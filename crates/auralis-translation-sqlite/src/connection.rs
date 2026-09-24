@@ -1,10 +1,10 @@
 use crate::repositories::{
-    attempt_repository, checkpoint_repository, result_repository, run_repository,
-    segment_repository, translation_repository,
+    attempt_repository, checkpoint_repository, edit_commit, edit_selection, result_repository,
+    run_repository, segment_repository, translation_repository,
 };
 use crate::{
-    AttemptId, CheckpointSpec, DbError, ResultRecord, ResultSpec, RunDiagnostic, RunSpec, RunStop,
-    SegmentSpec, SqliteConfig, TranslationSpec,
+    AttemptId, CheckpointSpec, DbError, EditSelection, EditSpec, ResultRecord, ResultSpec,
+    RunDiagnostic, RunSpec, RunStop, SegmentSpec, SqliteConfig, TranslationSpec,
 };
 use crate::{diagnostic_codec, migrations};
 use auralis_translation::{ResultId, RunControl, RunId, RunState, TranslationId, VerifiedRenderer};
@@ -139,6 +139,34 @@ impl TranslateDb {
 
     pub fn result_for_run(&self, run_id: RunId) -> Result<ResultRecord, DbError> {
         result_repository::for_run(&self.connection, run_id)
+    }
+
+    pub fn commit_edit<V: VerifiedRenderer>(
+        &mut self,
+        spec: &EditSpec,
+        renderer: &V,
+    ) -> Result<ResultRecord, DbError> {
+        edit_commit::commit(&mut self.connection, spec, renderer)
+    }
+
+    pub fn result_edits(&self, result_id: ResultId) -> Result<Vec<EditSelection>, DbError> {
+        let result = result_repository::load(&self.connection, result_id)?;
+        let selections = edit_selection::load(&self.connection, result_id)?;
+        for selection in &selections {
+            let stored_text =
+                edit_selection::text(&self.connection, result_id, selection.segment_id)?
+                    .ok_or(DbError::CorruptRecord("selected edit text is missing"))?;
+            if !result
+                .selected
+                .iter()
+                .any(|segment| segment.id == selection.segment_id && segment.lines == stored_text)
+            {
+                return Err(DbError::CorruptRecord(
+                    "selected edit differs from result text",
+                ));
+            }
+        }
+        Ok(selections)
     }
 }
 

@@ -152,7 +152,7 @@ pub(crate) fn for_run(connection: &Connection, run_id: RunId) -> Result<ResultRe
     load_from_connection(connection, result_id)
 }
 
-fn load_from_connection(
+pub(crate) fn load_from_connection(
     connection: &Connection,
     result_id: ResultId,
 ) -> Result<ResultRecord, DbError> {

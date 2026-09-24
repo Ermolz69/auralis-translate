@@ -49,7 +49,7 @@ The UI reads progress and pause reasons from Translate through `active_run_id`. 
 
 ## Translate SQLite tables
 
-The table below describes the logical contract. Migration `crates/auralis-translation-sqlite/migrations/0001_initial.sql` contains the initial executable Translate schema, and `0002_pause_request.sql` adds the durable pause flag. An existing v1 database upgrades transactionally to v2; not all logical tables have repository operations yet. Line-level quality warnings are stored once in `block_checkpoints.diagnostics_json`, next to the accepted lines they describe. The separate `diagnostics` table is reserved for run-level events and measurements; the current CLI does not write it.
+The table below describes the logical contract. Migration `crates/auralis-translation-sqlite/migrations/0001_initial.sql` contains the initial executable Translate schema, `0002_pause_request.sql` adds the durable pause flag, and `0003_result_edit_selections.sql` adds exact result-to-edit revision links. Existing v1 and v2 databases upgrade transactionally to v3; not all logical tables have repository operations yet. Line-level quality warnings are stored once in `block_checkpoints.diagnostics_json`, next to the accepted lines they describe. The separate `diagnostics` table is reserved for run-level events and measurements; the current CLI does not write it.
 
 | Table | Required content |
 | --- | --- |
@@ -60,11 +60,14 @@ The table below describes the logical contract. Migration `crates/auralis-transl
 | `block_checkpoints` | `run_id`, block ID, input fingerprint, accepted translations by ID, diagnostics and attempt count. `(run_id, block_id)` is idempotent. |
 | `results` | `result_id`, `run_id`, revision, immutable manifest of selected segment versions, output digest, structural-check evidence, review flag. |
 | `segment_edits` | `translation_id`, `segment_id`, edit revision, Russian text, provenance. A new edit never mutates an earlier result. |
+| `result_edit_selections` | `result_id`, `translation_id`, `segment_id`, and exact edit revision used by that result; unchanged edits from a base result are carried into its successor. |
 | `diagnostics` | `run_id`, stage, code, time, related segment/block IDs and metrics; full raw model text is not required. |
 
 Use ordinary FKs within Translate SQLite (`runs → translations`, `results → runs`, checkpoints → runs). IDs owned by Auralis are checked through the integration API and reconciliation. SQLite FKs cannot cross schemas; in WAL mode, writing attached database files is not atomic across the files as a set. `ATTACH` is therefore not a substitute for recovery. [SQLite foreign-key limits](https://www.sqlite.org/foreignkeys.html#fk_unsupported), [SQLite ATTACH transactions](https://www.sqlite.org/lang_attach.html).
 
 The source link, source map, accepted checkpoints, results, edits, and effective fingerprints remain while the project exists. Working files, raw model responses and detailed runtime logs may have a bounded retention period; its exact duration must be chosen before production. Checkpoints and edit versions referenced by a result manifest are immutable. A new manual edit appends a revision rather than rewriting a published `result_id`.
+
+For the current strict-SRT path, `commit_edit` takes an existing validated result, a changed text slot, and an immutable original through the verified renderer. It rejects a stale base revision and an invalid payload before writing. In one Translate transaction it appends the segment edit, creates a new result revision with its verified output digest, carries forward other edit references, and points the new result at the exact edit revision. The earlier result remains readable and reproducible. The standalone `edit` command exports a separate file and leaves the original and earlier output untouched. Every edited result currently remains `needs_review`; approval and Auralis selection are future workflow steps.
 
 ## Start and checkpoint protocol
 

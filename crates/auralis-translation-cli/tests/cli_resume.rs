@@ -1,4 +1,4 @@
-use auralis_translation::{RunId, RunState};
+use auralis_translation::{ResultId, RunId, RunState};
 use auralis_translation_sqlite::{SqliteConfig, TranslateDb};
 use std::error::Error;
 use std::io::{BufRead, BufReader, Read, Write};
@@ -10,6 +10,117 @@ use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
 const PROFILE: &[u8] =
     include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.experimental.json");
+
+#[test]
+fn cli_edits_a_validated_copy_and_reexports_latest_result() -> Result<(), Box<dyn Error>> {
+    let nonce = SystemTime::now().duration_since(UNIX_EPOCH)?.as_nanos();
+    let directory =
+        std::env::temp_dir().join(format!("auralis-cli-edit-{}-{nonce}", std::process::id()));
+    std::fs::create_dir(&directory)?;
+    let source_path = directory.join("original.srt");
+    let state_dir = directory.join("state");
+    let profile_path = directory.join("profile.json");
+    let edit_path = directory.join("edit.json");
+    let initial_path = directory.join("initial.srt");
+    let edited_path = directory.join("edited.srt");
+    let export_path = directory.join("edited-again.srt");
+    let source = b"1\n00:00:01,000 --> 00:00:02,000\n\xe4\xbd\xa0\xe5\xa5\xbd\xe3\x80\x82\n";
+    std::fs::write(&source_path, source)?;
+    std::fs::write(&profile_path, PROFILE)?;
+    let listener = TcpListener::bind("127.0.0.1:0")?;
+    let endpoint = format!("http://{}/", listener.local_addr()?);
+    let server = std::thread::spawn(move || serve(listener, 1, None, None, "Привет."));
+    let translated = command(&[
+        "translate",
+        path(&source_path)?,
+        path(&state_dir)?,
+        path(&profile_path)?,
+        &endpoint,
+        path(&initial_path)?,
+    ])?;
+    assert!(
+        translated.status.success(),
+        "{}",
+        String::from_utf8_lossy(&translated.stderr)
+    );
+    server.join().map_err(|_| "mock server panicked")??;
+    let stdout = String::from_utf8(translated.stdout)?;
+    let run_id = stdout
+        .split_whitespace()
+        .find_map(|item| item.strip_prefix("run_id="))
+        .ok_or("missing run ID")?;
+    let base_result_id = stdout
+        .split_whitespace()
+        .find_map(|item| item.strip_prefix("result_id="))
+        .ok_or("missing result ID")?;
+    std::fs::write(
+        &edit_path,
+        r#"{"schema_version":1,"segment_id":1,"lines":["Здравствуйте."]}"#,
+    )?;
+    let edited = command(&[
+        "edit",
+        path(&state_dir)?,
+        base_result_id,
+        path(&profile_path)?,
+        path(&edit_path)?,
+        path(&edited_path)?,
+    ])?;
+    assert!(
+        edited.status.success(),
+        "{}",
+        String::from_utf8_lossy(&edited.stderr)
+    );
+    let edited_stdout = String::from_utf8(edited.stdout)?;
+    let edited_result_id = edited_stdout
+        .split_whitespace()
+        .find_map(|item| item.strip_prefix("result_id="))
+        .ok_or("missing edited result ID")?;
+    assert_ne!(edited_result_id, base_result_id);
+    assert!(String::from_utf8(std::fs::read(&edited_path)?)?.contains("Здравствуйте."));
+    assert!(String::from_utf8(std::fs::read(&initial_path)?)?.contains("Привет."));
+    assert_eq!(std::fs::read(&source_path)?, source);
+    let db = TranslateDb::open(
+        &state_dir.join("auralis-translate.sqlite"),
+        SqliteConfig::default(),
+    )?;
+    assert_eq!(db.result(ResultId::parse(base_result_id)?)?.revision, 1);
+    assert_eq!(db.result(ResultId::parse(edited_result_id)?)?.revision, 2);
+    assert_eq!(
+        db.result_edits(ResultId::parse(edited_result_id)?)?.len(),
+        1
+    );
+    drop(db);
+    let exported = command(&[
+        "resume",
+        path(&state_dir)?,
+        run_id,
+        path(&profile_path)?,
+        "http://127.0.0.1:1/",
+        path(&export_path)?,
+    ])?;
+    assert!(
+        exported.status.success(),
+        "{}",
+        String::from_utf8_lossy(&exported.stderr)
+    );
+    assert_eq!(std::fs::read(&export_path)?, std::fs::read(&edited_path)?);
+    let status = command(&["status", path(&state_dir)?, run_id])?;
+    let status: serde_json::Value = serde_json::from_slice(&status.stdout)?;
+    assert_eq!(status["selected_result_id"], edited_result_id);
+    let stale_path = directory.join("stale.srt");
+    let stale = command(&[
+        "edit",
+        path(&state_dir)?,
+        base_result_id,
+        path(&profile_path)?,
+        path(&edit_path)?,
+        path(&stale_path)?,
+    ])?;
+    assert!(!stale.status.success());
+    assert!(!stale_path.exists());
+    std::fs::remove_dir_all(directory)?;
+    Ok(())
+}
 
 #[test]
 fn cli_resumes_checkpointed_srt_and_reexports_validated_result() -> Result<(), Box<dyn Error>> {

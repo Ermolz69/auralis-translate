@@ -1,5 +1,7 @@
 mod attempt_id;
 mod checkpoint_spec;
+mod edit_selection;
+mod edit_spec;
 mod result_record;
 mod result_spec;
 mod run_diagnostic;
@@ -10,6 +12,8 @@ mod translation_spec;
 
 pub use attempt_id::AttemptId;
 pub use checkpoint_spec::CheckpointSpec;
+pub use edit_selection::EditSelection;
+pub use edit_spec::EditSpec;
 pub use result_record::ResultRecord;
 pub use result_spec::ResultSpec;
 pub use run_diagnostic::RunDiagnostic;

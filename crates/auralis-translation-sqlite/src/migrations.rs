@@ -1,9 +1,11 @@
 use crate::DbError;
 use rusqlite::Connection;
 
-pub const SCHEMA_VERSION: u32 = 2;
+pub const SCHEMA_VERSION: u32 = 3;
 const INITIAL_SCHEMA: &str = include_str!("../migrations/0001_initial.sql");
 const PAUSE_REQUEST_SCHEMA: &str = include_str!("../migrations/0002_pause_request.sql");
+const RESULT_EDIT_SELECTIONS_SCHEMA: &str =
+    include_str!("../migrations/0003_result_edit_selections.sql");
 
 pub(crate) fn apply(connection: &mut Connection) -> Result<(), DbError> {
     let current: u32 = connection.pragma_query_value(None, "user_version", |row| row.get(0))?;
@@ -19,6 +21,9 @@ pub(crate) fn apply(connection: &mut Connection) -> Result<(), DbError> {
     }
     if current < 2 {
         transaction.execute_batch(PAUSE_REQUEST_SCHEMA)?;
+    }
+    if current < 3 {
+        transaction.execute_batch(RESULT_EDIT_SELECTIONS_SCHEMA)?;
     }
     transaction.pragma_update(None, "user_version", SCHEMA_VERSION)?;
     transaction.commit()?;
