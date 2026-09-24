@@ -1,3 +1,10 @@
-mod segment_id;
+mod application;
+mod domain;
+mod ports;
 
-pub use segment_id::SegmentId;
+pub use application::{TranslateBatchError, translate_batch};
+pub use domain::{
+    ContractError, IdError, LanguageCode, LanguagePair, ProviderResponse, RunId, SegmentId,
+    SourceHash, SourceSegment, TargetSegment, TranslationBatch, TranslationId,
+};
+pub use ports::{ProviderError, TranslationProvider};

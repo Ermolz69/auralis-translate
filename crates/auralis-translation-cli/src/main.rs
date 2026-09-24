@@ -1,6 +1,7 @@
 mod inspect_command;
 mod manual_command;
 mod manual_manifest;
+mod manual_translation;
 mod write_new;
 
 use std::process::ExitCode;

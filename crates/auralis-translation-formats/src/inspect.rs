@@ -1,22 +1,5 @@
-use crate::srt::{SrtDocument, SrtError};
-use std::fmt;
-
-#[derive(Debug)]
-pub enum InspectError {
-    UnsupportedFormat,
-    InvalidSrt(SrtError),
-}
-
-impl fmt::Display for InspectError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            Self::UnsupportedFormat => write!(f, "unsupported subtitle format"),
-            Self::InvalidSrt(error) => error.fmt(f),
-        }
-    }
-}
-
-impl std::error::Error for InspectError {}
+use crate::InspectError;
+use crate::srt::SrtDocument;
 
 pub fn inspect(source: &[u8]) -> Result<SrtDocument, InspectError> {
     if source.starts_with(b"WEBVTT") || source.starts_with(b"\xef\xbb\xbfWEBVTT") {

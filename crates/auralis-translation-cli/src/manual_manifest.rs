@@ -1,7 +1,7 @@
-use auralis_translation::SegmentId;
+use crate::manual_translation::ManualTranslation;
+use auralis_translation::{SegmentId, SourceHash};
 use auralis_translation_formats::srt::{SegmentTranslation, SrtDocument};
 use serde::{Deserialize, Serialize};
-use sha2::{Digest, Sha256};
 use std::error::Error;
 
 const SCHEMA_VERSION: u32 = 1;
@@ -12,13 +12,6 @@ pub(crate) struct ManualManifest {
     schema_version: u32,
     source_sha256: String,
     translations: Vec<ManualTranslation>,
-}
-
-#[derive(Deserialize, Serialize)]
-#[serde(deny_unknown_fields)]
-struct ManualTranslation {
-    id: u32,
-    lines: Vec<String>,
 }
 
 impl ManualManifest {
@@ -60,5 +53,5 @@ impl ManualManifest {
 }
 
 fn digest(bytes: &[u8]) -> String {
-    format!("{:x}", Sha256::digest(bytes))
+    SourceHash::digest(bytes).to_string()
 }

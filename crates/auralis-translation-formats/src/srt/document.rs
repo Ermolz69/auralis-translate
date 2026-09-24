@@ -1,4 +1,5 @@
 use super::{SegmentTranslation, SrtError, SrtSegment, parser, renderer, verifier};
+use auralis_translation::{ContractError, SourceSegment};
 use std::ops::Range;
 
 #[derive(Clone, Debug)]
@@ -18,6 +19,24 @@ impl SrtDocument {
 
     pub fn source_bytes(&self) -> &[u8] {
         &self.source
+    }
+
+    pub fn source_segments(&self) -> Result<Vec<SourceSegment>, ContractError> {
+        self.segments
+            .iter()
+            .map(|segment| {
+                SourceSegment::new(
+                    segment.id,
+                    segment.start_ms,
+                    segment.end_ms,
+                    segment
+                        .text_slots
+                        .iter()
+                        .map(|slot| slot.text.clone())
+                        .collect(),
+                )
+            })
+            .collect()
     }
 
     pub fn protected_byte_ranges(&self) -> Vec<Range<usize>> {
