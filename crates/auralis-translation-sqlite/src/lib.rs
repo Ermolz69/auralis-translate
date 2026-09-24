@@ -1,3 +1,4 @@
+mod checkpoint_store;
 mod config;
 mod connection;
 mod error;

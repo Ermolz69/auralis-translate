@@ -2,9 +2,11 @@ mod application;
 mod domain;
 mod ports;
 
-pub use application::{TranslateBatchError, translate_batch};
-pub use domain::{
-    ContractError, IdError, LanguageCode, LanguagePair, ProviderResponse, RunId, RunState,
-    SegmentId, SourceHash, SourceSegment, TargetSegment, TranslationBatch, TranslationId,
+pub use application::{
+    TranslateBatchError, TranslateRunError, translate_batch, translate_planned_run,
 };
-pub use ports::{ProviderError, TranslationProvider};
+pub use domain::{
+    BlockCheckpoint, ContractError, IdError, LanguageCode, LanguagePair, ProviderResponse, RunId,
+    RunState, SegmentId, SourceHash, SourceSegment, TargetSegment, TranslationBatch, TranslationId,
+};
+pub use ports::{CheckpointStore, ProviderError, TranslationProvider};

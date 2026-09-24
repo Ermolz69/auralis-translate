@@ -1,3 +1,4 @@
+mod block_checkpoint;
 mod contract_error;
 mod id_error;
 mod language_code;
@@ -12,6 +13,7 @@ mod target_segment;
 mod translation_batch;
 mod translation_id;
 
+pub use block_checkpoint::BlockCheckpoint;
 pub use contract_error::ContractError;
 pub use id_error::IdError;
 pub use language_code::LanguageCode;

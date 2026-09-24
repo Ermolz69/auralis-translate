@@ -1,0 +1,123 @@
+use super::{TranslateRunError, translate_batch};
+use crate::domain::valid_line;
+use crate::{
+    BlockCheckpoint, CheckpointStore, SegmentId, TargetSegment, TranslationBatch,
+    TranslationProvider,
+};
+use std::collections::{HashMap, HashSet};
+
+pub fn translate_planned_run<S: CheckpointStore>(
+    provider: &impl TranslationProvider,
+    store: &mut S,
+    planned_ids: &[Vec<SegmentId>],
+    batches: &[TranslationBatch],
+) -> Result<Vec<TargetSegment>, TranslateRunError<S::Error>> {
+    if planned_ids.is_empty() || planned_ids.len() != batches.len() {
+        return Err(TranslateRunError::InvalidPlan(
+            "block count differs from frozen plan",
+        ));
+    }
+    let first = batches
+        .first()
+        .ok_or(TranslateRunError::InvalidPlan("no blocks"))?;
+    let mut target_ids = HashSet::new();
+    for (expected_ids, batch) in planned_ids.iter().zip(batches) {
+        if expected_ids.is_empty()
+            || expected_ids.as_slice()
+                != batch
+                    .targets()
+                    .iter()
+                    .map(|segment| segment.id())
+                    .collect::<Vec<_>>()
+        {
+            return Err(TranslateRunError::InvalidPlan(
+                "block target IDs differ from frozen plan",
+            ));
+        }
+        if batch.translation_id() != first.translation_id()
+            || batch.run_id() != first.run_id()
+            || batch.source_hash() != first.source_hash()
+            || batch.language_pair() != first.language_pair()
+        {
+            return Err(TranslateRunError::InvalidPlan(
+                "blocks disagree on frozen run identity",
+            ));
+        }
+        if batch
+            .targets()
+            .iter()
+            .any(|segment| !target_ids.insert(segment.id()))
+        {
+            return Err(TranslateRunError::InvalidPlan(
+                "target ID occurs in more than one block",
+            ));
+        }
+    }
+    let loaded = store
+        .load(first.run_id())
+        .map_err(TranslateRunError::Store)?;
+    let mut checkpoints = HashMap::new();
+    for checkpoint in loaded {
+        let index = checkpoint.block_index as usize;
+        let batch = batches
+            .get(index)
+            .ok_or(TranslateRunError::InvalidCheckpoint(
+                "checkpoint lies outside the run plan",
+            ))?;
+        validate_checkpoint(batch, &checkpoint)?;
+        if checkpoints.insert(index, checkpoint).is_some() {
+            return Err(TranslateRunError::InvalidCheckpoint(
+                "duplicate saved block",
+            ));
+        }
+    }
+    let mut accepted = Vec::with_capacity(target_ids.len());
+    for (index, batch) in batches.iter().enumerate() {
+        let checkpoint = if let Some(checkpoint) = checkpoints.remove(&index) {
+            checkpoint
+        } else {
+            let translated = translate_batch(provider, batch).map_err(TranslateRunError::Batch)?;
+            let block_index = u32::try_from(index)
+                .map_err(|_| TranslateRunError::InvalidPlan("too many blocks"))?;
+            let checkpoint = BlockCheckpoint {
+                run_id: batch.run_id(),
+                block_index,
+                input_fingerprint: batch.fingerprint(),
+                accepted: translated,
+                attempt_count: 1,
+            };
+            store
+                .commit(&checkpoint)
+                .map_err(TranslateRunError::Store)?;
+            checkpoint
+        };
+        accepted.extend(checkpoint.accepted);
+    }
+    Ok(accepted)
+}
+
+fn validate_checkpoint<E>(
+    batch: &TranslationBatch,
+    checkpoint: &BlockCheckpoint,
+) -> Result<(), TranslateRunError<E>> {
+    if checkpoint.run_id != batch.run_id()
+        || checkpoint.input_fingerprint != batch.fingerprint()
+        || checkpoint.attempt_count == 0
+        || checkpoint.accepted.len() != batch.targets().len()
+    {
+        return Err(TranslateRunError::InvalidCheckpoint(
+            "saved block does not match frozen input",
+        ));
+    }
+    for (source, target) in batch.targets().iter().zip(&checkpoint.accepted) {
+        if source.id() != target.id
+            || source.lines().len() != target.lines.len()
+            || target.lines.iter().any(|line| !valid_line(line))
+        {
+            return Err(TranslateRunError::InvalidCheckpoint(
+                "saved text does not match target slots",
+            ));
+        }
+    }
+    Ok(())
+}

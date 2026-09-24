@@ -1,7 +1,11 @@
-use super::{ContractError, LanguagePair, RunId, SourceHash, SourceSegment, TranslationId};
+use super::{
+    ContractError, LanguageCode, LanguagePair, RunId, SourceHash, SourceSegment, TranslationId,
+};
+use sha2::{Digest, Sha256};
 use std::collections::HashSet;
 
 pub const TRANSLATION_BATCH_SCHEMA_VERSION: u32 = 1;
+const BATCH_FINGERPRINT_VERSION: u32 = 1;
 
 #[derive(Clone, Debug)]
 pub struct TranslationBatch {
@@ -69,5 +73,41 @@ impl TranslationBatch {
 
     pub fn context(&self) -> &[SourceSegment] {
         &self.context
+    }
+
+    pub fn fingerprint(&self) -> SourceHash {
+        let mut hasher = Sha256::new();
+        hasher.update(BATCH_FINGERPRINT_VERSION.to_le_bytes());
+        hasher.update(self.schema_version().to_le_bytes());
+        hasher.update(self.translation_id.get().as_bytes());
+        hasher.update(self.run_id.get().as_bytes());
+        hasher.update(self.source_hash.bytes());
+        hasher.update([language_byte(self.language_pair.source())]);
+        hasher.update([language_byte(self.language_pair.target())]);
+        hash_segments(&mut hasher, &self.targets);
+        hash_segments(&mut hasher, &self.context);
+        SourceHash::from_bytes(hasher.finalize().into())
+    }
+}
+
+fn hash_segments(hasher: &mut Sha256, segments: &[SourceSegment]) {
+    hasher.update((segments.len() as u64).to_le_bytes());
+    for segment in segments {
+        hasher.update(segment.id().get().to_le_bytes());
+        hasher.update(segment.start_ms().to_le_bytes());
+        hasher.update(segment.end_ms().to_le_bytes());
+        hasher.update((segment.lines().len() as u64).to_le_bytes());
+        for line in segment.lines() {
+            hasher.update((line.len() as u64).to_le_bytes());
+            hasher.update(line.as_bytes());
+        }
+    }
+}
+
+fn language_byte(language: LanguageCode) -> u8 {
+    match language {
+        LanguageCode::Chinese => 1,
+        LanguageCode::Japanese => 2,
+        LanguageCode::Russian => 3,
     }
 }
