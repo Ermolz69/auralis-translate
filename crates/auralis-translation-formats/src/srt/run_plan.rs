@@ -13,6 +13,10 @@ pub struct SrtRunPlan {
 }
 
 impl SrtRunPlan {
+    pub const PARSER_VERSION: u32 = 1;
+    pub const STRUCTURAL_EVIDENCE: &'static str =
+        r#"{"format":"srt","verification":"reparse_and_protected_bytes","version":1}"#;
+
     pub fn new(
         source: &[u8],
         translation_id: TranslationId,
@@ -60,6 +64,17 @@ impl SrtRunPlan {
             .iter()
             .map(TranslationBatch::fingerprint)
             .collect()
+    }
+
+    pub fn policy_fingerprint(policy: SrtBlockPolicy) -> SourceHash {
+        let parse = super::SrtParsePolicy::default();
+        let mut bytes = Vec::new();
+        bytes.extend_from_slice(&Self::PARSER_VERSION.to_le_bytes());
+        bytes.extend_from_slice(&(policy.max_target_segments() as u64).to_le_bytes());
+        bytes.extend_from_slice(&(parse.max_bytes() as u64).to_le_bytes());
+        bytes.extend_from_slice(&parse.max_cues().to_le_bytes());
+        bytes.extend_from_slice(&(parse.max_line_bytes() as u64).to_le_bytes());
+        SourceHash::digest(&bytes)
     }
 
     pub fn execute<S: CheckpointStore>(

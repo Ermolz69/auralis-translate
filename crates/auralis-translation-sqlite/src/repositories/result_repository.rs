@@ -120,6 +120,20 @@ pub(crate) fn load(connection: &Connection, result_id: ResultId) -> Result<Resul
     load_from_connection(connection, result_id)
 }
 
+pub(crate) fn for_run(connection: &Connection, run_id: RunId) -> Result<ResultRecord, DbError> {
+    let id: Option<String> = connection
+        .query_row(
+            "SELECT result_id FROM results WHERE run_id = ?1 ORDER BY revision DESC LIMIT 1",
+            [run_id.to_string()],
+            |row| row.get(0),
+        )
+        .optional()?;
+    let id = id.ok_or(DbError::Conflict("run has no result"))?;
+    let result_id =
+        ResultId::parse(&id).map_err(|_| DbError::CorruptRecord("invalid result ID"))?;
+    load_from_connection(connection, result_id)
+}
+
 fn load_from_connection(
     connection: &Connection,
     result_id: ResultId,

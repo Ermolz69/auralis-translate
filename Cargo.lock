@@ -23,6 +23,7 @@ dependencies = [
  "auralis-translation",
  "auralis-translation-formats",
  "auralis-translation-llamacpp",
+ "auralis-translation-sqlite",
  "serde",
  "serde_json",
  "uuid",

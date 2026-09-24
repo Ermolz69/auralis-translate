@@ -93,4 +93,8 @@ impl TranslateDb {
     pub fn result(&self, result_id: ResultId) -> Result<ResultRecord, DbError> {
         result_repository::load(&self.connection, result_id)
     }
+
+    pub fn result_for_run(&self, run_id: RunId) -> Result<ResultRecord, DbError> {
+        result_repository::for_run(&self.connection, run_id)
+    }
 }

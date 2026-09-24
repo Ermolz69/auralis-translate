@@ -103,6 +103,7 @@ fn renders_complete_copy_only_after_durable_resume() -> Result<(), Box<dyn Error
     assert_eq!(committed.selected.len(), 2);
     assert_eq!(db.run_state(run.run_id)?, RunState::Validated);
     assert_eq!(db.result(result.result_id)?, committed);
+    assert_eq!(db.result_for_run(run.run_id)?, committed);
     assert_eq!(db.commit_result(&result, &output)?, committed);
     assert!(matches!(
         db.commit_result(&result, b"different output"),
