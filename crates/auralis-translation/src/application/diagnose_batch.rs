@@ -28,9 +28,36 @@ pub(crate) fn diagnose_batch(
                     line_index,
                 });
             }
+            if glossary_term_missing(batch, source.id(), source_line, translated_line) {
+                diagnostics.push(TranslationDiagnostic {
+                    code: DiagnosticCode::GlossaryTermMissing,
+                    segment_id: source.id(),
+                    line_index,
+                });
+            }
         }
     }
     diagnostics
+}
+
+fn glossary_term_missing(
+    batch: &TranslationBatch,
+    segment_id: crate::SegmentId,
+    source_line: &str,
+    translated_line: &str,
+) -> bool {
+    let translated = translated_line.to_lowercase();
+    batch.glossary().iter().any(|entry| {
+        entry
+            .segment_ids()
+            .is_none_or(|scope| scope.contains(&segment_id))
+            && source_line.contains(entry.source())
+            && !translated.contains(&entry.target().to_lowercase())
+            && !entry
+                .allowed_forms()
+                .iter()
+                .any(|form| translated.contains(&form.to_lowercase()))
+    })
 }
 
 fn is_cyrillic(character: char) -> bool {

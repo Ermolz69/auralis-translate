@@ -1,8 +1,9 @@
 mod support;
 
 use auralis_translation::{
-    DiagnosticCode, LanguageCode, LanguagePair, ProviderError, ProviderResponse, SegmentId,
-    SourceSegment, TargetSegment, TranslationBatch, TranslationProvider, translate_planned_run,
+    DiagnosticCode, GlossaryEntry, LanguageCode, LanguagePair, ProviderError, ProviderResponse,
+    SegmentId, SourceSegment, TargetSegment, TranslationBatch, TranslationProvider,
+    translate_planned_run,
 };
 use auralis_translation_sqlite::{RunStop, SqliteConfig, TranslateDb};
 use std::cell::Cell;
@@ -164,6 +165,43 @@ fn quality_warnings_survive_checkpoint_reopen_without_changing_text() -> Result<
     assert_eq!(diagnostics[1].diagnostic.code, DiagnosticCode::NoCyrillic);
     assert_eq!(diagnostics[0].block_index, 0);
     assert_eq!(diagnostics[0].diagnostic.line_index, 0);
+    drop(db);
+    std::fs::remove_dir_all(directory)?;
+    Ok(())
+}
+
+#[test]
+fn glossary_warning_survives_checkpoint_reopen() -> Result<(), Box<dyn Error>> {
+    let directory = test_directory()?;
+    let path = directory.join("auralis-translate.sqlite");
+    let run = run_spec()?;
+    let plain = batch(&run, 1, "你好。")?;
+    let batch = TranslationBatch::with_glossary(
+        plain.translation_id(),
+        plain.run_id(),
+        plain.source_hash(),
+        plain.language_pair(),
+        plain.targets().to_vec(),
+        plain.context().to_vec(),
+        vec![GlossaryEntry::new(
+            "你好".into(),
+            "Привет".into(),
+            vec![],
+            None,
+        )?],
+    )?;
+    let mut db = TranslateDb::open(&path, SqliteConfig::default())?;
+    db.ensure_translation(&translation_spec()?)?;
+    db.begin_attempt(&run, None)?;
+    translate_planned_run(&UnchangedProvider, &mut db, &run.blocks, &[batch])?;
+    drop(db);
+
+    let db = TranslateDb::open(&path, SqliteConfig::default())?;
+    assert!(
+        db.diagnostics(run.run_id)?
+            .iter()
+            .any(|warning| { warning.diagnostic.code == DiagnosticCode::GlossaryTermMissing })
+    );
     drop(db);
     std::fs::remove_dir_all(directory)?;
     Ok(())

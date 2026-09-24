@@ -56,7 +56,7 @@ The opt-in prompt-v3 profile can include [confirmed glossary entries](../referen
 
 The profile can allow one to three attempts for an uncommitted block. Each attempt runs the provider and full response contract again. Only a complete accepted response becomes a checkpoint, whose `attempt_count` records how many calls were made for that block. The current retry mechanism immediately repeats provider or contract failures; error classification, backoff, and detailed failure diagnostics remain to be implemented before the reliable-translation gate.
 
-After response validation, the current checker records `unchanged_source` and `no_cyrillic` warnings for individual accepted lines. It saves those warnings with the block checkpoint. They are visible through the CLI `diagnostics` report and `status` warning count after a restart. They are advisory: a proper name may have no Cyrillic, and some text can legitimately remain unchanged. A complete, structurally verified result remains available with `needs_review`; warnings never bypass the structural checks or prove linguistic accuracy.
+After response validation, the checker records `unchanged_source`, `no_cyrillic`, and, when applicable, `glossary_term_missing` warnings for individual accepted lines. It saves those warnings with the block checkpoint. They are visible through the CLI `diagnostics` report and `status` warning count after a restart. They are advisory: a proper name may have no Cyrillic, some text can legitimately remain unchanged, and an unlisted Russian inflection may satisfy a term despite the warning. A complete, structurally verified result remains available with `needs_review`; warnings never bypass the structural checks or prove linguistic accuracy.
 
 ## Strict-format invariants
 

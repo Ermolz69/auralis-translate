@@ -2,6 +2,7 @@
 pub enum DiagnosticCode {
     UnchangedSource,
     NoCyrillic,
+    GlossaryTermMissing,
 }
 
 impl DiagnosticCode {
@@ -9,6 +10,7 @@ impl DiagnosticCode {
         match self {
             Self::UnchangedSource => "unchanged_source",
             Self::NoCyrillic => "no_cyrillic",
+            Self::GlossaryTermMissing => "glossary_term_missing",
         }
     }
 
@@ -16,6 +18,7 @@ impl DiagnosticCode {
         match value {
             "unchanged_source" => Some(Self::UnchangedSource),
             "no_cyrillic" => Some(Self::NoCyrillic),
+            "glossary_term_missing" => Some(Self::GlossaryTermMissing),
             _ => None,
         }
     }
