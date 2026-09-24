@@ -37,6 +37,7 @@ fn cli_resumes_checkpointed_srt_and_reexports_validated_result() -> Result<(), B
         path(&output_path)?,
     ])?;
     assert!(!first.status.success());
+    assert!(String::from_utf8_lossy(&first.stderr).contains("saved_blocks=1/2"));
     server.join().map_err(|_| "first mock server panicked")??;
     assert!(!output_path.exists());
     let stdout = String::from_utf8(first.stdout)?;
@@ -77,6 +78,7 @@ fn cli_resumes_checkpointed_srt_and_reexports_validated_result() -> Result<(), B
         "{}",
         String::from_utf8_lossy(&resumed.stderr)
     );
+    assert!(String::from_utf8_lossy(&resumed.stderr).contains("saved_blocks=2/2"));
     server.join().map_err(|_| "second mock server panicked")??;
     assert_eq!(std::fs::read(&source_path)?, source);
     let translated = std::fs::read(&output_path)?;

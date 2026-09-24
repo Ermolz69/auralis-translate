@@ -1,8 +1,8 @@
 use super::{TranslateRunError, translate_batch};
 use crate::domain::valid_line;
 use crate::{
-    BlockCheckpoint, CheckpointStore, SegmentId, TargetSegment, TranslationBatch,
-    TranslationProvider,
+    BlockCheckpoint, CheckpointStore, ProgressSink, RunProgress, SegmentId, TargetSegment,
+    TranslationBatch, TranslationProvider,
 };
 use std::collections::{HashMap, HashSet};
 
@@ -11,6 +11,22 @@ pub fn translate_planned_run<S: CheckpointStore>(
     store: &mut S,
     planned_ids: &[Vec<SegmentId>],
     batches: &[TranslationBatch],
+) -> Result<Vec<TargetSegment>, TranslateRunError<S::Error>> {
+    translate_planned_run_with_progress(provider, store, planned_ids, batches, &mut NoopProgress)
+}
+
+struct NoopProgress;
+
+impl ProgressSink for NoopProgress {
+    fn report(&mut self, _: RunProgress) {}
+}
+
+pub fn translate_planned_run_with_progress<S: CheckpointStore>(
+    provider: &impl TranslationProvider,
+    store: &mut S,
+    planned_ids: &[Vec<SegmentId>],
+    batches: &[TranslationBatch],
+    progress: &mut impl ProgressSink,
 ) -> Result<Vec<TargetSegment>, TranslateRunError<S::Error>> {
     if planned_ids.is_empty() || planned_ids.len() != batches.len() {
         return Err(TranslateRunError::InvalidPlan(
@@ -71,6 +87,12 @@ pub fn translate_planned_run<S: CheckpointStore>(
             ));
         }
     }
+    let mut committed_blocks = checkpoints.len();
+    progress.report(RunProgress {
+        run_id: first.run_id(),
+        committed_blocks,
+        total_blocks: batches.len(),
+    });
     let mut accepted = Vec::with_capacity(target_ids.len());
     for (index, batch) in batches.iter().enumerate() {
         let checkpoint = if let Some(checkpoint) = checkpoints.remove(&index) {
@@ -89,6 +111,12 @@ pub fn translate_planned_run<S: CheckpointStore>(
             store
                 .commit(&checkpoint)
                 .map_err(TranslateRunError::Store)?;
+            committed_blocks += 1;
+            progress.report(RunProgress {
+                run_id: first.run_id(),
+                committed_blocks,
+                total_blocks: batches.len(),
+            });
             checkpoint
         };
         accepted.extend(checkpoint.accepted);

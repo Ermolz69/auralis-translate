@@ -10,6 +10,7 @@ mod manual_translation;
 mod read_source;
 mod source_snapshot;
 mod status_command;
+mod stderr_progress;
 mod write_new;
 
 use std::process::ExitCode;

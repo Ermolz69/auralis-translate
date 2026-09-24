@@ -1,3 +1,4 @@
+use crate::stderr_progress::StderrProgress;
 use crate::write_new::write_new;
 use auralis_translation::{ResultId, ReviewState, RunState, SourceHash};
 use auralis_translation_formats::srt::SrtRunPlan;
@@ -31,7 +32,7 @@ pub(crate) fn execute(
     let endpoint = endpoint.to_str().ok_or("server URL must be Unicode")?;
     let provider = LlamaCppProvider::new(endpoint, profile)?;
     let attempt = db.begin_attempt(run, None)?;
-    let output = match plan.execute(&provider, db) {
+    let output = match plan.execute_with_progress(&provider, db, &mut StderrProgress) {
         Ok(output) => output,
         Err(error) => {
             db.stop_attempt(run.run_id, attempt, RunStop::Failed, "translation failed")?;
