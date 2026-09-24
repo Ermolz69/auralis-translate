@@ -29,6 +29,11 @@ fn manual_render_preserves_source_and_refuses_existing_output() -> Result<(), Bo
     assert!(std::str::from_utf8(&translated)?.contains("Привет."));
     assert!(!run(&["render", path(&source)?, path(&manifest)?, path(&output)?])?.success());
     assert_eq!(std::fs::read(&output)?, translated);
+    assert!(std::fs::read_dir(&directory)?.all(|entry| {
+        entry
+            .ok()
+            .is_some_and(|file| !file.file_name().to_string_lossy().ends_with(".tmp"))
+    }));
 
     std::fs::remove_dir_all(directory)?;
     Ok(())

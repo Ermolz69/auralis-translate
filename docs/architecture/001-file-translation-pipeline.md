@@ -35,7 +35,7 @@ flowchart TD
 
 In the embedded workflow, Auralis stores the source file once as a managed artifact. Translate receives its ID and bytes through the host adapter and records a SHA-256 digest. Translate SQLite stores the ID, digest, parse metadata, and source mapping; it does not keep another permanent copy of the file. On resume, Translate reads the artifact again and verifies its digest. Different bytes require a new source snapshot and translation identity.
 
-The renderer constructs a new buffer or temporary file from the original bytes. It replaces permitted ranges in **that copy** and never opens the original artifact for writing. The final file receives a distinct artifact ID. For standalone CLI use, a CLI-owned working directory holds the immutable source; its ID/path and digest are recorded in Translate SQLite. The CLI must not overwrite an input or existing output by default.
+The renderer constructs a new buffer or temporary file from the original bytes. It replaces permitted ranges in **that copy** and never opens the original artifact for writing. The final file receives a distinct artifact ID. For standalone CLI use, a CLI-owned working directory holds the immutable source; its ID/path and digest are recorded in Translate SQLite. The CLI stages and syncs output beside the target, then creates the final name through a same-directory hard link. It never overwrites an input or existing output by default. A filesystem without hard-link support fails without exposing a partial final file.
 
 ## Steps and contracts
 
