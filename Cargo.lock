@@ -50,6 +50,7 @@ name = "auralis-translation-sqlite"
 version = "0.1.0"
 dependencies = [
  "auralis-translation",
+ "auralis-translation-formats",
  "rusqlite",
  "serde",
  "serde_json",

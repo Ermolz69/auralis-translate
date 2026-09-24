@@ -1,20 +1,28 @@
+mod block_policy;
 mod document;
 mod error;
 mod error_code;
 mod parse_policy;
 mod parser;
+mod plan_error;
 mod policy_error;
 mod renderer;
+mod run_error;
+mod run_plan;
 mod segment;
 mod text_slot;
 mod translation;
 mod verifier;
 
+pub use block_policy::SrtBlockPolicy;
 pub use document::SrtDocument;
 pub use error::SrtError;
 pub use error_code::SrtErrorCode;
 pub use parse_policy::SrtParsePolicy;
+pub use plan_error::SrtPlanError;
 pub use policy_error::SrtPolicyError;
+pub use run_error::SrtRunError;
+pub use run_plan::SrtRunPlan;
 pub use segment::SrtSegment;
 pub use text_slot::TextSlot;
 pub use translation::SegmentTranslation;
