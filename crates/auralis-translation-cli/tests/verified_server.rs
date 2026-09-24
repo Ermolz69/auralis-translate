@@ -76,7 +76,11 @@ fn checked_profile_probes_server_and_hashes_reported_local_model() -> Result<(),
         path(&output_path)?,
     ])?;
     assert!(!output.status.success());
-    assert!(String::from_utf8_lossy(&output.stderr).contains("hash differs from profile"));
+    assert!(
+        String::from_utf8_lossy(&output.stderr).contains("hash differs from profile"),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
     server.join().map_err(|_| "mock server panicked")??;
     assert!(!output_path.exists());
     let stdout = String::from_utf8(output.stdout)?;

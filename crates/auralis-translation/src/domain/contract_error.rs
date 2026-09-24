@@ -10,6 +10,8 @@ pub enum ContractError {
     UnsupportedSchemaVersion,
     ResponseIds,
     ResponseLines,
+    InvalidGlossary,
+    GlossaryConflict,
 }
 
 impl fmt::Display for ContractError {

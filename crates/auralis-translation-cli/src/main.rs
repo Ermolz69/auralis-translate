@@ -6,8 +6,10 @@ mod durable_workflow;
 mod edit_command;
 mod edit_payload;
 mod experimental_command;
+mod glossary_input;
 mod inspect_command;
 mod loaded_run;
+mod managed_glossary;
 mod manual_command;
 mod manual_manifest;
 mod manual_translation;
@@ -53,10 +55,17 @@ fn main() -> ExitCode {
         [command, source, state_dir, profile, endpoint, output] if command == "translate" => {
             durable_start::run(source, state_dir, profile, endpoint, output)
         }
+        [command, source, state_dir, profile, glossary, endpoint, output]
+            if command == "translate-glossary" =>
+        {
+            durable_start::run_with_glossary(
+                source, state_dir, profile, glossary, endpoint, output,
+            )
+        }
         [command, state_dir, run_id, profile, endpoint, output] if command == "resume" => {
             durable_resume::run(state_dir, run_id, profile, endpoint, output)
         }
-        _ => Err("usage: auralis-translation-cli <inspect SOURCE | template SOURCE MANIFEST | render SOURCE MANIFEST OUTPUT | status STATE_DIR RUN_ID | diagnostics STATE_DIR RUN_ID | pause STATE_DIR RUN_ID | edit STATE_DIR BASE_RESULT_ID PROFILE EDIT_JSON OUTPUT | doctor PROFILE MODEL_FILE | translate-experimental SOURCE PROFILE SERVER_URL OUTPUT | translate SOURCE STATE_DIR PROFILE SERVER_URL OUTPUT | resume STATE_DIR RUN_ID PROFILE SERVER_URL OUTPUT>".into()),
+        _ => Err("usage: auralis-translation-cli <inspect SOURCE | template SOURCE MANIFEST | render SOURCE MANIFEST OUTPUT | status STATE_DIR RUN_ID | diagnostics STATE_DIR RUN_ID | pause STATE_DIR RUN_ID | edit STATE_DIR BASE_RESULT_ID PROFILE EDIT_JSON OUTPUT | doctor PROFILE MODEL_FILE | translate-experimental SOURCE PROFILE SERVER_URL OUTPUT | translate SOURCE STATE_DIR PROFILE SERVER_URL OUTPUT | translate-glossary SOURCE STATE_DIR PROFILE GLOSSARY SERVER_URL OUTPUT | resume STATE_DIR RUN_ID PROFILE SERVER_URL OUTPUT>".into()),
     };
 
     match result {

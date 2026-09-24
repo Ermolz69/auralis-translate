@@ -3,10 +3,11 @@ use super::{
 };
 use crate::inspect;
 use auralis_translation::{
-    CheckpointStore, LanguagePair, ProgressSink, RetryPolicy, RunControl, RunId, SegmentId,
-    SourceHash, TargetSegment, TranslationBatch, TranslationId, TranslationProvider,
-    VerifiedRenderer, translate_planned_run, translate_planned_run_with_control,
-    translate_planned_run_with_policy, translate_planned_run_with_progress,
+    CheckpointStore, ContractError, Glossary, LanguagePair, ProgressSink, RetryPolicy, RunControl,
+    RunId, SegmentId, SourceHash, TargetSegment, TranslationBatch, TranslationId,
+    TranslationProvider, VerifiedRenderer, translate_planned_run,
+    translate_planned_run_with_control, translate_planned_run_with_policy,
+    translate_planned_run_with_progress,
 };
 
 pub struct SrtRunPlan {
@@ -28,9 +29,30 @@ impl SrtRunPlan {
         pair: LanguagePair,
         policy: SrtBlockPolicy,
     ) -> Result<Self, SrtPlanError> {
+        Self::with_glossary(source, translation_id, run_id, pair, policy, None)
+    }
+
+    pub fn with_glossary(
+        source: &[u8],
+        translation_id: TranslationId,
+        run_id: RunId,
+        pair: LanguagePair,
+        policy: SrtBlockPolicy,
+        glossary: Option<&Glossary>,
+    ) -> Result<Self, SrtPlanError> {
         let document = inspect(source).map_err(SrtPlanError::Inspect)?;
         let source_hash = SourceHash::digest(source);
         let segments = document.source_segments().map_err(SrtPlanError::Contract)?;
+        if glossary.is_some_and(|glossary| {
+            glossary.entries().iter().any(|entry| {
+                entry.segment_ids().is_some_and(|ids| {
+                    ids.iter()
+                        .any(|id| !segments.iter().any(|segment| segment.id() == *id))
+                })
+            })
+        }) {
+            return Err(SrtPlanError::Contract(ContractError::InvalidGlossary));
+        }
         let mut batches = Vec::new();
         let mut planned_ids = Vec::new();
         for (block_index, targets) in segments.chunks(policy.max_target_segments()).enumerate() {
@@ -44,16 +66,20 @@ impl SrtRunPlan {
                 .iter()
                 .chain(&segments[end..after])
                 .cloned()
-                .collect();
+                .collect::<Vec<_>>();
+            let applied_glossary = glossary
+                .map(|glossary| glossary.applicable(targets, &context))
+                .unwrap_or_default();
             planned_ids.push(targets.iter().map(|segment| segment.id()).collect());
             batches.push(
-                TranslationBatch::new(
+                TranslationBatch::with_glossary(
                     translation_id,
                     run_id,
                     source_hash,
                     pair,
                     targets.to_vec(),
                     context,
+                    applied_glossary,
                 )
                 .map_err(SrtPlanError::Contract)?,
             );

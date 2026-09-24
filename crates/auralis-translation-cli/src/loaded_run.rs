@@ -1,4 +1,5 @@
 use crate::durable_workflow::{DATABASE_FILE, SOURCE_DIRECTORY, block_policy, load_profile};
+use crate::managed_glossary;
 use crate::read_source::read_source;
 use crate::source_snapshot::source_snapshot;
 use auralis_translation::{RunId, SourceHash};
@@ -53,12 +54,17 @@ pub(crate) fn load(
         return Err("model profile differs from frozen run".into());
     }
     let policy = block_policy(&profile)?;
-    let plan = SrtRunPlan::new(
+    let glossary = managed_glossary::load(&state_dir, run.glossary_revision.as_deref())?;
+    if glossary.is_some() && profile.prompt_version != 3 {
+        return Err("frozen glossary requires a glossary-capable profile".into());
+    }
+    let plan = SrtRunPlan::with_glossary(
         &source,
         translation.translation_id,
         run_id,
         translation.language_pair,
         policy,
+        glossary.as_ref(),
     )?;
     if plan.blocks() != run.blocks
         || run.parser_version != SrtRunPlan::PARSER_VERSION

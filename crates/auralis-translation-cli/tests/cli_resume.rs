@@ -1,4 +1,4 @@
-use auralis_translation::{ResultId, RunId, RunState};
+use auralis_translation::{ResultId, RunId, RunState, SourceHash};
 use auralis_translation_sqlite::{SqliteConfig, TranslateDb};
 use std::error::Error;
 use std::io::{BufRead, BufReader, Read, Write};
@@ -10,6 +10,113 @@ use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
 const PROFILE: &[u8] =
     include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.experimental.json");
+const GLOSSARY_PROFILE: &[u8] =
+    include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.glossary.experimental.json");
+
+#[test]
+fn cli_freezes_glossary_for_resume_and_rejects_conflicts() -> Result<(), Box<dyn Error>> {
+    let nonce = SystemTime::now().duration_since(UNIX_EPOCH)?.as_nanos();
+    let directory = std::env::temp_dir().join(format!(
+        "auralis-cli-glossary-{}-{nonce}",
+        std::process::id()
+    ));
+    std::fs::create_dir(&directory)?;
+    let source_path = directory.join("original.srt");
+    let state_dir = directory.join("state");
+    let profile_path = directory.join("profile.json");
+    let glossary_path = directory.join("glossary.json");
+    let output_path = directory.join("translated.srt");
+    let export_path = directory.join("export.srt");
+    let source = b"1\n00:00:01,000 --> 00:00:02,000\n\xe4\xbd\xa0\xe5\xa5\xbd\xe3\x80\x82\n";
+    let glossary = r#"{"schema_version":1,"entries":[{"source":"你好","target":"Здравствуйте","allowed_forms":[]}]}"#;
+    std::fs::write(&source_path, source)?;
+    std::fs::write(&profile_path, GLOSSARY_PROFILE)?;
+    std::fs::write(&glossary_path, glossary)?;
+    let listener = TcpListener::bind("127.0.0.1:0")?;
+    let endpoint = format!("http://{}/", listener.local_addr()?);
+    let server = std::thread::spawn(move || serve(listener, 1, None, None, "Привет."));
+    let output = command(&[
+        "translate-glossary",
+        path(&source_path)?,
+        path(&state_dir)?,
+        path(&profile_path)?,
+        path(&glossary_path)?,
+        &endpoint,
+        path(&output_path)?,
+    ])?;
+    assert!(
+        output.status.success(),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    server
+        .join()
+        .map_err(|_| "glossary mock server panicked")??;
+    let stdout = String::from_utf8(output.stdout)?;
+    let run_id = stdout
+        .split_whitespace()
+        .find_map(|item| item.strip_prefix("run_id="))
+        .ok_or("missing run ID")?;
+    let db = TranslateDb::open(
+        &state_dir.join("auralis-translate.sqlite"),
+        SqliteConfig::default(),
+    )?;
+    assert_eq!(
+        db.run(RunId::parse(run_id)?)?.glossary_revision,
+        Some(SourceHash::digest(glossary.as_bytes()).to_string())
+    );
+    drop(db);
+    std::fs::write(&glossary_path, b"changed external glossary")?;
+    let exported = command(&[
+        "resume",
+        path(&state_dir)?,
+        run_id,
+        path(&profile_path)?,
+        "http://127.0.0.1:1/",
+        path(&export_path)?,
+    ])?;
+    assert!(
+        exported.status.success(),
+        "{}",
+        String::from_utf8_lossy(&exported.stderr)
+    );
+    assert_eq!(std::fs::read(&output_path)?, std::fs::read(&export_path)?);
+    let managed = state_dir
+        .join("glossaries")
+        .join(format!("{}.json", SourceHash::digest(glossary.as_bytes())));
+    std::fs::write(&managed, b"changed managed glossary")?;
+    let rejected_path = directory.join("rejected.srt");
+    let rejected = command(&[
+        "resume",
+        path(&state_dir)?,
+        run_id,
+        path(&profile_path)?,
+        "http://127.0.0.1:1/",
+        path(&rejected_path)?,
+    ])?;
+    assert!(!rejected.status.success());
+    assert!(!rejected_path.exists());
+    let conflict_path = directory.join("conflict.json");
+    std::fs::write(
+        &conflict_path,
+        r#"{"schema_version":1,"entries":[{"source":"你好","target":"Здравствуйте"},{"source":"你好","target":"Привет"}]}"#,
+    )?;
+    let invalid_state = directory.join("invalid-state");
+    let conflict = command(&[
+        "translate-glossary",
+        path(&source_path)?,
+        path(&invalid_state)?,
+        path(&profile_path)?,
+        path(&conflict_path)?,
+        "http://127.0.0.1:1/",
+        path(&rejected_path)?,
+    ])?;
+    assert!(!conflict.status.success());
+    assert!(!invalid_state.exists());
+    assert_eq!(std::fs::read(&source_path)?, source);
+    std::fs::remove_dir_all(directory)?;
+    Ok(())
+}
 
 #[test]
 fn cli_edits_a_validated_copy_and_reexports_latest_result() -> Result<(), Box<dyn Error>> {

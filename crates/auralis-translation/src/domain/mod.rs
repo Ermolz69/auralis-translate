@@ -1,6 +1,8 @@
 mod block_checkpoint;
 mod contract_error;
 mod diagnostic_code;
+mod glossary;
+mod glossary_entry;
 mod id_error;
 mod language_code;
 mod language_pair;
@@ -22,6 +24,8 @@ mod translation_id;
 pub use block_checkpoint::BlockCheckpoint;
 pub use contract_error::ContractError;
 pub use diagnostic_code::DiagnosticCode;
+pub use glossary::Glossary;
+pub use glossary_entry::GlossaryEntry;
 pub use id_error::IdError;
 pub use language_code::LanguageCode;
 pub use language_pair::LanguagePair;

@@ -10,6 +10,8 @@ const DEFAULT_TARGET_SEGMENTS: usize = 8;
 const MAX_TARGET_SEGMENTS: usize = 64;
 const MAX_CONTEXT_SEGMENTS: usize = 8;
 const MAX_CONTEXT_BYTES: usize = 64 * 1024;
+const MAX_GLOSSARY_BYTES: usize = 32 * 1024;
+const MAX_GLOSSARY_ENTRIES: usize = 128;
 
 fn default_target_segments() -> usize {
     DEFAULT_TARGET_SEGMENTS
@@ -42,6 +44,10 @@ pub struct ModelProfile {
     pub context_after_segments: usize,
     #[serde(default)]
     pub max_context_bytes: usize,
+    #[serde(default)]
+    pub max_glossary_bytes: usize,
+    #[serde(default)]
+    pub max_glossary_entries: usize,
     #[serde(default = "default_block_attempts")]
     pub max_block_attempts: u32,
     pub temperature: f64,
@@ -93,13 +99,15 @@ impl ModelProfile {
                 "runtime identity fields are incomplete",
             ));
         }
-        if !matches!(self.prompt_version, 1 | 2) {
+        if !matches!(self.prompt_version, 1..=3) {
             return Err(ProfileError::Invalid("unsupported prompt version"));
         }
         if !(1..=MAX_TARGET_SEGMENTS).contains(&self.target_segments_per_block)
             || self.context_before_segments > MAX_CONTEXT_SEGMENTS
             || self.context_after_segments > MAX_CONTEXT_SEGMENTS
             || self.max_context_bytes > MAX_CONTEXT_BYTES
+            || self.max_glossary_bytes > MAX_GLOSSARY_BYTES
+            || self.max_glossary_entries > MAX_GLOSSARY_ENTRIES
             || RetryPolicy::new(self.max_block_attempts).is_none()
         {
             return Err(ProfileError::Invalid("block or context limits are invalid"));
@@ -112,6 +120,14 @@ impl ModelProfile {
                 && (self.target_segments_per_block != 1
                     || self.context_before_segments + self.context_after_segments == 0
                     || self.max_context_bytes == 0))
+            || (self.prompt_version == 3 && self.target_segments_per_block != 1)
+            || (self.prompt_version == 3
+                && self.context_before_segments + self.context_after_segments > 0
+                && self.max_context_bytes == 0)
+            || (self.prompt_version != 3
+                && (self.max_glossary_bytes != 0 || self.max_glossary_entries != 0))
+            || (self.prompt_version == 3
+                && (self.max_glossary_bytes == 0 || self.max_glossary_entries == 0))
         {
             return Err(ProfileError::Invalid("prompt and context policy disagree"));
         }

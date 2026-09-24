@@ -17,6 +17,7 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 | [Storage and lifecycle](architecture/002-storage-and-lifecycle.md) | Data ownership across two SQLite databases, project links, checkpoints, pause/resume, publication and recovery. |
 | [Auralis integration](architecture/003-auralis-integration.md) | Host responsibilities, integration API, current Auralis gaps, Git submodule and delivery order. |
 | [Rust code architecture](architecture/004-rust-code-architecture.md) | Crate dependencies, module and test layout, typed contracts, configuration and code conventions. |
+| [Glossary input v1](reference/glossary-v1.md) | Experimental terminology JSON, target scope, frozen revision, and resume behavior. |
 
 ## Agreed MVP decisions
 

@@ -1,11 +1,13 @@
 use super::{
-    ContractError, LanguageCode, LanguagePair, RunId, SourceHash, SourceSegment, TranslationId,
+    ContractError, Glossary, GlossaryEntry, LanguageCode, LanguagePair, RunId, SourceHash,
+    SourceSegment, TranslationId,
 };
 use sha2::{Digest, Sha256};
 use std::collections::HashSet;
 
 pub const TRANSLATION_BATCH_SCHEMA_VERSION: u32 = 1;
 const BATCH_FINGERPRINT_VERSION: u32 = 1;
+const GLOSSARY_FINGERPRINT_VERSION: u32 = 1;
 
 #[derive(Clone, Debug)]
 pub struct TranslationBatch {
@@ -15,6 +17,7 @@ pub struct TranslationBatch {
     language_pair: LanguagePair,
     targets: Vec<SourceSegment>,
     context: Vec<SourceSegment>,
+    glossary: Vec<GlossaryEntry>,
 }
 
 impl TranslationBatch {
@@ -25,6 +28,26 @@ impl TranslationBatch {
         language_pair: LanguagePair,
         targets: Vec<SourceSegment>,
         context: Vec<SourceSegment>,
+    ) -> Result<Self, ContractError> {
+        Self::with_glossary(
+            translation_id,
+            run_id,
+            source_hash,
+            language_pair,
+            targets,
+            context,
+            Vec::new(),
+        )
+    }
+
+    pub fn with_glossary(
+        translation_id: TranslationId,
+        run_id: RunId,
+        source_hash: SourceHash,
+        language_pair: LanguagePair,
+        targets: Vec<SourceSegment>,
+        context: Vec<SourceSegment>,
+        glossary: Vec<GlossaryEntry>,
     ) -> Result<Self, ContractError> {
         if targets.is_empty() {
             return Err(ContractError::EmptyTargets);
@@ -37,6 +60,14 @@ impl TranslationBatch {
         {
             return Err(ContractError::DuplicateSegmentId);
         }
+        Glossary::validate_entries(&glossary)?;
+        if glossary.iter().any(|entry| {
+            entry
+                .segment_ids()
+                .is_some_and(|scope| !targets.iter().any(|target| scope.contains(&target.id())))
+        }) {
+            return Err(ContractError::InvalidGlossary);
+        }
         Ok(Self {
             translation_id,
             run_id,
@@ -44,6 +75,7 @@ impl TranslationBatch {
             language_pair,
             targets,
             context,
+            glossary,
         })
     }
 
@@ -75,6 +107,10 @@ impl TranslationBatch {
         &self.context
     }
 
+    pub fn glossary(&self) -> &[GlossaryEntry] {
+        &self.glossary
+    }
+
     pub fn fingerprint(&self) -> SourceHash {
         let mut hasher = Sha256::new();
         hasher.update(BATCH_FINGERPRINT_VERSION.to_le_bytes());
@@ -86,6 +122,28 @@ impl TranslationBatch {
         hasher.update([language_byte(self.language_pair.target())]);
         hash_segments(&mut hasher, &self.targets);
         hash_segments(&mut hasher, &self.context);
+        if !self.glossary.is_empty() {
+            hasher.update(GLOSSARY_FINGERPRINT_VERSION.to_le_bytes());
+            hasher.update((self.glossary.len() as u64).to_le_bytes());
+            for entry in &self.glossary {
+                hash_text(&mut hasher, entry.source());
+                hash_text(&mut hasher, entry.target());
+                hasher.update((entry.allowed_forms().len() as u64).to_le_bytes());
+                for form in entry.allowed_forms() {
+                    hash_text(&mut hasher, form);
+                }
+                match entry.segment_ids() {
+                    None => hasher.update([0]),
+                    Some(ids) => {
+                        hasher.update([1]);
+                        hasher.update((ids.len() as u64).to_le_bytes());
+                        for id in ids {
+                            hasher.update(id.get().to_le_bytes());
+                        }
+                    }
+                }
+            }
+        }
         SourceHash::from_bytes(hasher.finalize().into())
     }
 }
@@ -98,10 +156,14 @@ fn hash_segments(hasher: &mut Sha256, segments: &[SourceSegment]) {
         hasher.update(segment.end_ms().to_le_bytes());
         hasher.update((segment.lines().len() as u64).to_le_bytes());
         for line in segment.lines() {
-            hasher.update((line.len() as u64).to_le_bytes());
-            hasher.update(line.as_bytes());
+            hash_text(hasher, line);
         }
     }
+}
+
+fn hash_text(hasher: &mut Sha256, text: &str) {
+    hasher.update((text.len() as u64).to_le_bytes());
+    hasher.update(text.as_bytes());
 }
 
 fn language_byte(language: LanguageCode) -> u8 {

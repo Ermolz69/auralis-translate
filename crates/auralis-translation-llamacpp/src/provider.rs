@@ -42,6 +42,7 @@ impl LlamaCppProvider {
             .join(CHAT_PATH)
             .map_err(|_| ProviderError("invalid llama.cpp endpoint".into()))?;
         let client = Client::builder()
+            .no_proxy()
             .timeout(Duration::from_secs(profile.timeout_seconds))
             .build()
             .map_err(|error| ProviderError(error.to_string()))?;
@@ -158,6 +159,19 @@ impl TranslationProvider for LlamaCppProvider {
                 "experimental profile has no context support".into(),
             ));
         }
+        if self.profile.prompt_version != 3 && !batch.glossary().is_empty() {
+            return Err(ProviderError(
+                "profile does not support glossary entries".into(),
+            ));
+        }
+        if batch.glossary().len() > self.profile.max_glossary_entries {
+            return Err(ProviderError("glossary exceeds profile entry limit".into()));
+        }
+        let glossary_bytes = prompt::glossary_payload_bytes(batch.glossary())
+            .map_err(|error| ProviderError(error.to_string()))?;
+        if glossary_bytes > self.profile.max_glossary_bytes {
+            return Err(ProviderError("glossary exceeds profile byte limit".into()));
+        }
         let context_bytes: usize = batch
             .context()
             .iter()
@@ -169,12 +183,28 @@ impl TranslationProvider for LlamaCppProvider {
         }
         let mut translations = Vec::with_capacity(batch.targets().len());
         for segment in batch.targets() {
+            let segment_glossary = batch
+                .glossary()
+                .iter()
+                .filter(|entry| {
+                    entry
+                        .segment_ids()
+                        .is_none_or(|scope| scope.contains(&segment.id()))
+                })
+                .cloned()
+                .collect::<Vec<_>>();
             let mut lines = Vec::with_capacity(segment.lines().len());
             for (line_index, source_line) in segment.lines().iter().enumerate() {
-                let prompt_text = if self.profile.prompt_version == 1 {
-                    prompt::translate_line(source_line)
-                } else {
-                    prompt::translate_line_with_context(segment, line_index, batch.context())
+                let prompt_text = match self.profile.prompt_version {
+                    1 => prompt::translate_line(source_line),
+                    2 => prompt::translate_line_with_context(segment, line_index, batch.context()),
+                    3 => prompt::translate_line_with_glossary(
+                        segment,
+                        line_index,
+                        batch.context(),
+                        &segment_glossary,
+                    ),
+                    _ => return Err(ProviderError("unsupported prompt version".into())),
                 };
                 lines.push(self.translate_line(prompt_text)?);
             }

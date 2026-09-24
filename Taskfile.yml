@@ -7,6 +7,9 @@ tasks:
   test:
     cmds:
       - cargo test --workspace --offline
+  test:verified-server:
+    cmds:
+      - cargo test --offline -p auralis-translation-cli --test verified_server
   fmt:
     cmds:
       - cargo fmt --all -- --check

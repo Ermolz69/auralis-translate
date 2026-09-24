@@ -1,6 +1,6 @@
 use auralis_translation::{
-    LanguageCode, LanguagePair, RunId, SegmentId, SourceHash, SourceSegment, TranslationBatch,
-    TranslationId, translate_batch,
+    GlossaryEntry, LanguageCode, LanguagePair, RunId, SegmentId, SourceHash, SourceSegment,
+    TranslationBatch, TranslationId, translate_batch,
 };
 use auralis_translation_llamacpp::{LlamaCppProvider, ModelProfile};
 use std::error::Error;
@@ -12,12 +12,14 @@ const PROFILE: &[u8] =
     include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.experimental.json");
 const CONTEXT_PROFILE: &[u8] =
     include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.context.experimental.json");
+const GLOSSARY_PROFILE: &[u8] =
+    include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.glossary.experimental.json");
 
 #[test]
 fn sends_one_line_to_local_chat_endpoint_and_accepts_response() -> Result<(), Box<dyn Error>> {
     let listener = TcpListener::bind("127.0.0.1:0")?;
     let address = listener.local_addr()?;
-    let server = std::thread::spawn(move || serve_once(listener, "stop"));
+    let server = std::thread::spawn(move || serve_once(&listener, "stop"));
 
     let profile = ModelProfile::from_json(PROFILE)?;
     let provider = LlamaCppProvider::new(&format!("http://{address}/"), profile)?;
@@ -44,7 +46,7 @@ fn rejects_truncated_response_and_remote_endpoint() -> Result<(), Box<dyn Error>
     assert!(LlamaCppProvider::new("https://example.com/", profile.clone()).is_err());
     let listener = TcpListener::bind("127.0.0.1:0")?;
     let address = listener.local_addr()?;
-    let server = std::thread::spawn(move || serve_once(listener, "length"));
+    let server = std::thread::spawn(move || serve_once(&listener, "length"));
     let provider = LlamaCppProvider::new(&format!("http://{address}/"), profile)?;
     assert!(translate_batch(&provider, &batch()?).is_err());
     server.join().map_err(|_| "mock server panicked")??;
@@ -55,7 +57,7 @@ fn rejects_truncated_response_and_remote_endpoint() -> Result<(), Box<dyn Error>
 fn context_prompt_contains_neighbor_text_but_returns_only_target() -> Result<(), Box<dyn Error>> {
     let listener = TcpListener::bind("127.0.0.1:0")?;
     let address = listener.local_addr()?;
-    let server = std::thread::spawn(move || serve_once(listener, "stop"));
+    let server = std::thread::spawn(move || serve_once(&listener, "stop"));
     let profile = ModelProfile::from_json(CONTEXT_PROFILE)?;
     let provider = LlamaCppProvider::new(&format!("http://{address}/"), profile)?;
     let batch = TranslationBatch::new(
@@ -100,6 +102,102 @@ fn context_prompt_contains_neighbor_text_but_returns_only_target() -> Result<(),
     Ok(())
 }
 
+#[test]
+fn glossary_prompt_sends_only_confirmed_terms_and_enforces_budget() -> Result<(), Box<dyn Error>> {
+    let listener = TcpListener::bind("127.0.0.1:0")?;
+    let address = listener.local_addr()?;
+    let server = std::thread::spawn(move || serve_once(&listener, "stop"));
+    let profile = ModelProfile::from_json(GLOSSARY_PROFILE)?;
+    let provider = LlamaCppProvider::new(&format!("http://{address}/"), profile)?;
+    let term = GlossaryEntry::new("阿明".into(), "Амин".into(), vec!["Амина".into()], None)?;
+    let batch = TranslationBatch::with_glossary(
+        TranslationId::parse("11111111-1111-4111-8111-111111111111")?,
+        RunId::parse("22222222-2222-4222-8222-222222222222")?,
+        SourceHash::digest(b"source"),
+        LanguagePair::new(LanguageCode::Chinese, LanguageCode::Russian)?,
+        vec![SourceSegment::new(
+            SegmentId::new(1).ok_or("invalid ID")?,
+            1000,
+            2000,
+            vec!["阿明来了。".into()],
+        )?],
+        Vec::new(),
+        vec![term],
+    )?;
+    let translated = translate_batch(&provider, &batch)?;
+    assert_eq!(translated[0].lines, ["Привет."]);
+    let request = server.join().map_err(|_| "mock server panicked")??;
+    let prompt = request["messages"][0]["content"]
+        .as_str()
+        .ok_or("missing prompt")?;
+    assert!(prompt.contains("confirmed_glossary"));
+    assert!(prompt.contains("Амина"));
+    assert!(prompt.contains("Амин"));
+    let mut limited: serde_json::Value = serde_json::from_slice(GLOSSARY_PROFILE)?;
+    limited["max_glossary_bytes"] = serde_json::json!(1);
+    let limited_profile = ModelProfile::from_json(&serde_json::to_vec(&limited)?)?;
+    let limited_provider = LlamaCppProvider::new("http://127.0.0.1:1/", limited_profile)?;
+    assert!(
+        translate_batch(&limited_provider, &batch).is_err_and(|error| error
+            .to_string()
+            .contains("glossary exceeds profile byte limit"))
+    );
+    Ok(())
+}
+
+#[test]
+fn scoped_terms_reach_only_their_target_line() -> Result<(), Box<dyn Error>> {
+    let listener = TcpListener::bind("127.0.0.1:0")?;
+    let address = listener.local_addr()?;
+    let server = std::thread::spawn(move || -> Result<_, String> {
+        let first = serve_once(&listener, "stop")?;
+        let second = serve_once(&listener, "stop")?;
+        Ok((first, second))
+    });
+    let profile = ModelProfile::from_json(GLOSSARY_PROFILE)?;
+    let provider = LlamaCppProvider::new(&format!("http://{address}/"), profile)?;
+    let first_id = SegmentId::new(1).ok_or("invalid ID")?;
+    let second_id = SegmentId::new(2).ok_or("invalid ID")?;
+    let batch = TranslationBatch::with_glossary(
+        TranslationId::parse("11111111-1111-4111-8111-111111111111")?,
+        RunId::parse("22222222-2222-4222-8222-222222222222")?,
+        SourceHash::digest(b"source"),
+        LanguagePair::new(LanguageCode::Chinese, LanguageCode::Russian)?,
+        vec![
+            SourceSegment::new(first_id, 1000, 2000, vec!["阿明来了。".into()])?,
+            SourceSegment::new(second_id, 2000, 3000, vec!["阿明来了。".into()])?,
+        ],
+        Vec::new(),
+        vec![
+            GlossaryEntry::new(
+                "阿明".into(),
+                "Амин".into(),
+                Vec::new(),
+                Some(vec![first_id]),
+            )?,
+            GlossaryEntry::new(
+                "阿明".into(),
+                "Артём".into(),
+                Vec::new(),
+                Some(vec![second_id]),
+            )?,
+        ],
+    )?;
+    assert_eq!(translate_batch(&provider, &batch)?.len(), 2);
+    let (first, second) = server.join().map_err(|_| "mock server panicked")??;
+    let first_prompt = first["messages"][0]["content"]
+        .as_str()
+        .ok_or("missing first prompt")?;
+    let second_prompt = second["messages"][0]["content"]
+        .as_str()
+        .ok_or("missing second prompt")?;
+    assert!(first_prompt.contains("Амин"));
+    assert!(!first_prompt.contains("Артём"));
+    assert!(second_prompt.contains("Артём"));
+    assert!(!second_prompt.contains("Амин"));
+    Ok(())
+}
+
 fn batch() -> Result<TranslationBatch, Box<dyn Error>> {
     Ok(TranslationBatch::new(
         TranslationId::parse("11111111-1111-4111-8111-111111111111")?,
@@ -116,7 +214,7 @@ fn batch() -> Result<TranslationBatch, Box<dyn Error>> {
     )?)
 }
 
-fn serve_once(listener: TcpListener, finish_reason: &str) -> Result<serde_json::Value, String> {
+fn serve_once(listener: &TcpListener, finish_reason: &str) -> Result<serde_json::Value, String> {
     let (mut stream, _) = listener.accept().map_err(|error| error.to_string())?;
     stream
         .set_read_timeout(Some(Duration::from_secs(5)))

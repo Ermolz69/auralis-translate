@@ -1,6 +1,6 @@
 # Integrating Translate with Auralis
 
-Status: proposed integration, 24 September 2026. `auralis-translate` remains an independent repository and builds without the Auralis UI.
+Status: integration in progress, 24 September 2026. `auralis-translate` remains an independent repository and builds without the Auralis UI. Auralis has project-link/publication SQLite migration v6 and a typed storage port, but does not yet call Translate through an application job or UI.
 
 ## Module boundaries
 
@@ -51,7 +51,7 @@ The current Auralis checkout inspected for this document is `3a14658e2abeca22d3b
 | A single `Transcript` in the project snapshot and only `Dubbing` in `JobKind`. | History of separate translation runs/results. Do not copy the new translated text into `projects.transcript_json` or `TranscriptSegment.translated_text`; the UI reads it through the Translate API. Existing imported transcript data needs a migration policy. |
 | Mock ASR/TTS in `adapters-model`. | Managed production model runtime/provider and a resource limit shared with other expensive stages. |
 
-This is a code survey, not a claim that the changes already exist. A parser that silently skips cues or flattens their markup cannot be a strict translation export path. Format and model experiments can be completed in Translate before changing Auralis.
+This table records the initial code survey. Since then, Auralis has added `project_translations` and `translation_publications` tables and a typed storage port for run intent and ready-result selection. Application orchestration, Translate run creation, artifact publication, and UI still need integration. A parser that silently skips cues or flattens their markup cannot be a strict translation export path.
 
 ## Repository and build connection
 
