@@ -1,6 +1,6 @@
 use crate::manual_translation::ManualTranslation;
 use auralis_translation::{SegmentId, SourceHash};
-use auralis_translation_formats::srt::{SegmentTranslation, SrtDocument};
+use auralis_translation_formats::SegmentTranslation;
 use serde::{Deserialize, Serialize};
 use std::error::Error;
 
@@ -15,12 +15,11 @@ pub(crate) struct ManualManifest {
 }
 
 impl ManualManifest {
-    pub(crate) fn template(document: &SrtDocument) -> Self {
+    pub(crate) fn template(source: &[u8], translations: Vec<SegmentTranslation>) -> Self {
         Self {
             schema_version: SCHEMA_VERSION,
-            source_sha256: digest(document.source_bytes()),
-            translations: document
-                .original_translations()
+            source_sha256: digest(source),
+            translations: translations
                 .into_iter()
                 .map(|item| ManualTranslation {
                     id: item.id.get(),

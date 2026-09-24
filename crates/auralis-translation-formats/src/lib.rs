@@ -10,4 +10,5 @@ pub mod vtt;
 pub use document_translation_error::DocumentTranslationError;
 pub use inspect::{inspect, inspect_with_policy};
 pub use inspect_error::InspectError;
+pub use segment_translation::SegmentTranslation;
 pub use translate_document::translate_document;

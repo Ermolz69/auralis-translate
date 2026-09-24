@@ -1,6 +1,6 @@
 # Strict plain-WebVTT subset v1
 
-Status: format-adapter contract, 24 September 2026. The parser and verified renderer are implemented in `auralis-translation-formats::vtt`. They are not connected to the durable CLI or Auralis workflow. No general `.vtt` support is advertised yet.
+Status: format-adapter and manual CLI contract, 24 September 2026. The parser and verified renderer are implemented in `auralis-translation-formats::vtt`. The CLI supports manual `inspect-vtt`, `template-vtt`, and `render-vtt`; WebVTT is not connected to the durable model-backed CLI or Auralis workflow. No general `.vtt` support is advertised yet.
 
 This subset follows the [W3C WebVTT format](https://www.w3.org/TR/webvtt1/) but deliberately accepts less than the full syntax. Its purpose is to make text extraction and byte-preserving copy generation independently testable before model inference. Unsupported input fails as a whole; the adapter never silently drops a block.
 
@@ -36,3 +36,15 @@ flowchart LR
 ```
 
 The adapter tests cover byte-identical round trips for BOM/LF/CRLF/terminal variants, comments and cue IDs, separate-copy replacement, exact protected bytes, structural rejection cases, ID/line validation, and policy limits. This is format-contract evidence only. A durable WebVTT translation run, broader corpus and fuzz coverage, Auralis import path, and model-language validation remain open before WebVTT can be part of the Chinese release gate.
+
+## Manual CLI path
+
+From the repository root, for a file inside this subset:
+
+```sh
+task cli -- inspect-vtt source.vtt
+task cli -- template-vtt source.vtt translations.json
+task cli -- render-vtt source.vtt translations.json translated.vtt
+```
+
+Edit only `translations[].lines` in the generated schema-v1 JSON. The manifest binds the exact source bytes by SHA-256. `render-vtt` verifies the replacement and creates a new destination without overwriting an existing file. The original is unchanged. This path does not call a model, create a Translate SQLite run, or attach an Auralis project result.

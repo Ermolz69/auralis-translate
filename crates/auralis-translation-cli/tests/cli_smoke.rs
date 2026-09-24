@@ -129,6 +129,59 @@ fn export_removes_only_old_matching_temporary_files() -> Result<(), Box<dyn Erro
     Ok(())
 }
 
+#[test]
+fn manual_vtt_path_extracts_and_renders_a_separate_verified_copy() -> Result<(), Box<dyn Error>> {
+    let nonce = SystemTime::now().duration_since(UNIX_EPOCH)?.as_nanos();
+    let directory =
+        std::env::temp_dir().join(format!("auralis-vtt-cli-{}-{nonce}", std::process::id()));
+    std::fs::create_dir(&directory)?;
+    let source = directory.join("source.vtt");
+    let manifest = directory.join("translations.json");
+    let output = directory.join("translated.vtt");
+    let source_bytes =
+        "WEBVTT\n\nNOTE provenance\nsynthetic\n\nid-1\n00:01.000 --> 00:02.000\n你好。\n";
+    std::fs::write(&source, source_bytes)?;
+
+    let inspected = Command::new(env!("CARGO_BIN_EXE_auralis-translation-cli"))
+        .args(["inspect-vtt", path(&source)?])
+        .output()?;
+    assert!(inspected.status.success());
+    let report = String::from_utf8(inspected.stdout)?;
+    assert!(report.contains("format=vtt cues=1"));
+    assert!(report.contains("text=你好。"));
+    assert!(run(&["template-vtt", path(&source)?, path(&manifest)?])?.success());
+    let mut json: serde_json::Value = serde_json::from_slice(&std::fs::read(&manifest)?)?;
+    json["translations"][0]["lines"][0] = "Привет.".into();
+    std::fs::write(&manifest, serde_json::to_vec(&json)?)?;
+
+    assert!(
+        run(&[
+            "render-vtt",
+            path(&source)?,
+            path(&manifest)?,
+            path(&output)?
+        ])?
+        .success()
+    );
+    assert_eq!(std::fs::read(&source)?, source_bytes.as_bytes());
+    assert_eq!(
+        std::str::from_utf8(&std::fs::read(&output)?)?,
+        source_bytes.replace("你好。", "Привет.")
+    );
+    assert!(
+        !run(&[
+            "render-vtt",
+            path(&source)?,
+            path(&manifest)?,
+            path(&output)?
+        ])?
+        .success()
+    );
+
+    std::fs::remove_dir_all(directory)?;
+    Ok(())
+}
+
 fn path(path: &Path) -> Result<&str, Box<dyn Error>> {
     Ok(path.to_str().ok_or("path is not Unicode")?)
 }

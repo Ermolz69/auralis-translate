@@ -21,6 +21,8 @@ mod source_snapshot;
 mod stale_output;
 mod status_command;
 mod stderr_progress;
+mod vtt_inspect_command;
+mod vtt_manual_command;
 mod write_new;
 
 use std::process::ExitCode;
@@ -29,11 +31,18 @@ fn main() -> ExitCode {
     let args = std::env::args_os().skip(1).collect::<Vec<_>>();
     let result = match args.as_slice() {
         [command, path] if command == "inspect" => inspect_command::run(path),
+        [command, path] if command == "inspect-vtt" => vtt_inspect_command::run(path),
         [command, source, manifest] if command == "template" => {
             manual_command::template(source, manifest)
         }
+        [command, source, manifest] if command == "template-vtt" => {
+            vtt_manual_command::template(source, manifest)
+        }
         [command, source, manifest, output] if command == "render" => {
             manual_command::render(source, manifest, output)
+        }
+        [command, source, manifest, output] if command == "render-vtt" => {
+            vtt_manual_command::render(source, manifest, output)
         }
         [command, state_dir, run_id] if command == "status" => {
             status_command::run(state_dir, run_id)
@@ -66,7 +75,7 @@ fn main() -> ExitCode {
         [command, state_dir, run_id, profile, endpoint, output] if command == "resume" => {
             durable_resume::run(state_dir, run_id, profile, endpoint, output)
         }
-        _ => Err("usage: auralis-translation-cli <inspect SOURCE | template SOURCE MANIFEST | render SOURCE MANIFEST OUTPUT | status STATE_DIR RUN_ID | diagnostics STATE_DIR RUN_ID | pause STATE_DIR RUN_ID | edit STATE_DIR BASE_RESULT_ID PROFILE EDIT_JSON OUTPUT | doctor PROFILE MODEL_FILE | translate-experimental SOURCE PROFILE SERVER_URL OUTPUT | translate SOURCE STATE_DIR PROFILE SERVER_URL OUTPUT | translate-glossary SOURCE STATE_DIR PROFILE GLOSSARY SERVER_URL OUTPUT | resume STATE_DIR RUN_ID PROFILE SERVER_URL OUTPUT>".into()),
+        _ => Err("usage: auralis-translation-cli <inspect SOURCE | inspect-vtt SOURCE | template SOURCE MANIFEST | template-vtt SOURCE MANIFEST | render SOURCE MANIFEST OUTPUT | render-vtt SOURCE MANIFEST OUTPUT | status STATE_DIR RUN_ID | diagnostics STATE_DIR RUN_ID | pause STATE_DIR RUN_ID | edit STATE_DIR BASE_RESULT_ID PROFILE EDIT_JSON OUTPUT | doctor PROFILE MODEL_FILE | translate-experimental SOURCE PROFILE SERVER_URL OUTPUT | translate SOURCE STATE_DIR PROFILE SERVER_URL OUTPUT | translate-glossary SOURCE STATE_DIR PROFILE GLOSSARY SERVER_URL OUTPUT | resume STATE_DIR RUN_ID PROFILE SERVER_URL OUTPUT>".into()),
     };
 
     match result {
