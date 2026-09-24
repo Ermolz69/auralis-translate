@@ -1,3 +1,4 @@
+use crate::model_preflight;
 use crate::stderr_progress::StderrProgress;
 use crate::write_new::write_new;
 use auralis_translation::{
@@ -52,7 +53,8 @@ pub(crate) fn execute(
         .ok_or("server URL must be Unicode")?;
     let retry = RetryPolicy::new(profile.max_block_attempts)
         .ok_or("model profile has an invalid block attempt limit")?;
-    let provider = LlamaCppProvider::new(endpoint, profile)?;
+    let provider = LlamaCppProvider::new(endpoint, profile.clone())?;
+    model_preflight::verify(&provider, &profile)?;
     let control_db = TranslateDb::open(
         &config.state_dir.join(DATABASE_FILE),
         SqliteConfig::default(),

@@ -7,6 +7,8 @@ mod inspect_command;
 mod manual_command;
 mod manual_manifest;
 mod manual_translation;
+mod model_hash;
+mod model_preflight;
 mod pause_command;
 mod read_source;
 mod source_snapshot;

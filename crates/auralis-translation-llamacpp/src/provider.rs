@@ -1,6 +1,7 @@
 use crate::profile::ModelProfile;
 use crate::prompt;
 use crate::response::ChatResponse;
+use crate::server_report::ServerReport;
 use auralis_translation::{
     ProviderError, ProviderResponse, TargetSegment, TranslationBatch, TranslationProvider,
 };
@@ -11,10 +12,14 @@ use std::io::Read;
 use std::time::Duration;
 
 const CHAT_PATH: &str = "/v1/chat/completions";
+const HEALTH_PATH: &str = "/health";
+const PROPS_PATH: &str = "/props";
+const MODELS_PATH: &str = "/v1/models";
 const RESPONSE_SCHEMA_VERSION: u32 = 1;
 
 pub struct LlamaCppProvider {
     client: Client,
+    base: Url,
     endpoint: Url,
     profile: ModelProfile,
 }
@@ -42,9 +47,47 @@ impl LlamaCppProvider {
             .map_err(|error| ProviderError(error.to_string()))?;
         Ok(Self {
             client,
+            base,
             endpoint,
             profile,
         })
+    }
+
+    pub fn probe_server(&self) -> Result<ServerReport, ProviderError> {
+        ServerReport::parse(
+            &self.get_bytes(HEALTH_PATH)?,
+            &self.get_bytes(PROPS_PATH)?,
+            &self.get_bytes(MODELS_PATH)?,
+        )
+    }
+
+    fn get_bytes(&self, path: &str) -> Result<Vec<u8>, ProviderError> {
+        let endpoint = self
+            .base
+            .join(path)
+            .map_err(|_| ProviderError("invalid llama.cpp probe endpoint".into()))?;
+        let response = self
+            .client
+            .get(endpoint)
+            .send()
+            .map_err(|error| ProviderError(error.to_string()))?;
+        if !response.status().is_success() {
+            return Err(ProviderError(format!(
+                "llama.cpp probe returned HTTP {}",
+                response.status()
+            )));
+        }
+        let mut reader = response.take(self.profile.max_response_bytes as u64 + 1);
+        let mut bytes = Vec::new();
+        reader
+            .read_to_end(&mut bytes)
+            .map_err(|error| ProviderError(error.to_string()))?;
+        if bytes.len() > self.profile.max_response_bytes {
+            return Err(ProviderError(
+                "llama.cpp probe response is too large".into(),
+            ));
+        }
+        Ok(bytes)
     }
 
     fn translate_line(&self, prompt_text: String) -> Result<String, ProviderError> {

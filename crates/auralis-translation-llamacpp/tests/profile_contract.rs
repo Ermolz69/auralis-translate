@@ -5,6 +5,8 @@ const PROFILE: &[u8] =
     include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.experimental.json");
 const CONTEXT_PROFILE: &[u8] =
     include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.context.experimental.json");
+const CHECKED_PROFILE: &[u8] =
+    include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.checked.experimental.json");
 
 #[test]
 fn pinned_experimental_profile_parses() -> Result<(), Box<dyn Error>> {
@@ -32,6 +34,24 @@ fn context_profile_is_separate_and_bounded() -> Result<(), Box<dyn Error>> {
     assert!(ModelProfile::from_json(&serde_json::to_vec(&json)?).is_err());
     json["target_segments_per_block"] = serde_json::json!(1);
     json["max_context_bytes"] = serde_json::json!(0);
+    assert!(ModelProfile::from_json(&serde_json::to_vec(&json)?).is_err());
+    Ok(())
+}
+
+#[test]
+fn checked_profile_requires_complete_runtime_identity() -> Result<(), Box<dyn Error>> {
+    let profile = ModelProfile::from_json(CHECKED_PROFILE)?;
+    assert_eq!(profile.model_file_bytes, Some(1_133_080_448));
+    assert_eq!(
+        profile.runtime_build_info.as_deref(),
+        Some("b10977-0ecb159c9")
+    );
+    assert_eq!(profile.min_context_tokens, Some(2048));
+
+    let mut json: serde_json::Value = serde_json::from_slice(CHECKED_PROFILE)?;
+    json.as_object_mut()
+        .ok_or("profile must be an object")?
+        .remove("runtime_build_info");
     assert!(ModelProfile::from_json(&serde_json::to_vec(&json)?).is_err());
     Ok(())
 }

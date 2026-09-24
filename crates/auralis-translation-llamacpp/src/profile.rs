@@ -26,7 +26,13 @@ pub struct ModelProfile {
     pub model_repo: String,
     pub model_revision: String,
     pub model_file_sha256: String,
+    #[serde(default)]
+    pub model_file_bytes: Option<u64>,
     pub model_alias: String,
+    #[serde(default)]
+    pub runtime_build_info: Option<String>,
+    #[serde(default)]
+    pub min_context_tokens: Option<u32>,
     pub prompt_version: u32,
     #[serde(default = "default_target_segments")]
     pub target_segments_per_block: usize,
@@ -71,6 +77,21 @@ impl ModelProfile {
                 .all(|byte| byte.is_ascii_hexdigit())
         {
             return Err(ProfileError::Invalid("model SHA-256 must be hexadecimal"));
+        }
+        let runtime_fields = [
+            self.model_file_bytes.is_some(),
+            self.runtime_build_info.is_some(),
+            self.min_context_tokens.is_some(),
+        ];
+        if runtime_fields.iter().any(|present| *present)
+            && (!runtime_fields.iter().all(|present| *present)
+                || self.model_file_bytes == Some(0)
+                || self.runtime_build_info.as_deref().is_none_or(str::is_empty)
+                || self.min_context_tokens == Some(0))
+        {
+            return Err(ProfileError::Invalid(
+                "runtime identity fields are incomplete",
+            ));
         }
         if !matches!(self.prompt_version, 1 | 2) {
             return Err(ProfileError::Invalid("unsupported prompt version"));
