@@ -3,6 +3,7 @@ members = [
     "crates/auralis-translation",
     "crates/auralis-translation-formats",
     "crates/auralis-translation-llamacpp",
+    "crates/auralis-translation-sqlite",
     "crates/auralis-translation-cli",
 ]
 resolver = "3"

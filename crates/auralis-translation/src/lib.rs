@@ -4,7 +4,7 @@ mod ports;
 
 pub use application::{TranslateBatchError, translate_batch};
 pub use domain::{
-    ContractError, IdError, LanguageCode, LanguagePair, ProviderResponse, RunId, SegmentId,
-    SourceHash, SourceSegment, TargetSegment, TranslationBatch, TranslationId,
+    ContractError, IdError, LanguageCode, LanguagePair, ProviderResponse, RunId, RunState,
+    SegmentId, SourceHash, SourceSegment, TargetSegment, TranslationBatch, TranslationId,
 };
 pub use ports::{ProviderError, TranslationProvider};

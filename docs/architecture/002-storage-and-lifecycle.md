@@ -1,6 +1,6 @@
 # Two databases and the translation lifecycle
 
-Status: proposed schema, 24 September 2026. The owner chose **one Translate SQLite file per installation**, with records linked to projects by ID. Table names and migrations remain proposals until implementation.
+Status: evolving contract, 24 September 2026. The owner chose **one Translate SQLite file per installation**, with records linked to projects by ID. The initial Translate schema and checkpoint/attempt primitives are implemented. Result creation and Auralis project publication remain proposals until their implementations pass the stage gates.
 
 ## Data ownership
 
@@ -49,7 +49,7 @@ The UI reads progress and pause reasons from Translate through `active_run_id`. 
 
 ## Translate SQLite tables
 
-This is a logical schema, not executable SQL. Constraints and migrations are fixed before coding.
+The table below describes the logical contract. Migration `crates/auralis-translation-sqlite/migrations/0001_initial.sql` contains the initial executable Translate schema; not all tables have repository operations yet.
 
 | Table | Required content |
 | --- | --- |

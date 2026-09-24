@@ -43,7 +43,7 @@ The Rust workspace has a format-independent core, formats crate, SQLite adapter,
 
 The first experiment is direct Chinese → Russian translation with `tencent/Hy-MT2-1.8B`, initially its official GGUF Q4_K_M and Q8_0 files. The official Q4_K_M, Q6_K and Q8_0 files are approximately 1.13, 1.47 and 1.91 GB on disk; those sizes are not total RAM/VRAM requirements. Compare a 7B Hy-MT2 candidate, TranslateGemma 4B, and possibly a small general LLM on the **same** scenes using each model's correct template. Choose the lightest profile that passes structural, linguistic and resource gates. Do not train a model from scratch for the first version.
 
-Model-card language lists and example outputs do not prove subtitle quality. Evaluate Chinese and Japanese independently. Do not use English as a default intermediate language. Preserve the exact licence, immutable model revision, weight checksum and notice obligations of the chosen distribution; conditions may differ among model families, conversions and runtimes. No model has yet been run or benchmarked for this project.
+Model-card language lists and example outputs do not prove subtitle quality. Evaluate Chinese and Japanese independently. Do not use English as a default intermediate language. Preserve the exact licence, immutable model revision, weight checksum and notice obligations of the chosen distribution; conditions may differ among model families, conversions and runtimes. A first local Chinese smoke was recorded after this plan was drafted; see [implementation status](IMPLEMENTATION_STATUS.md). No comparative benchmark or language-quality gate has been completed.
 
 ## 6. Runtime and resource policy
 

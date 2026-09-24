@@ -5,6 +5,10 @@ use std::fmt;
 pub struct SourceHash([u8; 32]);
 
 impl SourceHash {
+    pub fn from_bytes(bytes: [u8; 32]) -> Self {
+        Self(bytes)
+    }
+
     pub fn digest(bytes: &[u8]) -> Self {
         Self(Sha256::digest(bytes).into())
     }
