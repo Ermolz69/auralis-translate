@@ -1,7 +1,9 @@
 mod document;
 mod error;
 mod error_code;
+mod parse_policy;
 mod parser;
+mod policy_error;
 mod renderer;
 mod segment;
 mod text_slot;
@@ -11,6 +13,8 @@ mod verifier;
 pub use document::SrtDocument;
 pub use error::SrtError;
 pub use error_code::SrtErrorCode;
+pub use parse_policy::SrtParsePolicy;
+pub use policy_error::SrtPolicyError;
 pub use segment::SrtSegment;
 pub use text_slot::TextSlot;
 pub use translation::SegmentTranslation;

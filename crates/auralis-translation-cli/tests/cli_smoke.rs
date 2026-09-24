@@ -66,6 +66,25 @@ fn changed_source_and_missing_segment_never_create_output() -> Result<(), Box<dy
     Ok(())
 }
 
+#[test]
+fn oversized_source_is_rejected_before_creating_manifest() -> Result<(), Box<dyn Error>> {
+    let nonce = SystemTime::now().duration_since(UNIX_EPOCH)?.as_nanos();
+    let directory =
+        std::env::temp_dir().join(format!("auralis-translate-{}-{nonce}", std::process::id()));
+    std::fs::create_dir(&directory)?;
+    let source = directory.join("oversized.srt");
+    let manifest = directory.join("translations.json");
+    let file = std::fs::File::create(&source)?;
+    let limit = auralis_translation_formats::srt::SrtParsePolicy::default().max_bytes();
+    file.set_len(limit as u64 + 1)?;
+    drop(file);
+
+    assert!(!run(&["template", path(&source)?, path(&manifest)?])?.success());
+    assert!(!manifest.exists());
+    std::fs::remove_dir_all(directory)?;
+    Ok(())
+}
+
 fn path(path: &Path) -> Result<&str, Box<dyn Error>> {
     Ok(path.to_str().ok_or("path is not Unicode")?)
 }

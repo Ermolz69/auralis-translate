@@ -1,5 +1,7 @@
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum SrtErrorCode {
+    FileTooLarge,
+    LineTooLong,
     InvalidUtf8,
     InvalidLineEnding,
     InvalidCueLabel,

@@ -1,4 +1,4 @@
-use super::{SegmentTranslation, SrtError, SrtSegment, parser, renderer, verifier};
+use super::{SegmentTranslation, SrtError, SrtParsePolicy, SrtSegment, parser, renderer, verifier};
 use auralis_translation::{ContractError, SourceSegment};
 use std::ops::Range;
 
@@ -10,7 +10,11 @@ pub struct SrtDocument {
 
 impl SrtDocument {
     pub fn parse(source: &[u8]) -> Result<Self, SrtError> {
-        parser::parse(source)
+        Self::parse_with_policy(source, SrtParsePolicy::default())
+    }
+
+    pub fn parse_with_policy(source: &[u8], policy: SrtParsePolicy) -> Result<Self, SrtError> {
+        parser::parse(source, policy)
     }
 
     pub fn segments(&self) -> &[SrtSegment] {

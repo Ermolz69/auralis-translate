@@ -1,4 +1,5 @@
 use crate::manual_manifest::ManualManifest;
+use crate::read_source::read_source;
 use crate::write_new::write_new;
 use auralis_translation_formats::inspect;
 use std::error::Error;
@@ -6,7 +7,7 @@ use std::ffi::OsStr;
 use std::path::Path;
 
 pub(crate) fn template(source_path: &OsStr, manifest_path: &OsStr) -> Result<(), Box<dyn Error>> {
-    let source = std::fs::read(Path::new(source_path))?;
+    let source = read_source(Path::new(source_path))?;
     let document = inspect(&source)?;
     let mut json = serde_json::to_vec_pretty(&ManualManifest::template(&document))?;
     json.push(b'\n');
@@ -19,7 +20,7 @@ pub(crate) fn render(
     manifest_path: &OsStr,
     output_path: &OsStr,
 ) -> Result<(), Box<dyn Error>> {
-    let source = std::fs::read(Path::new(source_path))?;
+    let source = read_source(Path::new(source_path))?;
     let document = inspect(&source)?;
     let manifest_bytes = std::fs::read(Path::new(manifest_path))?;
     let manifest: ManualManifest = serde_json::from_slice(&manifest_bytes)?;

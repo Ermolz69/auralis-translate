@@ -62,3 +62,23 @@ fn renders_a_separate_copy_with_only_text_slots_changed() -> Result<(), Box<dyn 
     assert!(output.ends_with(b"\n\n"));
     Ok(())
 }
+
+#[test]
+fn roundtrips_generated_line_and_bom_variants() -> Result<(), Box<dyn std::error::Error>> {
+    for ending in ["\n", "\r\n"] {
+        for bom in ["", "\u{feff}"] {
+            for terminal in ["", "\n", "\n\n"] {
+                let terminal = terminal.replace('\n', ending);
+                let source = format!(
+                    "{bom}7{ending}00:00:00,010 --> 00:00:00,020{ending}汉字{ending}日本語{terminal}"
+                );
+                let document = SrtDocument::parse(source.as_bytes())?;
+                assert_eq!(
+                    document.render(&document.original_translations())?,
+                    source.as_bytes()
+                );
+            }
+        }
+    }
+    Ok(())
+}

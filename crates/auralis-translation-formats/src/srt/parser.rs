@@ -1,4 +1,4 @@
-use super::{SrtDocument, SrtError, SrtErrorCode, SrtSegment, TextSlot};
+use super::{SrtDocument, SrtError, SrtErrorCode, SrtParsePolicy, SrtSegment, TextSlot};
 use auralis_translation::SegmentId;
 
 const TIMING_SEPARATOR: &str = " --> ";
@@ -11,13 +11,19 @@ struct Line<'a> {
     number: usize,
 }
 
-pub(crate) fn parse(source: &[u8]) -> Result<SrtDocument, SrtError> {
+pub(crate) fn parse(source: &[u8], policy: SrtParsePolicy) -> Result<SrtDocument, SrtError> {
+    if source.len() > policy.max_bytes() {
+        return Err(SrtError::document(SrtErrorCode::FileTooLarge));
+    }
     std::str::from_utf8(source).map_err(|_| SrtError::document(SrtErrorCode::InvalidUtf8))?;
-    let lines = scan_lines(source)?;
+    let lines = scan_lines(source, policy)?;
     let mut cursor = 0;
     let mut segments = Vec::new();
 
     while cursor < lines.len() {
+        if segments.len() >= policy.max_cues() as usize {
+            return Err(SrtError::document(SrtErrorCode::TooManyCues));
+        }
         let label_line = &lines[cursor];
         let label = if cursor == 0 {
             label_line
@@ -107,7 +113,7 @@ pub(crate) fn validate_text(text: &str) -> Result<(), SrtErrorCode> {
     Ok(())
 }
 
-fn scan_lines(source: &[u8]) -> Result<Vec<Line<'_>>, SrtError> {
+fn scan_lines(source: &[u8], policy: SrtParsePolicy) -> Result<Vec<Line<'_>>, SrtError> {
     let mut result = Vec::new();
     let mut start = 0;
     let mut expected_ending = None;
@@ -125,16 +131,31 @@ fn scan_lines(source: &[u8]) -> Result<Vec<Line<'_>>, SrtError> {
         }
         expected_ending = Some(crlf);
         let end = if crlf { index - 1 } else { index };
-        result.push(make_line(source, start, end, result.len() + 1)?);
+        result.push(make_line(source, start, end, result.len() + 1, policy)?);
         start = index + 1;
     }
     if start < source.len() {
-        result.push(make_line(source, start, source.len(), result.len() + 1)?);
+        result.push(make_line(
+            source,
+            start,
+            source.len(),
+            result.len() + 1,
+            policy,
+        )?);
     }
     Ok(result)
 }
 
-fn make_line(source: &[u8], start: usize, end: usize, number: usize) -> Result<Line<'_>, SrtError> {
+fn make_line(
+    source: &[u8],
+    start: usize,
+    end: usize,
+    number: usize,
+    policy: SrtParsePolicy,
+) -> Result<Line<'_>, SrtError> {
+    if end - start > policy.max_line_bytes() {
+        return Err(SrtError::at(SrtErrorCode::LineTooLong, number));
+    }
     let text = std::str::from_utf8(&source[start..end])
         .map_err(|_| SrtError::at(SrtErrorCode::InvalidUtf8, number))?;
     if text.contains('\r') {

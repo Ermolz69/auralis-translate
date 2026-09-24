@@ -1,10 +1,11 @@
+use crate::read_source::read_source;
 use auralis_translation_formats::inspect;
 use std::error::Error;
 use std::ffi::OsStr;
 use std::path::Path;
 
 pub(crate) fn run(path: &OsStr) -> Result<(), Box<dyn Error>> {
-    let source = std::fs::read(Path::new(path))?;
+    let source = read_source(Path::new(path))?;
     let document = inspect(&source)?;
     println!("format=srt cues={}", document.segments().len());
     for segment in document.segments() {
