@@ -10,10 +10,10 @@ mod renderer;
 mod run_error;
 mod run_plan;
 mod segment;
-mod text_slot;
-mod translation;
 mod verifier;
 
+pub use crate::segment_translation::SegmentTranslation;
+pub use crate::text_slot::TextSlot;
 pub use block_policy::SrtBlockPolicy;
 pub use document::SrtDocument;
 pub use error::SrtError;
@@ -24,5 +24,3 @@ pub use policy_error::SrtPolicyError;
 pub use run_error::SrtRunError;
 pub use run_plan::SrtRunPlan;
 pub use segment::SrtSegment;
-pub use text_slot::TextSlot;
-pub use translation::SegmentTranslation;

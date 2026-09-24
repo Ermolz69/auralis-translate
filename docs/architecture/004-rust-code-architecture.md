@@ -72,7 +72,7 @@ crates/
         parser.rs
         renderer.rs
         verifier.rs
-      vtt/                       # Add when the supported subset is defined.
+      vtt/                       # Strict plain-WebVTT format adapter.
     tests/
       srt_roundtrip.rs
       srt_rejections.rs

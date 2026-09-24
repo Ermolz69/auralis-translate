@@ -1,0 +1,21 @@
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum VttErrorCode {
+    FileTooLarge,
+    LineTooLong,
+    InvalidUtf8,
+    InvalidLineEnding,
+    InvalidHeader,
+    MissingHeaderSeparator,
+    InvalidCueId,
+    DuplicateCueId,
+    InvalidTiming,
+    UnorderedTiming,
+    MissingText,
+    MissingSeparator,
+    UnsupportedFeature,
+    UnsupportedControl,
+    TooManyCues,
+    TranslationIds,
+    TranslationLines,
+    StructuralMismatch,
+}
