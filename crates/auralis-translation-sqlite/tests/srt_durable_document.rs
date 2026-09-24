@@ -80,7 +80,7 @@ fn renders_complete_copy_only_after_durable_resume() -> Result<(), Box<dyn Error
     drop(db);
 
     let mut db = TranslateDb::open(&path, SqliteConfig::default())?;
-    db.begin_attempt(&run, None)?;
+    let attempt = db.begin_attempt(&run, None)?;
     let provider = FailableProvider {
         calls: Cell::new(0),
         fail_on_call: None,
@@ -93,6 +93,14 @@ fn renders_complete_copy_only_after_durable_resume() -> Result<(), Box<dyn Error
         auralis_translation::SourceHash::digest(SOURCE),
         translation.source_hash
     );
+    db.request_pause(run.run_id)?;
+    assert!(matches!(
+        db.commit_result(&result, &plan),
+        Err(DbError::PauseRequested)
+    ));
+    assert_eq!(db.run_state(run.run_id)?, RunState::Running);
+    db.stop_attempt(run.run_id, attempt, RunStop::Paused, "pause before result")?;
+    db.begin_attempt(&run, None)?;
     let committed = db.commit_result(&result, &plan)?;
     assert_eq!(
         committed.output_hash,

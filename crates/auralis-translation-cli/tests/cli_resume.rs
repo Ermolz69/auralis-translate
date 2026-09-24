@@ -1,10 +1,11 @@
 use auralis_translation::{RunId, RunState};
 use auralis_translation_sqlite::{SqliteConfig, TranslateDb};
 use std::error::Error;
-use std::io::{Read, Write};
+use std::io::{BufRead, BufReader, Read, Write};
 use std::net::TcpListener;
 use std::path::Path;
-use std::process::Command;
+use std::process::{Command, Stdio};
+use std::sync::mpsc;
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
 const PROFILE: &[u8] =
@@ -27,7 +28,7 @@ fn cli_resumes_checkpointed_srt_and_reexports_validated_result() -> Result<(), B
 
     let listener = TcpListener::bind("127.0.0.1:0")?;
     let endpoint = format!("http://{}/", listener.local_addr()?);
-    let server = std::thread::spawn(move || serve(listener, 9, Some(9)));
+    let server = std::thread::spawn(move || serve(listener, 9, Some(9), None));
     let first = command(&[
         "translate",
         path(&source_path)?,
@@ -64,7 +65,7 @@ fn cli_resumes_checkpointed_srt_and_reexports_validated_result() -> Result<(), B
 
     let listener = TcpListener::bind("127.0.0.1:0")?;
     let endpoint = format!("http://{}/", listener.local_addr()?);
-    let server = std::thread::spawn(move || serve(listener, 1, None));
+    let server = std::thread::spawn(move || serve(listener, 1, None, None));
     let resumed = command(&[
         "resume",
         path(&state_dir)?,
@@ -164,6 +165,99 @@ fn cli_resumes_checkpointed_srt_and_reexports_validated_result() -> Result<(), B
     Ok(())
 }
 
+#[test]
+fn cli_pause_preserves_committed_blocks_and_resume_finishes() -> Result<(), Box<dyn Error>> {
+    let nonce = SystemTime::now().duration_since(UNIX_EPOCH)?.as_nanos();
+    let directory =
+        std::env::temp_dir().join(format!("auralis-cli-pause-{}-{nonce}", std::process::id()));
+    std::fs::create_dir(&directory)?;
+    let source_path = directory.join("original.srt");
+    let state_dir = directory.join("state");
+    let profile_path = directory.join("profile.json");
+    let output_path = directory.join("russian.srt");
+    std::fs::write(&source_path, source_with_nine_cues())?;
+    std::fs::write(&profile_path, PROFILE)?;
+
+    let listener = TcpListener::bind("127.0.0.1:0")?;
+    let endpoint = format!("http://{}/", listener.local_addr()?);
+    let (ready_sender, ready_receiver) = mpsc::channel();
+    let (release_sender, release_receiver) = mpsc::channel();
+    let server = std::thread::spawn(move || {
+        serve(listener, 9, None, Some((ready_sender, release_receiver)))
+    });
+    let mut child = Command::new(env!("CARGO_BIN_EXE_auralis-translation-cli"))
+        .args([
+            "translate",
+            path(&source_path)?,
+            path(&state_dir)?,
+            path(&profile_path)?,
+            &endpoint,
+            path(&output_path)?,
+        ])
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()?;
+    let mut stdout = BufReader::new(child.stdout.take().ok_or("missing CLI stdout")?);
+    let mut first_line = String::new();
+    stdout.read_line(&mut first_line)?;
+    let run_id = first_line
+        .split_whitespace()
+        .find_map(|item| item.strip_prefix("run_id="))
+        .ok_or("CLI did not announce its run ID")?;
+    let run_id = RunId::parse(run_id)?;
+    ready_receiver.recv_timeout(Duration::from_secs(20))?;
+    let pause = command(&["pause", path(&state_dir)?, &run_id.to_string()])?;
+    assert!(
+        pause.status.success(),
+        "{}",
+        String::from_utf8_lossy(&pause.stderr)
+    );
+    let status = command(&["status", path(&state_dir)?, &run_id.to_string()])?;
+    let status: serde_json::Value = serde_json::from_slice(&status.stdout)?;
+    assert_eq!(status["state"], "running");
+    assert_eq!(status["pause_requested"], true);
+    release_sender.send(())?;
+    let output = child.wait_with_output()?;
+    assert!(!output.status.success());
+    assert!(String::from_utf8_lossy(&output.stderr).contains("pause requested"));
+    server.join().map_err(|_| "pause mock server panicked")??;
+    assert!(!output_path.exists());
+
+    let db = TranslateDb::open(
+        &state_dir.join("auralis-translate.sqlite"),
+        SqliteConfig::default(),
+    )?;
+    assert_eq!(db.run_state(run_id)?, RunState::Paused);
+    assert_eq!(db.checkpoints(run_id)?.len(), 1);
+    assert!(!db.pause_requested(run_id)?);
+    drop(db);
+    let status = command(&["status", path(&state_dir)?, &run_id.to_string()])?;
+    let status: serde_json::Value = serde_json::from_slice(&status.stdout)?;
+    assert_eq!(status["state"], "paused");
+    assert_eq!(status["pause_requested"], false);
+
+    let listener = TcpListener::bind("127.0.0.1:0")?;
+    let endpoint = format!("http://{}/", listener.local_addr()?);
+    let server = std::thread::spawn(move || serve(listener, 1, None, None));
+    let resumed = command(&[
+        "resume",
+        path(&state_dir)?,
+        &run_id.to_string(),
+        path(&profile_path)?,
+        &endpoint,
+        path(&output_path)?,
+    ])?;
+    assert!(
+        resumed.status.success(),
+        "{}",
+        String::from_utf8_lossy(&resumed.stderr)
+    );
+    server.join().map_err(|_| "resume mock server panicked")??;
+    assert!(output_path.exists());
+    std::fs::remove_dir_all(directory)?;
+    Ok(())
+}
+
 fn source_with_nine_cues() -> Vec<u8> {
     let mut text = String::new();
     for index in 1..=9 {
@@ -185,7 +279,12 @@ fn path(path: &Path) -> Result<&str, Box<dyn Error>> {
     Ok(path.to_str().ok_or("test path must be Unicode")?)
 }
 
-fn serve(listener: TcpListener, count: usize, fail_on: Option<usize>) -> Result<(), String> {
+fn serve(
+    listener: TcpListener,
+    count: usize,
+    fail_on: Option<usize>,
+    pause_handshake: Option<(mpsc::Sender<()>, mpsc::Receiver<()>)>,
+) -> Result<(), String> {
     listener
         .set_nonblocking(true)
         .map_err(|error| error.to_string())?;
@@ -210,6 +309,14 @@ fn serve(listener: TcpListener, count: usize, fail_on: Option<usize>) -> Result<
             .set_read_timeout(Some(Duration::from_secs(5)))
             .map_err(|error| error.to_string())?;
         read_request(&mut stream)?;
+        if request_index == count
+            && let Some((ready, release)) = &pause_handshake
+        {
+            ready.send(()).map_err(|error| error.to_string())?;
+            release
+                .recv_timeout(Duration::from_secs(20))
+                .map_err(|error| error.to_string())?;
+        }
         let finish = if fail_on == Some(request_index) {
             "length"
         } else {

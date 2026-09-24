@@ -3,7 +3,7 @@ use crate::{DbError, ResultRecord, ResultSpec};
 use auralis_translation::{
     ResultId, ReviewState, RunId, SourceHash, TargetSegment, VerifiedRenderer,
 };
-use rusqlite::{Connection, OptionalExtension, params};
+use rusqlite::{Connection, OptionalExtension, TransactionBehavior, params};
 
 pub(crate) fn commit<V: VerifiedRenderer>(
     connection: &mut Connection,
@@ -26,15 +26,19 @@ pub(crate) fn commit<V: VerifiedRenderer>(
             "structural evidence must be an object",
         ));
     }
-    let transaction = connection.transaction()?;
-    let run: Option<(String, String, String)> = transaction
+    let transaction = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
+    let run: Option<(String, String, String, bool)> = transaction
         .query_row(
-            "SELECT source_sha256, block_plan_json, state FROM runs WHERE run_id = ?1",
+            "SELECT source_sha256, block_plan_json, state, pause_requested FROM runs WHERE run_id = ?1",
             [spec.run_id.to_string()],
-            |row| Ok((row.get(0)?, row.get(1)?, row.get(2)?)),
+            |row| Ok((row.get(0)?, row.get(1)?, row.get(2)?, row.get(3)?)),
         )
         .optional()?;
-    let (run_hash, plan_json, state) = run.ok_or(DbError::Conflict("run does not exist"))?;
+    let (run_hash, plan_json, state, pause_requested) =
+        run.ok_or(DbError::Conflict("run does not exist"))?;
+    if state == "running" && pause_requested {
+        return Err(DbError::PauseRequested);
+    }
     if run_hash != spec.source_hash.to_string() {
         return Err(DbError::Conflict("result source differs from run source"));
     }

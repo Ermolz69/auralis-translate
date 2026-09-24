@@ -6,6 +6,8 @@ use std::fmt;
 pub enum TranslateRunError<E> {
     InvalidPlan(&'static str),
     InvalidCheckpoint(&'static str),
+    Paused,
+    Control(Box<dyn Error>),
     Store(E),
     Batch(TranslateBatchError),
 }
@@ -15,6 +17,8 @@ impl<E: fmt::Display> fmt::Display for TranslateRunError<E> {
         match self {
             Self::InvalidPlan(reason) => write!(f, "invalid run plan: {reason}"),
             Self::InvalidCheckpoint(reason) => write!(f, "invalid saved checkpoint: {reason}"),
+            Self::Paused => write!(f, "pause requested"),
+            Self::Control(error) => write!(f, "run control: {error}"),
             Self::Store(error) => write!(f, "checkpoint store: {error}"),
             Self::Batch(error) => error.fmt(f),
         }

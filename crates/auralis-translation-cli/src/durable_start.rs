@@ -1,4 +1,6 @@
-use crate::durable_workflow::{DATABASE_FILE, SOURCE_DIRECTORY, execute, load_profile};
+use crate::durable_workflow::{
+    DATABASE_FILE, ExecutionConfig, SOURCE_DIRECTORY, execute, load_profile,
+};
 use crate::read_source::read_source;
 use crate::source_snapshot::source_snapshot;
 use crate::write_new::write_new;
@@ -7,6 +9,7 @@ use auralis_translation_formats::srt::{SrtBlockPolicy, SrtRunPlan};
 use auralis_translation_sqlite::{RunSpec, SqliteConfig, TranslateDb, TranslationSpec};
 use std::error::Error;
 use std::ffi::OsStr;
+use std::io::Write;
 use std::path::Path;
 use uuid::Uuid;
 
@@ -70,5 +73,17 @@ pub(crate) fn run(
     };
     db.ensure_run(&run)?;
     println!("translation_id={translation_id} run_id={run_id}");
-    execute(&mut db, &run, &plan, profile, endpoint, output_path)
+    std::io::stdout().flush()?;
+    execute(
+        &mut db,
+        &run,
+        &plan,
+        profile,
+        ExecutionConfig {
+            endpoint,
+            output_path,
+            state_dir: &state_dir,
+            initial_attempt: true,
+        },
+    )
 }

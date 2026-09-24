@@ -3,9 +3,9 @@ use super::{
 };
 use crate::inspect;
 use auralis_translation::{
-    CheckpointStore, LanguagePair, ProgressSink, RunId, SegmentId, SourceHash, TargetSegment,
-    TranslationBatch, TranslationId, TranslationProvider, VerifiedRenderer, translate_planned_run,
-    translate_planned_run_with_progress,
+    CheckpointStore, LanguagePair, ProgressSink, RunControl, RunId, SegmentId, SourceHash,
+    TargetSegment, TranslationBatch, TranslationId, TranslationProvider, VerifiedRenderer,
+    translate_planned_run, translate_planned_run_with_control, translate_planned_run_with_progress,
 };
 
 pub struct SrtRunPlan {
@@ -110,6 +110,25 @@ impl SrtRunPlan {
             &self.planned_ids,
             &self.batches,
             progress,
+        )
+        .map_err(SrtRunError::Translate)?;
+        self.render_selected(&accepted).map_err(SrtRunError::Render)
+    }
+
+    pub fn execute_with_control<S: CheckpointStore>(
+        &self,
+        provider: &impl TranslationProvider,
+        store: &mut S,
+        progress: &mut impl ProgressSink,
+        control: &impl RunControl,
+    ) -> Result<Vec<u8>, SrtRunError<S::Error>> {
+        let accepted = translate_planned_run_with_control(
+            provider,
+            store,
+            &self.planned_ids,
+            &self.batches,
+            progress,
+            control,
         )
         .map_err(SrtRunError::Translate)?;
         self.render_selected(&accepted).map_err(SrtRunError::Render)

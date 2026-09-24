@@ -6,15 +6,17 @@ pub(crate) fn begin(
     connection: &mut Connection,
     run_id: RunId,
     host_job_id: Option<&str>,
+    initial_only: bool,
 ) -> Result<AttemptId, DbError> {
     if host_job_id.is_some_and(str::is_empty) {
         return Err(DbError::InvalidSpec("empty host job ID"));
     }
     let transaction = connection.transaction()?;
     let changed = transaction.execute(
-        "UPDATE runs SET state = 'running', updated_at = unixepoch()
-         WHERE run_id = ?1 AND state IN ('requested', 'paused', 'failed')",
-        [run_id.to_string()],
+        "UPDATE runs SET state = 'running', pause_requested = 0, updated_at = unixepoch()
+         WHERE run_id = ?1 AND ((?2 = 1 AND state = 'requested')
+                               OR (?2 = 0 AND state IN ('requested', 'paused', 'failed')))",
+        params![run_id.to_string(), initial_only],
     )?;
     if changed != 1 {
         return Err(DbError::Conflict("run is not ready for a new attempt"));
@@ -52,7 +54,7 @@ pub(crate) fn stop(
         return Err(DbError::Conflict("attempt is not open for this run"));
     }
     let changed = transaction.execute(
-        "UPDATE runs SET state = ?2, updated_at = unixepoch()
+        "UPDATE runs SET state = ?2, pause_requested = 0, updated_at = unixepoch()
          WHERE run_id = ?1 AND state = 'running'",
         params![run_id.to_string(), state],
     )?;
@@ -84,11 +86,41 @@ pub(crate) fn recover_interrupted(
         ));
     }
     transaction.execute(
-        "UPDATE runs SET state = 'paused', updated_at = unixepoch() WHERE run_id = ?1",
+        "UPDATE runs SET state = 'paused', pause_requested = 0, updated_at = unixepoch() WHERE run_id = ?1",
         [run_id.to_string()],
     )?;
     transaction.commit()?;
     Ok(true)
+}
+
+pub(crate) fn request_pause(connection: &Connection, run_id: RunId) -> Result<(), DbError> {
+    let changed = connection.execute(
+        "UPDATE runs SET state = CASE WHEN state = 'requested' THEN 'paused' ELSE state END,
+                pause_requested = CASE WHEN state = 'running' THEN 1 ELSE 0 END,
+                updated_at = unixepoch()
+         WHERE run_id = ?1 AND state IN ('requested', 'running', 'paused')",
+        [run_id.to_string()],
+    )?;
+    if changed != 1 {
+        return Err(DbError::Conflict("run cannot be paused"));
+    }
+    Ok(())
+}
+
+pub(crate) fn pause_requested(connection: &Connection, run_id: RunId) -> Result<bool, DbError> {
+    let value: Option<i64> = connection
+        .query_row(
+            "SELECT pause_requested FROM runs WHERE run_id = ?1",
+            [run_id.to_string()],
+            |row| row.get(0),
+        )
+        .optional()?;
+    match value {
+        Some(0) => Ok(false),
+        Some(1) => Ok(true),
+        Some(_) => Err(DbError::CorruptRecord("invalid pause request flag")),
+        None => Err(DbError::Conflict("run does not exist")),
+    }
 }
 
 pub(crate) fn state(connection: &Connection, run_id: RunId) -> Result<RunState, DbError> {

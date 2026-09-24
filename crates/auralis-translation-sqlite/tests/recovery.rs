@@ -67,6 +67,29 @@ fn changed_profile_cannot_resume_a_paused_run() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
+#[test]
+fn pause_before_first_attempt_blocks_start_until_explicit_resume() -> Result<(), Box<dyn Error>> {
+    let directory = test_directory()?;
+    let path = directory.join("auralis-translate.sqlite");
+    let mut db = TranslateDb::open(&path, SqliteConfig::default())?;
+    db.ensure_translation(&translation_spec()?)?;
+    let run = run_spec()?;
+    db.ensure_run(&run)?;
+    db.request_pause(run.run_id)?;
+    assert_eq!(db.run_state(run.run_id)?, RunState::Paused);
+    assert!(matches!(
+        db.begin_initial_attempt(&run, None),
+        Err(DbError::Conflict(_))
+    ));
+    assert_eq!(db.run_state(run.run_id)?, RunState::Paused);
+    let attempt = db.begin_attempt(&run, None)?;
+    assert_eq!(db.run_state(run.run_id)?, RunState::Running);
+    db.stop_attempt(run.run_id, attempt, RunStop::Paused, "test complete")?;
+    drop(db);
+    std::fs::remove_dir_all(directory)?;
+    Ok(())
+}
+
 fn checkpoint(
     run: &auralis_translation_sqlite::RunSpec,
     block_index: u32,

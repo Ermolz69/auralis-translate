@@ -1,8 +1,8 @@
 use super::{TranslateRunError, translate_batch};
 use crate::domain::valid_line;
 use crate::{
-    BlockCheckpoint, CheckpointStore, ProgressSink, RunProgress, SegmentId, TargetSegment,
-    TranslationBatch, TranslationProvider,
+    BlockCheckpoint, CheckpointStore, ProgressSink, RunControl, RunId, RunProgress, SegmentId,
+    TargetSegment, TranslationBatch, TranslationProvider,
 };
 use std::collections::{HashMap, HashSet};
 
@@ -27,6 +27,32 @@ pub fn translate_planned_run_with_progress<S: CheckpointStore>(
     planned_ids: &[Vec<SegmentId>],
     batches: &[TranslationBatch],
     progress: &mut impl ProgressSink,
+) -> Result<Vec<TargetSegment>, TranslateRunError<S::Error>> {
+    translate_planned_run_with_control(
+        provider,
+        store,
+        planned_ids,
+        batches,
+        progress,
+        &NoRunControl,
+    )
+}
+
+struct NoRunControl;
+
+impl RunControl for NoRunControl {
+    fn pause_requested(&self, _: RunId) -> Result<bool, Box<dyn std::error::Error>> {
+        Ok(false)
+    }
+}
+
+pub fn translate_planned_run_with_control<S: CheckpointStore>(
+    provider: &impl TranslationProvider,
+    store: &mut S,
+    planned_ids: &[Vec<SegmentId>],
+    batches: &[TranslationBatch],
+    progress: &mut impl ProgressSink,
+    control: &impl RunControl,
 ) -> Result<Vec<TargetSegment>, TranslateRunError<S::Error>> {
     if planned_ids.is_empty() || planned_ids.len() != batches.len() {
         return Err(TranslateRunError::InvalidPlan(
@@ -98,7 +124,9 @@ pub fn translate_planned_run_with_progress<S: CheckpointStore>(
         let checkpoint = if let Some(checkpoint) = checkpoints.remove(&index) {
             checkpoint
         } else {
+            check_pause(control, first.run_id())?;
             let translated = translate_batch(provider, batch).map_err(TranslateRunError::Batch)?;
+            check_pause(control, first.run_id())?;
             let block_index = u32::try_from(index)
                 .map_err(|_| TranslateRunError::InvalidPlan("too many blocks"))?;
             let checkpoint = BlockCheckpoint {
@@ -121,7 +149,18 @@ pub fn translate_planned_run_with_progress<S: CheckpointStore>(
         };
         accepted.extend(checkpoint.accepted);
     }
+    check_pause(control, first.run_id())?;
     Ok(accepted)
+}
+
+fn check_pause<E>(control: &impl RunControl, run_id: RunId) -> Result<(), TranslateRunError<E>> {
+    if control
+        .pause_requested(run_id)
+        .map_err(TranslateRunError::Control)?
+    {
+        return Err(TranslateRunError::Paused);
+    }
+    Ok(())
 }
 
 fn validate_checkpoint<E>(

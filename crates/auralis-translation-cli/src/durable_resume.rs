@@ -1,5 +1,5 @@
 use crate::durable_workflow::{
-    DATABASE_FILE, SOURCE_DIRECTORY, execute, export_validated, load_profile,
+    DATABASE_FILE, ExecutionConfig, SOURCE_DIRECTORY, execute, export_validated, load_profile,
 };
 use crate::read_source::read_source;
 use crate::source_snapshot::source_snapshot;
@@ -8,6 +8,7 @@ use auralis_translation_formats::srt::{SrtBlockPolicy, SrtRunPlan};
 use auralis_translation_sqlite::{SqliteConfig, TranslateDb};
 use std::error::Error;
 use std::ffi::OsStr;
+use std::io::Write;
 use std::path::Path;
 
 pub(crate) fn run(
@@ -72,9 +73,21 @@ pub(crate) fn run(
         "translation_id={} run_id={run_id}",
         translation.translation_id
     );
+    std::io::stdout().flush()?;
     if db.run_state(run_id)? == RunState::Validated {
         return export_validated(&db, &stored_run, &plan, output_path);
     }
     db.recover_interrupted(run_id)?;
-    execute(&mut db, &stored_run, &plan, profile, endpoint, output_path)
+    execute(
+        &mut db,
+        &stored_run,
+        &plan,
+        profile,
+        ExecutionConfig {
+            endpoint,
+            output_path,
+            state_dir: &state_dir,
+            initial_attempt: false,
+        },
+    )
 }

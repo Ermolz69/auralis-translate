@@ -7,7 +7,7 @@ use crate::{
     AttemptId, CheckpointSpec, DbError, ResultRecord, ResultSpec, RunSpec, RunStop, SegmentSpec,
     SqliteConfig, TranslationSpec,
 };
-use auralis_translation::{ResultId, RunId, RunState, TranslationId, VerifiedRenderer};
+use auralis_translation::{ResultId, RunControl, RunId, RunState, TranslationId, VerifiedRenderer};
 use rusqlite::Connection;
 use std::path::Path;
 
@@ -74,7 +74,16 @@ impl TranslateDb {
         host_job_id: Option<&str>,
     ) -> Result<AttemptId, DbError> {
         self.ensure_run(run)?;
-        attempt_repository::begin(&mut self.connection, run.run_id, host_job_id)
+        attempt_repository::begin(&mut self.connection, run.run_id, host_job_id, false)
+    }
+
+    pub fn begin_initial_attempt(
+        &mut self,
+        run: &RunSpec,
+        host_job_id: Option<&str>,
+    ) -> Result<AttemptId, DbError> {
+        self.ensure_run(run)?;
+        attempt_repository::begin(&mut self.connection, run.run_id, host_job_id, true)
     }
 
     pub fn stop_attempt(
@@ -95,6 +104,14 @@ impl TranslateDb {
         attempt_repository::state(&self.connection, run_id)
     }
 
+    pub fn request_pause(&self, run_id: RunId) -> Result<(), DbError> {
+        attempt_repository::request_pause(&self.connection, run_id)
+    }
+
+    pub fn pause_requested(&self, run_id: RunId) -> Result<bool, DbError> {
+        attempt_repository::pause_requested(&self.connection, run_id)
+    }
+
     pub fn commit_result<V: VerifiedRenderer>(
         &mut self,
         spec: &ResultSpec,
@@ -109,5 +126,11 @@ impl TranslateDb {
 
     pub fn result_for_run(&self, run_id: RunId) -> Result<ResultRecord, DbError> {
         result_repository::for_run(&self.connection, run_id)
+    }
+}
+
+impl RunControl for TranslateDb {
+    fn pause_requested(&self, run_id: RunId) -> Result<bool, Box<dyn std::error::Error>> {
+        Ok(TranslateDb::pause_requested(self, run_id)?)
     }
 }

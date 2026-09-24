@@ -1,9 +1,9 @@
 use crate::stderr_progress::StderrProgress;
 use crate::write_new::write_new;
-use auralis_translation::{ResultId, ReviewState, RunState, SourceHash};
-use auralis_translation_formats::srt::SrtRunPlan;
+use auralis_translation::{ResultId, ReviewState, RunState, SourceHash, TranslateRunError};
+use auralis_translation_formats::srt::{SrtRunError, SrtRunPlan};
 use auralis_translation_llamacpp::{LlamaCppProvider, ModelProfile};
-use auralis_translation_sqlite::{ResultSpec, RunSpec, RunStop, TranslateDb};
+use auralis_translation_sqlite::{ResultSpec, RunSpec, RunStop, SqliteConfig, TranslateDb};
 use std::error::Error;
 use std::ffi::OsStr;
 use std::path::Path;
@@ -11,6 +11,13 @@ use uuid::Uuid;
 
 pub(crate) const DATABASE_FILE: &str = "auralis-translate.sqlite";
 pub(crate) const SOURCE_DIRECTORY: &str = "sources";
+
+pub(crate) struct ExecutionConfig<'a> {
+    pub endpoint: &'a OsStr,
+    pub output_path: &'a Path,
+    pub state_dir: &'a Path,
+    pub initial_attempt: bool,
+}
 
 pub(crate) fn load_profile(path: &Path) -> Result<(ModelProfile, SourceHash), Box<dyn Error>> {
     let bytes = std::fs::read(path)?;
@@ -23,17 +30,31 @@ pub(crate) fn execute(
     run: &RunSpec,
     plan: &SrtRunPlan,
     profile: ModelProfile,
-    endpoint: &OsStr,
-    output_path: &Path,
+    config: ExecutionConfig<'_>,
 ) -> Result<(), Box<dyn Error>> {
-    if output_path.exists() {
+    if config.output_path.exists() {
         return Err("output already exists".into());
     }
-    let endpoint = endpoint.to_str().ok_or("server URL must be Unicode")?;
+    let endpoint = config
+        .endpoint
+        .to_str()
+        .ok_or("server URL must be Unicode")?;
     let provider = LlamaCppProvider::new(endpoint, profile)?;
-    let attempt = db.begin_attempt(run, None)?;
-    let output = match plan.execute_with_progress(&provider, db, &mut StderrProgress) {
+    let control_db = TranslateDb::open(
+        &config.state_dir.join(DATABASE_FILE),
+        SqliteConfig::default(),
+    )?;
+    let attempt = if config.initial_attempt {
+        db.begin_initial_attempt(run, None)?
+    } else {
+        db.begin_attempt(run, None)?
+    };
+    let output = match plan.execute_with_control(&provider, db, &mut StderrProgress, &control_db) {
         Ok(output) => output,
+        Err(error @ SrtRunError::Translate(TranslateRunError::Paused)) => {
+            db.stop_attempt(run.run_id, attempt, RunStop::Paused, "pause requested")?;
+            return Err(Box::new(error));
+        }
         Err(error) => {
             db.stop_attempt(run.run_id, attempt, RunStop::Failed, "translation failed")?;
             return Err(Box::new(error));
@@ -50,6 +71,10 @@ pub(crate) fn execute(
     };
     let committed = match db.commit_result(&result, plan) {
         Ok(committed) => committed,
+        Err(error @ auralis_translation_sqlite::DbError::PauseRequested) => {
+            db.stop_attempt(run.run_id, attempt, RunStop::Paused, "pause requested")?;
+            return Err(Box::new(error));
+        }
         Err(error) => {
             db.stop_attempt(
                 run.run_id,
@@ -63,7 +88,7 @@ pub(crate) fn execute(
     if committed.output_hash != SourceHash::digest(&output) {
         return Err("verified result differs from the completed output".into());
     }
-    write_new(output_path, &output)?;
+    write_new(config.output_path, &output)?;
     println!("result_id={result_id} review=needs_review");
     Ok(())
 }

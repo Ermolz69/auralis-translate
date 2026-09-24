@@ -49,7 +49,7 @@ The UI reads progress and pause reasons from Translate through `active_run_id`. 
 
 ## Translate SQLite tables
 
-The table below describes the logical contract. Migration `crates/auralis-translation-sqlite/migrations/0001_initial.sql` contains the initial executable Translate schema; not all tables have repository operations yet.
+The table below describes the logical contract. Migration `crates/auralis-translation-sqlite/migrations/0001_initial.sql` contains the initial executable Translate schema, and `0002_pause_request.sql` adds the durable pause flag. An existing v1 database upgrades transactionally to v2; not all logical tables have repository operations yet.
 
 | Table | Required content |
 | --- | --- |
@@ -110,6 +110,8 @@ stateDiagram-v2
 ```
 
 The diagram combines two state owners: Requested/Publishing/Published belong to the Auralis link, while Running/Paused/Failed/Validated belong to the Translate run. A persisted Running state with no live owner is marked interrupted at startup and made resumable. Pause stops scheduling new blocks. A partially generated response is discarded; only committed checkpoints count. Resume verifies source digest, parser/profile fingerprints, and model compatibility, then processes missing blocks. Explicit deletion is a separate action, not a synonym for pause.
+
+The standalone CLI's `pause` command sets `runs.pause_requested` through a second SQLite connection. Its worker checks before and after each model block. The current blocking HTTP request is allowed to finish before the pause is acknowledged; its response is discarded if pause was requested. Result commit takes an immediate SQLite write transaction and refuses a pause already recorded before that transaction, so a late request cannot leave a validated result with a pending pause flag. The worker then closes the attempt as `paused`, clears the flag, and leaves earlier checkpoints intact. `status` distinguishes a pending request from an acknowledged pause. A pause requested before the initial attempt prevents `translate` from starting inference; an explicit `resume` can start it. A killed worker still uses the interrupted-run recovery path.
 
 Technical completeness and language review are separate. A structurally complete result with quality warnings is **published with `needs_review`**, so the user can compare and edit it. Missing segments cannot produce a publishable `result_id`. Model reruns never overwrite a manual edit.
 
