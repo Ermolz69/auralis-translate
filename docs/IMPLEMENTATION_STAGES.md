@@ -49,7 +49,7 @@ Stages describe **observable capabilities**, not a checklist of files. S2 and S3
 | **S8 — Chinese release gate** | Supported WebVTT subset, packaging/model installation, long-file and crash tests, Chinese holdout, documented platform profile. | Every applicable G1–G9 gate in the original plan has evidence. Publish exact format, OS, hardware, model and known limitations; do not claim unmeasured configurations. |
 | **S9 — Japanese gate** | Japanese corpus, name/honorific review, tuned profile if required, regression checks against Chinese. | Japanese passes its own structural, linguistic, performance and packaging gates. The Chinese profile remains valid. |
 
-The [host translation job design](architecture/006-host-translation-jobs.md) specifies the remaining S7 work: one Auralis job per attempt, a durable link to the Translate run, committed progress, scoped crash recovery, and publication after a ready managed artifact.
+The [host translation job design](architecture/006-host-translation-jobs.md) specifies the remaining S7 work. Auralis schema v8 stores the host job/run association and enforces one active association per run. Transactional job creation, worker ownership, committed progress, scoped crash recovery, and publication after a ready managed artifact still require implementation and verification.
 
 ## Milestones that matter to the user
 

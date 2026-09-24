@@ -1,6 +1,6 @@
 # Host translation jobs
 
-Status: implementation design, 24 September 2026. Auralis currently creates durable Translate runs and can execute them through an experimental application API, but no host job owns a model request. The `Translation` job kind now persists independently of dubbing project processing state. The run/job association and execution transitions below are not implemented yet.
+Status: implementation design, 24 September 2026. Auralis currently creates durable Translate runs and can execute them through an experimental application API, but no host job owns a model request. The `Translation` job kind persists independently of dubbing project processing state. Auralis SQLite schema v8 stores a run/job association; its transactional creation and execution transitions below are not implemented yet.
 
 ## Ownership and identity
 
@@ -8,7 +8,7 @@ One Auralis project may have several translations. A translation has one active 
 
 Auralis owns the job record, run-to-job association, process/runtime lease, cancellation signal, and managed output artifact. Translate SQLite owns attempt state, checkpoints, warnings, and immutable result revisions. No full source or translated lines are copied into Auralis SQLite. Auralis's existing dubbing project status and active dubbing job remain separate from translation job status.
 
-The existing Auralis `jobs` table and job queue now accept a `translation` kind; a storage test confirms that such a job does not alter project processing state. The current `DubbingPipelineStage` field must become a typed kind-specific stage or remain absent for a translation job until that migration is complete; a translation job must never store a fake dubbing stage. Add a transactional Auralis association between `job_id`, `translation_id`, and `run_id`, with at most one active host job per run. Its history retains terminal attempts. The exact migration shape should be selected after surveying existing job constraints; it must preserve the version-7 frozen run intent and published result links.
+The existing Auralis `jobs` table and job queue accept a `translation` kind; a storage test confirms that such a job does not alter project processing state. The current `DubbingPipelineStage` field must become a typed kind-specific stage or remain absent for a translation job until that migration is complete; a translation job must never store a fake dubbing stage. Auralis SQLite schema v8 adds `translation_host_jobs(job_id, run_id, created_at, ended_at)`. `run_id` references the frozen intent, which already identifies `translation_id`; `job_id` references the host job. A partial unique index permits only one association with no `ended_at` per run and retains terminal history. The v7-to-v8 migration preserves frozen intents and project links. Creation of the job and its association must be one transaction; the schema alone does not guarantee that the referenced job has kind `Translation` or belongs to the run's project.
 
 ## Start and execution order
 

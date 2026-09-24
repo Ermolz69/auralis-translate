@@ -132,6 +132,9 @@ fn serve(listener: TcpListener, model_path: &str, expect_chat: bool) -> Result<(
             }
         };
         stream
+            .set_nonblocking(false)
+            .map_err(|error| error.to_string())?;
+        stream
             .set_read_timeout(Some(Duration::from_secs(5)))
             .map_err(|error| error.to_string())?;
         let request = read_request(&mut stream)?;
