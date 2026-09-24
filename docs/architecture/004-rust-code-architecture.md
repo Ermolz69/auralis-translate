@@ -24,6 +24,8 @@ flowchart BT
 
 `auralis-translation` owns `translate_track` and format-independent segment contracts. `auralis-translation-formats` owns `translate_document`: it extracts segments, calls the core engine, and renders a separate output document. The SQLite and llama.cpp crates implement core ports. The CLI and Auralis provide concrete paths, process ownership, cancellation, and configuration. This direction avoids a circular dependency between the core and the format adapters.
 
+The llama.cpp adapter exports model-file hashing and checked-server preflight for both the CLI and Auralis composition. The CLI no longer owns a separate copy of this verification. A checked profile compares the reported model alias, runtime build, minimum context, local model-file size, and SHA-256 before an attempt; an older experimental profile without runtime identity remains explicitly unchecked for saved-run compatibility. This preflight does not attest the server's in-memory weights or manage its process.
+
 ## Suggested layout
 
 ```text

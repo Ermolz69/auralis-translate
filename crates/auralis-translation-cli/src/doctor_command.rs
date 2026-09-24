@@ -1,6 +1,5 @@
-use crate::model_hash::hash_file;
 use auralis_translation::SourceHash;
-use auralis_translation_llamacpp::ModelProfile;
+use auralis_translation_llamacpp::{ModelProfile, hash_file};
 use serde::Serialize;
 use std::error::Error;
 use std::ffi::OsStr;

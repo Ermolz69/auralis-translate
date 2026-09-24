@@ -1,12 +1,11 @@
 use crate::document_run_error::DocumentRunError;
 use crate::document_run_plan::DocumentRunPlan;
-use crate::model_preflight;
 use crate::stderr_progress::StderrProgress;
 use crate::write_new::write_new;
 use auralis_translation::{
     BlockPolicy, ResultId, RetryPolicy, ReviewState, RunState, SourceHash, VerifiedRenderer,
 };
-use auralis_translation_llamacpp::{LlamaCppProvider, ModelProfile};
+use auralis_translation_llamacpp::{LlamaCppProvider, ModelProfile, verify_server};
 use auralis_translation_sqlite::{ResultSpec, RunSpec, RunStop, SqliteConfig, TranslateDb};
 use std::error::Error;
 use std::ffi::OsStr;
@@ -55,7 +54,12 @@ pub(crate) fn execute(
     let retry = RetryPolicy::new(profile.max_block_attempts)
         .ok_or("model profile has an invalid block attempt limit")?;
     let provider = LlamaCppProvider::new(endpoint, profile.clone())?;
-    model_preflight::verify(&provider, &profile)?;
+    if let Some(report) = verify_server(&provider, &profile)? {
+        eprintln!(
+            "model_ready alias={} build={} context_tokens={}",
+            report.model_alias, report.build_info, report.context_tokens
+        );
+    }
     let control_db = TranslateDb::open(
         &config.state_dir.join(DATABASE_FILE),
         SqliteConfig::default(),
