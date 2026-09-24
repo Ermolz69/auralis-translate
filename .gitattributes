@@ -1,0 +1,4 @@
+* text=auto
+*.srt text eol=lf
+*.srt whitespace=-blank-at-eof
+AURALIS_SUBTITLE_TRANSLATION_PLAN.md whitespace=-trailing-space

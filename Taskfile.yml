@@ -1,0 +1,29 @@
+version: '3'
+
+tasks:
+  build:
+    cmds:
+      - cargo build --workspace --offline
+  test:
+    cmds:
+      - cargo test --workspace --offline
+  fmt:
+    cmds:
+      - cargo fmt --all -- --check
+  fmt:fix:
+    cmds:
+      - cargo fmt --all
+  lint:
+    cmds:
+      - cargo clippy --workspace --all-targets --offline -- -D warnings
+  check:
+    cmds:
+      - task: fmt
+      - task: lint
+      - task: test
+  inspect:
+    cmds:
+      - cargo run --offline -p auralis-translation-cli -- inspect {{.CLI_ARGS}}
+  cli:
+    cmds:
+      - cargo run --offline -p auralis-translation-cli -- {{.CLI_ARGS}}
