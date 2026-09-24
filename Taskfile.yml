@@ -1,6 +1,9 @@
 version: '3'
 
 tasks:
+  fetch:
+    cmds:
+      - cargo fetch
   build:
     cmds:
       - cargo build --workspace --offline

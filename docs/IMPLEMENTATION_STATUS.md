@@ -67,4 +67,4 @@ These commands use `create_new` semantics: choose paths that do not exist. The d
 3. Repeat model and glossary experiments on a larger licensed Chinese corpus with bilingual review; compare profiles and measure term adherence, quality, speed, and resources.
 4. Prove real-model interrupted resume, then connect Translate run creation to Auralis host jobs and the existing project-link/publication storage port.
 
-The repository is a separate local Git repository. No GitHub remote or Auralis submodule has been configured; those are part of the integration stage after the standalone boundary is stable.
+The repository is a separate local Git repository. The Auralis checkout now has a local gitlink at `modules/auralis-translate`, pinned to a Translate commit, with a relative sibling URL planned for GitHub. The Translate SQLite adapter uses rusqlite 0.39 to share a compatible SQLite FFI version with Auralis SQLx 0.9; `task check` and `task build` passed after that dependency change. The Translate GitHub remote is still absent, so cloning the submodule from GitHub remains open.
