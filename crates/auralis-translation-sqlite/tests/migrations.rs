@@ -21,6 +21,15 @@ fn migration_and_ensure_are_idempotent_across_reopen() -> Result<(), Box<dyn Err
 
     let db = TranslateDb::open(&path, SqliteConfig::default())?;
     assert_eq!(db.schema_version()?, 1);
+    let stored_translation = db.translation(translation.translation_id)?;
+    let stored_run = db.run(run.run_id)?;
+    assert_eq!(stored_translation.source_hash, translation.source_hash);
+    assert_eq!(
+        stored_translation.source_artifact_id,
+        translation.source_artifact_id
+    );
+    assert_eq!(stored_run.translation_id, run.translation_id);
+    assert_eq!(stored_run.blocks, run.blocks);
     drop(db);
     let connection = Connection::open(&path)?;
     let translations: u32 =

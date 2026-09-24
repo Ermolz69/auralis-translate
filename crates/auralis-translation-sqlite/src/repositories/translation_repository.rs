@@ -1,6 +1,16 @@
 use crate::{DbError, TranslationSpec};
-use auralis_translation::LanguageCode;
-use rusqlite::{Connection, params};
+use auralis_translation::{LanguageCode, LanguagePair, SourceHash, TranslationId};
+use rusqlite::{Connection, OptionalExtension, params};
+
+struct StoredTranslationRow {
+    project_id: Option<String>,
+    source_artifact_id: Option<String>,
+    source_locator: Option<String>,
+    hash: String,
+    format: String,
+    source: String,
+    target: String,
+}
 
 pub(crate) fn ensure(connection: &mut Connection, spec: &TranslationSpec) -> Result<(), DbError> {
     if spec.source_artifact_id.is_some() == spec.source_locator.is_some() {
@@ -70,5 +80,53 @@ fn language_code(language: LanguageCode) -> &'static str {
         LanguageCode::Chinese => "zh",
         LanguageCode::Japanese => "ja",
         LanguageCode::Russian => "ru",
+    }
+}
+
+pub(crate) fn load(
+    connection: &Connection,
+    translation_id: TranslationId,
+) -> Result<TranslationSpec, DbError> {
+    let row: Option<StoredTranslationRow> = connection
+            .query_row(
+                "SELECT project_id, source_artifact_id, source_locator, source_sha256, source_format, source_language, target_language
+                 FROM translations WHERE translation_id = ?1",
+                [translation_id.to_string()],
+                |row| {
+                    Ok(StoredTranslationRow {
+                        project_id: row.get(0)?,
+                        source_artifact_id: row.get(1)?,
+                        source_locator: row.get(2)?,
+                        hash: row.get(3)?,
+                        format: row.get(4)?,
+                        source: row.get(5)?,
+                        target: row.get(6)?,
+                    })
+                },
+            )
+            .optional()?;
+    let row = row.ok_or(DbError::Conflict("translation does not exist"))?;
+    let source = parse_language(&row.source)?;
+    let target = parse_language(&row.target)?;
+    let language_pair = LanguagePair::new(source, target)
+        .map_err(|_| DbError::CorruptRecord("invalid stored language pair"))?;
+    Ok(TranslationSpec {
+        translation_id,
+        project_id: row.project_id,
+        source_artifact_id: row.source_artifact_id,
+        source_locator: row.source_locator,
+        source_hash: SourceHash::parse_hex(&row.hash)
+            .ok_or(DbError::CorruptRecord("invalid source hash"))?,
+        source_format: row.format,
+        language_pair,
+    })
+}
+
+fn parse_language(value: &str) -> Result<LanguageCode, DbError> {
+    match value {
+        "zh" => Ok(LanguageCode::Chinese),
+        "ja" => Ok(LanguageCode::Japanese),
+        "ru" => Ok(LanguageCode::Russian),
+        _ => Err(DbError::CorruptRecord("unknown language code")),
     }
 }

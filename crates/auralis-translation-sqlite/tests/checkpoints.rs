@@ -2,6 +2,7 @@ mod support;
 
 use auralis_translation::{SegmentId, SourceHash, TargetSegment};
 use auralis_translation_sqlite::{CheckpointSpec, DbError, SqliteConfig, TranslateDb};
+use rusqlite::Connection;
 use std::error::Error;
 use support::{run_spec, test_directory, translation_spec};
 
@@ -78,6 +79,32 @@ fn rejects_invalid_plan_and_unchecked_text() -> Result<(), Box<dyn Error>> {
         Err(DbError::InvalidSpec(_))
     ));
     assert!(db.checkpoints(checkpoint.run_id)?.is_empty());
+    drop(db);
+    std::fs::remove_dir_all(directory)?;
+    Ok(())
+}
+
+#[test]
+fn malformed_unicode_hash_is_reported_as_corrupt_data() -> Result<(), Box<dyn Error>> {
+    let directory = test_directory()?;
+    let path = directory.join("auralis-translate.sqlite");
+    let mut db = TranslateDb::open(&path, SqliteConfig::default())?;
+    db.ensure_translation(&translation_spec()?)?;
+    db.begin_attempt(&run_spec()?, None)?;
+    let checkpoint = checkpoint()?;
+    db.commit_checkpoint(&checkpoint)?;
+    drop(db);
+    let connection = Connection::open(&path)?;
+    connection.execute(
+        "UPDATE block_checkpoints SET input_fingerprint = ?1 WHERE run_id = ?2",
+        rusqlite::params!["é".repeat(32), checkpoint.run_id.to_string()],
+    )?;
+    drop(connection);
+    let db = TranslateDb::open(&path, SqliteConfig::default())?;
+    assert!(matches!(
+        db.checkpoints(checkpoint.run_id),
+        Err(DbError::CorruptRecord(_))
+    ));
     drop(db);
     std::fs::remove_dir_all(directory)?;
     Ok(())

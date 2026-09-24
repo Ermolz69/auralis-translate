@@ -31,7 +31,7 @@ Edit each `lines` value in `translations.json` while keeping the IDs and number 
 task cli -- render crates/auralis-translation-formats/tests/fixtures/plain.srt translations.json translated.srt
 ```
 
-These commands use `create_new` semantics: choose paths that do not exist. The default SRT inspection policy permits up to 16 MiB of source bytes, 100,000 cues, and 16 KiB per line; callers may pass a separately validated policy to the library. The fixture is synthetic and its provenance is recorded in `crates/auralis-translation-formats/tests/fixtures/LICENSE.md`. The last verified `task check` passed formatting, Clippy, and 32 behavior tests, including CLI process, malformed provider output, local HTTP protocol, SQLite migration, checkpoint, model-failure/resume, and complete SRT reconstruction tests. See the current command output before reporting a later gate as complete.
+These commands use `create_new` semantics: choose paths that do not exist. The default SRT inspection policy permits up to 16 MiB of source bytes, 100,000 cues, and 16 KiB per line; callers may pass a separately validated policy to the library. The fixture is synthetic and its provenance is recorded in `crates/auralis-translation-formats/tests/fixtures/LICENSE.md`. The last verified `task check` passed formatting, Clippy, and 33 behavior tests, including CLI process, malformed provider output, local HTTP protocol, SQLite migration, checkpoint, model-failure/resume, complete SRT reconstruction, and corrupt-hash handling. See the current command output before reporting a later gate as complete.
 
 ## Next implementation steps
 

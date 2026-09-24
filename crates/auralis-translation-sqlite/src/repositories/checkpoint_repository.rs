@@ -169,13 +169,5 @@ pub(crate) fn decode_segments(json: &str) -> Result<Vec<TargetSegment>, DbError>
 }
 
 pub(crate) fn decode_hash(hex: &str) -> Result<SourceHash, DbError> {
-    if hex.len() != 64 {
-        return Err(DbError::CorruptRecord("invalid checkpoint hash length"));
-    }
-    let mut bytes = [0_u8; 32];
-    for (index, byte) in bytes.iter_mut().enumerate() {
-        *byte = u8::from_str_radix(&hex[index * 2..index * 2 + 2], 16)
-            .map_err(|_| DbError::CorruptRecord("invalid checkpoint hash"))?;
-    }
-    Ok(SourceHash::from_bytes(bytes))
+    SourceHash::parse_hex(hex).ok_or(DbError::CorruptRecord("invalid SHA-256 hex"))
 }

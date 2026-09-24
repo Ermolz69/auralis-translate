@@ -16,6 +16,28 @@ impl SourceHash {
     pub fn bytes(self) -> [u8; 32] {
         self.0
     }
+
+    pub fn parse_hex(value: &str) -> Option<Self> {
+        if value.len() != 64 || !value.is_ascii() {
+            return None;
+        }
+        let mut bytes = [0_u8; 32];
+        for (output, pair) in bytes.iter_mut().zip(value.as_bytes().chunks_exact(2)) {
+            let high = hex_digit(pair[0])?;
+            let low = hex_digit(pair[1])?;
+            *output = (high << 4) | low;
+        }
+        Some(Self(bytes))
+    }
+}
+
+fn hex_digit(byte: u8) -> Option<u8> {
+    match byte {
+        b'0'..=b'9' => Some(byte - b'0'),
+        b'a'..=b'f' => Some(byte - b'a' + 10),
+        b'A'..=b'F' => Some(byte - b'A' + 10),
+        _ => None,
+    }
 }
 
 impl fmt::Display for SourceHash {
