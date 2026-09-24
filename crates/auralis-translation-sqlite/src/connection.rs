@@ -1,11 +1,11 @@
 use crate::migrations;
 use crate::repositories::{
     attempt_repository, checkpoint_repository, result_repository, run_repository,
-    translation_repository,
+    segment_repository, translation_repository,
 };
 use crate::{
-    AttemptId, CheckpointSpec, DbError, ResultRecord, ResultSpec, RunSpec, RunStop, SqliteConfig,
-    TranslationSpec,
+    AttemptId, CheckpointSpec, DbError, ResultRecord, ResultSpec, RunSpec, RunStop, SegmentSpec,
+    SqliteConfig, TranslationSpec,
 };
 use auralis_translation::{ResultId, RunId, RunState, TranslationId, VerifiedRenderer};
 use rusqlite::Connection;
@@ -37,6 +37,19 @@ impl TranslateDb {
 
     pub fn translation(&self, translation_id: TranslationId) -> Result<TranslationSpec, DbError> {
         translation_repository::load(&self.connection, translation_id)
+    }
+
+    pub fn ensure_segments(
+        &mut self,
+        translation_id: TranslationId,
+        source_len: u64,
+        segments: &[SegmentSpec],
+    ) -> Result<(), DbError> {
+        segment_repository::ensure(&mut self.connection, translation_id, source_len, segments)
+    }
+
+    pub fn segments(&self, translation_id: TranslationId) -> Result<Vec<SegmentSpec>, DbError> {
+        segment_repository::load(&self.connection, translation_id)
     }
 
     pub fn ensure_run(&mut self, spec: &RunSpec) -> Result<(), DbError> {

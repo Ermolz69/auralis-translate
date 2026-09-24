@@ -2,6 +2,7 @@ use crate::durable_workflow::{
     DATABASE_FILE, SOURCE_DIRECTORY, execute, export_validated, load_profile,
 };
 use crate::read_source::read_source;
+use crate::source_snapshot::source_snapshot;
 use auralis_translation::{RunId, RunState, SourceHash};
 use auralis_translation_formats::srt::{SrtBlockPolicy, SrtRunPlan};
 use auralis_translation_sqlite::{SqliteConfig, TranslateDb};
@@ -61,6 +62,11 @@ pub(crate) fn run(
     {
         return Err("source parser or block policy differs from frozen run".into());
     }
+    db.ensure_segments(
+        translation.translation_id,
+        u64::try_from(plan.source_len())?,
+        &source_snapshot(&plan)?,
+    )?;
     let output_path = Path::new(output_path);
     println!(
         "translation_id={} run_id={run_id}",

@@ -1,5 +1,6 @@
 use crate::durable_workflow::{DATABASE_FILE, SOURCE_DIRECTORY, execute, load_profile};
 use crate::read_source::read_source;
+use crate::source_snapshot::source_snapshot;
 use crate::write_new::write_new;
 use auralis_translation::{LanguageCode, LanguagePair, RunId, TranslationId};
 use auralis_translation_formats::srt::{SrtBlockPolicy, SrtRunPlan};
@@ -52,6 +53,11 @@ pub(crate) fn run(
         source_format: SOURCE_FORMAT.into(),
         language_pair: pair,
     })?;
+    db.ensure_segments(
+        translation_id,
+        u64::try_from(plan.source_len())?,
+        &source_snapshot(&plan)?,
+    )?;
     let run = RunSpec {
         run_id,
         translation_id,

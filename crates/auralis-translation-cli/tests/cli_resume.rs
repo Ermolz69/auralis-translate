@@ -51,6 +51,7 @@ fn cli_resumes_checkpointed_srt_and_reexports_validated_result() -> Result<(), B
     )?;
     assert_eq!(db.run_state(run_id)?, RunState::Failed);
     assert_eq!(db.checkpoints(run_id)?.len(), 1);
+    assert_eq!(db.segments(db.run(run_id)?.translation_id)?.len(), 9);
     drop(db);
 
     let listener = TcpListener::bind("127.0.0.1:0")?;
@@ -186,6 +187,9 @@ fn serve(listener: TcpListener, count: usize, fail_on: Option<usize>) -> Result<
                 Err(error) => return Err(error.to_string()),
             }
         };
+        stream
+            .set_nonblocking(false)
+            .map_err(|error| error.to_string())?;
         stream
             .set_read_timeout(Some(Duration::from_secs(5)))
             .map_err(|error| error.to_string())?;

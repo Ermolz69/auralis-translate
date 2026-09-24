@@ -1,4 +1,6 @@
-use super::{SegmentTranslation, SrtBlockPolicy, SrtDocument, SrtPlanError, SrtRunError};
+use super::{
+    SegmentTranslation, SrtBlockPolicy, SrtDocument, SrtPlanError, SrtRunError, SrtSegment,
+};
 use crate::inspect;
 use auralis_translation::{
     CheckpointStore, LanguagePair, RunId, SegmentId, SourceHash, TargetSegment, TranslationBatch,
@@ -53,6 +55,14 @@ impl SrtRunPlan {
 
     pub fn source_hash(&self) -> SourceHash {
         self.source_hash
+    }
+
+    pub fn source_len(&self) -> usize {
+        self.document.source_bytes().len()
+    }
+
+    pub fn source_segments(&self) -> &[SrtSegment] {
+        self.document.segments()
     }
 
     pub fn blocks(&self) -> &[Vec<SegmentId>] {

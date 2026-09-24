@@ -7,6 +7,7 @@ mod manual_command;
 mod manual_manifest;
 mod manual_translation;
 mod read_source;
+mod source_snapshot;
 mod write_new;
 
 use std::process::ExitCode;

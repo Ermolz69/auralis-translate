@@ -1,6 +1,6 @@
 # Two databases and the translation lifecycle
 
-Status: evolving contract, 24 September 2026. The owner chose **one Translate SQLite file per installation**, with records linked to projects by ID. The initial Translate schema, checkpoint/attempt primitives, and complete-checkpoint result records are implemented. The CLI lifecycle and Auralis project publication remain open; this is not a completed stage gate.
+Status: evolving contract, 24 September 2026. The owner chose **one Translate SQLite file per installation**, with records linked to projects by ID. The strict-SRT Translate lifecycle, including source maps, checkpoints, attempts, and verified result records, has passed its [S4 recovery gate](../../eval/experiments/2026-09-24-s4-recovery-gate.md). Auralis project publication remains open.
 
 ## Data ownership
 

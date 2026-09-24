@@ -10,5 +10,6 @@ pub use config::SqliteConfig;
 pub use connection::TranslateDb;
 pub use error::DbError;
 pub use specs::{
-    AttemptId, CheckpointSpec, ResultRecord, ResultSpec, RunSpec, RunStop, TranslationSpec,
+    AttemptId, CheckpointSpec, ResultRecord, ResultSpec, RunSpec, RunStop, SegmentSpec,
+    TranslationSpec,
 };
