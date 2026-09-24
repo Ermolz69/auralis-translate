@@ -122,6 +122,8 @@ Technical completeness and language review are separate. A structurally complete
 
 After structural validation, Translate stores immutable `result_id`, the selected-segment manifest, and the output digest. To retry publication, it rebuilds the output from the immutable original and referenced segment versions; the digest must match. Auralis verifies `translation_id`, `run_id`, source artifact and digest. It stages the output and creates a pending artifact, `translation_publications` row, and outbox message in a short Auralis transaction. After outbox finalisation makes the artifact ready, a separate conditional Auralis transaction updates the selected result and artifact ID. The condition includes the link revision and source digest so a late run cannot replace a newer selection. A pending artifact is never shown as published.
 
+The Auralis storage port now has `commit_staged_publication` for the pending artifact, publication row, and outbox in one transaction, with an idempotent retry for the same result. Its storage test covers a stale-revision rollback and selection only after readiness. The application has not yet staged a real Translate output or invoked this port, and startup reconciliation remains to be implemented.
+
 All steps are repeatable by `translation_id`, `run_id`, and `result_id`. On startup, reconciliation checks requested/publishing links, Translate runs/results, pending artifacts, and outbox messages:
 
 | Failure point | Recovery |
