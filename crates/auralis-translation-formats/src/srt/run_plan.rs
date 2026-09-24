@@ -2,7 +2,7 @@ use super::{SegmentTranslation, SrtBlockPolicy, SrtDocument, SrtPlanError, SrtRu
 use crate::inspect;
 use auralis_translation::{
     CheckpointStore, LanguagePair, RunId, SegmentId, SourceHash, TargetSegment, TranslationBatch,
-    TranslationId, TranslationProvider, translate_planned_run,
+    TranslationId, TranslationProvider, VerifiedRenderer, translate_planned_run,
 };
 
 pub struct SrtRunPlan {
@@ -96,5 +96,21 @@ impl SrtRunPlan {
             })
             .collect::<Vec<_>>();
         self.document.render(&replacements)
+    }
+}
+
+impl VerifiedRenderer for SrtRunPlan {
+    type Error = super::SrtError;
+
+    fn source_hash(&self) -> SourceHash {
+        SrtRunPlan::source_hash(self)
+    }
+
+    fn render_selected(&self, selected: &[TargetSegment]) -> Result<Vec<u8>, Self::Error> {
+        SrtRunPlan::render_selected(self, selected)
+    }
+
+    fn structural_evidence(&self) -> &'static str {
+        Self::STRUCTURAL_EVIDENCE
     }
 }

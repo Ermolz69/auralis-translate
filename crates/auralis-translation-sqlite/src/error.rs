@@ -7,6 +7,7 @@ pub enum DbError {
     InvalidSpec(&'static str),
     Conflict(&'static str),
     CorruptRecord(&'static str),
+    Verification(String),
 }
 
 impl fmt::Display for DbError {
@@ -19,6 +20,7 @@ impl fmt::Display for DbError {
             Self::InvalidSpec(reason) => write!(f, "invalid Translate record: {reason}"),
             Self::Conflict(reason) => write!(f, "Translate record conflict: {reason}"),
             Self::CorruptRecord(reason) => write!(f, "corrupt Translate record: {reason}"),
+            Self::Verification(reason) => write!(f, "result verification failed: {reason}"),
         }
     }
 }

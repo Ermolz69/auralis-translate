@@ -10,4 +10,4 @@ pub use domain::{
     ResultId, ReviewState, RunId, RunState, SegmentId, SourceHash, SourceSegment, TargetSegment,
     TranslationBatch, TranslationId,
 };
-pub use ports::{CheckpointStore, ProviderError, TranslationProvider};
+pub use ports::{CheckpointStore, ProviderError, TranslationProvider, VerifiedRenderer};

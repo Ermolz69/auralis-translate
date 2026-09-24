@@ -45,17 +45,22 @@ pub(crate) fn execute(
         revision: 1,
         source_hash: plan.source_hash(),
         block_fingerprints: plan.block_fingerprints(),
-        structural_evidence_json: SrtRunPlan::STRUCTURAL_EVIDENCE.into(),
         review_state: ReviewState::NeedsReview,
     };
-    if let Err(error) = db.commit_result(&result, &output) {
-        db.stop_attempt(
-            run.run_id,
-            attempt,
-            RunStop::Failed,
-            "result persistence failed",
-        )?;
-        return Err(Box::new(error));
+    let committed = match db.commit_result(&result, plan) {
+        Ok(committed) => committed,
+        Err(error) => {
+            db.stop_attempt(
+                run.run_id,
+                attempt,
+                RunStop::Failed,
+                "result persistence failed",
+            )?;
+            return Err(Box::new(error));
+        }
+    };
+    if committed.output_hash != SourceHash::digest(&output) {
+        return Err("verified result differs from the completed output".into());
     }
     write_new(output_path, &output)?;
     println!("result_id={result_id} review=needs_review");

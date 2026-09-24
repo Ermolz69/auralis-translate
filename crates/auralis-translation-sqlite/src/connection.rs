@@ -7,7 +7,7 @@ use crate::{
     AttemptId, CheckpointSpec, DbError, ResultRecord, ResultSpec, RunSpec, RunStop, SqliteConfig,
     TranslationSpec,
 };
-use auralis_translation::{ResultId, RunId, RunState, TranslationId};
+use auralis_translation::{ResultId, RunId, RunState, TranslationId, VerifiedRenderer};
 use rusqlite::Connection;
 use std::path::Path;
 
@@ -82,12 +82,12 @@ impl TranslateDb {
         attempt_repository::state(&self.connection, run_id)
     }
 
-    pub fn commit_result(
+    pub fn commit_result<V: VerifiedRenderer>(
         &mut self,
         spec: &ResultSpec,
-        verified_output: &[u8],
+        renderer: &V,
     ) -> Result<ResultRecord, DbError> {
-        result_repository::commit(&mut self.connection, spec, verified_output)
+        result_repository::commit(&mut self.connection, spec, renderer)
     }
 
     pub fn result(&self, result_id: ResultId) -> Result<ResultRecord, DbError> {

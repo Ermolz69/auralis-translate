@@ -1,17 +1,25 @@
 use crate::repositories::checkpoint_repository;
 use crate::{DbError, ResultRecord, ResultSpec};
-use auralis_translation::{ResultId, ReviewState, RunId, SourceHash, TargetSegment};
+use auralis_translation::{
+    ResultId, ReviewState, RunId, SourceHash, TargetSegment, VerifiedRenderer,
+};
 use rusqlite::{Connection, OptionalExtension, params};
 
-pub(crate) fn commit(
+pub(crate) fn commit<V: VerifiedRenderer>(
     connection: &mut Connection,
     spec: &ResultSpec,
-    verified_output: &[u8],
+    renderer: &V,
 ) -> Result<ResultRecord, DbError> {
-    if spec.revision == 0 || spec.block_fingerprints.is_empty() || verified_output.is_empty() {
-        return Err(DbError::InvalidSpec("incomplete result revision or output"));
+    if spec.revision == 0 || spec.block_fingerprints.is_empty() {
+        return Err(DbError::InvalidSpec("incomplete result revision or plan"));
     }
-    let evidence: serde_json::Value = serde_json::from_str(&spec.structural_evidence_json)
+    if renderer.source_hash() != spec.source_hash {
+        return Err(DbError::Conflict(
+            "renderer source differs from result source",
+        ));
+    }
+    let evidence_json = renderer.structural_evidence();
+    let evidence: serde_json::Value = serde_json::from_str(evidence_json)
         .map_err(|_| DbError::InvalidSpec("invalid structural evidence JSON"))?;
     if !evidence.is_object() {
         return Err(DbError::InvalidSpec(
@@ -58,7 +66,13 @@ pub(crate) fn commit(
         selected.extend(checkpoint.accepted);
     }
     let selected_json = checkpoint_repository::encode_segments(&selected)?;
-    let output_hash = SourceHash::digest(verified_output);
+    let verified_output = renderer
+        .render_selected(&selected)
+        .map_err(|error| DbError::Verification(error.to_string()))?;
+    if verified_output.is_empty() {
+        return Err(DbError::Verification("rendered output is empty".into()));
+    }
+    let output_hash = SourceHash::digest(&verified_output);
     let review_state = review_state_str(spec.review_state);
     if state != "running" && state != "validated" {
         return Err(DbError::Conflict("run is not ready for a result"));
@@ -83,7 +97,7 @@ pub(crate) fn commit(
          ON CONFLICT(result_id) DO NOTHING",
         params![spec.result_id.to_string(), spec.run_id.to_string(), spec.revision,
             spec.source_hash.to_string(), output_hash.to_string(), selected_json,
-            spec.structural_evidence_json, review_state],
+            evidence_json, review_state],
     )?;
     let stored = load_from_connection(&transaction, spec.result_id)?;
     if stored.run_id != spec.run_id
@@ -91,7 +105,7 @@ pub(crate) fn commit(
         || stored.source_hash != spec.source_hash
         || stored.output_hash != output_hash
         || stored.selected != selected
-        || stored.structural_evidence_json != spec.structural_evidence_json
+        || stored.structural_evidence_json != evidence_json
         || stored.review_state != spec.review_state
     {
         return Err(DbError::Conflict(

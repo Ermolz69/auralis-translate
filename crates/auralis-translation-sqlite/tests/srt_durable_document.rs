@@ -64,17 +64,16 @@ fn renders_complete_copy_only_after_durable_resume() -> Result<(), Box<dyn Error
     };
     assert!(plan.execute(&provider, &mut db).is_err());
     assert_eq!(db.checkpoints(run.run_id)?.len(), 1);
-    let result = ResultSpec {
+    let mut result = ResultSpec {
         result_id: ResultId::parse("33333333-3333-4333-8333-333333333333")?,
         run_id: run.run_id,
         revision: 1,
         source_hash: plan.source_hash(),
         block_fingerprints: plan.block_fingerprints(),
-        structural_evidence_json: "{\"format\":\"srt\",\"verified\":true}".into(),
         review_state: ReviewState::NeedsReview,
     };
     assert!(matches!(
-        db.commit_result(&result, b"partial"),
+        db.commit_result(&result, &plan),
         Err(DbError::Conflict(_))
     ));
     db.stop_attempt(run.run_id, attempt, RunStop::Failed, "model failed")?;
@@ -94,7 +93,7 @@ fn renders_complete_copy_only_after_durable_resume() -> Result<(), Box<dyn Error
         auralis_translation::SourceHash::digest(SOURCE),
         translation.source_hash
     );
-    let committed = db.commit_result(&result, &output)?;
+    let committed = db.commit_result(&result, &plan)?;
     assert_eq!(
         committed.output_hash,
         auralis_translation::SourceHash::digest(&output)
@@ -104,9 +103,10 @@ fn renders_complete_copy_only_after_durable_resume() -> Result<(), Box<dyn Error
     assert_eq!(db.run_state(run.run_id)?, RunState::Validated);
     assert_eq!(db.result(result.result_id)?, committed);
     assert_eq!(db.result_for_run(run.run_id)?, committed);
-    assert_eq!(db.commit_result(&result, &output)?, committed);
+    assert_eq!(db.commit_result(&result, &plan)?, committed);
+    result.review_state = ReviewState::Ready;
     assert!(matches!(
-        db.commit_result(&result, b"different output"),
+        db.commit_result(&result, &plan),
         Err(DbError::Conflict(_))
     ));
     drop(db);
