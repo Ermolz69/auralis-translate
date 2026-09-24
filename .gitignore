@@ -1,4 +1,5 @@
 /target/
+/.cache/
 *.sqlite
 *.sqlite-shm
 *.sqlite-wal

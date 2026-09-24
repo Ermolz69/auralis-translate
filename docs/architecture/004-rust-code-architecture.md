@@ -1,6 +1,6 @@
 # Rust code architecture
 
-Status: implementation guidance, 24 September 2026. The core, format, and CLI crates are present. SQLite and model crates are added when their adapters have real behavior; the layout below is the target structure.
+Status: implementation guidance, 24 September 2026. The core, format, experimental llama.cpp adapter, and CLI crates are present. The SQLite crate is added when its adapter has real behavior; the layout below is the target structure.
 
 ## Design goals
 
