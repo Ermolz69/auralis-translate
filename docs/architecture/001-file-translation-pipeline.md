@@ -48,6 +48,8 @@ The renderer constructs a new buffer or temporary file from the original bytes. 
 7. **Verify.** Reparse output and compare cue count/order/identity, timing, settings, and protected bytes. Confirm that no segment was lost, every payload is representable, and the source digest still matches. Create an immutable `result_id` only after these checks pass.
 8. **Publish.** Auralis writes the new file as a managed artifact and links it to the project using [the storage protocol](002-storage-and-lifecycle.md). The source artifact remains unchanged.
 
+The current opt-in SRT context experiment uses one target cue per block and up to one neighboring cue on each side. Context stays read-only, is never accepted as a translated output ID, and is part of the block fingerprint used by resume. The version-2 prompt rejects context beyond its profile byte limit before making a model request. The original prompt-v1 profile still uses zero context and retains its existing policy fingerprint. This experiment has structural smoke evidence, but [its first real output](../../eval/experiments/2026-09-24-context-profile-smoke.md) showed repeated phrasing and has not passed language review.
+
 ## Strict-format invariants
 
 For an advertised strict subset, cue count and order, external timing, source labels/identifiers, and supported non-text constructs are preserved. Protected source ranges remain byte-identical. Only declared text slots may differ. Longer Russian text shifts later byte offsets; verification compares protected content through the source map rather than using old absolute offsets in the output.

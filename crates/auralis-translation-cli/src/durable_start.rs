@@ -1,11 +1,11 @@
 use crate::durable_workflow::{
-    DATABASE_FILE, ExecutionConfig, SOURCE_DIRECTORY, execute, load_profile,
+    DATABASE_FILE, ExecutionConfig, SOURCE_DIRECTORY, block_policy, execute, load_profile,
 };
 use crate::read_source::read_source;
 use crate::source_snapshot::source_snapshot;
 use crate::write_new::write_new;
 use auralis_translation::{LanguageCode, LanguagePair, RunId, TranslationId};
-use auralis_translation_formats::srt::{SrtBlockPolicy, SrtRunPlan};
+use auralis_translation_formats::srt::SrtRunPlan;
 use auralis_translation_sqlite::{RunSpec, SqliteConfig, TranslateDb, TranslationSpec};
 use std::error::Error;
 use std::ffi::OsStr;
@@ -32,7 +32,7 @@ pub(crate) fn run(
         TranslationId::new(Uuid::new_v4()).ok_or("failed to create translation ID")?;
     let run_id = RunId::new(Uuid::new_v4()).ok_or("failed to create run ID")?;
     let pair = LanguagePair::new(LanguageCode::Chinese, LanguageCode::Russian)?;
-    let block_policy = SrtBlockPolicy::default();
+    let block_policy = block_policy(&profile)?;
     let plan = SrtRunPlan::new(&source, translation_id, run_id, pair, block_policy)?;
 
     let state_dir = Path::new(state_dir);

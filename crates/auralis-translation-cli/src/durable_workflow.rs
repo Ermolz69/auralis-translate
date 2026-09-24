@@ -1,7 +1,7 @@
 use crate::stderr_progress::StderrProgress;
 use crate::write_new::write_new;
 use auralis_translation::{ResultId, ReviewState, RunState, SourceHash, TranslateRunError};
-use auralis_translation_formats::srt::{SrtRunError, SrtRunPlan};
+use auralis_translation_formats::srt::{SrtBlockPolicy, SrtRunError, SrtRunPlan};
 use auralis_translation_llamacpp::{LlamaCppProvider, ModelProfile};
 use auralis_translation_sqlite::{ResultSpec, RunSpec, RunStop, SqliteConfig, TranslateDb};
 use std::error::Error;
@@ -23,6 +23,15 @@ pub(crate) fn load_profile(path: &Path) -> Result<(ModelProfile, SourceHash), Bo
     let bytes = std::fs::read(path)?;
     let profile = ModelProfile::from_json(&bytes)?;
     Ok((profile, SourceHash::digest(&bytes)))
+}
+
+pub(crate) fn block_policy(profile: &ModelProfile) -> Result<SrtBlockPolicy, Box<dyn Error>> {
+    SrtBlockPolicy::with_context(
+        profile.target_segments_per_block,
+        profile.context_before_segments,
+        profile.context_after_segments,
+    )
+    .ok_or_else(|| "model profile has an unsupported SRT block policy".into())
 }
 
 pub(crate) fn execute(

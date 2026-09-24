@@ -1,10 +1,11 @@
 use crate::durable_workflow::{
-    DATABASE_FILE, ExecutionConfig, SOURCE_DIRECTORY, execute, export_validated, load_profile,
+    DATABASE_FILE, ExecutionConfig, SOURCE_DIRECTORY, block_policy, execute, export_validated,
+    load_profile,
 };
 use crate::read_source::read_source;
 use crate::source_snapshot::source_snapshot;
 use auralis_translation::{RunId, RunState, SourceHash};
-use auralis_translation_formats::srt::{SrtBlockPolicy, SrtRunPlan};
+use auralis_translation_formats::srt::SrtRunPlan;
 use auralis_translation_sqlite::{SqliteConfig, TranslateDb};
 use std::error::Error;
 use std::ffi::OsStr;
@@ -49,7 +50,7 @@ pub(crate) fn run(
     if stored_run.profile_fingerprint != profile_hash.to_string() {
         return Err("model profile differs from frozen run".into());
     }
-    let block_policy = SrtBlockPolicy::default();
+    let block_policy = block_policy(&profile)?;
     let plan = SrtRunPlan::new(
         &source,
         translation.translation_id,

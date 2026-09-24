@@ -5,6 +5,14 @@ const PROFILE_SCHEMA_VERSION: u32 = 1;
 const MAX_RESPONSE_BYTES: usize = 4 * 1024 * 1024;
 const MAX_TIMEOUT_SECONDS: u64 = 600;
 const MAX_TOKENS_PER_LINE: u32 = 4096;
+const DEFAULT_TARGET_SEGMENTS: usize = 8;
+const MAX_TARGET_SEGMENTS: usize = 64;
+const MAX_CONTEXT_SEGMENTS: usize = 8;
+const MAX_CONTEXT_BYTES: usize = 64 * 1024;
+
+fn default_target_segments() -> usize {
+    DEFAULT_TARGET_SEGMENTS
+}
 
 #[derive(Clone, Debug, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -15,6 +23,14 @@ pub struct ModelProfile {
     pub model_file_sha256: String,
     pub model_alias: String,
     pub prompt_version: u32,
+    #[serde(default = "default_target_segments")]
+    pub target_segments_per_block: usize,
+    #[serde(default)]
+    pub context_before_segments: usize,
+    #[serde(default)]
+    pub context_after_segments: usize,
+    #[serde(default)]
+    pub max_context_bytes: usize,
     pub temperature: f64,
     pub top_p: f64,
     pub top_k: i32,
@@ -49,8 +65,26 @@ impl ModelProfile {
         {
             return Err(ProfileError::Invalid("model SHA-256 must be hexadecimal"));
         }
-        if self.prompt_version != 1 {
+        if !matches!(self.prompt_version, 1 | 2) {
             return Err(ProfileError::Invalid("unsupported prompt version"));
+        }
+        if !(1..=MAX_TARGET_SEGMENTS).contains(&self.target_segments_per_block)
+            || self.context_before_segments > MAX_CONTEXT_SEGMENTS
+            || self.context_after_segments > MAX_CONTEXT_SEGMENTS
+            || self.max_context_bytes > MAX_CONTEXT_BYTES
+        {
+            return Err(ProfileError::Invalid("block or context limits are invalid"));
+        }
+        if (self.prompt_version == 1
+            && (self.context_before_segments != 0
+                || self.context_after_segments != 0
+                || self.max_context_bytes != 0))
+            || (self.prompt_version == 2
+                && (self.target_segments_per_block != 1
+                    || self.context_before_segments + self.context_after_segments == 0
+                    || self.max_context_bytes == 0))
+        {
+            return Err(ProfileError::Invalid("prompt and context policy disagree"));
         }
         if !self.temperature.is_finite()
             || !(0.0..=2.0).contains(&self.temperature)

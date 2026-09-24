@@ -32,7 +32,18 @@ impl SrtRunPlan {
         let segments = document.source_segments().map_err(SrtPlanError::Contract)?;
         let mut batches = Vec::new();
         let mut planned_ids = Vec::new();
-        for targets in segments.chunks(policy.max_target_segments()) {
+        for (block_index, targets) in segments.chunks(policy.max_target_segments()).enumerate() {
+            let start = block_index * policy.max_target_segments();
+            let end = start + targets.len();
+            let before = start.saturating_sub(policy.context_before_segments());
+            let after = end
+                .saturating_add(policy.context_after_segments())
+                .min(segments.len());
+            let context = segments[before..start]
+                .iter()
+                .chain(&segments[end..after])
+                .cloned()
+                .collect();
             planned_ids.push(targets.iter().map(|segment| segment.id()).collect());
             batches.push(
                 TranslationBatch::new(
@@ -41,7 +52,7 @@ impl SrtRunPlan {
                     source_hash,
                     pair,
                     targets.to_vec(),
-                    Vec::new(),
+                    context,
                 )
                 .map_err(SrtPlanError::Contract)?,
             );
@@ -85,6 +96,12 @@ impl SrtRunPlan {
         bytes.extend_from_slice(&(parse.max_bytes() as u64).to_le_bytes());
         bytes.extend_from_slice(&parse.max_cues().to_le_bytes());
         bytes.extend_from_slice(&(parse.max_line_bytes() as u64).to_le_bytes());
+        if policy.context_before_segments() != 0 || policy.context_after_segments() != 0 {
+            const CONTEXT_POLICY_VERSION: u32 = 2;
+            bytes.extend_from_slice(&CONTEXT_POLICY_VERSION.to_le_bytes());
+            bytes.extend_from_slice(&(policy.context_before_segments() as u64).to_le_bytes());
+            bytes.extend_from_slice(&(policy.context_after_segments() as u64).to_le_bytes());
+        }
         SourceHash::digest(&bytes)
     }
 

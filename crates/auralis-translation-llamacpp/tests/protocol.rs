@@ -10,6 +10,8 @@ use std::time::Duration;
 
 const PROFILE: &[u8] =
     include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.experimental.json");
+const CONTEXT_PROFILE: &[u8] =
+    include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.context.experimental.json");
 
 #[test]
 fn sends_one_line_to_local_chat_endpoint_and_accepts_response() -> Result<(), Box<dyn Error>> {
@@ -46,6 +48,55 @@ fn rejects_truncated_response_and_remote_endpoint() -> Result<(), Box<dyn Error>
     let provider = LlamaCppProvider::new(&format!("http://{address}/"), profile)?;
     assert!(translate_batch(&provider, &batch()?).is_err());
     server.join().map_err(|_| "mock server panicked")??;
+    Ok(())
+}
+
+#[test]
+fn context_prompt_contains_neighbor_text_but_returns_only_target() -> Result<(), Box<dyn Error>> {
+    let listener = TcpListener::bind("127.0.0.1:0")?;
+    let address = listener.local_addr()?;
+    let server = std::thread::spawn(move || serve_once(listener, "stop"));
+    let profile = ModelProfile::from_json(CONTEXT_PROFILE)?;
+    let provider = LlamaCppProvider::new(&format!("http://{address}/"), profile)?;
+    let batch = TranslationBatch::new(
+        TranslationId::parse("11111111-1111-4111-8111-111111111111")?,
+        RunId::parse("22222222-2222-4222-8222-222222222222")?,
+        SourceHash::digest(b"source"),
+        LanguagePair::new(LanguageCode::Chinese, LanguageCode::Russian)?,
+        vec![SourceSegment::new(
+            SegmentId::new(2).ok_or("invalid ID")?,
+            2000,
+            3000,
+            vec!["你好。".into()],
+        )?],
+        vec![SourceSegment::new(
+            SegmentId::new(1).ok_or("invalid ID")?,
+            1000,
+            2000,
+            vec!["旁白。".into()],
+        )?],
+    )?;
+    let translated = translate_batch(&provider, &batch)?;
+    assert_eq!(translated.len(), 1);
+    assert_eq!(translated[0].lines, ["Привет."]);
+    let request = server.join().map_err(|_| "mock server panicked")??;
+    let prompt = request["messages"][0]["content"]
+        .as_str()
+        .ok_or("missing context prompt")?;
+    assert!(prompt.contains("context_subtitles"));
+    assert!(prompt.contains("旁白。"));
+    assert!(prompt.contains("你好。"));
+    assert!(prompt.contains("target_line_index"));
+
+    let mut limited: serde_json::Value = serde_json::from_slice(CONTEXT_PROFILE)?;
+    limited["max_context_bytes"] = serde_json::json!(1);
+    let limited_profile = ModelProfile::from_json(&serde_json::to_vec(&limited)?)?;
+    let limited_provider = LlamaCppProvider::new("http://127.0.0.1:1/", limited_profile)?;
+    assert!(
+        translate_batch(&limited_provider, &batch).is_err_and(|error| error
+            .to_string()
+            .contains("context exceeds profile byte limit"))
+    );
     Ok(())
 }
 

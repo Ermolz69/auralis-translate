@@ -47,10 +47,10 @@ impl LlamaCppProvider {
         })
     }
 
-    fn translate_line(&self, source: &str) -> Result<String, ProviderError> {
+    fn translate_line(&self, prompt_text: String) -> Result<String, ProviderError> {
         let request = json!({
             "model": self.profile.model_alias,
-            "messages": [{"role": "user", "content": prompt::translate_line(source)}],
+            "messages": [{"role": "user", "content": prompt_text}],
             "temperature": self.profile.temperature,
             "top_p": self.profile.top_p,
             "top_k": self.profile.top_k,
@@ -110,16 +110,30 @@ impl LlamaCppProvider {
 
 impl TranslationProvider for LlamaCppProvider {
     fn translate(&self, batch: &TranslationBatch) -> Result<ProviderResponse, ProviderError> {
-        if !batch.context().is_empty() {
+        if self.profile.prompt_version == 1 && !batch.context().is_empty() {
             return Err(ProviderError(
                 "experimental profile has no context support".into(),
             ));
         }
+        let context_bytes: usize = batch
+            .context()
+            .iter()
+            .flat_map(|segment| segment.lines())
+            .map(String::len)
+            .sum();
+        if context_bytes > self.profile.max_context_bytes {
+            return Err(ProviderError("context exceeds profile byte limit".into()));
+        }
         let mut translations = Vec::with_capacity(batch.targets().len());
         for segment in batch.targets() {
             let mut lines = Vec::with_capacity(segment.lines().len());
-            for source_line in segment.lines() {
-                lines.push(self.translate_line(source_line)?);
+            for (line_index, source_line) in segment.lines().iter().enumerate() {
+                let prompt_text = if self.profile.prompt_version == 1 {
+                    prompt::translate_line(source_line)
+                } else {
+                    prompt::translate_line_with_context(segment, line_index, batch.context())
+                };
+                lines.push(self.translate_line(prompt_text)?);
             }
             translations.push(TargetSegment {
                 id: segment.id(),
