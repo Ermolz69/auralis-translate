@@ -1,6 +1,6 @@
 # Host translation jobs
 
-Status: implementation design, 25 September 2026. Auralis creates durable Translate runs, and an experimental caller-driven worker can execute one through a linked host job using a supplied local-server URL. Translate records that job ID on the attempt. The `Translation` job kind persists independently of dubbing project processing state. Auralis SQLite schema v8 and its storage port create, start, and terminalize associated jobs with revision checks. Desktop scheduling, managed model process ownership, and checkpoint progress reporting are not implemented yet.
+Status: implementation design, 25 September 2026. Auralis creates durable Translate runs, and an experimental caller-driven worker can execute one through a linked host job using a supplied local-server URL. Translate records that job ID on the attempt. The `Translation` job kind persists independently of dubbing project processing state. Auralis SQLite schema v8 and its storage port create, start, report progress for, and terminalize associated jobs with revision checks. Desktop scheduling and managed model process ownership are not implemented yet.
 
 ## Ownership and identity
 
@@ -40,6 +40,8 @@ sequenceDiagram
 
 All resource admission and job creation must have explicit compensation. A committed Auralis link/run intent survives failure to create Translate records. A job must not become `running` unless a worker is attached or startup recovery can identify and terminalize it. A worker must never report a block saved before the Translate checkpoint transaction commits. The result ID is available only after complete structural validation and Translate result commit.
 
+The caller-driven worker receives core `RunProgress` after each durable checkpoint and mirrors its saved/total block counts into the linked running Auralis job. The initial count also includes checkpoints retained from an earlier attempt. The domain requires a fixed positive total and monotonic saved count; Auralis SQLite checks the active run association and job revision on every progress write. The host percentage stays below 100 until the validated result commits and the job completes. A failed mirror write is logged without changing the Translate run or discarding its checkpoint; Translate SQLite remains authoritative, so the host display can lag until reconciliation. Progress is not yet streamed to the desktop UI, and failure recovery of a lagging progress mirror still needs an end-to-end test.
+
 The first production runner should accept a checked, frozen model profile. It must own or verify the local server process, loaded model, model-file digest, and resource slot before inference. The current application API accepts a caller-supplied loopback URL for development and is not the managed runner. An unchecked experimental profile cannot silently enter the production path.
 
 ## Pause, cancellation, and restart
@@ -52,7 +54,7 @@ Publication is a separate transition. A job can finish with a validated result w
 
 ## S7 verification before enabling the UI action
 
-1. Exercise job creation, resource reservation, worker attachment, progress, terminalization, and publication with a mock local model server across the two real SQLite files.
+1. Exercise job creation, resource reservation, worker attachment, progress, terminalization, and publication with a mock local model server across the two real SQLite files. Current tests cover a caller-driven worker and persisted checkpoint progress; resource admission remains open.
 2. Kill the worker after a committed block, restart desktop services, and prove the same run resumes only missing blocks. Repeat after the result commit and before managed output finalization.
 3. Pause during an in-flight block and verify that the UI distinguishes pending pause from acknowledged pause, without losing a checkpoint or modifying the original.
 4. Verify project deletion and cancellation cannot select a stale result or leak a runtime process. Test concurrent start/resume requests and one-active-job enforcement.
