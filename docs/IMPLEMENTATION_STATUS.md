@@ -24,6 +24,8 @@ The library creates the translated document in memory from the original bytes. T
 
 The [first prompt-v3 real-model smoke](../eval/experiments/2026-09-24-glossary-profile-smoke.md) completed two blocks and re-exported an identical file after server shutdown. The model ignored the confirmed term and repeated one Russian phrase across distinct source lines; the glossary warning identified the missing term. This is evidence against selecting the current profile without further evaluation. S5 and S6 remain open.
 
+S7 comparison now has a project-scoped Tauri command and typed frontend response for pages of 1–100 source/result segment pairs. A two-database test checks manual edits, an empty tail page, project mismatch, and reading an older ready revision after a newer run starts. The adapter verifies the full reconstructed result and original hash before slicing a page. A UI screen and managed inference remain open.
+
 ## Reproduce the current path
 
 From this repository root:
