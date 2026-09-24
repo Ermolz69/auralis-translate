@@ -1,8 +1,8 @@
 use super::{TranslateRunError, translate_batch};
 use crate::domain::valid_line;
 use crate::{
-    BlockCheckpoint, CheckpointStore, ProgressSink, RunControl, RunId, RunProgress, SegmentId,
-    TargetSegment, TranslationBatch, TranslationProvider,
+    BlockCheckpoint, CheckpointStore, ProgressSink, RetryPolicy, RunControl, RunId, RunProgress,
+    SegmentId, TargetSegment, TranslationBatch, TranslationProvider,
 };
 use std::collections::{HashMap, HashSet};
 
@@ -53,6 +53,26 @@ pub fn translate_planned_run_with_control<S: CheckpointStore>(
     batches: &[TranslationBatch],
     progress: &mut impl ProgressSink,
     control: &impl RunControl,
+) -> Result<Vec<TargetSegment>, TranslateRunError<S::Error>> {
+    translate_planned_run_with_policy(
+        provider,
+        store,
+        planned_ids,
+        batches,
+        progress,
+        control,
+        RetryPolicy::default(),
+    )
+}
+
+pub fn translate_planned_run_with_policy<S: CheckpointStore>(
+    provider: &impl TranslationProvider,
+    store: &mut S,
+    planned_ids: &[Vec<SegmentId>],
+    batches: &[TranslationBatch],
+    progress: &mut impl ProgressSink,
+    control: &impl RunControl,
+    retry: RetryPolicy,
 ) -> Result<Vec<TargetSegment>, TranslateRunError<S::Error>> {
     if planned_ids.is_empty() || planned_ids.len() != batches.len() {
         return Err(TranslateRunError::InvalidPlan(
@@ -124,8 +144,16 @@ pub fn translate_planned_run_with_control<S: CheckpointStore>(
         let checkpoint = if let Some(checkpoint) = checkpoints.remove(&index) {
             checkpoint
         } else {
-            check_pause(control, first.run_id())?;
-            let translated = translate_batch(provider, batch).map_err(TranslateRunError::Batch)?;
+            let mut attempt_count = 0;
+            let translated = loop {
+                check_pause(control, first.run_id())?;
+                attempt_count += 1;
+                match translate_batch(provider, batch) {
+                    Ok(translated) => break translated,
+                    Err(_) if attempt_count < retry.max_attempts() => continue,
+                    Err(error) => return Err(TranslateRunError::Batch(error)),
+                }
+            };
             check_pause(control, first.run_id())?;
             let block_index = u32::try_from(index)
                 .map_err(|_| TranslateRunError::InvalidPlan("too many blocks"))?;
@@ -134,7 +162,7 @@ pub fn translate_planned_run_with_control<S: CheckpointStore>(
                 block_index,
                 input_fingerprint: batch.fingerprint(),
                 accepted: translated,
-                attempt_count: 1,
+                attempt_count,
             };
             store
                 .commit(&checkpoint)

@@ -1,4 +1,5 @@
 use crate::ProfileError;
+use auralis_translation::RetryPolicy;
 use serde::Deserialize;
 
 const PROFILE_SCHEMA_VERSION: u32 = 1;
@@ -12,6 +13,10 @@ const MAX_CONTEXT_BYTES: usize = 64 * 1024;
 
 fn default_target_segments() -> usize {
     DEFAULT_TARGET_SEGMENTS
+}
+
+fn default_block_attempts() -> u32 {
+    RetryPolicy::default().max_attempts()
 }
 
 #[derive(Clone, Debug, Deserialize)]
@@ -31,6 +36,8 @@ pub struct ModelProfile {
     pub context_after_segments: usize,
     #[serde(default)]
     pub max_context_bytes: usize,
+    #[serde(default = "default_block_attempts")]
+    pub max_block_attempts: u32,
     pub temperature: f64,
     pub top_p: f64,
     pub top_k: i32,
@@ -72,6 +79,7 @@ impl ModelProfile {
             || self.context_before_segments > MAX_CONTEXT_SEGMENTS
             || self.context_after_segments > MAX_CONTEXT_SEGMENTS
             || self.max_context_bytes > MAX_CONTEXT_BYTES
+            || RetryPolicy::new(self.max_block_attempts).is_none()
         {
             return Err(ProfileError::Invalid("block or context limits are invalid"));
         }

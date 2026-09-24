@@ -1,6 +1,8 @@
 use crate::stderr_progress::StderrProgress;
 use crate::write_new::write_new;
-use auralis_translation::{ResultId, ReviewState, RunState, SourceHash, TranslateRunError};
+use auralis_translation::{
+    ResultId, RetryPolicy, ReviewState, RunState, SourceHash, TranslateRunError,
+};
 use auralis_translation_formats::srt::{SrtBlockPolicy, SrtRunError, SrtRunPlan};
 use auralis_translation_llamacpp::{LlamaCppProvider, ModelProfile};
 use auralis_translation_sqlite::{ResultSpec, RunSpec, RunStop, SqliteConfig, TranslateDb};
@@ -48,6 +50,8 @@ pub(crate) fn execute(
         .endpoint
         .to_str()
         .ok_or("server URL must be Unicode")?;
+    let retry = RetryPolicy::new(profile.max_block_attempts)
+        .ok_or("model profile has an invalid block attempt limit")?;
     let provider = LlamaCppProvider::new(endpoint, profile)?;
     let control_db = TranslateDb::open(
         &config.state_dir.join(DATABASE_FILE),
@@ -58,17 +62,18 @@ pub(crate) fn execute(
     } else {
         db.begin_attempt(run, None)?
     };
-    let output = match plan.execute_with_control(&provider, db, &mut StderrProgress, &control_db) {
-        Ok(output) => output,
-        Err(error @ SrtRunError::Translate(TranslateRunError::Paused)) => {
-            db.stop_attempt(run.run_id, attempt, RunStop::Paused, "pause requested")?;
-            return Err(Box::new(error));
-        }
-        Err(error) => {
-            db.stop_attempt(run.run_id, attempt, RunStop::Failed, "translation failed")?;
-            return Err(Box::new(error));
-        }
-    };
+    let output =
+        match plan.execute_with_policy(&provider, db, &mut StderrProgress, &control_db, retry) {
+            Ok(output) => output,
+            Err(error @ SrtRunError::Translate(TranslateRunError::Paused)) => {
+                db.stop_attempt(run.run_id, attempt, RunStop::Paused, "pause requested")?;
+                return Err(Box::new(error));
+            }
+            Err(error) => {
+                db.stop_attempt(run.run_id, attempt, RunStop::Failed, "translation failed")?;
+                return Err(Box::new(error));
+            }
+        };
     let result_id = ResultId::new(Uuid::new_v4()).ok_or("failed to create result ID")?;
     let result = ResultSpec {
         result_id,

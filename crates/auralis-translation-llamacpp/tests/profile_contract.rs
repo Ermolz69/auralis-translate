@@ -14,6 +14,7 @@ fn pinned_experimental_profile_parses() -> Result<(), Box<dyn Error>> {
     assert_eq!(profile.prompt_version, 1);
     assert_eq!(profile.target_segments_per_block, 8);
     assert_eq!(profile.context_before_segments, 0);
+    assert_eq!(profile.max_block_attempts, 1);
     Ok(())
 }
 
@@ -44,6 +45,7 @@ fn rejects_invalid_profile_limits_and_revision() -> Result<(), Box<dyn Error>> {
         ("max_tokens_per_line", serde_json::json!(0)),
         ("timeout_seconds", serde_json::json!(0)),
         ("max_response_bytes", serde_json::json!(0)),
+        ("max_block_attempts", serde_json::json!(4)),
     ] {
         let mut json: serde_json::Value = serde_json::from_slice(PROFILE)?;
         json[key] = bad;

@@ -50,6 +50,8 @@ The renderer constructs a new buffer or temporary file from the original bytes. 
 
 The current opt-in SRT context experiment uses one target cue per block and up to one neighboring cue on each side. Context stays read-only, is never accepted as a translated output ID, and is part of the block fingerprint used by resume. The version-2 prompt rejects context beyond its profile byte limit before making a model request. The original prompt-v1 profile still uses zero context and retains its existing policy fingerprint. This experiment has structural smoke evidence, but [its first real output](../../eval/experiments/2026-09-24-context-profile-smoke.md) showed repeated phrasing and has not passed language review.
 
+The profile can allow one to three attempts for an uncommitted block. Each attempt runs the provider and full response contract again. Only a complete accepted response becomes a checkpoint, whose `attempt_count` records how many calls were made for that block. The current retry mechanism immediately repeats provider or contract failures; error classification, backoff, and detailed failure diagnostics remain to be implemented before the reliable-translation gate.
+
 ## Strict-format invariants
 
 For an advertised strict subset, cue count and order, external timing, source labels/identifiers, and supported non-text constructs are preserved. Protected source ranges remain byte-identical. Only declared text slots may differ. Longer Russian text shifts later byte offsets; verification compares protected content through the source map rather than using old absolute offsets in the output.
