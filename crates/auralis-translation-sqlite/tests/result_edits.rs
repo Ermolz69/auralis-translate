@@ -39,7 +39,7 @@ fn source_map(plan: &SrtRunPlan) -> Result<Vec<SegmentSpec>, Box<dyn Error>> {
             Ok(SegmentSpec {
                 id: segment.id,
                 ordinal: u32::try_from(index)?,
-                cue_label: segment.cue_label.clone(),
+                cue_label: Some(segment.cue_label.clone()),
                 start_ms: segment.start_ms,
                 end_ms: segment.end_ms,
                 source_lines: segment

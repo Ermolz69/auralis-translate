@@ -22,15 +22,16 @@ pub(crate) fn ensure(
 ) -> Result<(), DbError> {
     validate(source_len, segments)?;
     let transaction = connection.transaction()?;
-    let exists: Option<u32> = transaction
+    let source_format: Option<String> = transaction
         .query_row(
-            "SELECT 1 FROM translations WHERE translation_id = ?1",
+            "SELECT source_format FROM translations WHERE translation_id = ?1",
             [translation_id.to_string()],
             |row| row.get(0),
         )
         .optional()?;
-    if exists.is_none() {
-        return Err(DbError::Conflict("translation does not exist"));
+    let source_format = source_format.ok_or(DbError::Conflict("translation does not exist"))?;
+    if source_format != "vtt" && segments.iter().any(|segment| segment.cue_label.is_none()) {
+        return Err(DbError::InvalidSpec("missing source cue label"));
     }
     for segment in segments {
         let lines_json = serde_json::to_string(&segment.source_lines)?;
@@ -46,7 +47,7 @@ pub(crate) fn ensure(
              VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)
              ON CONFLICT(translation_id, segment_id) DO NOTHING",
             params![translation_id.to_string(), segment.id.get(), segment.ordinal,
-                segment.cue_label, segment.start_ms as i64, segment.end_ms as i64,
+                segment.cue_label.as_deref().unwrap_or(""), segment.start_ms as i64, segment.end_ms as i64,
                 lines_json, ranges_json, segment.parser_version],
         )?;
     }
@@ -86,7 +87,7 @@ pub(crate) fn load(
         segments.push(SegmentSpec {
             id: SegmentId::new(row.id).ok_or(DbError::CorruptRecord("zero stored segment ID"))?,
             ordinal: row.ordinal,
-            cue_label: row.cue_label,
+            cue_label: (!row.cue_label.is_empty()).then_some(row.cue_label),
             start_ms: u64::try_from(row.start_ms)
                 .map_err(|_| DbError::CorruptRecord("negative stored start time"))?,
             end_ms: u64::try_from(row.end_ms)
@@ -110,8 +111,10 @@ fn validate(source_len: u64, segments: &[SegmentSpec]) -> Result<(), DbError> {
     for (index, segment) in segments.iter().enumerate() {
         if Some(segment.ordinal) != u32::try_from(index).ok()
             || !ids.insert(segment.id)
-            || segment.cue_label.is_empty()
-            || segment.cue_label.chars().any(char::is_control)
+            || segment
+                .cue_label
+                .as_ref()
+                .is_some_and(|label| label.is_empty() || label.chars().any(char::is_control))
             || segment.start_ms >= segment.end_ms
             || segment.end_ms > i64::MAX as u64
             || segment.parser_version == 0

@@ -54,7 +54,7 @@ The table below describes the logical contract. Migration `crates/auralis-transl
 | Table | Required content |
 | --- | --- |
 | `translations` | `translation_id`, external `project_id`, source artifact ID/digest, format, language pair, creation time. |
-| `segments` | `translation_id`, stable `segment_id`, order, extracted source text, timing, source map, parser version. |
+| `segments` | `translation_id`, stable `segment_id`, order, optional external cue label, extracted source text, timing, source map, parser version. |
 | `runs` | `run_id`, `translation_id`, state, source digest, model/prompt/runtime fingerprints, block plan. |
 | `run_attempts` | `run_id`, attempt/host-job ID, start/end, pause or failure reason, actual runtime. Resume adds an attempt without changing `run_id`. |
 | `block_checkpoints` | `run_id`, block ID, input fingerprint, accepted translations by ID, diagnostics and attempt count. `(run_id, block_id)` is idempotent. |
@@ -64,6 +64,8 @@ The table below describes the logical contract. Migration `crates/auralis-transl
 | `diagnostics` | `run_id`, stage, code, time, related segment/block IDs and metrics; full raw model text is not required. |
 
 Use ordinary FKs within Translate SQLite (`runs → translations`, `results → runs`, checkpoints → runs). IDs owned by Auralis are checked through the integration API and reconciliation. SQLite FKs cannot cross schemas; in WAL mode, writing attached database files is not atomic across the files as a set. `ATTACH` is therefore not a substitute for recovery. [SQLite foreign-key limits](https://www.sqlite.org/foreignkeys.html#fk_unsupported), [SQLite ATTACH transactions](https://www.sqlite.org/lang_attach.html).
+
+`SegmentSpec.cue_label` is optional because a WebVTT cue may have no external identifier. The stable internal `segment_id` remains mandatory. The existing `segments.cue_label TEXT NOT NULL` column stores an absent WebVTT identifier as the empty string and decodes it back to `None`; nonempty identifiers round-trip unchanged. `ensure_segments` rejects an absent label for SRT records, so existing SRT snapshots retain their contract. This representation avoids a schema migration and does not change any stored SRT value. The source format belongs to the immutable translation record, and each segment's ID, text ranges, and optional cue label are compared on idempotent re-entry.
 
 The source link, source map, accepted checkpoints, results, edits, and effective fingerprints remain while the project exists. Working files, raw model responses and detailed runtime logs may have a bounded retention period; its exact duration must be chosen before production. Checkpoints and edit versions referenced by a result manifest are immutable. A new manual edit appends a revision rather than rewriting a published `result_id`.
 

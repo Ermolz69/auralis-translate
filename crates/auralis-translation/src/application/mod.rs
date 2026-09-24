@@ -1,9 +1,11 @@
 mod diagnose_batch;
+mod planned_batches;
 mod translate_batch;
 mod translate_batch_error;
 mod translate_planned_run;
 mod translate_run_error;
 
+pub use planned_batches::PlannedBatches;
 pub use translate_batch::translate_batch;
 pub use translate_batch_error::TranslateBatchError;
 pub use translate_planned_run::{

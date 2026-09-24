@@ -13,7 +13,7 @@ fn source_map_survives_reopen_and_conflicting_mapping_is_rejected() -> Result<()
     let segment = SegmentSpec {
         id: SegmentId::new(1).ok_or("invalid test ID")?,
         ordinal: 0,
-        cue_label: "1".into(),
+        cue_label: Some("1".into()),
         start_ms: 1000,
         end_ms: 2000,
         source_lines: vec!["source".into()],
@@ -22,6 +22,12 @@ fn source_map_survives_reopen_and_conflicting_mapping_is_rejected() -> Result<()
     };
     let mut db = TranslateDb::open(&path, SqliteConfig::default())?;
     db.ensure_translation(&translation)?;
+    let mut missing_srt_label = segment.clone();
+    missing_srt_label.cue_label = None;
+    assert!(matches!(
+        db.ensure_segments(translation.translation_id, 20, &[missing_srt_label]),
+        Err(DbError::InvalidSpec(_))
+    ));
     db.ensure_segments(
         translation.translation_id,
         20,

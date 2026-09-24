@@ -15,7 +15,7 @@ pub(crate) fn source_snapshot(plan: &SrtRunPlan) -> Result<Vec<SegmentSpec>, Box
         specs.push(SegmentSpec {
             id: segment.id,
             ordinal: u32::try_from(ordinal)?,
-            cue_label: segment.cue_label.clone(),
+            cue_label: Some(segment.cue_label.clone()),
             start_ms: segment.start_ms,
             end_ms: segment.end_ms,
             source_lines: segment

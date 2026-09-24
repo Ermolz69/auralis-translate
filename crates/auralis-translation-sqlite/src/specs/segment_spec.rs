@@ -5,7 +5,7 @@ use std::ops::Range;
 pub struct SegmentSpec {
     pub id: SegmentId,
     pub ordinal: u32,
-    pub cue_label: String,
+    pub cue_label: Option<String>,
     pub start_ms: u64,
     pub end_ms: u64,
     pub source_lines: Vec<String>,

@@ -1,6 +1,6 @@
 # Strict plain-WebVTT subset v1
 
-Status: format-adapter and experimental CLI contract, 24 September 2026. The parser and verified renderer are implemented in `auralis-translation-formats::vtt`. The CLI supports manual `inspect-vtt`, `template-vtt`, and `render-vtt`, plus a real-model `translate-vtt-experimental` path. WebVTT is not connected to the durable model-backed CLI or Auralis workflow. No general `.vtt` support is advertised yet.
+Status: format-adapter, durable library run, and experimental CLI contract, 24 September 2026. The parser and verified renderer are implemented in `auralis-translation-formats::vtt`. The CLI supports manual `inspect-vtt`, `template-vtt`, and `render-vtt`, plus a real-model `translate-vtt-experimental` path. The library can plan and resume a WebVTT run through Translate SQLite; the durable model-backed CLI and Auralis workflow are not connected yet. No general `.vtt` support is advertised yet.
 
 This subset follows the [W3C WebVTT format](https://www.w3.org/TR/webvtt1/) but deliberately accepts less than the full syntax. Its purpose is to make text extraction and byte-preserving copy generation independently testable before model inference. Unsupported input fails as a whole; the adapter never silently drops a block.
 
@@ -23,6 +23,8 @@ The adapter does not normalise line breaks or infer timing. It does not translat
 
 `VttDocument::parse` exposes ordered internal segment IDs, optional external cue IDs, timing, and exact byte ranges for each translatable text line. Internal IDs do not depend on external cue IDs. `source_segments` passes the track snapshot to the format-independent core.
 
+`VttRunPlan` uses the shared block planner and a WebVTT-specific policy fingerprint. Translate SQLite saves an absent external cue ID as an empty `segments.cue_label` value and returns `None` to Rust; the mandatory internal segment ID and source map preserve identity. A two-cue library test saves the source map with one absent ID, fails after a committed block, reopens SQLite, resumes only the missing block, commits the verified result, and regenerates identical output from that result. This is durable library evidence, not a durable CLI command or a quality evaluation.
+
 `render` requires exactly one translated record for every internal ID and exactly the original line count per cue. It rejects empty or unsupported replacement text, assembles a **new** byte buffer by replacing only declared text ranges, reparses it under the same policy, and compares cue order, IDs, timing, line counts, and every protected byte chunk. The source buffer is never mutated. A no-op render is byte-identical to the source, including BOM, comments, separators, and line endings.
 
 ```mermaid
@@ -35,7 +37,7 @@ flowchart LR
     V --> R["Verified copy"]
 ```
 
-The adapter tests cover byte-identical round trips for BOM/LF/CRLF/terminal variants, comments and cue IDs, separate-copy replacement, exact protected bytes, structural rejection cases, ID/line validation, and policy limits. This is format-contract evidence only. A durable WebVTT translation run, broader corpus and fuzz coverage, Auralis import path, and model-language validation remain open before WebVTT can be part of the Chinese release gate.
+The adapter tests cover byte-identical round trips for BOM/LF/CRLF/terminal variants, comments and cue IDs, separate-copy replacement, exact protected bytes, structural rejection cases, ID/line validation, and policy limits. The durable library test covers checkpoint recovery and result reconstruction with a fake provider. Durable CLI orchestration, broader corpus and fuzz coverage, Auralis import path, and model-language validation remain open before WebVTT can be part of the Chinese release gate.
 
 ## Manual CLI path
 

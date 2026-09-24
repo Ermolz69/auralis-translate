@@ -1,4 +1,3 @@
-mod block_policy;
 mod document;
 mod error;
 mod error_code;
@@ -14,7 +13,7 @@ mod verifier;
 
 pub use crate::segment_translation::SegmentTranslation;
 pub use crate::text_slot::TextSlot;
-pub use block_policy::SrtBlockPolicy;
+pub use auralis_translation::BlockPolicy as SrtBlockPolicy;
 pub use document::SrtDocument;
 pub use error::SrtError;
 pub use error_code::SrtErrorCode;

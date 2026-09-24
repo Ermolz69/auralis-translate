@@ -1,4 +1,5 @@
 mod block_checkpoint;
+mod block_policy;
 mod contract_error;
 mod diagnostic_code;
 mod glossary;
@@ -22,6 +23,7 @@ mod translation_diagnostic;
 mod translation_id;
 
 pub use block_checkpoint::BlockCheckpoint;
+pub use block_policy::BlockPolicy;
 pub use contract_error::ContractError;
 pub use diagnostic_code::DiagnosticCode;
 pub use glossary::Glossary;

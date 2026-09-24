@@ -3,17 +3,15 @@ use super::{
 };
 use crate::inspect;
 use auralis_translation::{
-    CheckpointStore, ContractError, Glossary, LanguagePair, ProgressSink, RetryPolicy, RunControl,
-    RunId, SegmentId, SourceHash, TargetSegment, TranslationBatch, TranslationId,
-    TranslationProvider, VerifiedRenderer, translate_planned_run,
-    translate_planned_run_with_control, translate_planned_run_with_policy,
-    translate_planned_run_with_progress,
+    CheckpointStore, Glossary, LanguagePair, PlannedBatches, ProgressSink, RetryPolicy, RunControl,
+    RunId, SegmentId, SourceHash, TargetSegment, TranslationId, TranslationProvider,
+    VerifiedRenderer, translate_planned_run, translate_planned_run_with_control,
+    translate_planned_run_with_policy, translate_planned_run_with_progress,
 };
 
 pub struct SrtRunPlan {
     document: SrtDocument,
-    batches: Vec<TranslationBatch>,
-    planned_ids: Vec<Vec<SegmentId>>,
+    planned: PlannedBatches,
     source_hash: SourceHash,
 }
 
@@ -43,51 +41,19 @@ impl SrtRunPlan {
         let document = inspect(source).map_err(SrtPlanError::Inspect)?;
         let source_hash = SourceHash::digest(source);
         let segments = document.source_segments().map_err(SrtPlanError::Contract)?;
-        if glossary.is_some_and(|glossary| {
-            glossary.entries().iter().any(|entry| {
-                entry.segment_ids().is_some_and(|ids| {
-                    ids.iter()
-                        .any(|id| !segments.iter().any(|segment| segment.id() == *id))
-                })
-            })
-        }) {
-            return Err(SrtPlanError::Contract(ContractError::InvalidGlossary));
-        }
-        let mut batches = Vec::new();
-        let mut planned_ids = Vec::new();
-        for (block_index, targets) in segments.chunks(policy.max_target_segments()).enumerate() {
-            let start = block_index * policy.max_target_segments();
-            let end = start + targets.len();
-            let before = start.saturating_sub(policy.context_before_segments());
-            let after = end
-                .saturating_add(policy.context_after_segments())
-                .min(segments.len());
-            let context = segments[before..start]
-                .iter()
-                .chain(&segments[end..after])
-                .cloned()
-                .collect::<Vec<_>>();
-            let applied_glossary = glossary
-                .map(|glossary| glossary.applicable(targets, &context))
-                .unwrap_or_default();
-            planned_ids.push(targets.iter().map(|segment| segment.id()).collect());
-            batches.push(
-                TranslationBatch::with_glossary(
-                    translation_id,
-                    run_id,
-                    source_hash,
-                    pair,
-                    targets.to_vec(),
-                    context,
-                    applied_glossary,
-                )
-                .map_err(SrtPlanError::Contract)?,
-            );
-        }
+        let planned = PlannedBatches::new(
+            &segments,
+            translation_id,
+            run_id,
+            source_hash,
+            pair,
+            policy,
+            glossary,
+        )
+        .map_err(SrtPlanError::Contract)?;
         Ok(Self {
             document,
-            batches,
-            planned_ids,
+            planned,
             source_hash,
         })
     }
@@ -105,14 +71,11 @@ impl SrtRunPlan {
     }
 
     pub fn blocks(&self) -> &[Vec<SegmentId>] {
-        &self.planned_ids
+        self.planned.ids()
     }
 
     pub fn block_fingerprints(&self) -> Vec<SourceHash> {
-        self.batches
-            .iter()
-            .map(TranslationBatch::fingerprint)
-            .collect()
+        self.planned.fingerprints()
     }
 
     pub fn policy_fingerprint(policy: SrtBlockPolicy) -> SourceHash {
@@ -137,8 +100,9 @@ impl SrtRunPlan {
         provider: &impl TranslationProvider,
         store: &mut S,
     ) -> Result<Vec<u8>, SrtRunError<S::Error>> {
-        let accepted = translate_planned_run(provider, store, &self.planned_ids, &self.batches)
-            .map_err(SrtRunError::Translate)?;
+        let accepted =
+            translate_planned_run(provider, store, self.planned.ids(), self.planned.batches())
+                .map_err(SrtRunError::Translate)?;
         self.render_selected(&accepted).map_err(SrtRunError::Render)
     }
 
@@ -151,8 +115,8 @@ impl SrtRunPlan {
         let accepted = translate_planned_run_with_progress(
             provider,
             store,
-            &self.planned_ids,
-            &self.batches,
+            self.planned.ids(),
+            self.planned.batches(),
             progress,
         )
         .map_err(SrtRunError::Translate)?;
@@ -169,8 +133,8 @@ impl SrtRunPlan {
         let accepted = translate_planned_run_with_control(
             provider,
             store,
-            &self.planned_ids,
-            &self.batches,
+            self.planned.ids(),
+            self.planned.batches(),
             progress,
             control,
         )
@@ -189,8 +153,8 @@ impl SrtRunPlan {
         let accepted = translate_planned_run_with_policy(
             provider,
             store,
-            &self.planned_ids,
-            &self.batches,
+            self.planned.ids(),
+            self.planned.batches(),
             progress,
             control,
             retry,
