@@ -1,6 +1,6 @@
 # Integrating Translate with Auralis
 
-Status: integration in progress, 24 September 2026. `auralis-translate` remains an independent repository and builds without the Auralis UI. Auralis has project-link/publication SQLite migration v6 and a typed storage port. Its new format-inspection adapter calls the pinned Translate parsers through an application use case, but no application job or UI starts a translation yet.
+Status: integration in progress, 24 September 2026. `auralis-translate` remains an independent repository and builds without the Auralis UI. Auralis has project-link/publication SQLite migration v6 and frozen-run-intent migration v7 with a typed storage port. Its format-inspection adapter calls the pinned Translate parsers through an application use case, but no application job or UI starts a translation yet.
 
 ## Module boundaries
 

@@ -83,7 +83,7 @@ sequenceDiagram
     participant TD as Translate SQLite
     UI->>A: Start translation of source artifact
     A->>A: Check project, original, digest, format
-    A->>AD: Transaction: link with translation_id/run_id and host job
+    A->>AD: Transaction: link and frozen run intent
     AD-->>A: Intent committed
     A->>T: ensure_translation + ensure_run with same IDs
     T->>TD: Idempotently create records and block plan
@@ -95,7 +95,7 @@ sequenceDiagram
     end
 ```
 
-Auralis commits the intent **before** starting inference. `ensure_translation` and `ensure_run` are idempotent: repeating them with the same IDs and source digest returns the existing records; a different digest is a conflict. If the process stops after the Auralis commit and before the Translate write, recovery sees the incomplete intent and retries `ensure_run`. The UI displays starting/recovering rather than losing the project link.
+Auralis commits the link and frozen run intent **in one local transaction before** starting inference. Schema v7 stores the exact profile manifest and hash, parser version, source-policy fingerprint, block size, and context bounds with the stable IDs. The frozen fields are needed to reconstruct the same block plan after a crash; a link with only an active run ID cannot do this safely if settings later change. The row stores no subtitle text. `ensure_translation` and `ensure_run` are idempotent: repeating them with the same IDs and source digest returns the existing records; a different digest is a conflict. If the process stops after the Auralis commit and before the Translate write, recovery reads the frozen record and retries `ensure_run`. The storage method exists; application recovery does not yet call it. Older links without a frozen record need an explicit compatibility path and cannot have their original run settings guessed. The UI displays starting/recovering rather than losing the project link.
 
 The Auralis host job owns scheduling, process cancellation, and resource limits. The Translate run owns accepted translation checkpoints and detailed translation state. A resumed run may use a new host job/attempt while keeping its `translation_id` and `run_id`. Embedded Translate does not create a second background queue. The standalone CLI invokes the same core directly and resumes from Translate SQLite.
 
