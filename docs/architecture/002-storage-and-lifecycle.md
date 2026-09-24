@@ -122,7 +122,7 @@ Technical completeness and language review are separate. A structurally complete
 
 After structural validation, Translate stores immutable `result_id`, the selected-segment manifest, and the output digest. To retry publication, it rebuilds the output from the immutable original and referenced segment versions; the digest must match. Auralis verifies `translation_id`, `run_id`, source artifact and digest. It stages the output and creates a pending artifact, `translation_publications` row, and outbox message in a short Auralis transaction. After outbox finalisation makes the artifact ready, a separate conditional Auralis transaction updates the selected result and artifact ID. The condition includes the link revision and source digest so a late run cannot replace a newer selection. A pending artifact is never shown as published.
 
-The Auralis storage port now has `commit_staged_publication` for the pending artifact, publication row, and outbox in one transaction, with an idempotent retry for the same result. Its storage test covers a stale-revision rollback and selection only after readiness. The application has not yet staged a real Translate output or invoked this port, and startup reconciliation remains to be implemented.
+The Auralis storage port now has `commit_staged_publication` for the pending artifact, publication row, and outbox in one transaction, with an idempotent retry for the same result. Its storage test covers a stale-revision rollback and selection only after readiness. The Auralis outbox worker now selects an eligible ready publication after finalization or on a later empty-queue poll. Its integration test covers a restart gap after the artifact became ready. The application has not yet staged a real Translate output or invoked the publication port; Translate-side intent recovery remains to be implemented.
 
 All steps are repeatable by `translation_id`, `run_id`, and `result_id`. On startup, reconciliation checks requested/publishing links, Translate runs/results, pending artifacts, and outbox messages:
 
@@ -132,7 +132,7 @@ All steps are repeatable by `translation_id`, `run_id`, and `result_id`. On star
 | Model returned a block; checkpoint was not committed | Retry the block; do not count partial output as progress. |
 | Translate result validated; Auralis artifact absent | Rebuild and retry publication using the same `result_id`. |
 | Artifact is staged or pending | Finish/retry the outbox action; do not select it yet. |
-| Artifact ready; link still selects an older result | Find the artifact via `translation_publications`, verify digest/revision, then conditionally complete the link. |
+| Artifact ready; link still selects an older result | The Auralis outbox worker finds an eligible pending publication, verifies active run/source/revision and ready artifact through storage, then conditionally completes the link. This also runs when no outbox messages remain. |
 | Translate database unavailable | Keep the Auralis link and any ready artifacts; report database access failure and never call an unfinished run complete. |
 
 Project deletion commits in Auralis with related translation IDs recorded in an outbox action. The cleanup request to Translate is then idempotent. A backup/restore policy for both databases and a precise diagnostic-retention period remain production decisions; neither changes the stable identity protocol.
