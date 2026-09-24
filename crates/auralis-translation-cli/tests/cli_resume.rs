@@ -53,6 +53,13 @@ fn cli_resumes_checkpointed_srt_and_reexports_validated_result() -> Result<(), B
     assert_eq!(db.checkpoints(run_id)?.len(), 1);
     assert_eq!(db.segments(db.run(run_id)?.translation_id)?.len(), 9);
     drop(db);
+    let status = command(&["status", path(&state_dir)?, &run_id.to_string()])?;
+    assert!(status.status.success());
+    let status: serde_json::Value = serde_json::from_slice(&status.stdout)?;
+    assert_eq!(status["state"], "failed");
+    assert_eq!(status["completed_blocks"], 1);
+    assert_eq!(status["total_blocks"], 2);
+    assert!(status["selected_result_id"].is_null());
 
     let listener = TcpListener::bind("127.0.0.1:0")?;
     let endpoint = format!("http://{}/", listener.local_addr()?);
@@ -91,6 +98,13 @@ fn cli_resumes_checkpointed_srt_and_reexports_validated_result() -> Result<(), B
         .source_locator
         .ok_or("managed source locator missing")?;
     drop(db);
+    let status = command(&["status", path(&state_dir)?, &run_id.to_string()])?;
+    assert!(status.status.success());
+    let status: serde_json::Value = serde_json::from_slice(&status.stdout)?;
+    assert_eq!(status["state"], "validated");
+    assert_eq!(status["completed_blocks"], 2);
+    assert_eq!(status["review_state"], "needs_review");
+    assert!(status["selected_result_id"].is_string());
 
     std::fs::write(&managed_source, b"changed")?;
     let changed_source = command(&[

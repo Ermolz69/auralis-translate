@@ -8,6 +8,7 @@ mod manual_manifest;
 mod manual_translation;
 mod read_source;
 mod source_snapshot;
+mod status_command;
 mod write_new;
 
 use std::process::ExitCode;
@@ -22,6 +23,9 @@ fn main() -> ExitCode {
         [command, source, manifest, output] if command == "render" => {
             manual_command::render(source, manifest, output)
         }
+        [command, state_dir, run_id] if command == "status" => {
+            status_command::run(state_dir, run_id)
+        }
         [command, source, profile, endpoint, output] if command == "translate-experimental" => {
             experimental_command::run(source, profile, endpoint, output)
         }
@@ -31,7 +35,7 @@ fn main() -> ExitCode {
         [command, state_dir, run_id, profile, endpoint, output] if command == "resume" => {
             durable_resume::run(state_dir, run_id, profile, endpoint, output)
         }
-        _ => Err("usage: auralis-translation-cli <inspect SOURCE | template SOURCE MANIFEST | render SOURCE MANIFEST OUTPUT | translate-experimental SOURCE PROFILE SERVER_URL OUTPUT | translate SOURCE STATE_DIR PROFILE SERVER_URL OUTPUT | resume STATE_DIR RUN_ID PROFILE SERVER_URL OUTPUT>".into()),
+        _ => Err("usage: auralis-translation-cli <inspect SOURCE | template SOURCE MANIFEST | render SOURCE MANIFEST OUTPUT | status STATE_DIR RUN_ID | translate-experimental SOURCE PROFILE SERVER_URL OUTPUT | translate SOURCE STATE_DIR PROFILE SERVER_URL OUTPUT | resume STATE_DIR RUN_ID PROFILE SERVER_URL OUTPUT>".into()),
     };
 
     match result {
