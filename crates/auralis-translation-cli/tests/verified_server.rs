@@ -48,13 +48,14 @@ fn checked_profile_probes_server_and_hashes_reported_local_model() -> Result<(),
         &endpoint,
         path(&output_path)?,
     ])?;
+    let server_result = server.join().map_err(|_| "mock server panicked")?;
     assert!(
         output.status.success(),
-        "{}",
-        String::from_utf8_lossy(&output.stderr)
+        "CLI: {}; mock server: {server_result:?}",
+        String::from_utf8_lossy(&output.stderr),
     );
+    server_result?;
     assert!(String::from_utf8_lossy(&output.stderr).contains("model_ready alias="));
-    server.join().map_err(|_| "mock server panicked")??;
     assert!(String::from_utf8(std::fs::read(&output_path)?)?.contains("Привет."));
     assert_eq!(std::fs::read(&source_path)?, SOURCE);
 
@@ -75,13 +76,14 @@ fn checked_profile_probes_server_and_hashes_reported_local_model() -> Result<(),
         &endpoint,
         path(&output_path)?,
     ])?;
+    let server_result = server.join().map_err(|_| "mock server panicked")?;
     assert!(!output.status.success());
     assert!(
         String::from_utf8_lossy(&output.stderr).contains("hash differs from profile"),
-        "{}",
-        String::from_utf8_lossy(&output.stderr)
+        "CLI: {}; mock server: {server_result:?}",
+        String::from_utf8_lossy(&output.stderr),
     );
-    server.join().map_err(|_| "mock server panicked")??;
+    server_result?;
     assert!(!output_path.exists());
     let stdout = String::from_utf8(output.stdout)?;
     let run_id = stdout
