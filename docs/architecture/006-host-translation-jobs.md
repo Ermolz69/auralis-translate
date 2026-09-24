@@ -1,6 +1,6 @@
 # Host translation jobs
 
-Status: implementation design, 24 September 2026. Auralis currently creates durable Translate runs and can execute them through an experimental application API, but no host job owns a model request. The `Translation` job kind persists independently of dubbing project processing state. Auralis SQLite schema v8 and its storage port can create and terminalize associated jobs atomically. An application use case can start or reuse a pending job after checking the project and Translate run phase; desktop scheduling and execution transitions below are not implemented yet.
+Status: implementation design, 25 September 2026. Auralis creates durable Translate runs, and an experimental caller-driven worker can execute one through a linked host job using a supplied local-server URL. Translate records that job ID on the attempt. The `Translation` job kind persists independently of dubbing project processing state. Auralis SQLite schema v8 and its storage port create, start, and terminalize associated jobs with revision checks. Desktop scheduling, managed model process ownership, and checkpoint progress reporting are not implemented yet.
 
 ## Ownership and identity
 
