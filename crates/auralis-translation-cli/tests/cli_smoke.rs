@@ -1,7 +1,7 @@
 use std::error::Error;
 use std::path::Path;
 use std::process::Command;
-use std::time::{SystemTime, UNIX_EPOCH};
+use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 const SOURCE: &[u8] = include_bytes!("../../auralis-translation-formats/tests/fixtures/plain.srt");
 
@@ -86,6 +86,45 @@ fn oversized_source_is_rejected_before_creating_manifest() -> Result<(), Box<dyn
 
     assert!(!run(&["template", path(&source)?, path(&manifest)?])?.success());
     assert!(!manifest.exists());
+    std::fs::remove_dir_all(directory)?;
+    Ok(())
+}
+
+#[test]
+fn export_removes_only_old_matching_temporary_files() -> Result<(), Box<dyn Error>> {
+    let nonce = SystemTime::now().duration_since(UNIX_EPOCH)?.as_nanos();
+    let directory =
+        std::env::temp_dir().join(format!("auralis-export-{}-{nonce}", std::process::id()));
+    std::fs::create_dir(&directory)?;
+    let source = directory.join("source.srt");
+    let manifest = directory.join("translations.json");
+    let output = directory.join("output.srt");
+    std::fs::write(&source, SOURCE)?;
+    assert!(run(&["template", path(&source)?, path(&manifest)?])?.success());
+
+    let stale = directory.join(".output.srt.1a451651-445b-42c4-806a-10f73432fb35.tmp");
+    let fresh = directory.join(".output.srt.b0b297f5-fb2f-47f8-960e-273e64ffcd6d.tmp");
+    let unrelated = directory.join(".other.srt.1a451651-445b-42c4-806a-10f73432fb35.tmp");
+    std::fs::write(&stale, b"incomplete")?;
+    std::fs::write(&fresh, b"active")?;
+    std::fs::write(&unrelated, b"unrelated")?;
+    let old = std::fs::FileTimes::new()
+        .set_modified(SystemTime::now() - Duration::from_secs(48 * 60 * 60));
+    std::fs::OpenOptions::new()
+        .write(true)
+        .open(&stale)?
+        .set_times(old)?;
+    std::fs::OpenOptions::new()
+        .write(true)
+        .open(&unrelated)?
+        .set_times(old)?;
+
+    assert!(run(&["render", path(&source)?, path(&manifest)?, path(&output)?])?.success());
+    assert!(!stale.exists());
+    assert_eq!(std::fs::read(&fresh)?, b"active");
+    assert_eq!(std::fs::read(&unrelated)?, b"unrelated");
+    assert_eq!(std::fs::read(&source)?, SOURCE);
+
     std::fs::remove_dir_all(directory)?;
     Ok(())
 }

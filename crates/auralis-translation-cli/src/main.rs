@@ -18,6 +18,7 @@ mod model_preflight;
 mod pause_command;
 mod read_source;
 mod source_snapshot;
+mod stale_output;
 mod status_command;
 mod stderr_progress;
 mod write_new;

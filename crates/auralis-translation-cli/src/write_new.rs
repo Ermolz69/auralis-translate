@@ -1,3 +1,4 @@
+use crate::stale_output;
 use std::ffi::OsString;
 use std::fs::OpenOptions;
 use std::io::{self, Write};
@@ -5,6 +6,13 @@ use std::path::Path;
 use uuid::Uuid;
 
 pub(crate) fn write_new(path: &Path, bytes: &[u8]) -> io::Result<()> {
+    if path.exists() {
+        return Err(io::Error::new(
+            io::ErrorKind::AlreadyExists,
+            "output already exists",
+        ));
+    }
+    stale_output::remove_stale_for(path);
     let filename = path
         .file_name()
         .ok_or_else(|| io::Error::new(io::ErrorKind::InvalidInput, "output has no filename"))?;
