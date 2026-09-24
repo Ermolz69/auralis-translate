@@ -48,6 +48,37 @@ fn interrupted_run_keeps_only_committed_blocks_and_resumes() -> Result<(), Box<d
 }
 
 #[test]
+fn scoped_recovery_only_pauses_the_matching_host_attempt() -> Result<(), Box<dyn Error>> {
+    let directory = test_directory()?;
+    let path = directory.join("auralis-translate.sqlite");
+    let mut db = TranslateDb::open(&path, SqliteConfig::default())?;
+    db.ensure_translation(&translation_spec()?)?;
+    let run = run_spec()?;
+    db.begin_attempt(&run, Some("auralis-job"))?;
+    db.commit_checkpoint(&checkpoint(&run, 0, 1, "Сохранено.")?)?;
+    assert!(matches!(
+        db.recover_interrupted_for_host(run.run_id, "different-job"),
+        Err(DbError::Conflict(_))
+    ));
+    assert_eq!(db.run_state(run.run_id)?, RunState::Running);
+    assert_eq!(db.checkpoints(run.run_id)?.len(), 1);
+    assert!(db.recover_interrupted_for_host(run.run_id, "auralis-job")?);
+    assert!(!db.recover_interrupted_for_host(run.run_id, "auralis-job")?);
+    assert_eq!(db.run_state(run.run_id)?, RunState::Paused);
+    assert_eq!(db.checkpoints(run.run_id)?.len(), 1);
+
+    db.begin_attempt(&run, None)?;
+    assert!(matches!(
+        db.recover_interrupted_for_host(run.run_id, "auralis-job"),
+        Err(DbError::Conflict(_))
+    ));
+    assert_eq!(db.run_state(run.run_id)?, RunState::Running);
+    drop(db);
+    std::fs::remove_dir_all(directory)?;
+    Ok(())
+}
+
+#[test]
 fn changed_profile_cannot_resume_a_paused_run() -> Result<(), Box<dyn Error>> {
     let directory = test_directory()?;
     let path = directory.join("auralis-translate.sqlite");

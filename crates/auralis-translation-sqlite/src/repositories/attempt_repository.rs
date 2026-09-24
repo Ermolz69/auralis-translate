@@ -69,11 +69,48 @@ pub(crate) fn recover_interrupted(
     connection: &mut Connection,
     run_id: RunId,
 ) -> Result<bool, DbError> {
+    recover_interrupted_inner(connection, run_id, None)
+}
+
+pub(crate) fn recover_interrupted_for_host(
+    connection: &mut Connection,
+    run_id: RunId,
+    host_job_id: &str,
+) -> Result<bool, DbError> {
+    if host_job_id.is_empty() {
+        return Err(DbError::InvalidSpec("empty host job ID"));
+    }
+    recover_interrupted_inner(connection, run_id, Some(host_job_id))
+}
+
+fn recover_interrupted_inner(
+    connection: &mut Connection,
+    run_id: RunId,
+    expected_host_job_id: Option<&str>,
+) -> Result<bool, DbError> {
     let transaction = connection.transaction()?;
     let state = read_state(&transaction, run_id)?;
     if state != RunState::Running {
         transaction.commit()?;
         return Ok(false);
+    }
+    if let Some(expected) = expected_host_job_id {
+        let stored: Option<Option<String>> = transaction
+            .query_row(
+                "SELECT host_job_id FROM run_attempts WHERE run_id = ?1 AND ended_at IS NULL",
+                [run_id.to_string()],
+                |row| row.get(0),
+            )
+            .optional()?;
+        match stored {
+            Some(Some(actual)) if actual == expected => {}
+            Some(_) => {
+                return Err(DbError::Conflict(
+                    "running attempt belongs to another host job",
+                ));
+            }
+            None => return Err(DbError::CorruptRecord("running run has no open attempt")),
+        }
     }
     let changed = transaction.execute(
         "UPDATE run_attempts SET ended_at = unixepoch(), stop_reason = 'interrupted'

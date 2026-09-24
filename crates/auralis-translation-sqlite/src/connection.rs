@@ -113,6 +113,14 @@ impl TranslateDb {
         attempt_repository::recover_interrupted(&mut self.connection, run_id)
     }
 
+    pub fn recover_interrupted_for_host(
+        &mut self,
+        run_id: RunId,
+        host_job_id: &str,
+    ) -> Result<bool, DbError> {
+        attempt_repository::recover_interrupted_for_host(&mut self.connection, run_id, host_job_id)
+    }
+
     pub fn run_state(&self, run_id: RunId) -> Result<RunState, DbError> {
         attempt_repository::state(&self.connection, run_id)
     }
