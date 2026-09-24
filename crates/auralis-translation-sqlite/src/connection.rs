@@ -1,9 +1,13 @@
 use crate::migrations;
 use crate::repositories::{
-    attempt_repository, checkpoint_repository, run_repository, translation_repository,
+    attempt_repository, checkpoint_repository, result_repository, run_repository,
+    translation_repository,
 };
-use crate::{AttemptId, CheckpointSpec, DbError, RunSpec, RunStop, SqliteConfig, TranslationSpec};
-use auralis_translation::{RunId, RunState};
+use crate::{
+    AttemptId, CheckpointSpec, DbError, ResultRecord, ResultSpec, RunSpec, RunStop, SqliteConfig,
+    TranslationSpec,
+};
+use auralis_translation::{ResultId, RunId, RunState};
 use rusqlite::Connection;
 use std::path::Path;
 
@@ -68,5 +72,17 @@ impl TranslateDb {
 
     pub fn run_state(&self, run_id: RunId) -> Result<RunState, DbError> {
         attempt_repository::state(&self.connection, run_id)
+    }
+
+    pub fn commit_result(
+        &mut self,
+        spec: &ResultSpec,
+        verified_output: &[u8],
+    ) -> Result<ResultRecord, DbError> {
+        result_repository::commit(&mut self.connection, spec, verified_output)
+    }
+
+    pub fn result(&self, result_id: ResultId) -> Result<ResultRecord, DbError> {
+        result_repository::load(&self.connection, result_id)
     }
 }

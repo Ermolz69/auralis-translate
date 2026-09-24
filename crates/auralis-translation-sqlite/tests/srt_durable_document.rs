@@ -1,11 +1,11 @@
 mod support;
 
 use auralis_translation::{
-    LanguageCode, LanguagePair, ProviderError, ProviderResponse, TargetSegment, TranslationBatch,
-    TranslationProvider,
+    LanguageCode, LanguagePair, ProviderError, ProviderResponse, ResultId, ReviewState, RunState,
+    TargetSegment, TranslationBatch, TranslationProvider,
 };
 use auralis_translation_formats::srt::{SrtBlockPolicy, SrtRunPlan};
-use auralis_translation_sqlite::{RunStop, SqliteConfig, TranslateDb};
+use auralis_translation_sqlite::{DbError, ResultSpec, RunStop, SqliteConfig, TranslateDb};
 use std::cell::Cell;
 use std::error::Error;
 use support::{run_spec, test_directory, translation_spec};
@@ -64,6 +64,19 @@ fn renders_complete_copy_only_after_durable_resume() -> Result<(), Box<dyn Error
     };
     assert!(plan.execute(&provider, &mut db).is_err());
     assert_eq!(db.checkpoints(run.run_id)?.len(), 1);
+    let result = ResultSpec {
+        result_id: ResultId::parse("33333333-3333-4333-8333-333333333333")?,
+        run_id: run.run_id,
+        revision: 1,
+        source_hash: plan.source_hash(),
+        block_fingerprints: plan.block_fingerprints(),
+        structural_evidence_json: "{\"format\":\"srt\",\"verified\":true}".into(),
+        review_state: ReviewState::NeedsReview,
+    };
+    assert!(matches!(
+        db.commit_result(&result, b"partial"),
+        Err(DbError::Conflict(_))
+    ));
     db.stop_attempt(run.run_id, attempt, RunStop::Failed, "model failed")?;
     drop(db);
 
@@ -81,6 +94,29 @@ fn renders_complete_copy_only_after_durable_resume() -> Result<(), Box<dyn Error
         auralis_translation::SourceHash::digest(SOURCE),
         translation.source_hash
     );
+    let committed = db.commit_result(&result, &output)?;
+    assert_eq!(
+        committed.output_hash,
+        auralis_translation::SourceHash::digest(&output)
+    );
+    assert_eq!(committed.review_state, ReviewState::NeedsReview);
+    assert_eq!(committed.selected.len(), 2);
+    assert_eq!(db.run_state(run.run_id)?, RunState::Validated);
+    assert_eq!(db.result(result.result_id)?, committed);
+    assert_eq!(db.commit_result(&result, &output)?, committed);
+    assert!(matches!(
+        db.commit_result(&result, b"different output"),
+        Err(DbError::Conflict(_))
+    ));
+    drop(db);
+    let db = TranslateDb::open(&path, SqliteConfig::default())?;
+    let restored = db.result(result.result_id)?;
+    let regenerated = plan.render_selected(&restored.selected)?;
+    assert_eq!(
+        auralis_translation::SourceHash::digest(&regenerated),
+        restored.output_hash
+    );
+    assert_eq!(regenerated, output);
     drop(db);
     std::fs::remove_dir_all(directory)?;
     Ok(())

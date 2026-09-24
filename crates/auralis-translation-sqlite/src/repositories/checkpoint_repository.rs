@@ -120,7 +120,7 @@ pub(crate) fn load(connection: &Connection, run_id: RunId) -> Result<Vec<Checkpo
     Ok(checkpoints)
 }
 
-fn encode_segments(segments: &[TargetSegment]) -> Result<String, DbError> {
+pub(crate) fn encode_segments(segments: &[TargetSegment]) -> Result<String, DbError> {
     if segments.iter().any(|segment| {
         segment.lines.is_empty()
             || segment
@@ -142,7 +142,7 @@ fn encode_segments(segments: &[TargetSegment]) -> Result<String, DbError> {
     Ok(serde_json::to_string(&stored)?)
 }
 
-fn decode_segments(json: &str) -> Result<Vec<TargetSegment>, DbError> {
+pub(crate) fn decode_segments(json: &str) -> Result<Vec<TargetSegment>, DbError> {
     let stored: Vec<StoredSegment> = serde_json::from_str(json)?;
     stored
         .into_iter()
@@ -168,7 +168,7 @@ fn decode_segments(json: &str) -> Result<Vec<TargetSegment>, DbError> {
         .collect()
 }
 
-fn decode_hash(hex: &str) -> Result<SourceHash, DbError> {
+pub(crate) fn decode_hash(hex: &str) -> Result<SourceHash, DbError> {
     if hex.len() != 64 {
         return Err(DbError::CorruptRecord("invalid checkpoint hash length"));
     }

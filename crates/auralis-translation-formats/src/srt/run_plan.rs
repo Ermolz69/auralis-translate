@@ -1,8 +1,8 @@
 use super::{SegmentTranslation, SrtBlockPolicy, SrtDocument, SrtPlanError, SrtRunError};
 use crate::inspect;
 use auralis_translation::{
-    CheckpointStore, LanguagePair, RunId, SegmentId, SourceHash, TranslationBatch, TranslationId,
-    TranslationProvider, translate_planned_run,
+    CheckpointStore, LanguagePair, RunId, SegmentId, SourceHash, TargetSegment, TranslationBatch,
+    TranslationId, TranslationProvider, translate_planned_run,
 };
 
 pub struct SrtRunPlan {
@@ -55,6 +55,13 @@ impl SrtRunPlan {
         &self.planned_ids
     }
 
+    pub fn block_fingerprints(&self) -> Vec<SourceHash> {
+        self.batches
+            .iter()
+            .map(TranslationBatch::fingerprint)
+            .collect()
+    }
+
     pub fn execute<S: CheckpointStore>(
         &self,
         provider: &impl TranslationProvider,
@@ -62,15 +69,17 @@ impl SrtRunPlan {
     ) -> Result<Vec<u8>, SrtRunError<S::Error>> {
         let accepted = translate_planned_run(provider, store, &self.planned_ids, &self.batches)
             .map_err(SrtRunError::Translate)?;
+        self.render_selected(&accepted).map_err(SrtRunError::Render)
+    }
+
+    pub fn render_selected(&self, accepted: &[TargetSegment]) -> Result<Vec<u8>, super::SrtError> {
         let replacements = accepted
-            .into_iter()
+            .iter()
             .map(|segment| SegmentTranslation {
                 id: segment.id,
-                lines: segment.lines,
+                lines: segment.lines.clone(),
             })
             .collect::<Vec<_>>();
-        self.document
-            .render(&replacements)
-            .map_err(SrtRunError::Render)
+        self.document.render(&replacements)
     }
 }

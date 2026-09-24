@@ -1,6 +1,6 @@
 # Auralis Translate documentation
 
-Status: architecture and staged implementation, 24 September 2026. The strict plain-SRT pipeline, manual renderer, and a real-model experimental path are implemented. Translate SQLite has an initial schema, idempotent run records, and durable checkpoint/attempt primitives; the end-to-end resume workflow and Auralis integration remain open. See [implementation status](IMPLEMENTATION_STATUS.md) for verified evidence.
+Status: architecture and staged implementation, 24 September 2026. The strict plain-SRT pipeline, manual renderer, and a real-model experimental path are implemented. Translate SQLite has an initial schema, durable checkpoint/attempt primitives, and immutable result records. A library integration test resumes and reconstructs an SRT; the CLI workflow and Auralis integration remain open. See [implementation status](IMPLEMENTATION_STATUS.md) for verified evidence.
 
 The detailed [version 2.0 plan](../AURALIS_SUBTITLE_TRANSLATION_PLAN.md) remains at the repository root in Russian as a historical source. The [English product plan](PRODUCT_PLAN.md) and the architecture documents record the later decisions for the first file-based translation product. Where the historical plan conflicts with an agreed MVP decision below, this directory takes precedence; its research, format cautions, and release gates still apply.
 
