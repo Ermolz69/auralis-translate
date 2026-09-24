@@ -1,14 +1,15 @@
-use crate::{DocumentTranslationError, document_batch, inspect};
+use crate::vtt::VttDocument;
+use crate::{DocumentTranslationError, document_batch};
 use auralis_translation::{LanguagePair, RunId, TranslationId, TranslationProvider};
 
-pub fn translate_document(
+pub fn translate_vtt_document(
     source: &[u8],
     translation_id: TranslationId,
     run_id: RunId,
     language_pair: LanguagePair,
     provider: &impl TranslationProvider,
 ) -> Result<Vec<u8>, DocumentTranslationError> {
-    let document = inspect(source).map_err(DocumentTranslationError::Inspect)?;
+    let document = VttDocument::parse(source).map_err(DocumentTranslationError::InspectVtt)?;
     let segments = document
         .source_segments()
         .map_err(DocumentTranslationError::Contract)?;
@@ -22,5 +23,5 @@ pub fn translate_document(
     )?;
     document
         .render(&replacements)
-        .map_err(DocumentTranslationError::Render)
+        .map_err(DocumentTranslationError::RenderVtt)
 }

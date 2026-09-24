@@ -2,7 +2,9 @@ use auralis_translation::{
     LanguageCode, LanguagePair, ProviderError, ProviderResponse, RunId, TargetSegment,
     TranslationBatch, TranslationId, TranslationProvider,
 };
-use auralis_translation_formats::{DocumentTranslationError, translate_document};
+use auralis_translation_formats::{
+    DocumentTranslationError, translate_document, translate_vtt_document,
+};
 use std::cell::Cell;
 use std::error::Error;
 
@@ -51,6 +53,38 @@ fn invalid_source_does_not_call_provider() -> Result<(), Box<dyn Error>> {
     let ids = ids()?;
     let result = translate_document(b"WEBVTT\n\n", ids.0, ids.1, ids.2, &provider);
     assert!(matches!(result, Err(DocumentTranslationError::Inspect(_))));
+    assert_eq!(provider.calls.get(), 0);
+    Ok(())
+}
+
+#[test]
+fn fake_provider_translates_only_plain_webvtt_cue_text() -> Result<(), Box<dyn Error>> {
+    let source = b"WEBVTT\n\nNOTE provenance\nprotected\n\nid-1\n00:01.000 --> 00:02.000\n\xe4\xbd\xa0\xe5\xa5\xbd\xe3\x80\x82\n";
+    let provider = FakeProvider {
+        calls: Cell::new(0),
+    };
+    let ids = ids()?;
+    let output = translate_vtt_document(source, ids.0, ids.1, ids.2, &provider)?;
+    assert_eq!(provider.calls.get(), 1);
+    assert_eq!(
+        std::str::from_utf8(&output)?,
+        std::str::from_utf8(source)?.replace("你好。", "Перевод.")
+    );
+    assert!(std::str::from_utf8(source)?.contains("你好。"));
+    Ok(())
+}
+
+#[test]
+fn unsupported_webvtt_is_rejected_before_provider_call() -> Result<(), Box<dyn Error>> {
+    let source = b"WEBVTT\n\n00:01.000 --> 00:02.000 align:start\nhello";
+    let provider = FakeProvider {
+        calls: Cell::new(0),
+    };
+    let ids = ids()?;
+    assert!(matches!(
+        translate_vtt_document(source, ids.0, ids.1, ids.2, &provider),
+        Err(DocumentTranslationError::InspectVtt(_))
+    ));
     assert_eq!(provider.calls.get(), 0);
     Ok(())
 }

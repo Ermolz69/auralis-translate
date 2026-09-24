@@ -1,6 +1,6 @@
 # Strict plain-WebVTT subset v1
 
-Status: format-adapter and manual CLI contract, 24 September 2026. The parser and verified renderer are implemented in `auralis-translation-formats::vtt`. The CLI supports manual `inspect-vtt`, `template-vtt`, and `render-vtt`; WebVTT is not connected to the durable model-backed CLI or Auralis workflow. No general `.vtt` support is advertised yet.
+Status: format-adapter and experimental CLI contract, 24 September 2026. The parser and verified renderer are implemented in `auralis-translation-formats::vtt`. The CLI supports manual `inspect-vtt`, `template-vtt`, and `render-vtt`, plus a real-model `translate-vtt-experimental` path. WebVTT is not connected to the durable model-backed CLI or Auralis workflow. No general `.vtt` support is advertised yet.
 
 This subset follows the [W3C WebVTT format](https://www.w3.org/TR/webvtt1/) but deliberately accepts less than the full syntax. Its purpose is to make text extraction and byte-preserving copy generation independently testable before model inference. Unsupported input fails as a whole; the adapter never silently drops a block.
 
@@ -48,3 +48,5 @@ task cli -- render-vtt source.vtt translations.json translated.vtt
 ```
 
 Edit only `translations[].lines` in the generated schema-v1 JSON. The manifest binds the exact source bytes by SHA-256. `render-vtt` verifies the replacement and creates a new destination without overwriting an existing file. The original is unchanged. This path does not call a model, create a Translate SQLite run, or attach an Auralis project result.
+
+For a separately started local llama-server and a validated profile, `task cli -- translate-vtt-experimental source.vtt PROFILE SERVER_URL translated.vtt` sends the extracted cue text through the shared model contract and verified renderer. A [one-cue real-model smoke](../../eval/experiments/2026-09-24-vtt-model-smoke.md) passed. This command is non-durable: it has no Translate SQLite run or resume and does not attach the output to Auralis.
