@@ -1,12 +1,12 @@
-use crate::migrations;
 use crate::repositories::{
     attempt_repository, checkpoint_repository, result_repository, run_repository,
     segment_repository, translation_repository,
 };
 use crate::{
-    AttemptId, CheckpointSpec, DbError, ResultRecord, ResultSpec, RunSpec, RunStop, SegmentSpec,
-    SqliteConfig, TranslationSpec,
+    AttemptId, CheckpointSpec, DbError, ResultRecord, ResultSpec, RunDiagnostic, RunSpec, RunStop,
+    SegmentSpec, SqliteConfig, TranslationSpec,
 };
+use crate::{diagnostic_codec, migrations};
 use auralis_translation::{ResultId, RunControl, RunId, RunState, TranslationId, VerifiedRenderer};
 use rusqlite::Connection;
 use std::path::Path;
@@ -66,6 +66,19 @@ impl TranslateDb {
 
     pub fn checkpoints(&self, run_id: RunId) -> Result<Vec<CheckpointSpec>, DbError> {
         checkpoint_repository::load(&self.connection, run_id)
+    }
+
+    pub fn diagnostics(&self, run_id: RunId) -> Result<Vec<RunDiagnostic>, DbError> {
+        let mut result = Vec::new();
+        for checkpoint in self.checkpoints(run_id)? {
+            for diagnostic in diagnostic_codec::decode(&checkpoint.diagnostics_json)? {
+                result.push(RunDiagnostic {
+                    block_index: checkpoint.block_index,
+                    diagnostic,
+                });
+            }
+        }
+        Ok(result)
     }
 
     pub fn begin_attempt(

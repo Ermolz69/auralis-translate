@@ -1,3 +1,4 @@
+mod diagnostics_command;
 mod doctor_command;
 mod durable_resume;
 mod durable_start;
@@ -31,6 +32,9 @@ fn main() -> ExitCode {
         [command, state_dir, run_id] if command == "status" => {
             status_command::run(state_dir, run_id)
         }
+        [command, state_dir, run_id] if command == "diagnostics" => {
+            diagnostics_command::run(state_dir, run_id)
+        }
         [command, state_dir, run_id] if command == "pause" => {
             pause_command::run(state_dir, run_id)
         }
@@ -46,7 +50,7 @@ fn main() -> ExitCode {
         [command, state_dir, run_id, profile, endpoint, output] if command == "resume" => {
             durable_resume::run(state_dir, run_id, profile, endpoint, output)
         }
-        _ => Err("usage: auralis-translation-cli <inspect SOURCE | template SOURCE MANIFEST | render SOURCE MANIFEST OUTPUT | status STATE_DIR RUN_ID | pause STATE_DIR RUN_ID | doctor PROFILE MODEL_FILE | translate-experimental SOURCE PROFILE SERVER_URL OUTPUT | translate SOURCE STATE_DIR PROFILE SERVER_URL OUTPUT | resume STATE_DIR RUN_ID PROFILE SERVER_URL OUTPUT>".into()),
+        _ => Err("usage: auralis-translation-cli <inspect SOURCE | template SOURCE MANIFEST | render SOURCE MANIFEST OUTPUT | status STATE_DIR RUN_ID | diagnostics STATE_DIR RUN_ID | pause STATE_DIR RUN_ID | doctor PROFILE MODEL_FILE | translate-experimental SOURCE PROFILE SERVER_URL OUTPUT | translate SOURCE STATE_DIR PROFILE SERVER_URL OUTPUT | resume STATE_DIR RUN_ID PROFILE SERVER_URL OUTPUT>".into()),
     };
 
     match result {

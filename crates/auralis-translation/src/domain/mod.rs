@@ -1,5 +1,6 @@
 mod block_checkpoint;
 mod contract_error;
+mod diagnostic_code;
 mod id_error;
 mod language_code;
 mod language_pair;
@@ -15,10 +16,12 @@ mod source_hash;
 mod source_segment;
 mod target_segment;
 mod translation_batch;
+mod translation_diagnostic;
 mod translation_id;
 
 pub use block_checkpoint::BlockCheckpoint;
 pub use contract_error::ContractError;
+pub use diagnostic_code::DiagnosticCode;
 pub use id_error::IdError;
 pub use language_code::LanguageCode;
 pub use language_pair::LanguagePair;
@@ -36,4 +39,5 @@ pub use source_segment::SourceSegment;
 pub(crate) use source_segment::valid_line;
 pub use target_segment::TargetSegment;
 pub use translation_batch::TranslationBatch;
+pub use translation_diagnostic::TranslationDiagnostic;
 pub use translation_id::TranslationId;

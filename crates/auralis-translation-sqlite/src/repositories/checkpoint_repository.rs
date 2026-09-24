@@ -1,4 +1,4 @@
-use crate::{CheckpointSpec, DbError};
+use crate::{CheckpointSpec, DbError, diagnostic_codec};
 use auralis_translation::{RunId, SegmentId, SourceHash, TargetSegment};
 use rusqlite::{Connection, OptionalExtension, params};
 use serde::{Deserialize, Serialize};
@@ -15,11 +15,17 @@ pub(crate) fn commit(connection: &mut Connection, spec: &CheckpointSpec) -> Resu
             "checkpoint has no accepted work or attempts",
         ));
     }
-    let diagnostics: serde_json::Value = serde_json::from_str(&spec.diagnostics_json)
-        .map_err(|_| DbError::InvalidSpec("checkpoint diagnostics are invalid JSON"))?;
-    if !diagnostics.is_array() {
+    let diagnostics = diagnostic_codec::decode(&spec.diagnostics_json)
+        .map_err(|_| DbError::InvalidSpec("checkpoint diagnostics are invalid"))?;
+    if diagnostics.iter().any(|diagnostic| {
+        !spec.accepted.iter().any(|segment| {
+            segment.id == diagnostic.segment_id
+                && usize::try_from(diagnostic.line_index)
+                    .is_ok_and(|index| index < segment.lines.len())
+        })
+    }) {
         return Err(DbError::InvalidSpec(
-            "checkpoint diagnostics must be an array",
+            "checkpoint diagnostic lies outside accepted lines",
         ));
     }
     let accepted_json = encode_segments(&spec.accepted)?;
@@ -108,6 +114,18 @@ pub(crate) fn load(connection: &Connection, run_id: RunId) -> Result<Vec<Checkpo
         let (block_index, fingerprint, accepted_json, diagnostics_json, attempt_count) = row?;
         let input_fingerprint = decode_hash(&fingerprint)?;
         let accepted = decode_segments(&accepted_json)?;
+        let diagnostics = diagnostic_codec::decode(&diagnostics_json)?;
+        if diagnostics.iter().any(|diagnostic| {
+            !accepted.iter().any(|segment| {
+                segment.id == diagnostic.segment_id
+                    && usize::try_from(diagnostic.line_index)
+                        .is_ok_and(|index| index < segment.lines.len())
+            })
+        }) {
+            return Err(DbError::CorruptRecord(
+                "checkpoint diagnostic lies outside accepted lines",
+            ));
+        }
         checkpoints.push(CheckpointSpec {
             run_id,
             block_index,

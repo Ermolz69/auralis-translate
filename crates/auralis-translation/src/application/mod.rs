@@ -1,3 +1,4 @@
+mod diagnose_batch;
 mod translate_batch;
 mod translate_batch_error;
 mod translate_planned_run;

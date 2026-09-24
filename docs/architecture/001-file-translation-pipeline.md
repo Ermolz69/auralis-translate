@@ -52,6 +52,8 @@ The current opt-in SRT context experiment uses one target cue per block and up t
 
 The profile can allow one to three attempts for an uncommitted block. Each attempt runs the provider and full response contract again. Only a complete accepted response becomes a checkpoint, whose `attempt_count` records how many calls were made for that block. The current retry mechanism immediately repeats provider or contract failures; error classification, backoff, and detailed failure diagnostics remain to be implemented before the reliable-translation gate.
 
+After response validation, the current checker records `unchanged_source` and `no_cyrillic` warnings for individual accepted lines. It saves those warnings with the block checkpoint. They are visible through the CLI `diagnostics` report and `status` warning count after a restart. They are advisory: a proper name may have no Cyrillic, and some text can legitimately remain unchanged. A complete, structurally verified result remains available with `needs_review`; warnings never bypass the structural checks or prove linguistic accuracy.
+
 ## Strict-format invariants
 
 For an advertised strict subset, cue count and order, external timing, source labels/identifiers, and supported non-text constructs are preserved. Protected source ranges remain byte-identical. Only declared text slots may differ. Longer Russian text shifts later byte offsets; verification compares protected content through the source map rather than using old absolute offsets in the output.

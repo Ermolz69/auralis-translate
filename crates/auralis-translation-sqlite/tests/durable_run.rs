@@ -1,8 +1,8 @@
 mod support;
 
 use auralis_translation::{
-    LanguageCode, LanguagePair, ProviderError, ProviderResponse, SegmentId, SourceSegment,
-    TargetSegment, TranslationBatch, TranslationProvider, translate_planned_run,
+    DiagnosticCode, LanguageCode, LanguagePair, ProviderError, ProviderResponse, SegmentId,
+    SourceSegment, TargetSegment, TranslationBatch, TranslationProvider, translate_planned_run,
 };
 use auralis_translation_sqlite::{RunStop, SqliteConfig, TranslateDb};
 use std::cell::Cell;
@@ -12,6 +12,24 @@ use support::{run_spec, test_directory, translation_spec};
 struct CountingProvider {
     calls: Cell<usize>,
     fail_on_call: Option<usize>,
+}
+
+struct UnchangedProvider;
+
+impl TranslationProvider for UnchangedProvider {
+    fn translate(&self, batch: &TranslationBatch) -> Result<ProviderResponse, ProviderError> {
+        Ok(ProviderResponse {
+            schema_version: batch.schema_version(),
+            translations: batch
+                .targets()
+                .iter()
+                .map(|source| TargetSegment {
+                    id: source.id(),
+                    lines: source.lines().to_vec(),
+                })
+                .collect(),
+        })
+    }
 }
 
 impl TranslationProvider for CountingProvider {
@@ -117,6 +135,35 @@ fn incomplete_batch_list_cannot_be_reported_as_complete() -> Result<(), Box<dyn 
     assert!(translate_planned_run(&provider, &mut db, &run.blocks, &batches[..1]).is_err());
     assert_eq!(provider.calls.get(), 0);
     assert!(db.checkpoints(run.run_id)?.is_empty());
+    drop(db);
+    std::fs::remove_dir_all(directory)?;
+    Ok(())
+}
+
+#[test]
+fn quality_warnings_survive_checkpoint_reopen_without_changing_text() -> Result<(), Box<dyn Error>>
+{
+    let directory = test_directory()?;
+    let path = directory.join("auralis-translate.sqlite");
+    let run = run_spec()?;
+    let batch = batch(&run, 1, "你好。")?;
+    let mut db = TranslateDb::open(&path, SqliteConfig::default())?;
+    db.ensure_translation(&translation_spec()?)?;
+    db.begin_attempt(&run, None)?;
+    let output = translate_planned_run(&UnchangedProvider, &mut db, &run.blocks, &[batch])?;
+    assert_eq!(output[0].lines, ["你好。"]);
+    drop(db);
+
+    let db = TranslateDb::open(&path, SqliteConfig::default())?;
+    let diagnostics = db.diagnostics(run.run_id)?;
+    assert_eq!(diagnostics.len(), 2);
+    assert_eq!(
+        diagnostics[0].diagnostic.code,
+        DiagnosticCode::UnchangedSource
+    );
+    assert_eq!(diagnostics[1].diagnostic.code, DiagnosticCode::NoCyrillic);
+    assert_eq!(diagnostics[0].block_index, 0);
+    assert_eq!(diagnostics[0].diagnostic.line_index, 0);
     drop(db);
     std::fs::remove_dir_all(directory)?;
     Ok(())

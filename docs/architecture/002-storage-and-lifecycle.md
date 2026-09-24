@@ -49,7 +49,7 @@ The UI reads progress and pause reasons from Translate through `active_run_id`. 
 
 ## Translate SQLite tables
 
-The table below describes the logical contract. Migration `crates/auralis-translation-sqlite/migrations/0001_initial.sql` contains the initial executable Translate schema, and `0002_pause_request.sql` adds the durable pause flag. An existing v1 database upgrades transactionally to v2; not all logical tables have repository operations yet.
+The table below describes the logical contract. Migration `crates/auralis-translation-sqlite/migrations/0001_initial.sql` contains the initial executable Translate schema, and `0002_pause_request.sql` adds the durable pause flag. An existing v1 database upgrades transactionally to v2; not all logical tables have repository operations yet. Line-level quality warnings are stored once in `block_checkpoints.diagnostics_json`, next to the accepted lines they describe. The separate `diagnostics` table is reserved for run-level events and measurements; the current CLI does not write it.
 
 | Table | Required content |
 | --- | --- |

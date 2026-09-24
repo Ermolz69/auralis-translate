@@ -6,7 +6,7 @@ use std::error::Error;
 use std::ffi::OsStr;
 use std::path::Path;
 
-const STATUS_SCHEMA_VERSION: u32 = 2;
+const STATUS_SCHEMA_VERSION: u32 = 3;
 
 #[derive(Serialize)]
 struct StatusReport {
@@ -18,6 +18,7 @@ struct StatusReport {
     pause_requested: bool,
     completed_blocks: usize,
     total_blocks: usize,
+    warning_count: usize,
     selected_result_id: Option<String>,
     review_state: Option<&'static str>,
 }
@@ -46,6 +47,7 @@ pub(crate) fn run(state_dir: &OsStr, run_id: &OsStr) -> Result<(), Box<dyn Error
         pause_requested: db.pause_requested(run_id)?,
         completed_blocks,
         total_blocks: stored_run.blocks.len(),
+        warning_count: db.diagnostics(run_id)?.len(),
         selected_result_id: result.as_ref().map(|record| record.result_id.to_string()),
         review_state: result
             .as_ref()

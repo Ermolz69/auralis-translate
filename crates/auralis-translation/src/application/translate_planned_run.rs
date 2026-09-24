@@ -1,4 +1,4 @@
-use super::{TranslateRunError, translate_batch};
+use super::{TranslateRunError, diagnose_batch::diagnose_batch, translate_batch};
 use crate::domain::valid_line;
 use crate::{
     BlockCheckpoint, CheckpointStore, ProgressSink, RetryPolicy, RunControl, RunId, RunProgress,
@@ -161,6 +161,7 @@ pub fn translate_planned_run_with_policy<S: CheckpointStore>(
                 run_id: batch.run_id(),
                 block_index,
                 input_fingerprint: batch.fingerprint(),
+                diagnostics: diagnose_batch(batch, &translated),
                 accepted: translated,
                 attempt_count,
             };
@@ -213,6 +214,17 @@ fn validate_checkpoint<E>(
                 "saved text does not match target slots",
             ));
         }
+    }
+    if checkpoint.diagnostics.iter().any(|diagnostic| {
+        !batch.targets().iter().any(|segment| {
+            segment.id() == diagnostic.segment_id
+                && usize::try_from(diagnostic.line_index)
+                    .is_ok_and(|index| index < segment.lines().len())
+        })
+    }) {
+        return Err(TranslateRunError::InvalidCheckpoint(
+            "saved diagnostic lies outside target lines",
+        ));
     }
     Ok(())
 }

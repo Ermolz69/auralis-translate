@@ -28,7 +28,7 @@ fn cli_resumes_checkpointed_srt_and_reexports_validated_result() -> Result<(), B
 
     let listener = TcpListener::bind("127.0.0.1:0")?;
     let endpoint = format!("http://{}/", listener.local_addr()?);
-    let server = std::thread::spawn(move || serve(listener, 9, Some(9), None));
+    let server = std::thread::spawn(move || serve(listener, 9, Some(9), None, "Привет."));
     let first = command(&[
         "translate",
         path(&source_path)?,
@@ -61,11 +61,16 @@ fn cli_resumes_checkpointed_srt_and_reexports_validated_result() -> Result<(), B
     assert_eq!(status["state"], "failed");
     assert_eq!(status["completed_blocks"], 1);
     assert_eq!(status["total_blocks"], 2);
+    assert_eq!(status["warning_count"], 0);
     assert!(status["selected_result_id"].is_null());
+    let diagnostics = command(&["diagnostics", path(&state_dir)?, &run_id.to_string()])?;
+    assert!(diagnostics.status.success());
+    let diagnostics: serde_json::Value = serde_json::from_slice(&diagnostics.stdout)?;
+    assert_eq!(diagnostics["warnings"].as_array().map(Vec::len), Some(0));
 
     let listener = TcpListener::bind("127.0.0.1:0")?;
     let endpoint = format!("http://{}/", listener.local_addr()?);
-    let server = std::thread::spawn(move || serve(listener, 1, None, None));
+    let server = std::thread::spawn(move || serve(listener, 1, None, None, "Привет."));
     let resumed = command(&[
         "resume",
         path(&state_dir)?,
@@ -106,6 +111,7 @@ fn cli_resumes_checkpointed_srt_and_reexports_validated_result() -> Result<(), B
     let status: serde_json::Value = serde_json::from_slice(&status.stdout)?;
     assert_eq!(status["state"], "validated");
     assert_eq!(status["completed_blocks"], 2);
+    assert_eq!(status["warning_count"], 0);
     assert_eq!(status["review_state"], "needs_review");
     assert!(status["selected_result_id"].is_string());
 
@@ -183,7 +189,13 @@ fn cli_pause_preserves_committed_blocks_and_resume_finishes() -> Result<(), Box<
     let (ready_sender, ready_receiver) = mpsc::channel();
     let (release_sender, release_receiver) = mpsc::channel();
     let server = std::thread::spawn(move || {
-        serve(listener, 9, None, Some((ready_sender, release_receiver)))
+        serve(
+            listener,
+            9,
+            None,
+            Some((ready_sender, release_receiver)),
+            "Привет.",
+        )
     });
     let mut child = Command::new(env!("CARGO_BIN_EXE_auralis-translation-cli"))
         .args([
@@ -238,7 +250,7 @@ fn cli_pause_preserves_committed_blocks_and_resume_finishes() -> Result<(), Box<
 
     let listener = TcpListener::bind("127.0.0.1:0")?;
     let endpoint = format!("http://{}/", listener.local_addr()?);
-    let server = std::thread::spawn(move || serve(listener, 1, None, None));
+    let server = std::thread::spawn(move || serve(listener, 1, None, None, "Привет."));
     let resumed = command(&[
         "resume",
         path(&state_dir)?,
@@ -278,7 +290,7 @@ fn cli_profile_retry_limit_is_recorded_in_checkpoint() -> Result<(), Box<dyn Err
 
     let listener = TcpListener::bind("127.0.0.1:0")?;
     let endpoint = format!("http://{}/", listener.local_addr()?);
-    let server = std::thread::spawn(move || serve(listener, 2, Some(1), None));
+    let server = std::thread::spawn(move || serve(listener, 2, Some(1), None, "Привет."));
     let output = command(&[
         "translate",
         path(&source_path)?,
@@ -311,6 +323,64 @@ fn cli_profile_retry_limit_is_recorded_in_checkpoint() -> Result<(), Box<dyn Err
     Ok(())
 }
 
+#[test]
+fn cli_keeps_structural_result_and_reports_quality_warnings() -> Result<(), Box<dyn Error>> {
+    let nonce = SystemTime::now().duration_since(UNIX_EPOCH)?.as_nanos();
+    let directory = std::env::temp_dir().join(format!(
+        "auralis-cli-warning-{}-{nonce}",
+        std::process::id()
+    ));
+    std::fs::create_dir(&directory)?;
+    let source_path = directory.join("original.srt");
+    let state_dir = directory.join("state");
+    let profile_path = directory.join("profile.json");
+    let output_path = directory.join("russian.srt");
+    let source = b"1\n00:00:01,000 --> 00:00:02,000\n\xe4\xbd\xa0\xe5\xa5\xbd\xe3\x80\x82\n";
+    std::fs::write(&source_path, source)?;
+    std::fs::write(&profile_path, PROFILE)?;
+
+    let listener = TcpListener::bind("127.0.0.1:0")?;
+    let endpoint = format!("http://{}/", listener.local_addr()?);
+    let server = std::thread::spawn(move || serve(listener, 1, None, None, "你好。"));
+    let output = command(&[
+        "translate",
+        path(&source_path)?,
+        path(&state_dir)?,
+        path(&profile_path)?,
+        &endpoint,
+        path(&output_path)?,
+    ])?;
+    assert!(
+        output.status.success(),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    server
+        .join()
+        .map_err(|_| "warning mock server panicked")??;
+    assert_eq!(std::fs::read(&source_path)?, source);
+    assert_eq!(std::fs::read(&output_path)?, source);
+    let stdout = String::from_utf8(output.stdout)?;
+    let run_id = stdout
+        .split_whitespace()
+        .find_map(|item| item.strip_prefix("run_id="))
+        .ok_or("CLI did not announce its run ID")?;
+    let run_id = RunId::parse(run_id)?;
+
+    let status = command(&["status", path(&state_dir)?, &run_id.to_string()])?;
+    let status: serde_json::Value = serde_json::from_slice(&status.stdout)?;
+    assert_eq!(status["state"], "validated");
+    assert_eq!(status["review_state"], "needs_review");
+    assert_eq!(status["warning_count"], 2);
+    let report = command(&["diagnostics", path(&state_dir)?, &run_id.to_string()])?;
+    let report: serde_json::Value = serde_json::from_slice(&report.stdout)?;
+    assert_eq!(report["warnings"][0]["code"], "unchanged_source");
+    assert_eq!(report["warnings"][1]["code"], "no_cyrillic");
+    assert_eq!(report["warnings"][0]["segment_id"], 1);
+    std::fs::remove_dir_all(directory)?;
+    Ok(())
+}
+
 fn source_with_nine_cues() -> Vec<u8> {
     let mut text = String::new();
     for index in 1..=9 {
@@ -337,6 +407,7 @@ fn serve(
     count: usize,
     fail_on: Option<usize>,
     pause_handshake: Option<(mpsc::Sender<()>, mpsc::Receiver<()>)>,
+    translated_text: &str,
 ) -> Result<(), String> {
     listener
         .set_nonblocking(true)
@@ -375,9 +446,10 @@ fn serve(
         } else {
             "stop"
         };
-        let body = format!(
-            r#"{{"choices":[{{"message":{{"content":"Привет."}},"finish_reason":"{finish}"}}]}}"#
-        );
+        let body = serde_json::json!({
+            "choices": [{"message": {"content": translated_text}, "finish_reason": finish}]
+        })
+        .to_string();
         let response = format!(
             "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",
             body.len()
