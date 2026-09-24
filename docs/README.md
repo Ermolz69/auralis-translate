@@ -1,6 +1,6 @@
 # Auralis Translate documentation
 
-Status: architecture and staged implementation, 24 September 2026. The strict plain-SRT pipeline, manual renderer, and real-model experimental paths are implemented. Translate SQLite has migrations, durable checkpoint/attempt primitives, pause requests, and immutable result records. The CLI has a managed-source `translate`/`pause`/`resume` path verified with a mock model server. A checked experimental profile also passed a real-model server preflight smoke. Production quality, durable WebVTT translation, and Auralis integration remain open. A strict plain-WebVTT adapter supports manual CLI copy verification and a non-durable experimental model path. A one-cue real-model smoke passed; durable WebVTT translation remains open. See [implementation status](IMPLEMENTATION_STATUS.md) for verified evidence.
+Status: architecture and staged implementation, 24 September 2026. The strict plain-SRT and plain-WebVTT pipelines, manual renderers, and real-model experimental paths are implemented. Translate SQLite has migrations, durable checkpoint/attempt primitives, pause requests, and immutable result records. The CLI has managed-source `translate`/`translate-vtt`/`pause`/`resume` paths verified with a mock model server. A checked experimental profile also passed a real-model server preflight smoke; a one-cue WebVTT real-model smoke used the experimental path. Production quality, real-model WebVTT interruption/resume, and Auralis integration remain open. See [implementation status](IMPLEMENTATION_STATUS.md) for verified evidence.
 
 The detailed [version 2.0 plan](../AURALIS_SUBTITLE_TRANSLATION_PLAN.md) remains at the repository root in Russian as a historical source. The [English product plan](PRODUCT_PLAN.md) and the architecture documents record the later decisions for the first file-based translation product. Where the historical plan conflicts with an agreed MVP decision below, this directory takes precedence; its research, format cautions, and release gates still apply.
 
@@ -17,8 +17,9 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 | [Storage and lifecycle](architecture/002-storage-and-lifecycle.md) | Data ownership across two SQLite databases, project links, checkpoints, pause/resume, publication and recovery. |
 | [Auralis integration](architecture/003-auralis-integration.md) | Host responsibilities, integration API, current Auralis gaps, Git submodule and delivery order. |
 | [Rust code architecture](architecture/004-rust-code-architecture.md) | Crate dependencies, module and test layout, typed contracts, configuration and code conventions. |
+| [Optional WebVTT cue identity decision](architecture/005-optional-webvtt-cue-identity.md) | How absent external cue IDs round-trip through the existing Translate SQLite schema. |
 | [Glossary input v1](reference/glossary-v1.md) | Experimental terminology JSON, target scope, frozen revision, and resume behavior. |
-| [Strict plain-WebVTT subset v1](reference/webvtt-subset-v1.md) | Separately verified text extraction and copy contract; durable translation integration remains open. |
+| [Strict plain-WebVTT subset v1](reference/webvtt-subset-v1.md) | Separately verified text extraction, durable CLI copy and recovery contract; release validation remains open. |
 
 ## Agreed MVP decisions
 

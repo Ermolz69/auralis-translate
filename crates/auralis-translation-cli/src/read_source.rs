@@ -1,4 +1,5 @@
 use auralis_translation_formats::srt::SrtParsePolicy;
+use auralis_translation_formats::vtt::VttParsePolicy;
 use std::fs::File;
 use std::io::{self, Read};
 use std::path::Path;
@@ -6,6 +7,10 @@ use std::path::Path;
 pub(crate) fn read_source(path: &Path) -> io::Result<Vec<u8>> {
     let max_bytes = SrtParsePolicy::default().max_bytes();
     read_bounded(path, max_bytes, "source")
+}
+
+pub(crate) fn read_vtt_source(path: &Path) -> io::Result<Vec<u8>> {
+    read_bounded(path, VttParsePolicy::default().max_bytes(), "source")
 }
 
 pub(crate) fn read_bounded(path: &Path, max_bytes: usize, kind: &str) -> io::Result<Vec<u8>> {

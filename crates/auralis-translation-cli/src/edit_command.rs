@@ -2,7 +2,7 @@ use crate::durable_workflow::DATABASE_FILE;
 use crate::edit_payload::EditPayload;
 use crate::loaded_run::load;
 use crate::write_new::write_new;
-use auralis_translation::{ResultId, SourceHash};
+use auralis_translation::{ResultId, SourceHash, VerifiedRenderer};
 use auralis_translation_sqlite::{EditSpec, SqliteConfig, TranslateDb};
 use std::error::Error;
 use std::ffi::OsStr;

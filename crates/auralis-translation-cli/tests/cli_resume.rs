@@ -390,6 +390,189 @@ fn cli_resumes_checkpointed_srt_and_reexports_validated_result() -> Result<(), B
 }
 
 #[test]
+fn cli_resumes_checkpointed_vtt_and_reexports_verified_copy() -> Result<(), Box<dyn Error>> {
+    let nonce = SystemTime::now().duration_since(UNIX_EPOCH)?.as_nanos();
+    let directory = std::env::temp_dir().join(format!(
+        "auralis-cli-vtt-resume-{}-{nonce}",
+        std::process::id()
+    ));
+    std::fs::create_dir(&directory)?;
+    let source_path = directory.join("original.vtt");
+    let state_dir = directory.join("state");
+    let profile_path = directory.join("profile.json");
+    let output_path = directory.join("russian.vtt");
+    let export_path = directory.join("russian-again.vtt");
+    let edit_path = directory.join("edit.json");
+    let edited_path = directory.join("edited.vtt");
+    let edited_export_path = directory.join("edited-again.vtt");
+    let source = source_with_nine_vtt_cues();
+    std::fs::write(&source_path, &source)?;
+    std::fs::write(&profile_path, PROFILE)?;
+
+    let listener = TcpListener::bind("127.0.0.1:0")?;
+    let endpoint = format!("http://{}/", listener.local_addr()?);
+    let server = std::thread::spawn(move || serve(listener, 9, Some(9), None, "Привет."));
+    let first = command(&[
+        "translate-vtt",
+        path(&source_path)?,
+        path(&state_dir)?,
+        path(&profile_path)?,
+        &endpoint,
+        path(&output_path)?,
+    ])?;
+    assert!(!first.status.success());
+    assert!(String::from_utf8_lossy(&first.stderr).contains("saved_blocks=1/2"));
+    server
+        .join()
+        .map_err(|_| "first VTT mock server panicked")??;
+    assert!(!output_path.exists());
+    let stdout = String::from_utf8(first.stdout)?;
+    let run_id = stdout
+        .split_whitespace()
+        .find_map(|item| item.strip_prefix("run_id="))
+        .ok_or("CLI did not report a VTT run ID")?;
+    let run_id = RunId::parse(run_id)?;
+    let db = TranslateDb::open(
+        &state_dir.join("auralis-translate.sqlite"),
+        SqliteConfig::default(),
+    )?;
+    assert_eq!(db.run_state(run_id)?, RunState::Failed);
+    assert_eq!(db.checkpoints(run_id)?.len(), 1);
+    let translation = db.translation(db.run(run_id)?.translation_id)?;
+    assert_eq!(translation.source_format, "vtt");
+    let segments = db.segments(translation.translation_id)?;
+    assert_eq!(segments.len(), 9);
+    assert_eq!(segments[0].cue_label, None);
+    assert_eq!(segments[1].cue_label.as_deref(), Some("cue-two"));
+    drop(db);
+
+    let listener = TcpListener::bind("127.0.0.1:0")?;
+    let endpoint = format!("http://{}/", listener.local_addr()?);
+    let server = std::thread::spawn(move || serve(listener, 1, None, None, "Привет."));
+    let resumed = command(&[
+        "resume",
+        path(&state_dir)?,
+        &run_id.to_string(),
+        path(&profile_path)?,
+        &endpoint,
+        path(&output_path)?,
+    ])?;
+    assert!(
+        resumed.status.success(),
+        "{}",
+        String::from_utf8_lossy(&resumed.stderr)
+    );
+    server
+        .join()
+        .map_err(|_| "second VTT mock server panicked")??;
+    assert_eq!(std::fs::read(&source_path)?, source);
+    let translated = std::fs::read(&output_path)?;
+    assert!(translated.starts_with(b"WEBVTT\r\n\r\nNOTE provenance\r\n"));
+    assert!(
+        translated
+            .windows(b"cue-two".len())
+            .any(|part| part == b"cue-two")
+    );
+    assert_eq!(
+        translated
+            .windows("Привет.".len())
+            .filter(|part| *part == "Привет.".as_bytes())
+            .count(),
+        9
+    );
+    let db = TranslateDb::open(
+        &state_dir.join("auralis-translate.sqlite"),
+        SqliteConfig::default(),
+    )?;
+    assert_eq!(db.run_state(run_id)?, RunState::Validated);
+    let base_result = db.result_for_run(run_id)?;
+    assert_eq!(base_result.selected.len(), 9);
+    drop(db);
+
+    let export = command(&[
+        "resume",
+        path(&state_dir)?,
+        &run_id.to_string(),
+        path(&profile_path)?,
+        "http://127.0.0.1:1/",
+        path(&export_path)?,
+    ])?;
+    assert!(
+        export.status.success(),
+        "{}",
+        String::from_utf8_lossy(&export.stderr)
+    );
+    assert_eq!(std::fs::read(&export_path)?, translated);
+    std::fs::write(
+        &edit_path,
+        r#"{"schema_version":1,"segment_id":1,"lines":["Здравствуйте."]}"#,
+    )?;
+    let edited = command(&[
+        "edit",
+        path(&state_dir)?,
+        &base_result.result_id.to_string(),
+        path(&profile_path)?,
+        path(&edit_path)?,
+        path(&edited_path)?,
+    ])?;
+    assert!(
+        edited.status.success(),
+        "{}",
+        String::from_utf8_lossy(&edited.stderr)
+    );
+    let edited_output = std::fs::read(&edited_path)?;
+    assert!(String::from_utf8(edited_output.clone())?.contains("Здравствуйте."));
+    assert_eq!(std::fs::read(&output_path)?, translated);
+    let edited_export = command(&[
+        "resume",
+        path(&state_dir)?,
+        &run_id.to_string(),
+        path(&profile_path)?,
+        "http://127.0.0.1:1/",
+        path(&edited_export_path)?,
+    ])?;
+    assert!(
+        edited_export.status.success(),
+        "{}",
+        String::from_utf8_lossy(&edited_export.stderr)
+    );
+    assert_eq!(std::fs::read(&edited_export_path)?, edited_output);
+    std::fs::remove_dir_all(directory)?;
+    Ok(())
+}
+
+#[test]
+fn cli_rejects_unsupported_vtt_before_creating_run_state() -> Result<(), Box<dyn Error>> {
+    let nonce = SystemTime::now().duration_since(UNIX_EPOCH)?.as_nanos();
+    let directory = std::env::temp_dir().join(format!(
+        "auralis-cli-vtt-invalid-{}-{nonce}",
+        std::process::id()
+    ));
+    std::fs::create_dir(&directory)?;
+    let source_path = directory.join("unsupported.vtt");
+    let state_dir = directory.join("state");
+    let profile_path = directory.join("profile.json");
+    let output_path = directory.join("russian.vtt");
+    let source = b"WEBVTT\n\nSTYLE\n::cue { color: red }\n\n00:01.000 --> 00:02.000\nhello\n";
+    std::fs::write(&source_path, source)?;
+    std::fs::write(&profile_path, PROFILE)?;
+    let result = command(&[
+        "translate-vtt",
+        path(&source_path)?,
+        path(&state_dir)?,
+        path(&profile_path)?,
+        "http://127.0.0.1:1/",
+        path(&output_path)?,
+    ])?;
+    assert!(!result.status.success());
+    assert!(!state_dir.exists());
+    assert!(!output_path.exists());
+    assert_eq!(std::fs::read(&source_path)?, source);
+    std::fs::remove_dir_all(directory)?;
+    Ok(())
+}
+
+#[test]
 fn cli_pause_preserves_committed_blocks_and_resume_finishes() -> Result<(), Box<dyn Error>> {
     let nonce = SystemTime::now().duration_since(UNIX_EPOCH)?.as_nanos();
     let directory =
@@ -604,6 +787,20 @@ fn source_with_nine_cues() -> Vec<u8> {
     for index in 1..=9 {
         text.push_str(&format!(
             "{index}\n00:00:{index:02},000 --> 00:00:{:02},000\n你好。\n\n",
+            index + 1
+        ));
+    }
+    text.into_bytes()
+}
+
+fn source_with_nine_vtt_cues() -> Vec<u8> {
+    let mut text = String::from("WEBVTT\r\n\r\nNOTE provenance\r\nsynthetic\r\n\r\n");
+    for index in 1..=9 {
+        if index == 2 {
+            text.push_str("cue-two\r\n");
+        }
+        text.push_str(&format!(
+            "00:{index:02}.000 --> 00:{:02}.000\r\n你好。\r\n\r\n",
             index + 1
         ));
     }

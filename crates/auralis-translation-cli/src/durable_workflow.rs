@@ -1,10 +1,11 @@
+use crate::document_run_error::DocumentRunError;
+use crate::document_run_plan::DocumentRunPlan;
 use crate::model_preflight;
 use crate::stderr_progress::StderrProgress;
 use crate::write_new::write_new;
 use auralis_translation::{
-    ResultId, RetryPolicy, ReviewState, RunState, SourceHash, TranslateRunError,
+    BlockPolicy, ResultId, RetryPolicy, ReviewState, RunState, SourceHash, VerifiedRenderer,
 };
-use auralis_translation_formats::srt::{SrtBlockPolicy, SrtRunError, SrtRunPlan};
 use auralis_translation_llamacpp::{LlamaCppProvider, ModelProfile};
 use auralis_translation_sqlite::{ResultSpec, RunSpec, RunStop, SqliteConfig, TranslateDb};
 use std::error::Error;
@@ -28,19 +29,19 @@ pub(crate) fn load_profile(path: &Path) -> Result<(ModelProfile, SourceHash), Bo
     Ok((profile, SourceHash::digest(&bytes)))
 }
 
-pub(crate) fn block_policy(profile: &ModelProfile) -> Result<SrtBlockPolicy, Box<dyn Error>> {
-    SrtBlockPolicy::with_context(
+pub(crate) fn block_policy(profile: &ModelProfile) -> Result<BlockPolicy, Box<dyn Error>> {
+    BlockPolicy::with_context(
         profile.target_segments_per_block,
         profile.context_before_segments,
         profile.context_after_segments,
     )
-    .ok_or_else(|| "model profile has an unsupported SRT block policy".into())
+    .ok_or_else(|| "model profile has an unsupported block policy".into())
 }
 
 pub(crate) fn execute(
     db: &mut TranslateDb,
     run: &RunSpec,
-    plan: &SrtRunPlan,
+    plan: &DocumentRunPlan,
     profile: ModelProfile,
     config: ExecutionConfig<'_>,
 ) -> Result<(), Box<dyn Error>> {
@@ -67,13 +68,13 @@ pub(crate) fn execute(
     let output =
         match plan.execute_with_policy(&provider, db, &mut StderrProgress, &control_db, retry) {
             Ok(output) => output,
-            Err(error @ SrtRunError::Translate(TranslateRunError::Paused)) => {
+            Err(DocumentRunError::Paused(error)) => {
                 db.stop_attempt(run.run_id, attempt, RunStop::Paused, "pause requested")?;
-                return Err(Box::new(error));
+                return Err(error);
             }
-            Err(error) => {
+            Err(DocumentRunError::Failed(error)) => {
                 db.stop_attempt(run.run_id, attempt, RunStop::Failed, "translation failed")?;
-                return Err(Box::new(error));
+                return Err(error);
             }
         };
     let result_id = ResultId::new(Uuid::new_v4()).ok_or("failed to create result ID")?;
@@ -112,7 +113,7 @@ pub(crate) fn execute(
 pub(crate) fn export_validated(
     db: &TranslateDb,
     run: &RunSpec,
-    plan: &SrtRunPlan,
+    plan: &DocumentRunPlan,
     output_path: &Path,
 ) -> Result<(), Box<dyn Error>> {
     if db.run_state(run.run_id)? != RunState::Validated {

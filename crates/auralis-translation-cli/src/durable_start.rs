@@ -1,20 +1,18 @@
+use crate::document_run_plan::DocumentRunPlan;
 use crate::durable_workflow::{
     DATABASE_FILE, ExecutionConfig, SOURCE_DIRECTORY, block_policy, execute, load_profile,
 };
-use crate::read_source::read_source;
+use crate::read_source::{read_source, read_vtt_source};
 use crate::source_snapshot::source_snapshot;
 use crate::write_new::write_new;
 use crate::{glossary_input, managed_glossary};
 use auralis_translation::{LanguageCode, LanguagePair, RunId, TranslationId};
-use auralis_translation_formats::srt::SrtRunPlan;
 use auralis_translation_sqlite::{RunSpec, SqliteConfig, TranslateDb, TranslationSpec};
 use std::error::Error;
 use std::ffi::OsStr;
 use std::io::Write;
 use std::path::Path;
 use uuid::Uuid;
-
-const SOURCE_FORMAT: &str = "srt";
 
 pub(crate) fn run(
     source_path: &OsStr,
@@ -30,6 +28,25 @@ pub(crate) fn run(
         None,
         endpoint,
         output_path,
+        DocumentRunPlan::SRT_FORMAT,
+    )
+}
+
+pub(crate) fn run_vtt(
+    source_path: &OsStr,
+    state_dir: &OsStr,
+    profile_path: &OsStr,
+    endpoint: &OsStr,
+    output_path: &OsStr,
+) -> Result<(), Box<dyn Error>> {
+    run_inner(
+        source_path,
+        state_dir,
+        profile_path,
+        None,
+        endpoint,
+        output_path,
+        DocumentRunPlan::VTT_FORMAT,
     )
 }
 
@@ -48,6 +65,7 @@ pub(crate) fn run_with_glossary(
         Some(glossary_path),
         endpoint,
         output_path,
+        DocumentRunPlan::SRT_FORMAT,
     )
 }
 
@@ -58,12 +76,17 @@ fn run_inner(
     glossary_path: Option<&OsStr>,
     endpoint: &OsStr,
     output_path: &OsStr,
+    format: &str,
 ) -> Result<(), Box<dyn Error>> {
     let output_path = Path::new(output_path);
     if output_path.exists() {
         return Err("output already exists".into());
     }
-    let source = read_source(Path::new(source_path))?;
+    let source = match format {
+        DocumentRunPlan::SRT_FORMAT => read_source(Path::new(source_path))?,
+        DocumentRunPlan::VTT_FORMAT => read_vtt_source(Path::new(source_path))?,
+        _ => return Err("unsupported standalone source format".into()),
+    };
     let (profile, profile_hash) = load_profile(Path::new(profile_path))?;
     let glossary_snapshot = glossary_path
         .map(|path| glossary_input::read(Path::new(path)))
@@ -76,7 +99,8 @@ fn run_inner(
     let run_id = RunId::new(Uuid::new_v4()).ok_or("failed to create run ID")?;
     let pair = LanguagePair::new(LanguageCode::Chinese, LanguageCode::Russian)?;
     let block_policy = block_policy(&profile)?;
-    let plan = SrtRunPlan::with_glossary(
+    let plan = DocumentRunPlan::new(
+        format,
         &source,
         translation_id,
         run_id,
@@ -93,7 +117,7 @@ fn run_inner(
     }
     let source_dir = state_dir.join(SOURCE_DIRECTORY);
     std::fs::create_dir_all(&source_dir)?;
-    let managed_source = source_dir.join(format!("{translation_id}.srt"));
+    let managed_source = source_dir.join(format!("{translation_id}.{}", plan.source_format()));
     write_new(&managed_source, &source)?;
     let source_locator = managed_source
         .to_str()
@@ -106,7 +130,7 @@ fn run_inner(
         source_artifact_id: None,
         source_locator: Some(source_locator),
         source_hash: plan.source_hash(),
-        source_format: SOURCE_FORMAT.into(),
+        source_format: plan.source_format().into(),
         language_pair: pair,
     })?;
     db.ensure_segments(
@@ -119,8 +143,8 @@ fn run_inner(
         translation_id,
         source_hash: plan.source_hash(),
         profile_fingerprint: profile_hash.to_string(),
-        parser_version: SrtRunPlan::PARSER_VERSION,
-        policy_fingerprint: SrtRunPlan::policy_fingerprint(block_policy).to_string(),
+        parser_version: plan.parser_version(),
+        policy_fingerprint: plan.policy_fingerprint(block_policy).to_string(),
         glossary_revision: glossary_snapshot
             .as_ref()
             .map(|(_, hash, _)| hash.to_string()),

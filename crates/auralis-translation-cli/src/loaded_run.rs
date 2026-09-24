@@ -1,9 +1,9 @@
+use crate::document_run_plan::DocumentRunPlan;
 use crate::durable_workflow::{DATABASE_FILE, SOURCE_DIRECTORY, block_policy, load_profile};
 use crate::managed_glossary;
-use crate::read_source::read_source;
+use crate::read_source::{read_source, read_vtt_source};
 use crate::source_snapshot::source_snapshot;
 use auralis_translation::{RunId, SourceHash};
-use auralis_translation_formats::srt::SrtRunPlan;
 use auralis_translation_llamacpp::ModelProfile;
 use auralis_translation_sqlite::{RunSpec, SqliteConfig, TranslateDb};
 use std::error::Error;
@@ -13,7 +13,7 @@ use std::path::{Path, PathBuf};
 pub(crate) struct LoadedRun {
     pub db: TranslateDb,
     pub run: RunSpec,
-    pub plan: SrtRunPlan,
+    pub plan: DocumentRunPlan,
     pub profile: ModelProfile,
     pub state_dir: PathBuf,
 }
@@ -31,8 +31,12 @@ pub(crate) fn load(
     let mut db = TranslateDb::open(&db_path, SqliteConfig::default())?;
     let run = db.run(run_id)?;
     let translation = db.translation(run.translation_id)?;
-    if translation.source_format != "srt" || translation.source_artifact_id.is_some() {
-        return Err("run is not a standalone SRT translation".into());
+    if !matches!(
+        translation.source_format.as_str(),
+        DocumentRunPlan::SRT_FORMAT | DocumentRunPlan::VTT_FORMAT
+    ) || translation.source_artifact_id.is_some()
+    {
+        return Err("run is not a supported standalone translation".into());
     }
     let locator = translation
         .source_locator
@@ -43,7 +47,11 @@ pub(crate) fn load(
     if !source_path.starts_with(&managed_root) {
         return Err("managed source lies outside the state directory".into());
     }
-    let source = read_source(&source_path)?;
+    let source = match translation.source_format.as_str() {
+        DocumentRunPlan::SRT_FORMAT => read_source(&source_path)?,
+        DocumentRunPlan::VTT_FORMAT => read_vtt_source(&source_path)?,
+        _ => return Err("unsupported standalone source format".into()),
+    };
     if SourceHash::digest(&source) != translation.source_hash
         || run.source_hash != translation.source_hash
     {
@@ -58,7 +66,8 @@ pub(crate) fn load(
     if glossary.is_some() && profile.prompt_version != 3 {
         return Err("frozen glossary requires a glossary-capable profile".into());
     }
-    let plan = SrtRunPlan::with_glossary(
+    let plan = DocumentRunPlan::new(
+        &translation.source_format,
         &source,
         translation.translation_id,
         run_id,
@@ -67,8 +76,8 @@ pub(crate) fn load(
         glossary.as_ref(),
     )?;
     if plan.blocks() != run.blocks
-        || run.parser_version != SrtRunPlan::PARSER_VERSION
-        || run.policy_fingerprint != SrtRunPlan::policy_fingerprint(policy).to_string()
+        || run.parser_version != plan.parser_version()
+        || run.policy_fingerprint != plan.policy_fingerprint(policy).to_string()
     {
         return Err("source parser or block policy differs from frozen run".into());
     }
