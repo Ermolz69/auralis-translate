@@ -18,6 +18,8 @@ Status: 24 September 2026. This log reports observed behavior, not release claim
 
 The library creates the translated document in memory from the original bytes. The `render` and `translate-experimental` commands write it only after validation. The durable CLI copies the source to `STATE_DIR/sources/<translation_id>.srt` before inference, retains the external original untouched, and stores run state in `STATE_DIR/auralis-translate.sqlite`. A scoped or global glossary term that is absent from its translated target line produces an advisory `glossary_term_missing` checkpoint warning; the SQLite round trip is tested. The manual manifest and fake provider are development tools, not proof of translation quality.
 
+The [first prompt-v3 real-model smoke](../eval/experiments/2026-09-24-glossary-profile-smoke.md) completed two blocks and re-exported an identical file after server shutdown. The model ignored the confirmed term and repeated one Russian phrase across distinct source lines; the glossary warning identified the missing term. This is evidence against selecting the current profile without further evaluation. S5 and S6 remain open.
+
 ## Reproduce the current path
 
 From this repository root:

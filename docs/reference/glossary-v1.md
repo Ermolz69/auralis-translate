@@ -2,6 +2,8 @@
 
 Status: experimental CLI contract, 24 September 2026. This file describes the first confirmed-terminology input used by the prompt-v3 Hy-MT2 profile. It is not evidence that the model follows every term or that the profile passes language review.
 
+The [first real-model glossary smoke](../../eval/experiments/2026-09-24-glossary-profile-smoke.md) preserved SRT structure but the model ignored its one confirmed term. The warning detected that case; the profile remains experimental.
+
 ## JSON shape
 
 ```json
