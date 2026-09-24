@@ -28,6 +28,8 @@ The first command exited 0 and reported `translation_id=04f033cc-e356-4e25-8fe2-
 
 The output preserved both cue labels, timing lines, cue order, line counts, and source line endings. The observed Russian text was `Здравствуйте.`, `Увидимся завтра.`, and `До свидания.` in the corresponding slots. The original remained unchanged.
 
+The later `task cli -- doctor models/manifests/hy_mt2_1_8b_q4_k_m.experimental.json .cache/models/Hy-MT2-1.8B-Q4_K_M.gguf` check also exited 0, reporting SHA-256 `dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699`, 1,133,080,448 bytes, and `verified=true`. It hashes the local file; it does not attest which weight a separate server has loaded.
+
 ## Limits of this evidence
 
 The separate mock-server CLI test injects a failure after one committed block and proves skip-on-resume; this real-model smoke completed without interruption. No bilingual reviewer has scored the text. The CLI currently trusts the configured server alias and profile; it does not attest the loaded model weight at request time. The runtime installer, platform packaging, automated server lifecycle, context-aware planning, quality diagnostics, and Auralis project publication remain open.

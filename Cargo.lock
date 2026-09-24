@@ -26,6 +26,7 @@ dependencies = [
  "auralis-translation-sqlite",
  "serde",
  "serde_json",
+ "sha2",
  "uuid",
 ]
 
