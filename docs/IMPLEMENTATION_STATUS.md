@@ -4,6 +4,8 @@ Status: 25 September 2026. This log reports observed behavior, not release claim
 
 The [open-data evaluation protocol](evaluation/001-open-data-and-language-gates.md) now lists candidate data and a provenance/review procedure. No third-party corpus has been imported, no bilingual scoring has occurred, and S5/S8/S9 language quality remains unmeasured. Auralis has additionally passed a two-database reopen test: its host job recovers the saved Translate checkpoint, keeps the project run link, repairs the host count, and permits a new pending attempt. This test closes and reopens SQLite handles; it does not kill the desktop process or prove runtime-child cleanup.
 
+The Auralis subtitle workspace now refreshes its source/result comparison when the run panel observes a changed ready selected result. Focused component tests pass for the notification and reloaded comparison. The panel still polls rather than subscribing to progress events, and native desktop inference remains unverified.
+
 ## Current slices
 
 | Roadmap stage | Working behavior | Gate still open |
