@@ -1,0 +1,7 @@
+# Native Auralis single-owner storage test
+
+Date: 25 September 2026. Scope: one isolated Windows application-data root and two real native Tauri desktop processes. This is an S7 host-ownership check, not a translation-quality or multi-installation benchmark.
+
+The opt-in Auralis command `task desktop:e2e:native:single-owner` builds the native test executable and starts the first desktop against a temporary data root. After its bootstrap records `setup-complete`, the harness starts a second executable against the **same** root. The second process records `setup-started`, exits unsuccessfully with the storage-lease conflict diagnostic, and never records `paths-ready` or `setup-complete`. The first process stays alive and completes the baseline project, artifact, and job workflow. The harness then removes the isolated data root. The command passed.
+
+`AppRootLease` is acquired before Auralis opens either SQLite database or starts Translate recovery. This process-level result complements the existing cross-process lock test and the local concurrent host-job admission tests. It establishes that two desktop processes cannot simultaneously own one installation's Auralis and Translate databases. The fixture does not start a model, race two translation IPC calls inside one process, exercise separate installation roots, or cover pause/resume and project-deletion races. Those checks keep their own gates.

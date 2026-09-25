@@ -17,6 +17,7 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 | [FLORES-200 acquisition](../eval/experiments/2026-09-25-flores200-acquisition.md) | Locally cached, hash-pinned auxiliary Chinese/Japanese-to-Russian sentence corpus; no subtitle release claim. |
 | [FLORES-200 provider smoke](../eval/experiments/2026-09-25-flores200-provider-smoke.md) | Checked local model output for one Chinese and one Japanese sentence, with unresolved source/reference divergence. |
 | [Native result-gap recovery](../eval/experiments/2026-09-25-native-result-gap.md) | Killed-desktop evidence for a validated Translate result committed before Auralis publication, followed by ready-artifact recovery. |
+| [Native single-owner storage](../eval/experiments/2026-09-25-native-single-owner.md) | Two real desktop processes compete for one application-data root; only the first reaches storage setup. |
 | [Commons subtitle pilot inventory](evaluation/002-commons-pilot-inventory.md) | Fixed candidate page revisions, rights and alignment gaps, and the decision to keep one multilingual video out of release holdouts. |
 | [File translation pipeline](architecture/001-file-translation-pipeline.md) | Immutable source, extraction, model input, separate working copy, structural verification. |
 | [Storage and lifecycle](architecture/002-storage-and-lifecycle.md) | Data ownership across two SQLite databases, project links, checkpoints, pause/resume, publication and recovery. |
