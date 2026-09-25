@@ -13,6 +13,7 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 | [English product plan](PRODUCT_PLAN.md) | Current overall product scope, models, format boundaries, delivery, evaluation and release gates. |
 | [Temporary implementation stages](IMPLEMENTATION_STAGES.md) | Observable steps from text extraction to real inference, durable state, Auralis integration, and release gates. Agents use this until a tracked backlog replaces it. |
 | [Implementation status](IMPLEMENTATION_STATUS.md) | Evidence for implemented slices, command examples, and open stage gates. |
+| [Open data and language evaluation](evaluation/001-open-data-and-language-gates.md) | Candidate licensed corpora, provenance requirements, frozen splits, bilingual review, and S8/S9 language evidence. |
 | [File translation pipeline](architecture/001-file-translation-pipeline.md) | Immutable source, extraction, model input, separate working copy, structural verification. |
 | [Storage and lifecycle](architecture/002-storage-and-lifecycle.md) | Data ownership across two SQLite databases, project links, checkpoints, pause/resume, publication and recovery. |
 | [Auralis integration](architecture/003-auralis-integration.md) | Host responsibilities, integration API, current Auralis gaps, Git submodule and delivery order. |

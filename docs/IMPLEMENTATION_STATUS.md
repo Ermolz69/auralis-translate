@@ -2,6 +2,8 @@
 
 Status: 25 September 2026. This log reports observed behavior, not release claims. Strict plain-SRT inspection and manual replacement work. A real model has produced a separate Russian SRT through both the experimental path and the durable CLI. Translate SQLite stores run attempts, accepted checkpoints, and immutable results. CLI tests cover managed-source copying, model failure, restart, completion, and reconstruction against a mock HTTP model server for SRT and WebVTT. A real-model SRT result was re-exported after server shutdown. Real-model interruption/resume and end-to-end managed desktop evidence remain open. The strict WebVTT adapter, manual CLI path, experimental real-model path, and durable CLI recovery path are implemented; release validation remains open.
 
+The [open-data evaluation protocol](evaluation/001-open-data-and-language-gates.md) now lists candidate data and a provenance/review procedure. No third-party corpus has been imported, no bilingual scoring has occurred, and S5/S8/S9 language quality remains unmeasured.
+
 ## Current slices
 
 | Roadmap stage | Working behavior | Gate still open |
