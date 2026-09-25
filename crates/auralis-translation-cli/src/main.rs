@@ -16,6 +16,7 @@ mod managed_glossary;
 mod manual_command;
 mod manual_manifest;
 mod manual_translation;
+mod offline_install_command;
 mod pause_command;
 mod read_source;
 mod source_snapshot;
@@ -60,6 +61,11 @@ fn main() -> ExitCode {
         [command, profile, model] if command == "doctor" => {
             doctor_command::run(profile, model)
         }
+        [command, manifest, profile, backend, source_dir, install_root]
+            if command == "install-offline" =>
+        {
+            offline_install_command::run(manifest, profile, backend, source_dir, install_root)
+        }
         [command, source, profile, endpoint, output] if command == "translate-experimental" => {
             experimental_command::run(source, profile, endpoint, output)
         }
@@ -82,7 +88,7 @@ fn main() -> ExitCode {
         [command, state_dir, run_id, profile, endpoint, output] if command == "resume" => {
             durable_resume::run(state_dir, run_id, profile, endpoint, output)
         }
-        _ => Err("usage: auralis-translation-cli <inspect SOURCE | inspect-vtt SOURCE | template SOURCE MANIFEST | template-vtt SOURCE MANIFEST | render SOURCE MANIFEST OUTPUT | render-vtt SOURCE MANIFEST OUTPUT | status STATE_DIR RUN_ID | diagnostics STATE_DIR RUN_ID | pause STATE_DIR RUN_ID | edit STATE_DIR BASE_RESULT_ID PROFILE EDIT_JSON OUTPUT | doctor PROFILE MODEL_FILE | translate-experimental SOURCE PROFILE SERVER_URL OUTPUT | translate-vtt-experimental SOURCE PROFILE SERVER_URL OUTPUT | translate SOURCE STATE_DIR PROFILE SERVER_URL OUTPUT | translate-vtt SOURCE STATE_DIR PROFILE SERVER_URL OUTPUT | translate-glossary SOURCE STATE_DIR PROFILE GLOSSARY SERVER_URL OUTPUT | resume STATE_DIR RUN_ID PROFILE SERVER_URL OUTPUT>".into()),
+        _ => Err("usage: auralis-translation-cli <inspect SOURCE | inspect-vtt SOURCE | template SOURCE MANIFEST | template-vtt SOURCE MANIFEST | render SOURCE MANIFEST OUTPUT | render-vtt SOURCE MANIFEST OUTPUT | status STATE_DIR RUN_ID | diagnostics STATE_DIR RUN_ID | pause STATE_DIR RUN_ID | edit STATE_DIR BASE_RESULT_ID PROFILE EDIT_JSON OUTPUT | doctor PROFILE MODEL_FILE | install-offline RELEASE_MANIFEST PROFILE BACKEND SOURCE_DIR INSTALL_ROOT | translate-experimental SOURCE PROFILE SERVER_URL OUTPUT | translate-vtt-experimental SOURCE PROFILE SERVER_URL OUTPUT | translate SOURCE STATE_DIR PROFILE SERVER_URL OUTPUT | translate-vtt SOURCE STATE_DIR PROFILE SERVER_URL OUTPUT | translate-glossary SOURCE STATE_DIR PROFILE GLOSSARY SERVER_URL OUTPUT | resume STATE_DIR RUN_ID PROFILE SERVER_URL OUTPUT>".into()),
     };
 
     match result {
