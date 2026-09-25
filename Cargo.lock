@@ -31,6 +31,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "auralis-translation-eval"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "sha2",
+ "thiserror",
+]
+
+[[package]]
 name = "auralis-translation-formats"
 version = "0.1.0"
 dependencies = [

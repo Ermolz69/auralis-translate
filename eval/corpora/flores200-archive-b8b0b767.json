@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "dataset": "FLORES-200",
+  "release": "official-archive-b8b0b767",
+  "source_url": "https://dl.fbaipublicfiles.com/nllb/flores200_dataset.tar.gz",
+  "license_id": "CC-BY-SA-4.0",
+  "archive": {
+    "path": "flores200_dataset.tar.gz",
+    "sha256": "b8b0b76783024b85797e5cc75064eb83fc5288b41e9654dabc7be6ae944011f6"
+  },
+  "splits": [
+    {
+      "name": "dev",
+      "expected_rows": 997,
+      "files": {
+        "metadata": { "path": "metadata_dev.tsv", "sha256": "26e7b00913809be16aa2590e5e252f0a54832eef2de96b3948876878995ec771" },
+        "jpn_Jpan": { "path": "dev/jpn_Jpan.dev", "sha256": "17a422e2729f2eaecf7bf98aea70e3e72b8cac8acd72547d6ec1ada07ff92f4f" },
+        "rus_Cyrl": { "path": "dev/rus_Cyrl.dev", "sha256": "3cad8426c208a2d5f5ccb1bbf5b5284129ffc30636cff4f4421f5f6f31d891a5" },
+        "zho_Hans": { "path": "dev/zho_Hans.dev", "sha256": "ae677073476a27d6d11db642df5c18b86ca5dfcbbeefeba7d99ec93b7f5bd177" },
+        "zho_Hant": { "path": "dev/zho_Hant.dev", "sha256": "9bd43d865c6fd8da92f978c425f1ad8a07673cc989ce887fd00dd64cda35e789" }
+      }
+    },
+    {
+      "name": "devtest",
+      "expected_rows": 1012,
+      "files": {
+        "metadata": { "path": "metadata_devtest.tsv", "sha256": "8edac47f861fcf6b54dad2068c10ba8f741da8b8676861c6bc27fcd9f5483b36" },
+        "jpn_Jpan": { "path": "devtest/jpn_Jpan.devtest", "sha256": "36b8e392ae9404a20e8448c731d16d957ac1b94588d97fb691128ae706b63606" },
+        "rus_Cyrl": { "path": "devtest/rus_Cyrl.devtest", "sha256": "cdc706ed862d1d35d8d67cfda0b396766646885434958b18291aa760ff1bb59e" },
+        "zho_Hans": { "path": "devtest/zho_Hans.devtest", "sha256": "b30158b1b76f7cee08530d8127a9769f4512597c7eefe97ae1ccf630d5b6e7fd" },
+        "zho_Hant": { "path": "devtest/zho_Hant.devtest", "sha256": "341a38f1b4a1a281d6cd9e8951c3d3d2324e94dad5049f85d7cf549a73b9c4bb" }
+      }
+    }
+  ]
+}
