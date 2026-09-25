@@ -57,6 +57,8 @@ The [open-data and language evaluation protocol](evaluation/001-open-data-and-la
 
 ## Milestones that matter to the user
 
+S7 now has a [two-database publication-gap test](../eval/experiments/2026-09-25-result-gap-recovery.md): when a worker dies after Translate result commit but before Auralis publication, startup stages the missing result only if the run has no existing publication; an interrupted pending artifact is finalized later by the outbox. This closes an application-level persistence gap. Native Tauri crash/restart and concurrent edit/publication behavior remain separate checks.
+
 The S7 desktop has a local file entry point for `.srt` and `.vtt`: strict inspection precedes staging; an outbox finalizes the verified managed copy; the project can freeze a run only after that copy is ready. An optional installed runtime config enables a managed local-model start command and start/resume/pause controls. The UI polls committed progress and pending pause state. The import path has a two-database test; managed admission has failure tests, and an opt-in checked-model run now passes through both real SQLite files and output finalization. A second checked-model test kills the worker after a committed checkpoint, releases its model process and resumes the same run to a ready artifact. Native Tauri invocation, whole-desktop crash recovery, installation, and release evidence remain open.
 
 | Milestone | Achieved at | User-visible meaning |

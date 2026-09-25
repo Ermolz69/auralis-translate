@@ -6,6 +6,8 @@ The [open-data evaluation protocol](evaluation/001-open-data-and-language-gates.
 
 The Auralis subtitle workspace now refreshes its source/result comparison when the run panel observes a changed ready selected result. Focused component tests pass for the notification and reloaded comparison. The panel still polls rather than subscribing to progress events, and native desktop inference remains unverified.
 
+A [deterministic two-database crash test](../eval/experiments/2026-09-25-result-gap-recovery.md) now covers the other publication boundary: a worker dies after Translate commits a validated result but before Auralis stages output. Startup publication recovery stages the missing copy once, leaves it unselected while pending, and the outbox selects it after another host database reopening. This uses a mock HTTP model and does not establish native Tauri crash behavior or linguistic quality.
+
 ## Current slices
 
 | Roadmap stage | Working behavior | Gate still open |
