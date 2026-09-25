@@ -57,6 +57,8 @@ The [open-data and language evaluation protocol](evaluation/001-open-data-and-la
 
 The [background job scheduler record](../eval/experiments/2026-09-25-background-job-scheduler.md) captures the S7 switch to the shared Auralis job runtime: the start command returns an accepted job/run pair after worker attachment, while progress and ready selection are observed separately. Native checked-model execution and a one-checkpoint desktop kill/restart pass with this route. The command still spends time starting and verifying the local model before it can accept the job.
 
+Local S7 admission tests now exercise concurrent creation of one SQLite host job and a competing scheduler that reaches an already reserved pending job. The competing request keeps that job active instead of compensating another worker's reservation. A request for a running job reuses its ID before model acquisition. Native multi-process admission and pause/resume races remain open.
+
 The [native result-gap test](../eval/experiments/2026-09-25-native-result-gap.md) now stops the desktop between Translate's durable result commit and Auralis's publication. Startup reconstruction and outbox finalization select the same result as a separate ready artifact. This verifies one named crash boundary, not all cross-database interleavings.
 
 ## Milestones that matter to the user
