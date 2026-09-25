@@ -34,4 +34,4 @@ The test is ignored in default CI because it needs the pinned local executable, 
 
 ## Remaining verification
 
-The test composes the same application services used by the desktop command but does not invoke the Tauri command or React UI. Native desktop startup after a whole-app crash, failure after Translate result commit but before outbox finalization, mid-request pause/cancellation, concurrent starts, model installation and resource measurements still need evidence. A bilingual reviewer and licensed holdout remain necessary for Chinese and Japanese language gates.
+The test composes the same application services used by the desktop command but does not invoke the Tauri command or React UI. A later [native desktop crash/restart test](2026-09-25-native-tauri-crash.md) covers that command path after a committed block. Native failure after Translate result commit but before outbox finalization, mid-request pause/cancellation, concurrent starts, model installation and resource measurements still need evidence. A bilingual reviewer and licensed holdout remain necessary for Chinese and Japanese language gates.
