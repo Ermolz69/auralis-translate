@@ -1,6 +1,6 @@
 # Model installation and package boundary
 
-Status: experimental offline package installer and pinned-asset downloader, 25 September 2026. This design covers a first Windows x64 CPU package. It does not establish a release installer, clean-machine compatibility, or a selected production backend.
+Status: experimental offline package installer, pinned-asset downloader, and Auralis package-selection integration, 26 September 2026. This design covers a first Windows x64 CPU package. It does not establish a release installer, clean-machine compatibility, or a selected production backend.
 
 ## Ownership and flow
 
@@ -27,12 +27,14 @@ The standalone `fetch-release` command downloads the selected backend's model, t
 
 The package contains `model/`, `runtime/`, `notices/`, `release.json`, `profile.json`, and a retained copy of the upstream archive under `assets/`. The archive copy makes a complete package self-contained for provenance; Auralis may later define a space-saving policy after verifying it does not weaken repair or audit. Preserve license files contained inside the runtime ZIP as well as the separate top-level notices.
 
-The installer returns the paths to the executable, model, and profile. It does **not** write Auralis `translation-runtime.json`, start a server, select this package for a project, or mark a language gate passed. Auralis must verify the selected package, configure its managed runtime, and use the existing admission checks before starting any run. The source subtitle remains an immutable project artifact, and the translated output is assembled separately; package installation never touches project files.
+The installer returns the paths to the executable, model, and profile. It does **not** write Auralis `translation-runtime.json`, start a server, select this package for a project, or mark a language gate passed. Auralis now owns an installation-global package service in its Translate adapter. It stores downloads under application data `cache/translation-downloads/`, packages under `translation-packages/<release-id>/<backend>/`, and a selection marker with only the pinned catalog ID and backend. The subtitle workspace can start installation and choose the verified package. Selection checks the installed assets, persists the marker, and replaces the runtime for new jobs without restarting Auralis. It cannot change while a translation host job is active; the start and selection commands share an admission lock. On restart Auralis reconstructs the selected runtime from its own package path, then the existing managed admission rechecks the model and server identity before work. A legacy manual `translation-runtime.json` remains a development fallback only when no package is selected. This integration still needs native desktop installation evidence and upgrade, repair, rollback and removal behavior.
+
+The source subtitle remains an immutable project artifact, and the translated output is assembled separately; package installation never touches project files.
 
 ## Remaining release work
 
 1. Choose and validate an intended Windows backend and clean OS/hardware profile. The current CPU package is an experimental baseline; CUDA needs a separately pinned runtime archive and companion dependency archive if selected.
 2. Verify network acquisition and resume against real CDN interruptions, and improve user-facing diagnostics for transport and HTTP failures. Validate installation from a complete downloaded cache on a clean offline machine.
-3. Connect Auralis installation and selection UI to application-data storage and its managed runtime configuration; define upgrades, coexistence, rollback, and removal with active-run protection.
+3. Exercise the Auralis install/select commands through the native desktop and verify startup reconstruction. Define upgrades, coexistence, repair, rollback, and removal with active-run protection.
 4. Verify runtime startup, translation, pause/resume, and notices using the installed paths on a clean offline Windows machine. Record disk use, cold start, RAM/VRAM, and failure recovery for the chosen backend.
 5. Do not close S6/S8 packaging gates from manifest validation, local installation, `doctor`, or a development-machine run alone.
