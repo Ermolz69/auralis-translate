@@ -61,7 +61,7 @@ Local S7 admission tests now exercise concurrent creation of one SQLite host job
 
 The [native result-gap test](../eval/experiments/2026-09-25-native-result-gap.md) now stops the desktop between Translate's durable result commit and Auralis's publication. Startup reconstruction and outbox finalization select the same result as a separate ready artifact. This verifies one named crash boundary, not all cross-database interleavings.
 
-Project deletion now records Translate cleanup intents atomically with the Auralis project deletion. Translate schema v4 removes project-owned translation state and tombstones the stable ID so a delayed registration cannot restore it. An integration test exercises a missing Translate database, a failed fifth outbox attempt, recovery, and eventual cleanup. A native deletion/cancellation race with a running model remains open.
+Project deletion now records Translate cleanup intents atomically with the Auralis project deletion. Translate schema v4 removes project-owned translation state and tombstones the stable ID so a delayed registration cannot restore it. An integration test exercises a missing Translate database, a failed fifth outbox attempt, recovery, and eventual cleanup. A [native deletion test](../eval/experiments/2026-09-25-native-project-deletion.md) now verifies one running-model cancellation and cleanup boundary. Other same-process command interleavings remain open.
 
 ## Milestones that matter to the user
 
