@@ -8,6 +8,8 @@ The Auralis subtitle workspace now refreshes its source/result comparison when t
 
 A [deterministic two-database crash test](../eval/experiments/2026-09-25-result-gap-recovery.md) now covers the other publication boundary: a worker dies after Translate commits a validated result but before Auralis stages output. Startup publication recovery stages the missing copy once, leaves it unselected while pending, and the outbox selects it after another host database reopening. This uses a mock HTTP model and does not establish native Tauri crash behavior or linguistic quality.
 
+Auralis SQLite schema v9 now stores each Translate result revision in its publication row. A same-run, same-link staged edit blocks automatic or direct selection of the older model result until the newer artifact is ready. A failed newer publication does not silently fall back to the earlier copy. Existing v8 publications receive revision 1 during migration. The local storage regression passes; a concurrent desktop process crash remains unverified.
+
 ## Current slices
 
 | Roadmap stage | Working behavior | Gate still open |
