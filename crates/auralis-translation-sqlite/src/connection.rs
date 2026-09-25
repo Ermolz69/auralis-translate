@@ -1,6 +1,6 @@
 use crate::repositories::{
-    attempt_repository, checkpoint_repository, edit_commit, edit_selection, result_repository,
-    run_repository, segment_repository, translation_repository,
+    attempt_repository, checkpoint_repository, edit_commit, edit_selection, project_cleanup,
+    result_repository, run_repository, segment_repository, translation_repository,
 };
 use crate::{
     AttemptId, CheckpointSpec, DbError, EditSelection, EditSpec, ResultRecord, ResultSpec,
@@ -37,6 +37,14 @@ impl TranslateDb {
 
     pub fn translation(&self, translation_id: TranslationId) -> Result<TranslationSpec, DbError> {
         translation_repository::load(&self.connection, translation_id)
+    }
+
+    pub fn delete_project_translation(
+        &mut self,
+        translation_id: TranslationId,
+        project_id: &str,
+    ) -> Result<bool, DbError> {
+        project_cleanup::delete(&mut self.connection, translation_id, project_id)
     }
 
     pub fn ensure_segments(

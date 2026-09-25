@@ -32,6 +32,18 @@ pub(crate) fn ensure(connection: &mut Connection, spec: &TranslationSpec) -> Res
     let source_language = language_code(spec.language_pair.source());
     let target_language = language_code(spec.language_pair.target());
     let transaction = connection.transaction()?;
+    let deleted: Option<String> = transaction
+        .query_row(
+            "SELECT project_id FROM deleted_translations WHERE translation_id = ?1",
+            [spec.translation_id.to_string()],
+            |row| row.get(0),
+        )
+        .optional()?;
+    if deleted.is_some() {
+        return Err(DbError::Conflict(
+            "translation was deleted with its project",
+        ));
+    }
     transaction.execute(
         "INSERT INTO translations (translation_id, project_id, source_artifact_id, source_locator, source_sha256, source_format, source_language, target_language)
          VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)
