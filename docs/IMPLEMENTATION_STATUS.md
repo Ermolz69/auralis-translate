@@ -28,6 +28,8 @@ S7 comparison now has a project-scoped Tauri command and typed frontend response
 
 ## Reproduce the current path
 
+S7 local-file entry is implemented in Auralis: the desktop picks an SRT/VTT file, the backend validates format and filename, inspects only declared text slots, stages a separate managed original, verifies the staged size/digest, and commits artifact finalization through the outbox. A ready copy can be selected to freeze a Chinese → Russian run with stable retry IDs. A two-database test verifies import, outbox readiness, inspection, Translate registration, malformed-input rejection and unchanged external bytes. Component tests cover picker cancellation, unsupported extension, pending artifact display and ready-source run preparation. This does not execute inference or establish release support.
+
 From this repository root:
 
 ```sh

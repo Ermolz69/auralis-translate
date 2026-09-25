@@ -55,6 +55,8 @@ The S7 comparison API now reads source and result lines as project-scoped pages 
 
 ## Milestones that matter to the user
 
+The S7 desktop now has a local file entry point for `.srt` and `.vtt`: strict inspection precedes staging; an outbox finalizes the verified managed copy; the project can freeze a run only after that copy is ready. The UI reports pending versus ready artifacts and explicitly states that managed inference is still unavailable. This import path is covered by a real two-database test, while the model runtime, host scheduling, interruption verification and release evidence remain open.
+
 | Milestone | Achieved at | User-visible meaning |
 | --- | --- | --- |
 | **Extraction minimum** | S1 | The program can identify exactly what needs translation while preserving the file. |
