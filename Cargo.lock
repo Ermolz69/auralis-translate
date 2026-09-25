@@ -34,10 +34,13 @@ dependencies = [
 name = "auralis-translation-eval"
 version = "0.1.0"
 dependencies = [
+ "auralis-translation",
+ "auralis-translation-llamacpp",
  "serde",
  "serde_json",
  "sha2",
  "thiserror",
+ "uuid",
 ]
 
 [[package]]

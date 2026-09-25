@@ -36,3 +36,6 @@ tasks:
   eval:flores:verify:
     cmds:
       - cargo run --offline -p auralis-translation-eval -- verify-flores eval/corpora/flores200-archive-b8b0b767.json .cache/eval/flores200_dataset.tar.gz .cache/eval/flores200_dataset
+  eval:flores:compare:
+    cmds:
+      - cargo run --offline -p auralis-translation-eval -- compare-flores eval/corpora/flores200-archive-b8b0b767.json .cache/eval/flores200_dataset.tar.gz .cache/eval/flores200_dataset {{.CLI_ARGS}}

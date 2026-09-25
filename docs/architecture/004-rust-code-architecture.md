@@ -1,12 +1,12 @@
 # Rust code architecture
 
-Status: implementation guidance, 25 September 2026. All five runtime crates are present, including the durable Translate SQLite adapter. A sixth, separately useful evaluation-tool crate verifies external corpus provenance without entering the product dependency graph. The layout below illustrates dependency and ownership boundaries; actual modules have evolved as each behavior was implemented.
+Status: implementation guidance, 25 September 2026. All five runtime crates are present, including the durable Translate SQLite adapter. A sixth evaluation-tool crate verifies external corpus provenance and compares pinned sentence rows through the existing provider; no product crate or Auralis depends on it. The layout below illustrates dependency and ownership boundaries; actual modules have evolved as each behavior was implemented.
 
 ## Design goals
 
 The translation engine must run in a standalone CLI and inside Auralis without duplicating parsing, model prompts, validation, or persistence rules. A reader should find one responsibility in one module. Files should remain small enough to understand without navigating unrelated types or test code. Infrastructure must depend on the core contracts, while the core must not depend on SQLite, Tauri, file paths, HTTP, or a specific model runtime.
 
-The product workspace has five runtime crates. A new crate is justified only when it creates a real dependency boundary or a separately useful package. `auralis-translation-eval` is a standalone development tool: it pins and verifies evaluation data and is never linked into the translator or Auralis.
+The product workspace has five runtime crates. A new crate is justified only when it creates a real dependency boundary or a separately useful package. `auralis-translation-eval` is a standalone development tool: it pins and verifies evaluation data, reuses the checked model provider for auxiliary sentence comparisons, and is never linked into the translator or Auralis.
 
 ```mermaid
 flowchart BT
@@ -21,6 +21,8 @@ flowchart BT
     AURALIS --> SQLITE
     AURALIS --> MODEL
     EVAL["auralis-translation-eval: external corpus verification"]
+    EVAL --> CORE
+    EVAL --> MODEL
 ```
 
 `auralis-translation` owns `translate_track` and format-independent segment contracts. `auralis-translation-formats` owns `translate_document`: it extracts segments, calls the core engine, and renders a separate output document. The SQLite and llama.cpp crates implement core ports. The CLI and Auralis provide concrete paths, process ownership, cancellation, and configuration. This direction avoids a circular dependency between the core and the format adapters.
@@ -119,6 +121,7 @@ crates/
       main.rs
       manifest.rs
       verify.rs
+      comparison.rs
     tests/
       flores_verification.rs
 models/manifests/

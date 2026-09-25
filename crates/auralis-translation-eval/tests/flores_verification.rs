@@ -6,7 +6,10 @@ use std::{
     time::{SystemTime, UNIX_EPOCH},
 };
 
-use auralis_translation_eval::verify_flores;
+use auralis_translation::{
+    ProviderError, ProviderResponse, TargetSegment, TranslationBatch, TranslationProvider,
+};
+use auralis_translation_eval::{ComparisonRequest, compare_flores, verify_flores};
 use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 
@@ -82,6 +85,40 @@ fn hash(bytes: &[u8]) -> String {
     format!("{:x}", Sha256::digest(bytes))
 }
 
+struct FakeProvider;
+
+impl TranslationProvider for FakeProvider {
+    fn translate(&self, batch: &TranslationBatch) -> Result<ProviderResponse, ProviderError> {
+        Ok(ProviderResponse {
+            schema_version: 1,
+            translations: batch
+                .targets()
+                .iter()
+                .map(|target| TargetSegment {
+                    id: target.id(),
+                    lines: vec![format!("Russian for {}", target.lines()[0])],
+                })
+                .collect(),
+        })
+    }
+}
+
+fn comparison_request(fixture: &Fixture) -> Result<ComparisonRequest, Box<dyn Error>> {
+    let manifest_path = fixture.root.join("manifest.json");
+    fs::write(&manifest_path, serde_json::to_vec(&fixture.manifest)?)?;
+    Ok(ComparisonRequest {
+        manifest_path,
+        archive_path: fixture.root.join("flores200_dataset.tar.gz"),
+        corpus_root: fixture.root.join("corpus"),
+        split: "dev".into(),
+        language: "jpn_Jpan".into(),
+        row_ids: vec![1],
+        profile_sha256: "profile-hash".into(),
+        model_sha256: "model-hash".into(),
+        runtime_build: "fixture-runtime".into(),
+    })
+}
+
 #[test]
 fn accepts_aligned_and_pinned_sentences() -> Result<(), Box<dyn Error>> {
     let fixture = Fixture::new()?;
@@ -116,5 +153,34 @@ fn rejects_manifest_path_escape() -> Result<(), Box<dyn Error>> {
     fixture.manifest["splits"][0]["files"]["jpn_Jpan"]["path"] = json!("../outside");
     let error = fixture.verify().err().ok_or("expected path rejection")?;
     assert!(error.to_string().contains("invalid file entry"));
+    Ok(())
+}
+
+#[test]
+fn compares_aligned_sentence_without_claiming_subtitle_review() -> Result<(), Box<dyn Error>> {
+    let fixture = Fixture::new()?;
+    let request = comparison_request(&fixture)?;
+    let report = compare_flores(&request, &FakeProvider)?;
+    assert_eq!(report.rows.len(), 1);
+    assert_eq!(report.rows[0].row_id, 1);
+    assert_eq!(report.rows[0].source, "sample jpn_Jpan");
+    assert_eq!(report.rows[0].reference_ru, "sample rus_Cyrl");
+    assert_eq!(report.rows[0].candidate_ru, "Russian for sample jpn_Jpan");
+    assert_eq!(report.corpus_license_id, "CC-BY-SA-4.0");
+    assert_eq!(report.corpus_source_url, "https://example.invalid/fixture");
+    assert!(!report.subtitle_holdout);
+    assert!(!report.bilingual_reviewed);
+    Ok(())
+}
+
+#[test]
+fn rejects_out_of_range_sample_before_provider_call() -> Result<(), Box<dyn Error>> {
+    let fixture = Fixture::new()?;
+    let mut request = comparison_request(&fixture)?;
+    request.row_ids = vec![2];
+    let error = compare_flores(&request, &FakeProvider)
+        .err()
+        .ok_or("expected row ID rejection")?;
+    assert!(error.to_string().contains("row IDs"));
     Ok(())
 }
