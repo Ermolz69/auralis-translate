@@ -1,4 +1,6 @@
 * text=auto
+*.json text eol=lf
 *.srt text eol=lf
+*.vtt -text
 *.srt whitespace=-blank-at-eof
 AURALIS_SUBTITLE_TRANSLATION_PLAN.md whitespace=-trailing-space
