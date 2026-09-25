@@ -46,6 +46,36 @@ impl ReleaseManifest {
         &self.runtime.license.notice
     }
 
+    pub fn assets_for_backend(
+        &self,
+        backend: &str,
+    ) -> Result<Vec<&ReleaseAsset>, ReleaseManifestError> {
+        let variant = self
+            .runtime
+            .variants
+            .iter()
+            .find(|variant| variant.backend == backend)
+            .ok_or(ReleaseManifestError::Invalid(
+                "runtime backend is unavailable",
+            ))?;
+        let assets = std::iter::once(&self.model.file)
+            .chain(std::iter::once(&self.model.license.notice))
+            .chain(std::iter::once(&self.runtime.license.notice))
+            .chain(std::iter::once(&variant.archive))
+            .chain(&variant.companions)
+            .collect::<Vec<_>>();
+        let mut filenames = std::collections::HashSet::new();
+        if assets
+            .iter()
+            .any(|asset| !filenames.insert(asset.filename.to_ascii_lowercase()))
+        {
+            return Err(ReleaseManifestError::Invalid(
+                "release assets have duplicate filenames",
+            ));
+        }
+        Ok(assets)
+    }
+
     pub fn verify_profile(&self, profile_bytes: &[u8]) -> Result<(), ReleaseManifestError> {
         let profile = ModelProfile::from_json(profile_bytes)
             .map_err(|_| ReleaseManifestError::Invalid("checked profile is invalid"))?;

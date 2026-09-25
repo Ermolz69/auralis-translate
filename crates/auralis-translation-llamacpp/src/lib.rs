@@ -1,3 +1,4 @@
+mod asset_download;
 mod offline_install;
 mod profile;
 mod profile_error;
@@ -17,3 +18,7 @@ pub use release_manifest::{ReleaseAsset, ReleaseManifest, ReleaseManifestError, 
 pub use server_report::ServerReport;
 mod model_hash;
 mod model_preflight;
+pub use asset_download::{
+    AssetDownloadError, download_asset_with_client, download_release_assets,
+    download_selected_release_asset, release_download_client,
+};

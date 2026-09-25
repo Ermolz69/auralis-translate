@@ -72,3 +72,12 @@ fn rejects_profile_drift_and_duplicate_backends() -> Result<(), Box<dyn Error>> 
     assert!(ReleaseManifest::from_json(&serde_json::to_vec(&manifest)?, PROFILE).is_err());
     Ok(())
 }
+
+#[test]
+fn rejects_asset_filenames_that_collide_in_the_download_cache() -> Result<(), Box<dyn Error>> {
+    let mut manifest: Value = serde_json::from_slice(MANIFEST)?;
+    manifest["model"]["license"]["notice"]["filename"] = json!("hy-mt2-1.8b-q4_k_m.gguf");
+    let release = ReleaseManifest::from_json(&serde_json::to_vec(&manifest)?, PROFILE)?;
+    assert!(release.assets_for_backend("cpu").is_err());
+    Ok(())
+}

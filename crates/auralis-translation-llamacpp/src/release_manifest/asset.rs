@@ -14,6 +14,7 @@ pub struct ReleaseAsset {
 
 impl ReleaseAsset {
     pub(super) fn validate(&self) -> Result<(), ReleaseManifestError> {
+        self.validate_file_identity()?;
         let url = reqwest::Url::parse(&self.url)
             .map_err(|_| ReleaseManifestError::Invalid("asset URL is invalid"))?;
         if url.scheme() != "https"
@@ -28,6 +29,10 @@ impl ReleaseAsset {
                 "asset URL must be trusted HTTPS without credentials, port or fragment",
             ));
         }
+        Ok(())
+    }
+
+    pub(crate) fn validate_file_identity(&self) -> Result<(), ReleaseManifestError> {
         if self.filename.is_empty()
             || self.filename == "."
             || self.filename == ".."

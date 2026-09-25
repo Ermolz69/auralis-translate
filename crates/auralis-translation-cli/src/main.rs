@@ -1,3 +1,4 @@
+mod asset_download_command;
 mod diagnostics_command;
 mod doctor_command;
 mod document_render_error;
@@ -17,6 +18,7 @@ mod manual_command;
 mod manual_manifest;
 mod manual_translation;
 mod offline_install_command;
+mod online_install_command;
 mod pause_command;
 mod read_source;
 mod source_snapshot;
@@ -66,6 +68,17 @@ fn main() -> ExitCode {
         {
             offline_install_command::run(manifest, profile, backend, source_dir, install_root)
         }
+        [command, manifest, profile, backend, cache_dir] if command == "fetch-release" => {
+            asset_download_command::run(manifest, profile, backend, cache_dir)
+        }
+        [command, manifest, profile, backend, filename, cache_dir] if command == "fetch-asset" => {
+            asset_download_command::run_one(manifest, profile, backend, filename, cache_dir)
+        }
+        [command, manifest, profile, backend, cache_dir, install_root]
+            if command == "install-online" =>
+        {
+            online_install_command::run(manifest, profile, backend, cache_dir, install_root)
+        }
         [command, source, profile, endpoint, output] if command == "translate-experimental" => {
             experimental_command::run(source, profile, endpoint, output)
         }
@@ -88,7 +101,7 @@ fn main() -> ExitCode {
         [command, state_dir, run_id, profile, endpoint, output] if command == "resume" => {
             durable_resume::run(state_dir, run_id, profile, endpoint, output)
         }
-        _ => Err("usage: auralis-translation-cli <inspect SOURCE | inspect-vtt SOURCE | template SOURCE MANIFEST | template-vtt SOURCE MANIFEST | render SOURCE MANIFEST OUTPUT | render-vtt SOURCE MANIFEST OUTPUT | status STATE_DIR RUN_ID | diagnostics STATE_DIR RUN_ID | pause STATE_DIR RUN_ID | edit STATE_DIR BASE_RESULT_ID PROFILE EDIT_JSON OUTPUT | doctor PROFILE MODEL_FILE | install-offline RELEASE_MANIFEST PROFILE BACKEND SOURCE_DIR INSTALL_ROOT | translate-experimental SOURCE PROFILE SERVER_URL OUTPUT | translate-vtt-experimental SOURCE PROFILE SERVER_URL OUTPUT | translate SOURCE STATE_DIR PROFILE SERVER_URL OUTPUT | translate-vtt SOURCE STATE_DIR PROFILE SERVER_URL OUTPUT | translate-glossary SOURCE STATE_DIR PROFILE GLOSSARY SERVER_URL OUTPUT | resume STATE_DIR RUN_ID PROFILE SERVER_URL OUTPUT>".into()),
+        _ => Err("usage: auralis-translation-cli <inspect SOURCE | inspect-vtt SOURCE | template SOURCE MANIFEST | template-vtt SOURCE MANIFEST | render SOURCE MANIFEST OUTPUT | render-vtt SOURCE MANIFEST OUTPUT | status STATE_DIR RUN_ID | diagnostics STATE_DIR RUN_ID | pause STATE_DIR RUN_ID | edit STATE_DIR BASE_RESULT_ID PROFILE EDIT_JSON OUTPUT | doctor PROFILE MODEL_FILE | fetch-release RELEASE_MANIFEST PROFILE BACKEND CACHE_DIR | fetch-asset RELEASE_MANIFEST PROFILE BACKEND FILENAME CACHE_DIR | install-offline RELEASE_MANIFEST PROFILE BACKEND SOURCE_DIR INSTALL_ROOT | install-online RELEASE_MANIFEST PROFILE BACKEND CACHE_DIR INSTALL_ROOT | translate-experimental SOURCE PROFILE SERVER_URL OUTPUT | translate-vtt-experimental SOURCE PROFILE SERVER_URL OUTPUT | translate SOURCE STATE_DIR PROFILE SERVER_URL OUTPUT | translate-vtt SOURCE STATE_DIR PROFILE SERVER_URL OUTPUT | translate-glossary SOURCE STATE_DIR PROFILE GLOSSARY SERVER_URL OUTPUT | resume STATE_DIR RUN_ID PROFILE SERVER_URL OUTPUT>".into()),
     };
 
     match result {

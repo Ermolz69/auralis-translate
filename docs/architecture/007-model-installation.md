@@ -1,6 +1,6 @@
 # Model installation and package boundary
 
-Status: experimental offline package installer, 25 September 2026. This design covers a first Windows x64 CPU package. It does not establish a release installer, clean-machine compatibility, or a selected production backend.
+Status: experimental offline package installer and pinned-asset downloader, 25 September 2026. This design covers a first Windows x64 CPU package. It does not establish a release installer, clean-machine compatibility, or a selected production backend.
 
 ## Ownership and flow
 
@@ -9,7 +9,7 @@ The Translate repository owns the versioned release manifest, asset verification
 ```mermaid
 flowchart LR
     M["Pinned release manifest and checked profile"] --> V["Validate identity, URLs, sizes and SHA-256"]
-    A["Locally supplied upstream assets"] --> V
+    A["Pinned HTTPS upstream assets or local cache"] --> V
     V --> S["Copy into a private staging directory"]
     S --> X["Extract bounded, flat runtime ZIP"]
     X --> N["Preserve license notices and frozen manifests"]
@@ -21,6 +21,8 @@ flowchart LR
 
 The standalone `install-offline` command accepts absolute source and destination directories. It reads assets from the source directory, verifies each complete copy, and extracts only regular flat ZIP entries with bounded file count and uncompressed sizes. A path, duplicate name, symbolic link, changed digest, or missing `llama-server.exe` aborts the install. Temporary directories are removed on handled failures. The final backend directory is created by a same-volume rename after all validation; an already existing final directory is never overwritten. A hard process kill can leave an `.installing-*` directory, which must be recovered under an owner-controlled installation root before a retry. The rename is the selection boundary, but this implementation does not claim power-loss durability of the parent directory metadata.
 
+The standalone `fetch-release` command downloads the selected backend's model, two license notices, runtime archive, and any declared companion assets into an absolute cache directory. `fetch-asset` fetches one named asset for diagnosis or recovery. `install-online` runs `fetch-release` and then the same verified offline installer. Each cache entry has a process lock and a digest-specific `.part` file. On retry, a shorter partial uses HTTP Range; a server that ignores Range causes a full restart. A complete cached file is rehashed before reuse. The downloader checks the pinned length and SHA-256 before publishing the final cache name, so a failed or incomplete download is never an installer input. The pinned manifest restricts origin URLs. Redirects must remain HTTPS without credentials or explicit ports and stay on GitHub asset hosts or Hugging Face-owned domains; the pinned digest remains the final content check. An interrupted transfer preserves only its untrusted partial file for retry.
+
 The package contains `model/`, `runtime/`, `notices/`, `release.json`, `profile.json`, and a retained copy of the upstream archive under `assets/`. The archive copy makes a complete package self-contained for provenance; Auralis may later define a space-saving policy after verifying it does not weaken repair or audit. Preserve license files contained inside the runtime ZIP as well as the separate top-level notices.
 
 The installer returns the paths to the executable, model, and profile. It does **not** write Auralis `translation-runtime.json`, start a server, select this package for a project, or mark a language gate passed. Auralis must verify the selected package, configure its managed runtime, and use the existing admission checks before starting any run. The source subtitle remains an immutable project artifact, and the translated output is assembled separately; package installation never touches project files.
@@ -28,7 +30,7 @@ The installer returns the paths to the executable, model, and profile. It does *
 ## Remaining release work
 
 1. Choose and validate an intended Windows backend and clean OS/hardware profile. The current CPU package is an experimental baseline; CUDA needs a separately pinned runtime archive and companion dependency archive if selected.
-2. Add network acquisition with bounded, resumable downloads, redirect policy, partial-file ownership, digest verification, error reporting, and offline installation from a complete cache. A failed download must never become selectable.
+2. Verify network acquisition and resume against real CDN interruptions, and improve user-facing diagnostics for transport and HTTP failures. Validate installation from a complete downloaded cache on a clean offline machine.
 3. Connect Auralis installation and selection UI to application-data storage and its managed runtime configuration; define upgrades, coexistence, rollback, and removal with active-run protection.
 4. Verify runtime startup, translation, pause/resume, and notices using the installed paths on a clean offline Windows machine. Record disk use, cold start, RAM/VRAM, and failure recovery for the chosen backend.
 5. Do not close S6/S8 packaging gates from manifest validation, local installation, `doctor`, or a development-machine run alone.
