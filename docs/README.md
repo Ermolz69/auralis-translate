@@ -19,6 +19,7 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 | [Native result-gap recovery](../eval/experiments/2026-09-25-native-result-gap.md) | Killed-desktop evidence for a validated Translate result committed before Auralis publication, followed by ready-artifact recovery. |
 | [Native single-owner storage](../eval/experiments/2026-09-25-native-single-owner.md) | Two real desktop processes compete for one application-data root; only the first reaches storage setup. |
 | [Native project deletion](../eval/experiments/2026-09-25-native-project-deletion.md) | Running checked-model attempt cancelled through project deletion, with both database records and managed files cleaned. |
+| [Auralis strict-WebVTT integration](../eval/experiments/2026-09-25-auralis-vtt-two-db.md) | Two real SQLite files, managed source import, mock-model host job, pending publication, and a separate ready WebVTT artifact. |
 | [Commons subtitle pilot inventory](evaluation/002-commons-pilot-inventory.md) | Fixed candidate page revisions, rights and alignment gaps, and the decision to keep one multilingual video out of release holdouts. |
 | [Native-speech subtitle candidates](evaluation/003-native-speech-candidates.md) | Chinese and Japanese source-speech discovery items, observed cue coverage, and rights, parser, and bilingual-review admission steps. |
 | [File translation pipeline](architecture/001-file-translation-pipeline.md) | Immutable source, extraction, model input, separate working copy, structural verification. |
