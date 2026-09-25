@@ -39,3 +39,8 @@ tasks:
   eval:flores:compare:
     cmds:
       - cargo run --offline -p auralis-translation-eval -- compare-flores eval/corpora/flores200-archive-b8b0b767.json .cache/eval/flores200_dataset.tar.gz .cache/eval/flores200_dataset {{.CLI_ARGS}}
+  eval:cli:vtt:interruption:
+    desc: Kill and resume a standalone WebVTT CLI run with an installed checked local model
+    cmds:
+      - task: build
+      - node eval/scripts/cli-vtt-interruption.mjs
