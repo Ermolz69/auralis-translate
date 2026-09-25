@@ -10,6 +10,8 @@ A [deterministic two-database crash test](../eval/experiments/2026-09-25-result-
 
 Auralis SQLite schema v9 now stores each Translate result revision in its publication row. A same-run, same-link staged edit blocks automatic or direct selection of the older model result until the newer artifact is ready. A failed newer publication does not silently fall back to the earlier copy. Existing v8 publications receive revision 1 during migration. The local storage regression passes; a concurrent desktop process crash remains unverified.
 
+Startup recovery now checks the latest Translate result ID on every link with an active run or selected result. An earlier pending or ready publication cannot hide a newer committed manual edit. A two-database integration test covers edit recovery before and after first selection, publication finalization, and an unchanged original. Native desktop process interruption remains open.
+
 ## Current slices
 
 | Roadmap stage | Working behavior | Gate still open |
