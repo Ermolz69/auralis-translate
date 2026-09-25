@@ -1,6 +1,6 @@
 # Host translation jobs
 
-Status: implementation design, 25 September 2026. Auralis creates durable Translate runs, and an experimental caller-driven worker can execute one through a linked host job using a supplied local-server URL. Translate records that job ID on the attempt. The `Translation` job kind persists independently of dubbing project processing state. Auralis SQLite schema v8 and its storage port create, start, report progress for, and terminalize associated jobs with revision checks. Desktop scheduling and managed model process ownership are not implemented yet.
+Status: implementation design, 25 September 2026. Auralis creates durable Translate runs. A managed desktop command can now admit one checked model profile, own a local llama.cpp child process, execute a linked host job, and stage the validated output for artifact finalization. Translate records the host job ID on the attempt. The `Translation` job kind persists independently of dubbing project processing state. Auralis SQLite schema v8 and its storage port create, start, report progress for, and terminalize associated jobs with revision checks. Installation, native desktop end-to-end evidence, and desktop crash verification remain open.
 
 ## Ownership and identity
 
@@ -23,10 +23,10 @@ sequenceDiagram
     UI->>Host: Start or resume translation
     Host->>Main: Verify project/source; freeze link and run intent
     Host->>DB: Idempotently register source map and block plan
+    Host->>Work: Reserve model slot and start checked local runtime
     Host->>Main: Commit translation job and run association
-    Host->>Work: Reserve resource lease and attach task
     Work->>DB: Open attempt with host job ID
-    Work->>Model: Check runtime and model identity
+    Work->>Model: Use the verified runtime lease
     loop Missing blocks
         Work->>Model: Translate bounded block
         Work->>DB: Validate and commit checkpoint
@@ -42,7 +42,9 @@ All resource admission and job creation must have explicit compensation. A commi
 
 The caller-driven worker receives core `RunProgress` after each durable checkpoint and mirrors its saved/total block counts into the linked running Auralis job. The initial count also includes checkpoints retained from an earlier attempt. The domain requires a fixed positive total and monotonic saved count; Auralis SQLite checks the active run association and job revision on every progress write. The host percentage stays below 100 until the validated result commits and the job completes. A failed mirror write is logged without changing the Translate run or discarding its checkpoint; Translate SQLite remains authoritative, so the host display can lag. Startup recovery rereads committed counts from Translate and persists them before closing a running host job. If the counts conflict with the host's monotonic state, recovery leaves the association active for attention. A storage-backed application test covers a lagging host count after result commit; a real desktop kill/restart test remains open. Progress is not yet streamed to the desktop UI.
 
-The first production runner should accept a checked, frozen model profile. It must own or verify the local server process, loaded model, model-file digest, and resource slot before inference. The current application API accepts a caller-supplied loopback URL for development and is not the managed runner. An unchecked experimental profile cannot silently enter the production path.
+`RunManagedTranslationUseCase` checks project/run ownership and Translate phase, acquires `TranslationModelRuntimePort` before creating a host job, executes the host attempt using only its lease URL, releases the child process, then stages the verified result. A failed admission leaves no new job. `ManagedLlamaRuntime` allows one installation-wide active lease, requires a checked frozen profile, hashes the configured model file, starts a private loopback `llama-server` child, probes its reported identity and model path, and verifies the loaded file before the host job exists. Windows ownership uses a kill-on-drop Job Object; Unix currently uses kill-on-drop for the direct child. A dropped request releases the slot and child. Startup recovery then closes any interrupted host job from durable Translate state. The caller-supplied URL application API remains available for development tests and does not represent the managed desktop route.
+
+The desktop config file is `translation-runtime.json` under the Auralis application data root. Its paths must be absolute and point to an explicitly installed executable and GGUF file. Without this file, the start command reports that the runtime is unavailable and creates no host job. The initial UI polls linked run status for committed block counts, allows start/resume and durable pause requests, and shows a pending pause separately from `paused`. It does not yet stream progress events. Successful inference stages a pending publication; Auralis selects it only after the outbox finalizes a ready artifact. Model installation, package signing, a real process kill/restart test, and a language-quality gate remain required before release.
 
 ## Pause, cancellation, and restart
 
@@ -52,9 +54,9 @@ At desktop startup, the application data-root lease establishes that the prior A
 
 Publication is a separate transition. A job can finish with a validated result while output staging fails; the link then retains the run/result for retry. The project selects `result_id` only after the translated copy reaches the ready managed-artifact state. A newer run does not erase the previous selected result. Quality warnings set `needs_review` on the attached result and remain available in Translate diagnostics.
 
-## S7 verification before enabling the UI action
+## Remaining S7 verification before release
 
-1. Exercise job creation, resource reservation, worker attachment, progress, terminalization, and publication with a mock local model server across the two real SQLite files. Current tests cover a caller-driven worker and persisted checkpoint progress; resource admission remains open.
+1. Exercise job creation, resource reservation, worker attachment, progress, terminalization, and publication with a mock local model server across the two real SQLite files. Current tests cover caller-driven execution, persisted checkpoint progress, resource rejection before job creation, and managed runtime preflight rejection before process start. An opt-in checked-model test now covers the managed child, both real SQLite files, output finalization, and the immutable original; native desktop invocation remains open.
 2. Kill the worker after a committed block, restart desktop services, and prove the same run resumes only missing blocks. Repeat after the result commit and before managed output finalization.
 3. Pause during an in-flight block and verify that the UI distinguishes pending pause from acknowledged pause, without losing a checkpoint or modifying the original.
 4. Verify project deletion and cancellation cannot select a stale result or leak a runtime process. Test concurrent start/resume requests and one-active-job enforcement.
