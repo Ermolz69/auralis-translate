@@ -15,6 +15,8 @@ Status: candidate sources and proposed protocol, 25 September 2026. The official
 
 [The Impact Of Wikipedia.webm](https://commons.wikimedia.org/wiki/File:The_Impact_Of_Wikipedia.webm) has extant Traditional Chinese, Japanese, and Russian timed-text pages. The [pilot inventory](002-commons-pilot-inventory.md) pins visible page revision IDs and records cue-label, timing, original-language, and end-card limitations. The video license alone does not clear the separate subtitle text or a new Russian reference. These pages remain **candidate metadata only**; no raw text was imported, no reviewer accepted a reference, and this video is excluded from frozen release holdouts for now.
 
+The [native-speech candidate inventory](003-native-speech-candidates.md) adds a 93-cue Simplified Chinese Henan-Mandarin video and a 16-cue Japanese Kyoto-dialect conversation. Both source-language SRT pages are visible on Commons. Their distinct media licenses and small, dialect-heavy coverage make them useful discovery pilots, not a cleared or representative release corpus.
+
 ## Acquisition and provenance
 
 1. Build a source inventory before importing third-party text. For each item record `dataset`, `source_url`, `media_url` if any, exact page/release revision, retrieval date, original SHA-256, source/target language and script, attribution, license identifier and URL, modification/ShareAlike obligations, and permitted internal/public use. Keep source and Russian reference rights separate.
@@ -45,6 +47,6 @@ S5 can use the pinned FLORES corpus as auxiliary model-selection evidence and th
 
 ## Immediate next actions
 
-1. Complete the rights, raw-byte, parser, and bilingual checks for the [Commons pilot revisions](002-commons-pilot-inventory.md), then identify additional independently licensed scenes with original Chinese and Japanese speech. Record approved candidates in a provenance manifest without placing raw third-party subtitles in this repository.
+1. Complete the rights, raw-byte, parser, and bilingual checks for the [native-speech candidates](003-native-speech-candidates.md) and [earlier multilingual pilot](002-commons-pilot-inventory.md), then identify additional independently licensed scenes with original Chinese and Japanese speech. Record approved candidates in a provenance manifest without placing raw third-party subtitles in this repository.
 2. Acquire or commission Chinese→Russian and Japanese→Russian bilingual review. Until reviewers have scored frozen scenes, keep S8/S9 open even if structural and runtime tests pass.
 3. Run candidate profiles on the pinned FLORES-200 `dev` split, then compare finalists once on its public `devtest` split. Record profile/runtime hashes, decoding settings, source script, paired Russian row ID, output hashes, and human observations. Do not promote sentence metrics to S8/S9 subtitle evidence. Tatoeba remains a candidate until its exact export is pinned.

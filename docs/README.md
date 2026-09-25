@@ -20,6 +20,7 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 | [Native single-owner storage](../eval/experiments/2026-09-25-native-single-owner.md) | Two real desktop processes compete for one application-data root; only the first reaches storage setup. |
 | [Native project deletion](../eval/experiments/2026-09-25-native-project-deletion.md) | Running checked-model attempt cancelled through project deletion, with both database records and managed files cleaned. |
 | [Commons subtitle pilot inventory](evaluation/002-commons-pilot-inventory.md) | Fixed candidate page revisions, rights and alignment gaps, and the decision to keep one multilingual video out of release holdouts. |
+| [Native-speech subtitle candidates](evaluation/003-native-speech-candidates.md) | Chinese and Japanese source-speech discovery items, observed cue coverage, and rights, parser, and bilingual-review admission steps. |
 | [File translation pipeline](architecture/001-file-translation-pipeline.md) | Immutable source, extraction, model input, separate working copy, structural verification. |
 | [Storage and lifecycle](architecture/002-storage-and-lifecycle.md) | Data ownership across two SQLite databases, project links, checkpoints, pause/resume, publication and recovery. |
 | [Auralis integration](architecture/003-auralis-integration.md) | Host responsibilities, integration API, current Auralis gaps, Git submodule and delivery order. |
