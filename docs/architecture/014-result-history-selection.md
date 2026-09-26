@@ -55,7 +55,9 @@ with supporting evidence. They retain ordinary stale-base protection by using a
 different command, and require verified context before enabling historical save.
 The later [native branch/reopening record](../../eval/experiments/2026-09-27-native-historical-branch.md)
 passes that completed-save case independently of the original history-selection
-slice. Process interruption inside manual-save boundaries remains unverified.
+slice. The subsequent [core interruption record](../../eval/experiments/2026-09-27-native-historical-result-gap.md)
+recovers a committed branch while preserving a newer explicit choice. Journal-only
+and staged publication interruption remain unverified.
 
 ```mermaid
 sequenceDiagram

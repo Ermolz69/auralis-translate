@@ -1,14 +1,25 @@
 # Implementation status and evidence
 
-Latest native historical slice: [checked-model branch and reopening evidence](../eval/experiments/2026-09-27-native-historical-branch.md)
+Latest native historical interruption: [core commit gap evidence](../eval/experiments/2026-09-27-native-historical-result-gap.md)
+passes forced desktop termination after a real older-base branch commit and a
+later explicit UI choice. Production startup creates the missing ready branch
+output as history, preserving the selected original and exact link revision 4.
+The two database/file snapshots, both request digests, all core results and two
+model checkpoints match; one inference attempt remains. Ten application tests,
+18 review component tests, both Clippy modes and production delivery checks pass.
+Journal-only and staged-file/outbox interruption, fuller concurrency, CLI branch
+delivery, language quality and clean installation remain open.
+
+Earlier native historical slice: [checked-model branch and reopening evidence](../eval/experiments/2026-09-27-native-historical-branch.md)
 passes actual controls and independent checks across both SQLite files and three
 immutable outputs. Editing the original version preserves its untouched second
 cue instead of a later correction. Explicit selection of revision 2 survives
 desktop termination/reopening with link revision 5, one inference attempt and two
 unchanged checkpoints. The probe found and fixed repeated-preview clearing;
-18 review component tests and the production frontend build pass. Manual-save
-journal/core/publication process-kill boundaries, the CLI branch interface and
-full S7/language/clean-install gates remain open.
+18 review component tests and the production frontend build pass. The later
+record above supplies the core commit interruption case; journal-only and staged
+publication interruption, the CLI branch interface and full release gates remain
+open.
 
 Earlier historical desktop slice: [typed commands and review evidence](../eval/experiments/2026-09-26-historical-edit-desktop-contract.md)
 records verified head/link observations, the explicit journaled save command and

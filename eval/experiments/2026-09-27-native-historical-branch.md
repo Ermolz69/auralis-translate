@@ -147,3 +147,7 @@ acquired weights/runtime assets were retained.
 Chinese/Japanese subtitle quality, broader syntax/resource/player coverage,
 native manual-save crash boundaries, command interleavings and clean Windows
 installation remain open. A two-cue authored probe cannot close those gates.
+
+The subsequent [native core interruption record](2026-09-27-native-historical-result-gap.md)
+passes one manual-save process-kill boundary with a newer explicit choice preserved.
+Journal-only and staged publication interruption remain separate requirements.

@@ -125,9 +125,10 @@ now covers supporting save and recovery across both databases and files. The
 adds typed observations/save/publication reads and experimental controls with
 supporting backend/React evidence. The later [native branch record](../eval/experiments/2026-09-27-native-historical-branch.md)
 verifies older-base saves, independent output ancestry checks, explicit selection
-and reopening without inference replay. CLI branch delivery and actual native
-manual-save journal/core/publication interruption checks still gate the complete
-workflow.
+and reopening without inference replay. A [native core interruption](../eval/experiments/2026-09-27-native-historical-result-gap.md)
+now recovers a committed branch as ready history without overriding a later
+explicit choice. CLI branch delivery, journal-only and staged-file/outbox
+interruption checks still gate the complete workflow.
 
 ## 14. Standalone CLI and delivery
 

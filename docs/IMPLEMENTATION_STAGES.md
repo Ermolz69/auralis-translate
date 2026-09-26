@@ -190,8 +190,10 @@ databases and managed files. The [desktop contract record](../eval/experiments/2
 adds supporting typed observations, guarded save controls and transactional
 publication reads. The later [native branch record](../eval/experiments/2026-09-27-native-historical-branch.md)
 passes older-base save, explicit attachment and reopening through the complete
-path. S7 remains open for the CLI branch route, native manual-save interruption
-boundaries and the other documented workflow requirements.
+path. The later [native core interruption](../eval/experiments/2026-09-27-native-historical-result-gap.md)
+passes committed-branch recovery while retaining a newer explicit project choice.
+S7 remains open for the CLI branch route, journal-only and staged-file/outbox
+interruption boundaries and the other documented workflow requirements.
 
 ## Manual publication ordering progress
 
@@ -203,4 +205,6 @@ run, and explicit replay cannot later attach a detached result. This is the stor
 foundation for historical save/recovery. The later application record supplies
 supporting actual Translate run/file integration, followed by the typed desktop
 record above. Completed native editing/reopening now passes in the branch record.
-CLI branch delivery and native manual-save crash evidence still gate S7.
+The native core interruption record also passes recovery without overriding a
+later explicit choice. CLI branch delivery, journal-only and staged publication
+crash evidence still gate S7.

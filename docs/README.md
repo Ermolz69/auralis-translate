@@ -12,8 +12,10 @@ The latest [native historical branch record](../eval/experiments/2026-09-27-nati
 verifies actual checked-model translation, older-base editing, explicit attachment
 and reopening through React/Tauri, both databases and three immutable output files.
 Untouched cues come from the chosen base; restart preserves selection, edit digests
-and checkpoints without another inference attempt. Manual-save process-kill
-boundaries, the CLI branch interface and full S7 remain open.
+and checkpoints without another inference attempt. The later [native core interruption record](../eval/experiments/2026-09-27-native-historical-result-gap.md)
+also passes forced termination after branch commit: startup restores its output
+as ready history and preserves a newer explicit choice. Journal-only and staged
+publication interruption, the CLI branch interface and full S7 remain open.
 
 | Document                                                                                        | Purpose                                                                                                                                                              |
 | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

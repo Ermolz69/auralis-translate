@@ -3,8 +3,10 @@
 Status: implementation contract, 26 September 2026. Engine, host journal,
 application recovery and typed desktop controls have supporting two-database/React
 evidence. A later [native checked-model branch probe](../../eval/experiments/2026-09-27-native-historical-branch.md)
-passes completed saves, explicit selection and reopening. CLI delivery and native
-manual-save interruption boundaries are still pending.
+passes completed saves, explicit selection and reopening. The subsequent native
+core interruption record passes committed-branch recovery with a later explicit
+choice preserved. CLI delivery, journal-only and staged publication interruption
+are still pending.
 
 ## Text base and observed head
 
@@ -147,6 +149,14 @@ the completed-save/reopening case with independent ancestry and file checks;
 it does not exercise process termination inside manual-save boundaries. Language
 and clean-install gates stay open.
 
+The [native core interruption protocol](../../eval/experiments/2026-09-27-native-historical-result-gap.md)
+holds an older-base save after its committed result, permits an explicit newer
+project choice, then kills/reopens the desktop. Its external oracle checks journal
+digests, ancestry, unchanged checkpoints and detached ready recovery. The task
+passed its actual invocation and independently verified ready history recovery
+without replaying inference or replacing that newer choice. It does not cover
+journal-only or staged-file/outbox interruption.
+
 ## Implemented foundation and remaining composition
 
 Translate schema v6 and `commit_branch_edit` have supporting SRT and independent
@@ -185,8 +195,9 @@ The [desktop contract record](../../eval/experiments/2026-09-26-historical-edit-
 adds the typed observation/save/publication commands and experimental review
 controls after those durable host boundaries were implemented. Their supporting
 backend and component checks pass. The native branch record verifies older-base
-save/reopening. Actual native manual-save process-kill boundaries and the CLI
-branch route remain pending.
+save/reopening; the later core interruption record passes one actual process-kill
+boundary with detached ready recovery. Journal-only and staged publication
+interruption and the CLI branch route remain pending.
 This experimental availability does not close the full S7 delivery gate.
 
 ## Manual publication transaction ordering
