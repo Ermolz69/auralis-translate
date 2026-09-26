@@ -120,8 +120,11 @@ Editing an older base uses [explicit base/head observations](architecture/015-hi
 a metadata-only host intent and a guarded immutable Translate branch. Manual
 publication retains ready history when the observed project link changed and
 preserves unfinished runs. [Application evidence](../eval/experiments/2026-09-26-historical-edit-application.md)
-now covers supporting save and recovery across both databases and files; typed
-CLI/UI delivery and native branch/crash checks still gate the complete workflow.
+now covers supporting save and recovery across both databases and files. The
+[desktop contract record](../eval/experiments/2026-09-26-historical-edit-desktop-contract.md)
+adds typed observations/save/publication reads and experimental controls with
+supporting backend/React evidence. CLI branch delivery and actual native
+save/crash/reopen checks still gate the complete workflow.
 
 ## 14. Standalone CLI and delivery
 

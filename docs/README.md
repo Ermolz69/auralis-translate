@@ -8,10 +8,10 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 
 ## Start here
 
-The latest [historical application record](../eval/experiments/2026-09-26-historical-edit-application.md)
-adds journaled branch save, frozen-run/request/provenance checks and paged startup
-publication recovery through both databases and managed files. Typed historical
-controls, CLI/UI and actual native branch/crash evidence remain pending.
+The latest [historical desktop contract record](../eval/experiments/2026-09-26-historical-edit-desktop-contract.md)
+adds typed observations/save/publication reads and experimental review controls
+to journaled branch recovery. Two-database and React/API checks pass. Actual
+native older-base saves/crashes, the CLI branch interface and full S7 remain open.
 
 | Document                                                                                        | Purpose                                                                                                                                                              |
 | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

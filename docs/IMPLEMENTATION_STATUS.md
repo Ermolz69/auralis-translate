@@ -1,13 +1,22 @@
 # Implementation status and evidence
 
+Latest historical desktop slice: [typed commands and review evidence](../eval/experiments/2026-09-26-historical-edit-desktop-contract.md)
+records verified head/link observations, the explicit journaled save command and
+transactional publication/selection reads. Experimental controls freeze retry IDs
+and lines, discard obsolete contexts/callbacks and distinguish pending, attached
+and ready historical output outside comparison paging. Thirteen application,
+17 component and 23 API/contract regression tests pass. Actual native older-base
+save/reopen and manual process-kill boundaries, the CLI branch interface and the
+full S7/language/clean-install gates remain open.
+
 Latest historical application slice: [save/publication/recovery evidence](../eval/experiments/2026-09-26-historical-edit-application.md)
 records journal admission before actual Translate branch commits, complete request
 digests, shared frozen-run/base verification and manual publication through the
 managed outbox. Production startup now receives the journal and scans its pages
 independently of selected/active runs. Five two-database/file tests cover divergent
 SRT/WebVTT bases, another unfinished run, reopening, concurrent head guards,
-corrupt metadata and more than one recovery page. Typed observation/save delivery,
-CLI/UI and real native branch/crash evidence remain open; S7 is not complete.
+corrupt metadata and more than one recovery page. The desktop record above adds
+supporting typed delivery; CLI and real native branch/crash evidence remain open.
 
 Latest historical-edit foundation: [engine and host journal evidence](../eval/experiments/2026-09-26-historical-edit-foundation.md)
 records immutable older-base SRT/WebVTT edits, explicit observed-head conflicts,
@@ -15,8 +24,8 @@ provenance and schema v6 migration. Auralis schema v10 now has a metadata-only,
 project-owned journal with idempotent retries and bounded recovery cursor pages.
 The engine workspace checks and host library/journal regressions pass. Application
 composition and startup replay were pending at that foundation; the later
-application record above covers their supporting implementation. CLI/UI and native
-branch save/reopen remain pending; this does not close S7.
+application and desktop records above cover their supporting implementation.
+CLI and native branch save/reopen remain pending; this does not close S7.
 
 Latest review slice: [ready result history](../eval/experiments/2026-09-26-result-history-selection.md)
 now separates historical preview from explicit project attachment. Six real-SQLite
@@ -304,4 +313,5 @@ The host can finalize an explicit branch as an attached or ready detached result
 preserve its active run and serialize against automatic publication. The outbox
 uses `finalize_ready_publication`; manual and automatic operations are split under
 one transaction. The later application record at the top covers supporting
-save/replay integration; typed delivery and native branch editing remain pending.
+save/replay integration; the desktop record adds typed delivery. Native branch
+editing remains pending.

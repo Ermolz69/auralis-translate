@@ -92,6 +92,11 @@ The language, installation and complete S7 gates remain open.
 
 ## Remaining delivery
 
+This section records the remaining delivery at the application snapshot. The
+later [desktop contract record](2026-09-26-historical-edit-desktop-contract.md)
+adds supporting typed observation/save/status commands and experimental controls.
+Native branch/crash/reopening and the CLI branch route remain open.
+
 Add typed historical observation/save contracts, freeze request IDs in the UI,
 represent attached versus ready detached outcomes and connect the explicit save
 use case to CLI/IPC/UI. Verify actual process interruption at journal/core/output

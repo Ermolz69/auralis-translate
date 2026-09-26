@@ -1,9 +1,8 @@
 # Historical result edits with explicit concurrency guards
 
-Status: implementation contract, 26 September 2026. The engine, metadata-only
-host journal and application save/publication/recovery paths have supporting
-two-database evidence. Typed observations, CLI/UI delivery and native branch
-evidence are still pending.
+Status: implementation contract, 26 September 2026. Engine, host journal,
+application recovery and typed desktop controls have supporting two-database/React
+evidence. CLI delivery and native branch evidence are still pending.
 
 ## Text base and observed head
 
@@ -57,6 +56,31 @@ The frontend must acquire both observations before save, freeze the request/resu
 ID for retry, distinguish preview from attachment, and discard obsolete UI reads.
 It must describe detached/conflicting publication honestly. Expose historical
 editing only after this durable host path and its typed contracts are implemented.
+
+### Desktop observations and outcomes
+
+`get_historical_translation_edit_context_cmd` verifies the ready base and its
+managed bytes, observes the head of that base's frozen run and verifies that head.
+It returns scoped IDs, base/head revisions and the observed host link revision;
+these are observations rather than locks. Save passes the exact head/link values
+to `edit_historical_translation_result_cmd` and retains the complete request and
+result ID on retry. Ordinary latest-base editing remains a separate command.
+
+`get_translation_publication_cmd` reads one publication and its project link in
+one host SQLite read transaction. A pending publication is still preparing its
+file. A ready result may be attached or ready history: determine attachment from
+that same snapshot's selected result ID. Never infer attachment from successful
+staging or publication state alone. Reads are project/translation/result scoped
+and return no filesystem path. A ready history entry remains explicitly selectable.
+
+The review editor requests a context when opened and suppresses obsolete async
+responses after its project/base/segment changes. It freezes input lines and both
+observations before the first save. A transient retry reuses that request; a
+confirmed pre-commit conflict requires a fresh observation and a new request ID.
+The publication notice is kept outside the changing comparison page, refreshes
+from committed events and bounded polling, and distinguishes pending, attached,
+detached and failed output. Editing any verified historical ready base is allowed,
+including an older run while another run is unfinished.
 
 ```mermaid
 sequenceDiagram
@@ -153,9 +177,12 @@ supplies the journal to publication/recovery and scans its cursor pages before
 ordinary linked-run gap recovery. Supporting evidence is recorded in
 [the application branch record](../../eval/experiments/2026-09-26-historical-edit-application.md).
 
-The typed observation/save commands, CLI/UI route, actual manual-save process-kill
-boundaries and native older-base save/reopening are still pending. Keep historical
-save controls unavailable until this complete delivery route is verified.
+The [desktop contract record](../../eval/experiments/2026-09-26-historical-edit-desktop-contract.md)
+adds the typed observation/save/publication commands and experimental review
+controls after those durable host boundaries were implemented. Their supporting
+backend and component checks pass; actual native manual-save process-kill
+boundaries, older-base save/reopening and the CLI branch route remain pending.
+This experimental availability does not close the full S7 delivery gate.
 
 ## Manual publication transaction ordering
 
