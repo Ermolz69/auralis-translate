@@ -1,5 +1,5 @@
 use crate::document_run_error::DocumentRunError;
-use crate::stderr_progress::StderrProgress;
+use auralis_translation::ProgressSink;
 use auralis_translation::{
     BlockPolicy, Glossary, LanguagePair, RetryPolicy, RunId, SegmentId, SourceHash, TargetSegment,
     TranslationId, VerifiedRenderer,
@@ -102,7 +102,7 @@ impl DocumentRunPlan {
         &self,
         provider: &LlamaCppProvider,
         store: &mut TranslateDb,
-        progress: &mut StderrProgress,
+        progress: &mut impl ProgressSink,
         control: &TranslateDb,
         retry: RetryPolicy,
     ) -> Result<Vec<u8>, DocumentRunError> {

@@ -16,17 +16,19 @@ pub(crate) fn read_vtt_source(path: &Path) -> io::Result<Vec<u8>> {
 pub(crate) fn read_bounded(path: &Path, max_bytes: usize, kind: &str) -> io::Result<Vec<u8>> {
     let file = File::open(path)?;
     if file.metadata()?.len() > max_bytes as u64 {
-        return Err(io::Error::other(format!(
-            "{kind} exceeds the configured size limit"
-        )));
+        return Err(io::Error::new(
+            io::ErrorKind::InvalidData,
+            format!("{kind} exceeds the configured size limit"),
+        ));
     }
     let mut reader = file.take((max_bytes as u64).saturating_add(1));
     let mut bytes = Vec::new();
     reader.read_to_end(&mut bytes)?;
     if bytes.len() > max_bytes {
-        return Err(io::Error::other(format!(
-            "{kind} exceeds the configured size limit"
-        )));
+        return Err(io::Error::new(
+            io::ErrorKind::InvalidData,
+            format!("{kind} exceeds the configured size limit"),
+        ));
     }
     Ok(bytes)
 }

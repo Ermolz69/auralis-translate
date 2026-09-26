@@ -3,96 +3,57 @@ use crate::durable_workflow::{
     DATABASE_FILE, ExecutionConfig, SOURCE_DIRECTORY, block_policy, execute, load_profile,
 };
 use crate::read_source::{read_source, read_vtt_source};
+use crate::reporting::{CliEvent, CommandOutput};
 use crate::source_snapshot::source_snapshot;
+use crate::start_input::StartInput;
 use crate::write_new::write_new;
 use crate::{glossary_input, managed_glossary};
 use auralis_translation::{LanguageCode, LanguagePair, RunId, TranslationId};
 use auralis_translation_sqlite::{RunSpec, SqliteConfig, TranslateDb, TranslationSpec};
 use std::error::Error;
-use std::ffi::OsStr;
-use std::io::Write;
+
 use std::path::Path;
 use uuid::Uuid;
 
 pub(crate) fn run(
-    source_path: &OsStr,
-    state_dir: &OsStr,
-    profile_path: &OsStr,
-    endpoint: &OsStr,
-    output_path: &OsStr,
+    input: StartInput<'_>,
+    reporter: &mut CommandOutput,
 ) -> Result<(), Box<dyn Error>> {
-    run_inner(
+    let StartInput {
         source_path,
         state_dir,
         profile_path,
-        None,
+        glossary_path,
         endpoint,
         output_path,
-        DocumentRunPlan::SRT_FORMAT,
-    )
-}
-
-pub(crate) fn run_vtt(
-    source_path: &OsStr,
-    state_dir: &OsStr,
-    profile_path: &OsStr,
-    endpoint: &OsStr,
-    output_path: &OsStr,
-) -> Result<(), Box<dyn Error>> {
-    run_inner(
-        source_path,
-        state_dir,
-        profile_path,
-        None,
-        endpoint,
-        output_path,
-        DocumentRunPlan::VTT_FORMAT,
-    )
-}
-
-pub(crate) fn run_with_glossary(
-    source_path: &OsStr,
-    state_dir: &OsStr,
-    profile_path: &OsStr,
-    glossary_path: &OsStr,
-    endpoint: &OsStr,
-    output_path: &OsStr,
-) -> Result<(), Box<dyn Error>> {
-    run_inner(
-        source_path,
-        state_dir,
-        profile_path,
-        Some(glossary_path),
-        endpoint,
-        output_path,
-        DocumentRunPlan::SRT_FORMAT,
-    )
-}
-
-fn run_inner(
-    source_path: &OsStr,
-    state_dir: &OsStr,
-    profile_path: &OsStr,
-    glossary_path: Option<&OsStr>,
-    endpoint: &OsStr,
-    output_path: &OsStr,
-    format: &str,
-) -> Result<(), Box<dyn Error>> {
+        format,
+    } = input;
     let output_path = Path::new(output_path);
     if output_path.exists() {
-        return Err("output already exists".into());
+        return Err(crate::reporting::CliFailure::boxed(
+            crate::reporting::ErrorCode::Conflict,
+            "output already exists",
+        ));
     }
     let source = match format {
         DocumentRunPlan::SRT_FORMAT => read_source(Path::new(source_path))?,
         DocumentRunPlan::VTT_FORMAT => read_vtt_source(Path::new(source_path))?,
-        _ => return Err("unsupported standalone source format".into()),
+        _ => {
+            return Err(crate::reporting::CliFailure::boxed(
+                crate::reporting::ErrorCode::InvalidInput,
+                "unsupported standalone source format",
+            ));
+        }
     };
     let (profile, profile_hash) = load_profile(Path::new(profile_path))?;
     let glossary_snapshot = glossary_path
         .map(|path| glossary_input::read(Path::new(path)))
         .transpose()?;
     if glossary_snapshot.is_some() && profile.prompt_version != 3 {
-        return Err("model profile does not support glossary prompts".into());
+        return Err(crate::reporting::CliFailure::boxed(
+            crate::reporting::ErrorCode::InvalidInput,
+            "model profile does not support glossary prompts",
+        ));
     }
     let translation_id =
         TranslationId::new(Uuid::new_v4()).ok_or("failed to create translation ID")?;
@@ -151,8 +112,17 @@ fn run_inner(
         blocks: plan.blocks().to_vec(),
     };
     db.ensure_run(&run)?;
-    println!("translation_id={translation_id} run_id={run_id}");
-    std::io::stdout().flush()?;
+    if reporter.is_machine() {
+        reporter.emit(CliEvent::RunStarted {
+            translation_id: translation_id.to_string(),
+            run_id: run_id.to_string(),
+            source_sha256: plan.source_hash().to_string(),
+            format: plan.source_format().into(),
+        })?;
+    } else {
+        println!("translation_id={translation_id} run_id={run_id}");
+        std::io::Write::flush(&mut std::io::stdout())?;
+    }
     execute(
         &mut db,
         &run,
@@ -164,5 +134,6 @@ fn run_inner(
             state_dir: &state_dir,
             initial_attempt: true,
         },
+        reporter,
     )
 }

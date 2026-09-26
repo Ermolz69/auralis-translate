@@ -13,6 +13,7 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 | [English product plan](PRODUCT_PLAN.md) | Current overall product scope, models, format boundaries, delivery, evaluation and release gates. |
 | [Temporary implementation stages](IMPLEMENTATION_STAGES.md) | Observable steps from text extraction to real inference, durable state, Auralis integration, and release gates. Agents use this until a tracked backlog replaces it. |
 | [Implementation status](IMPLEMENTATION_STATUS.md) | Evidence for implemented slices, command examples, and open stage gates. |
+| [CLI machine protocol v1](reference/cli-protocol-v1.md) | Explicit JSON requests, JSON/JSONL output, durable progress, terminal outcomes and opt-in exit codes. |
 | [Open data and language evaluation](evaluation/001-open-data-and-language-gates.md) | Candidate licensed corpora, provenance requirements, frozen splits, bilingual review, and S8/S9 language evidence. |
 | [Local profile comparison](evaluation/004-model-profile-comparison.md) | Frozen development inputs, decoding/prompt variants, same-file controls, failure retention and unreviewed comparison reports. |
 | [Long-file recovery probe](evaluation/005-long-file-recovery.md) | Optimized CLI, large synthetic SRT/WebVTT inputs, exact checkpoint recovery, full-file checks and approximate resource sampling. |

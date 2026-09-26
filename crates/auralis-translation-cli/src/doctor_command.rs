@@ -18,15 +18,20 @@ struct DoctorReport<'a> {
     verified: bool,
 }
 
-pub(crate) fn run(profile_path: &OsStr, model_path: &OsStr) -> Result<(), Box<dyn Error>> {
+pub(crate) fn run(
+    profile_path: &OsStr,
+    model_path: &OsStr,
+    reporter: &mut crate::reporting::CommandOutput,
+) -> Result<(), Box<dyn Error>> {
     let profile = ModelProfile::from_json(&std::fs::read(Path::new(profile_path))?)?;
     let expected = SourceHash::parse_hex(&profile.model_file_sha256)
         .ok_or("profile model SHA-256 is invalid")?;
     let (actual, bytes) = hash_file(Path::new(model_path))?;
     if actual != expected {
-        return Err(
-            format!("model SHA-256 mismatch: expected {expected}, observed {actual}").into(),
-        );
+        return Err(crate::reporting::CliFailure::boxed(
+            crate::reporting::ErrorCode::ModelMismatch,
+            format!("model SHA-256 mismatch: expected {expected}, observed {actual}"),
+        ));
     }
     let report = DoctorReport {
         schema_version: DOCTOR_SCHEMA_VERSION,
@@ -37,6 +42,5 @@ pub(crate) fn run(profile_path: &OsStr, model_path: &OsStr) -> Result<(), Box<dy
         model_bytes: bytes,
         verified: true,
     };
-    println!("{}", serde_json::to_string_pretty(&report)?);
-    Ok(())
+    reporter.report("doctor", &report)
 }

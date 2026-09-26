@@ -1,6 +1,7 @@
 use crate::document_run_error::DocumentRunError;
 use crate::document_run_plan::DocumentRunPlan;
-use crate::stderr_progress::StderrProgress;
+use crate::report_result::report_result;
+use crate::reporting::{CliEvent, CliFailure, CommandOutput, ErrorCode};
 use crate::write_new::write_new;
 use auralis_translation::{
     BlockPolicy, ResultId, RetryPolicy, ReviewState, RunState, SourceHash, VerifiedRenderer,
@@ -43,9 +44,13 @@ pub(crate) fn execute(
     plan: &DocumentRunPlan,
     profile: ModelProfile,
     config: ExecutionConfig<'_>,
+    reporter: &mut CommandOutput,
 ) -> Result<(), Box<dyn Error>> {
     if config.output_path.exists() {
-        return Err("output already exists".into());
+        return Err(CliFailure::boxed(
+            ErrorCode::Conflict,
+            "output already exists",
+        ));
     }
     let endpoint = config
         .endpoint
@@ -55,6 +60,13 @@ pub(crate) fn execute(
         .ok_or("model profile has an invalid block attempt limit")?;
     let provider = LlamaCppProvider::new(endpoint, profile.clone())?;
     if let Some(report) = verify_server(&provider, &profile)? {
+        if reporter.is_machine() {
+            reporter.emit(CliEvent::ModelReady {
+                alias: report.model_alias.clone(),
+                build: report.build_info.clone(),
+                context_tokens: u64::from(report.context_tokens),
+            })?;
+        }
         eprintln!(
             "model_ready alias={} build={} context_tokens={}",
             report.model_alias, report.build_info, report.context_tokens
@@ -69,18 +81,17 @@ pub(crate) fn execute(
     } else {
         db.begin_attempt(run, None)?
     };
-    let output =
-        match plan.execute_with_policy(&provider, db, &mut StderrProgress, &control_db, retry) {
-            Ok(output) => output,
-            Err(DocumentRunError::Paused(error)) => {
-                db.stop_attempt(run.run_id, attempt, RunStop::Paused, "pause requested")?;
-                return Err(error);
-            }
-            Err(DocumentRunError::Failed(error)) => {
-                db.stop_attempt(run.run_id, attempt, RunStop::Failed, "translation failed")?;
-                return Err(error);
-            }
-        };
+    let output = match plan.execute_with_policy(&provider, db, reporter, &control_db, retry) {
+        Ok(output) => output,
+        Err(DocumentRunError::Paused(error)) => {
+            db.stop_attempt(run.run_id, attempt, RunStop::Paused, "pause requested")?;
+            return Err(error);
+        }
+        Err(DocumentRunError::Failed(error)) => {
+            db.stop_attempt(run.run_id, attempt, RunStop::Failed, "translation failed")?;
+            return Err(error);
+        }
+    };
     let result_id = ResultId::new(Uuid::new_v4()).ok_or("failed to create result ID")?;
     let result = ResultSpec {
         result_id,
@@ -110,8 +121,7 @@ pub(crate) fn execute(
         return Err("verified result differs from the completed output".into());
     }
     write_new(config.output_path, &output)?;
-    println!("result_id={result_id} review=needs_review");
-    Ok(())
+    report_result(reporter, run, &committed, &output, config.output_path)
 }
 
 pub(crate) fn export_validated(
@@ -119,23 +129,25 @@ pub(crate) fn export_validated(
     run: &RunSpec,
     plan: &DocumentRunPlan,
     output_path: &Path,
+    reporter: &mut CommandOutput,
 ) -> Result<(), Box<dyn Error>> {
     if db.run_state(run.run_id)? != RunState::Validated {
         return Err("run is not validated".into());
     }
     let result = db.result_for_run(run.run_id)?;
     if result.source_hash != plan.source_hash() {
-        return Err("validated result source differs from managed original".into());
+        return Err(crate::reporting::CliFailure::boxed(
+            crate::reporting::ErrorCode::Conflict,
+            "validated result source differs from managed original",
+        ));
     }
     let output = plan.render_selected(&result.selected)?;
     if SourceHash::digest(&output) != result.output_hash {
-        return Err("regenerated output hash differs from validated result".into());
+        return Err(crate::reporting::CliFailure::boxed(
+            crate::reporting::ErrorCode::Conflict,
+            "regenerated output hash differs from validated result",
+        ));
     }
     write_new(output_path, &output)?;
-    let review = match result.review_state {
-        ReviewState::Ready => "ready",
-        ReviewState::NeedsReview => "needs_review",
-    };
-    println!("result_id={} review={review}", result.result_id);
-    Ok(())
+    report_result(reporter, run, &result, &output, output_path)
 }

@@ -19,7 +19,10 @@ pub(crate) fn store(
     if path.exists() {
         let saved = read_bounded(&path, SrtParsePolicy::default().max_bytes(), "glossary")?;
         if saved != bytes {
-            return Err("managed glossary differs from frozen revision".into());
+            return Err(crate::reporting::CliFailure::boxed(
+                crate::reporting::ErrorCode::Conflict,
+                "managed glossary differs from frozen revision",
+            ));
         }
     } else {
         write_new(&path, bytes)?;
@@ -40,7 +43,10 @@ pub(crate) fn load(
         .join(format!("{hash}.json"));
     let bytes = read_bounded(&path, SrtParsePolicy::default().max_bytes(), "glossary")?;
     if SourceHash::digest(&bytes) != hash {
-        return Err("managed glossary hash differs from frozen run".into());
+        return Err(crate::reporting::CliFailure::boxed(
+            crate::reporting::ErrorCode::Conflict,
+            "managed glossary hash differs from frozen run",
+        ));
     }
     Ok(Some(glossary_input::parse(&bytes)?))
 }

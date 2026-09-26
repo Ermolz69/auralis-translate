@@ -23,11 +23,19 @@ struct StatusReport {
     review_state: Option<&'static str>,
 }
 
-pub(crate) fn run(state_dir: &OsStr, run_id: &OsStr) -> Result<(), Box<dyn Error>> {
+pub(crate) fn run(
+    state_dir: &OsStr,
+    run_id: &OsStr,
+    reporter: &mut crate::reporting::CommandOutput,
+) -> Result<(), Box<dyn Error>> {
     let run_id = RunId::parse(run_id.to_str().ok_or("run ID must be Unicode")?)?;
     let db_path = Path::new(state_dir).join(DATABASE_FILE);
     if !db_path.is_file() {
-        return Err("Translate database does not exist in state directory".into());
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::NotFound,
+            "Translate database does not exist in state directory",
+        )
+        .into());
     }
     let db = TranslateDb::open(&db_path, SqliteConfig::default())?;
     let stored_run = db.run(run_id)?;
@@ -53,8 +61,7 @@ pub(crate) fn run(state_dir: &OsStr, run_id: &OsStr) -> Result<(), Box<dyn Error
             .as_ref()
             .map(|record| review_name(record.review_state)),
     };
-    println!("{}", serde_json::to_string_pretty(&report)?);
-    Ok(())
+    reporter.report("status", &report)
 }
 
 fn state_name(state: RunState) -> &'static str {

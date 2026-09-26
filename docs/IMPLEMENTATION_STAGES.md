@@ -69,6 +69,14 @@ Project deletion now records Translate cleanup intents atomically with the Aural
 
 ## Milestones that matter to the user
 
+S6 now has [machine protocol v1](reference/cli-protocol-v1.md): versioned JSON
+requests, final JSON or streaming JSONL, committed counters and distinct review,
+runtime, pause, I/O and conflict exit codes. Seven CLI process/SQLite regressions
+pass, and a [checked-model SRT/WebVTT probe](../eval/experiments/2026-09-26-cli-machine-protocol.md)
+verifies separate outputs and identical offline JSON export with retained
+source/draft/candidate comparisons. Machine installation commands, CLI-owned
+runtime and orphan cleanup remain prerequisites for the complete standalone gate.
+
 The [active request cancellation contract](architecture/009-request-cancellation.md)
 implements the product-plan pause semantics without putting HTTP or SQLite into
 the core. Mock transport tests interrupt both headers and incomplete bodies and

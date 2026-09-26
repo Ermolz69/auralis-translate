@@ -33,6 +33,17 @@ The same adapter now has separate `release_manifest/` and `offline_install/` mod
 
 ## Suggested layout
 
+The standalone CLI's machine interface is isolated in `reporting/`: one module
+each for output format, event, envelope, summary, error code, failure and output
+composition. `mod.rs` declares and exports these modules. JSON input has a typed
+command enum and bounded versioned request document; dispatch still invokes the
+same durable command implementations as positional input. `StartInput` groups
+start configuration rather than adding another argument to every start variant.
+The document-plan facade accepts a `ProgressSink`, and the CLI output adapter
+implements that port without moving serialization or stdout into the core.
+Behavior tests and process/socket helpers stay under the CLI's `tests/` tree.
+See [machine protocol v1](../reference/cli-protocol-v1.md) for its public boundary.
+
 ```text
 Cargo.toml
 Cargo.lock

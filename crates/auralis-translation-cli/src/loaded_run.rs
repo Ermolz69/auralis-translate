@@ -26,7 +26,11 @@ pub(crate) fn load(
     let state_dir = std::fs::canonicalize(Path::new(state_dir))?;
     let db_path = state_dir.join(DATABASE_FILE);
     if !db_path.is_file() {
-        return Err("Translate database does not exist in state directory".into());
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::NotFound,
+            "Translate database does not exist in state directory",
+        )
+        .into());
     }
     let mut db = TranslateDb::open(&db_path, SqliteConfig::default())?;
     let run = db.run(run_id)?;
@@ -36,7 +40,10 @@ pub(crate) fn load(
         DocumentRunPlan::SRT_FORMAT | DocumentRunPlan::VTT_FORMAT
     ) || translation.source_artifact_id.is_some()
     {
-        return Err("run is not a supported standalone translation".into());
+        return Err(crate::reporting::CliFailure::boxed(
+            crate::reporting::ErrorCode::InvalidInput,
+            "run is not a supported standalone translation",
+        ));
     }
     let locator = translation
         .source_locator
@@ -45,26 +52,43 @@ pub(crate) fn load(
     let managed_root = std::fs::canonicalize(state_dir.join(SOURCE_DIRECTORY))?;
     let source_path = std::fs::canonicalize(locator)?;
     if !source_path.starts_with(&managed_root) {
-        return Err("managed source lies outside the state directory".into());
+        return Err(crate::reporting::CliFailure::boxed(
+            crate::reporting::ErrorCode::Conflict,
+            "managed source lies outside the state directory",
+        ));
     }
     let source = match translation.source_format.as_str() {
         DocumentRunPlan::SRT_FORMAT => read_source(&source_path)?,
         DocumentRunPlan::VTT_FORMAT => read_vtt_source(&source_path)?,
-        _ => return Err("unsupported standalone source format".into()),
+        _ => {
+            return Err(crate::reporting::CliFailure::boxed(
+                crate::reporting::ErrorCode::InvalidInput,
+                "unsupported standalone source format",
+            ));
+        }
     };
     if SourceHash::digest(&source) != translation.source_hash
         || run.source_hash != translation.source_hash
     {
-        return Err("managed source hash differs from frozen run".into());
+        return Err(crate::reporting::CliFailure::boxed(
+            crate::reporting::ErrorCode::Conflict,
+            "managed source hash differs from frozen run",
+        ));
     }
     let (profile, profile_hash) = load_profile(Path::new(profile_path))?;
     if run.profile_fingerprint != profile_hash.to_string() {
-        return Err("model profile differs from frozen run".into());
+        return Err(crate::reporting::CliFailure::boxed(
+            crate::reporting::ErrorCode::Conflict,
+            "model profile differs from frozen run",
+        ));
     }
     let policy = block_policy(&profile)?;
     let glossary = managed_glossary::load(&state_dir, run.glossary_revision.as_deref())?;
     if glossary.is_some() && profile.prompt_version != 3 {
-        return Err("frozen glossary requires a glossary-capable profile".into());
+        return Err(crate::reporting::CliFailure::boxed(
+            crate::reporting::ErrorCode::InvalidInput,
+            "frozen glossary requires a glossary-capable profile",
+        ));
     }
     let plan = DocumentRunPlan::new(
         &translation.source_format,
@@ -79,7 +103,10 @@ pub(crate) fn load(
         || run.parser_version != plan.parser_version()
         || run.policy_fingerprint != plan.policy_fingerprint(policy).to_string()
     {
-        return Err("source parser or block policy differs from frozen run".into());
+        return Err(crate::reporting::CliFailure::boxed(
+            crate::reporting::ErrorCode::Conflict,
+            "source parser or block policy differs from frozen run",
+        ));
     }
     db.ensure_segments(
         translation.translation_id,

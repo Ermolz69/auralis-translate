@@ -10,6 +10,7 @@ The current implementation is **experimental**. Strict plain-SRT and a documente
 - [Current English product plan](docs/PRODUCT_PLAN.md)
 - [Temporary implementation stages](docs/IMPLEMENTATION_STAGES.md)
 - [Rust architecture](docs/architecture/004-rust-code-architecture.md)
+- [CLI machine protocol v1](docs/reference/cli-protocol-v1.md)
 - [Agent instructions](AGENTS.md)
 
 The Russian [historical plan](AURALIS_SUBTITLE_TRANSLATION_PLAN.md) stays at the root. Later agreed file-based MVP decisions are recorded in English under `docs/`.

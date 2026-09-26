@@ -1,6 +1,16 @@
 version: "3"
 
 tasks:
+  test:cli:protocol:
+    desc: Verify machine JSON input/output, durable progress, review exit, interruption and recovery
+    cmds:
+      - cargo test --offline -p auralis-translation-cli --test machine_protocol
+  eval:cli:protocol:
+    desc: Verify machine JSON/JSONL with a supplied checked model and independent authored comparison inputs
+    cmds:
+      - task: build:release
+      - task: test:cli:protocol
+      - node eval/scripts/cli-machine-probe.mjs
   eval:clean-windows:check:
     desc: Verify separate QA preparation, installer identity and unexecuted report boundaries
     cmds:

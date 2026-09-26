@@ -21,11 +21,19 @@ struct DiagnosticReport {
     warnings: Vec<DiagnosticItem>,
 }
 
-pub(crate) fn run(state_dir: &OsStr, run_id: &OsStr) -> Result<(), Box<dyn Error>> {
+pub(crate) fn run(
+    state_dir: &OsStr,
+    run_id: &OsStr,
+    reporter: &mut crate::reporting::CommandOutput,
+) -> Result<(), Box<dyn Error>> {
     let run_id = RunId::parse(run_id.to_str().ok_or("run ID must be Unicode")?)?;
     let database = Path::new(state_dir).join(DATABASE_FILE);
     if !database.is_file() {
-        return Err("Translate database does not exist in state directory".into());
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::NotFound,
+            "Translate database does not exist in state directory",
+        )
+        .into());
     }
     let db = TranslateDb::open(&database, SqliteConfig::default())?;
     db.run(run_id)?;
@@ -44,6 +52,5 @@ pub(crate) fn run(state_dir: &OsStr, run_id: &OsStr) -> Result<(), Box<dyn Error
         run_id: run_id.to_string(),
         warnings,
     };
-    println!("{}", serde_json::to_string_pretty(&report)?);
-    Ok(())
+    reporter.report("diagnostics", &report)
 }

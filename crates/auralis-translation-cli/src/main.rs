@@ -24,91 +24,98 @@ mod read_source;
 mod source_snapshot;
 mod stale_output;
 mod status_command;
-mod stderr_progress;
+
 mod vtt_inspect_command;
 mod vtt_manual_command;
 mod write_new;
 
+mod machine_request;
+mod report_result;
+mod reporting;
+mod request_document;
+mod start_input;
+
+mod command_dispatch;
+use reporting::{CliFailure, CommandOutput, ErrorCode, OutputFormat};
+
 use std::process::ExitCode;
 
 fn main() -> ExitCode {
-    let args = std::env::args_os().skip(1).collect::<Vec<_>>();
-    let result = match args.as_slice() {
-        [command, path] if command == "inspect" => inspect_command::run(path),
-        [command, path] if command == "inspect-vtt" => vtt_inspect_command::run(path),
-        [command, source, manifest] if command == "template" => {
-            manual_command::template(source, manifest)
-        }
-        [command, source, manifest] if command == "template-vtt" => {
-            vtt_manual_command::template(source, manifest)
-        }
-        [command, source, manifest, output] if command == "render" => {
-            manual_command::render(source, manifest, output)
-        }
-        [command, source, manifest, output] if command == "render-vtt" => {
-            vtt_manual_command::render(source, manifest, output)
-        }
-        [command, state_dir, run_id] if command == "status" => {
-            status_command::run(state_dir, run_id)
-        }
-        [command, state_dir, run_id] if command == "diagnostics" => {
-            diagnostics_command::run(state_dir, run_id)
-        }
-        [command, state_dir, run_id] if command == "pause" => {
-            pause_command::run(state_dir, run_id)
-        }
-        [command, state_dir, base_result_id, profile, edit, output] if command == "edit" => {
-            edit_command::run(state_dir, base_result_id, profile, edit, output)
-        }
-        [command, profile, model] if command == "doctor" => {
-            doctor_command::run(profile, model)
-        }
-        [command, manifest, profile, backend, source_dir, install_root]
-            if command == "install-offline" =>
-        {
-            offline_install_command::run(manifest, profile, backend, source_dir, install_root)
-        }
-        [command, manifest, profile, backend, cache_dir] if command == "fetch-release" => {
-            asset_download_command::run(manifest, profile, backend, cache_dir)
-        }
-        [command, manifest, profile, backend, filename, cache_dir] if command == "fetch-asset" => {
-            asset_download_command::run_one(manifest, profile, backend, filename, cache_dir)
-        }
-        [command, manifest, profile, backend, cache_dir, install_root]
-            if command == "install-online" =>
-        {
-            online_install_command::run(manifest, profile, backend, cache_dir, install_root)
-        }
-        [command, source, profile, endpoint, output] if command == "translate-experimental" => {
-            experimental_command::run(source, profile, endpoint, output)
-        }
-        [command, source, profile, endpoint, output] if command == "translate-vtt-experimental" => {
-            experimental_command::run_vtt(source, profile, endpoint, output)
-        }
-        [command, source, state_dir, profile, endpoint, output] if command == "translate" => {
-            durable_start::run(source, state_dir, profile, endpoint, output)
-        }
-        [command, source, state_dir, profile, endpoint, output] if command == "translate-vtt" => {
-            durable_start::run_vtt(source, state_dir, profile, endpoint, output)
-        }
-        [command, source, state_dir, profile, glossary, endpoint, output]
-            if command == "translate-glossary" =>
-        {
-            durable_start::run_with_glossary(
-                source, state_dir, profile, glossary, endpoint, output,
-            )
-        }
-        [command, state_dir, run_id, profile, endpoint, output] if command == "resume" => {
-            durable_resume::run(state_dir, run_id, profile, endpoint, output)
-        }
-        _ => Err("usage: auralis-translation-cli <inspect SOURCE | inspect-vtt SOURCE | template SOURCE MANIFEST | template-vtt SOURCE MANIFEST | render SOURCE MANIFEST OUTPUT | render-vtt SOURCE MANIFEST OUTPUT | status STATE_DIR RUN_ID | diagnostics STATE_DIR RUN_ID | pause STATE_DIR RUN_ID | edit STATE_DIR BASE_RESULT_ID PROFILE EDIT_JSON OUTPUT | doctor PROFILE MODEL_FILE | fetch-release RELEASE_MANIFEST PROFILE BACKEND CACHE_DIR | fetch-asset RELEASE_MANIFEST PROFILE BACKEND FILENAME CACHE_DIR | install-offline RELEASE_MANIFEST PROFILE BACKEND SOURCE_DIR INSTALL_ROOT | install-online RELEASE_MANIFEST PROFILE BACKEND CACHE_DIR INSTALL_ROOT | translate-experimental SOURCE PROFILE SERVER_URL OUTPUT | translate-vtt-experimental SOURCE PROFILE SERVER_URL OUTPUT | translate SOURCE STATE_DIR PROFILE SERVER_URL OUTPUT | translate-vtt SOURCE STATE_DIR PROFILE SERVER_URL OUTPUT | translate-glossary SOURCE STATE_DIR PROFILE GLOSSARY SERVER_URL OUTPUT | resume STATE_DIR RUN_ID PROFILE SERVER_URL OUTPUT>".into()),
+    let mut args = std::env::args_os().skip(1).collect::<Vec<_>>();
+    let format = match args.first().and_then(|arg| arg.to_str()) {
+        Some("--json") => OutputFormat::Json,
+        Some("--jsonl") => OutputFormat::Jsonl,
+        _ => OutputFormat::Legacy,
     };
-
-    match result {
-        Ok(()) => ExitCode::SUCCESS,
-        Err(error) => {
-            eprintln!("{error}");
+    if format != OutputFormat::Legacy {
+        args.remove(0);
+    }
+    let mut reporter = CommandOutput::new(
+        format,
+        args.first()
+            .and_then(|arg| arg.to_str())
+            .unwrap_or("")
+            .into(),
+    );
+    let result = (|| {
+        if args.first().is_some_and(|arg| arg == "--request") {
+            if format == OutputFormat::Legacy || args.len() != 2 {
+                return Err(CliFailure::boxed(
+                    ErrorCode::Usage,
+                    "--request requires a machine output flag and one request file",
+                ));
+            }
+            args = request_document::load(std::path::Path::new(&args[1]))?;
+            reporter.set_command(args.first().and_then(|arg| arg.to_str()).unwrap_or(""));
+        }
+        if reporter.is_machine() {
+            if args.iter().any(|arg| arg.to_str().is_none()) {
+                return Err(CliFailure::boxed(
+                    ErrorCode::InvalidInput,
+                    "machine arguments must be Unicode",
+                ));
+            }
+            let command = args.first().and_then(|arg| arg.to_str()).unwrap_or("");
+            if !matches!(
+                command,
+                "inspect"
+                    | "inspect-vtt"
+                    | "doctor"
+                    | "status"
+                    | "diagnostics"
+                    | "pause"
+                    | "translate"
+                    | "translate-vtt"
+                    | "translate-glossary"
+                    | "resume"
+                    | "edit"
+            ) {
+                return Err(CliFailure::boxed(
+                    ErrorCode::Usage,
+                    "command is not available in machine protocol v1",
+                ));
+            }
+        }
+        command_dispatch::dispatch(&args, &mut reporter)
+    })();
+    if let Err(error) = &result {
+        eprintln!("{error}");
+    }
+    if !reporter.is_machine() {
+        return if result.is_ok() {
+            ExitCode::SUCCESS
+        } else {
             ExitCode::FAILURE
+        };
+    }
+    let failure = result
+        .err()
+        .map(|error| (reporting::classify(error.as_ref()), error.to_string()));
+    match reporter.finish(failure) {
+        Ok(exit) => ExitCode::from(exit),
+        Err(error) => {
+            eprintln!("CLI output failed: {error}");
+            ExitCode::from(ErrorCode::IoFailure.exit_code())
         }
     }
 }

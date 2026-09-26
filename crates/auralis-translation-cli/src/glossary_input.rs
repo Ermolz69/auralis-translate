@@ -34,7 +34,10 @@ pub(crate) fn read(path: &Path) -> Result<(Glossary, SourceHash, Vec<u8>), Box<d
 pub(crate) fn parse(bytes: &[u8]) -> Result<Glossary, Box<dyn Error>> {
     let payload: GlossaryPayload = serde_json::from_slice(bytes)?;
     if payload.schema_version != GLOSSARY_SCHEMA_VERSION {
-        return Err("unsupported glossary schema version".into());
+        return Err(crate::reporting::CliFailure::boxed(
+            crate::reporting::ErrorCode::InvalidInput,
+            "unsupported glossary schema version",
+        ));
     }
     let entries = payload
         .entries
@@ -44,7 +47,14 @@ pub(crate) fn parse(bytes: &[u8]) -> Result<Glossary, Box<dyn Error>> {
                 .segment_ids
                 .map(|ids| {
                     ids.into_iter()
-                        .map(|id| SegmentId::new(id).ok_or("zero glossary segment ID"))
+                        .map(|id| {
+                            SegmentId::new(id).ok_or_else(|| {
+                                crate::reporting::CliFailure::boxed(
+                                    crate::reporting::ErrorCode::InvalidInput,
+                                    "zero glossary segment ID",
+                                )
+                            })
+                        })
                         .collect::<Result<Vec<_>, _>>()
                 })
                 .transpose()?;
