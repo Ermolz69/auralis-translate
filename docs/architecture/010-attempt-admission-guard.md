@@ -40,9 +40,9 @@ new public frontend status schema.
 
 ## Remaining scope
 
-The guard prevents lost pauses and stale attempt starts. It does not interrupt
-model-file hashing or server readiness in progress; this correction releases a
-cancelled admission lease when admission returns. Prompt cancellation/child cleanup
-during admission, concurrent deletion/publication and native IPC race scenarios
-still require their own implementation/evidence. Existing active-inference
+The guard prevents lost pauses and stale attempt starts. It is now composed with
+[cooperative preparation control](011-preparation-cancellation.md), which has
+controlled library, CLI, application and UI checks. Native preparation-pause
+latency/child cleanup, concurrent deletion/publication and native IPC race scenarios
+still require their own evidence. Existing active-inference
 cancellation remains governed by [the request contract](009-request-cancellation.md).

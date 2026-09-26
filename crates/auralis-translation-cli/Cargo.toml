@@ -17,3 +17,6 @@ uuid = { version = "1.26.1", features = ["v4"] }
 
 [lints]
 workspace = true
+
+[dev-dependencies]
+rusqlite = { version = "0.39.0", features = ["bundled"] }

@@ -54,7 +54,8 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 ## Agreed MVP decisions
 
 The [preparation cancellation contract](architecture/011-preparation-cancellation.md)
-is the next admission implementation decision. Its evidence is still in progress.
+is implemented with [controlled evidence](../eval/experiments/2026-09-26-preparation-cancellation.md).
+Native preparation-pause latency and child cleanup remain open.
 
 Recent evidence: [pinned package repair](../eval/experiments/2026-09-26-package-repair.md) and a [ten-sentence real file/reference comparison](../eval/experiments/2026-09-26-flores-file-comparison.md). The latter verifies the transport pipeline with synthetic timings; its local side-by-side report remains unreviewed and has concrete quality-triage items. Neither record closes the language release gates.
 

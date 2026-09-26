@@ -33,6 +33,7 @@ dependencies = [
  "auralis-translation-formats",
  "auralis-translation-llamacpp",
  "auralis-translation-sqlite",
+ "rusqlite",
  "serde",
  "serde_json",
  "sha2",

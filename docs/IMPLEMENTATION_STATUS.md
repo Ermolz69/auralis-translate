@@ -1,5 +1,11 @@
 # Implementation status and evidence
 
+Latest preparation slice: [cooperative control](architecture/011-preparation-cancellation.md)
+now reaches hashing, runtime package verification and readiness HTTP reads.
+[Controlled CLI, application and UI evidence](../eval/experiments/2026-09-26-preparation-cancellation.md)
+shows cancellation before any attempt/result; the real runtime still completes
+checked admission. Native preparation-pause latency/child cleanup remains open.
+
 Latest admission slice: [durable control revisions](architecture/010-attempt-admission-guard.md)
 reject a start captured before a newer pause, including repeated pause while
 resuming an already-paused run. Translate schema v5 migrates retained state;
