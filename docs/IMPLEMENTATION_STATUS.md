@@ -11,6 +11,13 @@ and resumes only the missing block for SRT and WebVTT. These are mock transport
 and real SQLite/process checks; real inference and desktop pause evidence are
 recorded separately. `task docs:check` passes all active file links.
 
+The [checked-model pause probe](../eval/experiments/2026-09-26-request-cancellation.md)
+now passes for SRT and WebVTT. It observes busy real inference after one saved
+block before pause. Acknowledgment took 547.62 and 429.60 ms; the server returned
+to idle, exact checkpoints survived resume and output re-exported identically
+offline. A pooled-connection failure after hashing was corrected and covered by
+a keep-alive regression. These are local measurements, not an SLA or quality verdict.
+
 Latest S5 evidence: the [three-profile local comparison](../eval/experiments/2026-09-26-profile-comparison.md) completed 30 real line translations through identical development sentence fixtures and three independent durable runs. All transport checks and the retained-artifact verifier passed. Grammar and terminology defects remain; no model/profile selection or human quality gate is claimed. The [comparison protocol](evaluation/004-model-profile-comparison.md) fixes input identity and retains failures without converting exact-reference equality into a quality score.
 
 Status: 26 September 2026. This log reports observed behavior, not release claims. Strict plain-SRT inspection and manual replacement work. A real model has produced a separate Russian SRT through both the experimental path and the durable CLI. Translate SQLite stores run attempts, accepted checkpoints, and immutable results. CLI tests cover managed-source copying, model failure, restart, completion, and reconstruction against a mock HTTP model server for SRT and WebVTT. A real-model SRT result was re-exported after server shutdown. An opt-in real-model Auralis application test kills the managed worker after one checkpoint, recovers both databases, and resumes the remaining block. A [native Tauri checked-model test](../eval/experiments/2026-09-25-native-tauri-translation.md) verifies desktop invocation and separate ready output publication; a [native desktop crash/restart test](../eval/experiments/2026-09-25-native-tauri-crash.md) verifies preservation of one committed checkpoint across parent termination and a second checked-model attempt. Release validation remains open.

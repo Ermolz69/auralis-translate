@@ -50,6 +50,47 @@ fn validates_control_poll_bounds() {
     assert!(RequestControlPolicy::new(Duration::from_millis(1001)).is_none());
 }
 
+#[test]
+fn releases_idle_connections_between_synchronous_calls() -> Result<(), Box<dyn Error>> {
+    let listener = TcpListener::bind("127.0.0.1:0")?;
+    let endpoint = format!("http://{}/", listener.local_addr()?);
+    let server = std::thread::spawn(move || -> Result<(), String> {
+        for _ in 0..2 {
+            let mut stream = accept_request(&listener)?;
+            let body = r#"{"choices":[{"message":{"content":"Привет."},"finish_reason":"stop"}]}"#;
+            write!(
+                stream,
+                "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: keep-alive\r\n\r\n{body}",
+                body.len()
+            )
+            .map_err(|cause| cause.to_string())?;
+            let mut byte = [0];
+            match stream.read(&mut byte) {
+                Ok(0) => {}
+                Err(cause) if cause.kind() == std::io::ErrorKind::ConnectionReset => {}
+                other => {
+                    return Err(format!(
+                        "unpolled connection was retained or reused: {other:?}"
+                    ));
+                }
+            }
+        }
+        Ok(())
+    });
+    let provider = LlamaCppProvider::new(&endpoint, ModelProfile::from_json(PROFILE)?)?;
+    let batch = batch()?;
+    assert_eq!(
+        provider.translate(&batch)?.translations[0].lines,
+        ["Привет."]
+    );
+    assert_eq!(
+        provider.translate(&batch)?.translations[0].lines,
+        ["Привет."]
+    );
+    server.join().map_err(|_| "server panicked")??;
+    Ok(())
+}
+
 fn interrupted_request(partial_body: bool, state: u8) -> Result<(), Box<dyn Error>> {
     let listener = TcpListener::bind("127.0.0.1:0")?;
     let endpoint = format!("http://{}/", listener.local_addr()?);

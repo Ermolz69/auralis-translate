@@ -27,6 +27,13 @@ the request or create additional inference workers. When control requests pause,
 the adapter drops the HTTP future and its partial response, drives connection
 cleanup, and returns. The profile timeout and response-byte bound still apply.
 
+Idle HTTP connection pooling is disabled because this runtime does not poll
+connections between synchronous calls, notably during checked model hashing.
+A real-model probe exposed failure to send the first translation after preflight
+with an unpolled pooled connection. Separate local connections avoid retaining
+that state; a keep-alive regression checks that each completed call disconnects.
+The subsequent checked-model probe supplies the implementation evidence.
+
 `RequestControlPolicy` supplies a validated polling interval of 10–1000 ms, with a
 250 ms default. It is an operational transport policy, not a model prompt setting
 or a change to the frozen profile fingerprint. Database lock waits and scheduling

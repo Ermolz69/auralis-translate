@@ -23,6 +23,8 @@ impl LocalHttp {
             .map_err(error)?;
         let client = Client::builder()
             .no_proxy()
+            // The current-thread runtime is idle during hashing and checkpoint writes.
+            .pool_max_idle_per_host(0)
             .timeout(timeout)
             .build()
             .map_err(error)?;
@@ -72,7 +74,7 @@ impl LocalHttp {
     }
 
     async fn read_response(&self, request: RequestBuilder) -> Result<Vec<u8>, ProviderError> {
-        let mut response = request.send().await.map_err(error)?;
+        let mut response = request.send().await.map_err(transport_error)?;
         if !response.status().is_success() {
             return Err(ProviderError(format!(
                 "llama.cpp returned HTTP {}",
@@ -80,7 +82,7 @@ impl LocalHttp {
             )));
         }
         let mut bytes = Vec::new();
-        while let Some(chunk) = response.chunk().await.map_err(error)? {
+        while let Some(chunk) = response.chunk().await.map_err(transport_error)? {
             if chunk.len() > self.response_limit.saturating_sub(bytes.len()) {
                 return Err(ProviderError(
                     "llama.cpp response exceeds profile limit".into(),
@@ -94,4 +96,16 @@ impl LocalHttp {
 
 fn error(cause: impl std::fmt::Display) -> ProviderError {
     ProviderError(cause.to_string())
+}
+
+fn transport_error(cause: reqwest::Error) -> ProviderError {
+    use std::error::Error;
+    let mut message = cause.to_string();
+    let mut source = cause.source();
+    while let Some(cause) = source {
+        message.push_str(": ");
+        message.push_str(&cause.to_string());
+        source = cause.source();
+    }
+    ProviderError(message)
 }
