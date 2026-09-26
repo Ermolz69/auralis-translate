@@ -30,6 +30,8 @@ task cli -- inspect-vtt PATH_TO_SOURCE.vtt
 
 The CLI accepts an explicitly installed checked local server for `translate`, `translate-vtt`, and `resume`. See [implementation status](docs/IMPLEMENTATION_STATUS.md) for exact command contracts and [the ten-row comparison record](eval/experiments/2026-09-26-flores-file-comparison.md) for a reproducible real local file transport run and source/reference/candidate reports.
 
+`task eval:cli:flores:profiles` compares frozen decoding/prompt variants with supplied local assets. The [real comparison evidence](eval/experiments/2026-09-26-profile-comparison.md) records passing transport checks and unresolved translation defects. Complete comparison reports stay in ignored local storage; evaluation does not download weights or select a production profile automatically.
+
 ## Model and test-data delivery
 
 Third-party model weights are never embedded in the application or uploaded to our release. Auralis downloads pinned upstream assets only after the user's **Download and install** action and selects a package after verification. The standalone CLI also supports explicit `fetch-release`, `install-online`, and separately supplied assets through `install-offline`; see [model installation](docs/architecture/007-model-installation.md).

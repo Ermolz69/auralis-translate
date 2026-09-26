@@ -14,6 +14,7 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 | [Temporary implementation stages](IMPLEMENTATION_STAGES.md) | Observable steps from text extraction to real inference, durable state, Auralis integration, and release gates. Agents use this until a tracked backlog replaces it. |
 | [Implementation status](IMPLEMENTATION_STATUS.md) | Evidence for implemented slices, command examples, and open stage gates. |
 | [Open data and language evaluation](evaluation/001-open-data-and-language-gates.md) | Candidate licensed corpora, provenance requirements, frozen splits, bilingual review, and S8/S9 language evidence. |
+| [Local profile comparison](evaluation/004-model-profile-comparison.md) | Frozen development inputs, decoding/prompt variants, same-file controls, failure retention and unreviewed comparison reports. |
 | [FLORES-200 acquisition](../eval/experiments/2026-09-25-flores200-acquisition.md) | Locally cached, hash-pinned auxiliary Chinese/Japanese-to-Russian sentence corpus; no subtitle release claim. |
 | [FLORES-200 provider smoke](../eval/experiments/2026-09-25-flores200-provider-smoke.md) | Checked local model output for one Chinese and one Japanese sentence, with unresolved source/reference divergence. |
 | [Native result-gap recovery](../eval/experiments/2026-09-25-native-result-gap.md) | Killed-desktop evidence for a validated Translate result committed before Auralis publication, followed by ready-artifact recovery. |
@@ -42,6 +43,8 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 ## Agreed MVP decisions
 
 Recent evidence: [pinned package repair](../eval/experiments/2026-09-26-package-repair.md) and a [ten-sentence real file/reference comparison](../eval/experiments/2026-09-26-flores-file-comparison.md). The latter verifies the transport pipeline with synthetic timings; its local side-by-side report remains unreviewed and has concrete quality-triage items. Neither record closes the language release gates.
+
+A [three-profile real comparison](../eval/experiments/2026-09-26-profile-comparison.md) now tests sampling, greedy decoding and the existing JSON wrapper on the same development rows. All file checks passed; visible grammar and terminology defects remain, and no winner or production profile was selected.
 
 | Topic | Decision |
 | --- | --- |

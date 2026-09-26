@@ -84,6 +84,8 @@ The S7 desktop has a local file entry point for `.srt` and `.vtt`: strict inspec
 
 ## Relation to the original 00–12 plan
 
+The [three-profile development comparison](../eval/experiments/2026-09-26-profile-comparison.md) extends S5 investigation with identical source/reference rows, checked weights/runtime, separate durable results, and retained artifact verification. Greedy decoding did not remove observed grammar errors, and the JSON variant introduced a terminology substitution. Quality remains unreviewed, no profile winner is selected, and the subtitle/language gates remain open.
+
 The [local file/reference comparison](../eval/experiments/2026-09-26-flores-file-comparison.md) extends S5/S6 evidence to ten development sentences through the durable strict-SRT transport path, with a local side-by-side report. Artificial timings do not supply real subtitle evaluation coverage. [Pinned package repair](../eval/experiments/2026-09-26-package-repair.md) extends S7 installation lifecycle evidence. Production frontend/resource/publication checks now exclude model weights and evaluation payloads; a clean installer and source-aware quality review remain required.
 
 | Original stages | This roadmap |

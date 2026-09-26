@@ -52,9 +52,22 @@ tasks:
     desc: Verify the auxiliary file comparison harness rejects structure and identity changes
     cmds:
       - node --test eval/scripts/tests/file-probe.test.mjs
+      - node --test eval/scripts/tests/profile-comparison.test.mjs
   eval:cli:flores:file:
     desc: Run real Chinese sentence comparisons through a durable SRT transport fixture; keep data and reports in ignored storage
     cmds:
       - task: build
       - task: eval:file:checks
       - node eval/scripts/cli-flores-file.mjs
+  eval:cli:flores:profiles:
+    desc: Compare pinned decoding and prompt variants through identical local dev sentence fixtures without downloading assets
+    cmds:
+      - task: build
+      - task: eval:file:checks
+      - node eval/scripts/cli-flores-profiles.mjs
+  eval:profiles:verify:
+    desc: Verify a completed local comparison against the pinned matrix and retained artifact hashes without inference
+    requires:
+      vars: [REPORT_DIR]
+    cmds:
+      - node eval/scripts/verify-profile-comparison.mjs "{{.REPORT_DIR}}"

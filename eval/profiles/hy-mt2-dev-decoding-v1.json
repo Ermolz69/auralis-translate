@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "purpose": "auxiliary_dev_profile_comparison",
+  "base_profile": "models/manifests/hy_mt2_1_8b_q4_k_m.checked.experimental.json",
+  "base_profile_sha256": "dba1d341230bc4f1117c6fba8ce55a1127b120864aa8363295bdbc883b98fc3e",
+  "sample_manifest": "eval/corpora/flores200-file-probe-v1.json",
+  "sample_manifest_sha256": "5d23133ae472eafe05513c18082049c72d8ac529d1b64230d4d36e2047c1891f",
+  "subtitle_holdout": false,
+  "bilingual_reviewed": false,
+  "variants": [
+    { "id": "plain-sampling", "overrides": { "target_segments_per_block": 1 } },
+    { "id": "plain-greedy", "overrides": { "target_segments_per_block": 1, "temperature": 0 } },
+    { "id": "json-greedy", "overrides": { "target_segments_per_block": 1, "temperature": 0, "prompt_version": 3, "max_glossary_bytes": 4096, "max_glossary_entries": 16 } }
+  ]
+}
