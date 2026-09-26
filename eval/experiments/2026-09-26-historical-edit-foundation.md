@@ -41,6 +41,19 @@ In Auralis:
 - `task rust:fmt-write`: passed.
 - `task rust:test:storage -- --test translation_edit_intents --lib`: 144 existing
   library tests and six journal integration tests passed.
+- `task rust:test:storage`: passed all storage library, integration and doc tests,
+  including existing history-selection and host-job regressions.
+- `task rust:clippy`: passed workspace/all-target checks with denied warnings after
+  updating the local submodule to the tested schema v6 engine.
+- `task rust:test:application -- --test translation_publish --test translation_publication_recovery`:
+  both existing two-database publication/restart-gap tests passed on that pin.
+- `task docs:check`: five checker tests and 31 host Markdown files passed. The
+  checker was rerun outside the sandbox after Node child creation returned EPERM.
+- `task quality:file-size`: eight checker tests and all architectural size limits
+  passed. `task quality:format-write -- docs/translation/README.md` passed.
+
+Independent `task docs:check` validates 79 active English Markdown files. These
+documentation checks verify local paths, not external links or linguistic quality.
 
 The first additional fixture compilation exposed test-only assumptions about
 Clone implementations and the VTT execution facade; those were corrected to use
