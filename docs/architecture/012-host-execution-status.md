@@ -46,9 +46,11 @@ Before clearing its local pending command, the panel uses the accepted job/run
 identity to retain preparation for that same run until refreshed storage status
 arrives. A delayed first refresh must not expose an idle Start/Continue button.
 
-This state survives panel remount because it is read from storage. Polling remains
-the current refresh mechanism; coherent status is not evidence for event-driven
-progress. Model hash/readiness sub-stages and percentages are not inferred from
+This state survives panel remount because it is read from storage. The later
+[committed event contract](013-committed-progress-events.md) adds notifications
+and snapshot refresh while retaining recovery polling. The status projection
+alone is not event-transport evidence. Model hash/readiness sub-stages and
+percentages are not inferred from
 the active job ID.
 
 ## Verification required

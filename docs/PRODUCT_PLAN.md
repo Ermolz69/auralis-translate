@@ -103,6 +103,12 @@ Cache keys include target text and ID/slot mapping, actual source context, langu
 
 Useful progress events are model preparation, plan ready, block started, **block committed**, diagnostic, finalising and terminal outcome. Events carry stable IDs, saved counts and bounded diagnostics, not every streamed token as durable progress. Auralis uses its existing revisioned job/event and recovery conventions where applicable.
 
+The [committed host event contract](architecture/013-committed-progress-events.md)
+defines storage commit ordering and project-scoped snapshot refresh for the
+existing lifecycle bridge. It keeps recovery polling for lost notifications.
+Host job events do not expose per-token progress or infer preparation percentages;
+richer preparation and diagnostic projections require their own contracts and evidence.
+
 The user chooses an existing source file or project subtitle artifact, sees language and format limits, starts translation, can pause or resume, then compares original and Russian cues. A structurally valid but uncertain result is attached with Needs review. The user may edit segments, build a new result revision, select a result, and export it. A later TTS stage consumes the selected Russian text without rewriting the approved subtitle translation silently.
 
 ## 14. Standalone CLI and delivery
@@ -130,17 +136,17 @@ The proposed Chinese corpus is roughly 20–30 scenes and 500 cues, with about 2
 
 Measure meaning, Russian fluency, terminology, cue-time alignment, structural validity and retry rate, readability, cold start/full-file/p50/p95 time, RAM/VRAM and cancellation/recovery. Compare candidates on the same scenes with their correct templates. The proposed release goals, not measured facts, are:
 
-| Gate | Required evidence |
-| --- | --- |
-| G1 structure | 100% of published strict outputs preserve IDs/order/external timing/protected ranges. |
-| G2 no silent loss | Every source segment has an explicit outcome; no hidden original-text fallback. |
-| G3 meaning | At least 95% of holdout cues receive adequacy ≥ 4/5 from source-aware review. |
+| Gate               | Required evidence                                                                                      |
+| ------------------ | ------------------------------------------------------------------------------------------------------ |
+| G1 structure       | 100% of published strict outputs preserve IDs/order/external timing/protected ranges.                  |
+| G2 no silent loss  | Every source segment has an explicit outcome; no hidden original-text fallback.                        |
+| G3 meaning         | At least 95% of holdout cues receive adequacy ≥ 4/5 from source-aware review.                          |
 | G4 critical errors | No unresolved critical error in the release holdout; this does not promise zero errors on every video. |
-| G5 terms | At least 98% of applicable approved glossary terms are respected with Russian inflection considered. |
-| G6 resources | Measured SLA on the declared hardware; numeric limits chosen after initial benchmarks. |
-| G7 durability | Crash/resume preserves checkpoints and edits without duplicate accepted blocks. |
-| G8 export | Output reparses, opens in the target consumer and meets its declared format subset. |
-| G9 packaging | Clean target OS installs the model and passes a real offline smoke test. |
+| G5 terms           | At least 98% of applicable approved glossary terms are respected with Russian inflection considered.   |
+| G6 resources       | Measured SLA on the declared hardware; numeric limits chosen after initial benchmarks.                 |
+| G7 durability      | Crash/resume preserves checkpoints and edits without duplicate accepted blocks.                        |
+| G8 export          | Output reparses, opens in the target consumer and meets its declared format subset.                    |
+| G9 packaging       | Clean target OS installs the model and passes a real offline smoke test.                               |
 
 An earlier idea of translating representative subtitles for a 30-minute video within 10 minutes on GPU remains only a hypothesis until text density and hardware are specified. Report final cues/characters per wall-clock time, including retries, rather than only video duration.
 
