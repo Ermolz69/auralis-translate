@@ -43,6 +43,7 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 | [Model installation](architecture/007-model-installation.md) | Release manifest, verified staging, package layout, host ownership, and remaining delivery work. |
 | [Managed runtime memory](architecture/008-managed-runtime-memory.md) | Explicit transient cache/slot policy following observed memory growth in a long-file run. |
 | [Active request cancellation](architecture/009-request-cancellation.md) | Control-aware provider, bounded response reads, request interruption and durable pause acknowledgment. |
+| [Attempt admission guard](architecture/010-attempt-admission-guard.md) | Durable control revisions prevent a newer pause or competing attempt from being treated as resume permission. |
 | [Real request-pause evidence](../eval/experiments/2026-09-26-request-cancellation.md) | Busy checked-model slot, durable SRT/WebVTT pause, preserved checkpoints, resume and offline re-export. |
 | [Native pause and resume](../eval/experiments/2026-09-26-native-pause-resume.md) | One desktop process, both SQLite files, cancelled first job, child release, retained checkpoint and ready resumed result. |
 | [Native WebVTT pause and resume](../eval/experiments/2026-09-26-native-vtt-pause-resume.md) | Same-process strict-WebVTT recovery, exact first checkpoint, no partial artifact and ready separate result. |

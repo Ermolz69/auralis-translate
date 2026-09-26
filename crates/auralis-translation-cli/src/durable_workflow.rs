@@ -52,6 +52,12 @@ pub(crate) fn execute(
             "output already exists",
         ));
     }
+    let guard = db.capture_attempt_start(run.run_id)?;
+    if config.initial_attempt && guard.state() != RunState::Requested {
+        return Err(Box::new(
+            auralis_translation_sqlite::DbError::PauseRequested,
+        ));
+    }
     let endpoint = config
         .endpoint
         .to_str()
@@ -76,11 +82,7 @@ pub(crate) fn execute(
         &config.state_dir.join(DATABASE_FILE),
         SqliteConfig::default(),
     )?;
-    let attempt = if config.initial_attempt {
-        db.begin_initial_attempt(run, None)?
-    } else {
-        db.begin_attempt(run, None)?
-    };
+    let attempt = db.begin_guarded_attempt(run, None, guard)?;
     let output = match plan.execute_with_policy(&provider, db, reporter, &control_db, retry) {
         Ok(output) => output,
         Err(DocumentRunError::Paused(error)) => {

@@ -1,3 +1,4 @@
+mod attempt_start_guard;
 mod checkpoint_store;
 mod config;
 mod connection;
@@ -7,6 +8,7 @@ mod migrations;
 mod repositories;
 mod specs;
 
+pub use attempt_start_guard::AttemptStartGuard;
 pub use config::SqliteConfig;
 pub use connection::TranslateDb;
 pub use error::DbError;

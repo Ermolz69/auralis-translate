@@ -20,7 +20,7 @@ impl fmt::Display for DbError {
             }
             Self::InvalidSpec(reason) => write!(f, "invalid Translate record: {reason}"),
             Self::Conflict(reason) => write!(f, "Translate record conflict: {reason}"),
-            Self::PauseRequested => write!(f, "pause requested before result commit"),
+            Self::PauseRequested => write!(f, "pause requested"),
             Self::CorruptRecord(reason) => write!(f, "corrupt Translate record: {reason}"),
             Self::Verification(reason) => write!(f, "result verification failed: {reason}"),
         }

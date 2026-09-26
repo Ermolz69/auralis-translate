@@ -1,6 +1,10 @@
 version: "3"
 
 tasks:
+  test:admission:
+    desc: Verify stale start rejection, repeated pause, competing attempts and v4 migration
+    cmds:
+      - cargo test --offline -p auralis-translation-sqlite --test attempt_admission --test migrations
   test:cli:protocol:
     desc: Verify machine JSON input/output, durable progress, review exit, interruption and recovery
     cmds:

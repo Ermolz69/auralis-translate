@@ -1,22 +1,27 @@
-use crate::{AttemptId, DbError, RunStop};
+use crate::{AttemptId, AttemptStartGuard, DbError, RunStop};
 use auralis_translation::{RunId, RunState};
-use rusqlite::{Connection, OptionalExtension, params};
+use rusqlite::{Connection, OptionalExtension, TransactionBehavior, params};
 
 pub(crate) fn begin(
     connection: &mut Connection,
     run_id: RunId,
     host_job_id: Option<&str>,
     initial_only: bool,
+    guard: Option<AttemptStartGuard>,
 ) -> Result<AttemptId, DbError> {
     if host_job_id.is_some_and(str::is_empty) {
         return Err(DbError::InvalidSpec("empty host job ID"));
     }
-    let transaction = connection.transaction()?;
+    let transaction = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
+    if let Some(guard) = guard {
+        super::attempt_admission::check(&transaction, guard)?;
+    }
     let changed = transaction.execute(
-        "UPDATE runs SET state = 'running', pause_requested = 0, updated_at = unixepoch()
+        "UPDATE runs SET state = 'running', pause_requested = 0, control_revision = control_revision + 1, updated_at = unixepoch()
          WHERE run_id = ?1 AND ((?2 = 1 AND state = 'requested')
-                               OR (?2 = 0 AND state IN ('requested', 'paused', 'failed')))",
-        params![run_id.to_string(), initial_only],
+                               OR (?2 = 0 AND state IN ('requested', 'paused', 'failed')))
+          AND control_revision < ?3",
+        params![run_id.to_string(), initial_only, i64::MAX],
     )?;
     if changed != 1 {
         return Err(DbError::Conflict("run is not ready for a new attempt"));
@@ -132,11 +137,11 @@ fn recover_interrupted_inner(
 
 pub(crate) fn request_pause(connection: &Connection, run_id: RunId) -> Result<(), DbError> {
     let changed = connection.execute(
-        "UPDATE runs SET state = CASE WHEN state = 'requested' THEN 'paused' ELSE state END,
+        "UPDATE runs SET state = CASE WHEN state IN ('requested', 'failed') THEN 'paused' ELSE state END,
                 pause_requested = CASE WHEN state = 'running' THEN 1 ELSE 0 END,
-                updated_at = unixepoch()
-         WHERE run_id = ?1 AND state IN ('requested', 'running', 'paused')",
-        [run_id.to_string()],
+                control_revision = control_revision + 1, updated_at = unixepoch()
+         WHERE run_id = ?1 AND state IN ('requested', 'running', 'paused', 'failed') AND control_revision < ?2",
+        params![run_id.to_string(), i64::MAX],
     )?;
     if changed != 1 {
         return Err(DbError::Conflict("run cannot be paused"));

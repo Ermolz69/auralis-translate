@@ -1,3 +1,4 @@
+pub(crate) mod attempt_admission;
 pub(crate) mod attempt_repository;
 pub(crate) mod checkpoint_repository;
 pub(crate) mod edit_commit;

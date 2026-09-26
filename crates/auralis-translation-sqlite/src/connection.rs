@@ -1,10 +1,10 @@
 use crate::repositories::{
-    attempt_repository, checkpoint_repository, edit_commit, edit_selection, project_cleanup,
-    result_repository, run_repository, segment_repository, translation_repository,
+    attempt_admission, attempt_repository, checkpoint_repository, edit_commit, edit_selection,
+    project_cleanup, result_repository, run_repository, segment_repository, translation_repository,
 };
 use crate::{
-    AttemptId, CheckpointSpec, DbError, EditSelection, EditSpec, ResultRecord, ResultSpec,
-    RunDiagnostic, RunSpec, RunStop, SegmentSpec, SqliteConfig, TranslationSpec,
+    AttemptId, AttemptStartGuard, CheckpointSpec, DbError, EditSelection, EditSpec, ResultRecord,
+    ResultSpec, RunDiagnostic, RunSpec, RunStop, SegmentSpec, SqliteConfig, TranslationSpec,
 };
 use crate::{diagnostic_codec, migrations};
 use auralis_translation::{ResultId, RunControl, RunId, RunState, TranslationId, VerifiedRenderer};
@@ -95,7 +95,7 @@ impl TranslateDb {
         host_job_id: Option<&str>,
     ) -> Result<AttemptId, DbError> {
         self.ensure_run(run)?;
-        attempt_repository::begin(&mut self.connection, run.run_id, host_job_id, false)
+        attempt_repository::begin(&mut self.connection, run.run_id, host_job_id, false, None)
     }
 
     pub fn begin_initial_attempt(
@@ -104,7 +104,30 @@ impl TranslateDb {
         host_job_id: Option<&str>,
     ) -> Result<AttemptId, DbError> {
         self.ensure_run(run)?;
-        attempt_repository::begin(&mut self.connection, run.run_id, host_job_id, true)
+        attempt_repository::begin(&mut self.connection, run.run_id, host_job_id, true, None)
+    }
+
+    pub fn capture_attempt_start(&self, run_id: RunId) -> Result<AttemptStartGuard, DbError> {
+        attempt_admission::capture(&self.connection, run_id)
+    }
+
+    pub fn begin_guarded_attempt(
+        &mut self,
+        run: &RunSpec,
+        host_job_id: Option<&str>,
+        guard: AttemptStartGuard,
+    ) -> Result<AttemptId, DbError> {
+        if guard.run_id() != run.run_id {
+            return Err(DbError::Conflict("admission guard belongs to another run"));
+        }
+        self.ensure_run(run)?;
+        attempt_repository::begin(
+            &mut self.connection,
+            run.run_id,
+            host_job_id,
+            false,
+            Some(guard),
+        )
     }
 
     pub fn stop_attempt(

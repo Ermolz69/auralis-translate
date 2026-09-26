@@ -1,7 +1,8 @@
 use crate::DbError;
 use rusqlite::Connection;
 
-pub const SCHEMA_VERSION: u32 = 4;
+pub const SCHEMA_VERSION: u32 = 5;
+const CONTROL_REVISION_SCHEMA: &str = include_str!("../migrations/0005_control_revision.sql");
 const INITIAL_SCHEMA: &str = include_str!("../migrations/0001_initial.sql");
 const PAUSE_REQUEST_SCHEMA: &str = include_str!("../migrations/0002_pause_request.sql");
 const RESULT_EDIT_SELECTIONS_SCHEMA: &str =
@@ -29,6 +30,9 @@ pub(crate) fn apply(connection: &mut Connection) -> Result<(), DbError> {
     }
     if current < 4 {
         transaction.execute_batch(DELETED_TRANSLATIONS_SCHEMA)?;
+    }
+    if current < 5 {
+        transaction.execute_batch(CONTROL_REVISION_SCHEMA)?;
     }
     transaction.pragma_update(None, "user_version", SCHEMA_VERSION)?;
     transaction.commit()?;
