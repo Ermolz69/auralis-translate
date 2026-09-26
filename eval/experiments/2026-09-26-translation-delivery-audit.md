@@ -24,4 +24,4 @@ The owner asked to keep publication local for now. GitHub authentication is avai
 
 ## Remaining evidence
 
-Run the native materialized-bundle policy against a newly built installer, exercise setup and explicit upstream installation on a clean target Windows machine, and verify offline translation, notices, disk use, and recovery there. Preserve separate CPU/GPU platform claims. The earlier development-machine package and frontend checks do not close G9 or establish translation quality.
+A later [fresh Windows MSI audit](2026-09-26-windows-msi-content.md) now passes materialized payload and application-identity checks. Execute [clean target Windows setup](../../docs/evaluation/006-clean-windows-installation.md), explicit upstream model installation, offline translation, notices, disk use and recovery. Verify the intended signed package formats and preserve separate CPU/GPU platform claims. Development-machine content checks do not close G9 or establish translation quality.

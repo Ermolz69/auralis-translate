@@ -16,6 +16,7 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 | [Open data and language evaluation](evaluation/001-open-data-and-language-gates.md) | Candidate licensed corpora, provenance requirements, frozen splits, bilingual review, and S8/S9 language evidence. |
 | [Local profile comparison](evaluation/004-model-profile-comparison.md) | Frozen development inputs, decoding/prompt variants, same-file controls, failure retention and unreviewed comparison reports. |
 | [Long-file recovery probe](evaluation/005-long-file-recovery.md) | Optimized CLI, large synthetic SRT/WebVTT inputs, exact checkpoint recovery, full-file checks and approximate resource sampling. |
+| [Clean Windows installation protocol](evaluation/006-clean-windows-installation.md) | Unseeded model setup, interrupted download, offline translation, installer identity and the remaining clean-machine gate. |
 | [FLORES-200 acquisition](../eval/experiments/2026-09-25-flores200-acquisition.md) | Locally cached, hash-pinned auxiliary Chinese/Japanese-to-Russian sentence corpus; no subtitle release claim. |
 | [FLORES-200 provider smoke](../eval/experiments/2026-09-25-flores200-provider-smoke.md) | Checked local model output for one Chinese and one Japanese sentence, with unresolved source/reference divergence. |
 | [Native result-gap recovery](../eval/experiments/2026-09-25-native-result-gap.md) | Killed-desktop evidence for a validated Translate result committed before Auralis publication, followed by ready-artifact recovery. |
@@ -49,6 +50,8 @@ Recent evidence: [pinned package repair](../eval/experiments/2026-09-26-package-
 A [three-profile real comparison](../eval/experiments/2026-09-26-profile-comparison.md) now tests sampling, greedy decoding and the existing JSON wrapper on the same development rows. All file checks passed; visible grammar and terminology defects remain, and no winner or production profile was selected.
 
 A [1024-cue long-file recovery investigation](../eval/experiments/2026-09-26-long-file-recovery.md) now passes optimized CLI interruption/resume for SRT and WebVTT, including exact saved checkpoints and offline re-export. Four real format runs compare an omitted RAM-cache argument with explicit zero; sampled model working set fell from about 5.7 GB to 1.54 GB on the observed machine. The managed cache policy is explicit; the repeated synthetic text does not supply linguistic release evidence.
+
+A [fresh Windows MSI audit](../eval/experiments/2026-09-26-windows-msi-content.md) now verifies actual extracted application/media/license files and exclusion of weights/test data. Package application identity accounts for Tauri's temporary package marker and captures every post-signing byte. The [clean Windows protocol](evaluation/006-clean-windows-installation.md) remains unexecuted; installer content alone does not close G9.
 
 | Topic | Decision |
 | --- | --- |

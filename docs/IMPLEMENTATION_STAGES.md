@@ -90,6 +90,8 @@ The [local file/reference comparison](../eval/experiments/2026-09-26-flores-file
 
 The [long-file recovery record](../eval/experiments/2026-09-26-long-file-recovery.md) extends S4/S6/S8 technical evidence to 1024 cues and 1280 text slots per format in an optimized CLI. SRT and WebVTT both preserve 16 saved blocks after forced termination and finish 128/128 blocks on the same run, with unchanged originals, protected bytes and offline re-export. Baseline and explicit-zero cache invocations pass; the [managed memory policy](architecture/008-managed-runtime-memory.md) records the resource correction. Representative language review, cancellation races, player export and clean-machine gates remain open.
 
+The [materialized Windows MSI record](../eval/experiments/2026-09-26-windows-msi-content.md) adds S6/S8 installer-content evidence, including current source/package application identity and exclusion of weights/test files. The package is locally unsigned; the [clean Windows protocol](evaluation/006-clean-windows-installation.md), explicit unseeded model setup, offline translation and signature/platform checks still gate release readiness.
+
 | Original stages | This roadmap |
 | --- | --- |
 | 00–02: boundaries, corpus, contracts | S0; corpus work continues through S5. |
