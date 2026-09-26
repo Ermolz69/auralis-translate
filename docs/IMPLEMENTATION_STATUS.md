@@ -1,5 +1,13 @@
 # Implementation status and evidence
 
+Latest desktop status slice: [host execution status](architecture/012-host-execution-status.md)
+adds the exact run's nullable active host-job identity to the desktop projection.
+Preparation persists after acceptance and panel remount, with Pause available
+and another Start/Continue disabled. Core Translate phases, checkpoints and CLI
+output remain unchanged. [The evidence record](../eval/experiments/2026-09-26-host-execution-status.md)
+distinguishes supporting checks and native observations. Polling still supplies
+updates; event-driven progress is separate work.
+
 Latest preparation slice: [cooperative control](architecture/011-preparation-cancellation.md)
 now reaches hashing, runtime package verification and readiness HTTP reads.
 [Controlled CLI, application and UI evidence](../eval/experiments/2026-09-26-preparation-cancellation.md)

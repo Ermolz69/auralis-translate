@@ -44,8 +44,19 @@ during fresh resume. The [post-child case](../eval/experiments/2026-09-26-native
 already records a 310 ms acknowledgement, zero job/attempt/result, model absence
 and fresh resume. Retain the durable guard at the final transaction boundary and
 complete same-process command/deletion/publication interleavings. The UI also needs
-to represent the worker's post-admission preflight, which can currently show the
-retained paused phase after the start command accepts its job.
+event-driven committed progress. The [host status projection](architecture/012-host-execution-status.md)
+now represents accepted worker preflight while Translate retains its paused phase;
+[its evidence](../eval/experiments/2026-09-26-host-execution-status.md) records the
+scope of restored controls.
+
+Fix and deterministically test cleanup-error precedence at admission completion.
+In Auralis `admit_runtime.rs`, the acquisition-completion branch performs its final
+durable guard check before inspecting the acquired error. A simultaneous changed
+guard or control-read failure can mask `CleanupFailed`; the polling-cancellation
+branch already preserves that error. This is an open code-review finding, not a
+reproduced Windows process-cleanup failure. A public-use-case regression must show
+that a typed cleanup failure remains visible as recovery-required after a newer
+pause, without weakening the final admission guard or creating an attempt.
 
 For the language gate, follow [the provenance/review protocol](evaluation/001-open-data-and-language-gates.md)
 and [the native-speech candidate admission steps](evaluation/003-native-speech-candidates.md).

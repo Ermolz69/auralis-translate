@@ -111,3 +111,8 @@ The panel currently labels the pending start command as preparation. After that
 command accepts the host job, the worker's checked preflight can still leave the
 retained run displayed as paused until attempt creation. A coherent progress
 view for that interval remains part of the project UI/event work.
+
+Follow-up: [host execution status](2026-09-26-host-execution-status.md) addresses
+that accepted-worker display interval with a nullable host-job identity and a
+restored preparation view. This historical record retains the original observed
+gap; the follow-up records its own implementation and verification scope.

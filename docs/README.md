@@ -59,6 +59,11 @@ is implemented with [controlled evidence](../eval/experiments/2026-09-26-prepara
 now passes through the actual panel, zero admitted records, observed child release
 and fresh resume. Native initial-hash cancellation and command races remain open.
 
+The [host execution status contract](architecture/012-host-execution-status.md)
+retains preparation after the scheduler accepts a job while the worker verifies
+the runtime. [Supporting and native evidence](../eval/experiments/2026-09-26-host-execution-status.md)
+records the exact tested implementation; event-driven progress remains open.
+
 Recent evidence: [pinned package repair](../eval/experiments/2026-09-26-package-repair.md) and a [ten-sentence real file/reference comparison](../eval/experiments/2026-09-26-flores-file-comparison.md). The latter verifies the transport pipeline with synthetic timings; its local side-by-side report remains unreviewed and has concrete quality-triage items. Neither record closes the language release gates.
 
 A [three-profile real comparison](../eval/experiments/2026-09-26-profile-comparison.md) now tests sampling, greedy decoding and the existing JSON wrapper on the same development rows. All file checks passed; visible grammar and terminology defects remain, and no winner or production profile was selected.
