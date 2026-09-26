@@ -25,7 +25,9 @@ Pause also accepts a failed run, moving it to paused while retaining its previou
 attempt diagnostics, so preparation of a failed-run retry can be stopped too.
 
 Auralis checks the guard again after runtime admission, before creating a host job,
-and requires the original run ID at job creation. A pause after job creation is
+even when acquisition returns an error. A newer pause takes precedence; a failure
+without a control change retains its runtime error. Job creation requires the
+original run ID. A pause after job creation is
 checked atomically before inference, closes the host job as cancelled and creates
 no Translate attempt/result. The project keeps its active run and saved blocks.
 The standalone CLI captures a guard before checked-server preflight too.
