@@ -39,8 +39,8 @@ substitute another synthetic translation run for either gate.
 ## Next engineering slice
 
 Extend the [cooperative preparation control](architecture/011-preparation-cancellation.md)
-evidence to native UI pause during observed initial hashing and repeated pause
-during fresh resume. The [post-child case](../eval/experiments/2026-09-26-native-preparation-pause.md)
+evidence to native UI pause during observed initial hashing and additional repeated
+or simultaneous commands. The [post-child case](../eval/experiments/2026-09-26-native-preparation-pause.md)
 already records a 310 ms acknowledgement, zero job/attempt/result, model absence
 and fresh resume. Retain the durable guard at the final transaction boundary and
 complete same-process command/deletion/publication interleavings. The UI also needs
@@ -48,6 +48,20 @@ event-driven committed progress. The [host status projection](architecture/012-h
 now represents accepted worker preflight while Translate retains its paused phase;
 [its evidence](../eval/experiments/2026-09-26-host-execution-status.md) records the
 scope of restored controls.
+
+The [accepted-worker native pause](../eval/experiments/2026-09-26-native-worker-preflight-pause.md)
+now passes after the first admission pause and panel remount on the same run:
+one host job is cancelled before any Translate attempt/result, its child is
+absent at verification, and another fresh job completes one attempt. The final
+213 ms admission and 3056 ms worker acknowledgments are individual debug/polling
+observations, not a general SLA. That named repeated preparation sequence is
+verified; initial-hash and concurrent/deletion/publication interleavings remain.
+
+For CLI lifecycle work, reuse the existing human-facing `fetch-release`,
+`fetch-asset`, `install-offline` and `install-online` operations. Their structured
+request/output and typed package/download failure integration remain outside
+machine protocol v1; implement those boundaries before claiming complete machine
+installation support.
 
 The [admission-completion regression](../eval/experiments/2026-09-26-admission-completion-cleanup.md)
 now covers the previously found cleanup-error masking branch. Final guard reads

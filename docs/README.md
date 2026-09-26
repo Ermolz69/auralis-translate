@@ -68,6 +68,11 @@ The [admission completion regression](../eval/experiments/2026-09-26-admission-c
 fixes the cleanup-error masking branch while retaining final durable guard checks.
 Its controlled error injection is separate from real process-cleanup evidence.
 
+The [native accepted-worker pause record](../eval/experiments/2026-09-26-native-worker-preflight-pause.md)
+records actual admission and worker-preflight Pause clicks, cancelled host work
+without a Translate attempt, and fresh resume on the same project-linked run.
+Per-invocation identities and verification scope remain in that record.
+
 Recent evidence: [pinned package repair](../eval/experiments/2026-09-26-package-repair.md) and a [ten-sentence real file/reference comparison](../eval/experiments/2026-09-26-flores-file-comparison.md). The latter verifies the transport pipeline with synthetic timings; its local side-by-side report remains unreviewed and has concrete quality-triage items. Neither record closes the language release gates.
 
 A [three-profile real comparison](../eval/experiments/2026-09-26-profile-comparison.md) now tests sampling, greedy decoding and the existing JSON wrapper on the same development rows. All file checks passed; visible grammar and terminology defects remain, and no winner or production profile was selected.

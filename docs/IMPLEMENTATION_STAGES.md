@@ -120,6 +120,14 @@ two real SQLite files and leaves no admitted records. Ordinary failures retain
 guard precedence. Actual Windows cleanup failure and other interleavings remain
 separate evidence requirements.
 
+S4/S7 now have a [native accepted-worker preflight pause](../eval/experiments/2026-09-26-native-worker-preflight-pause.md)
+after an earlier admission pause on the same run. The final rebuilt invocation
+verifies actual controls after remount, one cancelled host job with no Translate
+attempt or result, advanced guard revision and child absence, then fresh resume
+through one completed job/closed attempt to a separate ready artifact. The final
+worker UI acknowledgment is 3056 ms and includes polling. This closes that named
+preflight boundary, not initial-hash cancellation, concurrent commands or S7 as a whole.
+
 S7 now has a [two-database publication-gap test](../eval/experiments/2026-09-25-result-gap-recovery.md): when a worker dies after Translate result commit but before Auralis publication, startup stages the latest result only if that exact result has no publication; an interrupted pending artifact is finalized later by the outbox. A two-database edit test also recovers a committed manual revision when an older model result is pending or a previous revision is already selected. Auralis schema v9 orders staged results by Translate revision, so a pending newer edit prevents an earlier model result from becoming the project selection. The storage regression checks both ready artifacts, an older direct selection attempt, and failed-newer behavior. Native Tauri checkpoint crash/restart, [result-commit-gap recovery](../eval/experiments/2026-09-25-native-result-gap.md), and [single-owner storage](../eval/experiments/2026-09-25-native-single-owner.md) have passed. Same-process command races remain open.
 
 The S7 desktop has a local file entry point for `.srt` and `.vtt`: strict inspection precedes staging; an outbox finalizes the verified managed copy; the project can freeze a run only after that copy is ready. An optional installed runtime config enables a managed local-model start command and start/resume/pause controls. The UI polls committed progress and pending pause state. The import path has a two-database test; managed admission has failure tests, and an opt-in checked-model run passes through both real SQLite files and output finalization. A second checked-model test kills the worker after a committed checkpoint, releases its model process and resumes the same run to a ready artifact. Native Tauri invocation passes for one synthetic SRT; a two-cue native process-kill test passes checkpoint-preserving restart and publication. Shared-scheduler attachment passed a native run and checkpoint-preserving crash/restart test; one native CPU package install and translation now pass, while clean-machine and release evidence remain open.

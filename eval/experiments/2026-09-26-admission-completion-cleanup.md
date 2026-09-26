@@ -80,3 +80,8 @@ evidence for its prior tested binary; it is not relabelled as a fresh native run
 for this correction. Initial-hash native interruption, actual Pause during worker
 preflight, repeated preparation pause and concurrent command/deletion/publication
 interleavings remain open.
+
+Follow-up: [the native worker-preflight scenario](2026-09-26-native-worker-preflight-pause.md)
+now verifies that actual Pause boundary and a named repeated preparation sequence.
+It does not inject `CleanupFailed` or reproduce Windows kill/reap failure; this
+controlled completion-error record retains its original scope.

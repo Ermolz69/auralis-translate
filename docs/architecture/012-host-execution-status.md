@@ -61,3 +61,8 @@ the active job ID.
 - A native checked-model run observes the actual preparation label and controls
   while an accepted host job exists but no Translate attempt has started, then
   completes the same run without duplicate attempts or changed originals.
+
+The [native worker-preflight pause record](../../eval/experiments/2026-09-26-native-worker-preflight-pause.md)
+additionally exercises the actual Pause button after panel remount at that
+accepted-worker boundary. It records exact paused host/Translate counts and
+distinct cancellation/completion identities, not just control visibility.

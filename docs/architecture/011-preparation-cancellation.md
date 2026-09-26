@@ -1,6 +1,6 @@
 # Cooperative preparation cancellation
 
-Status: implementation, controlled checks and native post-child preparation pause,
+Status: implementation, controlled checks, native post-child preparation and accepted-worker pause,
 26 September 2026. Initial-hash native interruption and command races remain open.
 
 The [durable admission guard](010-attempt-admission-guard.md) prevents stale starts.
@@ -64,3 +64,10 @@ A [native post-child case](../../eval/experiments/2026-09-26-native-preparation-
 observes actual controls, one 310 ms UI acknowledgement, zero jobs/attempts/results,
 child absence at paused verification and fresh resume. It does not establish a
 general latency SLA or prove native interruption during the initial hash.
+
+The [accepted-worker native scenario](../../eval/experiments/2026-09-26-native-worker-preflight-pause.md)
+extends observation to an admitted host job whose worker is still checking the
+model before atomic Translate attempt creation. The actual Pause control must
+cancel that job, close its association, advance the guard revision and release
+its child without creating a checkpoint or result. The same run then resumes
+through a distinct host job; invocation evidence is recorded separately.

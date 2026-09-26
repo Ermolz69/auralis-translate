@@ -102,3 +102,8 @@ See [remaining engineering work](../../docs/REMAINING_WORK.md).
 Follow-up: the [admission-completion regression](2026-09-26-admission-completion-cleanup.md)
 reproduces and corrects the masking branch with its own controlled evidence. This
 record retains the original finding and native implementation scope.
+
+Further follow-up: [native accepted-worker preflight pause](2026-09-26-native-worker-preflight-pause.md)
+now clicks Pause at the previously visibility-only boundary, cancels one host job
+without a Translate attempt/result, releases its model and resumes the same run
+through a distinct completed job. Its final rebuilt invocation is recorded there.

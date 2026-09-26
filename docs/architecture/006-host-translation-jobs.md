@@ -31,7 +31,8 @@ sequenceDiagram
     Host->>Queue: Reserve job ID and attach gated worker
     Queue-->>UI: Accepted job ID and run ID
     Queue->>Work: Release worker for execution
-    Work->>DB: Open attempt with host job ID
+    Work->>Model: Recheck checked runtime/model under start guard
+    Work->>DB: Recheck guard; atomically open attempt with host job ID
     Work->>Model: Use the verified runtime lease
     loop Missing blocks
         Work->>Model: Translate bounded block
@@ -72,6 +73,13 @@ At desktop startup, the application data-root lease establishes that the prior A
 Publication is a separate transition. A job can finish with a validated result while output staging fails; the link then retains the run/result for retry. After host-job recovery, Auralis startup now scans active validated runs and stages a verified publication only when no publication exists for that run. An existing pending or edited publication is left in place; a failed publication remains visible for attention rather than being silently replaced. The outbox finalizes pending artifacts. The project selects `result_id` only after the translated copy reaches the ready managed-artifact state. A newer run does not erase the previous selected result. Quality warnings set `needs_review` on the attached result and remain available in Translate diagnostics.
 
 ## Remaining S7 verification before release
+
+The [native accepted-worker pause record](../../eval/experiments/2026-09-26-native-worker-preflight-pause.md)
+adds the boundary between host job acceptance/start and Translate attempt creation.
+Its observer distinguishes one cancelled host job with no Translate attempt from
+the different completed host job used for final resume, while retaining the same
+project run and immutable source. Refer to that record for actual invocation scope;
+other command, deletion and publication interleavings remain required.
 
 1. Exercise job creation, resource reservation, worker attachment, progress, terminalization, and publication with a mock local model server across the two real SQLite files. Current tests cover caller-driven execution, persisted checkpoint progress, resource rejection before job creation, managed runtime preflight rejection, and scheduled failure cleanup. The native checked-model path now exercises job attachment and completion. An opt-in checked-model test covers the managed child, both real SQLite files, output finalization, and the immutable original. The separate native E2E covers desktop invocation of a one-cue translation.
 2. The mock-based worker-subprocess test proves committed progress survives and a new host attempt can begin on the same run; the checked-model worker-kill test proves the managed child exits and the missing block completes. A [validated-result gap test](../../eval/experiments/2026-09-25-result-gap-recovery.md) kills a mock-model worker after Translate result commit, automatically stages the missing publication on restart, and finalizes it after a second database reopening. The native Tauri crash/restart test now verifies the committed-checkpoint boundary and Windows Job Object child cleanup; a [native result-commit gap test](../../eval/experiments/2026-09-25-native-result-gap.md) now kills the desktop after the validated result and completed host job but before Auralis publication, then verifies ready-artifact recovery on restart.

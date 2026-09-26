@@ -1,5 +1,15 @@
 # Implementation status and evidence
 
+Latest native worker-preflight slice: [actual Pause and fresh resume](../eval/experiments/2026-09-26-native-worker-preflight-pause.md)
+pass through the remounted panel after host acceptance but before Translate
+attempt creation. The final repeat acknowledges initial admission pause in 213 ms
+with zero jobs/attempts, then worker pause in 3056 ms with one cancelled host job
+and still no Translate attempt/result. Fresh resume completes the same run through
+a distinct host job and one closed attempt, preserving the original and publishing
+a ready separate output. Both paused child checks and final release pass.
+These individual debug/polling observations leave initial-hash interruption,
+concurrent commands, language quality and clean installation open.
+
 Latest admission cleanup correction: the
 [completion regression](../eval/experiments/2026-09-26-admission-completion-cleanup.md)
 first reproduces masking of `CleanupFailed`, then verifies its precedence over
