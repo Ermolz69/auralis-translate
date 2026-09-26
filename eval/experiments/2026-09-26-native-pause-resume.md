@@ -96,6 +96,7 @@ It covers both cancellation completion and ordinary model failure; formatting an
 Clippy checks also apply to this correction. The earlier native run did not
 observe the internal runtime completion classification.
 
-Further simultaneous start/pause/resume/deletion interleavings, native WebVTT pause,
-pre-attempt admission cancellation, clean installation and language gates remain
-separate work. Existing process-kill tests cover their recorded crash boundaries.
+This SRT record precedes the separately completed [native WebVTT pause/resume](2026-09-26-native-vtt-pause-resume.md).
+Further simultaneous start/pause/resume/deletion interleavings, pre-attempt admission
+cancellation, clean installation and language gates remain separate work. Existing
+process-kill tests cover their recorded crash boundaries.

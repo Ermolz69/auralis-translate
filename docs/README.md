@@ -45,6 +45,7 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 | [Active request cancellation](architecture/009-request-cancellation.md) | Control-aware provider, bounded response reads, request interruption and durable pause acknowledgment. |
 | [Real request-pause evidence](../eval/experiments/2026-09-26-request-cancellation.md) | Busy checked-model slot, durable SRT/WebVTT pause, preserved checkpoints, resume and offline re-export. |
 | [Native pause and resume](../eval/experiments/2026-09-26-native-pause-resume.md) | One desktop process, both SQLite files, cancelled first job, child release, retained checkpoint and ready resumed result. |
+| [Native WebVTT pause and resume](../eval/experiments/2026-09-26-native-vtt-pause-resume.md) | Same-process strict-WebVTT recovery, exact first checkpoint, no partial artifact and ready separate result. |
 | [Glossary input v1](reference/glossary-v1.md) | Experimental terminology JSON, target scope, frozen revision, and resume behavior. |
 | [Strict plain-WebVTT subset v1](reference/webvtt-subset-v1.md) | Separately verified text extraction, durable CLI copy and recovery contract; release validation remains open. |
 

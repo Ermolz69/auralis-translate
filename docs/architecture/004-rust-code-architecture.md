@@ -29,7 +29,7 @@ flowchart BT
 
 The llama.cpp adapter exports model-file hashing and checked-server preflight for both the CLI and Auralis composition. The CLI no longer owns a separate copy of this verification. A checked profile compares the reported model alias, runtime build, minimum context, local model-file size, and SHA-256 before an attempt; an older experimental profile without runtime identity remains explicitly unchecked for saved-run compatibility. This preflight does not attest the server's in-memory weights or manage its process.
 
-The same adapter now has separate `release_manifest/` and `offline_install/` modules. The manifest module validates versioned upstream asset identity against a checked profile; the installer module verifies local files, extracts a constrained archive, and stages an experimental package. The CLI only parses installation arguments and calls the installer. Auralis will own application-data placement and backend selection. Keep package operations out of the core/domain crates; see [the installation boundary](007-model-installation.md).
+The same adapter now has separate `release_manifest/` and `offline_install/` modules. The manifest module validates versioned upstream asset identity against a checked profile; the installer module verifies local files, extracts a constrained archive, and stages an experimental package. The CLI only parses installation arguments and calls the installer. Auralis owns application-data placement and backend selection through its experimental package workflow. Keep package operations out of the core/domain crates; see [the installation boundary](007-model-installation.md).
 
 ## Suggested layout
 

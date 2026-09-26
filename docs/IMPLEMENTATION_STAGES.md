@@ -89,7 +89,9 @@ Real [CLI request interruption](../eval/experiments/2026-09-26-request-cancellat
 now observes busy checked-model slots for SRT/WebVTT, then preserves checkpoints
 through pause/resume and identical offline export. A [native SRT pause/resume](../eval/experiments/2026-09-26-native-pause-resume.md)
 also verifies both databases, first-job cancellation, child release, and a second
-attempt on the same run in one desktop process. Broader same-process command
+attempt on the same run in one desktop process. The [native WebVTT pause/resume](../eval/experiments/2026-09-26-native-vtt-pause-resume.md)
+now passes the corresponding scenario, also requiring no partial artifact at pause
+and matching the original's initial digest after completion. Broader same-process command
 interleavings and cancellation during pre-attempt admission remain open.
 
 S7 now has a [two-database publication-gap test](../eval/experiments/2026-09-25-result-gap-recovery.md): when a worker dies after Translate result commit but before Auralis publication, startup stages the latest result only if that exact result has no publication; an interrupted pending artifact is finalized later by the outbox. A two-database edit test also recovers a committed manual revision when an older model result is pending or a previous revision is already selected. Auralis schema v9 orders staged results by Translate revision, so a pending newer edit prevents an earlier model result from becoming the project selection. The storage regression checks both ready artifacts, an older direct selection attempt, and failed-newer behavior. Native Tauri checkpoint crash/restart, [result-commit-gap recovery](../eval/experiments/2026-09-25-native-result-gap.md), and [single-owner storage](../eval/experiments/2026-09-25-native-single-owner.md) have passed. Same-process command races remain open.
