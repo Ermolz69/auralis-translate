@@ -1,5 +1,16 @@
 # Implementation status and evidence
 
+Latest review slice: [ready result history](../eval/experiments/2026-09-26-result-history-selection.md)
+now separates historical preview from explicit project attachment. Six real-SQLite
+tests cover cursor pages, ownership/readiness, active-run preservation and
+concurrent choices/publication. The extended two-database test rejects corrupt or
+missing source/output files and retains selection through recovery. Eight review
+and editor component tests and five history API/contract tests pass. A native
+checked-model run saves an edit through actual controls, previews and selects the
+model version, then restarts and renders the same attachment with unchanged output
+hashes and link revision 4. Older-base branch edits, richer review/diagnostic
+interactions, additional races and language/delivery gates remain open.
+
 Latest UI progress slice: [committed lifecycle events](../eval/experiments/2026-09-26-committed-progress-events.md)
 now uses Auralis's existing bounded job bridge after host storage commits.
 The panel refreshes project links/status on translation jobs, invalidation and
@@ -8,7 +19,8 @@ and three-second recovery polling. Two real-SQLite tests, nine observer/API test
 and ten component tests pass. A native checked-model run also passes actual
 Start, typed created/started/committed/completed events, one ready panel notification,
 separate output and sandbox cleanup. Its terminal host revision is 5 with 1/1
-saved blocks. Historical revision selection, richer preparation/diagnostic
+saved blocks. At that event slice historical revision selection was pending;
+the later history record above covers it. Richer preparation/diagnostic
 projections, command interleavings and release gates remain separate work.
 
 Latest same-process concurrency slice: [native parallel starts](../eval/experiments/2026-09-26-native-concurrent-starts.md)
@@ -260,7 +272,7 @@ These commands use `create_new` semantics: choose paths that do not exist. The d
 2. **S6 / S8: installation and delivery.** Execute the clean Windows installation protocol and subsequent offline use; exercise package upgrade, coexistence, removal and interrupted cleanup. Declare a measured OS/backend/hardware profile and repeat payload/signature audits for the intended release packages. The completed local unsigned MSI content check does not close this gate.
 3. **S4 / S7: cancellation and concurrency.** Add simultaneous same-process start/pause/resume/deletion/publication race evidence and actual process-cleanup failure. Checked-model CLI and native SRT/WebVTT pause/resume, initial-hash, post-child and accepted-worker preparation pause now pass. Retain committed checkpoints and project links across every supported interruption. Completed scenarios cover named boundaries, not every interleaving or power loss.
 4. **S6: standalone CLI.** Add richer typed provider failure reasons, CLI-owned runtime lifecycle and source/glossary orphan cleanup. JSON/JSONL now covers translation/control/export and all four separate-model acquisition/install commands; package failures have typed codes. Upgrades/removal and clean-machine behavior remain open.
-5. **S7: desktop workflow.** Add historical result selection and progress events, and verify the complete comparison/edit workflow with users. The currently selected result already has paged comparison and immutable manual edits.
+5. **S7: desktop workflow.** Extend the verified event/history flow to older-base branch edits, fuller review/diagnostic interactions and user validation. Selected and historical ready results have paged comparison; actual native latest-result edits, historical selection and reopening pass.
 6. **S1 / S8: formats and resources.** Expand strict SRT/WebVTT fixtures, fuzz parsers and verify exports in target players. Extend the completed synthetic long-file recovery record to varied real scenes and resource budgets with other Auralis workloads.
 7. **Repository delivery: owner deferred.** Publish the reviewed Translate repository and update GitHub submodule/CI cloning only after the owner resumes publication. Continue local commits and the pinned local submodule meanwhile.
 

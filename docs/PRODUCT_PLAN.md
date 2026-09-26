@@ -111,6 +111,13 @@ richer preparation and diagnostic projections require their own contracts and ev
 
 The user chooses an existing source file or project subtitle artifact, sees language and format limits, starts translation, can pause or resume, then compares original and Russian cues. A structurally valid but uncertain result is attached with Needs review. The user may edit segments, build a new result revision, select a result, and export it. A later TTS stage consumes the selected Russian text without rewriting the approved subtitle translation silently.
 
+The [ready history contract](architecture/014-result-history-selection.md) separates
+preview from project attachment. Explicit selection verifies the original and
+existing immutable output, uses an expected host-link revision, preserves an
+unfinished run and serializes with publication. Its [evidence](../eval/experiments/2026-09-26-result-history-selection.md)
+includes a native latest-result edit followed by historical selection and reopening.
+Editing an older base into a new branch remains a separate contract and gate.
+
 ## 14. Standalone CLI and delivery
 
 Separate-model acquisition and installation use the same machine boundary:
