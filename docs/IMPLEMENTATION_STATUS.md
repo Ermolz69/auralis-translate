@@ -1,13 +1,23 @@
 # Implementation status and evidence
 
-Latest historical desktop slice: [typed commands and review evidence](../eval/experiments/2026-09-26-historical-edit-desktop-contract.md)
+Latest native historical slice: [checked-model branch and reopening evidence](../eval/experiments/2026-09-27-native-historical-branch.md)
+passes actual controls and independent checks across both SQLite files and three
+immutable outputs. Editing the original version preserves its untouched second
+cue instead of a later correction. Explicit selection of revision 2 survives
+desktop termination/reopening with link revision 5, one inference attempt and two
+unchanged checkpoints. The probe found and fixed repeated-preview clearing;
+18 review component tests and the production frontend build pass. Manual-save
+journal/core/publication process-kill boundaries, the CLI branch interface and
+full S7/language/clean-install gates remain open.
+
+Earlier historical desktop slice: [typed commands and review evidence](../eval/experiments/2026-09-26-historical-edit-desktop-contract.md)
 records verified head/link observations, the explicit journaled save command and
 transactional publication/selection reads. Experimental controls freeze retry IDs
 and lines, discard obsolete contexts/callbacks and distinguish pending, attached
 and ready historical output outside comparison paging. Thirteen application,
-17 component and 23 API/contract regression tests pass. Actual native older-base
-save/reopen and manual process-kill boundaries, the CLI branch interface and the
-full S7/language/clean-install gates remain open.
+17 component and 23 API/contract regression tests passed at that slice. The later
+native record above supplies completed older-base save/reopen evidence; manual
+process-kill boundaries and the remaining delivery gates are still open.
 
 Latest historical application slice: [save/publication/recovery evidence](../eval/experiments/2026-09-26-historical-edit-application.md)
 records journal admission before actual Translate branch commits, complete request
@@ -16,7 +26,8 @@ managed outbox. Production startup now receives the journal and scans its pages
 independently of selected/active runs. Five two-database/file tests cover divergent
 SRT/WebVTT bases, another unfinished run, reopening, concurrent head guards,
 corrupt metadata and more than one recovery page. The desktop record above adds
-supporting typed delivery; CLI and real native branch/crash evidence remain open.
+supporting typed delivery; the later native record verifies completed branch
+save/reopen. CLI delivery and manual-save crash boundaries remain open.
 
 Latest historical-edit foundation: [engine and host journal evidence](../eval/experiments/2026-09-26-historical-edit-foundation.md)
 records immutable older-base SRT/WebVTT edits, explicit observed-head conflicts,
@@ -25,7 +36,8 @@ project-owned journal with idempotent retries and bounded recovery cursor pages.
 The engine workspace checks and host library/journal regressions pass. Application
 composition and startup replay were pending at that foundation; the later
 application and desktop records above cover their supporting implementation.
-CLI and native branch save/reopen remain pending; this does not close S7.
+The later native record covers completed branch save/reopen. CLI delivery and
+manual-save interruption checks remain pending; this does not close S7.
 
 Latest review slice: [ready result history](../eval/experiments/2026-09-26-result-history-selection.md)
 now separates historical preview from explicit project attachment. Six real-SQLite
@@ -35,8 +47,9 @@ missing source/output files and retains selection through recovery. Eight review
 and editor component tests and five history API/contract tests pass. A native
 checked-model run saves an edit through actual controls, previews and selects the
 model version, then restarts and renders the same attachment with unchanged output
-hashes and link revision 4. Older-base branch edits, richer review/diagnostic
-interactions, additional races and language/delivery gates remain open.
+hashes and link revision 4. The later native branch record covers older-base edits.
+Richer review/diagnostic interactions, additional races and language/delivery gates
+remain open.
 
 Latest UI progress slice: [committed lifecycle events](../eval/experiments/2026-09-26-committed-progress-events.md)
 now uses Auralis's existing bounded job bridge after host storage commits.
@@ -299,7 +312,7 @@ These commands use `create_new` semantics: choose paths that do not exist. The d
 2. **S6 / S8: installation and delivery.** Execute the clean Windows installation protocol and subsequent offline use; exercise package upgrade, coexistence, removal and interrupted cleanup. Declare a measured OS/backend/hardware profile and repeat payload/signature audits for the intended release packages. The completed local unsigned MSI content check does not close this gate.
 3. **S4 / S7: cancellation and concurrency.** Add simultaneous same-process start/pause/resume/deletion/publication race evidence and actual process-cleanup failure. Checked-model CLI and native SRT/WebVTT pause/resume, initial-hash, post-child and accepted-worker preparation pause now pass. Retain committed checkpoints and project links across every supported interruption. Completed scenarios cover named boundaries, not every interleaving or power loss.
 4. **S6: standalone CLI.** Add richer typed provider failure reasons, CLI-owned runtime lifecycle and source/glossary orphan cleanup. JSON/JSONL now covers translation/control/export and all four separate-model acquisition/install commands; package failures have typed codes. Upgrades/removal and clean-machine behavior remain open.
-5. **S7: desktop workflow.** Extend the verified event/history flow to older-base branch edits, fuller review/diagnostic interactions and user validation. Selected and historical ready results have paged comparison; actual native latest-result edits, historical selection and reopening pass.
+5. **S7: desktop workflow.** Extend the verified event/history flow with manual-save crash boundaries, fuller review/diagnostic interactions and user validation. Selected and historical ready results have paged comparison; actual native older-base branches, explicit selection and reopening pass.
 6. **S1 / S8: formats and resources.** Expand strict SRT/WebVTT fixtures, fuzz parsers and verify exports in target players. Extend the completed synthetic long-file recovery record to varied real scenes and resource budgets with other Auralis workloads.
 7. **Repository delivery: owner deferred.** Publish the reviewed Translate repository and update GitHub submodule/CI cloning only after the owner resumes publication. Continue local commits and the pinned local submodule meanwhile.
 

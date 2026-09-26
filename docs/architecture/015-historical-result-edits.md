@@ -2,7 +2,9 @@
 
 Status: implementation contract, 26 September 2026. Engine, host journal,
 application recovery and typed desktop controls have supporting two-database/React
-evidence. CLI delivery and native branch evidence are still pending.
+evidence. A later [native checked-model branch probe](../../eval/experiments/2026-09-27-native-historical-branch.md)
+passes completed saves, explicit selection and reopening. CLI delivery and native
+manual-save interruption boundaries are still pending.
 
 ## Text base and observed head
 
@@ -140,8 +142,10 @@ reopening, v5 migration and project cleanup. Add independent WebVTT coverage.
 The complete host gate additionally needs two-database intent/result/publication
 crash boundaries, conflicting selection and automatic publication, preserved real
 unfinished runs, typed frontend interactions and a native checked-model edit from
-an older version followed by reopening. The existing history-selection evidence
-does not prove this new workflow. Language and clean-install gates stay open.
+an older version followed by reopening. The later native branch record proves
+the completed-save/reopening case with independent ancestry and file checks;
+it does not exercise process termination inside manual-save boundaries. Language
+and clean-install gates stay open.
 
 ## Implemented foundation and remaining composition
 
@@ -180,8 +184,9 @@ ordinary linked-run gap recovery. Supporting evidence is recorded in
 The [desktop contract record](../../eval/experiments/2026-09-26-historical-edit-desktop-contract.md)
 adds the typed observation/save/publication commands and experimental review
 controls after those durable host boundaries were implemented. Their supporting
-backend and component checks pass; actual native manual-save process-kill
-boundaries, older-base save/reopening and the CLI branch route remain pending.
+backend and component checks pass. The native branch record verifies older-base
+save/reopening. Actual native manual-save process-kill boundaries and the CLI
+branch route remain pending.
 This experimental availability does not close the full S7 delivery gate.
 
 ## Manual publication transaction ordering

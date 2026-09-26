@@ -8,10 +8,12 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 
 ## Start here
 
-The latest [historical desktop contract record](../eval/experiments/2026-09-26-historical-edit-desktop-contract.md)
-adds typed observations/save/publication reads and experimental review controls
-to journaled branch recovery. Two-database and React/API checks pass. Actual
-native older-base saves/crashes, the CLI branch interface and full S7 remain open.
+The latest [native historical branch record](../eval/experiments/2026-09-27-native-historical-branch.md)
+verifies actual checked-model translation, older-base editing, explicit attachment
+and reopening through React/Tauri, both databases and three immutable output files.
+Untouched cues come from the chosen base; restart preserves selection, edit digests
+and checkpoints without another inference attempt. Manual-save process-kill
+boundaries, the CLI branch interface and full S7 remain open.
 
 | Document                                                                                        | Purpose                                                                                                                                                              |
 | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

@@ -123,8 +123,11 @@ preserves unfinished runs. [Application evidence](../eval/experiments/2026-09-26
 now covers supporting save and recovery across both databases and files. The
 [desktop contract record](../eval/experiments/2026-09-26-historical-edit-desktop-contract.md)
 adds typed observations/save/publication reads and experimental controls with
-supporting backend/React evidence. CLI branch delivery and actual native
-save/crash/reopen checks still gate the complete workflow.
+supporting backend/React evidence. The later [native branch record](../eval/experiments/2026-09-27-native-historical-branch.md)
+verifies older-base saves, independent output ancestry checks, explicit selection
+and reopening without inference replay. CLI branch delivery and actual native
+manual-save journal/core/publication interruption checks still gate the complete
+workflow.
 
 ## 14. Standalone CLI and delivery
 

@@ -106,6 +106,10 @@ No model weights, runtime payloads or external corpus data were added.
 
 ## Remaining gate
 
+The later [native historical branch record](2026-09-27-native-historical-branch.md)
+supplies the completed older-base save, explicit selection and reopening evidence
+that was pending at this snapshot. Manual-save process-kill boundaries remain open.
+
 Run the actual checked-model Tauri older-base edit, verify untouched segments come
 from that older base, conflict with a later project choice, and reopen both
 databases and ready files. Kill the desktop at journal/core/publication boundaries

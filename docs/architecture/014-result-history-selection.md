@@ -46,11 +46,16 @@ history page or preview must not silently select it. The selection button uses
 the observed link revision; errors keep the existing project selection and make
 refresh/retry available. Discard late reads after project/translation changes.
 
-The current editor appends to the latest Translate result and rejects a stale
-base. Historical previews remain readable, but must not offer an edit that is
-known to target an older ready revision or a different active run. Editing from
-an older base as a new branch requires a separate optimistic edit contract; this
-history slice does not change the existing stale-edit protection.
+The ordinary editor appends to the latest Translate result and rejects a stale
+base. An older preview must use the separate
+[explicit historical edit contract](015-historical-result-edits.md), which
+observes that base's current run head and host link revision, journals the request
+and appends an immutable branch. Experimental controls now implement that path
+with supporting evidence. They retain ordinary stale-base protection by using a
+different command, and require verified context before enabling historical save.
+The later [native branch/reopening record](../../eval/experiments/2026-09-27-native-historical-branch.md)
+passes that completed-save case independently of the original history-selection
+slice. Process interruption inside manual-save boundaries remains unverified.
 
 ```mermaid
 sequenceDiagram

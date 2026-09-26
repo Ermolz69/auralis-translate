@@ -188,8 +188,10 @@ The later [application record](../eval/experiments/2026-09-26-historical-edit-ap
 covers supporting save/recovery/manual publication composition through both
 databases and managed files. The [desktop contract record](../eval/experiments/2026-09-26-historical-edit-desktop-contract.md)
 adds supporting typed observations, guarded save controls and transactional
-publication reads. S7 remains open until the CLI branch route and actual native
-save/crash/reopen use the complete path.
+publication reads. The later [native branch record](../eval/experiments/2026-09-27-native-historical-branch.md)
+passes older-base save, explicit attachment and reopening through the complete
+path. S7 remains open for the CLI branch route, native manual-save interruption
+boundaries and the other documented workflow requirements.
 
 ## Manual publication ordering progress
 
@@ -200,5 +202,5 @@ publication already owns that revision. It preserves an unfinished active host
 run, and explicit replay cannot later attach a detached result. This is the storage
 foundation for historical save/recovery. The later application record supplies
 supporting actual Translate run/file integration, followed by the typed desktop
-record above. CLI branch delivery and actual native editing/crash evidence still
-gate S7.
+record above. Completed native editing/reopening now passes in the branch record.
+CLI branch delivery and native manual-save crash evidence still gate S7.
