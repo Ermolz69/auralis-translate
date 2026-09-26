@@ -78,6 +78,24 @@ From Auralis, the following checks passed:
 - `task docs:check` for the host documentation contract.
 
 The host lockfile resolves Tokio 1.53.1 for the newly explicit transport dependency.
+
+Final worker review found that a durable UI pause closed its host job as cancelled
+but reported `ApplicationFailed` to the in-memory runtime when its cancellation
+token remained unset. The worker now treats the typed executor cancellation as
+`Cancelled` too, and does not log it as an application failure. A separate
+`translation_scheduler_pause` regression schedules the actual managed worker
+through a recording wrapper over the real JobManager, holds a mock loopback HTTP
+response, and pauses through the application use case. It observes the attached
+task completion, a cancelled host job, paused Translate state with a cleared flag,
+the retained active run, no selected result and unchanged source. This is real
+two-database/scheduler evidence with mock HTTP, not another real-model run.
+
+The focused command is
+`task rs:test:application -- --test translation_scheduler_pause --test translation_host_execution_failure`.
+It covers both cancellation completion and ordinary model failure; formatting and
+Clippy checks also apply to this correction. The earlier native run did not
+observe the internal runtime completion classification.
+
 Further simultaneous start/pause/resume/deletion interleavings, native WebVTT pause,
 pre-attempt admission cancellation, clean installation and language gates remain
 separate work. Existing process-kill tests cover their recorded crash boundaries.

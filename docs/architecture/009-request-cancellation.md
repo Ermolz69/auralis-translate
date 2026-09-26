@@ -68,6 +68,10 @@ There is no partial result or output artifact. Auralis's worker awaits this dura
 acknowledgment before releasing its runtime lease and completing cancellation;
 dropping its outer future alone would leave a blocking worker alive.
 
+An acknowledged executor cancellation also completes the host runtime task as
+`Cancelled`, even when the UI wrote only the durable pause flag and did not cancel
+the in-memory runtime token. It must not become an application-failure outcome.
+
 Disconnecting a caller-supplied server request is not a promise that an arbitrary
 server stops computation. Auralis additionally owns and releases the managed child.
 Process ownership, concurrent command interleavings, and power-loss durability
