@@ -8,6 +8,11 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 
 ## Start here
 
+The latest [historical application record](../eval/experiments/2026-09-26-historical-edit-application.md)
+adds journaled branch save, frozen-run/request/provenance checks and paged startup
+publication recovery through both databases and managed files. Typed historical
+controls, CLI/UI and actual native branch/crash evidence remain pending.
+
 | Document                                                                                        | Purpose                                                                                                                                                              |
 | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [English product plan](PRODUCT_PLAN.md)                                                         | Current overall product scope, models, format boundaries, delivery, evaluation and release gates.                                                                    |
@@ -125,13 +130,15 @@ Active documentation in `docs/` and `AGENTS.md` is written in English. The root 
 The [explicit branch contract](architecture/015-historical-result-edits.md) and
 [foundation evidence](../eval/experiments/2026-09-26-historical-edit-foundation.md)
 record Translate schema v6 ancestry and the Auralis schema v10 metadata-only
-journal. Core and journal tests pass; application/recovery/publication/CLI/UI and
-native branch-edit integration remain open.
+journal. Core and journal tests pass. The later application record linked above
+covers supporting save/recovery/publication; typed CLI/UI and native branch-edit
+integration remain open.
 
 ## Manual publication ordering
 
 The [historical-edit contract](architecture/015-historical-result-edits.md) now has
 [host ordering evidence](../eval/experiments/2026-09-26-manual-publication-ordering.md).
 Explicit manual results complete as attached or ready historical artifacts without
-silently replacing a newer project choice. Application historical save/replay,
-CLI/UI and native branch evidence remain pending.
+silently replacing a newer project choice. The later application record linked
+above covers supporting historical save/replay; typed CLI/UI and native branch
+evidence remain pending.

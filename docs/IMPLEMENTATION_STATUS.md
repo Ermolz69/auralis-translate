@@ -1,12 +1,22 @@
 # Implementation status and evidence
 
+Latest historical application slice: [save/publication/recovery evidence](../eval/experiments/2026-09-26-historical-edit-application.md)
+records journal admission before actual Translate branch commits, complete request
+digests, shared frozen-run/base verification and manual publication through the
+managed outbox. Production startup now receives the journal and scans its pages
+independently of selected/active runs. Five two-database/file tests cover divergent
+SRT/WebVTT bases, another unfinished run, reopening, concurrent head guards,
+corrupt metadata and more than one recovery page. Typed observation/save delivery,
+CLI/UI and real native branch/crash evidence remain open; S7 is not complete.
+
 Latest historical-edit foundation: [engine and host journal evidence](../eval/experiments/2026-09-26-historical-edit-foundation.md)
 records immutable older-base SRT/WebVTT edits, explicit observed-head conflicts,
 provenance and schema v6 migration. Auralis schema v10 now has a metadata-only,
 project-owned journal with idempotent retries and bounded recovery cursor pages.
 The engine workspace checks and host library/journal regressions pass. Application
-composition, startup replay, application branch publication, CLI/UI and native branch
-save/reopen remain pending; this does not close S7.
+composition and startup replay were pending at that foundation; the later
+application record above covers their supporting implementation. CLI/UI and native
+branch save/reopen remain pending; this does not close S7.
 
 Latest review slice: [ready result history](../eval/experiments/2026-09-26-result-history-selection.md)
 now separates historical preview from explicit project attachment. Six real-SQLite
@@ -293,4 +303,5 @@ records eight new real-SQLite tests and existing storage/history/journal regress
 The host can finalize an explicit branch as an attached or ready detached result,
 preserve its active run and serialize against automatic publication. The outbox
 uses `finalize_ready_publication`; manual and automatic operations are split under
-one transaction. Application save/replay and native branch editing remain pending.
+one transaction. The later application record at the top covers supporting
+save/replay integration; typed delivery and native branch editing remain pending.

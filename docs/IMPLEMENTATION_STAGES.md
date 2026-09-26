@@ -184,8 +184,10 @@ The [explicit older-base contract](architecture/015-historical-result-edits.md)
 now has [SRT/WebVTT and host-journal evidence](../eval/experiments/2026-09-26-historical-edit-foundation.md).
 The engine can append from a historical base with a checked current head, and the
 host can durably retain metadata-only intent references across selection changes.
-S7 remains open until the application, recovery, separate manual attachment,
-CLI/UI and native save/reopen path use those foundations.
+The later [application record](../eval/experiments/2026-09-26-historical-edit-application.md)
+covers supporting save/recovery/manual publication composition through both
+databases and managed files. S7 remains open until typed observations, CLI/UI and
+native save/crash/reopen use the complete path.
 
 ## Manual publication ordering progress
 
@@ -194,5 +196,6 @@ adds eight real-SQLite ordering, idempotency and rollback checks. Host finalizat
 now retains a ready historical result when its observed link changed or automatic
 publication already owns that revision. It preserves an unfinished active host
 run, and explicit replay cannot later attach a detached result. This is the storage
-foundation for historical save/recovery; application composition, actual Translate
-run/file evidence, CLI/UI and native branch editing still gate S7.
+foundation for historical save/recovery. The later application record supplies
+supporting actual Translate run/file integration; typed observation/save contracts,
+CLI/UI and native branch editing/crash evidence still gate S7.

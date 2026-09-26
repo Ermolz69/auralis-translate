@@ -116,7 +116,12 @@ preview from project attachment. Explicit selection verifies the original and
 existing immutable output, uses an expected host-link revision, preserves an
 unfinished run and serializes with publication. Its [evidence](../eval/experiments/2026-09-26-result-history-selection.md)
 includes a native latest-result edit followed by historical selection and reopening.
-Editing an older base into a new branch remains a separate contract and gate.
+Editing an older base uses [explicit base/head observations](architecture/015-historical-result-edits.md),
+a metadata-only host intent and a guarded immutable Translate branch. Manual
+publication retains ready history when the observed project link changed and
+preserves unfinished runs. [Application evidence](../eval/experiments/2026-09-26-historical-edit-application.md)
+now covers supporting save and recovery across both databases and files; typed
+CLI/UI delivery and native branch/crash checks still gate the complete workflow.
 
 ## 14. Standalone CLI and delivery
 

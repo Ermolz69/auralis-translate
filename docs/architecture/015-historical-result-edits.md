@@ -1,8 +1,9 @@
 # Historical result edits with explicit concurrency guards
 
 Status: implementation contract, 26 September 2026. The engine, metadata-only
-host journal and manual publication foundations have supporting SQLite evidence.
-Composition, CLI/UI delivery and native branch evidence are still pending.
+host journal and application save/publication/recovery paths have supporting
+two-database evidence. Typed observations, CLI/UI delivery and native branch
+evidence are still pending.
 
 ## Text base and observed head
 
@@ -79,6 +80,32 @@ sequenceDiagram
     H-->>U: Attached or ready but unattached
 ```
 
+## Application request identity and verification
+
+The host request digest uses the length-prefixed UTF-8 domain separator
+`auralis-historical-edit-v1`, then length-prefixed UTF-8 project, translation, result, base, run and observed
+head IDs, the expected host revision, changed segment ID, line count and each
+unchanged UTF-8 line. Integer fields and byte lengths use unsigned big-endian
+encoding (revision/lengths/count: u64; segment: u32). Creation time is excluded so
+an identical retry preserves its original admission. Never trim or normalise text
+for this identity. Store only the lowercase SHA-256 digest in the host journal.
+
+Before admission, reconstruct the ready historical base from its frozen run and
+verify its managed file size/digest, original bytes, parser, block policy and
+profile identity. A new intent is admitted at the caller's expected host revision;
+the branch transaction guards the supplied Translate head. Exact recorded retries
+remain valid after selection or head changes, with the engine checking the saved
+result identity rather than creating another revision.
+
+Manual publication and startup replay verify the frozen run, reconstructed output
+and stored edit provenance. Recover the changed lines from that verified result,
+recompute the digest with the recorded metadata, and reject any ancestry or
+payload mismatch before staging. Recovery pages advance past every entry, including
+requests whose results were never committed; each failure is isolated. Such a
+request remains interrupted/retryable and is never replayed as inference or an
+invented edit. Ready output continues through the existing managed artifact outbox
+and the explicit manual finalization contract below.
+
 ## Required evidence
 
 SQLite tests must cover two-cue divergent ancestry, inherited edit selections,
@@ -117,11 +144,18 @@ Ready publications leave that enumeration only with a ready translated artifact
 owned by the same project and matching run. Link deletion cascades the journal.
 No intent states are inferred from the current active run.
 
-The existing application editor does not yet call this journal or branch API.
-Startup does not yet recover journal entries. The host storage foundation now has
-the separate manual attachment transaction; the application save/replay route
-still needs to use it. Do not expose historical saves
-through the UI until those operations and their crash/concurrency evidence exist.
+The separate `EditHistoricalTranslationUseCase` now verifies a ready historical
+base, admits its digest to the journal and invokes the explicit branch adapter.
+The ordinary editor remains latest-base-only. Publication can resolve an admitted
+historical run independently of selection, verify the frozen run and edit digest,
+and stage a separate result through the existing outbox. Production startup now
+supplies the journal to publication/recovery and scans its cursor pages before
+ordinary linked-run gap recovery. Supporting evidence is recorded in
+[the application branch record](../../eval/experiments/2026-09-26-historical-edit-application.md).
+
+The typed observation/save commands, CLI/UI route, actual manual-save process-kill
+boundaries and native older-base save/reopening are still pending. Keep historical
+save controls unavailable until this complete delivery route is verified.
 
 ## Manual publication transaction ordering
 
