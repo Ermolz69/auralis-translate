@@ -1,6 +1,6 @@
 use auralis_translation::{
-    LanguageCode, LanguagePair, RunControl, RunId, SegmentId, SourceHash, SourceSegment,
-    TranslationBatch, TranslationId, TranslationProvider,
+    LanguageCode, LanguagePair, ProviderError, RunControl, RunId, SegmentId, SourceHash,
+    SourceSegment, TranslationBatch, TranslationId, TranslationProvider,
 };
 use auralis_translation_llamacpp::{LlamaCppProvider, ModelProfile, RequestControlPolicy};
 use std::error::Error;
@@ -39,6 +39,62 @@ fn cancels_while_waiting_for_headers_or_an_incomplete_body() -> Result<(), Box<d
 #[test]
 fn control_failure_disconnects_without_waiting_for_model_timeout() -> Result<(), Box<dyn Error>> {
     interrupted_request(true, 2)
+}
+
+#[test]
+fn readiness_probe_disconnects_on_preparation_cancellation() -> Result<(), Box<dyn Error>> {
+    for partial_body in [false, true] {
+        let listener = TcpListener::bind("127.0.0.1:0")?;
+        let endpoint = format!("http://{}/", listener.local_addr()?);
+        let (ready_tx, ready_rx) = mpsc::channel();
+        let server = std::thread::spawn(move || -> Result<(), String> {
+            let mut stream = accept_request(&listener)?;
+            if partial_body {
+                stream
+                    .write_all(
+                        b"HTTP/1.1 200 OK\r\nContent-Length: 4096\r\nConnection: close\r\n\r\n{",
+                    )
+                    .map_err(|cause| cause.to_string())?;
+            }
+            ready_tx.send(()).map_err(|cause| cause.to_string())?;
+            let mut byte = [0];
+            match stream.read(&mut byte) {
+                Ok(0) => Ok(()),
+                Err(cause) if cause.kind() == std::io::ErrorKind::ConnectionReset => Ok(()),
+                other => Err(format!("preflight stayed connected: {other:?}")),
+            }
+        });
+        let flag = Arc::new(AtomicU8::new(0));
+        let worker_flag = flag.clone();
+        let (finished_tx, finished_rx) = mpsc::channel();
+        let worker = std::thread::spawn(move || -> Result<(), String> {
+            let profile = ModelProfile::from_json(PROFILE).map_err(|cause| cause.to_string())?;
+            let provider =
+                LlamaCppProvider::new(&endpoint, profile).map_err(|cause| cause.to_string())?;
+            let control = || {
+                if worker_flag.load(Ordering::SeqCst) == 0 {
+                    Ok(())
+                } else {
+                    Err(ProviderError("preparation cancelled".into()))
+                }
+            };
+            finished_tx
+                .send(
+                    provider
+                        .probe_server_with_control(&control)
+                        .map_err(|cause| cause.to_string()),
+                )
+                .map_err(|cause| cause.to_string())?;
+            Ok(())
+        });
+        ready_rx.recv_timeout(Duration::from_secs(5))?;
+        flag.store(1, Ordering::SeqCst);
+        let result = finished_rx.recv_timeout(Duration::from_secs(3))?;
+        assert!(matches!(result, Err(message) if message == "preparation cancelled"));
+        worker.join().map_err(|_| "probe worker panicked")??;
+        server.join().map_err(|_| "probe server panicked")??;
+    }
+    Ok(())
 }
 
 #[test]
@@ -199,6 +255,7 @@ fn accept_request(listener: &TcpListener) -> Result<TcpStream, String> {
                         .strip_prefix("content-length: ")
                         .and_then(|value| value.parse::<usize>().ok())
                 })
+                .or_else(|| headers.starts_with("GET ").then_some(0))
                 .ok_or("missing request length")?;
             if raw.len() >= end + 4 + length {
                 return Ok(stream);

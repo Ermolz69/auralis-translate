@@ -1,6 +1,10 @@
 version: "3"
 
 tasks:
+  test:preparation:
+    desc: Verify cancellable model hashing and readiness HTTP headers/body cleanup
+    cmds:
+      - cargo test --offline -p auralis-translation-llamacpp --test preparation_hash --test request_cancellation --test offline_install
   test:admission:
     desc: Verify stale start rejection, repeated pause, competing attempts and v4 migration
     cmds:

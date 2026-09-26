@@ -1,3 +1,4 @@
+use crate::PreparationControl;
 use auralis_translation::{ProviderError, SourceHash};
 use sha2::{Digest, Sha256};
 use std::{fs::File, io::Read, path::Path};
@@ -5,11 +6,20 @@ use std::{fs::File, io::Read, path::Path};
 const HASH_BUFFER_BYTES: usize = 64 * 1024;
 
 pub fn hash_file(path: &Path) -> Result<(SourceHash, u64), ProviderError> {
+    hash_file_with_control(path, &|| Ok(()))
+}
+
+pub fn hash_file_with_control(
+    path: &Path,
+    control: &dyn PreparationControl,
+) -> Result<(SourceHash, u64), ProviderError> {
+    control.check()?;
     let mut file = File::open(path).map_err(io_error)?;
     let mut hasher = Sha256::new();
     let mut bytes = 0_u64;
     let mut buffer = [0_u8; HASH_BUFFER_BYTES];
     loop {
+        control.check()?;
         let count = file.read(&mut buffer).map_err(io_error)?;
         if count == 0 {
             break;
@@ -19,6 +29,7 @@ pub fn hash_file(path: &Path) -> Result<(SourceHash, u64), ProviderError> {
             .checked_add(u64::try_from(count).map_err(|error| ProviderError(error.to_string()))?)
             .ok_or_else(|| ProviderError("model file is too large".into()))?;
     }
+    control.check()?;
     Ok((SourceHash::from_bytes(hasher.finalize().into()), bytes))
 }
 

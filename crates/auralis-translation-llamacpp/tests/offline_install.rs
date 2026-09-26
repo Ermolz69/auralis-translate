@@ -1,4 +1,6 @@
-use auralis_translation_llamacpp::{ReleaseManifest, install_offline, verify_runtime_files};
+use auralis_translation_llamacpp::{
+    ReleaseManifest, install_offline, verify_runtime_files, verify_runtime_files_with_control,
+};
 use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 use std::error::Error;
@@ -12,6 +14,48 @@ const PROFILE: &[u8] =
     include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.checked.experimental.json");
 const MANIFEST: &[u8] =
     include_bytes!("../../../models/releases/hy_mt2_1_8b_q4_k_m.windows_x64_cpu.experimental.json");
+
+#[test]
+fn interrupted_runtime_verification_keeps_the_installed_package() -> Result<(), Box<dyn Error>> {
+    let root = tempfile::tempdir()?;
+    let fixture = fixture(root.path(), false)?;
+    let destination = root.path().join("installed");
+    let manifest = ReleaseManifest::from_json(&fixture.manifest, &fixture.profile)?;
+    let installed = install_offline(
+        &fixture.manifest,
+        &fixture.profile,
+        "cpu",
+        &fixture.sources,
+        &destination,
+    )?;
+    let checks = std::cell::Cell::new(0);
+    let control = || {
+        checks.set(checks.get() + 1);
+        if checks.get() == 8 {
+            Err(auralis_translation::ProviderError(
+                "verification cancelled".into(),
+            ))
+        } else {
+            Ok(())
+        }
+    };
+    let result = verify_runtime_files_with_control(
+        &installed.root.join("assets"),
+        &installed.root.join("runtime"),
+        &manifest.variants()[0],
+        &control,
+    );
+    assert!(
+        matches!(result, Err(auralis_translation_llamacpp::OfflineInstallError::Preparation(error)) if error.to_string() == "verification cancelled")
+    );
+    assert_eq!(checks.get(), 8);
+    verify_runtime_files(
+        &installed.root.join("assets"),
+        &installed.root.join("runtime"),
+        &manifest.variants()[0],
+    )?;
+    Ok(())
+}
 
 struct Fixture {
     manifest: Vec<u8>,

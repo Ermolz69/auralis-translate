@@ -1,4 +1,6 @@
-use crate::{LlamaCppProvider, ModelProfile, ServerReport, hash_file};
+use crate::{
+    LlamaCppProvider, ModelProfile, PreparationControl, ServerReport, hash_file_with_control,
+};
 use auralis_translation::{ProviderError, SourceHash};
 use std::path::Path;
 
@@ -6,6 +8,15 @@ pub fn verify_server(
     provider: &LlamaCppProvider,
     profile: &ModelProfile,
 ) -> Result<Option<ServerReport>, ProviderError> {
+    verify_server_with_control(provider, profile, &|| Ok(()))
+}
+
+pub fn verify_server_with_control(
+    provider: &LlamaCppProvider,
+    profile: &ModelProfile,
+    control: &dyn PreparationControl,
+) -> Result<Option<ServerReport>, ProviderError> {
+    control.check()?;
     let Some(expected_bytes) = profile.model_file_bytes else {
         return Ok(None);
     };
@@ -16,7 +27,7 @@ pub fn verify_server(
     let minimum_context = profile
         .min_context_tokens
         .ok_or_else(|| ProviderError("profile minimum context is missing".into()))?;
-    let report = provider.probe_server()?;
+    let report = provider.probe_server_with_control(control)?;
     if report.model_alias != profile.model_alias || report.build_info != expected_build {
         return Err(ProviderError(
             "llama.cpp server model alias or runtime build differs from profile".into(),
@@ -46,7 +57,7 @@ pub fn verify_server(
     }
     let expected_hash = SourceHash::parse_hex(&profile.model_file_sha256)
         .ok_or_else(|| ProviderError("profile model SHA-256 is invalid".into()))?;
-    let (observed_hash, observed_bytes) = hash_file(&model_path)?;
+    let (observed_hash, observed_bytes) = hash_file_with_control(&model_path, control)?;
     if observed_bytes != expected_bytes || observed_hash != expected_hash {
         return Err(ProviderError(
             "llama.cpp server model file hash differs from profile".into(),

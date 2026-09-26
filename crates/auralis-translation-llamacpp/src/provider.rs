@@ -2,7 +2,8 @@ use crate::profile::ModelProfile;
 use crate::prompt;
 use crate::server_report::ServerReport;
 use crate::{
-    RequestControlPolicy, decode_chat_response::decode_chat_response, local_http::LocalHttp,
+    PreparationControl, RequestControlPolicy, decode_chat_response::decode_chat_response,
+    local_http::LocalHttp,
 };
 use auralis_translation::{
     ProviderError, ProviderResponse, RunControl, RunId, TargetSegment, TranslationBatch,
@@ -64,19 +65,32 @@ impl LlamaCppProvider {
     }
 
     pub fn probe_server(&self) -> Result<ServerReport, ProviderError> {
+        self.probe_server_with_control(&|| Ok(()))
+    }
+
+    pub fn probe_server_with_control(
+        &self,
+        control: &dyn PreparationControl,
+    ) -> Result<ServerReport, ProviderError> {
+        control.check()?;
         ServerReport::parse(
-            &self.get_bytes(HEALTH_PATH)?,
-            &self.get_bytes(PROPS_PATH)?,
-            &self.get_bytes(MODELS_PATH)?,
+            &self.get_bytes(HEALTH_PATH, control)?,
+            &self.get_bytes(PROPS_PATH, control)?,
+            &self.get_bytes(MODELS_PATH, control)?,
         )
     }
 
-    fn get_bytes(&self, path: &str) -> Result<Vec<u8>, ProviderError> {
+    fn get_bytes(
+        &self,
+        path: &str,
+        control: &dyn PreparationControl,
+    ) -> Result<Vec<u8>, ProviderError> {
         let endpoint = self
             .base
             .join(path)
             .map_err(|_| ProviderError("invalid llama.cpp probe endpoint".into()))?;
-        self.http.request(self.http.client().get(endpoint), None)
+        self.http
+            .request(self.http.client().get(endpoint), Some(control))
     }
 
     fn translate_line(
@@ -99,7 +113,17 @@ impl LlamaCppProvider {
             .client()
             .post(self.endpoint.clone())
             .json(&request);
-        decode_chat_response(&self.http.request(request, control)?)
+        let check = || match control {
+            Some((control, run_id)) => match control.pause_requested(run_id) {
+                Ok(false) => Ok(()),
+                Ok(true) => Err(ProviderError("request paused".into())),
+                Err(error) => Err(ProviderError(error.to_string())),
+            },
+            None => Ok(()),
+        };
+        let preparation: Option<&dyn PreparationControl> =
+            control.map(|_| &check as &dyn PreparationControl);
+        decode_chat_response(&self.http.request(request, preparation)?)
     }
 
     fn translate_controlled(

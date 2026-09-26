@@ -18,6 +18,10 @@ fn newer_pause_invalidates_initial_and_paused_resume_guards() -> Result<(), Box<
     let other = TranslateDb::open(&path, SqliteConfig::default())?;
     other.request_pause(run.run_id)?;
     assert!(matches!(
+        db.check_attempt_start(initial),
+        Err(DbError::PauseRequested)
+    ));
+    assert!(matches!(
         db.begin_guarded_attempt(&run, Some("old-start"), initial),
         Err(DbError::PauseRequested)
     ));
@@ -29,6 +33,12 @@ fn newer_pause_invalidates_initial_and_paused_resume_guards() -> Result<(), Box<
         Err(DbError::PauseRequested)
     ));
     let current = db.capture_attempt_start(run.run_id)?;
+    let poll = auralis_translation_sqlite::AttemptStartControl::new(
+        &db,
+        current,
+        std::time::Duration::from_millis(10),
+    )?;
+    poll.check()?;
     assert_eq!(current.control_revision(), 2);
     let attempt = db.begin_guarded_attempt(&run, Some("explicit-resume"), current)?;
     db.stop_attempt(run.run_id, attempt, RunStop::Paused, "test pause")?;

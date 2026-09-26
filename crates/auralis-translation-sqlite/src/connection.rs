@@ -111,6 +111,10 @@ impl TranslateDb {
         attempt_admission::capture(&self.connection, run_id)
     }
 
+    pub fn check_attempt_start(&self, guard: AttemptStartGuard) -> Result<(), DbError> {
+        attempt_admission::check(&self.connection, guard)
+    }
+
     pub fn begin_guarded_attempt(
         &mut self,
         run: &RunSpec,

@@ -1,5 +1,7 @@
 #[derive(Debug, thiserror::Error)]
 pub enum OfflineInstallError {
+    #[error(transparent)]
+    Preparation(#[from] auralis_translation::ProviderError),
     #[error("offline installation is invalid: {0}")]
     Invalid(&'static str),
     #[error(transparent)]

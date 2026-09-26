@@ -1,5 +1,6 @@
+use crate::PreparationControl;
 use crate::RequestControlPolicy;
-use auralis_translation::{ProviderError, RunControl, RunId};
+use auralis_translation::ProviderError;
 use reqwest::{Client, RequestBuilder};
 use std::time::Duration;
 use tokio::runtime::Runtime;
@@ -43,7 +44,7 @@ impl LocalHttp {
     pub(crate) fn request(
         &self,
         request: RequestBuilder,
-        control: Option<(&dyn RunControl, RunId)>,
+        control: Option<&dyn PreparationControl>,
     ) -> Result<Vec<u8>, ProviderError> {
         self.runtime.block_on(async {
             let result = {
@@ -55,12 +56,8 @@ impl LocalHttp {
                     tokio::select! {
                         biased;
                         _ = poll.tick(), if control.is_some() => {
-                            if let Some((control, run_id)) = control {
-                                match control.pause_requested(run_id) {
-                                    Ok(false) => {},
-                                    Ok(true) => break Err(ProviderError("request paused".into())),
-                                    Err(cause) => break Err(error(cause)),
-                                }
+                            if let Some(control) = control && let Err(cause) = control.check() {
+                                break Err(cause);
                             }
                         }
                         result = &mut response => break result,

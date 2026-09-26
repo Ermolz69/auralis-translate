@@ -53,6 +53,9 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 
 ## Agreed MVP decisions
 
+The [preparation cancellation contract](architecture/011-preparation-cancellation.md)
+is the next admission implementation decision. Its evidence is still in progress.
+
 Recent evidence: [pinned package repair](../eval/experiments/2026-09-26-package-repair.md) and a [ten-sentence real file/reference comparison](../eval/experiments/2026-09-26-flores-file-comparison.md). The latter verifies the transport pipeline with synthetic timings; its local side-by-side report remains unreviewed and has concrete quality-triage items. Neither record closes the language release gates.
 
 A [three-profile real comparison](../eval/experiments/2026-09-26-profile-comparison.md) now tests sampling, greedy decoding and the existing JSON wrapper on the same development rows. All file checks passed; visible grammar and terminology defects remain, and no winner or production profile was selected.

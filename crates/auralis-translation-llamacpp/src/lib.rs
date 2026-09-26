@@ -11,11 +11,14 @@ mod request_control_policy;
 mod response;
 mod server_report;
 
-pub use model_hash::hash_file;
-pub use model_preflight::verify_server;
+pub use model_hash::{hash_file, hash_file_with_control};
+pub use model_preflight::{verify_server, verify_server_with_control};
+mod preparation_control;
 pub use offline_install::{
     InstalledRelease, OfflineInstallError, install_offline, verify_runtime_files,
+    verify_runtime_files_with_control,
 };
+pub use preparation_control::PreparationControl;
 pub use profile::ModelProfile;
 pub use profile_error::ProfileError;
 pub use provider::LlamaCppProvider;

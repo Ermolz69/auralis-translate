@@ -8,5 +8,5 @@ mod verify_runtime_files;
 pub use error::OfflineInstallError;
 pub use install::install_offline;
 pub use installed_release::InstalledRelease;
-pub use verify_runtime_files::verify_runtime_files;
+pub use verify_runtime_files::{verify_runtime_files, verify_runtime_files_with_control};
 mod archive_entry;

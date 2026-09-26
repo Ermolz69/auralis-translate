@@ -6,7 +6,9 @@ use crate::write_new::write_new;
 use auralis_translation::{
     BlockPolicy, ResultId, RetryPolicy, ReviewState, RunState, SourceHash, VerifiedRenderer,
 };
-use auralis_translation_llamacpp::{LlamaCppProvider, ModelProfile, verify_server};
+use auralis_translation_llamacpp::{
+    LlamaCppProvider, ModelProfile, RequestControlPolicy, verify_server_with_control,
+};
 use auralis_translation_sqlite::{ResultSpec, RunSpec, RunStop, SqliteConfig, TranslateDb};
 use std::error::Error;
 use std::ffi::OsStr;
@@ -65,7 +67,19 @@ pub(crate) fn execute(
     let retry = RetryPolicy::new(profile.max_block_attempts)
         .ok_or("model profile has an invalid block attempt limit")?;
     let provider = LlamaCppProvider::new(endpoint, profile.clone())?;
-    if let Some(report) = verify_server(&provider, &profile)? {
+    let preparation = auralis_translation_sqlite::AttemptStartControl::new(
+        db,
+        guard,
+        RequestControlPolicy::default().poll_interval(),
+    )?;
+    let check = || {
+        preparation
+            .check()
+            .map_err(|cause| auralis_translation::ProviderError(cause.to_string()))
+    };
+    let verification = verify_server_with_control(&provider, &profile, &check);
+    db.check_attempt_start(guard)?;
+    if let Some(report) = verification? {
         if reporter.is_machine() {
             reporter.emit(CliEvent::ModelReady {
                 alias: report.model_alias.clone(),

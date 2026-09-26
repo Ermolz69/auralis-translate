@@ -1,6 +1,6 @@
 use super::OfflineInstallError;
 use super::archive_entry::{MAX_ENTRY_BYTES, MAX_FILES, validate_entry};
-use crate::{RuntimeVariant, hash_file};
+use crate::{PreparationControl, RuntimeVariant, hash_file_with_control};
 use sha2::{Digest, Sha256};
 use std::collections::HashSet;
 use std::fs::File;
@@ -15,6 +15,16 @@ pub fn verify_runtime_files(
     runtime_dir: &Path,
     variant: &RuntimeVariant,
 ) -> Result<(), OfflineInstallError> {
+    verify_runtime_files_with_control(assets_dir, runtime_dir, variant, &|| Ok(()))
+}
+
+pub fn verify_runtime_files_with_control(
+    assets_dir: &Path,
+    runtime_dir: &Path,
+    variant: &RuntimeVariant,
+    control: &dyn PreparationControl,
+) -> Result<(), OfflineInstallError> {
+    control.check()?;
     if !std::fs::symlink_metadata(runtime_dir)?.file_type().is_dir() {
         return Err(OfflineInstallError::Invalid(
             "runtime path is not a regular directory",
@@ -22,9 +32,9 @@ pub fn verify_runtime_files(
     }
     let mut names = HashSet::new();
     for asset in std::iter::once(&variant.archive).chain(&variant.companions) {
+        control.check()?;
         let archive_path = assets_dir.join(&asset.filename);
-        let (digest, bytes) = hash_file(&archive_path)
-            .map_err(|_| OfflineInstallError::Invalid("runtime archive could not be hashed"))?;
+        let (digest, bytes) = hash_file_with_control(&archive_path, control)?;
         if Some(bytes) != asset.bytes || !digest.to_string().eq_ignore_ascii_case(&asset.sha256) {
             return Err(OfflineInstallError::Invalid(
                 "runtime archive differs from its pinned digest",
@@ -38,6 +48,7 @@ pub fn verify_runtime_files(
         }
         let mut total_bytes = 0;
         for index in 0..archive.len() {
+            control.check()?;
             let entry = archive.by_index(index)?;
             let name = validate_entry(&entry, &mut names, &mut total_bytes)?;
             let expected_bytes = entry.size();
@@ -53,6 +64,7 @@ pub fn verify_runtime_files(
             let mut read_bytes = 0;
             let mut buffer = [0; HASH_BUFFER_BYTES];
             loop {
+                control.check()?;
                 let length = bounded.read(&mut buffer)?;
                 if length == 0 {
                     break;
@@ -65,8 +77,8 @@ pub fn verify_runtime_files(
                     "runtime archive entry length differs",
                 ));
             }
-            let (installed_digest, installed_bytes) = hash_file(&installed_path)
-                .map_err(|_| OfflineInstallError::Invalid("runtime file could not be hashed"))?;
+            let (installed_digest, installed_bytes) =
+                hash_file_with_control(&installed_path, control)?;
             if installed_bytes != expected_bytes
                 || installed_digest.to_string() != format!("{:x}", expected_digest.finalize())
             {
@@ -77,6 +89,7 @@ pub fn verify_runtime_files(
         }
     }
     for entry in std::fs::read_dir(runtime_dir)? {
+        control.check()?;
         let entry = entry?;
         if !entry.file_type()?.is_file()
             || !entry
@@ -89,5 +102,6 @@ pub fn verify_runtime_files(
             ));
         }
     }
+    control.check()?;
     Ok(())
 }
