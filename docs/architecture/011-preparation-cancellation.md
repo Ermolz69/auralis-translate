@@ -1,7 +1,8 @@
 # Cooperative preparation cancellation
 
-Status: implementation, controlled checks, native post-child preparation and accepted-worker pause,
-26 September 2026. Initial-hash native interruption and command races remain open.
+Status: implementation, controlled checks, native initial-hash, post-child and
+accepted-worker pause, 26 September 2026. Command races and actual process-cleanup
+failure remain open.
 
 The [durable admission guard](010-attempt-admission-guard.md) prevents stale starts.
 Preparation must also stop promptly when the owner pauses the run. Auralis polls
@@ -77,7 +78,14 @@ Controlled library, CLI-process, two-database and React checks now have
 A [native post-child case](../../eval/experiments/2026-09-26-native-preparation-pause.md)
 observes actual controls, one 310 ms UI acknowledgement, zero jobs/attempts/results,
 child absence at paused verification and fresh resume. It does not establish a
-general latency SLA or prove native interruption during the initial hash.
+general latency SLA. A separate
+[native initial-hash case](../../eval/experiments/2026-09-26-native-initial-hash-pause.md)
+now observes a failed partial operation before any child/job/attempt, zero
+partial-result counts and a newer control revision. Its 52 ms UI acknowledgment
+is one observation. Fresh resume consumes the complete model in three distinct
+checks and produces a ready separate result, retaining both original digests.
+The observer sets the diagnostic filter directly on its test application child
+so an inherited `RUST_LOG=warn` cannot suppress the required evidence.
 
 The [accepted-worker native scenario](../../eval/experiments/2026-09-26-native-worker-preflight-pause.md)
 extends observation to an admitted host job whose worker is still checking the

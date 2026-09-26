@@ -58,7 +58,10 @@ The [preparation cancellation contract](architecture/011-preparation-cancellatio
 is implemented with [controlled evidence](../eval/experiments/2026-09-26-preparation-cancellation.md).
 [Native post-child preparation pause](../eval/experiments/2026-09-26-native-preparation-pause.md)
 now passes through the actual panel, zero admitted records, observed child release
-and fresh resume. Native initial-hash cancellation and command races remain open.
+and fresh resume. [Native initial-hash pause](../eval/experiments/2026-09-26-native-initial-hash-pause.md)
+also passes an observed incomplete hash, zero admitted records, a 52 ms UI
+acknowledgment and fresh full verification before a ready separate result.
+Command races and real process-cleanup failure remain open.
 
 The [host execution status contract](architecture/012-host-execution-status.md)
 retains preparation after the scheduler accepts a job while the worker verifies

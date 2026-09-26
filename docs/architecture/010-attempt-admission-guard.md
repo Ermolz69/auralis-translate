@@ -44,7 +44,9 @@ The guard prevents lost pauses and stale attempt starts. It is now composed with
 [cooperative preparation control](011-preparation-cancellation.md), which has
 controlled library, CLI, application and UI checks. A
 [native post-child preparation case](../../eval/experiments/2026-09-26-native-preparation-pause.md)
-now verifies zero admitted records and fresh resume. Initial-hash native pause,
-concurrent deletion/publication and native IPC race scenarios still require their
-own evidence. Existing active-inference
+now verifies zero admitted records and fresh resume. A separately observed
+[native initial-hash pause](../../eval/experiments/2026-09-26-native-initial-hash-pause.md)
+also interrupts partial hashing before job/attempt admission and performs fresh
+complete checks on resume. Concurrent deletion/publication and native IPC race
+scenarios still require their own evidence. Existing active-inference
 cancellation remains governed by [the request contract](009-request-cancellation.md).

@@ -24,7 +24,7 @@ The local Git submodule pins the independent Translate implementation.
 
 | Priority          | Work                                                        | Observable completion                                                                                                                                                                                     | Current limit                                                                                                                                                                                                                                                                                                                                                               |
 | ----------------- | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1                 | Admission cancellation and concurrency (S4/S7, G7)          | Pause interrupts model preparation safely; simultaneous start/resume/pause, deletion and publication have deterministic ownership and real desktop evidence.                                              | [Control revisions](architecture/010-attempt-admission-guard.md) reject stale starts; cooperative hashing/package/readiness checks pass. [Native post-child preparation pause](../eval/experiments/2026-09-26-native-preparation-pause.md) passes actual controls, zero admitted records and child absence. Initial-hash native cancellation and command races remain open. |
+| 1 | Admission cancellation and concurrency (S4/S7, G7) | Pause interrupts model preparation safely; simultaneous start/resume/pause, deletion and publication have deterministic ownership and real desktop evidence. | [Control revisions](architecture/010-attempt-admission-guard.md) reject stale starts. Native [initial-hash](../eval/experiments/2026-09-26-native-initial-hash-pause.md), [post-child](../eval/experiments/2026-09-26-native-preparation-pause.md) and [accepted-worker](../eval/experiments/2026-09-26-native-worker-preflight-pause.md) pause boundaries pass. Concurrent commands, deletion/publication interleavings and actual process-cleanup failure remain open. |
 | 2                 | Source-aware translation quality (S5/S8/S9, G3/G4/G5)       | A rights-cleared representative subtitle development set and frozen holdout receive bilingual adequacy, critical-error and terminology review; Chinese and Japanese pass independently.                   | Auxiliary FLORES sentence comparisons and authored probes remain unreviewed. Visible grammar/term defects remain. No production model/profile is selected and Japanese is not enabled in the durable product workflow.                                                                                                                                                      |
 | 3                 | Clean Windows delivery (S6/S8, G9)                          | An unseeded target installs the application, explicitly downloads/selects the separate model, survives interrupted download, restarts and translates offline; package identity and signature checks pass. | A real unsigned MSI content audit and a separate ignored QA handoff exist. The clean-machine report is unexecuted. Fresh packages must be rebuilt/audited after later product changes.                                                                                                                                                                                      |
 | 4                 | Complete CLI/runtime/package lifecycle (S6)                 | Machine installation/download commands, declared typed provider failures, runtime ownership, interrupted startup and upgrade/removal/orphan cleanup work without losing selected data.                    | JSON/JSONL translation/control/export and verified package receipts exist; the CLI still requires a caller-supplied running local server. Package install/select/repair has evidence, while upgrade/removal and orphan cleanup remain open.                                                                                                                                                              |
@@ -39,8 +39,11 @@ substitute another synthetic translation run for either gate.
 ## Next engineering slice
 
 Extend the [cooperative preparation control](architecture/011-preparation-cancellation.md)
-evidence to native UI pause during observed initial hashing and additional repeated
-or simultaneous commands. The [post-child case](../eval/experiments/2026-09-26-native-preparation-pause.md)
+evidence to additional repeated or simultaneous commands. The
+[native initial-hash case](../eval/experiments/2026-09-26-native-initial-hash-pause.md)
+now records an actual interrupted partial read, 52 ms UI acknowledgment, zero
+admitted records and three distinct full checks on resume before a ready separate
+result. The [post-child case](../eval/experiments/2026-09-26-native-preparation-pause.md)
 already records a 310 ms acknowledgement, zero job/attempt/result, model absence
 and fresh resume. Retain the durable guard at the final transaction boundary and
 complete same-process command/deletion/publication interleavings. The UI also needs
@@ -55,7 +58,8 @@ one host job is cancelled before any Translate attempt/result, its child is
 absent at verification, and another fresh job completes one attempt. The final
 213 ms admission and 3056 ms worker acknowledgments are individual debug/polling
 observations, not a general SLA. That named repeated preparation sequence is
-verified; initial-hash and concurrent/deletion/publication interleavings remain.
+verified; concurrent/deletion/publication interleavings remain. The initial-hash
+case is separately verified above; these observations do not close G7 as a whole.
 
 The [machine package extension](../eval/experiments/2026-09-26-cli-package-protocol.md)
 now covers `fetch-release`, `fetch-asset`, `install-offline` and `install-online`

@@ -95,7 +95,7 @@ also verifies both databases, first-job cancellation, child release, and a secon
 attempt on the same run in one desktop process. The [native WebVTT pause/resume](../eval/experiments/2026-09-26-native-vtt-pause-resume.md)
 now passes the corresponding scenario, also requiring no partial artifact at pause
 and matching the original's initial digest after completion. Broader same-process command
-interleavings and initial-hash native interruption during pre-attempt admission remain open.
+interleavings remain open; the separately recorded initial-hash case below passes.
 The [attempt admission guard](architecture/010-attempt-admission-guard.md) now
 prevents a newer pause from becoming implicit resume permission. Its
 [two-database evidence](../eval/experiments/2026-09-26-attempt-admission-guard.md)
@@ -105,8 +105,11 @@ after host admission. Cooperative preparation has
 [Native post-child preparation pause](../eval/experiments/2026-09-26-native-preparation-pause.md)
 now verifies actual controls, one 310 ms acknowledgement, zero attempts/results,
 child absence at verification and fresh resume to one completed attempt.
-Initial-hash native cancellation and admission races remain separate gates;
-see [remaining work](REMAINING_WORK.md).
+The [native initial-hash case](../eval/experiments/2026-09-26-native-initial-hash-pause.md)
+now passes with 52 ms UI acknowledgment, all seven admitted/partial counts zero,
+an actual interrupted partial hash and three fresh full checks before one ready
+separate result. This closes that named pre-attempt boundary. Admission races,
+real cleanup failure and the other [remaining gates](REMAINING_WORK.md) stay open.
 
 S7's [host execution status projection](architecture/012-host-execution-status.md)
 now distinguishes accepted host work from an idle retained pause without changing
@@ -129,7 +132,8 @@ verifies actual controls after remount, one cancelled host job with no Translate
 attempt or result, advanced guard revision and child absence, then fresh resume
 through one completed job/closed attempt to a separate ready artifact. The final
 worker UI acknowledgment is 3056 ms and includes polling. This closes that named
-preflight boundary, not initial-hash cancellation, concurrent commands or S7 as a whole.
+preflight boundary. Initial-hash cancellation has its own evidence above;
+concurrent commands and S7 as a whole remain open.
 
 S7 now has a [two-database publication-gap test](../eval/experiments/2026-09-25-result-gap-recovery.md): when a worker dies after Translate result commit but before Auralis publication, startup stages the latest result only if that exact result has no publication; an interrupted pending artifact is finalized later by the outbox. A two-database edit test also recovers a committed manual revision when an older model result is pending or a previous revision is already selected. Auralis schema v9 orders staged results by Translate revision, so a pending newer edit prevents an earlier model result from becoming the project selection. The storage regression checks both ready artifacts, an older direct selection attempt, and failed-newer behavior. Native Tauri checkpoint crash/restart, [result-commit-gap recovery](../eval/experiments/2026-09-25-native-result-gap.md), and [single-owner storage](../eval/experiments/2026-09-25-native-single-owner.md) have passed. Same-process command races remain open.
 
