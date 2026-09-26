@@ -30,9 +30,19 @@ abandoned by `timeout_at`. Failed child cleanup is a typed `CleanupFailed` error
 that overrides a normal cancellation acknowledgment and maps to the existing
 `RECOVERY_REQUIRED` native error code.
 
+At acquisition completion, the final durable guard check is still performed.
+Its outcome is retained until the acquisition result is classified: a typed
+`CleanupFailed` takes precedence over a newer pause or guard-read failure.
+For a successful lease or any ordinary runtime error, the failed guard remains
+authoritative and prevents admission. The [completion regression](../../eval/experiments/2026-09-26-admission-completion-cleanup.md)
+records the corrected branch and deterministic two-database evidence. This applies
+the existing cleanup contract; it does not weaken atomic attempt admission.
+
 The desktop panel exposes **Pause** while its start/resume request is pending and
 labels that phase as model preparation. An acknowledged cancellation refreshes the
-retained paused run without a failure alert. Status wire schemas stay unchanged.
+retained paused run without a failure alert. This preparation-token change leaves
+status wire schemas unchanged; the later [host execution projection](012-host-execution-status.md)
+adds a desktop-only active job identity for accepted worker preflight.
 
 Immediate filesystem calls may still block in the OS. The contract is cooperative
 cancellation at declared chunk/request boundaries, not a guarantee to preempt an

@@ -1,5 +1,13 @@
 # Implementation status and evidence
 
+Latest admission cleanup correction: the
+[completion regression](../eval/experiments/2026-09-26-admission-completion-cleanup.md)
+first reproduces masking of `CleanupFailed`, then verifies its precedence over
+a newer pause or final control-read failure. Ordinary runtime errors still obey
+the durable final guard. Real two-database assertions retain the paused project
+run and unchanged original with no jobs, attempts, checkpoints or results. This
+controlled error evidence does not establish real Windows cleanup-failure handling.
+
 Latest desktop status slice: [host execution status](architecture/012-host-execution-status.md)
 adds the exact run's nullable active host-job identity to the desktop projection.
 Preparation persists after acceptance and panel remount, with Pause available

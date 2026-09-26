@@ -98,3 +98,7 @@ Admission completion also needs a regression for cleanup-error precedence: a
 final durable guard check can mask an acquisition `CleanupFailed` if control
 changes at that boundary. The polling-cancellation path already preserves it.
 See [remaining engineering work](../../docs/REMAINING_WORK.md).
+
+Follow-up: the [admission-completion regression](2026-09-26-admission-completion-cleanup.md)
+reproduces and corrects the masking branch with its own controlled evidence. This
+record retains the original finding and native implementation scope.

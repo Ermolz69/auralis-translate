@@ -49,14 +49,11 @@ now represents accepted worker preflight while Translate retains its paused phas
 [its evidence](../eval/experiments/2026-09-26-host-execution-status.md) records the
 scope of restored controls.
 
-Fix and deterministically test cleanup-error precedence at admission completion.
-In Auralis `admit_runtime.rs`, the acquisition-completion branch performs its final
-durable guard check before inspecting the acquired error. A simultaneous changed
-guard or control-read failure can mask `CleanupFailed`; the polling-cancellation
-branch already preserves that error. This is an open code-review finding, not a
-reproduced Windows process-cleanup failure. A public-use-case regression must show
-that a typed cleanup failure remains visible as recovery-required after a newer
-pause, without weakening the final admission guard or creating an attempt.
+The [admission-completion regression](../eval/experiments/2026-09-26-admission-completion-cleanup.md)
+now covers the previously found cleanup-error masking branch. Final guard reads
+remain mandatory, and `CleanupFailed` survives a newer pause or read failure.
+The controlled regression does not reproduce an actual Windows kill/reap failure;
+that process-failure scenario and command interleavings remain open.
 
 For the language gate, follow [the provenance/review protocol](evaluation/001-open-data-and-language-gates.md)
 and [the native-speech candidate admission steps](evaluation/003-native-speech-candidates.md).
