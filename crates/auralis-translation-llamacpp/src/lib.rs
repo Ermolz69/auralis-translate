@@ -10,7 +10,9 @@ mod server_report;
 
 pub use model_hash::hash_file;
 pub use model_preflight::verify_server;
-pub use offline_install::{InstalledRelease, OfflineInstallError, install_offline};
+pub use offline_install::{
+    InstalledRelease, OfflineInstallError, install_offline, verify_runtime_files,
+};
 pub use profile::ModelProfile;
 pub use profile_error::ProfileError;
 pub use provider::LlamaCppProvider;

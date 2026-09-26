@@ -41,6 +41,8 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 
 ## Agreed MVP decisions
 
+Recent evidence: [pinned package repair](../eval/experiments/2026-09-26-package-repair.md) and a [ten-sentence real file/reference comparison](../eval/experiments/2026-09-26-flores-file-comparison.md). The latter verifies the transport pipeline with synthetic timings; its local side-by-side report remains unreviewed and has concrete quality-triage items. Neither record closes the language release gates.
+
 | Topic | Decision |
 | --- | --- |
 | Input | An existing subtitle file. Start with a strict plain-SRT subset; add a documented WebVTT subset after independent validation. |

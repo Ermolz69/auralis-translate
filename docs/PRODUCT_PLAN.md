@@ -113,6 +113,10 @@ A release manifest pins model ID/revision/filename/size/SHA-256, licence/NOTICE,
 
 ## 15. Evaluation and release gates
 
+### Delivery clarification
+
+The application installer and Auralis GitHub release never include third-party model weights. The user explicitly chooses **Download and install** in the application; pinned upstream assets then enter application-data storage and are verified before selection. Separately supplied assets can be used through the offline installer. Neither path changes the product's source files or uploads weights to our own release. Test corpora, generated fixtures, comparisons, and SQLite test state remain development artifacts outside production bundles.
+
 The proposed Chinese corpus is roughly 20–30 scenes and 500 cues, with about 200 for development and 300 held out by source video/scene. Japanese requires a comparable separate corpus. Include dialogue, names/terminology, idioms, negation, numbers, split sentences, speaker changes, overlaps, simplified/traditional Chinese, manual/ASR-origin text, Latin text, complex line breaks and protected elements. Keep a provenance and usage-rights manifest; do not commit unlicensed full third-party subtitles. A reviewer must understand both the source language and Russian. Automated judges and back-translation can triage examples but cannot close the semantic gate.
 
 Measure meaning, Russian fluency, terminology, cue-time alignment, structural validity and retry rate, readability, cold start/full-file/p50/p95 time, RAM/VRAM and cancellation/recovery. Compare candidates on the same scenes with their correct templates. The proposed release goals, not measured facts, are:

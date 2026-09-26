@@ -6,6 +6,8 @@ The owner confirmed there is no existing approved Chinese/Japanese subtitle set 
 
 ## Candidate sources and limits
 
+The [ten-row file comparison](../../eval/experiments/2026-09-26-flores-file-comparison.md) uses selected `dev` sentences inside artificial SRT transport fixtures solely to exercise extraction, model execution, persistence, separate output, and offline re-export. Its local report compares source/reference/candidate without a semantic score. It is explicitly **not a subtitle test corpus**, and its synthetic timing/readability is excluded from subtitle-release denominators.
+
 | Source | Verified source-level facts | Proposed use | Cannot establish |
 | --- | --- | --- | --- |
 | [FLORES-200](https://github.com/facebookresearch/flores) | The publisher identifies FLORES-200 as **CC BY-SA 4.0**; its [language list](https://github.com/facebookresearch/flores/blob/main/flores200/README.md) includes `zho_Hans`, `zho_Hant`, `jpn_Jpan`, and `rus_Cyrl`. The exact official archive and selected files are pinned in the [manifest](../../eval/corpora/flores200-archive-b8b0b767.json). The publisher also points to a newer [FLORES+ project](https://github.com/openlanguagedata/flores); treat it as a different dataset. | Fixed, attributed sentence-level comparison of candidate model profiles on both language pairs. Preserve official split and row order; use split plus one-based row as the item ID. | Cue boundaries, dialogue context, timing, subtitle readability, source-file preservation, or an uncontaminated private holdout. Do not turn article sentences into invented timed subtitles and call that a subtitle test. |

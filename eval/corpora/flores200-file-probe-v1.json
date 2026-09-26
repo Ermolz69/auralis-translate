@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "corpus_manifest": "eval/corpora/flores200-archive-b8b0b767.json",
+  "split": "dev",
+  "language": "zho_Hans",
+  "reference_language": "rus_Cyrl",
+  "row_ids": [1, 101, 201, 301, 401, 501, 601, 701, 801, 901],
+  "purpose": "auxiliary_sentence_file_transport_probe",
+  "subtitle_holdout": false,
+  "timings": "synthetic_transport_only"
+}

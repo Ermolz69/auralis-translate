@@ -1,4 +1,4 @@
-use auralis_translation_llamacpp::install_offline;
+use auralis_translation_llamacpp::{ReleaseManifest, install_offline, verify_runtime_files};
 use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 use std::error::Error;
@@ -96,6 +96,31 @@ fn installs_only_verified_files_and_preserves_notices() -> Result<(), Box<dyn Er
         std::fs::read(installed.root.join("release.json"))?,
         fixture.manifest
     );
+    Ok(())
+}
+
+#[test]
+fn runtime_verification_detects_same_length_changes_and_extra_files() -> Result<(), Box<dyn Error>>
+{
+    let root = tempfile::tempdir()?;
+    let fixture = fixture(root.path(), false)?;
+    let installed = install_offline(
+        &fixture.manifest,
+        &fixture.profile,
+        "cpu",
+        &fixture.sources,
+        &root.path().join("installed"),
+    )?;
+    let manifest = ReleaseManifest::from_json(&fixture.manifest, &fixture.profile)?;
+    let variant = &manifest.variants()[0];
+    let assets = installed.root.join("assets");
+    let runtime = installed.root.join("runtime");
+    verify_runtime_files(&assets, &runtime, variant)?;
+    std::fs::write(&installed.executable, b"bad! server")?;
+    assert!(verify_runtime_files(&assets, &runtime, variant).is_err());
+    std::fs::write(&installed.executable, b"stub server")?;
+    std::fs::write(runtime.join("injected.dll"), b"undeclared")?;
+    assert!(verify_runtime_files(&assets, &runtime, variant).is_err());
     Ok(())
 }
 

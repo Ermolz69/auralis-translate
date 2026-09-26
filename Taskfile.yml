@@ -44,3 +44,13 @@ tasks:
     cmds:
       - task: build
       - node eval/scripts/cli-vtt-interruption.mjs
+  eval:file:checks:
+    desc: Verify the auxiliary file comparison harness rejects structure and identity changes
+    cmds:
+      - node --test eval/scripts/tests/file-probe.test.mjs
+  eval:cli:flores:file:
+    desc: Run real Chinese sentence comparisons through a durable SRT transport fixture; keep data and reports in ignored storage
+    cmds:
+      - task: build
+      - task: eval:file:checks
+      - node eval/scripts/cli-flores-file.mjs
