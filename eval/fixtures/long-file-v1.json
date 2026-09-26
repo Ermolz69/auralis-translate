@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "purpose": "synthetic_long_file_recovery_probe",
+  "origin": "project_authored_synthetic_text_and_unreviewed_reference",
+  "cue_count": 1024,
+  "cue_interval_ms": 6000,
+  "cue_duration_ms": 4000,
+  "multiline_every": 4,
+  "repeated_srt_label_every": 17,
+  "missing_vtt_label_every": 3,
+  "code_prefix": "AUR-",
+  "code_width": 4,
+  "crash_after_blocks": 16,
+  "subtitle_holdout": false,
+  "bilingual_reviewed": false,
+  "templates": [
+    { "source": "列车将在 08:10 出发。", "reference_ru": "Поезд отправится в 08:10." },
+    { "source": "不要打开这扇门。", "reference_ru": "Не открывайте эту дверь." },
+    { "source": "我们还需要 3 个箱子。", "reference_ru": "Нам нужны ещё 3 коробки." },
+    { "source": "这个房间的温度是 21 度。", "reference_ru": "Температура в этой комнате — 21 градус." },
+    { "source": "请在星期五之前完成检查。", "reference_ru": "Пожалуйста, завершите проверку до пятницы." },
+    { "source": "设备已经关闭，不需要重新启动。", "reference_ru": "Оборудование уже выключено, перезапуск не требуется." },
+    { "source": "阿明说，会议推迟到明天。", "reference_ru": "Амин сказал, что совещание перенесено на завтра." },
+    { "source": "这不是最后一班车。", "reference_ru": "Это не последний рейс." }
+  ],
+  "second_line": { "source": "请保存这份记录。", "reference_ru": "Пожалуйста, сохраните эту запись." }
+}

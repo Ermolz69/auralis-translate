@@ -4,14 +4,21 @@ import { setTimeout as delay } from 'node:timers/promises';
 
 const MAX_CAPTURE_CHARACTERS = 262_144;
 
-export function startProcess(command, args, cwd, env = process.env) {
+export function startProcess(command, args, cwd, env = process.env, { maxCaptureCharacters = MAX_CAPTURE_CHARACTERS } = {}) {
+  if (!Number.isInteger(maxCaptureCharacters) || maxCaptureCharacters < 1 || maxCaptureCharacters > 16 * 1024 * 1024) throw new Error('Invalid process capture limit');
   const child = spawn(command, args, { cwd, env, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
-  const process = { child, stdout: '', stderr: '' };
-  child.stdout.on('data', (chunk) => { process.stdout = `${process.stdout}${chunk}`.slice(-MAX_CAPTURE_CHARACTERS); });
-  child.stderr.on('data', (chunk) => { process.stderr = `${process.stderr}${chunk}`.slice(-MAX_CAPTURE_CHARACTERS); });
+  const process = { child, stdout: '', stderr: '', stdoutTruncated: false, stderrTruncated: false };
+  for (const stream of ['stdout', 'stderr']) {
+    child[stream].setEncoding('utf8');
+    child[stream].on('data', (chunk) => {
+      const next = `${process[stream]}${chunk}`;
+      process[`${stream}Truncated`] ||= next.length > maxCaptureCharacters;
+      process[stream] = next.slice(-maxCaptureCharacters);
+    });
+  }
   process.ended = new Promise((resolve) => {
     child.once('error', (error) => resolve({ code: null, error }));
-    child.once('exit', (code, signal) => resolve({ code, signal }));
+    child.once('close', (code, signal) => resolve({ code, signal }));
   });
   return process;
 }

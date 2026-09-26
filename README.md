@@ -32,6 +32,8 @@ The CLI accepts an explicitly installed checked local server for `translate`, `t
 
 `task eval:cli:flores:profiles` compares frozen decoding/prompt variants with supplied local assets. The [real comparison evidence](eval/experiments/2026-09-26-profile-comparison.md) records passing transport checks and unresolved translation defects. Complete comparison reports stay in ignored local storage; evaluation does not download weights or select a production profile automatically.
 
+`task eval:cli:long:interruption` runs optimized CLI recovery checks on authored 1024-cue SRT and WebVTT files with supplied assets. The [long-file record](eval/experiments/2026-09-26-long-file-recovery.md) verifies interruption, exact checkpoint retention and offline re-export, and records sampled memory before and after an explicit runtime-cache setting. This technical probe does not establish subtitle adequacy or a throughput SLA.
+
 ## Model and test-data delivery
 
 Third-party model weights are never embedded in the application or uploaded to our release. Auralis downloads pinned upstream assets only after the user's **Download and install** action and selects a package after verification. The standalone CLI also supports explicit `fetch-release`, `install-online`, and separately supplied assets through `install-offline`; see [model installation](docs/architecture/007-model-installation.md).

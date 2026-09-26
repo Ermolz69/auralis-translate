@@ -59,6 +59,7 @@ export async function runFloresFile({ profileFile = 'models/manifests/hy_mt2_1_8
         throw error;
       }
     }
+    assert(!child.stdoutTruncated, 'CLI output capture truncated: file verification would be incomplete');
     return child;
   };
   let server;

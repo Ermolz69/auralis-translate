@@ -7,6 +7,10 @@ tasks:
   build:
     cmds:
       - cargo build --workspace --offline
+  build:release:
+    desc: Build the optimized standalone CLI without downloading dependencies or models
+    cmds:
+      - cargo build --release --offline -p auralis-translation-cli
   test:
     cmds:
       - cargo test --workspace --offline
@@ -71,3 +75,14 @@ tasks:
       vars: [REPORT_DIR]
     cmds:
       - node eval/scripts/verify-profile-comparison.mjs "{{.REPORT_DIR}}"
+  eval:load:checks:
+    desc: Check synthetic long-file fixture, checkpoint preservation and process-capture contracts
+    cmds:
+      - node --test eval/scripts/tests/long-file.test.mjs
+      - node --test eval/scripts/tests/local-process.test.mjs
+  eval:cli:long:interruption:
+    desc: Kill and resume real long SRT and WebVTT runs with supplied checked assets; retain local comparison and resource reports
+    cmds:
+      - task: build:release
+      - task: eval:load:checks
+      - node eval/scripts/cli-long-file.mjs
