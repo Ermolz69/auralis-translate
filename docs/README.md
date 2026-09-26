@@ -59,6 +59,8 @@ Voice markup, TTS, ASR, subtitle timing creation from text, live translation, an
 
 ## Changes from the root plan
 
+The [delivery audit](../eval/experiments/2026-09-26-translation-delivery-audit.md) records the explicit separation of application releases, upstream model downloads, and ignored local test data. Public GitHub publication is deferred by the repository owner; the local submodule workflow continues.
+
 | Root plan sections | MVP clarification |
 | --- | --- |
 | §1, §3, §8 | Text-only input remains a possible future core capability; it is not part of the first file-based MVP or its completion criteria. |

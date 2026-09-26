@@ -26,7 +26,9 @@ Startup recovery now checks the latest Translate result ID on every link with an
 
 ## Current slices
 
-The [26 September package-repair slice](../eval/experiments/2026-09-26-package-repair.md) adds verified candidate replacement, retained selection, a recovery directory, shared active-run admission, and UI repair. A real model-corruption/recovery test and native install/restart/CPU translation passed. The later extracted-runtime verifier has synthetic regression evidence; the updated host adapter regression is pending. Upgrade/removal and orphan workspace cleanup remain open.
+The [delivery audit](../eval/experiments/2026-09-26-translation-delivery-audit.md) records production frontend, native-resource, default-feature, and release-publication exclusion checks. Public GitHub publication is deferred at the owner's request on 26 September; authentication is available, and no public remote was created or pushed.
+
+The [26 September package-repair slice](../eval/experiments/2026-09-26-package-repair.md) adds verified candidate replacement, retained selection, a recovery directory, shared active-run admission, and UI repair. The expanded executable-plus-model corruption test passed in 825.41 seconds, rejecting acquisition/selection before repair and restoring selection after recovery/reopening. The extracted-runtime verifier and pre-acquisition wrapper also passed a final native install/restart/CPU translation. Upgrade/removal and orphan workspace cleanup remain open.
 
 A [ten-row FLORES development file probe](../eval/experiments/2026-09-26-flores-file-comparison.md) now exercises source inspection, a real checked model, two durable blocks, separate verified output, overwrite refusal, and byte-identical offline re-export. Full source/reference/candidate reports remain local under ignored `.cache/`. Russian grammar and terminology review leads remain, despite zero heuristic warnings. This is auxiliary sentence transport evidence with artificial timings, not an approved subtitle corpus or S5/S8 gate.
 
