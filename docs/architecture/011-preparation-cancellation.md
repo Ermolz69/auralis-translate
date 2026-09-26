@@ -11,6 +11,20 @@ failure. It awaits acquisition cleanup before returning; it does not detach or
 simply abandon a blocking hash/probe worker.
 
 The model adapter exposes a small synchronous preparation-control callback.
+
+Model-file diagnostics distinguish observed reading from a successful digest.
+`translation_model_hash_started` is emitted only after hashing the first real
+chunk, with a process-local operation number, actual `hashed_bytes` and the opened
+file's `total_bytes`. `translation_model_hash_finished` carries the same operation
+and counters, with outcome `completed` or `failed`. These are tracing diagnostics,
+not durable checkpoints or machine-protocol progress. They contain no paths,
+source text or error messages. No subscriber is installed by the adapter.
+The native initial-hash test must observe a started, unfinished operation with
+`0 < hashed_bytes < total_bytes`, zero admitted records and no model child before
+it releases the actual UI Pause click. After acknowledgment, the same operation
+must finish failed before all bytes were hashed; a fresh resume must perform a
+new complete check. Observing only elapsed time or a pending request is insufficient.
+
 Model hashing checks it before opening, between bounded chunks and before
 returning a digest. Package verification checks archive hashing, decompression,
 installed-file hashing and directory traversal. Readiness probes check it during
