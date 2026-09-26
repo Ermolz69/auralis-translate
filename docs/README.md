@@ -17,6 +17,7 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 | [Local profile comparison](evaluation/004-model-profile-comparison.md) | Frozen development inputs, decoding/prompt variants, same-file controls, failure retention and unreviewed comparison reports. |
 | [Long-file recovery probe](evaluation/005-long-file-recovery.md) | Optimized CLI, large synthetic SRT/WebVTT inputs, exact checkpoint recovery, full-file checks and approximate resource sampling. |
 | [Clean Windows installation protocol](evaluation/006-clean-windows-installation.md) | Unseeded model setup, interrupted download, offline translation, installer identity and the remaining clean-machine gate. |
+| [Fresh MSI and separate QA handoff](../eval/experiments/2026-09-26-windows-msi-cancellation.md) | Production cancellation build, materialized payload checks and independently supplied setup probes; clean installation remains unexecuted. |
 | [FLORES-200 acquisition](../eval/experiments/2026-09-25-flores200-acquisition.md) | Locally cached, hash-pinned auxiliary Chinese/Japanese-to-Russian sentence corpus; no subtitle release claim. |
 | [FLORES-200 provider smoke](../eval/experiments/2026-09-25-flores200-provider-smoke.md) | Checked local model output for one Chinese and one Japanese sentence, with unresolved source/reference divergence. |
 | [Native result-gap recovery](../eval/experiments/2026-09-25-native-result-gap.md) | Killed-desktop evidence for a validated Translate result committed before Auralis publication, followed by ready-artifact recovery. |

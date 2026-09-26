@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "provenance": "Project-authored setup diagnostics; no third-party corpus or reviewed reference.",
+  "source_language": "zh",
+  "target_language": "ru",
+  "reference_status": "unreviewed_draft",
+  "cues": [
+    {
+      "id": 1,
+      "start_ms": 1000,
+      "end_ms": 5000,
+      "source": "列车将在 08:10 出发。",
+      "draft": "Поезд отправится в 08:10.",
+      "diagnostic": "time_and_number"
+    },
+    {
+      "id": 2,
+      "start_ms": 6000,
+      "end_ms": 10000,
+      "source": "不要打开这扇门。",
+      "draft": "Не открывайте эту дверь.",
+      "diagnostic": "negation"
+    },
+    {
+      "id": 3,
+      "start_ms": 11000,
+      "end_ms": 15000,
+      "source": "我们还需要 3 个箱子。",
+      "draft": "Нам нужны ещё 3 коробки.",
+      "diagnostic": "quantity"
+    },
+    {
+      "id": 4,
+      "start_ms": 16000,
+      "end_ms": 20000,
+      "source": "请在星期五之前完成检查。",
+      "draft": "Пожалуйста, завершите проверку до пятницы.",
+      "diagnostic": "deadline"
+    }
+  ]
+}

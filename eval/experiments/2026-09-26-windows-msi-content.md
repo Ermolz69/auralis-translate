@@ -2,6 +2,10 @@
 
 Date: 26 September 2026. Scope: a real locally built, unsigned Windows x64 MSI with production features and materialized content verification. This adds S6/S8 delivery evidence; clean installation, signing and language gates remain open.
 
+This is the earlier build record. The [later cancellation build](2026-09-26-windows-msi-cancellation.md)
+supersedes its live `target/` paths; the copies under the retained audit directory
+below remain the authoritative artifacts for the hashes in this record.
+
 ## Commands and outcomes
 
 From the Auralis checkout:

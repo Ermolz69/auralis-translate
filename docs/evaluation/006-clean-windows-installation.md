@@ -24,14 +24,42 @@ The local unsigned MSI can exercise development installation where explicitly ac
 
 ## Minimal independently supplied probe
 
+The versioned [authored setup fixture](../../eval/fixtures/clean-windows/setup-probe.v1.json)
+contains the four diagnostics below. After Auralis completes a production MSI
+build and payload audit, prepare a separate handoff directory from the Translate
+checkout:
+
+```text
+task eval:clean-windows:prepare AURALIS_ROOT=ABSOLUTE_AURALIS_CHECKOUT OUTPUT_DIR=NEW_IGNORED_QA_DIRECTORY AURALIS_REVISION=FULL_BUILD_COMMIT TRANSLATE_REVISION=FULL_PINNED_TRANSLATE_COMMIT
+```
+
+Use absolute paths and full 40-character commits for the installer build; these
+are supplied provenance, not a reproducible-build attestation. The generator
+rejects an MSI that differs from the audit or a stale application source hash,
+copies the installer and audit, generates BOM/CRLF SRT/WebVTT diagnostics, and
+includes an unreviewed Russian draft, detached checklist and empty report. Every
+copied input has a length and SHA-256 in `manifest.json`. A new output directory is
+required and application build/resource directories are rejected. No model,
+runtime, Node/Rust runner, application data or private corpus is copied.
+
+Copy this independent directory to the disposable Windows environment. It is
+QA material, never an application resource or release publication directory.
+The target machine needs only the installer and application UI to execute the
+checklist; controller-side `task eval:clean-windows:check` verifies preparation
+behavior using fake installer bytes. Leave all report steps `not_run` until
+observed, record signature status explicitly, and retain baseline inputs while
+editing `REPORT.json`. Preparation alone does not close clean-install or language
+gates. A failed preparation may retain an incomplete directory without a final
+manifest; use a new destination after resolving the failure.
+
 Create a UTF-8 plain SRT outside the installation directory, with one cue for each authored source below. Freeze timings and a source hash before import. Use these as small setup diagnostics; representative Chinese/Japanese subtitle corpora and bilingual review remain separate language gates.
 
-| Chinese source | Unreviewed Russian draft | Diagnostic |
-| --- | --- | --- |
-| 列车将在 08:10 出发。 | Поезд отправится в 08:10. | Time and number |
-| 不要打开这扇门。 | Не открывайте эту дверь. | Negation |
-| 我们还需要 3 个箱子。 | Нам нужны ещё 3 коробки. | Quantity |
-| 请在星期五之前完成检查。 | Пожалуйста, завершите проверку до пятницы. | Deadline |
+| Chinese source           | Unreviewed Russian draft                   | Diagnostic      |
+| ------------------------ | ------------------------------------------ | --------------- |
+| 列车将在 08:10 出发。    | Поезд отправится в 08:10.                  | Time and number |
+| 不要打开这扇门。         | Не открывайте эту дверь.                   | Negation        |
+| 我们还需要 3 个箱子。    | Нам нужны ещё 3 коробки.                   | Quantity        |
+| 请在星期五之前完成检查。 | Пожалуйста, завершите проверку до пятницы. | Deadline        |
 
 Supply WebVTT separately if that format is included in the declared profile. The [long-file protocol](005-long-file-recovery.md) can generate larger authored files on the controller; artificial timing/repeated text remains technical load evidence.
 
@@ -39,13 +67,13 @@ Supply WebVTT separately if that format is included in the declared profile. The
 
 Retain a report with environment identity, source/installer/model/runtime/profile hashes, signatures, steps and observed failures, screenshots/logs, source/draft/candidate files, run/result identities, exported files and resource/disk measurements. After the application exits, collect database copies for controller-side integrity/recovery analysis without editing the originals.
 
-| Claim | Required direct evidence |
-| --- | --- |
-| Installer excludes weights/test data | Materialized file inventory, application identity and payload policy passed for this exact installer. |
-| Explicit setup works | Real unseeded UI download/install/select and interrupted retry on the clean environment. |
-| Offline operation works | Network-disconnected cold launch and real translation from the installed package after restart. |
-| Durable project workflow works | Preserved original/checkpoints and ready result/revision through the named interruption tests. |
-| G9 passes | All applicable clean-environment setup and offline checks passed on the declared profile, with retained evidence. |
-| Language support passes | Separate source-aware corpus review and the G3/G4/G5 thresholds in the product plan. |
+| Claim                                | Required direct evidence                                                                                          |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| Installer excludes weights/test data | Materialized file inventory, application identity and payload policy passed for this exact installer.             |
+| Explicit setup works                 | Real unseeded UI download/install/select and interrupted retry on the clean environment.                          |
+| Offline operation works              | Network-disconnected cold launch and real translation from the installed package after restart.                   |
+| Durable project workflow works       | Preserved original/checkpoints and ready result/revision through the named interruption tests.                    |
+| G9 passes                            | All applicable clean-environment setup and offline checks passed on the declared profile, with retained evidence. |
+| Language support passes              | Separate source-aware corpus review and the G3/G4/G5 thresholds in the product plan.                              |
 
 Keep every failed case in the report. A process remaining alive for a few seconds, a seeded developer cache, compiler success, synthetic reference equality or installer extraction alone cannot establish clean installation or language quality.

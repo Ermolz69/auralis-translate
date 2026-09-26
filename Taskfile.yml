@@ -1,6 +1,17 @@
-version: '3'
+version: "3"
 
 tasks:
+  eval:clean-windows:check:
+    desc: Verify separate QA preparation, installer identity and unexecuted report boundaries
+    cmds:
+      - node --test eval/scripts/tests/clean-windows-qa.test.mjs
+  eval:clean-windows:prepare:
+    desc: Copy an audited MSI and independent authored diagnostics into a new QA directory without model weights
+    requires:
+      vars: [AURALIS_ROOT, OUTPUT_DIR, AURALIS_REVISION, TRANSLATE_REVISION]
+    cmds:
+      - task: eval:clean-windows:check
+      - node eval/scripts/clean-windows-qa.mjs "{{.AURALIS_ROOT}}" "{{.OUTPUT_DIR}}" "{{.AURALIS_REVISION}}" "{{.TRANSLATE_REVISION}}"
   fetch:
     cmds:
       - cargo fetch
