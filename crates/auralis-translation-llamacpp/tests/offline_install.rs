@@ -16,6 +16,41 @@ const MANIFEST: &[u8] =
     include_bytes!("../../../models/releases/hy_mt2_1_8b_q4_k_m.windows_x64_cpu.experimental.json");
 
 #[test]
+fn reporting_failure_keeps_verified_asset_and_stops_before_next_asset() -> Result<(), Box<dyn Error>>
+{
+    let root = tempfile::tempdir()?;
+    let fixture = fixture(root.path(), false)?;
+    let mut calls = 0;
+    let result = auralis_translation_llamacpp::download_release_assets_with_observer(
+        &fixture.manifest,
+        &fixture.profile,
+        "cpu",
+        &fixture.sources,
+        |asset, path| {
+            calls += 1;
+            assert_eq!(asset.filename, "Hy-MT2-1.8B-Q4_K_M.gguf");
+            assert_eq!(std::fs::read(path)?, b"tiny fixture model");
+            Err(std::io::Error::new(
+                std::io::ErrorKind::BrokenPipe,
+                "disconnected controller",
+            ))
+        },
+    );
+    assert!(
+        matches!(result, Err(auralis_translation_llamacpp::AssetDownloadError::Io(error)) if error.kind() == std::io::ErrorKind::BrokenPipe)
+    );
+    assert_eq!(calls, 1);
+    assert!(fixture.sources.join("Hy-MT2-1.8B-Q4_K_M.gguf").is_file());
+    assert!(
+        !fixture
+            .sources
+            .join("MODEL-LICENSE.txt.download.lock")
+            .exists()
+    );
+    Ok(())
+}
+
+#[test]
 fn interrupted_runtime_verification_keeps_the_installed_package() -> Result<(), Box<dyn Error>> {
     let root = tempfile::tempdir()?;
     let fixture = fixture(root.path(), false)?;

@@ -1,72 +1,62 @@
-use serde::Deserialize;
-use std::{ffi::OsString, path::PathBuf};
-
-#[derive(Deserialize)]
-#[serde(tag = "command", rename_all = "kebab-case", deny_unknown_fields)]
-pub(crate) enum MachineRequest {
-    Inspect {
-        source: PathBuf,
-    },
-    InspectVtt {
-        source: PathBuf,
-    },
-    Doctor {
-        profile: PathBuf,
-        model: PathBuf,
-    },
-    Status {
-        state_dir: PathBuf,
-        run_id: String,
-    },
-    Diagnostics {
-        state_dir: PathBuf,
-        run_id: String,
-    },
-    Pause {
-        state_dir: PathBuf,
-        run_id: String,
-    },
-    Translate {
-        source: PathBuf,
-        state_dir: PathBuf,
-        profile: PathBuf,
-        endpoint: String,
-        output: PathBuf,
-    },
-    TranslateVtt {
-        source: PathBuf,
-        state_dir: PathBuf,
-        profile: PathBuf,
-        endpoint: String,
-        output: PathBuf,
-    },
-    TranslateGlossary {
-        source: PathBuf,
-        state_dir: PathBuf,
-        profile: PathBuf,
-        glossary: PathBuf,
-        endpoint: String,
-        output: PathBuf,
-    },
-    Resume {
-        state_dir: PathBuf,
-        run_id: String,
-        profile: PathBuf,
-        endpoint: String,
-        output: PathBuf,
-    },
-    Edit {
-        state_dir: PathBuf,
-        base_result_id: String,
-        profile: PathBuf,
-        edit: PathBuf,
-        output: PathBuf,
-    },
-}
-
+use super::MachineRequest;
+use std::ffi::OsString;
 impl MachineRequest {
     pub fn into_args(self) -> Vec<OsString> {
         match self {
+            Self::FetchRelease {
+                manifest,
+                profile,
+                backend,
+                cache_dir,
+            } => vec![
+                "fetch-release".into(),
+                manifest.into(),
+                profile.into(),
+                backend.into(),
+                cache_dir.into(),
+            ],
+            Self::FetchAsset {
+                manifest,
+                profile,
+                backend,
+                filename,
+                cache_dir,
+            } => vec![
+                "fetch-asset".into(),
+                manifest.into(),
+                profile.into(),
+                backend.into(),
+                filename.into(),
+                cache_dir.into(),
+            ],
+            Self::InstallOffline {
+                manifest,
+                profile,
+                backend,
+                source_dir,
+                install_root,
+            } => vec![
+                "install-offline".into(),
+                manifest.into(),
+                profile.into(),
+                backend.into(),
+                source_dir.into(),
+                install_root.into(),
+            ],
+            Self::InstallOnline {
+                manifest,
+                profile,
+                backend,
+                cache_dir,
+                install_root,
+            } => vec![
+                "install-online".into(),
+                manifest.into(),
+                profile.into(),
+                backend.into(),
+                cache_dir.into(),
+                install_root.into(),
+            ],
             Self::Inspect { source } => vec!["inspect".into(), source.into()],
             Self::InspectVtt { source } => vec!["inspect-vtt".into(), source.into()],
             Self::Doctor { profile, model } => vec!["doctor".into(), profile.into(), model.into()],

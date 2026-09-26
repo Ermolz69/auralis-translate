@@ -8,12 +8,32 @@ pub fn download_release_assets(
     backend: &str,
     cache_dir: &Path,
 ) -> Result<Vec<PathBuf>, AssetDownloadError> {
+    download_release_assets_with_observer(
+        manifest_bytes,
+        profile_bytes,
+        backend,
+        cache_dir,
+        |_, _| Ok(()),
+    )
+}
+
+pub fn download_release_assets_with_observer(
+    manifest_bytes: &[u8],
+    profile_bytes: &[u8],
+    backend: &str,
+    cache_dir: &Path,
+    mut verified: impl FnMut(&crate::ReleaseAsset, &Path) -> Result<(), std::io::Error>,
+) -> Result<Vec<PathBuf>, AssetDownloadError> {
     let manifest = ReleaseManifest::from_json(manifest_bytes, profile_bytes)?;
     let assets = manifest.assets_for_backend(backend)?;
     let client = release_download_client()?;
     assets
         .into_iter()
-        .map(|asset| download_asset_with_client(asset, cache_dir, &client))
+        .map(|asset| {
+            let path = download_asset_with_client(asset, cache_dir, &client)?;
+            verified(asset, &path)?;
+            Ok(path)
+        })
         .collect()
 }
 

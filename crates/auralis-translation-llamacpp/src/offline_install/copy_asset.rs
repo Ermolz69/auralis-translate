@@ -36,7 +36,9 @@ pub(super) fn copy_asset(
             .checked_add(read as u64)
             .ok_or(OfflineInstallError::Invalid("asset length overflow"))?;
         if asset.bytes.is_some_and(|expected| size > expected) {
-            return Err(OfflineInstallError::Invalid("asset exceeds pinned length"));
+            return Err(OfflineInstallError::Integrity {
+                filename: asset.filename.clone(),
+            });
         }
         hasher.update(&buffer[..read]);
         output.write_all(&buffer[..read])?;
@@ -47,9 +49,9 @@ pub(super) fn copy_asset(
             .sha256
             .eq_ignore_ascii_case(&format!("{:x}", hasher.finalize()))
     {
-        return Err(OfflineInstallError::Invalid(
-            "asset differs from pinned length or digest",
-        ));
+        return Err(OfflineInstallError::Integrity {
+            filename: asset.filename.clone(),
+        });
     }
     Ok(destination)
 }

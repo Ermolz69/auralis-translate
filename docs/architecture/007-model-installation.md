@@ -31,6 +31,19 @@ The installer returns the paths to the executable, model, and profile. It does *
 
 The source subtitle remains an immutable project artifact, and the translated output is assembled separately; package installation never touches project files.
 
+## Standalone machine boundary
+
+The four existing acquisition/install commands now share the
+[machine protocol](../reference/cli-protocol-v1.md) with translation/control.
+Validated manifest/profile bytes are frozen before either online phase.
+`package_started` reports that identity; `asset_cached` reports only a complete
+verified cache entry; `package_installed` reports the final renamed package.
+JSONL retains per-asset receipts before a later failure, while final JSON keeps
+only the latest receipt. Installation does not select an Auralis runtime or
+launch inference. Typed identity, ownership, transport and filesystem failures
+replace message-based interpretation at this boundary. See the
+[implementation and evidence record](../../eval/experiments/2026-09-26-cli-package-protocol.md).
+
 ## Remaining release work
 
 ### Implemented repair and delivery boundary

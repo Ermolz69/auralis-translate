@@ -44,6 +44,15 @@ implements that port without moving serialization or stdout into the core.
 Behavior tests and process/socket helpers stay under the CLI's `tests/` tree.
 See [machine protocol v1](../reference/cli-protocol-v1.md) for its public boundary.
 
+The growing request concept now lives in `machine_request/`: `request.rs` owns
+the tagged enum, `into_args.rs` converts it to positional dispatch, and `mod.rs`
+only declares/exports modules. `PackageInput` freezes validated manifest/profile
+bytes and backend once, including both online-install phases. Cache and installed
+package receipt types have separate reporting files; package error classification
+is separate from translation/store classification. The shared adapter's verified
+asset observer is fallible, emits no text, and stops before the next asset when a
+controller disconnects. Core/domain code does not depend on package IO or stdout.
+
 ```text
 Cargo.toml
 Cargo.lock

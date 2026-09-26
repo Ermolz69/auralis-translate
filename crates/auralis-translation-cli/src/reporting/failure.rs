@@ -32,6 +32,9 @@ impl fmt::Display for CliFailure {
 impl Error for CliFailure {}
 
 pub(crate) fn classify(error: &(dyn Error + 'static)) -> ErrorCode {
+    if let Some(code) = super::package_failure::classify(error) {
+        return code;
+    }
     if let Some(error) = error.downcast_ref::<auralis_translation_formats::srt::SrtPlanError>() {
         return match error {
             auralis_translation_formats::srt::SrtPlanError::Inspect(_) => ErrorCode::InvalidSource,
@@ -76,15 +79,19 @@ pub(crate) fn classify(error: &(dyn Error + 'static)) -> ErrorCode {
         return ErrorCode::RuntimeFailure;
     }
     if let Some(error) = error.downcast_ref::<std::io::Error>() {
-        return match error.kind() {
-            std::io::ErrorKind::AlreadyExists => ErrorCode::Conflict,
-            std::io::ErrorKind::InvalidData | std::io::ErrorKind::InvalidInput => {
-                ErrorCode::InvalidInput
-            }
-            _ => ErrorCode::IoFailure,
-        };
+        return io_code(error);
     }
     ErrorCode::InternalFailure
+}
+
+pub(super) fn io_code(error: &std::io::Error) -> ErrorCode {
+    match error.kind() {
+        std::io::ErrorKind::AlreadyExists => ErrorCode::Conflict,
+        std::io::ErrorKind::InvalidData | std::io::ErrorKind::InvalidInput => {
+            ErrorCode::InvalidInput
+        }
+        _ => ErrorCode::IoFailure,
+    }
 }
 
 fn database(error: &DbError) -> ErrorCode {

@@ -31,9 +31,7 @@ pub fn install_offline(
     std::fs::create_dir_all(&release_root)?;
     let final_root = release_root.join(backend);
     if final_root.exists() {
-        return Err(OfflineInstallError::Invalid(
-            "release backend already exists",
-        ));
+        return Err(OfflineInstallError::AlreadyInstalled);
     }
     let staged = tempfile::Builder::new()
         .prefix(".installing-")

@@ -30,6 +30,7 @@ mod vtt_manual_command;
 mod write_new;
 
 mod machine_request;
+mod package_input;
 mod report_result;
 mod reporting;
 mod request_document;
@@ -89,6 +90,10 @@ fn main() -> ExitCode {
                     | "translate-glossary"
                     | "resume"
                     | "edit"
+                    | "fetch-release"
+                    | "fetch-asset"
+                    | "install-offline"
+                    | "install-online"
             ) {
                 return Err(CliFailure::boxed(
                     ErrorCode::Usage,

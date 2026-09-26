@@ -1,10 +1,24 @@
-use super::ErrorCode;
+use super::{CachedAsset, ErrorCode, InstalledPackage};
 use serde::Serialize;
 use serde_json::Value;
 
 #[derive(Serialize)]
 #[serde(tag = "event", rename_all = "snake_case")]
 pub(crate) enum CliEvent {
+    PackageStarted {
+        release_id: String,
+        backend: String,
+        manifest_sha256: String,
+        profile_sha256: String,
+    },
+    AssetCached {
+        #[serde(flatten)]
+        receipt: CachedAsset,
+    },
+    PackageInstalled {
+        #[serde(flatten)]
+        receipt: InstalledPackage,
+    },
     RunStarted {
         translation_id: String,
         run_id: String,

@@ -11,7 +11,7 @@ pub(super) fn verify_partial_range(
         .headers()
         .get(CONTENT_RANGE)
         .and_then(|value| value.to_str().ok())
-        .ok_or(AssetDownloadError::Invalid(
+        .ok_or(AssetDownloadError::Response(
             "partial response has no Content-Range",
         ))?;
     let fields = value
@@ -22,17 +22,17 @@ pub(super) fn verify_partial_range(
                 .split_once('-')
                 .map(|(start, end)| (start, end, total))
         })
-        .ok_or(AssetDownloadError::Invalid("Content-Range is invalid"))?;
+        .ok_or(AssetDownloadError::Response("Content-Range is invalid"))?;
     let (start, end, total) = (
         fields.0.parse::<u64>(),
         fields.1.parse::<u64>(),
         fields.2.parse::<u64>(),
     );
     let (Ok(start), Ok(end), Ok(total)) = (start, end, total) else {
-        return Err(AssetDownloadError::Invalid("Content-Range is invalid"));
+        return Err(AssetDownloadError::Response("Content-Range is invalid"));
     };
     if start != offset || end < start || end.checked_add(1) != Some(expected) || total != expected {
-        return Err(AssetDownloadError::Invalid(
+        return Err(AssetDownloadError::Response(
             "partial response range differs from pinned asset length",
         ));
     }
@@ -40,7 +40,7 @@ pub(super) fn verify_partial_range(
         .content_length()
         .is_some_and(|length| length != expected - offset)
     {
-        return Err(AssetDownloadError::Invalid(
+        return Err(AssetDownloadError::Response(
             "partial response length differs from Content-Range",
         ));
     }

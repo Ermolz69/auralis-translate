@@ -107,6 +107,15 @@ The user chooses an existing source file or project subtitle artifact, sees lang
 
 ## 14. Standalone CLI and delivery
 
+Separate-model acquisition and installation use the same machine boundary:
+`fetch-release`, `fetch-asset`, `install-offline` and `install-online` accept
+versioned requests and report verified cache/package receipts. Cache progress
+counts verified assets, not untrusted transferred bytes. Installing a package
+does not start inference or select a host runtime. The
+[package protocol evidence](../eval/experiments/2026-09-26-cli-package-protocol.md)
+records process checks and real pinned-file installation separately from the
+clean-machine and quality gates.
+
 The CLI uses the same core, validators, profiles and formats as Auralis. Commands include `inspect`, `doctor`, `translate` and `resume`, with explicit JSON input/output and JSONL progress modes defined by [machine protocol v1](reference/cli-protocol-v1.md). In machine mode human diagnostics go to stderr and stdout contains only versioned records. Stable exit codes distinguish success, review required, invalid input, runtime failure, cancellation and persistence/conflict outcomes. The unflagged development interface retains its existing 0/1 behavior for current local tooling; it is not the new machine contract. A completed file is written through a temporary file and atomic replacement only after validation; an existing output is not overwritten without an explicit option. The original is never overwritten by default.
 
 A release manifest pins model ID/revision/filename/size/SHA-256, licence/NOTICE, runtime build/backend/checksum, tokenizer/template/prompt, decoding, supported languages/platforms and linked evaluation evidence. Download to a temporary file, support safe resume, verify checksum and atomically install; incomplete weights are not selectable. Updates create a new profile version and do not rewrite old translations. After initial installation the selected local profile must pass an offline smoke test on its declared OS.

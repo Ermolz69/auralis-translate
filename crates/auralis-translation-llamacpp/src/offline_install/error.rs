@@ -1,5 +1,9 @@
 #[derive(Debug, thiserror::Error)]
 pub enum OfflineInstallError {
+    #[error("release backend already exists")]
+    AlreadyInstalled,
+    #[error("asset differs from pinned length or digest: {filename}")]
+    Integrity { filename: String },
     #[error(transparent)]
     Preparation(#[from] auralis_translation::ProviderError),
     #[error("offline installation is invalid: {0}")]

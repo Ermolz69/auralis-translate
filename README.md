@@ -11,6 +11,7 @@ The current implementation is **experimental**. Strict plain-SRT and a documente
 - [Temporary implementation stages](docs/IMPLEMENTATION_STAGES.md)
 - [Rust architecture](docs/architecture/004-rust-code-architecture.md)
 - [CLI machine protocol v1](docs/reference/cli-protocol-v1.md)
+- [Separate-model package protocol evidence](eval/experiments/2026-09-26-cli-package-protocol.md)
 - [Agent instructions](AGENTS.md)
 
 The Russian [historical plan](AURALIS_SUBTITLE_TRANSLATION_PLAN.md) stays at the root. Later agreed file-based MVP decisions are recorded in English under `docs/`.
@@ -30,6 +31,13 @@ task cli -- inspect-vtt PATH_TO_SOURCE.vtt
 `task check` covers Rust formatting, Clippy, and workspace tests. The documentation link check and optional evaluation scripts use Node.js. Default Rust tests use small synthetic fixtures and mock providers; they do not establish translation quality.
 
 The CLI accepts an explicitly installed checked local server for `translate`, `translate-vtt`, and `resume`. See [implementation status](docs/IMPLEMENTATION_STATUS.md) for exact command contracts and [the ten-row comparison record](eval/experiments/2026-09-26-flores-file-comparison.md) for a reproducible real local file transport run and source/reference/candidate reports.
+
+Model acquisition and installation are separate commands. `fetch-release`,
+`fetch-asset`, `install-offline` and `install-online` accept machine JSON requests
+and produce JSON/JSONL verified cache/package receipts. Run `task test:cli:packages`
+for their process regressions or `task eval:cli:packages ASSET_DIR=ABSOLUTE_CACHE`
+with separately supplied real pinned assets. Weights and probe reports remain
+outside Git and application bundles; installation does not start translation.
 
 `task eval:cli:flores:profiles` compares frozen decoding/prompt variants with supplied local assets. The [real comparison evidence](eval/experiments/2026-09-26-profile-comparison.md) records passing transport checks and unresolved translation defects. Complete comparison reports stay in ignored local storage; evaluation does not download weights or select a production profile automatically.
 

@@ -89,7 +89,7 @@ fn transfer(
         .get(CONTENT_ENCODING)
         .is_some_and(|encoding| encoding != "identity")
     {
-        return Err(AssetDownloadError::Invalid(
+        return Err(AssetDownloadError::Response(
             "compressed asset response is unsupported",
         ));
     }
@@ -100,7 +100,7 @@ fn transfer(
         }
         StatusCode::OK => {
             if response.headers().contains_key(CONTENT_RANGE) {
-                return Err(AssetDownloadError::Invalid(
+                return Err(AssetDownloadError::Response(
                     "full response unexpectedly has Content-Range",
                 ));
             }
@@ -108,7 +108,7 @@ fn transfer(
                 .content_length()
                 .is_some_and(|length| length != expected)
             {
-                return Err(AssetDownloadError::Invalid(
+                return Err(AssetDownloadError::Response(
                     "full response length differs from pinned asset length",
                 ));
             }
@@ -116,31 +116,31 @@ fn transfer(
             0
         }
         _ => {
-            return Err(AssetDownloadError::Invalid(
-                "asset server returned HTTP error",
-            ));
+            return Err(AssetDownloadError::HttpStatus(response.status().as_u16()));
         }
     };
     partial.seek(SeekFrom::Start(start))?;
     let mut total = start;
     let mut buffer = vec![0_u8; COPY_BUFFER_BYTES];
     loop {
-        let count = response.read(&mut buffer)?;
+        let count = response
+            .read(&mut buffer)
+            .map_err(AssetDownloadError::TransferIo)?;
         if count == 0 {
             break;
         }
         total = total
             .checked_add(count as u64)
-            .ok_or(AssetDownloadError::Invalid("asset length overflow"))?;
+            .ok_or(AssetDownloadError::Response("asset length overflow"))?;
         if total > expected {
-            return Err(AssetDownloadError::Invalid(
+            return Err(AssetDownloadError::Response(
                 "asset response exceeds pinned length",
             ));
         }
         partial.write_all(&buffer[..count])?;
     }
     if total != expected {
-        return Err(AssetDownloadError::Invalid(
+        return Err(AssetDownloadError::Response(
             "asset response ended before pinned length",
         ));
     }
@@ -148,12 +148,11 @@ fn transfer(
 }
 
 fn verify_file(path: &Path, asset: &ReleaseAsset) -> Result<(), AssetDownloadError> {
-    let (digest, bytes) = hash_file(path)
-        .map_err(|_| AssetDownloadError::Invalid("asset file could not be hashed"))?;
+    let (digest, bytes) = hash_file(path).map_err(AssetDownloadError::Hash)?;
     if Some(bytes) != asset.bytes || !digest.to_string().eq_ignore_ascii_case(&asset.sha256) {
-        return Err(AssetDownloadError::Invalid(
-            "asset differs from pinned length or digest",
-        ));
+        return Err(AssetDownloadError::Integrity {
+            filename: asset.filename.clone(),
+        });
     }
     Ok(())
 }

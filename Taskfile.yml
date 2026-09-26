@@ -14,6 +14,21 @@ tasks:
     desc: Verify machine JSON input/output, durable progress, review exit, interruption and recovery
     cmds:
       - cargo test --offline -p auralis-translation-cli --test machine_protocol
+  test:cli:packages:
+    desc: Verify separate model installation through machine requests, receipts, partial failures and legacy output
+    cmds:
+      - cargo test --offline -p auralis-translation-cli --test machine_packages
+      - cargo test --offline -p auralis-translation-llamacpp --test asset_download --test offline_install
+  eval:cli:packages:
+    desc: Verify machine package receipts against separately supplied real pinned assets; retain outputs only in ignored storage
+    requires:
+      vars: [ASSET_DIR]
+    env:
+      AURALIS_PACKAGE_PROBE_ASSET_DIR: '{{.ASSET_DIR}}'
+    cmds:
+      - task: build:release
+      - task: test:cli:packages
+      - node eval/scripts/cli-package-probe.mjs
   eval:cli:protocol:
     desc: Verify machine JSON/JSONL with a supplied checked model and independent authored comparison inputs
     cmds:

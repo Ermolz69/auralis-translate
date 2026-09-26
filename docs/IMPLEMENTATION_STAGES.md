@@ -74,8 +74,11 @@ requests, final JSON or streaming JSONL, committed counters and distinct review,
 runtime, pause, I/O and conflict exit codes. Seven CLI process/SQLite regressions
 pass, and a [checked-model SRT/WebVTT probe](../eval/experiments/2026-09-26-cli-machine-protocol.md)
 verifies separate outputs and identical offline JSON export with retained
-source/draft/candidate comparisons. Machine installation commands, CLI-owned
-runtime and orphan cleanup remain prerequisites for the complete standalone gate.
+source/draft/candidate comparisons. The [package protocol extension](../eval/experiments/2026-09-26-cli-package-protocol.md)
+adds machine download/install commands, verified receipts and typed package
+failures. CLI-owned runtime, finer provider reasons and orphan cleanup remain
+prerequisites for the complete standalone gate; package support does not close
+the clean-machine or language gates.
 
 The [active request cancellation contract](architecture/009-request-cancellation.md)
 implements the product-plan pause semantics without putting HTTP or SQLite into

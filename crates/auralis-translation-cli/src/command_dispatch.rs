@@ -49,19 +49,33 @@ pub(crate) fn dispatch(
             backend,
             source_dir,
             install_root,
-        ] if command == "install-offline" => {
-            offline_install_command::run(manifest, profile, backend, source_dir, install_root)
-        }
+        ] if command == "install-offline" => offline_install_command::run(
+            manifest,
+            profile,
+            backend,
+            source_dir,
+            install_root,
+            reporter,
+        ),
         [command, manifest, profile, backend, cache_dir] if command == "fetch-release" => {
-            asset_download_command::run(manifest, profile, backend, cache_dir)
+            asset_download_command::run(manifest, profile, backend, cache_dir, reporter)
         }
         [command, manifest, profile, backend, filename, cache_dir] if command == "fetch-asset" => {
-            asset_download_command::run_one(manifest, profile, backend, filename, cache_dir)
+            asset_download_command::run_one(
+                manifest, profile, backend, filename, cache_dir, reporter,
+            )
         }
         [command, manifest, profile, backend, cache_dir, install_root]
             if command == "install-online" =>
         {
-            online_install_command::run(manifest, profile, backend, cache_dir, install_root)
+            online_install_command::run(
+                manifest,
+                profile,
+                backend,
+                cache_dir,
+                install_root,
+                reporter,
+            )
         }
         [command, source, profile, endpoint, output] if command == "translate-experimental" => {
             experimental_command::run(source, profile, endpoint, output)

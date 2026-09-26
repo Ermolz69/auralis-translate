@@ -6,6 +6,9 @@ use serde::Serialize;
 pub(super) struct CliSummary {
     pub schema_version: u32,
     pub command: String,
+    pub package: Option<CliEvent>,
+    pub asset: Option<CliEvent>,
+    pub installation: Option<CliEvent>,
     pub run: Option<CliEvent>,
     pub model: Option<CliEvent>,
     pub progress: Option<CliEvent>,
@@ -19,6 +22,9 @@ impl CliSummary {
         Self {
             schema_version: PROTOCOL_VERSION,
             command,
+            package: None,
+            asset: None,
+            installation: None,
             run: None,
             model: None,
             progress: None,
@@ -30,6 +36,9 @@ impl CliSummary {
 
     pub fn retain(&mut self, event: CliEvent) {
         match event {
+            CliEvent::PackageStarted { .. } => self.package = Some(event),
+            CliEvent::AssetCached { .. } => self.asset = Some(event),
+            CliEvent::PackageInstalled { .. } => self.installation = Some(event),
             CliEvent::RunStarted { .. } => self.run = Some(event),
             CliEvent::ModelReady { .. } => self.model = Some(event),
             CliEvent::Progress { .. } => self.progress = Some(event),
