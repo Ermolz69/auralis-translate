@@ -61,7 +61,10 @@ now passes through the actual panel, zero admitted records, observed child relea
 and fresh resume. [Native initial-hash pause](../eval/experiments/2026-09-26-native-initial-hash-pause.md)
 also passes an observed incomplete hash, zero admitted records, a 52 ms UI
 acknowledgment and fresh full verification before a ready separate result.
-Command races and real process-cleanup failure remain open.
+The [native concurrent-start probe](../eval/experiments/2026-09-26-native-concurrent-starts.md)
+also verifies two `BUSY` replies during that hash and reuse of one accepted host
+job by two parallel requests during worker preflight, followed by one ready result.
+Additional command races and real process-cleanup failure remain open.
 
 The [host execution status contract](architecture/012-host-execution-status.md)
 retains preparation after the scheduler accepts a job while the worker verifies

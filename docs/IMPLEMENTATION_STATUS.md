@@ -1,5 +1,17 @@
 # Implementation status and evidence
 
+Latest same-process concurrency slice: [native parallel starts](../eval/experiments/2026-09-26-native-concurrent-starts.md)
+pass two named boundaries. Two extra IPC requests return typed `BUSY` while the
+initial real hash owns the model slot; actual UI Pause acknowledges in 235 ms
+with all seven admitted/partial counts zero. Fresh resume performs three full
+checks, and two extra worker-preflight requests return the same accepted job/run.
+The run completes exactly one host job/Translate attempt with unchanged originals,
+a ready separate result and child/sandbox cleanup. The first invocation failed
+because its observation checkpoint was not allowlisted; a bounded native-only
+validator and three Rust regressions correct the test channel. Additional
+concurrent Pause/deletion/publication and real cleanup failure remain open; no
+language, clean-machine or general latency gate is inferred.
+
 Latest native initial-hash slice: [observed interruption and fresh resume](../eval/experiments/2026-09-26-native-initial-hash-pause.md)
 passes actual UI controls before any model child/job/attempt. The hash stops after
 3,604,480 of 1,133,080,448 bytes; UI acknowledgment is 52 ms with all seven partial

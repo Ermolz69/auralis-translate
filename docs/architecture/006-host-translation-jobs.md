@@ -57,6 +57,17 @@ Concurrent callers share the SQLite-enforced active host job for one run. A repe
 
 ## Pause, cancellation, and restart
 
+Same-process native concurrency checks must distinguish preparation from admitted
+work. While an observed initial hash owns the model slot and no host job exists,
+two additional parallel Start requests must return typed `BUSY` without changing
+the run, guard revision or admitted records. Once a running host job owns accepted
+worker preflight, parallel Start requests must return that exact job/run identity
+without another model lease or attempt. The named `start-race` native scenario
+combines these requests with actual UI Pause, fresh resume and final two-database
+publication checks. Its [corrected completed invocation](../../eval/experiments/2026-09-26-native-concurrent-starts.md)
+now passes both request boundaries and one closed job/attempt with a ready separate
+result. It does not cover concurrent Pause/deletion/publication.
+
 The [desktop host-status projection](012-host-execution-status.md) combines the
 project-scoped Translate snapshot with the exact run's unclosed host-job identity.
 An accepted job can still be verifying the runtime while Translate remains paused.
