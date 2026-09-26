@@ -1,5 +1,7 @@
 mod attempt_id;
+mod branch_edit_spec;
 mod checkpoint_spec;
+mod edit_provenance;
 mod edit_selection;
 mod edit_spec;
 mod result_record;
@@ -11,7 +13,9 @@ mod segment_spec;
 mod translation_spec;
 
 pub use attempt_id::AttemptId;
+pub use branch_edit_spec::BranchEditSpec;
 pub use checkpoint_spec::CheckpointSpec;
+pub use edit_provenance::EditProvenance;
 pub use edit_selection::EditSelection;
 pub use edit_spec::EditSpec;
 pub use result_record::ResultRecord;

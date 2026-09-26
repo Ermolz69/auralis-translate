@@ -113,7 +113,7 @@ fn v4_paused_run_migrates_with_zero_revision_and_retained_inputs() -> Result<(),
     raw.pragma_update(None, "user_version", 4)?;
     drop(raw);
     let db = TranslateDb::open(&path, SqliteConfig::default())?;
-    assert_eq!(db.schema_version()?, 5);
+    assert_eq!(db.schema_version()?, 6);
     let stored = db.run(run.run_id)?;
     assert_eq!(stored.source_hash, run.source_hash);
     assert_eq!(stored.blocks, run.blocks);

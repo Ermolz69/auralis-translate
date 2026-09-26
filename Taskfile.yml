@@ -1,6 +1,10 @@
 version: "3"
 
 tasks:
+  test:result-edits:
+    desc: Verify immutable edit ancestry, explicit historical branches, concurrent writers and migration
+    cmds:
+      - cargo test --offline -p auralis-translation-sqlite --test result_edits --test result_branches --test vtt_result_branches --test migrations --test project_cleanup
   test:preparation:
     desc: Verify cancellable model hashing and readiness HTTP headers/body cleanup
     cmds:

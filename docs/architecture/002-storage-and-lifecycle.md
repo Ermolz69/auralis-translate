@@ -143,3 +143,12 @@ All steps are repeatable by `translation_id`, `run_id`, and `result_id`. On star
 | Translate database unavailable | Keep the Auralis link and any ready artifacts; report database access failure and never call an unfinished run complete. |
 
 Project deletion first commits one `delete_project_translation` outbox action per linked translation ID in the same Auralis transaction that removes the project and its links. The outbox invokes Translate cleanup after that commit. Translate SQLite schema v4 records a durable `(translation_id, project_id)` tombstone and deletes the owned translation, runs, checkpoints, results, edits and diagnostics in one transaction. Repeating cleanup succeeds; an attempt to reuse the deleted translation ID or delete an ID owned by another project conflicts. A stale registrar therefore cannot recreate a deleted project translation. The outbox retains failed cleanup actions and retries them with a capped delay while Translate SQLite is unavailable; normal five-attempt dead-letter handling does not apply to this action. A corrupt cleanup payload still needs operator recovery. A backup/restore policy for both databases and a precise diagnostic-retention period remain production decisions; neither changes the stable identity protocol.
+
+## Historical edit intents
+
+[Historical result editing](015-historical-result-edits.md) adds a metadata-only
+Auralis journal before an explicit older-base Translate commit. Translate schema
+v6 owns new edit ancestry and text. Auralis schema v10 owns request IDs, observed
+head/link revisions, a bounded fingerprint and cursor-paged recovery references.
+The store foundations have [supporting evidence](../../eval/experiments/2026-09-26-historical-edit-foundation.md);
+application save/replay and manual branch attachment remain pending.

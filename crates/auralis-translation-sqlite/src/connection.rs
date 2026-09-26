@@ -1,10 +1,12 @@
 use crate::repositories::{
-    attempt_admission, attempt_repository, checkpoint_repository, edit_commit, edit_selection,
-    project_cleanup, result_repository, run_repository, segment_repository, translation_repository,
+    attempt_admission, attempt_repository, checkpoint_repository, edit_commit, edit_provenance,
+    edit_selection, project_cleanup, result_repository, run_repository, segment_repository,
+    translation_repository,
 };
 use crate::{
-    AttemptId, AttemptStartGuard, CheckpointSpec, DbError, EditSelection, EditSpec, ResultRecord,
-    ResultSpec, RunDiagnostic, RunSpec, RunStop, SegmentSpec, SqliteConfig, TranslationSpec,
+    AttemptId, AttemptStartGuard, BranchEditSpec, CheckpointSpec, DbError, EditProvenance,
+    EditSelection, EditSpec, ResultRecord, ResultSpec, RunDiagnostic, RunSpec, RunStop,
+    SegmentSpec, SqliteConfig, TranslationSpec,
 };
 use crate::{diagnostic_codec, migrations};
 use auralis_translation::{ResultId, RunControl, RunId, RunState, TranslationId, VerifiedRenderer};
@@ -189,7 +191,27 @@ impl TranslateDb {
         spec: &EditSpec,
         renderer: &V,
     ) -> Result<ResultRecord, DbError> {
-        edit_commit::commit(&mut self.connection, spec, renderer)
+        edit_commit::run(&mut self.connection, spec, None, renderer)
+    }
+
+    pub fn commit_branch_edit<V: VerifiedRenderer>(
+        &mut self,
+        spec: &BranchEditSpec,
+        renderer: &V,
+    ) -> Result<ResultRecord, DbError> {
+        edit_commit::run(
+            &mut self.connection,
+            &spec.edit,
+            Some(spec.expected_head_result_id),
+            renderer,
+        )
+    }
+
+    pub fn result_edit_provenance(
+        &self,
+        result_id: ResultId,
+    ) -> Result<Option<EditProvenance>, DbError> {
+        edit_provenance::load(&self.connection, result_id)
     }
 
     pub fn result_edits(&self, result_id: ResultId) -> Result<Vec<EditSelection>, DbError> {

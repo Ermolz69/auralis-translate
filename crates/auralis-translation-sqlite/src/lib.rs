@@ -13,8 +13,8 @@ pub use config::SqliteConfig;
 pub use connection::TranslateDb;
 pub use error::DbError;
 pub use specs::{
-    AttemptId, CheckpointSpec, EditSelection, EditSpec, ResultRecord, ResultSpec, RunDiagnostic,
-    RunSpec, RunStop, SegmentSpec, TranslationSpec,
+    AttemptId, BranchEditSpec, CheckpointSpec, EditProvenance, EditSelection, EditSpec,
+    ResultRecord, ResultSpec, RunDiagnostic, RunSpec, RunStop, SegmentSpec, TranslationSpec,
 };
 mod attempt_start_control;
 pub use attempt_start_control::AttemptStartControl;

@@ -2,6 +2,7 @@ pub(crate) mod attempt_admission;
 pub(crate) mod attempt_repository;
 pub(crate) mod checkpoint_repository;
 pub(crate) mod edit_commit;
+pub(crate) mod edit_provenance;
 pub(crate) mod edit_selection;
 pub(crate) mod project_cleanup;
 pub(crate) mod result_repository;

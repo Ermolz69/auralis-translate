@@ -177,3 +177,12 @@ The [materialized Windows MSI record](../eval/experiments/2026-09-26-windows-msi
 3. Preserve source immutability, ID mapping, supported-format boundaries, and separate database ownership. Change an agreed contract only with a short ADR and updated examples.
 4. Include the fixture, command, observed output, and remaining limits when claiming a stage gate. Fake provider tests never stand in for real inference or bilingual evaluation.
 5. Keep this roadmap updated while it is in use, then remove it when a tracked implementation plan takes over.
+
+## Historical editing progress
+
+The [explicit older-base contract](architecture/015-historical-result-edits.md)
+now has [SRT/WebVTT and host-journal evidence](../eval/experiments/2026-09-26-historical-edit-foundation.md).
+The engine can append from a historical base with a checked current head, and the
+host can durably retain metadata-only intent references across selection changes.
+S7 remains open until the application, recovery, separate manual attachment,
+CLI/UI and native save/reopen path use those foundations.

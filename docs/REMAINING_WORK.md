@@ -84,3 +84,13 @@ that process-failure scenario and command interleavings remain open.
 For the language gate, follow [the provenance/review protocol](evaluation/001-open-data-and-language-gates.md)
 and [the native-speech candidate admission steps](evaluation/003-native-speech-candidates.md).
 For packaging, use [the clean Windows protocol](evaluation/006-clean-windows-installation.md).
+
+## Historical edit foundation
+
+The [branch contract](architecture/015-historical-result-edits.md) now has
+[engine and host-journal supporting evidence](../eval/experiments/2026-09-26-historical-edit-foundation.md).
+Translate schema v6 preserves explicit edit ancestry and guards the observed head;
+Auralis schema v10 stores metadata-only intents and pages them independently of
+current project selection. The application save/recovery/publication path, typed
+CLI/UI delivery and native older-base save/reopen are still the next integration
+work. This foundation does not close project review or release gates.

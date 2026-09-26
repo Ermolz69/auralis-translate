@@ -119,3 +119,11 @@ The [delivery audit](../eval/experiments/2026-09-26-translation-delivery-audit.m
 | §17, §22–23        | The first complete user path is existing file → Russian file → project link. Text-to-subtitle creation is deferred.                                            |
 
 Active documentation in `docs/` and `AGENTS.md` is written in English. The root Russian plan is retained as a historical source by the repository owner's choice.
+
+## Historical edit foundation
+
+The [explicit branch contract](architecture/015-historical-result-edits.md) and
+[foundation evidence](../eval/experiments/2026-09-26-historical-edit-foundation.md)
+record Translate schema v6 ancestry and the Auralis schema v10 metadata-only
+journal. Core and journal tests pass; application/recovery/publication/CLI/UI and
+native branch-edit integration remain open.

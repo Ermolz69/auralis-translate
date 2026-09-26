@@ -1,5 +1,13 @@
 # Implementation status and evidence
 
+Latest historical-edit foundation: [engine and host journal evidence](../eval/experiments/2026-09-26-historical-edit-foundation.md)
+records immutable older-base SRT/WebVTT edits, explicit observed-head conflicts,
+provenance and schema v6 migration. Auralis schema v10 now has a metadata-only,
+project-owned journal with idempotent retries and bounded recovery cursor pages.
+The engine workspace checks and host library/journal regressions pass. Application
+composition, startup replay, manual branch attachment, CLI/UI and native branch
+save/reopen remain pending; this does not close S7.
+
 Latest review slice: [ready result history](../eval/experiments/2026-09-26-result-history-selection.md)
 now separates historical preview from explicit project attachment. Six real-SQLite
 tests cover cursor pages, ownership/readiness, active-run preservation and
