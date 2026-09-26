@@ -574,33 +574,43 @@ fn cli_rejects_unsupported_vtt_before_creating_run_state() -> Result<(), Box<dyn
 
 #[test]
 fn cli_pause_preserves_committed_blocks_and_resume_finishes() -> Result<(), Box<dyn Error>> {
+    pause_and_resume("srt")
+}
+
+#[test]
+fn cli_vtt_pause_preserves_committed_blocks_and_resume_finishes() -> Result<(), Box<dyn Error>> {
+    pause_and_resume("vtt")
+}
+
+fn pause_and_resume(format: &str) -> Result<(), Box<dyn Error>> {
     let nonce = SystemTime::now().duration_since(UNIX_EPOCH)?.as_nanos();
     let directory =
         std::env::temp_dir().join(format!("auralis-cli-pause-{}-{nonce}", std::process::id()));
     std::fs::create_dir(&directory)?;
-    let source_path = directory.join("original.srt");
+    let source_path = directory.join(format!("original.{format}"));
     let state_dir = directory.join("state");
     let profile_path = directory.join("profile.json");
-    let output_path = directory.join("russian.srt");
-    std::fs::write(&source_path, source_with_nine_cues())?;
+    let output_path = directory.join(format!("russian.{format}"));
+    let source = if format == "srt" {
+        source_with_nine_cues()
+    } else {
+        source_with_nine_vtt_cues()
+    };
+    std::fs::write(&source_path, &source)?;
     std::fs::write(&profile_path, PROFILE)?;
 
     let listener = TcpListener::bind("127.0.0.1:0")?;
     let endpoint = format!("http://{}/", listener.local_addr()?);
     let (ready_sender, ready_receiver) = mpsc::channel();
-    let (release_sender, release_receiver) = mpsc::channel();
-    let server = std::thread::spawn(move || {
-        serve(
-            listener,
-            9,
-            None,
-            Some((ready_sender, release_receiver)),
-            "Привет.",
-        )
-    });
+    let server =
+        std::thread::spawn(move || serve(listener, 9, None, Some(ready_sender), "Привет."));
     let mut child = Command::new(env!("CARGO_BIN_EXE_auralis-translation-cli"))
         .args([
-            "translate",
+            if format == "srt" {
+                "translate"
+            } else {
+                "translate-vtt"
+            },
             path(&source_path)?,
             path(&state_dir)?,
             path(&profile_path)?,
@@ -619,22 +629,32 @@ fn cli_pause_preserves_committed_blocks_and_resume_finishes() -> Result<(), Box<
         .ok_or("CLI did not announce its run ID")?;
     let run_id = RunId::parse(run_id)?;
     ready_receiver.recv_timeout(Duration::from_secs(20))?;
+    let db_path = state_dir.join("auralis-translate.sqlite");
+    let db = TranslateDb::open(&db_path, SqliteConfig::default())?;
+    let before = db.checkpoints(run_id)?;
+    assert_eq!(before.len(), 1);
+    drop(db);
     let pause = command(&["pause", path(&state_dir)?, &run_id.to_string()])?;
     assert!(
         pause.status.success(),
         "{}",
         String::from_utf8_lossy(&pause.stderr)
     );
-    let status = command(&["status", path(&state_dir)?, &run_id.to_string()])?;
-    let status: serde_json::Value = serde_json::from_slice(&status.stdout)?;
-    assert_eq!(status["state"], "running");
-    assert_eq!(status["pause_requested"], true);
-    release_sender.send(())?;
+    let started = Instant::now();
+    while child.try_wait()?.is_none() {
+        if started.elapsed() > Duration::from_secs(5) {
+            child.kill()?;
+            child.wait()?;
+            return Err("pause did not interrupt the unanswered HTTP request".into());
+        }
+        std::thread::sleep(Duration::from_millis(10));
+    }
     let output = child.wait_with_output()?;
     assert!(!output.status.success());
     assert!(String::from_utf8_lossy(&output.stderr).contains("pause requested"));
     server.join().map_err(|_| "pause mock server panicked")??;
     assert!(!output_path.exists());
+    assert_eq!(std::fs::read(&source_path)?, source);
 
     let db = TranslateDb::open(
         &state_dir.join("auralis-translate.sqlite"),
@@ -642,6 +662,12 @@ fn cli_pause_preserves_committed_blocks_and_resume_finishes() -> Result<(), Box<
     )?;
     assert_eq!(db.run_state(run_id)?, RunState::Paused);
     assert_eq!(db.checkpoints(run_id)?.len(), 1);
+    assert_eq!(db.checkpoints(run_id)?[0].accepted, before[0].accepted);
+    assert_eq!(
+        db.checkpoints(run_id)?[0].input_fingerprint,
+        before[0].input_fingerprint
+    );
+    assert!(db.result_for_run(run_id).is_err());
     assert!(!db.pause_requested(run_id)?);
     drop(db);
     let status = command(&["status", path(&state_dir)?, &run_id.to_string()])?;
@@ -667,6 +693,11 @@ fn cli_pause_preserves_committed_blocks_and_resume_finishes() -> Result<(), Box<
     );
     server.join().map_err(|_| "resume mock server panicked")??;
     assert!(output_path.exists());
+    let db = TranslateDb::open(&db_path, SqliteConfig::default())?;
+    assert_eq!(db.checkpoints(run_id)?.len(), 2);
+    assert_eq!(db.checkpoints(run_id)?[0].accepted, before[0].accepted);
+    assert_eq!(std::fs::read(&source_path)?, source);
+    drop(db);
     std::fs::remove_dir_all(directory)?;
     Ok(())
 }
@@ -821,7 +852,7 @@ fn serve(
     listener: TcpListener,
     count: usize,
     fail_on: Option<usize>,
-    pause_handshake: Option<(mpsc::Sender<()>, mpsc::Receiver<()>)>,
+    pause_handshake: Option<mpsc::Sender<()>>,
     translated_text: &str,
 ) -> Result<(), String> {
     listener
@@ -849,12 +880,15 @@ fn serve(
             .map_err(|error| error.to_string())?;
         read_request(&mut stream)?;
         if request_index == count
-            && let Some((ready, release)) = &pause_handshake
+            && let Some(ready) = &pause_handshake
         {
             ready.send(()).map_err(|error| error.to_string())?;
-            release
-                .recv_timeout(Duration::from_secs(20))
-                .map_err(|error| error.to_string())?;
+            let mut byte = [0];
+            return match stream.read(&mut byte) {
+                Ok(0) => Ok(()),
+                Err(error) if error.kind() == std::io::ErrorKind::ConnectionReset => Ok(()),
+                other => Err(format!("paused request did not disconnect: {other:?}")),
+            };
         }
         let finish = if fail_on == Some(request_index) {
             "length"

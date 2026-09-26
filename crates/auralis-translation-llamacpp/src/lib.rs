@@ -1,10 +1,13 @@
 mod asset_download;
+mod decode_chat_response;
+mod local_http;
 mod offline_install;
 mod profile;
 mod profile_error;
 mod prompt;
 mod provider;
 mod release_manifest;
+mod request_control_policy;
 mod response;
 mod server_report;
 
@@ -17,6 +20,7 @@ pub use profile::ModelProfile;
 pub use profile_error::ProfileError;
 pub use provider::LlamaCppProvider;
 pub use release_manifest::{ReleaseAsset, ReleaseManifest, ReleaseManifestError, RuntimeVariant};
+pub use request_control_policy::RequestControlPolicy;
 pub use server_report::ServerReport;
 mod model_hash;
 mod model_preflight;

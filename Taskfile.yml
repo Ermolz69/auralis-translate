@@ -17,6 +17,12 @@ tasks:
   test:verified-server:
     cmds:
       - cargo test --offline -p auralis-translation-cli --test verified_server
+  test:request-cancellation:
+    desc: Verify response-header/body interruption, provider reuse, and durable CLI pause
+    cmds:
+      - cargo test --offline -p auralis-translation-llamacpp --test request_cancellation
+      - cargo test --offline -p auralis-translation --test retry_policy
+      - cargo test --offline -p auralis-translation-cli --test cli_resume pause_preserves_committed_blocks_and_resume_finishes
   fmt:
     cmds:
       - cargo fmt --all -- --check
@@ -86,3 +92,9 @@ tasks:
       - task: build:release
       - task: eval:load:checks
       - node eval/scripts/cli-long-file.mjs
+  eval:cli:request-pause:
+    desc: Pause observed active checked-model inference, preserve checkpoints, resume SRT/WebVTT and re-export offline
+    cmds:
+      - task: build:release
+      - task: test:request-cancellation
+      - node eval/scripts/cli-request-pause.mjs

@@ -40,6 +40,7 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 | [Host translation jobs](architecture/006-host-translation-jobs.md) | Proposed Auralis job ownership, run/attempt IDs, cancellation, committed progress, and crash recovery before S7 is complete. |
 | [Model installation](architecture/007-model-installation.md) | Release manifest, verified staging, package layout, host ownership, and remaining delivery work. |
 | [Managed runtime memory](architecture/008-managed-runtime-memory.md) | Explicit transient cache/slot policy following observed memory growth in a long-file run. |
+| [Active request cancellation](architecture/009-request-cancellation.md) | Control-aware provider, bounded response reads, request interruption and durable pause acknowledgment. |
 | [Glossary input v1](reference/glossary-v1.md) | Experimental terminology JSON, target scope, frozen revision, and resume behavior. |
 | [Strict plain-WebVTT subset v1](reference/webvtt-subset-v1.md) | Separately verified text extraction, durable CLI copy and recovery contract; release validation remains open. |
 

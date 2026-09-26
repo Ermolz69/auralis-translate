@@ -2,7 +2,7 @@ mod support;
 
 use auralis_translation::{
     BlockCheckpoint, CheckpointStore, ProgressSink, ProviderError, ProviderResponse, RetryPolicy,
-    RunControl, RunId, RunProgress, TranslationBatch, TranslationProvider,
+    RunControl, RunId, RunProgress, TranslateRunError, TranslationBatch, TranslationProvider,
     translate_planned_run_with_policy,
 };
 use std::{cell::Cell, error::Error, io};
@@ -110,5 +110,71 @@ fn retry_budget_exhaustion_saves_no_checkpoint() -> Result<(), Box<dyn Error>> {
     assert!(store.0.is_empty());
     assert_eq!(progress.0.len(), 1);
     assert_eq!(progress.0[0].committed_blocks, 0);
+    Ok(())
+}
+
+struct PauseOnProviderReturn(Cell<bool>);
+
+impl RunControl for PauseOnProviderReturn {
+    fn pause_requested(&self, _: RunId) -> Result<bool, Box<dyn Error>> {
+        Ok(self.0.get())
+    }
+}
+
+struct InterruptedProvider<'a> {
+    control: &'a PauseOnProviderReturn,
+    calls: Cell<u32>,
+    fail: bool,
+}
+
+impl TranslationProvider for InterruptedProvider<'_> {
+    fn translate(&self, _: &TranslationBatch) -> Result<ProviderResponse, ProviderError> {
+        Err(ProviderError("uncontrolled provider path was used".into()))
+    }
+
+    fn translate_with_control(
+        &self,
+        batch: &TranslationBatch,
+        _: &dyn RunControl,
+    ) -> Result<ProviderResponse, ProviderError> {
+        self.calls.set(self.calls.get() + 1);
+        self.control.0.set(true);
+        if self.fail {
+            Err(ProviderError("interrupted request".into()))
+        } else {
+            EchoProvider.translate(batch)
+        }
+    }
+}
+
+#[test]
+fn pause_wins_on_provider_success_or_error_including_final_retry() -> Result<(), Box<dyn Error>> {
+    let batch = sample_batch()?;
+    let planned = vec![batch.targets().iter().map(|target| target.id()).collect()];
+    for fail in [false, true] {
+        for attempts in [1, 2] {
+            let control = PauseOnProviderReturn(Cell::new(false));
+            let provider = InterruptedProvider {
+                control: &control,
+                calls: Cell::new(0),
+                fail,
+            };
+            let mut store = MemoryStore::default();
+            let mut progress = Progress::default();
+            let result = translate_planned_run_with_policy(
+                &provider,
+                &mut store,
+                &planned,
+                std::slice::from_ref(&batch),
+                &mut progress,
+                &control,
+                RetryPolicy::new(attempts).ok_or("invalid policy")?,
+            );
+            assert!(matches!(result, Err(TranslateRunError::Paused)));
+            assert_eq!(provider.calls.get(), 1);
+            assert!(store.0.is_empty());
+            assert_eq!(progress.0.len(), 1);
+        }
+    }
     Ok(())
 }
