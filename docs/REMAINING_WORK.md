@@ -94,3 +94,13 @@ Auralis schema v10 stores metadata-only intents and pages them independently of
 current project selection. The application save/recovery/publication path, typed
 CLI/UI delivery and native older-base save/reopen are still the next integration
 work. This foundation does not close project review or release gates.
+
+## Manual branch publication foundation
+
+The [ordering contract](architecture/015-historical-result-edits.md) now has
+[eight host transaction regressions](../eval/experiments/2026-09-26-manual-publication-ordering.md).
+Explicit manual results can complete as ready history without overriding current
+selection, while pending automatic publication remains recoverable. The next
+historical-edit work remains application intent admission, core branch invocation,
+journal reconstruction with request/provenance verification, and CLI/UI/native
+delivery. The storage foundation alone does not complete project review.

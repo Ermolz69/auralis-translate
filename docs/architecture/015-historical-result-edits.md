@@ -1,8 +1,8 @@
 # Historical result edits with explicit concurrency guards
 
-Status: implementation contract, 26 September 2026. The engine and metadata-only
-host journal foundations have supporting SQLite evidence. Composition, CLI/UI
-delivery and native branch evidence are still pending.
+Status: implementation contract, 26 September 2026. The engine, metadata-only
+host journal and manual publication foundations have supporting SQLite evidence.
+Composition, CLI/UI delivery and native branch evidence are still pending.
 
 ## Text base and observed head
 
@@ -70,7 +70,12 @@ sequenceDiagram
     T-->>H: Immutable result ID
     H->>O: Stage verified separate result
     O->>H: Artifact ready
-    H->>H: Attach at expected link revision, preserve active run
+    H->>H: Finalize manual publication transaction
+    alt Expected link revision and no pending automatic publication
+        H->>H: Attach result and preserve active run
+    else Changed link or automatic publication owns revision
+        H->>H: Keep ready history, selection and active run
+    end
     H-->>U: Attached or ready but unattached
 ```
 
@@ -113,6 +118,42 @@ owned by the same project and matching run. Link deletion cascades the journal.
 No intent states are inferred from the current active run.
 
 The existing application editor does not yet call this journal or branch API.
-Startup does not yet recover journal entries, and manual branch publication does
-not yet have its separate attachment transaction. Do not expose historical saves
+Startup does not yet recover journal entries. The host storage foundation now has
+the separate manual attachment transaction; the application save/replay route
+still needs to use it. Do not expose historical saves
 through the UI until those operations and their crash/concurrency evidence exist.
+
+## Manual publication transaction ordering
+
+The schema v10 journal identifies explicit manual branches by result ID; do not
+infer publication kind from revision numbers. Staging such a result checks the
+journal's project, translation, run and expected link revision while allowing a
+newer current selection or a different active run. Automatic staging keeps its
+existing link/run/revision checks and ignores explicit manual branches when
+checking automatic result precedence.
+
+Manual finalization rechecks the ready owned base, frozen run, later result
+revision, required manual `Needs review` projection, ready translated artifact and
+matching immutable publication/journal metadata. Attach only when the observed link revision is
+still current and no pending automatic publication exists at that current link
+revision. Preserve the active run. Otherwise mark the branch ready for history
+without changing the link. The ready state is terminal for this automatic manual
+finalizer: later outbox retries never attach an earlier detached branch. A user
+may subsequently attach it through explicit verified historical selection.
+
+The outbox includes ready-artifact manual candidates even after selection/run
+changes. Automatic candidate enumeration and precedence exclude manual branches,
+so a detached manual result cannot strand an earlier automatic result. If manual
+attachment wins before automatic staging, stale automatic admission fails safely;
+the retained active run and durable Translate result remain available to normal
+publication-gap recovery at the new link revision. Existing legacy ordinary edits
+without a journal keep their previous precedence behavior.
+
+The internal host port is now `finalize_ready_publication`, because completion
+can produce either attachment or a ready historical artifact. Its automatic and
+manual operations are split into separate modules under one transaction owner.
+The outbox reports publication finalization rather than claiming every result
+was selected. A selected newer manual revision also blocks older automatic
+admission for that same run; another active run may still publish at its current
+link revision. Supporting evidence is recorded in
+[manual publication ordering](../../eval/experiments/2026-09-26-manual-publication-ordering.md).

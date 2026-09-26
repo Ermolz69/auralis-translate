@@ -186,3 +186,13 @@ The engine can append from a historical base with a checked current head, and th
 host can durably retain metadata-only intent references across selection changes.
 S7 remains open until the application, recovery, separate manual attachment,
 CLI/UI and native save/reopen path use those foundations.
+
+## Manual publication ordering progress
+
+The [manual publication record](../eval/experiments/2026-09-26-manual-publication-ordering.md)
+adds eight real-SQLite ordering, idempotency and rollback checks. Host finalization
+now retains a ready historical result when its observed link changed or automatic
+publication already owns that revision. It preserves an unfinished active host
+run, and explicit replay cannot later attach a detached result. This is the storage
+foundation for historical save/recovery; application composition, actual Translate
+run/file evidence, CLI/UI and native branch editing still gate S7.

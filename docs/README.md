@@ -127,3 +127,11 @@ The [explicit branch contract](architecture/015-historical-result-edits.md) and
 record Translate schema v6 ancestry and the Auralis schema v10 metadata-only
 journal. Core and journal tests pass; application/recovery/publication/CLI/UI and
 native branch-edit integration remain open.
+
+## Manual publication ordering
+
+The [historical-edit contract](architecture/015-historical-result-edits.md) now has
+[host ordering evidence](../eval/experiments/2026-09-26-manual-publication-ordering.md).
+Explicit manual results complete as attached or ready historical artifacts without
+silently replacing a newer project choice. Application historical save/replay,
+CLI/UI and native branch evidence remain pending.

@@ -5,7 +5,7 @@ records immutable older-base SRT/WebVTT edits, explicit observed-head conflicts,
 provenance and schema v6 migration. Auralis schema v10 now has a metadata-only,
 project-owned journal with idempotent retries and bounded recovery cursor pages.
 The engine workspace checks and host library/journal regressions pass. Application
-composition, startup replay, manual branch attachment, CLI/UI and native branch
+composition, startup replay, application branch publication, CLI/UI and native branch
 save/reopen remain pending; this does not close S7.
 
 Latest review slice: [ready result history](../eval/experiments/2026-09-26-result-history-selection.md)
@@ -285,3 +285,12 @@ These commands use `create_new` semantics: choose paths that do not exist. The d
 7. **Repository delivery: owner deferred.** Publish the reviewed Translate repository and update GitHub submodule/CI cloning only after the owner resumes publication. Continue local commits and the pinned local submodule meanwhile.
 
 The repository is a separate local Git repository. The Auralis checkout now has a local gitlink at `modules/auralis-translate`, pinned to a Translate commit, with a relative sibling URL planned for GitHub. The Translate SQLite adapter uses rusqlite 0.39 to share a compatible SQLite FFI version with Auralis SQLx 0.9; `task check` and `task build` passed after that dependency change. The Translate GitHub remote is still absent, so cloning the submodule from GitHub remains open.
+
+## Explicit manual publication foundation
+
+[Manual ordering evidence](../eval/experiments/2026-09-26-manual-publication-ordering.md)
+records eight new real-SQLite tests and existing storage/history/journal regressions.
+The host can finalize an explicit branch as an attached or ready detached result,
+preserve its active run and serialize against automatic publication. The outbox
+uses `finalize_ready_publication`; manual and automatic operations are split under
+one transaction. Application save/replay and native branch editing remain pending.
