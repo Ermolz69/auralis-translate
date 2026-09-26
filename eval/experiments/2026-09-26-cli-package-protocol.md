@@ -113,6 +113,16 @@ fixtures and external assets remain ignored and outside release publication.
 
 ## Limits and remaining work
 
+After pinning implementation commit `7741ae5a7d2e0cf7f26d210c316ac5d28db5aeff`
+from the local sibling repository, Auralis `task rust:test:translate` passed
+15 default adapter tests; two supplied-asset opt-in tests remained ignored.
+`task rust:clippy` passed the host workspace with warnings denied. No frontend
+or native interaction code changed in this slice. Host `task docs:check` passed
+five checker regressions and the 31-document/11-mandatory inventory after using
+the existing code-path convention for references into the separate submodule.
+Translate `task docs:check` passed 71 active Markdown files. These checks preserve
+the earlier native records' scope rather than claim another native run.
+
 This is an existing-machine package probe, not an unseeded Windows installation.
 The fresh acquisition exercised only the notice, not a deliberately interrupted
 real weight/CDN transfer. It did not start inference, compare linguistic output,
