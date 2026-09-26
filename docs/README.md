@@ -55,7 +55,9 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 
 The [preparation cancellation contract](architecture/011-preparation-cancellation.md)
 is implemented with [controlled evidence](../eval/experiments/2026-09-26-preparation-cancellation.md).
-Native preparation-pause latency and child cleanup remain open.
+[Native post-child preparation pause](../eval/experiments/2026-09-26-native-preparation-pause.md)
+now passes through the actual panel, zero admitted records, observed child release
+and fresh resume. Native initial-hash cancellation and command races remain open.
 
 Recent evidence: [pinned package repair](../eval/experiments/2026-09-26-package-repair.md) and a [ten-sentence real file/reference comparison](../eval/experiments/2026-09-26-flores-file-comparison.md). The latter verifies the transport pipeline with synthetic timings; its local side-by-side report remains unreviewed and has concrete quality-triage items. Neither record closes the language release gates.
 
@@ -77,7 +79,7 @@ A [fresh Windows MSI audit](../eval/experiments/2026-09-26-windows-msi-content.m
 | Publication         | Auralis attaches a result after its managed artifact reaches `ready`; a structurally valid result with language warnings is attached with a **Needs review** label.  |
 | Repository          | `auralis-translate` evolves independently and is added to Auralis as a Git submodule pinned to a commit.                                                             |
 
-Voice markup, TTS, ASR, subtitle timing creation from text, live translation, and source-specific YouTube event normalisation are outside this first product. They may consume an approved Russian result through Auralis later. Chinese → Russian is the first language gate; Japanese → Russian has its own later gate. Model quality, hardware requirements, and speed remain unmeasured.
+Voice markup, TTS, ASR, subtitle timing creation from text, live translation, and source-specific YouTube event normalisation are outside this first product. They may consume an approved Russian result through Auralis later. Chinese → Russian is the first language gate; Japanese → Russian has its own later gate. Representative language quality and release hardware/speed requirements remain unvalidated.
 
 ## Changes from the root plan
 

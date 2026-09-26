@@ -4,7 +4,10 @@ Latest preparation slice: [cooperative control](architecture/011-preparation-can
 now reaches hashing, runtime package verification and readiness HTTP reads.
 [Controlled CLI, application and UI evidence](../eval/experiments/2026-09-26-preparation-cancellation.md)
 shows cancellation before any attempt/result; the real runtime still completes
-checked admission. Native preparation-pause latency/child cleanup remains open.
+checked admission. A [native post-child preparation pause](../eval/experiments/2026-09-26-native-preparation-pause.md)
+now passes actual Start/Pause/Continue buttons, one 310 ms UI acknowledgement,
+zero admitted/partial records, observed model-child release and one fresh completed
+attempt. Initial-hash native interruption and admission races remain open.
 
 Latest admission slice: [durable control revisions](architecture/010-attempt-admission-guard.md)
 reject a start captured before a newer pause, including repeated pause while
@@ -12,7 +15,8 @@ resuming an already-paused run. Translate schema v5 migrates retained state;
 Auralis carries the guard through admission to atomic attempt creation.
 [Two-database regressions and a real CLI repeat](../eval/experiments/2026-09-26-attempt-admission-guard.md)
 verify cancellation without a new attempt/result and checked-model SRT/WebVTT
-compatibility. Model hashing/readiness is still not promptly interruptible.
+compatibility. Cooperative hashing/readiness interruption is now implemented;
+controlled evidence is linked above, with native preparation evidence separate.
 The [remaining-work summary](REMAINING_WORK.md) orders the open product gates.
 
 Latest CLI slice: [machine protocol v1](reference/cli-protocol-v1.md) now implements

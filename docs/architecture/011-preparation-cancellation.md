@@ -1,7 +1,7 @@
 # Cooperative preparation cancellation
 
-Status: implementation and controlled checks, 26 September 2026. Native
-preparation-pause latency and child cleanup remain a separate evidence gate.
+Status: implementation, controlled checks and native post-child preparation pause,
+26 September 2026. Initial-hash native interruption and command races remain open.
 
 The [durable admission guard](010-attempt-admission-guard.md) prevents stale starts.
 Preparation must also stop promptly when the owner pauses the run. Auralis polls
@@ -50,3 +50,7 @@ model-child cleanup. These gates are open until their actual outputs are recorde
 
 Controlled library, CLI-process, two-database and React checks now have
 [recorded evidence](../../eval/experiments/2026-09-26-preparation-cancellation.md).
+A [native post-child case](../../eval/experiments/2026-09-26-native-preparation-pause.md)
+observes actual controls, one 310 ms UI acknowledgement, zero jobs/attempts/results,
+child absence at paused verification and fresh resume. It does not establish a
+general latency SLA or prove native interruption during the initial hash.

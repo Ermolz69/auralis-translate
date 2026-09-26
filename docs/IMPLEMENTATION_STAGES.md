@@ -92,15 +92,18 @@ also verifies both databases, first-job cancellation, child release, and a secon
 attempt on the same run in one desktop process. The [native WebVTT pause/resume](../eval/experiments/2026-09-26-native-vtt-pause-resume.md)
 now passes the corresponding scenario, also requiring no partial artifact at pause
 and matching the original's initial digest after completion. Broader same-process command
-interleavings and prompt interruption during pre-attempt admission remain open.
+interleavings and initial-hash native interruption during pre-attempt admission remain open.
 The [attempt admission guard](architecture/010-attempt-admission-guard.md) now
 prevents a newer pause from becoming implicit resume permission. Its
 [two-database evidence](../eval/experiments/2026-09-26-attempt-admission-guard.md)
 covers initial start, repeated pause during resume, runtime failure and pause
 after host admission. Cooperative preparation has
 [controlled evidence](../eval/experiments/2026-09-26-preparation-cancellation.md).
-Native hashing/readiness cancellation and admission races
-remain separate gates; see [remaining work](REMAINING_WORK.md).
+[Native post-child preparation pause](../eval/experiments/2026-09-26-native-preparation-pause.md)
+now verifies actual controls, one 310 ms acknowledgement, zero attempts/results,
+child absence at verification and fresh resume to one completed attempt.
+Initial-hash native cancellation and admission races remain separate gates;
+see [remaining work](REMAINING_WORK.md).
 
 S7 now has a [two-database publication-gap test](../eval/experiments/2026-09-25-result-gap-recovery.md): when a worker dies after Translate result commit but before Auralis publication, startup stages the latest result only if that exact result has no publication; an interrupted pending artifact is finalized later by the outbox. A two-database edit test also recovers a committed manual revision when an older model result is pending or a previous revision is already selected. Auralis schema v9 orders staged results by Translate revision, so a pending newer edit prevents an earlier model result from becoming the project selection. The storage regression checks both ready artifacts, an older direct selection attempt, and failed-newer behavior. Native Tauri checkpoint crash/restart, [result-commit-gap recovery](../eval/experiments/2026-09-25-native-result-gap.md), and [single-owner storage](../eval/experiments/2026-09-25-native-single-owner.md) have passed. Same-process command races remain open.
 

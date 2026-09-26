@@ -77,6 +77,12 @@ run. Publication busy state does not create a preparation-pause action.
 
 ## Remaining evidence
 
+Follow-up [native post-child preparation evidence](2026-09-26-native-preparation-pause.md)
+now verifies actual Start/Pause/Continue controls, one 310 ms UI acknowledgement,
+zero admitted records, observed child absence and fresh resume. The limitations
+below describe the original controlled-test slice; native initial hashing and
+command races remain open.
+
 The real runtime completion is not a real preparation-cancellation verdict.
 Native UI pause during initial hashing and after child startup, acknowledgment
 latency, child/slot cleanup and fresh resume still need a separately observed
