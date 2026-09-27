@@ -8,6 +8,11 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 
 ## Start here
 
+The [translation quality and model selection plan](evaluation/007-translation-quality-improvement-plan.md)
+orders regression data, a controlled 1.8B/7B precision comparison, composable
+context/terminology, desktop delivery, review and separate language release gates.
+The larger-model recommendation is a candidate for measurement, not local evidence.
+
 The [Chinese currency protection experiment](../eval/experiments/2026-09-27-chinese-currency-protection.md)
 adds an explicit [prompt-v4 profile](reference/chinese-fidelity-profile-v1.md).
 Repeated real file runs preserve the observed yuan prices and independent

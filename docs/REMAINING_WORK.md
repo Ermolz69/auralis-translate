@@ -3,8 +3,11 @@
 Status: 26 September 2026. This is an ordered summary for the owner and agents,
 not a replacement for [the product plan](PRODUCT_PLAN.md),
 [stage gates](IMPLEMENTATION_STAGES.md) or [evidence](IMPLEMENTATION_STATUS.md).
-Development and commits remain local. Public GitHub publication is deferred by
-the owner.
+Translate source and the authored development report are now published on GitHub
+and Pages following the owner's later request. The new
+[quality improvement plan](evaluation/007-translation-quality-improvement-plan.md)
+specifies the model comparison and language work; publication does not close
+quality or desktop release gates.
 
 ## Working foundation
 
