@@ -1,5 +1,9 @@
 # Translation quality improvement and model selection plan
 
+Execution notice, 28 September 2026: the [delivery plan](../DELIVERY_PLAN.md)
+and [tracked backlog](../IMPLEMENTATION_BACKLOG.md) supersede the next-step ordering
+here. Preserve this document's model/precision rationale and language criteria.
+
 Status: proposed work with a first local comparison, 27 September 2026. The
 [matched 1.8B/7B Q4 development experiment](../../eval/experiments/2026-09-27-model-size-comparison.md)
 now has real evidence; the wider precision matrix and language gate remain open.
@@ -55,7 +59,8 @@ Sizes come from the official [1.8B files](https://huggingface.co/tencent/Hy-MT2-
 and [7B files](https://huggingface.co/tencent/Hy-MT2-7B-GGUF/tree/ab8472660ac61fac25f1af43fac2599d52a8a775).
 They are download sizes, not measured peak VRAM. For example, 4.62 decimal GB is
 about 4.30 GiB. KV cache, compute buffers, desktop use and other applications also
-occupy VRAM. Full GPU placement, actual headroom and speed are unverified.
+occupy VRAM. The first Q4 comparison now measures speed and sampled whole-device
+usage on the RTX 3070; full layer placement and larger-context headroom remain unverified.
 Start with a bounded 2048-token context and one inference slot; separately test
 4096 tokens when evaluating scene context. Do not equate a RAM-cached model with
 full GPU residency or use CPU spill as an undisclosed performance comparison.
@@ -215,7 +220,7 @@ fails. A larger model and a green build do not satisfy these gates on their own.
 
 ## Immediate next deliverable
 
-Prepare the pinned A/B manifests and controlled forty-example comparison for
-1.8B Q4 versus 7B Q4. In parallel with data preparation, define the desktop package
-upgrade that exposes protected currencies without rewriting saved runs. This plan
-does not download weights, execute a larger model or change the installed default.
+The pinned A/B manifests and forty-entry comparison are complete. Next define
+source provenance/splits, the composable v5 contract and independent review under
+`DATA-01`, `CTX-01` and `EVAL-01` in the canonical backlog. Desktop UI remains
+deferred; no installed default changes as a consequence of this plan.

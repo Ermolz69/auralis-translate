@@ -8,7 +8,10 @@ The current implementation is **experimental**. Strict plain-SRT and a documente
 
 - [Documentation index](docs/README.md)
 - [Current English product plan](docs/PRODUCT_PLAN.md)
-- [Temporary implementation stages](docs/IMPLEMENTATION_STAGES.md)
+- [Delivery plan: context, long files and dubbing](docs/DELIVERY_PLAN.md)
+- [Canonical task backlog and progress](docs/IMPLEMENTATION_BACKLOG.md)
+- [Agent workflow, evaluation and commit authorship](docs/AGENT_WORKFLOW.md)
+- [Historical S0–S9 acceptance stages](docs/IMPLEMENTATION_STAGES.md)
 - [Rust architecture](docs/architecture/004-rust-code-architecture.md)
 - [CLI machine protocol v1](docs/reference/cli-protocol-v1.md)
 - [Separate-model package protocol evidence](eval/experiments/2026-09-26-cli-package-protocol.md)

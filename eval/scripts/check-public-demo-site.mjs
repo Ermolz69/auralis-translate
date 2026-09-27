@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { buildSrt, digest } from './flores-file-fixture.mjs';
 import { loadCurrencyReport } from './currency-report-section.mjs';
 import { loadModelComparison } from './model-comparison-section.mjs';
+import { loadDeliveryPlan } from './delivery-progress-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const html = await fs.readFile(path.join(root, 'site/index.html'), 'utf8');
@@ -23,6 +24,10 @@ assert.equal(data.google.observations.length, 20);
 assert.equal(data.review.observations.length, 20);
 assert.deepEqual(data.currency, await loadCurrencyReport(root, data.dataset));
 assert.deepEqual(data.model_comparison, await loadModelComparison(root));
+assert.deepEqual(data.delivery_plan, await loadDeliveryPlan(root));
+assert.equal((html.match(/data-plan-task=/g) ?? []).length, data.delivery_plan.total_tasks);
+assert(html.indexOf('id="model-comparison"') < html.indexOf('id="delivery-plan"'));
+assert(html.indexOf('id="delivery-plan"') < html.indexOf('id="currency-fix"'));
 assert(html.indexOf('id="model-comparison"') < html.indexOf('id="currency-fix"'));
 assert.equal((html.match(/data-model-row=/g) ?? []).length, 40);
 assert.equal((html.match(/data-model-run=/g) ?? []).length, 3);

@@ -1,6 +1,10 @@
 version: "3"
 
 tasks:
+  plan:check:
+    desc: Validate canonical delivery backlog states, dependencies and completion evidence
+    cmds:
+      - node eval/scripts/check-delivery-plan.mjs
   model:7b:smoke:
     desc: Verify the real 7B launcher reaches readiness and cleans up its runtime
     cmds:

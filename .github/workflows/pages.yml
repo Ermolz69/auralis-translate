@@ -5,6 +5,11 @@ on:
     branches: [main]
     paths:
       - site/**
+      - docs/DELIVERY_PLAN.md
+      - docs/IMPLEMENTATION_BACKLOG.md
+      - docs/AGENT_WORKFLOW.md
+      - eval/scripts/delivery-progress-section.mjs
+      - eval/scripts/check-delivery-plan.mjs
       - .github/workflows/pages.yml
       - eval/scripts/check-public-demo-site.mjs
       - eval/reports/public-demo-2026-09-27.json

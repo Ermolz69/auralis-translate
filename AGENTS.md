@@ -1,6 +1,6 @@
 # Agent instructions for Auralis Translate
 
-Read [docs/README.md](docs/README.md), the [English product plan](docs/PRODUCT_PLAN.md), the relevant architecture document, and the current repository state before changing code. Use [docs/IMPLEMENTATION_STAGES.md](docs/IMPLEMENTATION_STAGES.md) as the temporary stage gate until it is replaced by a tracked implementation backlog. The Russian root plan is historical; the later decisions in `docs/` govern the first file-based MVP where they differ.
+Read [docs/README.md](docs/README.md), the [English product plan](docs/PRODUCT_PLAN.md), the [delivery plan](docs/DELIVERY_PLAN.md), the [canonical backlog](docs/IMPLEMENTATION_BACKLOG.md), the [agent workflow](docs/AGENT_WORKFLOW.md), the relevant architecture document, and the current repository state before changing code. The backlog replaces the temporary stage work queue; [S0–S9](docs/IMPLEMENTATION_STAGES.md) remain acceptance references. The Russian root plan is historical; the later decisions in `docs/` govern the first file-based MVP where they differ.
 
 ## Scope and invariants
 
@@ -11,6 +11,10 @@ Read [docs/README.md](docs/README.md), the [English product plan](docs/PRODUCT_P
 - Do not claim language, format, model, or hardware support from mocks or compilation alone. Record real evidence for each stage gate.
 
 ## Rust and repository conventions
+
+- Use the computer's primary global Git name/email for both author and committer. Inspect local/environment overrides before committing; never substitute an agent/bot/noreply identity or change global configuration. Follow the scoped identity procedure and commit format in [the agent workflow](docs/AGENT_WORKFLOW.md).
+- Work by stable backlog ID, satisfy dependencies and update status with scoped evidence. A done task requires a linked acceptance record. Keep source-aware context/long-file quality, real audio and clean-install gates separate from mock/compile checks.
+- Predeclare experiment identities, splits and budgets; retain failures and immutable baselines. Add Taskfile commands before new probes. Generate public task progress from the canonical backlog and verify `task plan:check` plus affected report/docs checks.
 
 - Keep the dependency direction in [the Rust architecture](docs/architecture/004-rust-code-architecture.md). Core/domain code must not depend on SQLite, Tauri, HTTP, filesystem paths, or a particular model.
 - Give a module one responsibility. Prefer one primary public type or operation per file. Keep `lib.rs` and `mod.rs` focused on declarations and public exports; split a growing concept into a directory before it becomes a large mixed file.

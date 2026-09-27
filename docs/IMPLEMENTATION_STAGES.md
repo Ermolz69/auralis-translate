@@ -1,6 +1,6 @@
 # Temporary implementation stages
 
-Status: working roadmap for agents, 24 September 2026. Remove or replace this document when the implementation backlog becomes authoritative. It breaks down the [English product plan](PRODUCT_PLAN.md) into observable steps and maps them to the [historical Russian plan](../AURALIS_SUBTITLE_TRANSLATION_PLAN.md). Implementation evidence and remaining gates are recorded in [the status log](IMPLEMENTATION_STATUS.md).
+Status: historical acceptance reference, 28 September 2026. The [delivery plan](DELIVERY_PLAN.md) and [tracked backlog](IMPLEMENTATION_BACKLOG.md) replace this temporary work queue. Retain S0–S9 criteria to assess previously implemented slices and open release gates. This document breaks down the [English product plan](PRODUCT_PLAN.md) and maps it to the [historical Russian plan](../AURALIS_SUBTITLE_TRANSLATION_PLAN.md). Implementation evidence remains in [the status log](IMPLEMENTATION_STATUS.md).
 
 ## Intended result
 

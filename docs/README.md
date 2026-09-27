@@ -8,6 +8,12 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 
 ## Start here
 
+The [delivery plan](DELIVERY_PLAN.md), [canonical backlog](IMPLEMENTATION_BACKLOG.md)
+and [agent workflow](AGENT_WORKFLOW.md) now govern execution and progress. They
+cover composed scene context, chunk boundaries, complete long files, independent
+review, conditional fine-tuning, real Auralis dubbing and primary Git authorship.
+The backlog replaces the temporary stage queue; S0–S9 acceptance remains applicable.
+
 The [translation quality and model selection plan](evaluation/007-translation-quality-improvement-plan.md)
 orders regression data, a controlled 1.8B/7B precision comparison, composable
 context/terminology, desktop delivery, review and separate language release gates.
@@ -34,7 +40,10 @@ publication interruption, the CLI branch interface and full S7 remain open.
 | Document                                                                                        | Purpose                                                                                                                                                              |
 | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [English product plan](PRODUCT_PLAN.md)                                                         | Current overall product scope, models, format boundaries, delivery, evaluation and release gates.                                                                    |
-| [Temporary implementation stages](IMPLEMENTATION_STAGES.md)                                     | Observable steps from text extraction to real inference, durable state, Auralis integration, and release gates. Agents use this until a tracked backlog replaces it. |
+| [Delivery plan](DELIVERY_PLAN.md) | Authoritative finish sequence, context/long-file experiments, optional training and separate dubbing gates. |
+| [Canonical backlog](IMPLEMENTATION_BACKLOG.md) | Stable task IDs, states, prerequisites and evidence; source for public progress. |
+| [Agent workflow](AGENT_WORKFLOW.md) | Execution, checks, reproducible comparisons, reporting and primary-account commit authorship. |
+| [Historical implementation stages](IMPLEMENTATION_STAGES.md) | S0–S9 acceptance references; task ordering and status now live in the canonical backlog. |
 | [Implementation status](IMPLEMENTATION_STATUS.md)                                               | Evidence for implemented slices, command examples, and open stage gates.                                                                                             |
 | [Remaining work](REMAINING_WORK.md)                                                             | Ordered engineering, quality, installation and review work with observable completion criteria.                                                                      |
 | [Ready result history](architecture/014-result-history-selection.md)                            | Separate preview and attachment, verified historical selection, cursor pages and preserved active runs.                                                              |

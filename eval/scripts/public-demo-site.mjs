@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { buildSrt, digest } from './flores-file-fixture.mjs';
 import { loadCurrencyReport, renderCurrencySection } from './currency-report-section.mjs';
 import { loadModelComparison, renderModelComparison } from './model-comparison-section.mjs';
+import { loadDeliveryPlan, renderDeliveryProgress } from './delivery-progress-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const dataset = JSON.parse(await fs.readFile(path.join(root, 'eval/corpora/public-demo-v1.json'), 'utf8'));
@@ -12,6 +13,7 @@ const google = JSON.parse(await fs.readFile(path.join(root, 'eval/corpora/public
 const review = JSON.parse(await fs.readFile(path.join(root, 'eval/corpora/public-demo-review-v1.json'), 'utf8'));
 const currency = await loadCurrencyReport(root, dataset);
 const modelComparison = await loadModelComparison(root);
+const deliveryPlan = await loadDeliveryPlan(root);
 const evidencePath = path.join(root, 'eval/reports/public-demo-2026-09-27.json');
 if (process.argv[2] === '--capture') {
   const workspace = (await fs.readFile(path.join(root, '.cache/eval/public-demo/latest.txt'), 'utf8')).trim();
@@ -62,6 +64,7 @@ const issues = review.observations.filter(row => row.flag === 'issue').length;
 const payload = { dataset, google, review, benchmark, evidence_sha256: digest(evidenceBytes), environment_failures: [{ phase: 'Before runtime startup', cause: 'Initial sandbox invocation denied Node child-process creation (EPERM). No inference ran. Rerun with authorized process access succeeded.', model_requests: 0 }] };
 payload.currency = currency;
 payload.model_comparison = modelComparison;
+payload.delivery_plan = deliveryPlan;
 const json = JSON.stringify(payload).replaceAll('<', '\\u003c');
 const runRows = benchmark.runs.map(run => `<tr><th scope="row">${run.repetition}</th><td>${number(run.translation_elapsed_ms)}</td><td>${number(run.request_elapsed_sum_ms)}</td><td>${number(run.translation_elapsed_ms - run.request_elapsed_sum_ms)}</td><td>${number(run.offline_reexport_ms)}</td><td>${run.status.completed_blocks}/${run.status.total_blocks}</td></tr>`).join('');
 const cards = dataset.examples.map((row, index) => {
@@ -92,9 +95,10 @@ const html = `<!doctype html>
 :root{color-scheme:light}body{margin:0;font-family:Segoe UI,Arial,sans-serif;color:#172033;background:#fff;font-size:16px;line-height:1.6}*{box-sizing:border-box}a{color:inherit}button{font:inherit;cursor:pointer}.shell{max-width:1440px;margin:auto;padding:0 28px}.label{font-size:14px;font-weight:600;color:#526074;margin:0 0 10px}.measurement{width:100%;border-collapse:collapse;text-align:left;font-size:14px;min-width:760px}.measurement th,.measurement td{border-bottom:1px solid #e2e8f0;padding:12px 14px;vertical-align:top}.measurement thead{background:#f1f5f9}.measurement th{font-weight:600}.measurement td:not(:nth-child(2)){font-variant-numeric:tabular-nums}details summary{padding:4px 0}code{overflow-wrap:anywhere;font-size:14px}p{overflow-wrap:anywhere}.hash{font-family:Consolas,monospace;font-size:13px;word-break:break-all}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #2563eb;outline-offset:4px}.run-button[aria-pressed=true]{background:#1d4ed8;color:white;border-color:#1d4ed8}@media(max-width:640px){.shell{padding:0 18px}.comparison{grid-template-columns:1fr}.measurement{font-size:14px}}@media print{button,nav{display:none}details{display:block}article{break-inside:avoid}body{font-size:12pt}}
 </style></head>
 <body>
-<header class="border-b border-slate-200"><div class="shell flex flex-wrap items-center justify-between gap-4 py-5"><a class="text-lg font-bold tracking-tight" href="#top">AURALIS <span class="font-normal text-slate-500">/ Translate</span></a><nav class="flex flex-wrap gap-5 text-sm text-slate-600" aria-label="Разделы отчёта"><a href="#model-comparison">1.8B / 7B</a><a href="#examples">История 20 примеров</a><a href="#measurements">Замеры v1</a><a href="#method">Методика</a></nav></div></header>
+<header class="border-b border-slate-200"><div class="shell flex flex-wrap items-center justify-between gap-4 py-5"><a class="text-lg font-bold tracking-tight" href="#top">AURALIS <span class="font-normal text-slate-500">/ Translate</span></a><nav class="flex flex-wrap gap-5 text-sm text-slate-600" aria-label="Разделы отчёта"><a href="#model-comparison">1.8B / 7B</a><a href="#delivery-plan">План и прогресс</a><a href="#examples">История 20 примеров</a><a href="#measurements">Замеры v1</a><a href="#method">Методика</a></nav></div></header>
 <main id="top" class="shell pb-16">
 ${renderModelComparison(modelComparison, escape, number)}
+${renderDeliveryProgress(deliveryPlan, escape)}
 <section class="pt-10 pb-7"><p class="mb-3 text-sm font-semibold uppercase tracking-[.12em] text-blue-700">Реальный прогон · 27 сентября 2026</p><h1 class="max-w-4xl text-3xl font-bold leading-tight tracking-tight md:text-4xl">Как Auralis переводит 20 китайских реплик</h1><p class="mt-4 max-w-4xl text-lg text-slate-600">Исходник, предлагаемая русская версия, фактический ответ локальной модели и Google Переводчика. Три повторения на одной машине; все ответы и замеры доступны для проверки.</p>
 <div class="mt-7 grid grid-cols-2 gap-4 lg:grid-cols-4"><div class="border-l-2 border-blue-600 pl-4"><p class="text-3xl font-semibold">60 / 60</p><p class="text-sm text-slate-500">запросов исходного профиля v1</p></div><div class="border-l-2 border-blue-600 pl-4"><p class="text-3xl font-semibold">${number(median(benchmark.runs.map(run => run.translation_elapsed_ms)) / 1000)} с</p><p class="text-sm text-slate-500">медиана обработки 20 реплик</p></div><div class="border-l-2 border-blue-600 pl-4"><p class="text-3xl font-semibold">${number(median(times))} мс</p><p class="text-sm text-slate-500">медиана отдельного запроса</p></div><div class="border-l-2 border-amber-500 pl-4"><p class="text-3xl font-semibold">${issues} / 20</p><p class="text-sm text-slate-500">реплик с замечаниями Ули</p></div></div>
 <div class="mt-7 border-l-4 border-amber-500 bg-amber-50 p-5 text-amber-950"><strong>Исходный профиль v1: файл прошёл проверку, перевод требует правки.</strong> В снимке до исправления модель во всех трёх прогонах меняет юани на шиллинги и заменяет «не бросать на полпути» на «не откладывать». Автоматических предупреждений — 0; результаты всё равно имеют статус <code>needs_review</code>. Эталоны и разбор предложены Улей, ИИ-ассистентом, и не проверены независимым переводчиком.</div>

@@ -1,5 +1,13 @@
 # Implementation status and evidence
 
+Latest planning slice, 28 September 2026: the [delivery plan](DELIVERY_PLAN.md),
+[tracked backlog](IMPLEMENTATION_BACKLOG.md) and [agent workflow](AGENT_WORKFLOW.md)
+replace the temporary work queue. They define context contrasts, bounded chunking,
+natural long-file quality and recovery, conditional adaptation, separate audio
+gates and primary-computer Git attribution. This is planning/report infrastructure,
+not executed v5, training, independent holdout review or real dubbing. Acceptance
+is recorded in [the planning check record](../eval/experiments/2026-09-28-delivery-plan.md).
+
 Latest native historical interruption: [core commit gap evidence](../eval/experiments/2026-09-27-native-historical-result-gap.md)
 passes forced desktop termination after a real older-base branch commit and a
 later explicit UI choice. Production startup creates the missing ready branch
