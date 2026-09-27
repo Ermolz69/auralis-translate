@@ -8,6 +8,20 @@ const MANIFEST: &[u8] =
     include_bytes!("../../../models/releases/hy_mt2_1_8b_q4_k_m.windows_x64_cpu.experimental.json");
 
 #[test]
+fn larger_release_is_separate_and_rejects_the_small_profile() -> Result<(), Box<dyn Error>> {
+    let profile =
+        include_bytes!("../../../models/manifests/hy_mt2_7b_q4_k_m.fidelity.experimental.json");
+    let manifest = include_bytes!(
+        "../../../models/releases/hy_mt2_7b_q4_k_m.windows_x64_cpu.experimental.json"
+    );
+    let release = ReleaseManifest::from_json(manifest, profile)?;
+    assert_eq!(release.model_asset().bytes, Some(4_624_648_896));
+    assert!(ReleaseManifest::from_json(manifest, PROFILE).is_err());
+    assert!(ReleaseManifest::from_json(MANIFEST, profile).is_err());
+    Ok(())
+}
+
+#[test]
 fn pinned_windows_cpu_release_matches_checked_profile() -> Result<(), Box<dyn Error>> {
     let release = ReleaseManifest::from_json(MANIFEST, PROFILE)?;
     assert_eq!(release.target_triple, "x86_64-pc-windows-msvc");

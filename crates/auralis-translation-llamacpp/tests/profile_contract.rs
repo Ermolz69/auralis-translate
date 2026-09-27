@@ -11,6 +11,36 @@ const CHECKED_PROFILE: &[u8] =
     include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.checked.experimental.json");
 const FIDELITY_PROFILE: &[u8] =
     include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.fidelity.experimental.json");
+const LARGE_FIDELITY_PROFILE: &[u8] =
+    include_bytes!("../../../models/manifests/hy_mt2_7b_q4_k_m.fidelity.experimental.json");
+
+#[test]
+fn model_sizes_share_policy_but_keep_separate_identity() -> Result<(), Box<dyn Error>> {
+    let large = ModelProfile::from_json(LARGE_FIDELITY_PROFILE)?;
+    assert_eq!(large.model_file_bytes, Some(4_624_648_896));
+    assert_eq!(large.model_repo, "tencent/Hy-MT2-7B-GGUF");
+    let mut small: serde_json::Value = serde_json::from_slice(FIDELITY_PROFILE)?;
+    let mut large: serde_json::Value = serde_json::from_slice(LARGE_FIDELITY_PROFILE)?;
+    for key in [
+        "model_repo",
+        "model_revision",
+        "model_file_sha256",
+        "model_file_bytes",
+        "model_alias",
+    ] {
+        assert_ne!(small[key], large[key]);
+        small
+            .as_object_mut()
+            .ok_or("profile object missing")?
+            .remove(key);
+        large
+            .as_object_mut()
+            .ok_or("profile object missing")?
+            .remove(key);
+    }
+    assert_eq!(small, large);
+    Ok(())
+}
 
 #[test]
 fn fidelity_profile_is_versioned_without_changing_legacy_fingerprints() -> Result<(), Box<dyn Error>>

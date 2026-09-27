@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "id": "hy-mt2-7b-q4-fidelity-windows-x64-cpu-b10977",
+  "target_triple": "x86_64-pc-windows-msvc",
+  "profile_sha256": "2059f9c44bb2dcee37bdd7829c5f500235f6af327987788a2169c0c49586540b",
+  "model": {
+    "repository": "tencent/Hy-MT2-7B-GGUF",
+    "revision": "ab8472660ac61fac25f1af43fac2599d52a8a775",
+    "file": {
+      "url": "https://huggingface.co/tencent/Hy-MT2-7B-GGUF/resolve/ab8472660ac61fac25f1af43fac2599d52a8a775/Hy-MT2-7B-Q4_K_M.gguf",
+      "filename": "Hy-MT2-7B-Q4_K_M.gguf",
+      "sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+      "bytes": 4624648896
+    },
+    "license": {
+      "spdx": "Apache-2.0",
+      "notice": {
+        "url": "https://huggingface.co/tencent/Hy-MT2-7B-GGUF/resolve/ab8472660ac61fac25f1af43fac2599d52a8a775/LICENSE.txt",
+        "filename": "HY-MT2-7B-LICENSE.txt",
+        "sha256": "746750afa6af28fe4f8b326751ad2a40c700d2e5c459c0a1f6a2e76d99ace224",
+        "bytes": 11635
+      }
+    }
+  },
+  "runtime": {
+    "repository": "ggml-org/llama.cpp",
+    "source_commit": "0ecb159c9e93056a4742afe4195d05a2912b1746",
+    "release_tag": "b10977",
+    "build_info": "b10977-0ecb159c9",
+    "license": {
+      "spdx": "MIT",
+      "notice": {
+        "url": "https://raw.githubusercontent.com/ggml-org/llama.cpp/0ecb159c9e93056a4742afe4195d05a2912b1746/LICENSE",
+        "filename": "LLAMA-LICENSE.txt",
+        "sha256": "94f29bbed6a22c35b992c5c6ebf0e7c92f13b836b90f36f461c9cf2f0f1d010d",
+        "bytes": 1078
+      }
+    },
+    "variants": [
+      {
+        "backend": "cpu",
+        "archive": {
+          "url": "https://github.com/ggml-org/llama.cpp/releases/download/b10977/llama-b10977-bin-win-cpu-x64.zip",
+          "filename": "llama-b10977-bin-win-cpu-x64.zip",
+          "sha256": "bdbb1ee5368b44112fa3fa9b3ac168a15d0d492e5c2f9fbe2074dd2f4628a4b9",
+          "bytes": 18428830
+        }
+      }
+    ]
+  }
+}

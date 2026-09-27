@@ -7,7 +7,10 @@ Translate source and the authored development report are now published on GitHub
 and Pages following the owner's later request. The new
 [quality improvement plan](evaluation/007-translation-quality-improvement-plan.md)
 specifies the model comparison and language work; publication does not close
-quality or desktop release gates.
+quality or desktop release gates. The first matched
+[1.8B/7B Q4 development comparison](../eval/experiments/2026-09-27-model-size-comparison.md)
+and a separate 7B CLI profile now exist; the larger holdout and precision matrix
+remain outstanding.
 
 ## Working foundation
 

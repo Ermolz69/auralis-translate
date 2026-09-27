@@ -49,7 +49,7 @@ const report = {
   cli_sha256: digest(await fs.readFile(executable)), runtime_sha256: digest(await fs.readFile(serverPath)),
   profile, repetitions_planned: 3, runs: [], failures: [],
   hardware: { os: `${os.type()} ${os.release()} ${os.arch()}`, cpu: os.cpus()[0].model, logical_cpus: os.cpus().length, total_ram_bytes: os.totalmem(), gpu: gpu.stdout.trim() },
-  methodology: { clock: 'Node performance.now(), monotonic milliseconds', server: 'One persistent server; first timed file follows readiness, other files reuse the loaded model. No claim of cold OS cache.', request: 'Loopback proxy times POST /v1/chat/completions through complete response body. Includes proxy/HTTP overhead; llama.cpp token timings are separate.', cache: 'llama.cpp --cache-ram 0; slot/prompt behavior otherwise defaults. Repeated identical prompts can reuse the runtime prompt cache.', resources: 'Sampled every 1 second. GPU usage includes other applications; process working set is not private allocation. Peaks are approximate.', dataset: dataset.provenance, scope: `Twenty standalone Chinese lines; prompt v${profile.prompt_version}, no context or glossary, synthetic CRLF SRT. Proposed references are not sent to the model. Not a subtitle holdout or language-release gate.` },
+  methodology: { clock: 'Node performance.now(), monotonic milliseconds', server: 'One persistent server; first timed file follows readiness, other files reuse the loaded model. No claim of cold OS cache.', request: 'Loopback proxy times POST /v1/chat/completions through complete response body. Includes proxy/HTTP overhead; llama.cpp token timings are separate.', cache: 'llama.cpp --cache-ram 0; slot/prompt behavior otherwise defaults. Repeated identical prompts can reuse the runtime prompt cache.', resources: 'Sampled every 1 second from server spawn, including startup where captured. GPU usage includes other applications; process working set is not private allocation. Peaks are approximate.', dataset: dataset.provenance, scope: `Twenty standalone Chinese lines; prompt v${profile.prompt_version}, no context or glossary, synthetic CRLF SRT. Proposed references are not sent to the model. Not a subtitle holdout or language-release gate.` },
 };
 report.code_snapshot = {};
 for (const file of ['crates/auralis-translation-llamacpp/src/provider.rs', 'crates/auralis-translation-llamacpp/src/chinese_fidelity_prompt.rs', 'crates/auralis-translation-llamacpp/src/chinese_money_terms.rs', 'crates/auralis-translation-llamacpp/src/chinese_number.rs', 'eval/scripts/public-demo-benchmark.mjs']) {
@@ -95,11 +95,11 @@ try {
   report.server_arguments = args.map(value => value === modelPath ? '<supplied-model.gguf>' : value);
   const started = performance.now();
   server = startProcess(serverPath, args, root, process.env, { maxCaptureCharacters: 4 * 1024 * 1024 });
+  const sampleScript = `$ErrorActionPreference='Stop'; while ($true) { $p = Get-Process -Id ${server.child.pid} -ErrorAction SilentlyContinue; if (!$p) { break }; $g = & nvidia-smi --query-gpu=memory.used,utilization.gpu --format=csv,noheader,nounits; @{time=[DateTime]::UtcNow.ToString('o');working_set_bytes=$p.WorkingSet64;cpu_seconds=$p.CPU;gpu=$g} | ConvertTo-Json -Compress; Start-Sleep -Milliseconds 1000 }`;
+  sampler = startProcess('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', sampleScript], root);
   await waitForHealthyServer(runtimeUrl, server, 180_000);
   report.server_startup_ms = performance.now() - started;
   console.log(`Server ready in ${report.server_startup_ms.toFixed(3)} ms`);
-  const sampleScript = `$ErrorActionPreference='Stop'; while ($true) { $p = Get-Process -Id ${server.child.pid} -ErrorAction SilentlyContinue; if (!$p) { break }; $g = & nvidia-smi --query-gpu=memory.used,utilization.gpu --format=csv,noheader,nounits; @{time=[DateTime]::UtcNow.ToString('o');working_set_bytes=$p.WorkingSet64;cpu_seconds=$p.CPU;gpu=$g} | ConvertTo-Json -Compress; Start-Sleep -Milliseconds 1000 }`;
-  sampler = startProcess('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', sampleScript], root);
   for (let repetition = 1; repetition <= 3; repetition++) {
     activeRun = repetition;
     const runRoot = path.join(workspace, `repeat-${repetition}`);
@@ -151,6 +151,7 @@ try {
   report.requests = requests;
   report.resource_samples = (sampler?.stdout ?? '').trim().split(/\r?\n/).filter(Boolean).map(line => { try { return JSON.parse(line); } catch { return { invalid_sample: true }; } });
   report.resource_sampling_error = sampler?.stderr || null;
+  report.runtime_observations = (server?.stderr ?? '').split(/\r?\n/).filter(line => /offload|CUDA.*buffer size|KV.*buffer size|model params|model size|build:/i.test(line));
   report.finished_at = new Date().toISOString();
   await fs.writeFile(path.join(workspace, 'benchmark.json'), JSON.stringify(report, null, 2));
   await fs.writeFile(path.join(workspace, 'model-server.log'), `${server?.stdout ?? ''}\n${server?.stderr ?? ''}`);

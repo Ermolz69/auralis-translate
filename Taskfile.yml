@@ -1,6 +1,40 @@
 version: "3"
 
 tasks:
+  model:7b:smoke:
+    desc: Verify the real 7B launcher reaches readiness and cleans up its runtime
+    cmds:
+      - task: build:release
+      - node eval/scripts/serve-local-model.mjs models/manifests/hy_mt2_7b_q4_k_m.fidelity.experimental.json .cache/models/Hy-MT2-7B-Q4_K_M.gguf --verify-only
+  model:7b:fetch:
+    desc: Acquire and hash-check the pinned 7B assets into an ignored cache
+    cmds:
+      - task: build:release
+      - target/release/auralis-translation-cli.exe fetch-release models/releases/hy_mt2_7b_q4_k_m.windows_x64_cpu.experimental.json models/manifests/hy_mt2_7b_q4_k_m.fidelity.experimental.json cpu "{{.ROOT_DIR}}/.cache/models"
+  model:7b:install:
+    desc: Install the verified experimental 7B CPU package separately from desktop selection
+    cmds:
+      - task: build:release
+      - target/release/auralis-translation-cli.exe install-offline models/releases/hy_mt2_7b_q4_k_m.windows_x64_cpu.experimental.json models/manifests/hy_mt2_7b_q4_k_m.fidelity.experimental.json cpu "{{.ROOT_DIR}}/.cache/models" "{{.ROOT_DIR}}/.cache/installed-models"
+  model:7b:serve:
+    desc: Verify and serve the separate experimental 7B fidelity model on loopback
+    cmds:
+      - task: build:release
+      - node eval/scripts/serve-local-model.mjs models/manifests/hy_mt2_7b_q4_k_m.fidelity.experimental.json .cache/models/Hy-MT2-7B-Q4_K_M.gguf
+  model:7b:doctor:
+    desc: Verify the downloaded 7B file against the pinned fidelity profile
+    cmds:
+      - task: build:release
+      - target/release/auralis-translation-cli.exe doctor models/manifests/hy_mt2_7b_q4_k_m.fidelity.experimental.json .cache/models/Hy-MT2-7B-Q4_K_M.gguf
+  eval:models:compare:
+    desc: Repeat both model sizes on the same two frozen development datasets
+    cmds:
+      - task: build:release
+      - node eval/scripts/model-size-comparison.mjs
+  test:model-profiles:
+    desc: Verify pinned model profiles and package identity boundaries
+    cmds:
+      - cargo test --offline -p auralis-translation-llamacpp --test profile_contract --test release_manifest
   eval:currency-prompts:
     desc: Explore direct terminology prompts before selecting a versioned file profile
     cmds:

@@ -11,7 +11,10 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 The [translation quality and model selection plan](evaluation/007-translation-quality-improvement-plan.md)
 orders regression data, a controlled 1.8B/7B precision comparison, composable
 context/terminology, desktop delivery, review and separate language release gates.
-The larger-model recommendation is a candidate for measurement, not local evidence.
+The first [real 1.8B/7B comparison](../eval/experiments/2026-09-27-model-size-comparison.md)
+now records 240 requests through matched fidelity profiles. The separate
+[7B CLI profile and commands](reference/hy-mt2-7b-cli-v1.md) are available;
+independent language review and desktop selection remain open.
 
 The [Chinese currency protection experiment](../eval/experiments/2026-09-27-chinese-currency-protection.md)
 adds an explicit [prompt-v4 profile](reference/chinese-fidelity-profile-v1.md).

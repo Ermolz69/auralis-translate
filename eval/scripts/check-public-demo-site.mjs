@@ -5,6 +5,7 @@ import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 import { buildSrt, digest } from './flores-file-fixture.mjs';
 import { loadCurrencyReport } from './currency-report-section.mjs';
+import { loadModelComparison } from './model-comparison-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const html = await fs.readFile(path.join(root, 'site/index.html'), 'utf8');
@@ -21,6 +22,10 @@ assert.equal(data.benchmark.requests.length, 60);
 assert.equal(data.google.observations.length, 20);
 assert.equal(data.review.observations.length, 20);
 assert.deepEqual(data.currency, await loadCurrencyReport(root, data.dataset));
+assert.deepEqual(data.model_comparison, await loadModelComparison(root));
+assert(html.indexOf('id="model-comparison"') < html.indexOf('id="currency-fix"'));
+assert.equal((html.match(/data-model-row=/g) ?? []).length, 40);
+assert.equal((html.match(/data-model-run=/g) ?? []).length, 3);
 assert(html.includes('id="currency-fix"'));
 assert.equal((html.match(/class="fidelity-candidate /g) ?? []).length, 20);
 assert.equal(data.benchmark.source_sha256, digest(buildSrt(data.dataset.examples)));
@@ -41,4 +46,4 @@ for (const script of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))
 }
 assert(!/(?:E:\\\\|C:\\\\Users\\\\|00ermzahar@|gh[pousr]_[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)/.test(html));
 assert(!/<script[^>]+src="(?!https:\/\/cdn\.jsdelivr\.net\/npm\/@tailwindcss\/browser@4")/.test(html));
-console.log('Public HTML verified: 20 original examples, 20 currency controls, 180 real requests, protected amounts, evidence identity, scripts, source hash and single-file publication boundary.');
+console.log('Public HTML verified: 180 historical and 240 new requests, 40 model comparison rows, matched prompts/policy, evidence identity, scripts and single-file publication boundary.');

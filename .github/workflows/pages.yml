@@ -11,6 +11,10 @@ on:
       - eval/reports/public-demo-fidelity-2026-09-27.json
       - eval/reports/currency-controls-2026-09-27.json
       - eval/scripts/currency-report-section.mjs
+      - eval/scripts/model-comparison-section.mjs
+      - eval/reports/model-size-comparison-2026-09-27.json
+      - eval/corpora/model-size-review-v1.json
+      - models/manifests/hy_mt2_7b_q4_k_m.fidelity.experimental.json
   workflow_dispatch:
 
 permissions:

@@ -1,7 +1,9 @@
 # Translation quality improvement and model selection plan
 
-Status: proposed work, 27 September 2026. This is a plan, not evidence that a
-larger model has run locally or passed a language gate. It complements the
+Status: proposed work with a first local comparison, 27 September 2026. The
+[matched 1.8B/7B Q4 development experiment](../../eval/experiments/2026-09-27-model-size-comparison.md)
+now has real evidence; the wider precision matrix and language gate remain open.
+This plan complements the
 [product plan](../PRODUCT_PLAN.md), [stage gates](../IMPLEMENTATION_STAGES.md)
 and [language evaluation protocol](001-open-data-and-language-gates.md).
 
