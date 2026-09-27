@@ -1,5 +1,12 @@
 # Implementation status and evidence
 
+Latest plan audit, 28 September 2026: [release acceptance](RELEASE_ACCEPTANCE.md),
+[regression policy 008](evaluation/008-regression-and-adversarial-checks.md) and
+[goal objective](GOAL_PROMPT.md) add finite completion, gate bindings, maintained
+regressions, bounded failure/retry, upgrade/rollback and a final candidate audit.
+The canonical backlog now contains 49 tasks. [Planning audit evidence](../eval/experiments/2026-09-28-goal-plan-audit.md)
+covers docs/report checks only; no Goal or new implementation/probe is activated.
+
 Latest planning slice, 28 September 2026: the [delivery plan](DELIVERY_PLAN.md),
 [tracked backlog](IMPLEMENTATION_BACKLOG.md) and [agent workflow](AGENT_WORKFLOW.md)
 replace the temporary work queue. They define context contrasts, bounded chunking,

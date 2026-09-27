@@ -3,6 +3,10 @@
 Updated: 28 September 2026. This is the authoritative delivery sequence. The
 [tracked backlog](IMPLEMENTATION_BACKLOG.md) owns task status;
 [agent workflow](AGENT_WORKFLOW.md) owns execution, evidence and commit rules.
+The [release acceptance map](RELEASE_ACCEPTANCE.md) binds finite goal scope and
+gate evidence; [regression policy 008](evaluation/008-regression-and-adversarial-checks.md)
+maintains future checks. A [reusable goal objective](GOAL_PROMPT.md) is available
+for a later execution request, without starting implementation now.
 The [product plan](PRODUCT_PLAN.md) still owns file invariants and G1–G9.
 The former [S0–S9 stages](IMPLEMENTATION_STAGES.md) remain acceptance references,
 not a second task queue. This plan supersedes the next-step ordering in
@@ -335,3 +339,34 @@ and independent review protocol before implementing/tuning the adapter. Keep
 the existing 420-request public evidence unchanged. Every subsequent slice follows
 the [agent workflow](AGENT_WORKFLOW.md), updates the backlog and publishes measured
 comparison evidence only after the named checks pass.
+
+## 10. Complete the goal and improve future checks
+
+Before sustained execution, `PLAN-03` freezes required and optional task IDs,
+hardware/format/endpoint scope and resources. The [acceptance map](RELEASE_ACCEPTANCE.md)
+prevents a local CLI milestone from closing a broader desktop/audio objective.
+Required human review, legal natural sources, clean-target checks and owner-deferred
+UI remain concrete external prerequisites; continue independent work while resolving
+them. The current planning request does not activate a Goal or start training.
+
+The audited additions are `DATA-05` for alignment/leakage/reviewer coverage,
+`CTX-05` for typed bounded retries and review outcomes, `EVAL-04` for maintained
+regression/adversarial/property/metamorphic checks, `HOST-04` for safe upgrade and
+rollback, `VOICE-07` for real speech regressions and `RELEASE-05` for a final
+committed-candidate audit. Their implementation is planned, not implied by these
+documents. Follow [policy 008](evaluation/008-regression-and-adversarial-checks.md)
+to retain minimal reproductions, unseen related controls and an immutable corpus
+history. A score gain must not hide a new critical regression.
+
+Keep every retry attempt and reject incomplete publication. Freeze limits before
+measurement; do not tune retries, references, exclusions or gate thresholds merely
+to make a candidate pass. Upgrade/rollback probes run only on owned database/package
+copies, preserving edits, historical results and compatible backups. The final audit
+ties raw evidence, profiles, selected consumer artifacts and public results to one
+actual candidate and records an explicit rollback path.
+
+Completion requires the scoped G1–G9 and audio A1–A6, not a green build or a done-task
+percentage. Conditional training may be unnecessary; required blocked/deferred work
+cannot be erased. Record excluded future directions with reasons, preserve unresolved
+input as a resumable handoff and stop expanding features once the frozen objective
+is met. The reusable [goal prompt](GOAL_PROMPT.md) carries these execution rules.

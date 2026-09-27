@@ -20,6 +20,10 @@ implementation; never mark a gate done from mocks or compilation. Add new tasks
 rather than broadening a completed task. `ready` and `done` require all declared
 prerequisites done. Release readiness is determined by gates, not done/total.
 Optional adaptation does not block a successful unadapted translation release.
+The [release acceptance map](RELEASE_ACCEPTANCE.md) defines finite goal scope,
+G1–G9/A1–A6 and the final audit. The [regression policy](evaluation/008-regression-and-adversarial-checks.md)
+defines future-check maintenance. The [reusable goal objective](GOAL_PROMPT.md)
+does not activate implementation by being stored here.
 
 ## Task table
 
@@ -29,17 +33,22 @@ Optional adaptation does not block a successful unadapted translation release.
 | BASE-02 | Real synthetic long-file recovery baseline | done | BASE-01 | Existing bounded scope and [recovery evidence](../eval/experiments/2026-09-26-long-file-recovery.md) |
 | BASE-03 | Matched 1.8B/7B development comparison | done | BASE-01 | 240 real requests, AI editorial review and [experiment](../eval/experiments/2026-09-27-model-size-comparison.md) |
 | PLAN-01 | Delivery plan, canonical progress and agent rules | done | BASE-03 | Documents/generated task progress; plan/docs/site and browser DOM checks passed; [acceptance record](../eval/experiments/2026-09-28-delivery-plan.md) tracks publication |
+| PLAN-02 | Audit planning gaps and define goal completion | done | PLAN-01 | Release/regression/goal contracts, 49-task dependencies, six document identities and checked progress; [audit record](../eval/experiments/2026-09-28-goal-plan-audit.md) |
+| PLAN-03 | Freeze finite execution scope and gate bindings | ready | PLAN-02 | Versioned required/optional/excluded IDs, candidate scope, resources, external prerequisites and deferred UI decision |
 | DATA-01 | Source rights, provenance, scene and split schema | ready | BASE-03 | Schema examples validate; rights/alignment exclusions and whole-source grouping documented |
 | DATA-02 | Sixty context contrast cases | planned | DATA-01, CTX-01 | Five categories, four scenarios per target, references/prohibited facts and IDs frozen |
 | DATA-03 | Licensed development subtitle scenes | planned | DATA-01 | Approximately 200 eligible cues; source/scene/speaker provenance and aligned references |
 | DATA-04 | Sealed independent release holdout | planned | DATA-01, EVAL-01 | At least 300 eligible cues; independent groups/references, no tuning exposure |
+| DATA-05 | Audit alignment, leakage and reviewer coverage | planned | DATA-03, DATA-04 | Whole-source duplicates/splits, reference provenance, rights, exclusions and balanced review categories checked |
 | EVAL-01 | Blind review, scoring and adjudication protocol | ready | BASE-03 | Human/source-aware rubrics, critical taxonomy, denominators and reviewer availability |
 | CTX-01 | Specify composable prompt v5 | ready | BASE-03 | Source windows, approved terms, fidelity, identity and strict output mapping contract |
-| CTX-02 | Implement v5 without changing v1–v4 | planned | CTX-01, DATA-02 | Target/context separation; invalid IDs/tokens rejected; legacy profile checks pass |
+| CTX-02 | Implement v5 without changing v1–v4 | planned | CTX-01, DATA-02, CTX-05 | Target/context separation; invalid IDs/tokens rejected; legacy profile checks pass |
 | CTX-03 | Scene terms and speaker evidence | planned | DATA-03, CTX-01 | Explicit approved facts with scope/hash; no invented speaker or automatic summary authority |
 | CTX-04 | Paired context/model ablation | planned | CTX-02, CTX-03, EVAL-01 | Budgeted repeated 60-case comparison, unrelated/insufficient-context controls and blinded review |
+| CTX-05 | Specify bounded failure, retry and review policy | planned | CTX-01, EVAL-02 | Versioned attempt/time budgets, typed outcomes, rejected evidence, no partial publication or silent model change |
 | EVAL-02 | General comparison and evidence schema | planned | CTX-01, EVAL-01 | Frozen identities, failures, timings/quantiles, raw/restored/accepted outputs and reproducibility |
 | EVAL-03 | Context and long-file HTML presentation | planned | EVAL-02, CTX-04 | Same evidence identities; scene/target/seam views, review labels, counts, public rights and raw downloads |
+| EVAL-04 | Implement maintained regression and adversarial tiers | planned | CTX-01, EVAL-02 | Permanent bug index, generative/metamorphic/source-instruction controls and change-triggered checks; [policy](evaluation/008-regression-and-adversarial-checks.md) |
 | LONG-01 | Token-budgeted scene and batch planner | planned | CTX-02, CTX-03 | Actual rendered-token budgets; deterministic context trimming and complete cue mapping |
 | LONG-02 | Batch and seam-shift ablation | planned | LONG-01, CTX-04, EVAL-02 | Batches 1/4/8, shifts 0/1/3 on retained scenes; paired seam/interior review |
 | LONG-03 | Engineering soak ladder | planned | LONG-01, EVAL-02 | 1024/4096/10000-cue owned fixtures; resources, no duplicates, exact supported structure |
@@ -54,25 +63,30 @@ Optional adaptation does not block a successful unadapted translation release.
 | HOST-01 | Close historical-branch publication interruptions | planned | BASE-01 | Journal-only and staged publication termination, startup recovery, preserved explicit selection |
 | HOST-02 | Clean distribution and selected backend package | planned | DECIDE-01 | Versioned installer/runtime/assets, archive-limit resolution if CUDA selected, real clean/offline install |
 | HOST-03 | Final native review and candidate selection UI | deferred | DECIDE-01, HOST-01, HOST-02 | Owner-deferred UI milestone; actual model identity/review/attach/pause/restart through both databases |
-| RELEASE-01 | Frozen Chinese holdout and term gates | planned | DECIDE-01, DATA-04, EVAL-02 | Blind G3/G4/G5; profile choice includes explicit accepted or rejected adaptation decision |
+| HOST-04 | Verify upgrade, compatible rollback and old results | planned | HOST-02, BASE-01 | Owned DB/package copies; interrupted migration/install, edits/history, identity refusal, backup restore and offline export |
+| RELEASE-01 | Frozen Chinese holdout and term gates | planned | DECIDE-01, DATA-04, DATA-05, EVAL-02 | Blind G3/G4/G5; profile choice includes explicit accepted or rejected adaptation decision |
 | RELEASE-02 | Translation reliability and export gates | planned | LONG-05, LONG-06, HOST-01 | G1/G2/G6/G7/G8 evidence for the exact release profile and supported format |
 | RELEASE-03 | Clean Windows and desktop release gate | deferred | HOST-02, HOST-03 | G9 unseeded/offline and final native workflow, no mock substitute |
-| RELEASE-04 | Chinese translation release candidate | planned | RELEASE-01, RELEASE-02, RELEASE-03 | G1–G9 decision record, notices, hashes, rollback and explicit exclusions |
+| RELEASE-04 | Chinese translation release candidate | planned | RELEASE-05 | G1–G9 decision record, notices, hashes, rollback and explicit exclusions |
+| RELEASE-05 | Audit committed final candidate and regression dossier | planned | RELEASE-01, RELEASE-02, RELEASE-03, EVAL-04, HOST-04 | Gate/artifact/identity agreement, exact-target checks, publication and reviewed severity dispositions; [acceptance](RELEASE_ACCEPTANCE.md) |
 | VOICE-01 | Reviewed spoken-script handoff contract | planned | CTX-01, EVAL-01 | Result lineage, cue/timing/speaker mapping and separately reviewed number/name adaptation |
 | VOICE-02 | Real Russian TTS selection and adapter | planned | VOICE-01, LONG-06 | Auralis-owned real audio, resource lease, engine/voice identity and cancellation |
 | VOICE-03 | Duration fit, mixing and mux policy | planned | VOICE-02 | Measured fit tolerance, playable mapped segments, preserved meaning and separate artifacts |
-| VOICE-04 | Human-listened three-scene dubbing pilot | planned | VOICE-03, RELEASE-01 | Reviewed translation input, 10–20-minute scenes, proposed audio gates and reviewer evidence |
+| VOICE-04 | Human-listened three-scene dubbing pilot | planned | VOICE-03, RELEASE-01, VOICE-07 | Reviewed translation input, 10–20-minute scenes, proposed audio gates and reviewer evidence |
 | VOICE-05 | Full-length dubbing soak and recovery | planned | VOICE-04, LONG-04, RELEASE-02 | Real complete media, no missing/duplicate audio, resume and resource contention evidence |
 | VOICE-06 | Dubbing pilot release decision | planned | VOICE-05, RELEASE-04 | Playback/listener results, media provenance and audio limits separate from translation gate |
+| VOICE-07 | Maintain speech and pronunciation regression controls | planned | VOICE-01, EVAL-04 | Real names/amounts/homographs/scene-boundary audio, lineage, fit/clipping and listening controls |
 | ASR-01 | Transcript creation/alignment without source subtitles | deferred | VOICE-01 | Separate Auralis real ASR contract and recognition/alignment evaluation; not needed for subtitle pilot |
 | LANGUAGE-01 | Separate Japanese admission and release evidence | deferred | RELEASE-04 | Japanese scenes, names, context, reviewers and independent G1–G9; no Chinese transfer claim |
 
 ## Current handoff
 
-The next independently executable tasks are `DATA-01`, `CTX-01` and `EVAL-01`.
+The next independently executable tasks are `PLAN-03`, `DATA-01`, `CTX-01` and `EVAL-01`.
 `PLAN-01` has passed planning-artifact and generated-progress checks; publication
 is tracked separately in its acceptance record. This request creates the plan, not v5, a trained adapter
 or a voice engine. No implementation task is silently promoted to `in_progress`.
+`PLAN-02` has passed the planning audit. Its goal template is ready to submit later;
+storing it here does not start a Goal, training, migration or audio implementation.
 
 Deferred UI, optional adaptation/precision and ASR remain visible. A completed
 translation CLI milestone does not close the desktop release or audio milestone.

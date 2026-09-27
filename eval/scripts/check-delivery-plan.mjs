@@ -4,4 +4,4 @@ import { loadDeliveryPlan } from './delivery-progress-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const plan = await loadDeliveryPlan(root);
-console.log(`Delivery backlog verified: ${plan.total_tasks} tasks, unique IDs, known statuses, acyclic prerequisites, linked completion evidence, three document identities.`);
+console.log(`Delivery backlog verified: ${plan.total_tasks} tasks, unique IDs, known statuses, acyclic prerequisites, linked completion evidence, ${plan.documents.length} document identities.`);

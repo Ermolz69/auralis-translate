@@ -8,6 +8,9 @@ on:
       - docs/DELIVERY_PLAN.md
       - docs/IMPLEMENTATION_BACKLOG.md
       - docs/AGENT_WORKFLOW.md
+      - docs/RELEASE_ACCEPTANCE.md
+      - docs/evaluation/008-regression-and-adversarial-checks.md
+      - docs/GOAL_PROMPT.md
       - eval/scripts/delivery-progress-section.mjs
       - eval/scripts/check-delivery-plan.mjs
       - .github/workflows/pages.yml

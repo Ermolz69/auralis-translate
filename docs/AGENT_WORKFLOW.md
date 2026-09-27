@@ -3,6 +3,10 @@
 Updated: 28 September 2026. Applies to the
 [delivery plan](DELIVERY_PLAN.md) and [canonical backlog](IMPLEMENTATION_BACKLOG.md).
 Repository [AGENTS.md](../AGENTS.md) and current user instructions remain binding.
+Use the [release acceptance map](RELEASE_ACCEPTANCE.md) and
+[regression policy 008](evaluation/008-regression-and-adversarial-checks.md) for
+finite goal completion, change-triggered checks and retained bug reproductions.
+The [goal objective](GOAL_PROMPT.md) is a template for a later execution request.
 
 ## 1. Start and select one bounded slice
 
@@ -224,3 +228,29 @@ outcomes, experiment/review scope, limitations, commit/push/deployment evidence
 and next ready task. Keep failures visible, including automatic approval rejection
 if any operation remains blocked. Release status requires the full selected gate
 record; a task completion is not a language or audio release.
+
+## 8. Sustained goal execution and final audit
+
+Freeze `PLAN-03` before a long execution. Track required IDs, optional conditional
+branches, resources and external prerequisites, preserving the existing UI deferral.
+Do not activate a Goal merely because a prompt template or plan is requested.
+When execution is explicitly requested, create/continue it according to the
+available Goal tool contract; do not invent a token budget. Backlog task `blocked`
+and goal-level status have different rules. A limit is not completion.
+
+Each iteration implements a bounded task, checks its acceptance and promotes a
+ready dependency; it does not merely rewrite the plan or repeat the same failed
+probe. New failures get a source/contract-based reproduction and related unseen
+controls. Predeclare retry limits and failure categories; never regenerate without
+bound until a chosen reference matches. Retain raw rejected candidates and no
+partial publication. Stop an experiment on its declared resource/time criteria,
+record it and revise the hypothesis before another budgeted comparison.
+
+For `HOST-04` use owned copies, verify restore/identity and protect user databases.
+For `DATA-05` preserve sealed splits and honest reviewer coverage. For `VOICE-07`
+use real audio and listening rather than mock paths. At `RELEASE-05` verify one
+committed candidate's gate, artifact, identity and public-report agreement. Apply
+the gate map to the selected endpoint and repeat affected checks after final fixes.
+Required deferred work or missing independent review prevents full completion;
+finish independent tasks and report concrete missing input instead of inventing a
+pass. Scope exclusions must be explicit, and future directions remain in the backlog.

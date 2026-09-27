@@ -13,6 +13,10 @@ and [agent workflow](AGENT_WORKFLOW.md) now govern execution and progress. They
 cover composed scene context, chunk boundaries, complete long files, independent
 review, conditional fine-tuning, real Auralis dubbing and primary Git authorship.
 The backlog replaces the temporary stage queue; S0–S9 acceptance remains applicable.
+The [release acceptance map](RELEASE_ACCEPTANCE.md) defines finite completion and
+G1–G9/A1–A6; [regression policy 008](evaluation/008-regression-and-adversarial-checks.md)
+defines future-check maintenance, and the [goal prompt](GOAL_PROMPT.md) is ready
+for a later sustained execution request.
 
 The [translation quality and model selection plan](evaluation/007-translation-quality-improvement-plan.md)
 orders regression data, a controlled 1.8B/7B precision comparison, composable
