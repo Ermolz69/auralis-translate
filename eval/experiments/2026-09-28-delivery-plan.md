@@ -1,6 +1,6 @@
 # Delivery planning and public task progress
 
-Status: local planning/report checks passed, 28 September 2026. This record covers planning
+Status: planning/report checks and Pages publication passed, 28 September 2026. This record covers planning
 and report infrastructure only. It does not add a context profile, run a new model
 benchmark, fine-tune weights or synthesize audio.
 
@@ -38,8 +38,10 @@ Chrome DOM inspection of the local preview confirmed all 41 rows, the navigation
 anchor, eight phase cards, next ready IDs and working task-table disclosure. At
 default CSS width 2,133 px and a mobile viewport override yielding 433 CSS px,
 document width remained within the viewport; the override was reset. No JavaScript
-errors were logged. Screenshot capture timed out in the browser tool; this is not
-a successful visual screenshot inspection. Remote deployment remains to be checked.
+errors were logged. Local-preview screenshot capture timed out in the browser tool.
+The later live Pages screenshot succeeded: eight phase cards, 4 of 41 scoped tasks
+done, three ready IDs, deferred stages, context/long-file proposals and document
+links were visually inspected. No JavaScript errors were logged on the live page.
 
 Rust/model/audio tests are not run for this documentation/report slice because
 no production Rust, model policy, benchmark evidence or media behavior changes.
@@ -47,6 +49,10 @@ Full quality, clean installation and audio gates remain open in the backlog.
 
 ## Publication
 
-Publication is pending the checks. Author/committer must match the computer's
-verified primary global Git identity. Final commit and deployment identities
-are available from Git history and the Pages workflow, not guessed in advance.
+Planning commit: `9e785c03033005860d23a6e7eddc8e93dd298e54`, pushed to `main`.
+Both author and committer were verified to match the primary global Git identity.
+[Pages run 36351805466](https://github.com/Ermolz69/auralis-translate/actions/runs/36351805466)
+completed with `success`. The [live plan](https://ermolz69.github.io/auralis-translate/#delivery-plan)
+was reloaded and inspected after deployment; all 41 task rows and the updated
+progress were present. The screenshot is retained in the ignored local cache.
+This follow-up acceptance record does not replace or add model benchmark evidence.
