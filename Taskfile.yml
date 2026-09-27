@@ -1,6 +1,27 @@
 version: "3"
 
 tasks:
+  site:preview:
+    desc: Preview the single report on loopback without exposing repository files
+    cmds:
+      - node eval/scripts/preview-public-demo.mjs
+  site:build:
+    desc: Rebuild the single HTML report from frozen real benchmark evidence
+    cmds:
+      - node eval/scripts/public-demo-site.mjs
+  site:capture:
+    desc: Deliberately replace report evidence with the latest successful authored benchmark
+    cmds:
+      - node eval/scripts/public-demo-site.mjs --capture
+  site:check:
+    desc: Verify report data integrity, embedded scripts and public artifact boundaries
+    cmds:
+      - node eval/scripts/check-public-demo-site.mjs
+  eval:public-demo:
+    desc: Measure three real checked-model runs on twenty authored Chinese SRT examples
+    cmds:
+      - task: build:release
+      - node eval/scripts/public-demo-benchmark.mjs
   test:result-edits:
     desc: Verify immutable edit ancestry, explicit historical branches, concurrent writers and migration
     cmds:

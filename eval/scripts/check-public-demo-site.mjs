@@ -1,0 +1,40 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import vm from 'node:vm';
+import { fileURLToPath } from 'node:url';
+import { buildSrt, digest } from './flores-file-fixture.mjs';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+const html = await fs.readFile(path.join(root, 'site/index.html'), 'utf8');
+assert.deepEqual(await fs.readdir(path.join(root, 'site')), ['index.html'], 'Only the single report is public');
+assert(html.includes('https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'));
+assert.equal((html.match(/<article id="zh\d\d"/g) ?? []).length, 20);
+const match = html.match(/<script id="report-data" type="application\/json">([\s\S]*?)<\/script>/);
+assert(match);
+const data = JSON.parse(match[1]);
+assert.equal(data.benchmark.result, 'passed');
+assert.equal(data.dataset.examples.length, 20);
+assert.equal(data.benchmark.runs.length, 3);
+assert.equal(data.benchmark.requests.length, 60);
+assert.equal(data.google.observations.length, 20);
+assert.equal(data.review.observations.length, 20);
+assert.equal(data.benchmark.source_sha256, digest(buildSrt(data.dataset.examples)));
+assert.equal(data.evidence_sha256, digest(await fs.readFile(path.join(root, 'eval/reports/public-demo-2026-09-27.json'))));
+for (const example of data.dataset.examples) {
+  for (const run of data.benchmark.runs) {
+    const candidate = run.rows.find(row => row.example_id === example.id);
+    const request = data.benchmark.requests.find(row => row.example_id === example.id && row.run === run.repetition);
+    assert.equal(candidate.candidate, request.candidate.trim());
+    assert(request.elapsed_ms > 0 && request.usage.completion_tokens > 0);
+    assert.equal(request.http_status, 200);
+    assert.equal(run.structural_checks, 'passed');
+    assert.equal(run.offline_reexport, 'byte_identical');
+  }
+}
+for (const script of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)) {
+  if (!script[0].includes('application/json')) new vm.Script(script[1]);
+}
+assert(!/(?:E:\\\\|C:\\\\Users\\\\|00ermzahar@|gh[pousr]_[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)/.test(html));
+assert(!/<script[^>]+src="(?!https:\/\/cdn\.jsdelivr\.net\/npm\/@tailwindcss\/browser@4")/.test(html));
+console.log('Public HTML verified: 20 examples, 60 real requests, evidence identity, scripts, source hash and single-file publication boundary.');

@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "provider": "Google Translate web interface",
+  "source_language": "zh-CN",
+  "target_language": "ru",
+  "method": "Each source was submitted independently through the Google Translate browser UI. Rendered Russian output spans were read after the previous translation disappeared and the new output was visible. No API or latency comparison was used.",
+  "model_version": "Not disclosed by the web interface",
+  "observations": [
+    {"id":"zh01","translation":"Не волнуйтесь, я сейчас вернусь.","observed_at":"2026-09-27T18:27:29.424Z"},
+    {"id":"zh02","translation":"Пожалуйста, закройте дверь; на улице слишком шумно.","observed_at":"2026-09-27T18:27:53.262Z"},
+    {"id":"zh03","translation":"Дело не в том, что я тебе не доверяю, просто мне нужно время.","observed_at":"2026-09-27T18:27:55.604Z"},
+    {"id":"zh04","translation":"Поезд отправляется в 20:30, и у нас есть 15 минут в запасе.","observed_at":"2026-09-27T18:27:57.757Z"},
+    {"id":"zh05","translation":"Эта бутылка воды стоит 3,5 юаня, а две бутылки обойдутся в общей сложности в 7 юаней.","observed_at":"2026-09-27T18:27:59.915Z"},
+    {"id":"zh06","translation":"Если завтра пойдет дождь, мы перенесем матч на воскресенье.","observed_at":"2026-09-27T18:28:02.266Z"},
+    {"id":"zh07","translation":"Сяолинь прибыл в Шанхай, но его багаж всё ещё находится в Пекине.","observed_at":"2026-09-27T18:28:46.136Z"},
+    {"id":"zh08","translation":"Хватит ходить вокруг да около, просто скажите то, что хотите сказать.","observed_at":"2026-09-27T18:28:48.407Z"},
+    {"id":"zh09","translation":"Этот вопрос нельзя оставлять на полпути.","observed_at":"2026-09-27T18:28:50.508Z"},
+    {"id":"zh10","translation":"Ты действительно умеешь выбирать время; я как раз собирался лечь спать.","observed_at":"2026-09-27T18:28:52.745Z"},
+    {"id":"zh11","translation":"Никто не имеет права открывать эту коробку без моего разрешения.","observed_at":"2026-09-27T18:28:54.925Z"},
+    {"id":"zh12","translation":"Эта дорога короче той, по которой мы ехали вчера, но идти по ней непросто.","observed_at":"2026-09-27T18:29:16.237Z"},
+    {"id":"zh13","translation":"После второго перекрестка поверните налево, и аптека будет справа от вас.","observed_at":"2026-09-27T18:29:18.548Z"},
+    {"id":"zh14","translation":"Сначала сделайте резервную копию файлов, а затем обновите систему.","observed_at":"2026-09-27T18:29:20.574Z"},
+    {"id":"zh15","translation":"Я чуть не забыла ключи в машине, слава богу, ты мне напомнил.","observed_at":"2026-09-27T18:29:22.654Z"},
+    {"id":"zh16","translation":"Каким бы ни был исход, я буду с тобой.","observed_at":"2026-09-27T18:29:24.756Z"},
+    {"id":"zh17","translation":"Дело не в том, что это слишком дорого, а в том, что нам это просто не нужно.","observed_at":"2026-09-27T18:29:47.663Z"},
+    {"id":"zh18","translation":"Отчет необходимо сдать не позднее 15:00 пятницы; не откладывайте это на последний момент.","observed_at":"2026-09-27T18:29:49.933Z"},
+    {"id":"zh19","translation":"Что ты только что сказал? Сигнал плохой, я тебя не расслышал.","observed_at":"2026-09-27T18:29:52.142Z"},
+    {"id":"zh20","translation":"Если вы сообщите мне заранее, я смогу согласовать время.","observed_at":"2026-09-27T18:29:54.154Z"}
+  ]
+}

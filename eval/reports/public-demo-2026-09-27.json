@@ -1,0 +1,2251 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-09-27T18:28:25.178Z",
+  "revision": "1b20e56bdb3ce37e02e35e585facbead60a7cad3",
+  "dataset_sha256": "221d4e854dbfa6952785628498f0e48ea9f485b903490b9bc7c64c87fa08f0db",
+  "source_sha256": "ddb98a4d3f5a3fffd924c7f1594448b17960ee660bb2120a399c779c11d239a9",
+  "profile_sha256": "dba1d341230bc4f1117c6fba8ce55a1127b120864aa8363295bdbc883b98fc3e",
+  "cli_sha256": "4ba6a04ef68a5aefa1017b5292f3d58b9418a5b26b6e191a331f4ab14137543d",
+  "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "profile": {
+    "schema_version": 1,
+    "model_repo": "tencent/Hy-MT2-1.8B-GGUF",
+    "model_revision": "a0c709d9fac510f2c807aa3af52872340dc37a4a",
+    "model_file_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+    "model_file_bytes": 1133080448,
+    "model_alias": "auralis-hy-mt2-1.8b-q4",
+    "runtime_build_info": "b10977-0ecb159c9",
+    "min_context_tokens": 2048,
+    "prompt_version": 1,
+    "temperature": 0.7,
+    "top_p": 0.6,
+    "top_k": 20,
+    "repeat_penalty": 1.05,
+    "max_tokens_per_line": 256,
+    "max_response_bytes": 1048576,
+    "timeout_seconds": 120
+  },
+  "repetitions_planned": 3,
+  "runs": [
+    {
+      "repetition": 1,
+      "run_id": "f7478e23-3606-4678-8e30-13ec9b610a39",
+      "translation_elapsed_ms": 10483.342599999998,
+      "request_elapsed_sum_ms": 3716.137300000002,
+      "output_sha256": "e697e110ce8e48e3b663202e38a6bb79ba2eb24b48f3d153294262e789f6d48e",
+      "status": {
+        "schema_version": 3,
+        "translation_id": "b47a7d53-75e6-4d52-b85c-3b9bbc1f3e39",
+        "run_id": "f7478e23-3606-4678-8e30-13ec9b610a39",
+        "source_sha256": "ddb98a4d3f5a3fffd924c7f1594448b17960ee660bb2120a399c779c11d239a9",
+        "state": "validated",
+        "pause_requested": false,
+        "completed_blocks": 3,
+        "total_blocks": 3,
+        "warning_count": 0,
+        "selected_result_id": "1a055f3b-60b9-46ad-a1b2-1400b94f9a69",
+        "review_state": "needs_review"
+      },
+      "structural_checks": "passed",
+      "rows": [
+        {
+          "example_id": "zh01",
+          "candidate": "Не волнуйтесь, я скоро вернусь."
+        },
+        {
+          "example_id": "zh02",
+          "candidate": "Закройте дверь, снаружи слишком шумно."
+        },
+        {
+          "example_id": "zh03",
+          "candidate": "Я не не верю вам, я просто нужно немного времени."
+        },
+        {
+          "example_id": "zh04",
+          "candidate": "Поезд отправляется в 8:30 вечера, у нас остается 15 минут."
+        },
+        {
+          "example_id": "zh05",
+          "candidate": "Эта бутылка воды стоит три шиллинги и пять центов, две бутылки вместе — семь шиллингов."
+        },
+        {
+          "example_id": "zh06",
+          "candidate": "Если завтра пойдет дождь, мы отложим матч на воскресенье."
+        },
+        {
+          "example_id": "zh07",
+          "candidate": "Кобаяси уже прибыл в Шанхай, но его багаж все ещё находится в Пекине."
+        },
+        {
+          "example_id": "zh08",
+          "candidate": "Перестаньте кружить в кругах, скажите прямо, что хотите."
+        },
+        {
+          "example_id": "zh09",
+          "candidate": "Эту работу нельзя откладывать."
+        },
+        {
+          "example_id": "zh10",
+          "candidate": "Ты действительно выбираешь подходящий момент — я только собирался спать."
+        },
+        {
+          "example_id": "zh11",
+          "candidate": "Без моего разрешения никто не может открыть этот ящик."
+        },
+        {
+          "example_id": "zh12",
+          "candidate": "Эта дорога ближе, чем та, по которой шли вчера, но она не очень удобна для прохождения."
+        },
+        {
+          "example_id": "zh13",
+          "candidate": "После второй перекрестки поверните налево, аптека будет с правой стороны."
+        },
+        {
+          "example_id": "zh14",
+          "candidate": "Сначала сделайте резервную копию файлов, а затем обновите систему."
+        },
+        {
+          "example_id": "zh15",
+          "candidate": "Я чуть не забыла ключи в машине, к счастью, ты напомнил мне."
+        },
+        {
+          "example_id": "zh16",
+          "candidate": "Независимо от результата, я буду рядом с вами."
+        },
+        {
+          "example_id": "zh17",
+          "candidate": "Не потому что это слишком дорого, а потому что мы вообще не нуждаемся в этом."
+        },
+        {
+          "example_id": "zh18",
+          "candidate": "Отчет следует подать не позднее пятницы в три часа дня, не ждать до последнего момента."
+        },
+        {
+          "example_id": "zh19",
+          "candidate": "Что ты только что сказал? Сигнал плохой, я не расслышал."
+        },
+        {
+          "example_id": "zh20",
+          "candidate": "Если вы скажете мне заранее, я смогу организовать время."
+        }
+      ],
+      "offline_reexport_ms": 68.12380000000121,
+      "offline_reexport": "byte_identical"
+    },
+    {
+      "repetition": 2,
+      "run_id": "ab6af822-1b1c-474d-9be0-95414ee9c9b3",
+      "translation_elapsed_ms": 9643.994899999998,
+      "request_elapsed_sum_ms": 3169.405999999999,
+      "output_sha256": "ba2b689282d7f10a219e431d9556841e2972a99fd79e791b3e6e59c04d4fb7c4",
+      "status": {
+        "schema_version": 3,
+        "translation_id": "7206bd4a-00be-44ca-b74c-5ac215bfb2b5",
+        "run_id": "ab6af822-1b1c-474d-9be0-95414ee9c9b3",
+        "source_sha256": "ddb98a4d3f5a3fffd924c7f1594448b17960ee660bb2120a399c779c11d239a9",
+        "state": "validated",
+        "pause_requested": false,
+        "completed_blocks": 3,
+        "total_blocks": 3,
+        "warning_count": 0,
+        "selected_result_id": "c9343f28-3901-47d9-981e-c6476de5745e",
+        "review_state": "needs_review"
+      },
+      "structural_checks": "passed",
+      "rows": [
+        {
+          "example_id": "zh01",
+          "candidate": "Не волнуйтесь, я скоро вернусь."
+        },
+        {
+          "example_id": "zh02",
+          "candidate": "Закройте дверь, снаружи слишком шумно."
+        },
+        {
+          "example_id": "zh03",
+          "candidate": "Я не не верю вам, мне просто нужно немного времени."
+        },
+        {
+          "example_id": "zh04",
+          "candidate": "Поезд отправляется в 8:30 вечера, у нас остается 15 минут."
+        },
+        {
+          "example_id": "zh05",
+          "candidate": "Эта бутылка воды стоит три шиллинги и пять центов, две бутылки вместе — семь шиллингов."
+        },
+        {
+          "example_id": "zh06",
+          "candidate": "Если завтра пойдет дождь, мы отложим матч на воскресенье."
+        },
+        {
+          "example_id": "zh07",
+          "candidate": "Кобаяси уже прибыл в Шанхай, но его багаж все еще находится в Пекине."
+        },
+        {
+          "example_id": "zh08",
+          "candidate": "Перестаньте умолчать — говорите прямо."
+        },
+        {
+          "example_id": "zh09",
+          "candidate": "Эту работу нельзя откладывать."
+        },
+        {
+          "example_id": "zh10",
+          "candidate": "Ты действительно выбираешь подходящий момент – я только собирался спать."
+        },
+        {
+          "example_id": "zh11",
+          "candidate": "Без моего разрешения никто не может открыть этот ящик."
+        },
+        {
+          "example_id": "zh12",
+          "candidate": "Эта дорога ближе, чем та, по которой шли вчера, но она не очень приятная для прохождения."
+        },
+        {
+          "example_id": "zh13",
+          "candidate": "После второй перекрестки поверните налево, аптека будет с правой стороны."
+        },
+        {
+          "example_id": "zh14",
+          "candidate": "Сначала сделайте резервную копию файлов, а затем обновите систему."
+        },
+        {
+          "example_id": "zh15",
+          "candidate": "Я чуть не забыла ключи в машине, к счастью, ты напомнил мне."
+        },
+        {
+          "example_id": "zh16",
+          "candidate": "Независимо от результата, я буду рядом с вами."
+        },
+        {
+          "example_id": "zh17",
+          "candidate": "Не потому что это слишком дорого, а потому что мы вообще не нуждаемся в этом."
+        },
+        {
+          "example_id": "zh18",
+          "candidate": "Отчет следует подать не позднее пятницы в три часа дня, не ждать до последней минуты."
+        },
+        {
+          "example_id": "zh19",
+          "candidate": "Что вы только что сказали? Сигнал плохой, я не расслышал."
+        },
+        {
+          "example_id": "zh20",
+          "candidate": "Если вы скажете мне заранее, я смогу организовать время."
+        }
+      ],
+      "offline_reexport_ms": 95.7039999999979,
+      "offline_reexport": "byte_identical"
+    },
+    {
+      "repetition": 3,
+      "run_id": "e698227a-5249-45dc-b92f-21dfd1438163",
+      "translation_elapsed_ms": 11255.358500000002,
+      "request_elapsed_sum_ms": 3471.743000000024,
+      "output_sha256": "d774f238d1b6d955e751c9ba69b7a3ca16dc74d0fff0e848438883fe15d932c9",
+      "status": {
+        "schema_version": 3,
+        "translation_id": "3b1b9e25-fd10-4f70-879a-ef7135638a69",
+        "run_id": "e698227a-5249-45dc-b92f-21dfd1438163",
+        "source_sha256": "ddb98a4d3f5a3fffd924c7f1594448b17960ee660bb2120a399c779c11d239a9",
+        "state": "validated",
+        "pause_requested": false,
+        "completed_blocks": 3,
+        "total_blocks": 3,
+        "warning_count": 0,
+        "selected_result_id": "4c668f23-5f6b-4998-ac1b-62a7bee1c474",
+        "review_state": "needs_review"
+      },
+      "structural_checks": "passed",
+      "rows": [
+        {
+          "example_id": "zh01",
+          "candidate": "Не волнуйтесь, я сейчас вернусь."
+        },
+        {
+          "example_id": "zh02",
+          "candidate": "Закройте дверь, снаружи слишком шумно."
+        },
+        {
+          "example_id": "zh03",
+          "candidate": "Я не не верю вам, я просто нужно немного времени."
+        },
+        {
+          "example_id": "zh04",
+          "candidate": "Поезд отправляется в 8:30 вечера, у нас остается пятнадцать минут."
+        },
+        {
+          "example_id": "zh05",
+          "candidate": "Эта бутылка воды стоит три шиллинги и пять центов, две бутылки вместе — семь шиллингов."
+        },
+        {
+          "example_id": "zh06",
+          "candidate": "Если завтра пойдет дождь, мы отложим матч на воскресенье."
+        },
+        {
+          "example_id": "zh07",
+          "candidate": "Кобаяси уже прибыл в Шанхай, но его багаж все еще находится в Пекине."
+        },
+        {
+          "example_id": "zh08",
+          "candidate": "Перестаньте вести отговорки, скажите прямо."
+        },
+        {
+          "example_id": "zh09",
+          "candidate": "Эту работу нельзя откладывать."
+        },
+        {
+          "example_id": "zh10",
+          "candidate": "Ты действительно выбираешь подходящий момент — я только собирался спать."
+        },
+        {
+          "example_id": "zh11",
+          "candidate": "Без моего разрешения никто не может открыть этот ящик."
+        },
+        {
+          "example_id": "zh12",
+          "candidate": "Эта дорога ближе, чем та, по которой шли вчера, но она не очень пригодна для пешеходов."
+        },
+        {
+          "example_id": "zh13",
+          "candidate": "Пройдя через второй перекресток, поверните налево — аптека будет с правой стороны."
+        },
+        {
+          "example_id": "zh14",
+          "candidate": "Сначала сделайте резервную копию файлов, а затем обновите систему."
+        },
+        {
+          "example_id": "zh15",
+          "candidate": "Я чуть не забыла ключи в машине, к счастью, ты напомнила мне."
+        },
+        {
+          "example_id": "zh16",
+          "candidate": "Независимо от результата, я буду рядом с тобой."
+        },
+        {
+          "example_id": "zh17",
+          "candidate": "Не потому что это слишком дорого, а потому что мы вообще не нуждаемся в этом."
+        },
+        {
+          "example_id": "zh18",
+          "candidate": "Отчет должен быть подан не позднее пятницы в три часа дня — не ждите до последней минуты."
+        },
+        {
+          "example_id": "zh19",
+          "candidate": "Что ты только что сказал? Сигнал плохой, я не расслышал."
+        },
+        {
+          "example_id": "zh20",
+          "candidate": "Если вы скажете мне заранее, я смогу организовать время."
+        }
+      ],
+      "offline_reexport_ms": 85.23730000000069,
+      "offline_reexport": "byte_identical"
+    }
+  ],
+  "failures": [],
+  "hardware": {
+    "os": "Windows_NT 10.0.19045 x64",
+    "cpu": "Intel(R) Core(TM) i7-6900K CPU @ 3.20GHz",
+    "logical_cpus": 16,
+    "total_ram_bytes": 51458560000,
+    "gpu": "NVIDIA GeForce RTX 3070, 8192 MiB, 595.79"
+  },
+  "methodology": {
+    "clock": "Node performance.now(), monotonic milliseconds",
+    "server": "One persistent server; first timed file follows readiness, other files reuse the loaded model. No claim of cold OS cache.",
+    "request": "Loopback proxy times POST /v1/chat/completions through complete response body. Includes proxy/HTTP overhead; llama.cpp token timings are separate.",
+    "cache": "llama.cpp --cache-ram 0; slot/prompt behavior otherwise defaults. Repeated identical prompts can reuse the runtime prompt cache.",
+    "resources": "Sampled every 1 second. GPU usage includes other applications; process working set is not private allocation. Peaks are approximate.",
+    "dataset": "Original examples and proposed Russian references authored by Ulya (AI assistant) for this report; not human-reviewed translations or a release holdout.",
+    "scope": "Twenty standalone Chinese lines; prompt v1, no context or glossary, synthetic CRLF SRT. Proposed references are not sent to the model. Not a subtitle holdout or language-release gate."
+  },
+  "server_arguments": [
+    "--model",
+    "<supplied-model.gguf>",
+    "--alias",
+    "auralis-hy-mt2-1.8b-q4",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "10044",
+    "-c",
+    "2048",
+    "-ngl",
+    "99",
+    "--cache-ram",
+    "0",
+    "--parallel",
+    "1",
+    "--jinja"
+  ],
+  "server_startup_ms": 12655.4341,
+  "source_preservation": "byte_identical",
+  "result": "passed",
+  "requests": [
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:45.269Z",
+      "request_sha256": "1c0e5965e1c50c838ba81e29ce9c1d04cc8704b7446d243ad581bbf0986773c7",
+      "example_id": "zh01",
+      "elapsed_ms": 388.6186000000016,
+      "http_status": 200,
+      "candidate": "Не волнуйтесь, я скоро вернусь.",
+      "usage": {
+        "completion_tokens": 17,
+        "prompt_tokens": 31,
+        "total_tokens": 48,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 31,
+        "prompt_ms": 264.539,
+        "prompt_per_token_ms": 8.533516129032257,
+        "prompt_per_second": 117.184989736863,
+        "predicted_n": 17,
+        "predicted_ms": 101.616,
+        "predicted_per_token_ms": 6.351,
+        "predicted_per_second": 157.4555188159345
+      }
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:45.658Z",
+      "request_sha256": "73d9b2ee3660a27b33faa5719931cbe9e787daaff1117becb8cce406a5b88f18",
+      "example_id": "zh02",
+      "elapsed_ms": 135.42569999999978,
+      "http_status": 200,
+      "candidate": "Закройте дверь, снаружи слишком шумно.",
+      "usage": {
+        "completion_tokens": 21,
+        "prompt_tokens": 33,
+        "total_tokens": 54,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 12.143,
+        "prompt_per_token_ms": 1.2143000000000002,
+        "prompt_per_second": 823.5197232973729,
+        "predicted_n": 21,
+        "predicted_ms": 118.185,
+        "predicted_per_token_ms": 5.90925,
+        "predicted_per_second": 169.22621314041547
+      }
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:45.795Z",
+      "request_sha256": "c941935175b7102d201e8a53e01f7b8510d02ce07cfc153f52e60bdc17a5ee7e",
+      "example_id": "zh03",
+      "elapsed_ms": 119.97509999999966,
+      "http_status": 200,
+      "candidate": "Я не не верю вам, я просто нужно немного времени.",
+      "usage": {
+        "completion_tokens": 19,
+        "prompt_tokens": 33,
+        "total_tokens": 52,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 11.176,
+        "prompt_per_token_ms": 1.1176,
+        "prompt_per_second": 894.7745168217609,
+        "predicted_n": 19,
+        "predicted_ms": 104.084,
+        "predicted_per_token_ms": 5.782444444444445,
+        "predicted_per_second": 172.93724299604168
+      }
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:45.916Z",
+      "request_sha256": "147961451f02efbe03474944fefcf3fdb7ce7ed81115dff64292ffb3651263ec",
+      "example_id": "zh04",
+      "elapsed_ms": 172.9386999999988,
+      "http_status": 200,
+      "candidate": "Поезд отправляется в 8:30 вечера, у нас остается 15 минут.",
+      "usage": {
+        "completion_tokens": 29,
+        "prompt_tokens": 35,
+        "total_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 11.325,
+        "prompt_per_token_ms": 0.94375,
+        "prompt_per_second": 1059.6026490066226,
+        "predicted_n": 29,
+        "predicted_ms": 155.913,
+        "predicted_per_token_ms": 5.568321428571429,
+        "predicted_per_second": 179.587333961889
+      }
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:46.090Z",
+      "request_sha256": "888f979b69927d2ecc779b3b9c7dffe2e3af18d17570a1020da10b5c577cb693",
+      "example_id": "zh05",
+      "elapsed_ms": 245.44509999999718,
+      "http_status": 200,
+      "candidate": "Эта бутылка воды стоит три шиллинги и пять центов, две бутылки вместе — семь шиллингов.",
+      "usage": {
+        "completion_tokens": 40,
+        "prompt_tokens": 37,
+        "total_tokens": 77,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 14,
+        "prompt_ms": 12.373,
+        "prompt_per_token_ms": 0.8837857142857143,
+        "prompt_per_second": 1131.495999353431,
+        "predicted_n": 40,
+        "predicted_ms": 228.63,
+        "predicted_per_token_ms": 5.862307692307692,
+        "predicted_per_second": 170.5812885448104
+      }
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:46.337Z",
+      "request_sha256": "d3fca0195aaa9b2193db8be06bc9d42ff2f63cd14bda5e0e86714770c9f0329e",
+      "example_id": "zh06",
+      "elapsed_ms": 172.6330999999991,
+      "http_status": 200,
+      "candidate": "Если завтра пойдет дождь, мы отложим матч на воскресенье.",
+      "usage": {
+        "completion_tokens": 27,
+        "prompt_tokens": 36,
+        "total_tokens": 63,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 12.587,
+        "prompt_per_token_ms": 0.9682307692307692,
+        "prompt_per_second": 1032.8116310479065,
+        "predicted_n": 27,
+        "predicted_ms": 153.397,
+        "predicted_per_token_ms": 5.899884615384615,
+        "predicted_per_second": 169.4948401859228
+      }
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:46.511Z",
+      "request_sha256": "1c74ac5343482d1902579f6dee4530c51c7dd90683164f2dc300dddcd84b2cea",
+      "example_id": "zh07",
+      "elapsed_ms": 207.52750000000015,
+      "http_status": 200,
+      "candidate": "Кобаяси уже прибыл в Шанхай, но его багаж все ещё находится в Пекине.",
+      "usage": {
+        "completion_tokens": 32,
+        "prompt_tokens": 35,
+        "total_tokens": 67,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 11.732,
+        "prompt_per_token_ms": 0.9776666666666666,
+        "prompt_per_second": 1022.8435049437436,
+        "predicted_n": 32,
+        "predicted_ms": 191.057,
+        "predicted_per_token_ms": 6.163129032258064,
+        "predicted_per_second": 162.2552431996734
+      }
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:46.719Z",
+      "request_sha256": "d9124a6a82a32c4119c3899f2814ab88f151aa67207fd940441715ba94d6af01",
+      "example_id": "zh08",
+      "elapsed_ms": 165.66389999999956,
+      "http_status": 200,
+      "candidate": "Перестаньте кружить в кругах, скажите прямо, что хотите.",
+      "usage": {
+        "completion_tokens": 27,
+        "prompt_tokens": 36,
+        "total_tokens": 63,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 12.059,
+        "prompt_per_token_ms": 0.9276153846153845,
+        "prompt_per_second": 1078.0330043950578,
+        "predicted_n": 27,
+        "predicted_ms": 149.478,
+        "predicted_per_token_ms": 5.749153846153846,
+        "predicted_per_second": 173.93863979983678
+      }
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:46.923Z",
+      "request_sha256": "4e46e587eff98b2d75f099e9a292ddbac4112bdc4a8ec45676af71e3116df2d7",
+      "example_id": "zh09",
+      "elapsed_ms": 171.03139999999985,
+      "http_status": 200,
+      "candidate": "Эту работу нельзя откладывать.",
+      "usage": {
+        "completion_tokens": 14,
+        "prompt_tokens": 31,
+        "total_tokens": 45,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 8,
+        "prompt_ms": 84.296,
+        "prompt_per_token_ms": 10.537,
+        "prompt_per_second": 94.90367277213628,
+        "predicted_n": 14,
+        "predicted_ms": 82.304,
+        "predicted_per_token_ms": 6.331076923076923,
+        "predicted_per_second": 157.95101088646965
+      }
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:47.095Z",
+      "request_sha256": "9d7ca32b4c867d7354eda53e8e0b611eefa7e0a63f13e2153d89acde2d8f2769",
+      "example_id": "zh10",
+      "elapsed_ms": 169.6376999999993,
+      "http_status": 200,
+      "candidate": "Ты действительно выбираешь подходящий момент — я только собирался спать.",
+      "usage": {
+        "completion_tokens": 26,
+        "prompt_tokens": 35,
+        "total_tokens": 61,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 12.446,
+        "prompt_per_token_ms": 1.0371666666666666,
+        "prompt_per_second": 964.1651936365098,
+        "predicted_n": 26,
+        "predicted_ms": 152.555,
+        "predicted_per_token_ms": 6.1022,
+        "predicted_per_second": 163.8753236537642
+      }
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:47.266Z",
+      "request_sha256": "76b555a30b08947a24be64c93a7b80b16710d7db2ac203bc33e9e500d4ccb725",
+      "example_id": "zh11",
+      "elapsed_ms": 158.29109999999855,
+      "http_status": 200,
+      "candidate": "Без моего разрешения никто не может открыть этот ящик.",
+      "usage": {
+        "completion_tokens": 23,
+        "prompt_tokens": 34,
+        "total_tokens": 57,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 11,
+        "prompt_ms": 12.532,
+        "prompt_per_token_ms": 1.1392727272727272,
+        "prompt_per_second": 877.7529524417491,
+        "predicted_n": 23,
+        "predicted_ms": 139.345,
+        "predicted_per_token_ms": 6.3338636363636365,
+        "predicted_per_second": 157.88151709785066
+      }
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:47.426Z",
+      "request_sha256": "7e19884a013bd54137d12f9d4ec068945d0f3a9b695b98b35190b99328ab4461",
+      "example_id": "zh12",
+      "elapsed_ms": 230.92209999999977,
+      "http_status": 200,
+      "candidate": "Эта дорога ближе, чем та, по которой шли вчера, но она не очень удобна для прохождения.",
+      "usage": {
+        "completion_tokens": 35,
+        "prompt_tokens": 36,
+        "total_tokens": 71,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 14.482,
+        "prompt_per_token_ms": 1.1139999999999999,
+        "prompt_per_second": 897.6660682226212,
+        "predicted_n": 35,
+        "predicted_ms": 210.143,
+        "predicted_per_token_ms": 6.180676470588235,
+        "predicted_per_second": 161.79458749518184
+      }
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:47.658Z",
+      "request_sha256": "040263887f1af9859d778b1433f267ce4f2a61873e31aaf06c7009b812421910",
+      "example_id": "zh13",
+      "elapsed_ms": 194.35740000000078,
+      "http_status": 200,
+      "candidate": "После второй перекрестки поверните налево, аптека будет с правой стороны.",
+      "usage": {
+        "completion_tokens": 30,
+        "prompt_tokens": 36,
+        "total_tokens": 66,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 11.64,
+        "prompt_per_token_ms": 0.8953846153846154,
+        "prompt_per_second": 1116.8384879725086,
+        "predicted_n": 30,
+        "predicted_ms": 178.022,
+        "predicted_per_token_ms": 6.1386896551724135,
+        "predicted_per_second": 162.9012144566402
+      }
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:47.853Z",
+      "request_sha256": "652153d2dc1bcc3cf23eadb21c8a3680ca7cd4a2bf13d46e542395db9304c839",
+      "example_id": "zh14",
+      "elapsed_ms": 162.0025999999998,
+      "http_status": 200,
+      "candidate": "Сначала сделайте резервную копию файлов, а затем обновите систему.",
+      "usage": {
+        "completion_tokens": 26,
+        "prompt_tokens": 32,
+        "total_tokens": 58,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 9,
+        "prompt_ms": 13.201,
+        "prompt_per_token_ms": 1.4667777777777777,
+        "prompt_per_second": 681.7665328384213,
+        "predicted_n": 26,
+        "predicted_ms": 142.884,
+        "predicted_per_token_ms": 5.7153599999999996,
+        "predicted_per_second": 174.96710618403742
+      }
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:48.016Z",
+      "request_sha256": "56cd7b9c69d90e36923dd002c9d713461921078c84d6d7b0ab11958b8cc5222b",
+      "example_id": "zh15",
+      "elapsed_ms": 185.27440000000206,
+      "http_status": 200,
+      "candidate": "Я чуть не забыла ключи в машине, к счастью, ты напомнил мне.",
+      "usage": {
+        "completion_tokens": 30,
+        "prompt_tokens": 39,
+        "total_tokens": 69,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 16,
+        "prompt_ms": 11.734,
+        "prompt_per_token_ms": 0.733375,
+        "prompt_per_second": 1363.5588886995058,
+        "predicted_n": 30,
+        "predicted_ms": 169.548,
+        "predicted_per_token_ms": 5.84648275862069,
+        "predicted_per_second": 171.04300846957793
+      }
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:48.202Z",
+      "request_sha256": "7d1f0e08e06835eb7e98f194257d0b6e36992bc06f9b56f8b74cb08db926d960",
+      "example_id": "zh16",
+      "elapsed_ms": 136.7422000000006,
+      "http_status": 200,
+      "candidate": "Независимо от результата, я буду рядом с вами.",
+      "usage": {
+        "completion_tokens": 22,
+        "prompt_tokens": 33,
+        "total_tokens": 55,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 12.249,
+        "prompt_per_token_ms": 1.2249,
+        "prompt_per_second": 816.3931749530573,
+        "predicted_n": 22,
+        "predicted_ms": 120.538,
+        "predicted_per_token_ms": 5.739904761904762,
+        "predicted_per_second": 174.218918515323
+      }
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:48.355Z",
+      "request_sha256": "ba08f7540d6fda82a639b394572ab3a8a8ef63372d19d63cd0436a21737376c4",
+      "example_id": "zh17",
+      "elapsed_ms": 185.44580000000133,
+      "http_status": 200,
+      "candidate": "Не потому что это слишком дорого, а потому что мы вообще не нуждаемся в этом.",
+      "usage": {
+        "completion_tokens": 30,
+        "prompt_tokens": 35,
+        "total_tokens": 65,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 11.929,
+        "prompt_per_token_ms": 0.9940833333333333,
+        "prompt_per_second": 1005.9518819683124,
+        "predicted_n": 30,
+        "predicted_ms": 169.176,
+        "predicted_per_token_ms": 5.833655172413793,
+        "predicted_per_second": 171.4191138222916
+      }
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:48.541Z",
+      "request_sha256": "b714a0b8d67b350972ac118274bfb85eaeca42703bb0a41ec554bf95eb70f028",
+      "example_id": "zh18",
+      "elapsed_ms": 215.06650000000081,
+      "http_status": 200,
+      "candidate": "Отчет следует подать не позднее пятницы в три часа дня, не ждать до последнего момента.",
+      "usage": {
+        "completion_tokens": 36,
+        "prompt_tokens": 37,
+        "total_tokens": 73,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 14,
+        "prompt_ms": 11.206,
+        "prompt_per_token_ms": 0.8004285714285714,
+        "prompt_per_second": 1249.3307156880244,
+        "predicted_n": 36,
+        "predicted_ms": 199.447,
+        "predicted_per_token_ms": 5.698485714285714,
+        "predicted_per_second": 175.48521662396524
+      }
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:48.758Z",
+      "request_sha256": "db09c4012027769a9b1fbbc7a916d34e262d59d4c01678fa1b15c1d11d4617b1",
+      "example_id": "zh19",
+      "elapsed_ms": 159.84970000000249,
+      "http_status": 200,
+      "candidate": "Что ты только что сказал? Сигнал плохой, я не расслышал.",
+      "usage": {
+        "completion_tokens": 24,
+        "prompt_tokens": 35,
+        "total_tokens": 59,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 12.259,
+        "prompt_per_token_ms": 1.0215833333333333,
+        "prompt_per_second": 978.8726649808303,
+        "predicted_n": 24,
+        "predicted_ms": 142.941,
+        "predicted_per_token_ms": 6.2148260869565215,
+        "predicted_per_second": 160.9055484430639
+      }
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T18:28:48.918Z",
+      "request_sha256": "14ff1a9be6261da54a0b7e43e2f1c3aeefaf1970fb486b69df696a9288d2b6a2",
+      "example_id": "zh20",
+      "elapsed_ms": 139.28870000000097,
+      "http_status": 200,
+      "candidate": "Если вы скажете мне заранее, я смогу организовать время.",
+      "usage": {
+        "completion_tokens": 22,
+        "prompt_tokens": 33,
+        "total_tokens": 55,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 11.927,
+        "prompt_per_token_ms": 1.1926999999999999,
+        "prompt_per_second": 838.4338056510438,
+        "predicted_n": 22,
+        "predicted_ms": 123.15,
+        "predicted_per_token_ms": 5.864285714285715,
+        "predicted_per_second": 170.52375152253347
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:55.406Z",
+      "request_sha256": "1c0e5965e1c50c838ba81e29ce9c1d04cc8704b7446d243ad581bbf0986773c7",
+      "example_id": "zh01",
+      "elapsed_ms": 117.85000000000218,
+      "http_status": 200,
+      "candidate": "Не волнуйтесь, я скоро вернусь.",
+      "usage": {
+        "completion_tokens": 17,
+        "prompt_tokens": 31,
+        "total_tokens": 48,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 8,
+        "prompt_ms": 14.525,
+        "prompt_per_token_ms": 1.815625,
+        "prompt_per_second": 550.7745266781411,
+        "predicted_n": 17,
+        "predicted_ms": 97.138,
+        "predicted_per_token_ms": 6.071125,
+        "predicted_per_second": 164.71411805884412
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:55.525Z",
+      "request_sha256": "73d9b2ee3660a27b33faa5719931cbe9e787daaff1117becb8cce406a5b88f18",
+      "example_id": "zh02",
+      "elapsed_ms": 131.34240000000136,
+      "http_status": 200,
+      "candidate": "Закройте дверь, снаружи слишком шумно.",
+      "usage": {
+        "completion_tokens": 21,
+        "prompt_tokens": 33,
+        "total_tokens": 54,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 11.701,
+        "prompt_per_token_ms": 1.1701000000000001,
+        "prompt_per_second": 854.6278095889239,
+        "predicted_n": 21,
+        "predicted_ms": 115.018,
+        "predicted_per_token_ms": 5.7509,
+        "predicted_per_second": 173.8858265662766
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:55.658Z",
+      "request_sha256": "c941935175b7102d201e8a53e01f7b8510d02ce07cfc153f52e60bdc17a5ee7e",
+      "example_id": "zh03",
+      "elapsed_ms": 118.79869999999937,
+      "http_status": 200,
+      "candidate": "Я не не верю вам, мне просто нужно немного времени.",
+      "usage": {
+        "completion_tokens": 19,
+        "prompt_tokens": 33,
+        "total_tokens": 52,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 11.235,
+        "prompt_per_token_ms": 1.1235,
+        "prompt_per_second": 890.0756564307967,
+        "predicted_n": 19,
+        "predicted_ms": 102.87,
+        "predicted_per_token_ms": 5.715,
+        "predicted_per_second": 174.97812773403325
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:55.778Z",
+      "request_sha256": "147961451f02efbe03474944fefcf3fdb7ce7ed81115dff64292ffb3651263ec",
+      "example_id": "zh04",
+      "elapsed_ms": 178.66589999999997,
+      "http_status": 200,
+      "candidate": "Поезд отправляется в 8:30 вечера, у нас остается 15 минут.",
+      "usage": {
+        "completion_tokens": 29,
+        "prompt_tokens": 35,
+        "total_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 11.269,
+        "prompt_per_token_ms": 0.9390833333333334,
+        "prompt_per_second": 1064.8682225574585,
+        "predicted_n": 29,
+        "predicted_ms": 163.082,
+        "predicted_per_token_ms": 5.824357142857143,
+        "predicted_per_second": 171.69276805533414
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:55.957Z",
+      "request_sha256": "888f979b69927d2ecc779b3b9c7dffe2e3af18d17570a1020da10b5c577cb693",
+      "example_id": "zh05",
+      "elapsed_ms": 234.4262000000017,
+      "http_status": 200,
+      "candidate": "Эта бутылка воды стоит три шиллинги и пять центов, две бутылки вместе — семь шиллингов.",
+      "usage": {
+        "completion_tokens": 40,
+        "prompt_tokens": 37,
+        "total_tokens": 77,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 14,
+        "prompt_ms": 11.189,
+        "prompt_per_token_ms": 0.7992142857142858,
+        "prompt_per_second": 1251.2288855125569,
+        "predicted_n": 40,
+        "predicted_ms": 218.618,
+        "predicted_per_token_ms": 5.605589743589744,
+        "predicted_per_second": 178.39336193726044
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:56.193Z",
+      "request_sha256": "d3fca0195aaa9b2193db8be06bc9d42ff2f63cd14bda5e0e86714770c9f0329e",
+      "example_id": "zh06",
+      "elapsed_ms": 161.83640000000014,
+      "http_status": 200,
+      "candidate": "Если завтра пойдет дождь, мы отложим матч на воскресенье.",
+      "usage": {
+        "completion_tokens": 27,
+        "prompt_tokens": 36,
+        "total_tokens": 63,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 11.504,
+        "prompt_per_token_ms": 0.8849230769230769,
+        "prompt_per_second": 1130.0417246175243,
+        "predicted_n": 27,
+        "predicted_ms": 146.225,
+        "predicted_per_token_ms": 5.624038461538461,
+        "predicted_per_second": 177.80817233715166
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:56.355Z",
+      "request_sha256": "1c74ac5343482d1902579f6dee4530c51c7dd90683164f2dc300dddcd84b2cea",
+      "example_id": "zh07",
+      "elapsed_ms": 184.58420000000115,
+      "http_status": 200,
+      "candidate": "Кобаяси уже прибыл в Шанхай, но его багаж все еще находится в Пекине.",
+      "usage": {
+        "completion_tokens": 30,
+        "prompt_tokens": 35,
+        "total_tokens": 65,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 10.942,
+        "prompt_per_token_ms": 0.9118333333333334,
+        "prompt_per_second": 1096.6916468652898,
+        "predicted_n": 30,
+        "predicted_ms": 166.228,
+        "predicted_per_token_ms": 5.732,
+        "predicted_per_second": 174.45917655268664
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:56.541Z",
+      "request_sha256": "d9124a6a82a32c4119c3899f2814ab88f151aa67207fd940441715ba94d6af01",
+      "example_id": "zh08",
+      "elapsed_ms": 119.15339999999924,
+      "http_status": 200,
+      "candidate": "Перестаньте умолчать — говорите прямо.",
+      "usage": {
+        "completion_tokens": 19,
+        "prompt_tokens": 36,
+        "total_tokens": 55,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 11.733,
+        "prompt_per_token_ms": 0.9025384615384616,
+        "prompt_per_second": 1107.9860223301798,
+        "predicted_n": 19,
+        "predicted_ms": 103.107,
+        "predicted_per_token_ms": 5.728166666666667,
+        "predicted_per_second": 174.57592597980738
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:56.685Z",
+      "request_sha256": "4e46e587eff98b2d75f099e9a292ddbac4112bdc4a8ec45676af71e3116df2d7",
+      "example_id": "zh09",
+      "elapsed_ms": 91.4188000000031,
+      "http_status": 200,
+      "candidate": "Эту работу нельзя откладывать.",
+      "usage": {
+        "completion_tokens": 14,
+        "prompt_tokens": 31,
+        "total_tokens": 45,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 8,
+        "prompt_ms": 11.063,
+        "prompt_per_token_ms": 1.382875,
+        "prompt_per_second": 723.1311579137665,
+        "predicted_n": 14,
+        "predicted_ms": 73.857,
+        "predicted_per_token_ms": 5.681307692307692,
+        "predicted_per_second": 176.01581434393492
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:56.778Z",
+      "request_sha256": "9d7ca32b4c867d7354eda53e8e0b611eefa7e0a63f13e2153d89acde2d8f2769",
+      "example_id": "zh10",
+      "elapsed_ms": 152.96319999999832,
+      "http_status": 200,
+      "candidate": "Ты действительно выбираешь подходящий момент – я только собирался спать.",
+      "usage": {
+        "completion_tokens": 26,
+        "prompt_tokens": 35,
+        "total_tokens": 61,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 10.809,
+        "prompt_per_token_ms": 0.9007499999999999,
+        "prompt_per_second": 1110.185956147655,
+        "predicted_n": 26,
+        "predicted_ms": 137.785,
+        "predicted_per_token_ms": 5.5114,
+        "predicted_per_second": 181.44210182530756
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:56.931Z",
+      "request_sha256": "76b555a30b08947a24be64c93a7b80b16710d7db2ac203bc33e9e500d4ccb725",
+      "example_id": "zh11",
+      "elapsed_ms": 144.21990000000005,
+      "http_status": 200,
+      "candidate": "Без моего разрешения никто не может открыть этот ящик.",
+      "usage": {
+        "completion_tokens": 23,
+        "prompt_tokens": 34,
+        "total_tokens": 57,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 11,
+        "prompt_ms": 11.885,
+        "prompt_per_token_ms": 1.0804545454545453,
+        "prompt_per_second": 925.5363904080775,
+        "predicted_n": 23,
+        "predicted_ms": 125.39,
+        "predicted_per_token_ms": 5.699545454545454,
+        "predicted_per_second": 175.4525879256719
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:57.077Z",
+      "request_sha256": "7e19884a013bd54137d12f9d4ec068945d0f3a9b695b98b35190b99328ab4461",
+      "example_id": "zh12",
+      "elapsed_ms": 207.17469999999958,
+      "http_status": 200,
+      "candidate": "Эта дорога ближе, чем та, по которой шли вчера, но она не очень приятная для прохождения.",
+      "usage": {
+        "completion_tokens": 35,
+        "prompt_tokens": 36,
+        "total_tokens": 71,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 11.767,
+        "prompt_per_token_ms": 0.9051538461538461,
+        "prompt_per_second": 1104.7845670094332,
+        "predicted_n": 35,
+        "predicted_ms": 190.851,
+        "predicted_per_token_ms": 5.613264705882353,
+        "predicted_per_second": 178.14944642679367
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:57.285Z",
+      "request_sha256": "040263887f1af9859d778b1433f267ce4f2a61873e31aaf06c7009b812421910",
+      "example_id": "zh13",
+      "elapsed_ms": 179.1149000000005,
+      "http_status": 200,
+      "candidate": "После второй перекрестки поверните налево, аптека будет с правой стороны.",
+      "usage": {
+        "completion_tokens": 30,
+        "prompt_tokens": 36,
+        "total_tokens": 66,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 11.554,
+        "prompt_per_token_ms": 0.8887692307692308,
+        "prompt_per_second": 1125.1514626969015,
+        "predicted_n": 30,
+        "predicted_ms": 163.226,
+        "predicted_per_token_ms": 5.62848275862069,
+        "predicted_per_second": 177.66777351647409
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:57.466Z",
+      "request_sha256": "652153d2dc1bcc3cf23eadb21c8a3680ca7cd4a2bf13d46e542395db9304c839",
+      "example_id": "zh14",
+      "elapsed_ms": 159.83929999999964,
+      "http_status": 200,
+      "candidate": "Сначала сделайте резервную копию файлов, а затем обновите систему.",
+      "usage": {
+        "completion_tokens": 26,
+        "prompt_tokens": 32,
+        "total_tokens": 58,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 9,
+        "prompt_ms": 12.014,
+        "prompt_per_token_ms": 1.3348888888888888,
+        "prompt_per_second": 749.126019643749,
+        "predicted_n": 26,
+        "predicted_ms": 139.806,
+        "predicted_per_token_ms": 5.59224,
+        "predicted_per_second": 178.81922092041827
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:57.627Z",
+      "request_sha256": "56cd7b9c69d90e36923dd002c9d713461921078c84d6d7b0ab11958b8cc5222b",
+      "example_id": "zh15",
+      "elapsed_ms": 181.80899999999747,
+      "http_status": 200,
+      "candidate": "Я чуть не забыла ключи в машине, к счастью, ты напомнил мне.",
+      "usage": {
+        "completion_tokens": 30,
+        "prompt_tokens": 39,
+        "total_tokens": 69,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 16,
+        "prompt_ms": 11.036,
+        "prompt_per_token_ms": 0.68975,
+        "prompt_per_second": 1449.8006524102937,
+        "predicted_n": 30,
+        "predicted_ms": 166.155,
+        "predicted_per_token_ms": 5.72948275862069,
+        "predicted_per_second": 174.53582498269688
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:57.810Z",
+      "request_sha256": "7d1f0e08e06835eb7e98f194257d0b6e36992bc06f9b56f8b74cb08db926d960",
+      "example_id": "zh16",
+      "elapsed_ms": 138.6854999999996,
+      "http_status": 200,
+      "candidate": "Независимо от результата, я буду рядом с вами.",
+      "usage": {
+        "completion_tokens": 22,
+        "prompt_tokens": 33,
+        "total_tokens": 55,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 11.914,
+        "prompt_per_token_ms": 1.1914,
+        "prompt_per_second": 839.3486654356219,
+        "predicted_n": 22,
+        "predicted_ms": 121.97,
+        "predicted_per_token_ms": 5.808095238095238,
+        "predicted_per_second": 172.1734852832664
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:58.161Z",
+      "request_sha256": "ba08f7540d6fda82a639b394572ab3a8a8ef63372d19d63cd0436a21737376c4",
+      "example_id": "zh17",
+      "elapsed_ms": 175.47389999999723,
+      "http_status": 200,
+      "candidate": "Не потому что это слишком дорого, а потому что мы вообще не нуждаемся в этом.",
+      "usage": {
+        "completion_tokens": 30,
+        "prompt_tokens": 35,
+        "total_tokens": 65,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 11.327,
+        "prompt_per_token_ms": 0.9439166666666666,
+        "prompt_per_second": 1059.4155557517438,
+        "predicted_n": 30,
+        "predicted_ms": 159.602,
+        "predicted_per_token_ms": 5.503517241379311,
+        "predicted_per_second": 181.70198368441498
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:58.338Z",
+      "request_sha256": "b714a0b8d67b350972ac118274bfb85eaeca42703bb0a41ec554bf95eb70f028",
+      "example_id": "zh18",
+      "elapsed_ms": 216.91530000000057,
+      "http_status": 200,
+      "candidate": "Отчет следует подать не позднее пятницы в три часа дня, не ждать до последней минуты.",
+      "usage": {
+        "completion_tokens": 36,
+        "prompt_tokens": 37,
+        "total_tokens": 73,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 14,
+        "prompt_ms": 11.44,
+        "prompt_per_token_ms": 0.8171428571428571,
+        "prompt_per_second": 1223.7762237762238,
+        "predicted_n": 36,
+        "predicted_ms": 199.224,
+        "predicted_per_token_ms": 5.692114285714285,
+        "predicted_per_second": 175.68164478175322
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:58.556Z",
+      "request_sha256": "db09c4012027769a9b1fbbc7a916d34e262d59d4c01678fa1b15c1d11d4617b1",
+      "example_id": "zh19",
+      "elapsed_ms": 143.7798999999941,
+      "http_status": 200,
+      "candidate": "Что вы только что сказали? Сигнал плохой, я не расслышал.",
+      "usage": {
+        "completion_tokens": 24,
+        "prompt_tokens": 35,
+        "total_tokens": 59,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 11.283,
+        "prompt_per_token_ms": 0.9402499999999999,
+        "prompt_per_second": 1063.5469290082426,
+        "predicted_n": 24,
+        "predicted_ms": 128.105,
+        "predicted_per_token_ms": 5.569782608695652,
+        "predicted_per_second": 179.5402209125327
+      }
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T18:28:58.701Z",
+      "request_sha256": "14ff1a9be6261da54a0b7e43e2f1c3aeefaf1970fb486b69df696a9288d2b6a2",
+      "example_id": "zh20",
+      "elapsed_ms": 131.3544000000038,
+      "http_status": 200,
+      "candidate": "Если вы скажете мне заранее, я смогу организовать время.",
+      "usage": {
+        "completion_tokens": 22,
+        "prompt_tokens": 33,
+        "total_tokens": 55,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 11.196,
+        "prompt_per_token_ms": 1.1196,
+        "prompt_per_second": 893.1761343336906,
+        "predicted_n": 22,
+        "predicted_ms": 115.7,
+        "predicted_per_token_ms": 5.5095238095238095,
+        "predicted_per_second": 181.5038893690579
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:06.512Z",
+      "request_sha256": "1c0e5965e1c50c838ba81e29ce9c1d04cc8704b7446d243ad581bbf0986773c7",
+      "example_id": "zh01",
+      "elapsed_ms": 356.0645999999979,
+      "http_status": 200,
+      "candidate": "Не волнуйтесь, я сейчас вернусь.",
+      "usage": {
+        "completion_tokens": 17,
+        "prompt_tokens": 31,
+        "total_tokens": 48,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 8,
+        "prompt_ms": 185.586,
+        "prompt_per_token_ms": 23.19825,
+        "prompt_per_second": 43.10669985882556,
+        "predicted_n": 17,
+        "predicted_ms": 158.562,
+        "predicted_per_token_ms": 9.910125,
+        "predicted_per_second": 100.90690077067644
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:06.869Z",
+      "request_sha256": "73d9b2ee3660a27b33faa5719931cbe9e787daaff1117becb8cce406a5b88f18",
+      "example_id": "zh02",
+      "elapsed_ms": 135.35399999999936,
+      "http_status": 200,
+      "candidate": "Закройте дверь, снаружи слишком шумно.",
+      "usage": {
+        "completion_tokens": 21,
+        "prompt_tokens": 33,
+        "total_tokens": 54,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 12.972,
+        "prompt_per_token_ms": 1.2972,
+        "prompt_per_second": 770.8911501695961,
+        "predicted_n": 21,
+        "predicted_ms": 117.834,
+        "predicted_per_token_ms": 5.8917,
+        "predicted_per_second": 169.73029855559517
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:07.005Z",
+      "request_sha256": "c941935175b7102d201e8a53e01f7b8510d02ce07cfc153f52e60bdc17a5ee7e",
+      "example_id": "zh03",
+      "elapsed_ms": 121.59679999999935,
+      "http_status": 200,
+      "candidate": "Я не не верю вам, я просто нужно немного времени.",
+      "usage": {
+        "completion_tokens": 19,
+        "prompt_tokens": 33,
+        "total_tokens": 52,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 11.989,
+        "prompt_per_token_ms": 1.1989,
+        "prompt_per_second": 834.0979230961715,
+        "predicted_n": 19,
+        "predicted_ms": 104.215,
+        "predicted_per_token_ms": 5.789722222222222,
+        "predicted_per_second": 172.71985798589455
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:07.128Z",
+      "request_sha256": "147961451f02efbe03474944fefcf3fdb7ce7ed81115dff64292ffb3651263ec",
+      "example_id": "zh04",
+      "elapsed_ms": 193.73139999999694,
+      "http_status": 200,
+      "candidate": "Поезд отправляется в 8:30 вечера, у нас остается пятнадцать минут.",
+      "usage": {
+        "completion_tokens": 33,
+        "prompt_tokens": 35,
+        "total_tokens": 68,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 11.383,
+        "prompt_per_token_ms": 0.9485833333333332,
+        "prompt_per_second": 1054.2036370025476,
+        "predicted_n": 33,
+        "predicted_ms": 177.792,
+        "predicted_per_token_ms": 5.556,
+        "predicted_per_second": 179.98560115190784
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:07.322Z",
+      "request_sha256": "888f979b69927d2ecc779b3b9c7dffe2e3af18d17570a1020da10b5c577cb693",
+      "example_id": "zh05",
+      "elapsed_ms": 233.2262000000046,
+      "http_status": 200,
+      "candidate": "Эта бутылка воды стоит три шиллинги и пять центов, две бутылки вместе — семь шиллингов.",
+      "usage": {
+        "completion_tokens": 40,
+        "prompt_tokens": 37,
+        "total_tokens": 77,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 14,
+        "prompt_ms": 12.521,
+        "prompt_per_token_ms": 0.894357142857143,
+        "prompt_per_second": 1118.121555786279,
+        "predicted_n": 40,
+        "predicted_ms": 216.237,
+        "predicted_per_token_ms": 5.544538461538461,
+        "predicted_per_second": 180.35766311963263
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:07.556Z",
+      "request_sha256": "d3fca0195aaa9b2193db8be06bc9d42ff2f63cd14bda5e0e86714770c9f0329e",
+      "example_id": "zh06",
+      "elapsed_ms": 164.0005999999994,
+      "http_status": 200,
+      "candidate": "Если завтра пойдет дождь, мы отложим матч на воскресенье.",
+      "usage": {
+        "completion_tokens": 27,
+        "prompt_tokens": 36,
+        "total_tokens": 63,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 11.477,
+        "prompt_per_token_ms": 0.8828461538461538,
+        "prompt_per_second": 1132.7001829746448,
+        "predicted_n": 27,
+        "predicted_ms": 147.995,
+        "predicted_per_token_ms": 5.692115384615385,
+        "predicted_per_second": 175.68161086523193
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:07.721Z",
+      "request_sha256": "1c74ac5343482d1902579f6dee4530c51c7dd90683164f2dc300dddcd84b2cea",
+      "example_id": "zh07",
+      "elapsed_ms": 179.03139999999985,
+      "http_status": 200,
+      "candidate": "Кобаяси уже прибыл в Шанхай, но его багаж все еще находится в Пекине.",
+      "usage": {
+        "completion_tokens": 30,
+        "prompt_tokens": 35,
+        "total_tokens": 65,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 11.746,
+        "prompt_per_token_ms": 0.9788333333333333,
+        "prompt_per_second": 1021.6243827686021,
+        "predicted_n": 30,
+        "predicted_ms": 162.777,
+        "predicted_per_token_ms": 5.6129999999999995,
+        "predicted_per_second": 178.15784785319795
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:07.901Z",
+      "request_sha256": "d9124a6a82a32c4119c3899f2814ab88f151aa67207fd940441715ba94d6af01",
+      "example_id": "zh08",
+      "elapsed_ms": 138.66800000000512,
+      "http_status": 200,
+      "candidate": "Перестаньте вести отговорки, скажите прямо.",
+      "usage": {
+        "completion_tokens": 23,
+        "prompt_tokens": 36,
+        "total_tokens": 59,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 11.682,
+        "prompt_per_token_ms": 0.8986153846153846,
+        "prompt_per_second": 1112.8231467214518,
+        "predicted_n": 23,
+        "predicted_ms": 122.543,
+        "predicted_per_token_ms": 5.570136363636364,
+        "predicted_per_second": 179.52881845556254
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:08.065Z",
+      "request_sha256": "4e46e587eff98b2d75f099e9a292ddbac4112bdc4a8ec45676af71e3116df2d7",
+      "example_id": "zh09",
+      "elapsed_ms": 94.04850000000442,
+      "http_status": 200,
+      "candidate": "Эту работу нельзя откладывать.",
+      "usage": {
+        "completion_tokens": 14,
+        "prompt_tokens": 31,
+        "total_tokens": 45,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 8,
+        "prompt_ms": 10.99,
+        "prompt_per_token_ms": 1.37375,
+        "prompt_per_second": 727.9344858962693,
+        "predicted_n": 14,
+        "predicted_ms": 75.624,
+        "predicted_per_token_ms": 5.817230769230769,
+        "predicted_per_second": 171.90309954511795
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:08.160Z",
+      "request_sha256": "9d7ca32b4c867d7354eda53e8e0b611eefa7e0a63f13e2153d89acde2d8f2769",
+      "example_id": "zh10",
+      "elapsed_ms": 160.28430000000662,
+      "http_status": 200,
+      "candidate": "Ты действительно выбираешь подходящий момент — я только собирался спать.",
+      "usage": {
+        "completion_tokens": 26,
+        "prompt_tokens": 35,
+        "total_tokens": 61,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 11.033,
+        "prompt_per_token_ms": 0.9194166666666667,
+        "prompt_per_second": 1087.6461524517358,
+        "predicted_n": 26,
+        "predicted_ms": 141.942,
+        "predicted_per_token_ms": 5.6776800000000005,
+        "predicted_per_second": 176.12827774724886
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:08.321Z",
+      "request_sha256": "76b555a30b08947a24be64c93a7b80b16710d7db2ac203bc33e9e500d4ccb725",
+      "example_id": "zh11",
+      "elapsed_ms": 138.47930000000633,
+      "http_status": 200,
+      "candidate": "Без моего разрешения никто не может открыть этот ящик.",
+      "usage": {
+        "completion_tokens": 23,
+        "prompt_tokens": 34,
+        "total_tokens": 57,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 11,
+        "prompt_ms": 11.196,
+        "prompt_per_token_ms": 1.0178181818181817,
+        "prompt_per_second": 982.4937477670596,
+        "predicted_n": 23,
+        "predicted_ms": 122.917,
+        "predicted_per_token_ms": 5.587136363636364,
+        "predicted_per_second": 178.9825654710089
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:08.460Z",
+      "request_sha256": "7e19884a013bd54137d12f9d4ec068945d0f3a9b695b98b35190b99328ab4461",
+      "example_id": "zh12",
+      "elapsed_ms": 212.2375000000029,
+      "http_status": 200,
+      "candidate": "Эта дорога ближе, чем та, по которой шли вчера, но она не очень пригодна для пешеходов.",
+      "usage": {
+        "completion_tokens": 36,
+        "prompt_tokens": 36,
+        "total_tokens": 72,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 11.505,
+        "prompt_per_token_ms": 0.885,
+        "prompt_per_second": 1129.9435028248588,
+        "predicted_n": 36,
+        "predicted_ms": 196.217,
+        "predicted_per_token_ms": 5.6062,
+        "predicted_per_second": 178.3739431343869
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:08.674Z",
+      "request_sha256": "040263887f1af9859d778b1433f267ce4f2a61873e31aaf06c7009b812421910",
+      "example_id": "zh13",
+      "elapsed_ms": 192.84879999999976,
+      "http_status": 200,
+      "candidate": "Пройдя через второй перекресток, поверните налево — аптека будет с правой стороны.",
+      "usage": {
+        "completion_tokens": 33,
+        "prompt_tokens": 36,
+        "total_tokens": 69,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 11.164,
+        "prompt_per_token_ms": 0.8587692307692307,
+        "prompt_per_second": 1164.4571838050879,
+        "predicted_n": 33,
+        "predicted_ms": 176.821,
+        "predicted_per_token_ms": 5.52565625,
+        "predicted_per_second": 180.97397933503373
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:08.867Z",
+      "request_sha256": "652153d2dc1bcc3cf23eadb21c8a3680ca7cd4a2bf13d46e542395db9304c839",
+      "example_id": "zh14",
+      "elapsed_ms": 153.6152000000002,
+      "http_status": 200,
+      "candidate": "Сначала сделайте резервную копию файлов, а затем обновите систему.",
+      "usage": {
+        "completion_tokens": 26,
+        "prompt_tokens": 32,
+        "total_tokens": 58,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 9,
+        "prompt_ms": 11.235,
+        "prompt_per_token_ms": 1.2483333333333333,
+        "prompt_per_second": 801.0680907877171,
+        "predicted_n": 26,
+        "predicted_ms": 137.882,
+        "predicted_per_token_ms": 5.515280000000001,
+        "predicted_per_second": 181.31445728956643
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:09.022Z",
+      "request_sha256": "56cd7b9c69d90e36923dd002c9d713461921078c84d6d7b0ab11958b8cc5222b",
+      "example_id": "zh15",
+      "elapsed_ms": 177.73669999999402,
+      "http_status": 200,
+      "candidate": "Я чуть не забыла ключи в машине, к счастью, ты напомнила мне.",
+      "usage": {
+        "completion_tokens": 30,
+        "prompt_tokens": 39,
+        "total_tokens": 69,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 16,
+        "prompt_ms": 12.255,
+        "prompt_per_token_ms": 0.7659375,
+        "prompt_per_second": 1305.5895552835577,
+        "predicted_n": 30,
+        "predicted_ms": 161.398,
+        "predicted_per_token_ms": 5.565448275862069,
+        "predicted_per_second": 179.6800456015564
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:09.201Z",
+      "request_sha256": "7d1f0e08e06835eb7e98f194257d0b6e36992bc06f9b56f8b74cb08db926d960",
+      "example_id": "zh16",
+      "elapsed_ms": 147.2998000000007,
+      "http_status": 200,
+      "candidate": "Независимо от результата, я буду рядом с тобой.",
+      "usage": {
+        "completion_tokens": 23,
+        "prompt_tokens": 33,
+        "total_tokens": 56,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 11.426,
+        "prompt_per_token_ms": 1.1426,
+        "prompt_per_second": 875.196919306844,
+        "predicted_n": 23,
+        "predicted_ms": 128.236,
+        "predicted_per_token_ms": 5.82890909090909,
+        "predicted_per_second": 171.55868866776882
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:09.557Z",
+      "request_sha256": "ba08f7540d6fda82a639b394572ab3a8a8ef63372d19d63cd0436a21737376c4",
+      "example_id": "zh17",
+      "elapsed_ms": 174.90559999999823,
+      "http_status": 200,
+      "candidate": "Не потому что это слишком дорого, а потому что мы вообще не нуждаемся в этом.",
+      "usage": {
+        "completion_tokens": 30,
+        "prompt_tokens": 35,
+        "total_tokens": 65,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 11.026,
+        "prompt_per_token_ms": 0.9188333333333333,
+        "prompt_per_second": 1088.3366588064575,
+        "predicted_n": 30,
+        "predicted_ms": 159.505,
+        "predicted_per_token_ms": 5.500172413793103,
+        "predicted_per_second": 181.8124823673239
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:09.732Z",
+      "request_sha256": "b714a0b8d67b350972ac118274bfb85eaeca42703bb0a41ec554bf95eb70f028",
+      "example_id": "zh18",
+      "elapsed_ms": 219.26220000000467,
+      "http_status": 200,
+      "candidate": "Отчет должен быть подан не позднее пятницы в три часа дня — не ждите до последней минуты.",
+      "usage": {
+        "completion_tokens": 37,
+        "prompt_tokens": 37,
+        "total_tokens": 74,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 14,
+        "prompt_ms": 11.706,
+        "prompt_per_token_ms": 0.8361428571428571,
+        "prompt_per_second": 1195.9678797198019,
+        "predicted_n": 37,
+        "predicted_ms": 203.016,
+        "predicted_per_token_ms": 5.639333333333333,
+        "predicted_per_second": 177.32592505024235
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:09.953Z",
+      "request_sha256": "db09c4012027769a9b1fbbc7a916d34e262d59d4c01678fa1b15c1d11d4617b1",
+      "example_id": "zh19",
+      "elapsed_ms": 145.1487000000052,
+      "http_status": 200,
+      "candidate": "Что ты только что сказал? Сигнал плохой, я не расслышал.",
+      "usage": {
+        "completion_tokens": 24,
+        "prompt_tokens": 35,
+        "total_tokens": 59,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 11.706,
+        "prompt_per_token_ms": 0.9754999999999999,
+        "prompt_per_second": 1025.115325474116,
+        "predicted_n": 24,
+        "predicted_ms": 128.797,
+        "predicted_per_token_ms": 5.599869565217391,
+        "predicted_per_second": 178.5755879407129
+      }
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T18:29:10.099Z",
+      "request_sha256": "14ff1a9be6261da54a0b7e43e2f1c3aeefaf1970fb486b69df696a9288d2b6a2",
+      "example_id": "zh20",
+      "elapsed_ms": 134.2033999999985,
+      "http_status": 200,
+      "candidate": "Если вы скажете мне заранее, я смогу организовать время.",
+      "usage": {
+        "completion_tokens": 22,
+        "prompt_tokens": 33,
+        "total_tokens": 55,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 11.043,
+        "prompt_per_token_ms": 1.1042999999999998,
+        "prompt_per_second": 905.5510278004167,
+        "predicted_n": 22,
+        "predicted_ms": 118.455,
+        "predicted_per_token_ms": 5.640714285714286,
+        "predicted_per_second": 177.28251234646066
+      }
+    }
+  ],
+  "resource_samples": [
+    {
+      "gpu": "2509, 2",
+      "time": "2026-09-27T18:28:39.0545900Z",
+      "working_set_bytes": 1514409984,
+      "cpu_seconds": 2.359375
+    },
+    {
+      "gpu": "2509, 1",
+      "time": "2026-09-27T18:28:40.2705230Z",
+      "working_set_bytes": 1514500096,
+      "cpu_seconds": 2.359375
+    },
+    {
+      "gpu": "2508, 4",
+      "time": "2026-09-27T18:28:41.3696550Z",
+      "working_set_bytes": 1514500096,
+      "cpu_seconds": 2.359375
+    },
+    {
+      "gpu": "2508, 6",
+      "time": "2026-09-27T18:28:42.4490961Z",
+      "working_set_bytes": 1514500096,
+      "cpu_seconds": 2.359375
+    },
+    {
+      "gpu": "2508, 3",
+      "time": "2026-09-27T18:28:43.5295426Z",
+      "working_set_bytes": 1514500096,
+      "cpu_seconds": 2.359375
+    },
+    {
+      "gpu": "2650, 19",
+      "time": "2026-09-27T18:28:44.6161348Z",
+      "working_set_bytes": 1514500096,
+      "cpu_seconds": 2.359375
+    },
+    {
+      "gpu": "2782, 16",
+      "time": "2026-09-27T18:28:45.6968786Z",
+      "working_set_bytes": 1535819776,
+      "cpu_seconds": 2.515625
+    },
+    {
+      "gpu": "2775, 76",
+      "time": "2026-09-27T18:28:46.7742906Z",
+      "working_set_bytes": 1536004096,
+      "cpu_seconds": 3.578125
+    },
+    {
+      "gpu": "2782, 77",
+      "time": "2026-09-27T18:28:47.8528533Z",
+      "working_set_bytes": 1539895296,
+      "cpu_seconds": 4.53125
+    },
+    {
+      "gpu": "2823, 72",
+      "time": "2026-09-27T18:28:48.9323700Z",
+      "working_set_bytes": 1539932160,
+      "cpu_seconds": 5.578125
+    },
+    {
+      "gpu": "2758, 2",
+      "time": "2026-09-27T18:28:50.0146705Z",
+      "working_set_bytes": 1539936256,
+      "cpu_seconds": 5.703125
+    },
+    {
+      "gpu": "2777, 2",
+      "time": "2026-09-27T18:28:51.0930462Z",
+      "working_set_bytes": 1539936256,
+      "cpu_seconds": 5.703125
+    },
+    {
+      "gpu": "2775, 5",
+      "time": "2026-09-27T18:28:52.1729059Z",
+      "working_set_bytes": 1539936256,
+      "cpu_seconds": 5.703125
+    },
+    {
+      "gpu": "2783, 4",
+      "time": "2026-09-27T18:28:53.2655915Z",
+      "working_set_bytes": 1539936256,
+      "cpu_seconds": 5.703125
+    },
+    {
+      "gpu": "2742, 3",
+      "time": "2026-09-27T18:28:54.3456444Z",
+      "working_set_bytes": 1539936256,
+      "cpu_seconds": 5.703125
+    },
+    {
+      "gpu": "2768, 1",
+      "time": "2026-09-27T18:28:55.4452079Z",
+      "working_set_bytes": 1539936256,
+      "cpu_seconds": 5.734375
+    },
+    {
+      "gpu": "2527, 70",
+      "time": "2026-09-27T18:28:56.5280033Z",
+      "working_set_bytes": 1539956736,
+      "cpu_seconds": 6.8125
+    },
+    {
+      "gpu": "2527, 77",
+      "time": "2026-09-27T18:28:57.6056524Z",
+      "working_set_bytes": 1539956736,
+      "cpu_seconds": 7.828125
+    },
+    {
+      "gpu": "2520, 64",
+      "time": "2026-09-27T18:28:58.6905920Z",
+      "working_set_bytes": 1539956736,
+      "cpu_seconds": 8.65625
+    },
+    {
+      "gpu": "2520, 1",
+      "time": "2026-09-27T18:28:59.7938595Z",
+      "working_set_bytes": 1539956736,
+      "cpu_seconds": 8.78125
+    },
+    {
+      "gpu": "2515, 2",
+      "time": "2026-09-27T18:29:00.8822065Z",
+      "working_set_bytes": 1539956736,
+      "cpu_seconds": 8.78125
+    },
+    {
+      "gpu": "2510, 2",
+      "time": "2026-09-27T18:29:01.9645340Z",
+      "working_set_bytes": 1539956736,
+      "cpu_seconds": 8.78125
+    },
+    {
+      "gpu": "2515, 3",
+      "time": "2026-09-27T18:29:03.0432972Z",
+      "working_set_bytes": 1539956736,
+      "cpu_seconds": 8.78125
+    },
+    {
+      "gpu": "2515, 5",
+      "time": "2026-09-27T18:29:04.1406613Z",
+      "working_set_bytes": 1539956736,
+      "cpu_seconds": 8.78125
+    },
+    {
+      "gpu": "2515, 3",
+      "time": "2026-09-27T18:29:05.2210920Z",
+      "working_set_bytes": 1539956736,
+      "cpu_seconds": 8.78125
+    },
+    {
+      "gpu": "2514, 4",
+      "time": "2026-09-27T18:29:06.3247680Z",
+      "working_set_bytes": 1539956736,
+      "cpu_seconds": 8.78125
+    },
+    {
+      "gpu": "2513, 75",
+      "time": "2026-09-27T18:29:07.4095565Z",
+      "working_set_bytes": 1539964928,
+      "cpu_seconds": 9.671875
+    },
+    {
+      "gpu": "2515, 65",
+      "time": "2026-09-27T18:29:08.4828911Z",
+      "working_set_bytes": 1539964928,
+      "cpu_seconds": 10.734375
+    },
+    {
+      "gpu": "2516, 64",
+      "time": "2026-09-27T18:29:09.5797706Z",
+      "working_set_bytes": 1539964928,
+      "cpu_seconds": 11.625
+    },
+    {
+      "gpu": "1096, 67",
+      "time": "2026-09-27T18:29:10.6589083Z",
+      "working_set_bytes": 1539964928,
+      "cpu_seconds": 12.390625
+    }
+  ],
+  "resource_sampling_error": null,
+  "finished_at": "2026-09-27T18:29:10.991Z"
+}
