@@ -157,6 +157,13 @@ passed its actual invocation and independently verified ready history recovery
 without replaying inference or replacing that newer choice. It does not cover
 journal-only or staged-file/outbox interruption.
 
+The [journal-only interruption protocol](../../eval/experiments/2026-09-27-native-historical-journal-gap.md)
+holds after host admission and before core commit. It verifies that startup does
+not synthesize an uncommitted edit, then permits a client to replay its original
+request with the same ID, observations and lines. The temporary test fixture is
+outside both databases; this is explicit client retry rather than draft-text
+reconstruction from a digest. Execution status is recorded in that evidence file.
+
 ## Implemented foundation and remaining composition
 
 Translate schema v6 and `commit_branch_edit` have supporting SRT and independent
