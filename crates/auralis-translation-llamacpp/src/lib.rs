@@ -1,4 +1,7 @@
 mod asset_download;
+mod chinese_fidelity_prompt;
+mod chinese_money_terms;
+mod chinese_number;
 mod decode_chat_response;
 mod local_http;
 mod offline_install;

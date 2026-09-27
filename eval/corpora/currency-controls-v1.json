@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "source_language": "zh",
+  "target_language": "ru",
+  "provenance": "Independent authored development controls for monetary shorthand, foreign currencies and physical pieces; AI-proposed Russian references, not a human-reviewed holdout.",
+  "examples": [
+    {"id":"c01","source":"这瓶水三块五，两瓶一共七块。","reference":"Эта бутылка воды стоит 3,5 юаня, две — 7 юаней.","expected_currency":"yuan"},
+    {"id":"c02","source":"这杯茶五块钱。","reference":"Эта чашка чая стоит 5 юаней.","expected_currency":"yuan"},
+    {"id":"c03","source":"一共十二块八毛。","reference":"Всего 12,8 юаня.","expected_currency":"yuan"},
+    {"id":"c04","source":"找你两毛钱。","reference":"Твоя сдача — 0,2 юаня.","expected_currency":"yuan"},
+    {"id":"c05","source":"每张票三十五元。","reference":"Каждый билет стоит 35 юаней.","expected_currency":"yuan"},
+    {"id":"c06","source":"这本书十九块九。","reference":"Эта книга стоит 19,9 юаня.","expected_currency":"yuan"},
+    {"id":"c07","source":"零钱还有五角。","reference":"Из мелочи осталось ещё 0,5 юаня.","expected_currency":"yuan"},
+    {"id":"c08","source":"价格是两元五角三分。","reference":"Цена — 2,53 юаня.","expected_currency":"yuan"},
+    {"id":"c09","source":"付了三百块，还剩二十块。","reference":"Заплатили 300 юаней, осталось 20.","expected_currency":"yuan"},
+    {"id":"c10","source":"这件衣服一百二十块五毛。","reference":"Эта одежда стоит 120,5 юаня.","expected_currency":"yuan"},
+    {"id":"c11","source":"这瓶水五美元。","reference":"Эта бутылка воды стоит 5 долларов.","expected_currency":"dollar"},
+    {"id":"c12","source":"门票十欧元。","reference":"Входной билет стоит 10 евро.","expected_currency":"euro"},
+    {"id":"c13","source":"这本书两百日元。","reference":"Эта книга стоит 200 иен.","expected_currency":"yen"},
+    {"id":"c14","source":"车票五十卢布。","reference":"Билет стоит 50 рублей.","expected_currency":"ruble"},
+    {"id":"c15","source":"这件商品七谢克尔。","reference":"Этот товар стоит 7 шекелей.","expected_currency":"shekel"},
+    {"id":"c16","source":"这瓶水三先令。","reference":"Эта бутылка воды стоит 3 шиллинга.","expected_currency":"shilling"},
+    {"id":"c17","source":"这本书十港元。","reference":"Эта книга стоит 10 гонконгских долларов.","expected_currency":"hong_kong_dollar"},
+    {"id":"c18","source":"给我三块石头。","reference":"Дай мне три камня.","expected_currency":"none"},
+    {"id":"c19","source":"把巧克力分成四块。","reference":"Раздели шоколад на четыре кусочка.","expected_currency":"none"},
+    {"id":"c20","source":"我们还剩五分钟。","reference":"У нас осталось пять минут.","expected_currency":"none"}
+  ]
+}

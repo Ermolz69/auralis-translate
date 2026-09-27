@@ -8,6 +8,12 @@ Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before im
 
 ## Start here
 
+The [Chinese currency protection experiment](../eval/experiments/2026-09-27-chinese-currency-protection.md)
+adds an explicit [prompt-v4 profile](reference/chinese-fidelity-profile-v1.md).
+Repeated real file runs preserve the observed yuan prices and independent
+foreign-currency amounts. General language quality and desktop-default selection
+remain open; the HTML report retains v1 alongside the new evidence.
+
 The latest [native historical branch record](../eval/experiments/2026-09-27-native-historical-branch.md)
 verifies actual checked-model translation, older-base editing, explicit attachment
 and reopening through React/Tauri, both databases and three immutable output files.

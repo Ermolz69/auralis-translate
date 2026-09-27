@@ -9,6 +9,32 @@ const GLOSSARY_PROFILE: &[u8] =
     include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.glossary.experimental.json");
 const CHECKED_PROFILE: &[u8] =
     include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.checked.experimental.json");
+const FIDELITY_PROFILE: &[u8] =
+    include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.fidelity.experimental.json");
+
+#[test]
+fn fidelity_profile_is_versioned_without_changing_legacy_fingerprints() -> Result<(), Box<dyn Error>>
+{
+    let profile = ModelProfile::from_json(FIDELITY_PROFILE)?;
+    assert_eq!(profile.prompt_version, 4);
+    let mut legacy: serde_json::Value = serde_json::from_slice(CHECKED_PROFILE)?;
+    legacy["prompt_version"] = serde_json::json!(4);
+    assert_eq!(
+        legacy,
+        serde_json::from_slice::<serde_json::Value>(FIDELITY_PROFILE)?
+    );
+    for (key, bad) in [
+        ("prompt_version", serde_json::json!(5)),
+        ("context_before_segments", serde_json::json!(1)),
+        ("max_context_bytes", serde_json::json!(4096)),
+        ("max_glossary_entries", serde_json::json!(16)),
+    ] {
+        let mut value: serde_json::Value = serde_json::from_slice(FIDELITY_PROFILE)?;
+        value[key] = bad;
+        assert!(ModelProfile::from_json(&serde_json::to_vec(&value)?).is_err());
+    }
+    Ok(())
+}
 
 #[test]
 fn pinned_experimental_profile_parses() -> Result<(), Box<dyn Error>> {

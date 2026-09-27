@@ -1,0 +1,2451 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-09-27T19:57:53.147Z",
+  "revision": "471417f51840af01e6e596e9533d1ec0728e03c3",
+  "dataset_sha256": "221d4e854dbfa6952785628498f0e48ea9f485b903490b9bc7c64c87fa08f0db",
+  "source_sha256": "ddb98a4d3f5a3fffd924c7f1594448b17960ee660bb2120a399c779c11d239a9",
+  "profile_sha256": "bdf893e8607dfceb9d4e97c31cf417c91b153d05ac1bb32ae6a7a814c163ff23",
+  "cli_sha256": "6c59d9b14d0e441813b7d7ecc0837ff028ba09ce26760518aa08188cec206601",
+  "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "profile": {
+    "schema_version": 1,
+    "model_repo": "tencent/Hy-MT2-1.8B-GGUF",
+    "model_revision": "a0c709d9fac510f2c807aa3af52872340dc37a4a",
+    "model_file_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+    "model_file_bytes": 1133080448,
+    "model_alias": "auralis-hy-mt2-1.8b-q4",
+    "runtime_build_info": "b10977-0ecb159c9",
+    "min_context_tokens": 2048,
+    "prompt_version": 4,
+    "temperature": 0.7,
+    "top_p": 0.6,
+    "top_k": 20,
+    "repeat_penalty": 1.05,
+    "max_tokens_per_line": 256,
+    "max_response_bytes": 1048576,
+    "timeout_seconds": 120
+  },
+  "repetitions_planned": 3,
+  "runs": [
+    {
+      "repetition": 1,
+      "run_id": "c11d16c0-843e-4f21-9c2f-fa2804eb5a4d",
+      "translation_elapsed_ms": 10943.4264,
+      "request_elapsed_sum_ms": 4504.136999999997,
+      "output_sha256": "f9fd2d158c0e9e34062bb8c932166eabb5247fec8f609ae57d02892d7a02a0ca",
+      "status": {
+        "schema_version": 3,
+        "translation_id": "c1d29f61-6a81-41e6-818e-ef2f71b5884f",
+        "run_id": "c11d16c0-843e-4f21-9c2f-fa2804eb5a4d",
+        "source_sha256": "ddb98a4d3f5a3fffd924c7f1594448b17960ee660bb2120a399c779c11d239a9",
+        "state": "validated",
+        "pause_requested": false,
+        "completed_blocks": 3,
+        "total_blocks": 3,
+        "warning_count": 0,
+        "selected_result_id": "42a06a22-97ff-46d7-97b6-aa7593af3cb4",
+        "review_state": "needs_review"
+      },
+      "structural_checks": "passed",
+      "rows": [
+        {
+          "example_id": "zh01",
+          "candidate": "Не волнуйтесь, я скоро вернусь."
+        },
+        {
+          "example_id": "zh02",
+          "candidate": "Закройте дверь, снаружи слишком шумно."
+        },
+        {
+          "example_id": "zh03",
+          "candidate": "Я не не верю вам, я просто нужно немного времени."
+        },
+        {
+          "example_id": "zh04",
+          "candidate": "Поезд отправляется в 8:30 вечера, у нас остается 15 минут."
+        },
+        {
+          "example_id": "zh05",
+          "candidate": "Эта бутылка воды 3,5 юаня, две бутылки вместе 7 юаней."
+        },
+        {
+          "example_id": "zh06",
+          "candidate": "Если завтра пойдет дождь, мы отложим матч на воскресенье."
+        },
+        {
+          "example_id": "zh07",
+          "candidate": "Кобаяси уже прибыл в Шанхай, но его багаж все ещё находится в Пекине."
+        },
+        {
+          "example_id": "zh08",
+          "candidate": "Перестаньте кружить в кругах, говорите прямо."
+        },
+        {
+          "example_id": "zh09",
+          "candidate": "Эту работу нельзя откладывать."
+        },
+        {
+          "example_id": "zh10",
+          "candidate": "Ты действительно выбираешь подходящий момент – я только собирался спать."
+        },
+        {
+          "example_id": "zh11",
+          "candidate": "Без моего разрешения никто не может открыть этот ящик."
+        },
+        {
+          "example_id": "zh12",
+          "candidate": "Эта дорога ближе, чем та, по которой шли вчера, но она не очень приятная для прохождения."
+        },
+        {
+          "example_id": "zh13",
+          "candidate": "После второго перекрестка поверните налево, аптека будет справа."
+        },
+        {
+          "example_id": "zh14",
+          "candidate": "Сначала сделайте резервную копию файлов, а затем обновите систему."
+        },
+        {
+          "example_id": "zh15",
+          "candidate": "Я чуть не забыла ключи в машине, к счастью, ты напомнила мне."
+        },
+        {
+          "example_id": "zh16",
+          "candidate": "Независимо от результата, я буду рядом с вами."
+        },
+        {
+          "example_id": "zh17",
+          "candidate": "Не потому что это слишком дорого, а потому что мы вообще не нуждаемся в этом."
+        },
+        {
+          "example_id": "zh18",
+          "candidate": "Отчет должен быть представлен не позднее пятницы в три часа дня — не ждите до последней минуты."
+        },
+        {
+          "example_id": "zh19",
+          "candidate": "Что ты только что сказал? Сигнал плохой, я не расслышал."
+        },
+        {
+          "example_id": "zh20",
+          "candidate": "Если вы скажете мне заранее, я смогу организовать время."
+        }
+      ],
+      "offline_reexport_ms": 76.45420000000013,
+      "offline_reexport": "byte_identical"
+    },
+    {
+      "repetition": 2,
+      "run_id": "8f336dbe-e6ba-464b-b29d-b40883dde959",
+      "translation_elapsed_ms": 11265.0707,
+      "request_elapsed_sum_ms": 4457.180099999994,
+      "output_sha256": "2e26e4263afa59139ae4aa8aaaec99d7131347e411d0c7876cc737cb78e60f8d",
+      "status": {
+        "schema_version": 3,
+        "translation_id": "2c712fd9-6b9c-4b92-8567-2f277c7931da",
+        "run_id": "8f336dbe-e6ba-464b-b29d-b40883dde959",
+        "source_sha256": "ddb98a4d3f5a3fffd924c7f1594448b17960ee660bb2120a399c779c11d239a9",
+        "state": "validated",
+        "pause_requested": false,
+        "completed_blocks": 3,
+        "total_blocks": 3,
+        "warning_count": 0,
+        "selected_result_id": "4a5e9572-fe82-4c5a-b121-8d19a818915b",
+        "review_state": "needs_review"
+      },
+      "structural_checks": "passed",
+      "rows": [
+        {
+          "example_id": "zh01",
+          "candidate": "Не волнуйтесь, я сейчас вернусь."
+        },
+        {
+          "example_id": "zh02",
+          "candidate": "Закройте дверь, снаружи слишком шумно."
+        },
+        {
+          "example_id": "zh03",
+          "candidate": "Я не не верю вам, я просто нужно немного времени."
+        },
+        {
+          "example_id": "zh04",
+          "candidate": "Поезд отправляется в 8:30 вечера, у нас остается пятнадцать минут."
+        },
+        {
+          "example_id": "zh05",
+          "candidate": "Эта бутылка воды 3,5 юаня, две бутылки вместе 7 юаней."
+        },
+        {
+          "example_id": "zh06",
+          "candidate": "Если завтра будет дождь, мы отложим матч на воскресенье."
+        },
+        {
+          "example_id": "zh07",
+          "candidate": "Кобаяси уже прибыл в Шанхай, но его багаж все ещё находится в Пекине."
+        },
+        {
+          "example_id": "zh08",
+          "candidate": "Перестаньте кружить в кругах, говорите прямо."
+        },
+        {
+          "example_id": "zh09",
+          "candidate": "Эту работу нельзя откладывать."
+        },
+        {
+          "example_id": "zh10",
+          "candidate": "Какой же ты умный выбирать время – я только собираюсь спать."
+        },
+        {
+          "example_id": "zh11",
+          "candidate": "Без моего разрешения никто не может открыть этот ящик."
+        },
+        {
+          "example_id": "zh12",
+          "candidate": "Эта дорога ближе, чем та, по которой шли вчера, но она не очень удобна для прохождения."
+        },
+        {
+          "example_id": "zh13",
+          "candidate": "После второго перекрестка поверните налево, аптера будет с правой стороны."
+        },
+        {
+          "example_id": "zh14",
+          "candidate": "Сначала сделайте резервную копию файлов, а затем обновите систему."
+        },
+        {
+          "example_id": "zh15",
+          "candidate": "Я чуть не забыла ключи в машине, к счастью, ты напомнил мне."
+        },
+        {
+          "example_id": "zh16",
+          "candidate": "Независимо от результата, я буду рядом с тобой."
+        },
+        {
+          "example_id": "zh17",
+          "candidate": "Не потому что это слишком дорого, а потому что мы вообще не нуждаемся в этом."
+        },
+        {
+          "example_id": "zh18",
+          "candidate": "Отчет должен быть представлен не позднее пятницы в три часа дня. Не стоит ждать до последней минуты."
+        },
+        {
+          "example_id": "zh19",
+          "candidate": "Что ты только что сказал? Сигнал плохой, я не расслышал."
+        },
+        {
+          "example_id": "zh20",
+          "candidate": "Если вы скажете мне заранее, я смогу организовать время."
+        }
+      ],
+      "offline_reexport_ms": 72.69180000000051,
+      "offline_reexport": "byte_identical"
+    },
+    {
+      "repetition": 3,
+      "run_id": "285c760f-8cf2-4ec5-a7c6-33d8c6f233a7",
+      "translation_elapsed_ms": 11162.9706,
+      "request_elapsed_sum_ms": 4586.6745000000155,
+      "output_sha256": "377ea5301d49df805ad63e80b547b412f064e86fe2cc621fe5fa5544326d96d1",
+      "status": {
+        "schema_version": 3,
+        "translation_id": "2b7e25ce-8220-4261-9982-a59a3877fa07",
+        "run_id": "285c760f-8cf2-4ec5-a7c6-33d8c6f233a7",
+        "source_sha256": "ddb98a4d3f5a3fffd924c7f1594448b17960ee660bb2120a399c779c11d239a9",
+        "state": "validated",
+        "pause_requested": false,
+        "completed_blocks": 3,
+        "total_blocks": 3,
+        "warning_count": 0,
+        "selected_result_id": "5b1b2d4d-623f-4287-a31a-b1e1f1c14dee",
+        "review_state": "needs_review"
+      },
+      "structural_checks": "passed",
+      "rows": [
+        {
+          "example_id": "zh01",
+          "candidate": "Не волнуйтесь, я скоро вернусь."
+        },
+        {
+          "example_id": "zh02",
+          "candidate": "Закройте дверь, снаружи слишком шумно."
+        },
+        {
+          "example_id": "zh03",
+          "candidate": "Я не не верю вам, я просто нужно немного времени."
+        },
+        {
+          "example_id": "zh04",
+          "candidate": "Поезд отправляется в 8:30 вечера, у нас остается пятнадцать минут."
+        },
+        {
+          "example_id": "zh05",
+          "candidate": "Эта бутылка воды 3,5 юаня, две бутылки вместе 7 юаней."
+        },
+        {
+          "example_id": "zh06",
+          "candidate": "Если завтра будет дождь, мы отложим матч на воскресенье."
+        },
+        {
+          "example_id": "zh07",
+          "candidate": "Кобаяси уже прибыл в Шанхай, но его багаж все еще находится в Пекине."
+        },
+        {
+          "example_id": "zh08",
+          "candidate": "Перестаньте кружить в кругах, скажите прямо, что хотите."
+        },
+        {
+          "example_id": "zh09",
+          "candidate": "Эту работу нельзя откладывать."
+        },
+        {
+          "example_id": "zh10",
+          "candidate": "Ты действительно выбираешь подходящий момент – я только собирался спать."
+        },
+        {
+          "example_id": "zh11",
+          "candidate": "Без моего разрешения никто не может открыть этот ящик."
+        },
+        {
+          "example_id": "zh12",
+          "candidate": "Эта дорога ближе, чем та, по которой шли вчера, но она не очень удобная для прохождения."
+        },
+        {
+          "example_id": "zh13",
+          "candidate": "Пройдя второй перекресток, поверните налево — аптека будет справа."
+        },
+        {
+          "example_id": "zh14",
+          "candidate": "Сначала сделайте резервную копию файлов, а затем обновите систему."
+        },
+        {
+          "example_id": "zh15",
+          "candidate": "Я чуть не забыла ключи в машине, к счастью, ты напомнила мне."
+        },
+        {
+          "example_id": "zh16",
+          "candidate": "Независимо от результата, я буду рядом с вами."
+        },
+        {
+          "example_id": "zh17",
+          "candidate": "Не потому что это слишком дорого, а потому что мы вообще не нуждаемся в этом."
+        },
+        {
+          "example_id": "zh18",
+          "candidate": "Отчет следует подать не позднее пятницы в три часа дня, не ждать до последнего момента."
+        },
+        {
+          "example_id": "zh19",
+          "candidate": "Что вы только что сказали? Сигнал плохой, я не расслышал."
+        },
+        {
+          "example_id": "zh20",
+          "candidate": "Если вы скажете мне заранее, я смогу организовать время."
+        }
+      ],
+      "offline_reexport_ms": 75.96990000000369,
+      "offline_reexport": "byte_identical"
+    }
+  ],
+  "failures": [],
+  "hardware": {
+    "os": "Windows_NT 10.0.19045 x64",
+    "cpu": "Intel(R) Core(TM) i7-6900K CPU @ 3.20GHz",
+    "logical_cpus": 16,
+    "total_ram_bytes": 51458560000,
+    "gpu": "NVIDIA GeForce RTX 3070, 8192 MiB, 595.79"
+  },
+  "methodology": {
+    "clock": "Node performance.now(), monotonic milliseconds",
+    "server": "One persistent server; first timed file follows readiness, other files reuse the loaded model. No claim of cold OS cache.",
+    "request": "Loopback proxy times POST /v1/chat/completions through complete response body. Includes proxy/HTTP overhead; llama.cpp token timings are separate.",
+    "cache": "llama.cpp --cache-ram 0; slot/prompt behavior otherwise defaults. Repeated identical prompts can reuse the runtime prompt cache.",
+    "resources": "Sampled every 1 second. GPU usage includes other applications; process working set is not private allocation. Peaks are approximate.",
+    "dataset": "Original examples and proposed Russian references authored by Ulya (AI assistant) for this report; not human-reviewed translations or a release holdout.",
+    "scope": "Twenty standalone Chinese lines; prompt v4, no context or glossary, synthetic CRLF SRT. Proposed references are not sent to the model. Not a subtitle holdout or language-release gate.",
+    "currency": "Recognized source amounts are protected as ordered tokens in inference-only text, then restored by the adapter after token validation. Raw candidate and accepted_candidate differ intentionally. Unrecognized amounts remain model translated."
+  },
+  "code_snapshot": {
+    "crates/auralis-translation-llamacpp/src/provider.rs": "20243a0cfd751d4f7b57a7cf2aa9b01232701b1490db9043e4d3f1988be5679c",
+    "crates/auralis-translation-llamacpp/src/chinese_fidelity_prompt.rs": "3ab8d5563496047a4af345d0ca5ad28e2ef7aa50cbc6ef23eebb3688059816f3",
+    "crates/auralis-translation-llamacpp/src/chinese_money_terms.rs": "7ebf15d18c83f2c892f89856a9735aae2c409d6c9a19cece7c6ae976b3deb267",
+    "crates/auralis-translation-llamacpp/src/chinese_number.rs": "78203d3bd9041bdacc3bc56e8402d9b9d473d90510326f021c1374e53dd3240b",
+    "eval/scripts/public-demo-benchmark.mjs": "30a27a9e30e127c53dc5ae9f15b57766ad2daf8753b6f1361c1f95c08b489f5f"
+  },
+  "server_arguments": [
+    "--model",
+    "<supplied-model.gguf>",
+    "--alias",
+    "auralis-hy-mt2-1.8b-q4",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "5817",
+    "-c",
+    "2048",
+    "-ngl",
+    "99",
+    "--cache-ram",
+    "0",
+    "--parallel",
+    "1",
+    "--jinja"
+  ],
+  "server_startup_ms": 1745.2295,
+  "source_preservation": "byte_identical",
+  "result": "passed",
+  "requests": [
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:01.430Z",
+      "request_sha256": "1c0e5965e1c50c838ba81e29ce9c1d04cc8704b7446d243ad581bbf0986773c7",
+      "example_id": "zh01",
+      "source_sha256": "e6e3cc777ddab8c3ce7b36e7f9483c15e92a1b1bcd0d2884902305f1a66d24df",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n别担心，我马上回来。",
+      "elapsed_ms": 309.34139999999934,
+      "http_status": 200,
+      "candidate": "Не волнуйтесь, я скоро вернусь.",
+      "usage": {
+        "completion_tokens": 17,
+        "prompt_tokens": 31,
+        "total_tokens": 48,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 31,
+        "prompt_ms": 93.869,
+        "prompt_per_token_ms": 3.028032258064516,
+        "prompt_per_second": 330.24747254152066,
+        "predicted_n": 17,
+        "predicted_ms": 204.219,
+        "predicted_per_token_ms": 12.7636875,
+        "predicted_per_second": 78.34726445629447
+      },
+      "accepted_candidate": "Не волнуйтесь, я скоро вернусь."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:01.741Z",
+      "request_sha256": "73d9b2ee3660a27b33faa5719931cbe9e787daaff1117becb8cce406a5b88f18",
+      "example_id": "zh02",
+      "source_sha256": "5e9628ce66418291c9f41261f92a9acb32010f2d2ba5114ba600ccba9025396d",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n请把门关上，外面太吵了。",
+      "elapsed_ms": 169.33359999999993,
+      "http_status": 200,
+      "candidate": "Закройте дверь, снаружи слишком шумно.",
+      "usage": {
+        "completion_tokens": 21,
+        "prompt_tokens": 33,
+        "total_tokens": 54,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 14.863,
+        "prompt_per_token_ms": 1.4863,
+        "prompt_per_second": 672.8116800107649,
+        "predicted_n": 21,
+        "predicted_ms": 149.549,
+        "predicted_per_token_ms": 7.47745,
+        "predicted_per_second": 133.73543119646402
+      },
+      "accepted_candidate": "Закройте дверь, снаружи слишком шумно."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:01.911Z",
+      "request_sha256": "c941935175b7102d201e8a53e01f7b8510d02ce07cfc153f52e60bdc17a5ee7e",
+      "example_id": "zh03",
+      "source_sha256": "83d9ae57254fec418c7901c99107844b63c925acf5529c8ba98808d8334f1540",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n我不是不相信你，我只是需要一点时间。",
+      "elapsed_ms": 165.89259999999922,
+      "http_status": 200,
+      "candidate": "Я не не верю вам, я просто нужно немного времени.",
+      "usage": {
+        "completion_tokens": 19,
+        "prompt_tokens": 33,
+        "total_tokens": 52,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 13.413,
+        "prompt_per_token_ms": 1.3413,
+        "prompt_per_second": 745.5453664355475,
+        "predicted_n": 19,
+        "predicted_ms": 147.028,
+        "predicted_per_token_ms": 8.168222222222221,
+        "predicted_per_second": 122.4256604184237
+      },
+      "accepted_candidate": "Я не не верю вам, я просто нужно немного времени."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:02.078Z",
+      "request_sha256": "147961451f02efbe03474944fefcf3fdb7ce7ed81115dff64292ffb3651263ec",
+      "example_id": "zh04",
+      "source_sha256": "16903df9f13e07189931fb0fb1ddb2fbac4ca019dff29ad2bb3c3c5934ca6d85",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n火车晚上八点半出发，我们还有十五分钟。",
+      "elapsed_ms": 243.53929999999855,
+      "http_status": 200,
+      "candidate": "Поезд отправляется в 8:30 вечера, у нас остается 15 минут.",
+      "usage": {
+        "completion_tokens": 29,
+        "prompt_tokens": 35,
+        "total_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 15.704,
+        "prompt_per_token_ms": 1.3086666666666666,
+        "prompt_per_second": 764.1365257259297,
+        "predicted_n": 29,
+        "predicted_ms": 221.112,
+        "predicted_per_token_ms": 7.896857142857143,
+        "predicted_per_second": 126.63265675313868
+      },
+      "accepted_candidate": "Поезд отправляется в 8:30 вечера, у нас остается 15 минут."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:02.323Z",
+      "request_sha256": "9ef04e9f9537826c5f3e41d26654366751fde7db6b92db5dbf39a1cd6b102b2d",
+      "example_id": "zh05",
+      "source_sha256": "fe414cdcef9a030efe848c24562766ad19a17a97a801f7e62ea291cec10d7dd9",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这瓶水__AURALIS_MONEY_0__，两瓶一共__AURALIS_MONEY_1__。",
+      "elapsed_ms": 297.6862000000001,
+      "http_status": 200,
+      "candidate": "Эта бутылка воды __AURALIS_MONEY_0__, две бутылки вместе __AURALIS_MONEY_1__.",
+      "usage": {
+        "completion_tokens": 38,
+        "prompt_tokens": 77,
+        "total_tokens": 115,
+        "prompt_tokens_details": {
+          "cached_tokens": 9
+        }
+      },
+      "timings": {
+        "cache_n": 9,
+        "prompt_n": 68,
+        "prompt_ms": 24.236,
+        "prompt_per_token_ms": 0.3564117647058824,
+        "prompt_per_second": 2805.7435220333386,
+        "predicted_n": 38,
+        "predicted_ms": 268.684,
+        "predicted_per_token_ms": 7.261729729729731,
+        "predicted_per_second": 137.70823718569025
+      },
+      "accepted_candidate": "Эта бутылка воды 3,5 юаня, две бутылки вместе 7 юаней."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:02.623Z",
+      "request_sha256": "d3fca0195aaa9b2193db8be06bc9d42ff2f63cd14bda5e0e86714770c9f0329e",
+      "example_id": "zh06",
+      "source_sha256": "4fa3ad88892684c6b45b83b6e5e590d5701be404bf2f52b6210e86871a2a7f34",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n如果明天下雨，我们就把比赛推迟到周日。",
+      "elapsed_ms": 219.9974999999995,
+      "http_status": 200,
+      "candidate": "Если завтра пойдет дождь, мы отложим матч на воскресенье.",
+      "usage": {
+        "completion_tokens": 27,
+        "prompt_tokens": 36,
+        "total_tokens": 63,
+        "prompt_tokens_details": {
+          "cached_tokens": 9
+        }
+      },
+      "timings": {
+        "cache_n": 9,
+        "prompt_n": 27,
+        "prompt_ms": 15.246,
+        "prompt_per_token_ms": 0.5646666666666667,
+        "prompt_per_second": 1770.9563164108617,
+        "predicted_n": 27,
+        "predicted_ms": 199.88,
+        "predicted_per_token_ms": 7.687692307692307,
+        "predicted_per_second": 130.07804682809686
+      },
+      "accepted_candidate": "Если завтра пойдет дождь, мы отложим матч на воскресенье."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:02.844Z",
+      "request_sha256": "1c74ac5343482d1902579f6dee4530c51c7dd90683164f2dc300dddcd84b2cea",
+      "example_id": "zh07",
+      "source_sha256": "0416dbc2446379668d2827e5d27df0ec8979c11d3917f7a7ea68fd5719bfc98a",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n小林已经到上海了，但他的行李还在北京。",
+      "elapsed_ms": 262.3033000000014,
+      "http_status": 200,
+      "candidate": "Кобаяси уже прибыл в Шанхай, но его багаж все ещё находится в Пекине.",
+      "usage": {
+        "completion_tokens": 32,
+        "prompt_tokens": 35,
+        "total_tokens": 67,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 13.816,
+        "prompt_per_token_ms": 1.1513333333333333,
+        "prompt_per_second": 868.5581933989577,
+        "predicted_n": 32,
+        "predicted_ms": 243.177,
+        "predicted_per_token_ms": 7.84441935483871,
+        "predicted_per_second": 127.47916126936346
+      },
+      "accepted_candidate": "Кобаяси уже прибыл в Шанхай, но его багаж все ещё находится в Пекине."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:03.108Z",
+      "request_sha256": "d9124a6a82a32c4119c3899f2814ab88f151aa67207fd940441715ba94d6af01",
+      "example_id": "zh08",
+      "source_sha256": "31131207659bb3a2a8129a7ab9da5cc7d75c7f82208acd4045ec1ae5303e2cec",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n别再绕圈子了，有话就直说。",
+      "elapsed_ms": 180.59269999999924,
+      "http_status": 200,
+      "candidate": "Перестаньте кружить в кругах, говорите прямо.",
+      "usage": {
+        "completion_tokens": 21,
+        "prompt_tokens": 36,
+        "total_tokens": 57,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 16.786,
+        "prompt_per_token_ms": 1.2912307692307694,
+        "prompt_per_second": 774.4549028952698,
+        "predicted_n": 21,
+        "predicted_ms": 158.473,
+        "predicted_per_token_ms": 7.92365,
+        "predicted_per_second": 126.20446385188643
+      },
+      "accepted_candidate": "Перестаньте кружить в кругах, говорите прямо."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:03.319Z",
+      "request_sha256": "4e46e587eff98b2d75f099e9a292ddbac4112bdc4a8ec45676af71e3116df2d7",
+      "example_id": "zh09",
+      "source_sha256": "3afa776c57ffe5a4e1dbab9187ec2b60dd8b95f3e80fc4b209d9ab2f559f2636",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n这件事不能半途而废。",
+      "elapsed_ms": 122.00870000000032,
+      "http_status": 200,
+      "candidate": "Эту работу нельзя откладывать.",
+      "usage": {
+        "completion_tokens": 14,
+        "prompt_tokens": 31,
+        "total_tokens": 45,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 8,
+        "prompt_ms": 15.472,
+        "prompt_per_token_ms": 1.934,
+        "prompt_per_second": 517.063081695967,
+        "predicted_n": 14,
+        "predicted_ms": 99.669,
+        "predicted_per_token_ms": 7.666846153846153,
+        "predicted_per_second": 130.43172902306637
+      },
+      "accepted_candidate": "Эту работу нельзя откладывать."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:03.442Z",
+      "request_sha256": "9d7ca32b4c867d7354eda53e8e0b611eefa7e0a63f13e2153d89acde2d8f2769",
+      "example_id": "zh10",
+      "source_sha256": "664a1c5f9a1c90629263fa6d7b6faada86e02073fca376e0b57546270c6cf65d",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n你可真会挑时候，我刚准备睡觉。",
+      "elapsed_ms": 223.16619999999966,
+      "http_status": 200,
+      "candidate": "Ты действительно выбираешь подходящий момент – я только собирался спать.",
+      "usage": {
+        "completion_tokens": 26,
+        "prompt_tokens": 35,
+        "total_tokens": 61,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 15.224,
+        "prompt_per_token_ms": 1.2686666666666666,
+        "prompt_per_second": 788.2291119285339,
+        "predicted_n": 26,
+        "predicted_ms": 201.306,
+        "predicted_per_token_ms": 8.052240000000001,
+        "predicted_per_second": 124.18904553267166
+      },
+      "accepted_candidate": "Ты действительно выбираешь подходящий момент – я только собирался спать."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:03.666Z",
+      "request_sha256": "76b555a30b08947a24be64c93a7b80b16710d7db2ac203bc33e9e500d4ccb725",
+      "example_id": "zh11",
+      "source_sha256": "e8a392c74540ccd2d1cc8c31f7c3ccbac986ffbd4e0ca56152659da2e62577de",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n没有我的允许，谁也不能打开这个箱子。",
+      "elapsed_ms": 193.19360000000052,
+      "http_status": 200,
+      "candidate": "Без моего разрешения никто не может открыть этот ящик.",
+      "usage": {
+        "completion_tokens": 23,
+        "prompt_tokens": 34,
+        "total_tokens": 57,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 11,
+        "prompt_ms": 14.464,
+        "prompt_per_token_ms": 1.314909090909091,
+        "prompt_per_second": 760.5088495575221,
+        "predicted_n": 23,
+        "predicted_ms": 171.883,
+        "predicted_per_token_ms": 7.812863636363637,
+        "predicted_per_second": 127.99404245911462
+      },
+      "accepted_candidate": "Без моего разрешения никто не может открыть этот ящик."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:03.861Z",
+      "request_sha256": "7e19884a013bd54137d12f9d4ec068945d0f3a9b695b98b35190b99328ab4461",
+      "example_id": "zh12",
+      "source_sha256": "42df5a0cd2d547bc284a86a66b4fe3fb6788e1a27e7c477a7fc6793ac6d6096e",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n这条路比昨天走的那条近，但不好走。",
+      "elapsed_ms": 265.5764999999992,
+      "http_status": 200,
+      "candidate": "Эта дорога ближе, чем та, по которой шли вчера, но она не очень приятная для прохождения.",
+      "usage": {
+        "completion_tokens": 35,
+        "prompt_tokens": 36,
+        "total_tokens": 71,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 14.651,
+        "prompt_per_token_ms": 1.127,
+        "prompt_per_second": 887.3114463176576,
+        "predicted_n": 35,
+        "predicted_ms": 246.284,
+        "predicted_per_token_ms": 7.243647058823529,
+        "predicted_per_second": 138.05200500235503
+      },
+      "accepted_candidate": "Эта дорога ближе, чем та, по которой шли вчера, но она не очень приятная для прохождения."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:04.127Z",
+      "request_sha256": "040263887f1af9859d778b1433f267ce4f2a61873e31aaf06c7009b812421910",
+      "example_id": "zh13",
+      "source_sha256": "2df3317e11281513cbbd212dbb6e10b53780dab3a24bfc1ab56dfe23fc338f90",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n过了第二个路口往左拐，药店就在右手边。",
+      "elapsed_ms": 224.66460000000006,
+      "http_status": 200,
+      "candidate": "После второго перекрестка поверните налево, аптека будет справа.",
+      "usage": {
+        "completion_tokens": 28,
+        "prompt_tokens": 36,
+        "total_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 16.73,
+        "prompt_per_token_ms": 1.286923076923077,
+        "prompt_per_second": 777.047220561865,
+        "predicted_n": 28,
+        "predicted_ms": 203.091,
+        "predicted_per_token_ms": 7.521888888888889,
+        "predicted_per_second": 132.94532992599378
+      },
+      "accepted_candidate": "После второго перекрестка поверните налево, аптека будет справа."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:04.353Z",
+      "request_sha256": "652153d2dc1bcc3cf23eadb21c8a3680ca7cd4a2bf13d46e542395db9304c839",
+      "example_id": "zh14",
+      "source_sha256": "14a948ba555888f551c801129fbcb88660bf7d2126c598af2e73e0401f5dc8fc",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n先备份文件，再更新系统。",
+      "elapsed_ms": 215.96030000000064,
+      "http_status": 200,
+      "candidate": "Сначала сделайте резервную копию файлов, а затем обновите систему.",
+      "usage": {
+        "completion_tokens": 26,
+        "prompt_tokens": 32,
+        "total_tokens": 58,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 9,
+        "prompt_ms": 18.163,
+        "prompt_per_token_ms": 2.018111111111111,
+        "prompt_per_second": 495.51285580575893,
+        "predicted_n": 26,
+        "predicted_ms": 193.526,
+        "predicted_per_token_ms": 7.741040000000001,
+        "predicted_per_second": 129.18160867273647
+      },
+      "accepted_candidate": "Сначала сделайте резервную копию файлов, а затем обновите систему."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:04.570Z",
+      "request_sha256": "56cd7b9c69d90e36923dd002c9d713461921078c84d6d7b0ab11958b8cc5222b",
+      "example_id": "zh15",
+      "source_sha256": "47f0e605e42190fae35dfda31cec539001b7056800638ccf703c6d768389aa53",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n我差点把钥匙忘在车里，幸好你提醒了我。",
+      "elapsed_ms": 261.2446,
+      "http_status": 200,
+      "candidate": "Я чуть не забыла ключи в машине, к счастью, ты напомнила мне.",
+      "usage": {
+        "completion_tokens": 30,
+        "prompt_tokens": 39,
+        "total_tokens": 69,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 16,
+        "prompt_ms": 14.389,
+        "prompt_per_token_ms": 0.8993125,
+        "prompt_per_second": 1111.9605254013484,
+        "predicted_n": 30,
+        "predicted_ms": 242.029,
+        "predicted_per_token_ms": 8.345827586206896,
+        "predicted_per_second": 119.82035210656574
+      },
+      "accepted_candidate": "Я чуть не забыла ключи в машине, к счастью, ты напомнила мне."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:04.832Z",
+      "request_sha256": "7d1f0e08e06835eb7e98f194257d0b6e36992bc06f9b56f8b74cb08db926d960",
+      "example_id": "zh16",
+      "source_sha256": "44330d7691d03682fb47a6d4ca493eb06fd0c94394cf86afe88645d10ba887f4",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n不管结果怎么样，我都会陪着你。",
+      "elapsed_ms": 208.82999999999993,
+      "http_status": 200,
+      "candidate": "Независимо от результата, я буду рядом с вами.",
+      "usage": {
+        "completion_tokens": 22,
+        "prompt_tokens": 33,
+        "total_tokens": 55,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 15.95,
+        "prompt_per_token_ms": 1.595,
+        "prompt_per_second": 626.9592476489029,
+        "predicted_n": 22,
+        "predicted_ms": 188.606,
+        "predicted_per_token_ms": 8.981238095238094,
+        "predicted_per_second": 111.34322343933916
+      },
+      "accepted_candidate": "Независимо от результата, я буду рядом с вами."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:05.068Z",
+      "request_sha256": "ba08f7540d6fda82a639b394572ab3a8a8ef63372d19d63cd0436a21737376c4",
+      "example_id": "zh17",
+      "source_sha256": "4a5ed3c2f764f2f0e8a8fe08338253f0a4e74046073adb53bf82a4d69bbd7549",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n不是因为太贵，而是因为我们根本用不上。",
+      "elapsed_ms": 248.83119999999872,
+      "http_status": 200,
+      "candidate": "Не потому что это слишком дорого, а потому что мы вообще не нуждаемся в этом.",
+      "usage": {
+        "completion_tokens": 30,
+        "prompt_tokens": 35,
+        "total_tokens": 65,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 15.956,
+        "prompt_per_token_ms": 1.3296666666666666,
+        "prompt_per_second": 752.0681875156681,
+        "predicted_n": 30,
+        "predicted_ms": 228.48,
+        "predicted_per_token_ms": 7.878620689655172,
+        "predicted_per_second": 126.92577030812326
+      },
+      "accepted_candidate": "Не потому что это слишком дорого, а потому что мы вообще не нуждаемся в этом."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:05.317Z",
+      "request_sha256": "b714a0b8d67b350972ac118274bfb85eaeca42703bb0a41ec554bf95eb70f028",
+      "example_id": "zh18",
+      "source_sha256": "dd9eb992e18865131e41633a64b5cd877f26517564ab392d554147baa5be8c42",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n报告最晚周五下午三点交，别等到最后一分钟。",
+      "elapsed_ms": 310.1913999999997,
+      "http_status": 200,
+      "candidate": "Отчет должен быть представлен не позднее пятницы в три часа дня — не ждите до последней минуты.",
+      "usage": {
+        "completion_tokens": 37,
+        "prompt_tokens": 37,
+        "total_tokens": 74,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 14,
+        "prompt_ms": 13.339,
+        "prompt_per_token_ms": 0.9527857142857143,
+        "prompt_per_second": 1049.5539395756805,
+        "predicted_n": 37,
+        "predicted_ms": 292.589,
+        "predicted_per_token_ms": 8.127472222222222,
+        "predicted_per_second": 123.03948542152986
+      },
+      "accepted_candidate": "Отчет должен быть представлен не позднее пятницы в три часа дня — не ждите до последней минуты."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:05.629Z",
+      "request_sha256": "db09c4012027769a9b1fbbc7a916d34e262d59d4c01678fa1b15c1d11d4617b1",
+      "example_id": "zh19",
+      "source_sha256": "13cfbf69c1e12a69bd5d311ef465cab186b8acd35ae686dcf565d02b2e3e8967",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n你刚才说什么？信号不好，我没听清。",
+      "elapsed_ms": 202.1163000000015,
+      "http_status": 200,
+      "candidate": "Что ты только что сказал? Сигнал плохой, я не расслышал.",
+      "usage": {
+        "completion_tokens": 24,
+        "prompt_tokens": 35,
+        "total_tokens": 59,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 14.757,
+        "prompt_per_token_ms": 1.22975,
+        "prompt_per_second": 813.1734092295181,
+        "predicted_n": 24,
+        "predicted_ms": 182.861,
+        "predicted_per_token_ms": 7.9504782608695646,
+        "predicted_per_second": 125.77859685772255
+      },
+      "accepted_candidate": "Что ты только что сказал? Сигнал плохой, я не расслышал."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:58:05.832Z",
+      "request_sha256": "14ff1a9be6261da54a0b7e43e2f1c3aeefaf1970fb486b69df696a9288d2b6a2",
+      "example_id": "zh20",
+      "source_sha256": "d7122a0df5e1ab605f06f686f7ee1b97a0aa4c52e8fa50bcad77e76dbd116c8a",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n只要你提前告诉我，我就能安排时间。",
+      "elapsed_ms": 179.66699999999946,
+      "http_status": 200,
+      "candidate": "Если вы скажете мне заранее, я смогу организовать время.",
+      "usage": {
+        "completion_tokens": 22,
+        "prompt_tokens": 33,
+        "total_tokens": 55,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 17.123,
+        "prompt_per_token_ms": 1.7123000000000002,
+        "prompt_per_second": 584.0098113648309,
+        "predicted_n": 22,
+        "predicted_ms": 158.168,
+        "predicted_per_token_ms": 7.531809523809524,
+        "predicted_per_second": 132.77021900763745
+      },
+      "accepted_candidate": "Если вы скажете мне заранее, я смогу организовать время."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:12.711Z",
+      "request_sha256": "1c0e5965e1c50c838ba81e29ce9c1d04cc8704b7446d243ad581bbf0986773c7",
+      "example_id": "zh01",
+      "source_sha256": "e6e3cc777ddab8c3ce7b36e7f9483c15e92a1b1bcd0d2884902305f1a66d24df",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n别担心，我马上回来。",
+      "elapsed_ms": 326.40889999999854,
+      "http_status": 200,
+      "candidate": "Не волнуйтесь, я сейчас вернусь.",
+      "usage": {
+        "completion_tokens": 17,
+        "prompt_tokens": 31,
+        "total_tokens": 48,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 8,
+        "prompt_ms": 205.498,
+        "prompt_per_token_ms": 25.68725,
+        "prompt_per_second": 38.92981926831405,
+        "predicted_n": 17,
+        "predicted_ms": 115.029,
+        "predicted_per_token_ms": 7.1893125,
+        "predicted_per_second": 139.09535856175398
+      },
+      "accepted_candidate": "Не волнуйтесь, я сейчас вернусь."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:13.038Z",
+      "request_sha256": "73d9b2ee3660a27b33faa5719931cbe9e787daaff1117becb8cce406a5b88f18",
+      "example_id": "zh02",
+      "source_sha256": "5e9628ce66418291c9f41261f92a9acb32010f2d2ba5114ba600ccba9025396d",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n请把门关上，外面太吵了。",
+      "elapsed_ms": 187.3194999999978,
+      "http_status": 200,
+      "candidate": "Закройте дверь, снаружи слишком шумно.",
+      "usage": {
+        "completion_tokens": 21,
+        "prompt_tokens": 33,
+        "total_tokens": 54,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 15.936,
+        "prompt_per_token_ms": 1.5936,
+        "prompt_per_second": 627.5100401606426,
+        "predicted_n": 21,
+        "predicted_ms": 167.374,
+        "predicted_per_token_ms": 8.3687,
+        "predicted_per_second": 119.49287225017028
+      },
+      "accepted_candidate": "Закройте дверь, снаружи слишком шумно."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:13.226Z",
+      "request_sha256": "c941935175b7102d201e8a53e01f7b8510d02ce07cfc153f52e60bdc17a5ee7e",
+      "example_id": "zh03",
+      "source_sha256": "83d9ae57254fec418c7901c99107844b63c925acf5529c8ba98808d8334f1540",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n我不是不相信你，我只是需要一点时间。",
+      "elapsed_ms": 151.70669999999882,
+      "http_status": 200,
+      "candidate": "Я не не верю вам, я просто нужно немного времени.",
+      "usage": {
+        "completion_tokens": 19,
+        "prompt_tokens": 33,
+        "total_tokens": 52,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 13.17,
+        "prompt_per_token_ms": 1.317,
+        "prompt_per_second": 759.301442672741,
+        "predicted_n": 19,
+        "predicted_ms": 134.409,
+        "predicted_per_token_ms": 7.4671666666666665,
+        "predicted_per_second": 133.91960359797338
+      },
+      "accepted_candidate": "Я не не верю вам, я просто нужно немного времени."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:13.379Z",
+      "request_sha256": "147961451f02efbe03474944fefcf3fdb7ce7ed81115dff64292ffb3651263ec",
+      "example_id": "zh04",
+      "source_sha256": "16903df9f13e07189931fb0fb1ddb2fbac4ca019dff29ad2bb3c3c5934ca6d85",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n火车晚上八点半出发，我们还有十五分钟。",
+      "elapsed_ms": 262.15060000000085,
+      "http_status": 200,
+      "candidate": "Поезд отправляется в 8:30 вечера, у нас остается пятнадцать минут.",
+      "usage": {
+        "completion_tokens": 33,
+        "prompt_tokens": 35,
+        "total_tokens": 68,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 15.218,
+        "prompt_per_token_ms": 1.2681666666666667,
+        "prompt_per_second": 788.5398869759495,
+        "predicted_n": 33,
+        "predicted_ms": 242.824,
+        "predicted_per_token_ms": 7.58825,
+        "predicted_per_second": 131.78269034362336
+      },
+      "accepted_candidate": "Поезд отправляется в 8:30 вечера, у нас остается пятнадцать минут."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:13.642Z",
+      "request_sha256": "9ef04e9f9537826c5f3e41d26654366751fde7db6b92db5dbf39a1cd6b102b2d",
+      "example_id": "zh05",
+      "source_sha256": "fe414cdcef9a030efe848c24562766ad19a17a97a801f7e62ea291cec10d7dd9",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这瓶水__AURALIS_MONEY_0__，两瓶一共__AURALIS_MONEY_1__。",
+      "elapsed_ms": 319.1330999999991,
+      "http_status": 200,
+      "candidate": "Эта бутылка воды __AURALIS_MONEY_0__, две бутылки вместе __AURALIS_MONEY_1__.",
+      "usage": {
+        "completion_tokens": 38,
+        "prompt_tokens": 77,
+        "total_tokens": 115,
+        "prompt_tokens_details": {
+          "cached_tokens": 9
+        }
+      },
+      "timings": {
+        "cache_n": 9,
+        "prompt_n": 68,
+        "prompt_ms": 20.453,
+        "prompt_per_token_ms": 0.30077941176470585,
+        "prompt_per_second": 3324.695643670855,
+        "predicted_n": 38,
+        "predicted_ms": 294.516,
+        "predicted_per_token_ms": 7.959891891891893,
+        "predicted_per_second": 125.62984693531081
+      },
+      "accepted_candidate": "Эта бутылка воды 3,5 юаня, две бутылки вместе 7 юаней."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:13.962Z",
+      "request_sha256": "d3fca0195aaa9b2193db8be06bc9d42ff2f63cd14bda5e0e86714770c9f0329e",
+      "example_id": "zh06",
+      "source_sha256": "4fa3ad88892684c6b45b83b6e5e590d5701be404bf2f52b6210e86871a2a7f34",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n如果明天下雨，我们就把比赛推迟到周日。",
+      "elapsed_ms": 199.27379999999903,
+      "http_status": 200,
+      "candidate": "Если завтра будет дождь, мы отложим матч на воскресенье.",
+      "usage": {
+        "completion_tokens": 24,
+        "prompt_tokens": 36,
+        "total_tokens": 60,
+        "prompt_tokens_details": {
+          "cached_tokens": 9
+        }
+      },
+      "timings": {
+        "cache_n": 9,
+        "prompt_n": 27,
+        "prompt_ms": 15.837,
+        "prompt_per_token_ms": 0.5865555555555555,
+        "prompt_per_second": 1704.868346277704,
+        "predicted_n": 24,
+        "predicted_ms": 179.312,
+        "predicted_per_token_ms": 7.796173913043479,
+        "predicted_per_second": 128.2680467564915
+      },
+      "accepted_candidate": "Если завтра будет дождь, мы отложим матч на воскресенье."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:14.163Z",
+      "request_sha256": "1c74ac5343482d1902579f6dee4530c51c7dd90683164f2dc300dddcd84b2cea",
+      "example_id": "zh07",
+      "source_sha256": "0416dbc2446379668d2827e5d27df0ec8979c11d3917f7a7ea68fd5719bfc98a",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n小林已经到上海了，但他的行李还在北京。",
+      "elapsed_ms": 262.057499999999,
+      "http_status": 200,
+      "candidate": "Кобаяси уже прибыл в Шанхай, но его багаж все ещё находится в Пекине.",
+      "usage": {
+        "completion_tokens": 32,
+        "prompt_tokens": 35,
+        "total_tokens": 67,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 14.58,
+        "prompt_per_token_ms": 1.215,
+        "prompt_per_second": 823.0452674897119,
+        "predicted_n": 32,
+        "predicted_ms": 243.296,
+        "predicted_per_token_ms": 7.848258064516129,
+        "predicted_per_second": 127.4168091542812
+      },
+      "accepted_candidate": "Кобаяси уже прибыл в Шанхай, но его багаж все ещё находится в Пекине."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:14.425Z",
+      "request_sha256": "d9124a6a82a32c4119c3899f2814ab88f151aa67207fd940441715ba94d6af01",
+      "example_id": "zh08",
+      "source_sha256": "31131207659bb3a2a8129a7ab9da5cc7d75c7f82208acd4045ec1ae5303e2cec",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n别再绕圈子了，有话就直说。",
+      "elapsed_ms": 185.82570000000123,
+      "http_status": 200,
+      "candidate": "Перестаньте кружить в кругах, говорите прямо.",
+      "usage": {
+        "completion_tokens": 21,
+        "prompt_tokens": 36,
+        "total_tokens": 57,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 15.054,
+        "prompt_per_token_ms": 1.158,
+        "prompt_per_second": 863.5578583765111,
+        "predicted_n": 21,
+        "predicted_ms": 166.692,
+        "predicted_per_token_ms": 8.3346,
+        "predicted_per_second": 119.98176277205864
+      },
+      "accepted_candidate": "Перестаньте кружить в кругах, говорите прямо."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:14.631Z",
+      "request_sha256": "4e46e587eff98b2d75f099e9a292ddbac4112bdc4a8ec45676af71e3116df2d7",
+      "example_id": "zh09",
+      "source_sha256": "3afa776c57ffe5a4e1dbab9187ec2b60dd8b95f3e80fc4b209d9ab2f559f2636",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n这件事不能半途而废。",
+      "elapsed_ms": 115.5632000000005,
+      "http_status": 200,
+      "candidate": "Эту работу нельзя откладывать.",
+      "usage": {
+        "completion_tokens": 14,
+        "prompt_tokens": 31,
+        "total_tokens": 45,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 8,
+        "prompt_ms": 13.115,
+        "prompt_per_token_ms": 1.639375,
+        "prompt_per_second": 609.9885627144491,
+        "predicted_n": 14,
+        "predicted_ms": 98.365,
+        "predicted_per_token_ms": 7.566538461538461,
+        "predicted_per_second": 132.16082956336095
+      },
+      "accepted_candidate": "Эту работу нельзя откладывать."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:14.747Z",
+      "request_sha256": "9d7ca32b4c867d7354eda53e8e0b611eefa7e0a63f13e2153d89acde2d8f2769",
+      "example_id": "zh10",
+      "source_sha256": "664a1c5f9a1c90629263fa6d7b6faada86e02073fca376e0b57546270c6cf65d",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n你可真会挑时候，我刚准备睡觉。",
+      "elapsed_ms": 195.84950000000026,
+      "http_status": 200,
+      "candidate": "Какой же ты умный выбирать время – я только собираюсь спать.",
+      "usage": {
+        "completion_tokens": 24,
+        "prompt_tokens": 35,
+        "total_tokens": 59,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 13.071,
+        "prompt_per_token_ms": 1.08925,
+        "prompt_per_second": 918.0628873077807,
+        "predicted_n": 24,
+        "predicted_ms": 178.76,
+        "predicted_per_token_ms": 7.772173913043478,
+        "predicted_per_second": 128.66413067800403
+      },
+      "accepted_candidate": "Какой же ты умный выбирать время – я только собираюсь спать."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:14.944Z",
+      "request_sha256": "76b555a30b08947a24be64c93a7b80b16710d7db2ac203bc33e9e500d4ccb725",
+      "example_id": "zh11",
+      "source_sha256": "e8a392c74540ccd2d1cc8c31f7c3ccbac986ffbd4e0ca56152659da2e62577de",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n没有我的允许，谁也不能打开这个箱子。",
+      "elapsed_ms": 185.5730999999978,
+      "http_status": 200,
+      "candidate": "Без моего разрешения никто не может открыть этот ящик.",
+      "usage": {
+        "completion_tokens": 23,
+        "prompt_tokens": 34,
+        "total_tokens": 57,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 11,
+        "prompt_ms": 12.919,
+        "prompt_per_token_ms": 1.1744545454545454,
+        "prompt_per_second": 851.4590912609334,
+        "predicted_n": 23,
+        "predicted_ms": 168.375,
+        "predicted_per_token_ms": 7.653409090909091,
+        "predicted_per_second": 130.66072754268745
+      },
+      "accepted_candidate": "Без моего разрешения никто не может открыть этот ящик."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:15.131Z",
+      "request_sha256": "7e19884a013bd54137d12f9d4ec068945d0f3a9b695b98b35190b99328ab4461",
+      "example_id": "zh12",
+      "source_sha256": "42df5a0cd2d547bc284a86a66b4fe3fb6788e1a27e7c477a7fc6793ac6d6096e",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n这条路比昨天走的那条近，但不好走。",
+      "elapsed_ms": 276.36569999999847,
+      "http_status": 200,
+      "candidate": "Эта дорога ближе, чем та, по которой шли вчера, но она не очень удобна для прохождения.",
+      "usage": {
+        "completion_tokens": 35,
+        "prompt_tokens": 36,
+        "total_tokens": 71,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 13.99,
+        "prompt_per_token_ms": 1.0761538461538462,
+        "prompt_per_second": 929.2351679771265,
+        "predicted_n": 35,
+        "predicted_ms": 257.948,
+        "predicted_per_token_ms": 7.58670588235294,
+        "predicted_per_second": 131.8095119946656
+      },
+      "accepted_candidate": "Эта дорога ближе, чем та, по которой шли вчера, но она не очень удобна для прохождения."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:15.408Z",
+      "request_sha256": "040263887f1af9859d778b1433f267ce4f2a61873e31aaf06c7009b812421910",
+      "example_id": "zh13",
+      "source_sha256": "2df3317e11281513cbbd212dbb6e10b53780dab3a24bfc1ab56dfe23fc338f90",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n过了第二个路口往左拐，药店就在右手边。",
+      "elapsed_ms": 240.47400000000198,
+      "http_status": 200,
+      "candidate": "После второго перекрестка поверните налево, аптера будет с правой стороны.",
+      "usage": {
+        "completion_tokens": 30,
+        "prompt_tokens": 36,
+        "total_tokens": 66,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 16.529,
+        "prompt_per_token_ms": 1.2714615384615384,
+        "prompt_per_second": 786.4964607659266,
+        "predicted_n": 30,
+        "predicted_ms": 219.697,
+        "predicted_per_token_ms": 7.575758620689656,
+        "predicted_per_second": 131.99998179310597
+      },
+      "accepted_candidate": "После второго перекрестка поверните налево, аптера будет с правой стороны."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:15.650Z",
+      "request_sha256": "652153d2dc1bcc3cf23eadb21c8a3680ca7cd4a2bf13d46e542395db9304c839",
+      "example_id": "zh14",
+      "source_sha256": "14a948ba555888f551c801129fbcb88660bf7d2126c598af2e73e0401f5dc8fc",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n先备份文件，再更新系统。",
+      "elapsed_ms": 209.74549999999726,
+      "http_status": 200,
+      "candidate": "Сначала сделайте резервную копию файлов, а затем обновите систему.",
+      "usage": {
+        "completion_tokens": 26,
+        "prompt_tokens": 32,
+        "total_tokens": 58,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 9,
+        "prompt_ms": 11.724,
+        "prompt_per_token_ms": 1.3026666666666666,
+        "prompt_per_second": 767.6560900716479,
+        "predicted_n": 26,
+        "predicted_ms": 194.062,
+        "predicted_per_token_ms": 7.76248,
+        "predicted_per_second": 128.82480856633447
+      },
+      "accepted_candidate": "Сначала сделайте резервную копию файлов, а затем обновите систему."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:15.860Z",
+      "request_sha256": "56cd7b9c69d90e36923dd002c9d713461921078c84d6d7b0ab11958b8cc5222b",
+      "example_id": "zh15",
+      "source_sha256": "47f0e605e42190fae35dfda31cec539001b7056800638ccf703c6d768389aa53",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n我差点把钥匙忘在车里，幸好你提醒了我。",
+      "elapsed_ms": 234.65820000000167,
+      "http_status": 200,
+      "candidate": "Я чуть не забыла ключи в машине, к счастью, ты напомнил мне.",
+      "usage": {
+        "completion_tokens": 30,
+        "prompt_tokens": 39,
+        "total_tokens": 69,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 16,
+        "prompt_ms": 15.583,
+        "prompt_per_token_ms": 0.9739375,
+        "prompt_per_second": 1026.7599306937047,
+        "predicted_n": 30,
+        "predicted_ms": 214.991,
+        "predicted_per_token_ms": 7.41348275862069,
+        "predicted_per_second": 134.88936746189376
+      },
+      "accepted_candidate": "Я чуть не забыла ключи в машине, к счастью, ты напомнил мне."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:16.096Z",
+      "request_sha256": "7d1f0e08e06835eb7e98f194257d0b6e36992bc06f9b56f8b74cb08db926d960",
+      "example_id": "zh16",
+      "source_sha256": "44330d7691d03682fb47a6d4ca493eb06fd0c94394cf86afe88645d10ba887f4",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n不管结果怎么样，我都会陪着你。",
+      "elapsed_ms": 178.6010000000024,
+      "http_status": 200,
+      "candidate": "Независимо от результата, я буду рядом с тобой.",
+      "usage": {
+        "completion_tokens": 23,
+        "prompt_tokens": 33,
+        "total_tokens": 56,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 13.16,
+        "prompt_per_token_ms": 1.316,
+        "prompt_per_second": 759.8784194528876,
+        "predicted_n": 23,
+        "predicted_ms": 161.114,
+        "predicted_per_token_ms": 7.323363636363637,
+        "predicted_per_second": 136.54927566816042
+      },
+      "accepted_candidate": "Независимо от результата, я буду рядом с тобой."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:16.481Z",
+      "request_sha256": "ba08f7540d6fda82a639b394572ab3a8a8ef63372d19d63cd0436a21737376c4",
+      "example_id": "zh17",
+      "source_sha256": "4a5ed3c2f764f2f0e8a8fe08338253f0a4e74046073adb53bf82a4d69bbd7549",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n不是因为太贵，而是因为我们根本用不上。",
+      "elapsed_ms": 239.27059999999983,
+      "http_status": 200,
+      "candidate": "Не потому что это слишком дорого, а потому что мы вообще не нуждаемся в этом.",
+      "usage": {
+        "completion_tokens": 30,
+        "prompt_tokens": 35,
+        "total_tokens": 65,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 13.482,
+        "prompt_per_token_ms": 1.1235,
+        "prompt_per_second": 890.0756564307967,
+        "predicted_n": 30,
+        "predicted_ms": 221.124,
+        "predicted_per_token_ms": 7.624965517241379,
+        "predicted_per_second": 131.14813407861652
+      },
+      "accepted_candidate": "Не потому что это слишком дорого, а потому что мы вообще не нуждаемся в этом."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:16.721Z",
+      "request_sha256": "b714a0b8d67b350972ac118274bfb85eaeca42703bb0a41ec554bf95eb70f028",
+      "example_id": "zh18",
+      "source_sha256": "dd9eb992e18865131e41633a64b5cd877f26517564ab392d554147baa5be8c42",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n报告最晚周五下午三点交，别等到最后一分钟。",
+      "elapsed_ms": 314.5501000000004,
+      "http_status": 200,
+      "candidate": "Отчет должен быть представлен не позднее пятницы в три часа дня. Не стоит ждать до последней минуты.",
+      "usage": {
+        "completion_tokens": 40,
+        "prompt_tokens": 37,
+        "total_tokens": 77,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 14,
+        "prompt_ms": 14.298,
+        "prompt_per_token_ms": 1.0212857142857144,
+        "prompt_per_second": 979.1579241852007,
+        "predicted_n": 40,
+        "predicted_ms": 296.188,
+        "predicted_per_token_ms": 7.594564102564102,
+        "predicted_per_second": 131.6731265277459
+      },
+      "accepted_candidate": "Отчет должен быть представлен не позднее пятницы в три часа дня. Не стоит ждать до последней минуты."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:17.037Z",
+      "request_sha256": "db09c4012027769a9b1fbbc7a916d34e262d59d4c01678fa1b15c1d11d4617b1",
+      "example_id": "zh19",
+      "source_sha256": "13cfbf69c1e12a69bd5d311ef465cab186b8acd35ae686dcf565d02b2e3e8967",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n你刚才说什么？信号不好，我没听清。",
+      "elapsed_ms": 188.26540000000023,
+      "http_status": 200,
+      "candidate": "Что ты только что сказал? Сигнал плохой, я не расслышал.",
+      "usage": {
+        "completion_tokens": 24,
+        "prompt_tokens": 35,
+        "total_tokens": 59,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 14.601,
+        "prompt_per_token_ms": 1.21675,
+        "prompt_per_second": 821.8615163344975,
+        "predicted_n": 24,
+        "predicted_ms": 169.62,
+        "predicted_per_token_ms": 7.374782608695653,
+        "predicted_per_second": 135.59721730927956
+      },
+      "accepted_candidate": "Что ты только что сказал? Сигнал плохой, я не расслышал."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:58:17.226Z",
+      "request_sha256": "14ff1a9be6261da54a0b7e43e2f1c3aeefaf1970fb486b69df696a9288d2b6a2",
+      "example_id": "zh20",
+      "source_sha256": "d7122a0df5e1ab605f06f686f7ee1b97a0aa4c52e8fa50bcad77e76dbd116c8a",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n只要你提前告诉我，我就能安排时间。",
+      "elapsed_ms": 184.387999999999,
+      "http_status": 200,
+      "candidate": "Если вы скажете мне заранее, я смогу организовать время.",
+      "usage": {
+        "completion_tokens": 22,
+        "prompt_tokens": 33,
+        "total_tokens": 55,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 14.946,
+        "prompt_per_token_ms": 1.4946,
+        "prompt_per_second": 669.0753378830457,
+        "predicted_n": 22,
+        "predicted_ms": 165.322,
+        "predicted_per_token_ms": 7.87247619047619,
+        "predicted_per_second": 127.02483637991314
+      },
+      "accepted_candidate": "Если вы скажете мне заранее, я смогу организовать время."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:23.884Z",
+      "request_sha256": "1c0e5965e1c50c838ba81e29ce9c1d04cc8704b7446d243ad581bbf0986773c7",
+      "example_id": "zh01",
+      "source_sha256": "e6e3cc777ddab8c3ce7b36e7f9483c15e92a1b1bcd0d2884902305f1a66d24df",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n别担心，我马上回来。",
+      "elapsed_ms": 370.5867000000035,
+      "http_status": 200,
+      "candidate": "Не волнуйтесь, я скоро вернусь.",
+      "usage": {
+        "completion_tokens": 17,
+        "prompt_tokens": 31,
+        "total_tokens": 48,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 8,
+        "prompt_ms": 231.164,
+        "prompt_per_token_ms": 28.8955,
+        "prompt_per_second": 34.60746483016387,
+        "predicted_n": 17,
+        "predicted_ms": 134.678,
+        "predicted_per_token_ms": 8.417375,
+        "predicted_per_second": 118.80188300984571
+      },
+      "accepted_candidate": "Не волнуйтесь, я скоро вернусь."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:24.256Z",
+      "request_sha256": "73d9b2ee3660a27b33faa5719931cbe9e787daaff1117becb8cce406a5b88f18",
+      "example_id": "zh02",
+      "source_sha256": "5e9628ce66418291c9f41261f92a9acb32010f2d2ba5114ba600ccba9025396d",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n请把门关上，外面太吵了。",
+      "elapsed_ms": 177.67510000000038,
+      "http_status": 200,
+      "candidate": "Закройте дверь, снаружи слишком шумно.",
+      "usage": {
+        "completion_tokens": 21,
+        "prompt_tokens": 33,
+        "total_tokens": 54,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 16.432,
+        "prompt_per_token_ms": 1.6431999999999998,
+        "prompt_per_second": 608.5686465433301,
+        "predicted_n": 21,
+        "predicted_ms": 157.191,
+        "predicted_per_token_ms": 7.8595500000000005,
+        "predicted_per_second": 127.23374747918137
+      },
+      "accepted_candidate": "Закройте дверь, снаружи слишком шумно."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:24.434Z",
+      "request_sha256": "c941935175b7102d201e8a53e01f7b8510d02ce07cfc153f52e60bdc17a5ee7e",
+      "example_id": "zh03",
+      "source_sha256": "83d9ae57254fec418c7901c99107844b63c925acf5529c8ba98808d8334f1540",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n我不是不相信你，我只是需要一点时间。",
+      "elapsed_ms": 154.22520000000077,
+      "http_status": 200,
+      "candidate": "Я не не верю вам, я просто нужно немного времени.",
+      "usage": {
+        "completion_tokens": 19,
+        "prompt_tokens": 33,
+        "total_tokens": 52,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 14.56,
+        "prompt_per_token_ms": 1.456,
+        "prompt_per_second": 686.8131868131868,
+        "predicted_n": 19,
+        "predicted_ms": 135.407,
+        "predicted_per_token_ms": 7.522611111111112,
+        "predicted_per_second": 132.93256626319172
+      },
+      "accepted_candidate": "Я не не верю вам, я просто нужно немного времени."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:24.590Z",
+      "request_sha256": "147961451f02efbe03474944fefcf3fdb7ce7ed81115dff64292ffb3651263ec",
+      "example_id": "zh04",
+      "source_sha256": "16903df9f13e07189931fb0fb1ddb2fbac4ca019dff29ad2bb3c3c5934ca6d85",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n火车晚上八点半出发，我们还有十五分钟。",
+      "elapsed_ms": 257.0112000000008,
+      "http_status": 200,
+      "candidate": "Поезд отправляется в 8:30 вечера, у нас остается пятнадцать минут.",
+      "usage": {
+        "completion_tokens": 33,
+        "prompt_tokens": 35,
+        "total_tokens": 68,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 14.423,
+        "prompt_per_token_ms": 1.2019166666666667,
+        "prompt_per_second": 832.0044373569992,
+        "predicted_n": 33,
+        "predicted_ms": 237.918,
+        "predicted_per_token_ms": 7.4349375,
+        "predicted_per_second": 134.50012189073547
+      },
+      "accepted_candidate": "Поезд отправляется в 8:30 вечера, у нас остается пятнадцать минут."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:24.848Z",
+      "request_sha256": "9ef04e9f9537826c5f3e41d26654366751fde7db6b92db5dbf39a1cd6b102b2d",
+      "example_id": "zh05",
+      "source_sha256": "fe414cdcef9a030efe848c24562766ad19a17a97a801f7e62ea291cec10d7dd9",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这瓶水__AURALIS_MONEY_0__，两瓶一共__AURALIS_MONEY_1__。",
+      "elapsed_ms": 313.9930000000022,
+      "http_status": 200,
+      "candidate": "Эта бутылка воды __AURALIS_MONEY_0__, две бутылки вместе __AURALIS_MONEY_1__.",
+      "usage": {
+        "completion_tokens": 38,
+        "prompt_tokens": 77,
+        "total_tokens": 115,
+        "prompt_tokens_details": {
+          "cached_tokens": 9
+        }
+      },
+      "timings": {
+        "cache_n": 9,
+        "prompt_n": 68,
+        "prompt_ms": 21.626,
+        "prompt_per_token_ms": 0.3180294117647059,
+        "prompt_per_second": 3144.363266438546,
+        "predicted_n": 38,
+        "predicted_ms": 287.909,
+        "predicted_per_token_ms": 7.781324324324324,
+        "predicted_per_second": 128.51282870629262
+      },
+      "accepted_candidate": "Эта бутылка воды 3,5 юаня, две бутылки вместе 7 юаней."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:25.163Z",
+      "request_sha256": "d3fca0195aaa9b2193db8be06bc9d42ff2f63cd14bda5e0e86714770c9f0329e",
+      "example_id": "zh06",
+      "source_sha256": "4fa3ad88892684c6b45b83b6e5e590d5701be404bf2f52b6210e86871a2a7f34",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n如果明天下雨，我们就把比赛推迟到周日。",
+      "elapsed_ms": 198.62710000000152,
+      "http_status": 200,
+      "candidate": "Если завтра будет дождь, мы отложим матч на воскресенье.",
+      "usage": {
+        "completion_tokens": 24,
+        "prompt_tokens": 36,
+        "total_tokens": 60,
+        "prompt_tokens_details": {
+          "cached_tokens": 9
+        }
+      },
+      "timings": {
+        "cache_n": 9,
+        "prompt_n": 27,
+        "prompt_ms": 17.024,
+        "prompt_per_token_ms": 0.6305185185185186,
+        "prompt_per_second": 1585.9962406015036,
+        "predicted_n": 24,
+        "predicted_ms": 177.387,
+        "predicted_per_token_ms": 7.712478260869565,
+        "predicted_per_second": 129.66000890707886
+      },
+      "accepted_candidate": "Если завтра будет дождь, мы отложим матч на воскресенье."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:25.363Z",
+      "request_sha256": "1c74ac5343482d1902579f6dee4530c51c7dd90683164f2dc300dddcd84b2cea",
+      "example_id": "zh07",
+      "source_sha256": "0416dbc2446379668d2827e5d27df0ec8979c11d3917f7a7ea68fd5719bfc98a",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n小林已经到上海了，但他的行李还在北京。",
+      "elapsed_ms": 248.14220000000205,
+      "http_status": 200,
+      "candidate": "Кобаяси уже прибыл в Шанхай, но его багаж все еще находится в Пекине.",
+      "usage": {
+        "completion_tokens": 30,
+        "prompt_tokens": 35,
+        "total_tokens": 65,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 13.236,
+        "prompt_per_token_ms": 1.103,
+        "prompt_per_second": 906.6183136899365,
+        "predicted_n": 30,
+        "predicted_ms": 230.64,
+        "predicted_per_token_ms": 7.953103448275861,
+        "predicted_per_second": 125.73707943114812
+      },
+      "accepted_candidate": "Кобаяси уже прибыл в Шанхай, но его багаж все еще находится в Пекине."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:25.612Z",
+      "request_sha256": "d9124a6a82a32c4119c3899f2814ab88f151aa67207fd940441715ba94d6af01",
+      "example_id": "zh08",
+      "source_sha256": "31131207659bb3a2a8129a7ab9da5cc7d75c7f82208acd4045ec1ae5303e2cec",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n别再绕圈子了，有话就直说。",
+      "elapsed_ms": 220.57300000000396,
+      "http_status": 200,
+      "candidate": "Перестаньте кружить в кругах, скажите прямо, что хотите.",
+      "usage": {
+        "completion_tokens": 27,
+        "prompt_tokens": 36,
+        "total_tokens": 63,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 15.173,
+        "prompt_per_token_ms": 1.1671538461538462,
+        "prompt_per_second": 856.7850787583207,
+        "predicted_n": 27,
+        "predicted_ms": 200.977,
+        "predicted_per_token_ms": 7.7298846153846155,
+        "predicted_per_second": 129.36803713857805
+      },
+      "accepted_candidate": "Перестаньте кружить в кругах, скажите прямо, что хотите."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:25.852Z",
+      "request_sha256": "4e46e587eff98b2d75f099e9a292ddbac4112bdc4a8ec45676af71e3116df2d7",
+      "example_id": "zh09",
+      "source_sha256": "3afa776c57ffe5a4e1dbab9187ec2b60dd8b95f3e80fc4b209d9ab2f559f2636",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n这件事不能半途而废。",
+      "elapsed_ms": 119.51490000000194,
+      "http_status": 200,
+      "candidate": "Эту работу нельзя откладывать.",
+      "usage": {
+        "completion_tokens": 14,
+        "prompt_tokens": 31,
+        "total_tokens": 45,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 8,
+        "prompt_ms": 15.943,
+        "prompt_per_token_ms": 1.992875,
+        "prompt_per_second": 501.78761839051623,
+        "predicted_n": 14,
+        "predicted_ms": 99.38,
+        "predicted_per_token_ms": 7.644615384615384,
+        "predicted_per_second": 130.8110283759308
+      },
+      "accepted_candidate": "Эту работу нельзя откладывать."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:25.972Z",
+      "request_sha256": "9d7ca32b4c867d7354eda53e8e0b611eefa7e0a63f13e2153d89acde2d8f2769",
+      "example_id": "zh10",
+      "source_sha256": "664a1c5f9a1c90629263fa6d7b6faada86e02073fca376e0b57546270c6cf65d",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n你可真会挑时候，我刚准备睡觉。",
+      "elapsed_ms": 204.97580000000016,
+      "http_status": 200,
+      "candidate": "Ты действительно выбираешь подходящий момент – я только собирался спать.",
+      "usage": {
+        "completion_tokens": 26,
+        "prompt_tokens": 35,
+        "total_tokens": 61,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 15.333,
+        "prompt_per_token_ms": 1.27775,
+        "prompt_per_second": 782.6257092545491,
+        "predicted_n": 26,
+        "predicted_ms": 185.641,
+        "predicted_per_token_ms": 7.42564,
+        "predicted_per_second": 134.6685268879181
+      },
+      "accepted_candidate": "Ты действительно выбираешь подходящий момент – я только собирался спать."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:26.178Z",
+      "request_sha256": "76b555a30b08947a24be64c93a7b80b16710d7db2ac203bc33e9e500d4ccb725",
+      "example_id": "zh11",
+      "source_sha256": "e8a392c74540ccd2d1cc8c31f7c3ccbac986ffbd4e0ca56152659da2e62577de",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n没有我的允许，谁也不能打开这个箱子。",
+      "elapsed_ms": 194.59640000000218,
+      "http_status": 200,
+      "candidate": "Без моего разрешения никто не может открыть этот ящик.",
+      "usage": {
+        "completion_tokens": 23,
+        "prompt_tokens": 34,
+        "total_tokens": 57,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 11,
+        "prompt_ms": 16.33,
+        "prompt_per_token_ms": 1.4845454545454544,
+        "prompt_per_second": 673.6068585425597,
+        "predicted_n": 23,
+        "predicted_ms": 172.446,
+        "predicted_per_token_ms": 7.838454545454545,
+        "predicted_per_second": 127.57616877167345
+      },
+      "accepted_candidate": "Без моего разрешения никто не может открыть этот ящик."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:26.374Z",
+      "request_sha256": "7e19884a013bd54137d12f9d4ec068945d0f3a9b695b98b35190b99328ab4461",
+      "example_id": "zh12",
+      "source_sha256": "42df5a0cd2d547bc284a86a66b4fe3fb6788e1a27e7c477a7fc6793ac6d6096e",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n这条路比昨天走的那条近，但不好走。",
+      "elapsed_ms": 282.4830000000002,
+      "http_status": 200,
+      "candidate": "Эта дорога ближе, чем та, по которой шли вчера, но она не очень удобная для прохождения.",
+      "usage": {
+        "completion_tokens": 35,
+        "prompt_tokens": 36,
+        "total_tokens": 71,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 17.593,
+        "prompt_per_token_ms": 1.3533076923076923,
+        "prompt_per_second": 738.9302563519582,
+        "predicted_n": 35,
+        "predicted_ms": 260.759,
+        "predicted_per_token_ms": 7.669382352941177,
+        "predicted_per_second": 130.3885963667601
+      },
+      "accepted_candidate": "Эта дорога ближе, чем та, по которой шли вчера, но она не очень удобная для прохождения."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:26.657Z",
+      "request_sha256": "040263887f1af9859d778b1433f267ce4f2a61873e31aaf06c7009b812421910",
+      "example_id": "zh13",
+      "source_sha256": "2df3317e11281513cbbd212dbb6e10b53780dab3a24bfc1ab56dfe23fc338f90",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n过了第二个路口往左拐，药店就在右手边。",
+      "elapsed_ms": 262.0858999999982,
+      "http_status": 200,
+      "candidate": "Пройдя второй перекресток, поверните налево — аптека будет справа.",
+      "usage": {
+        "completion_tokens": 30,
+        "prompt_tokens": 36,
+        "total_tokens": 66,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 13,
+        "prompt_ms": 16.078,
+        "prompt_per_token_ms": 1.2367692307692306,
+        "prompt_per_second": 808.558278392835,
+        "predicted_n": 30,
+        "predicted_ms": 241.615,
+        "predicted_per_token_ms": 8.331551724137931,
+        "predicted_per_second": 120.02566065848562
+      },
+      "accepted_candidate": "Пройдя второй перекресток, поверните налево — аптека будет справа."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:26.920Z",
+      "request_sha256": "652153d2dc1bcc3cf23eadb21c8a3680ca7cd4a2bf13d46e542395db9304c839",
+      "example_id": "zh14",
+      "source_sha256": "14a948ba555888f551c801129fbcb88660bf7d2126c598af2e73e0401f5dc8fc",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n先备份文件，再更新系统。",
+      "elapsed_ms": 226.0054999999993,
+      "http_status": 200,
+      "candidate": "Сначала сделайте резервную копию файлов, а затем обновите систему.",
+      "usage": {
+        "completion_tokens": 26,
+        "prompt_tokens": 32,
+        "total_tokens": 58,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 9,
+        "prompt_ms": 16.282,
+        "prompt_per_token_ms": 1.8091111111111111,
+        "prompt_per_second": 552.7576464807763,
+        "predicted_n": 26,
+        "predicted_ms": 205.498,
+        "predicted_per_token_ms": 8.21992,
+        "predicted_per_second": 121.6556852134814
+      },
+      "accepted_candidate": "Сначала сделайте резервную копию файлов, а затем обновите систему."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:27.147Z",
+      "request_sha256": "56cd7b9c69d90e36923dd002c9d713461921078c84d6d7b0ab11958b8cc5222b",
+      "example_id": "zh15",
+      "source_sha256": "47f0e605e42190fae35dfda31cec539001b7056800638ccf703c6d768389aa53",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n我差点把钥匙忘在车里，幸好你提醒了我。",
+      "elapsed_ms": 243.83600000000297,
+      "http_status": 200,
+      "candidate": "Я чуть не забыла ключи в машине, к счастью, ты напомнила мне.",
+      "usage": {
+        "completion_tokens": 30,
+        "prompt_tokens": 39,
+        "total_tokens": 69,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 16,
+        "prompt_ms": 11.849,
+        "prompt_per_token_ms": 0.7405625,
+        "prompt_per_second": 1350.3249219343404,
+        "predicted_n": 30,
+        "predicted_ms": 227.582,
+        "predicted_per_token_ms": 7.847655172413793,
+        "predicted_per_second": 127.42659788559727
+      },
+      "accepted_candidate": "Я чуть не забыла ключи в машине, к счастью, ты напомнила мне."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:27.392Z",
+      "request_sha256": "7d1f0e08e06835eb7e98f194257d0b6e36992bc06f9b56f8b74cb08db926d960",
+      "example_id": "zh16",
+      "source_sha256": "44330d7691d03682fb47a6d4ca493eb06fd0c94394cf86afe88645d10ba887f4",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n不管结果怎么样，我都会陪着你。",
+      "elapsed_ms": 182.01490000000194,
+      "http_status": 200,
+      "candidate": "Независимо от результата, я буду рядом с вами.",
+      "usage": {
+        "completion_tokens": 22,
+        "prompt_tokens": 33,
+        "total_tokens": 55,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 13.951,
+        "prompt_per_token_ms": 1.3951,
+        "prompt_per_second": 716.7944950182782,
+        "predicted_n": 22,
+        "predicted_ms": 163.898,
+        "predicted_per_token_ms": 7.804666666666667,
+        "predicted_per_second": 128.12847014606646
+      },
+      "accepted_candidate": "Независимо от результата, я буду рядом с вами."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:27.785Z",
+      "request_sha256": "ba08f7540d6fda82a639b394572ab3a8a8ef63372d19d63cd0436a21737376c4",
+      "example_id": "zh17",
+      "source_sha256": "4a5ed3c2f764f2f0e8a8fe08338253f0a4e74046073adb53bf82a4d69bbd7549",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n不是因为太贵，而是因为我们根本用不上。",
+      "elapsed_ms": 251.65060000000085,
+      "http_status": 200,
+      "candidate": "Не потому что это слишком дорого, а потому что мы вообще не нуждаемся в этом.",
+      "usage": {
+        "completion_tokens": 30,
+        "prompt_tokens": 35,
+        "total_tokens": 65,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 16.183,
+        "prompt_per_token_ms": 1.3485833333333332,
+        "prompt_per_second": 741.5188778347649,
+        "predicted_n": 30,
+        "predicted_ms": 231.103,
+        "predicted_per_token_ms": 7.969068965517241,
+        "predicted_per_second": 125.485173277716
+      },
+      "accepted_candidate": "Не потому что это слишком дорого, а потому что мы вообще не нуждаемся в этом."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:28.038Z",
+      "request_sha256": "b714a0b8d67b350972ac118274bfb85eaeca42703bb0a41ec554bf95eb70f028",
+      "example_id": "zh18",
+      "source_sha256": "dd9eb992e18865131e41633a64b5cd877f26517564ab392d554147baa5be8c42",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n报告最晚周五下午三点交，别等到最后一分钟。",
+      "elapsed_ms": 290.75049999999464,
+      "http_status": 200,
+      "candidate": "Отчет следует подать не позднее пятницы в три часа дня, не ждать до последнего момента.",
+      "usage": {
+        "completion_tokens": 36,
+        "prompt_tokens": 37,
+        "total_tokens": 73,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 14,
+        "prompt_ms": 15.643,
+        "prompt_per_token_ms": 1.117357142857143,
+        "prompt_per_second": 894.968995716934,
+        "predicted_n": 36,
+        "predicted_ms": 271.102,
+        "predicted_per_token_ms": 7.745771428571428,
+        "predicted_per_second": 129.10269935301105
+      },
+      "accepted_candidate": "Отчет следует подать не позднее пятницы в три часа дня, не ждать до последнего момента."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:28.330Z",
+      "request_sha256": "db09c4012027769a9b1fbbc7a916d34e262d59d4c01678fa1b15c1d11d4617b1",
+      "example_id": "zh19",
+      "source_sha256": "13cfbf69c1e12a69bd5d311ef465cab186b8acd35ae686dcf565d02b2e3e8967",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n你刚才说什么？信号不好，我没听清。",
+      "elapsed_ms": 198.16449999999895,
+      "http_status": 200,
+      "candidate": "Что вы только что сказали? Сигнал плохой, я не расслышал.",
+      "usage": {
+        "completion_tokens": 24,
+        "prompt_tokens": 35,
+        "total_tokens": 59,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 12,
+        "prompt_ms": 14.132,
+        "prompt_per_token_ms": 1.1776666666666666,
+        "prompt_per_second": 849.1367110104727,
+        "predicted_n": 24,
+        "predicted_ms": 179.677,
+        "predicted_per_token_ms": 7.812043478260869,
+        "predicted_per_second": 128.00748008927133
+      },
+      "accepted_candidate": "Что вы только что сказали? Сигнал плохой, я не расслышал."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:58:28.529Z",
+      "request_sha256": "14ff1a9be6261da54a0b7e43e2f1c3aeefaf1970fb486b69df696a9288d2b6a2",
+      "example_id": "zh20",
+      "source_sha256": "d7122a0df5e1ab605f06f686f7ee1b97a0aa4c52e8fa50bcad77e76dbd116c8a",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n只要你提前告诉我，我就能安排时间。",
+      "elapsed_ms": 189.762999999999,
+      "http_status": 200,
+      "candidate": "Если вы скажете мне заранее, я смогу организовать время.",
+      "usage": {
+        "completion_tokens": 22,
+        "prompt_tokens": 33,
+        "total_tokens": 55,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 10,
+        "prompt_ms": 16.087,
+        "prompt_per_token_ms": 1.6087,
+        "prompt_per_second": 621.6199415677255,
+        "predicted_n": 22,
+        "predicted_ms": 167.568,
+        "predicted_per_token_ms": 7.979428571428572,
+        "predicted_per_second": 125.32225723288455
+      },
+      "accepted_candidate": "Если вы скажете мне заранее, я смогу организовать время."
+    }
+  ],
+  "resource_samples": [
+    {
+      "gpu": "3769, 16",
+      "time": "2026-09-27T19:57:55.5361665Z",
+      "working_set_bytes": 1513828352,
+      "cpu_seconds": 1.609375
+    },
+    {
+      "gpu": "3775, 17",
+      "time": "2026-09-27T19:57:56.6736074Z",
+      "working_set_bytes": 1513914368,
+      "cpu_seconds": 1.609375
+    },
+    {
+      "gpu": "3765, 14",
+      "time": "2026-09-27T19:57:57.7566989Z",
+      "working_set_bytes": 1513914368,
+      "cpu_seconds": 1.609375
+    },
+    {
+      "gpu": "3769, 14",
+      "time": "2026-09-27T19:57:58.8352682Z",
+      "working_set_bytes": 1513914368,
+      "cpu_seconds": 1.609375
+    },
+    {
+      "gpu": "3774, 13",
+      "time": "2026-09-27T19:57:59.9228424Z",
+      "working_set_bytes": 1513914368,
+      "cpu_seconds": 1.609375
+    },
+    {
+      "gpu": "3774, 36",
+      "time": "2026-09-27T19:58:01.0011084Z",
+      "working_set_bytes": 1513914368,
+      "cpu_seconds": 1.609375
+    },
+    {
+      "gpu": "3769, 88",
+      "time": "2026-09-27T19:58:02.0820821Z",
+      "working_set_bytes": 1535393792,
+      "cpu_seconds": 2.25
+    },
+    {
+      "gpu": "3817, 81",
+      "time": "2026-09-27T19:58:03.1684404Z",
+      "working_set_bytes": 1535647744,
+      "cpu_seconds": 3.28125
+    },
+    {
+      "gpu": "3820, 83",
+      "time": "2026-09-27T19:58:04.2487610Z",
+      "working_set_bytes": 1539493888,
+      "cpu_seconds": 4.328125
+    },
+    {
+      "gpu": "3815, 64",
+      "time": "2026-09-27T19:58:05.3354452Z",
+      "working_set_bytes": 1539497984,
+      "cpu_seconds": 5.359375
+    },
+    {
+      "gpu": "3783, 29",
+      "time": "2026-09-27T19:58:06.4168731Z",
+      "working_set_bytes": 1539514368,
+      "cpu_seconds": 6.03125
+    },
+    {
+      "gpu": "3805, 13",
+      "time": "2026-09-27T19:58:07.4934187Z",
+      "working_set_bytes": 1539514368,
+      "cpu_seconds": 6.046875
+    },
+    {
+      "gpu": "3812, 26",
+      "time": "2026-09-27T19:58:08.5723306Z",
+      "working_set_bytes": 1539514368,
+      "cpu_seconds": 6.046875
+    },
+    {
+      "gpu": "3814, 27",
+      "time": "2026-09-27T19:58:09.6530305Z",
+      "working_set_bytes": 1539514368,
+      "cpu_seconds": 6.046875
+    },
+    {
+      "gpu": "3819, 25",
+      "time": "2026-09-27T19:58:10.7322890Z",
+      "working_set_bytes": 1539514368,
+      "cpu_seconds": 6.046875
+    },
+    {
+      "gpu": "3819, 25",
+      "time": "2026-09-27T19:58:11.8056146Z",
+      "working_set_bytes": 1539514368,
+      "cpu_seconds": 6.046875
+    },
+    {
+      "gpu": "3818, 40",
+      "time": "2026-09-27T19:58:12.8845896Z",
+      "working_set_bytes": 1538084864,
+      "cpu_seconds": 6.21875
+    },
+    {
+      "gpu": "3792, 83",
+      "time": "2026-09-27T19:58:13.9615018Z",
+      "working_set_bytes": 1539534848,
+      "cpu_seconds": 7.3125
+    },
+    {
+      "gpu": "3815, 88",
+      "time": "2026-09-27T19:58:15.0391886Z",
+      "working_set_bytes": 1539534848,
+      "cpu_seconds": 8.359375
+    },
+    {
+      "gpu": "3816, 87",
+      "time": "2026-09-27T19:58:16.1181806Z",
+      "working_set_bytes": 1539547136,
+      "cpu_seconds": 9.421875
+    },
+    {
+      "gpu": "3815, 80",
+      "time": "2026-09-27T19:58:17.2059166Z",
+      "working_set_bytes": 1539547136,
+      "cpu_seconds": 10.296875
+    },
+    {
+      "gpu": "3786, 15",
+      "time": "2026-09-27T19:58:18.2926803Z",
+      "working_set_bytes": 1539547136,
+      "cpu_seconds": 10.5
+    },
+    {
+      "gpu": "3813, 16",
+      "time": "2026-09-27T19:58:19.3731088Z",
+      "working_set_bytes": 1539547136,
+      "cpu_seconds": 10.5
+    },
+    {
+      "gpu": "3813, 24",
+      "time": "2026-09-27T19:58:20.4465649Z",
+      "working_set_bytes": 1539547136,
+      "cpu_seconds": 10.5
+    },
+    {
+      "gpu": "3814, 28",
+      "time": "2026-09-27T19:58:21.5266857Z",
+      "working_set_bytes": 1539547136,
+      "cpu_seconds": 10.5
+    },
+    {
+      "gpu": "3816, 30",
+      "time": "2026-09-27T19:58:22.6035549Z",
+      "working_set_bytes": 1539547136,
+      "cpu_seconds": 10.5
+    },
+    {
+      "gpu": "3858, 31",
+      "time": "2026-09-27T19:58:23.6730475Z",
+      "working_set_bytes": 1539547136,
+      "cpu_seconds": 10.5
+    },
+    {
+      "gpu": "3853, 87",
+      "time": "2026-09-27T19:58:24.7584987Z",
+      "working_set_bytes": 1539567616,
+      "cpu_seconds": 11.34375
+    },
+    {
+      "gpu": "3830, 86",
+      "time": "2026-09-27T19:58:25.8438018Z",
+      "working_set_bytes": 1539571712,
+      "cpu_seconds": 12.421875
+    },
+    {
+      "gpu": "3858, 86",
+      "time": "2026-09-27T19:58:26.9187793Z",
+      "working_set_bytes": 1539571712,
+      "cpu_seconds": 13.5
+    },
+    {
+      "gpu": "3857, 77",
+      "time": "2026-09-27T19:58:27.9993239Z",
+      "working_set_bytes": 1539571712,
+      "cpu_seconds": 14.359375
+    },
+    {
+      "gpu": "2434, 77",
+      "time": "2026-09-27T19:58:29.0878403Z",
+      "working_set_bytes": 1539571712,
+      "cpu_seconds": 15.125
+    }
+  ],
+  "resource_sampling_error": null,
+  "finished_at": "2026-09-27T19:58:29.391Z"
+}

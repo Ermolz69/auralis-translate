@@ -8,6 +8,9 @@ on:
       - .github/workflows/pages.yml
       - eval/scripts/check-public-demo-site.mjs
       - eval/reports/public-demo-2026-09-27.json
+      - eval/reports/public-demo-fidelity-2026-09-27.json
+      - eval/reports/currency-controls-2026-09-27.json
+      - eval/scripts/currency-report-section.mjs
   workflow_dispatch:
 
 permissions:

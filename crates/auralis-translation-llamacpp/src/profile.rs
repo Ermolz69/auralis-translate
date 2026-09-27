@@ -99,7 +99,7 @@ impl ModelProfile {
                 "runtime identity fields are incomplete",
             ));
         }
-        if !matches!(self.prompt_version, 1..=3) {
+        if !matches!(self.prompt_version, 1..=4) {
             return Err(ProfileError::Invalid("unsupported prompt version"));
         }
         if !(1..=MAX_TARGET_SEGMENTS).contains(&self.target_segments_per_block)
@@ -112,7 +112,7 @@ impl ModelProfile {
         {
             return Err(ProfileError::Invalid("block or context limits are invalid"));
         }
-        if (self.prompt_version == 1
+        if (matches!(self.prompt_version, 1 | 4)
             && (self.context_before_segments != 0
                 || self.context_after_segments != 0
                 || self.max_context_bytes != 0))

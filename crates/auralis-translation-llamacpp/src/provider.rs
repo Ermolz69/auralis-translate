@@ -6,11 +6,12 @@ use crate::{
     local_http::LocalHttp,
 };
 use auralis_translation::{
-    ProviderError, ProviderResponse, RunControl, RunId, TargetSegment, TranslationBatch,
-    TranslationProvider,
+    LanguageCode, ProviderError, ProviderResponse, RunControl, RunId, TargetSegment,
+    TranslationBatch, TranslationProvider,
 };
 use reqwest::Url;
 use serde_json::json;
+use sha2::{Digest, Sha256};
 use std::time::Duration;
 
 const CHAT_PATH: &str = "/v1/chat/completions";
@@ -96,6 +97,7 @@ impl LlamaCppProvider {
     fn translate_line(
         &self,
         prompt_text: String,
+        source: &str,
         control: Option<(&dyn RunControl, RunId)>,
     ) -> Result<String, ProviderError> {
         let request = json!({
@@ -112,6 +114,10 @@ impl LlamaCppProvider {
             .http
             .client()
             .post(self.endpoint.clone())
+            .header(
+                "x-auralis-source-sha256",
+                format!("{:x}", Sha256::digest(source.as_bytes())),
+            )
             .json(&request);
         let check = || match control {
             Some((control, run_id)) => match control.pause_requested(run_id) {
@@ -131,7 +137,14 @@ impl LlamaCppProvider {
         batch: &TranslationBatch,
         control: Option<(&dyn RunControl, RunId)>,
     ) -> Result<ProviderResponse, ProviderError> {
-        if self.profile.prompt_version == 1 && !batch.context().is_empty() {
+        if self.profile.prompt_version == 4
+            && batch.language_pair().source() != LanguageCode::Chinese
+        {
+            return Err(ProviderError(
+                "Chinese fidelity profile requires Chinese source".into(),
+            ));
+        }
+        if matches!(self.profile.prompt_version, 1 | 4) && !batch.context().is_empty() {
             return Err(ProviderError(
                 "experimental profile has no context support".into(),
             ));
@@ -172,6 +185,15 @@ impl LlamaCppProvider {
                 .collect::<Vec<_>>();
             let mut lines = Vec::with_capacity(segment.lines().len());
             for (line_index, source_line) in segment.lines().iter().enumerate() {
+                if self.profile.prompt_version == 4 {
+                    let prepared = crate::chinese_fidelity_prompt::ChineseFidelityPrompt::prepare(
+                        source_line,
+                    )?;
+                    let candidate =
+                        self.translate_line(prepared.text.clone(), source_line, control)?;
+                    lines.push(prepared.restore(&candidate)?);
+                    continue;
+                }
                 let prompt_text = match self.profile.prompt_version {
                     1 => prompt::translate_line(source_line),
                     2 => prompt::translate_line_with_context(segment, line_index, batch.context()),
@@ -183,7 +205,7 @@ impl LlamaCppProvider {
                     ),
                     _ => return Err(ProviderError("unsupported prompt version".into())),
                 };
-                lines.push(self.translate_line(prompt_text, control)?);
+                lines.push(self.translate_line(prompt_text, source_line, control)?);
             }
             translations.push(TargetSegment {
                 id: segment.id(),

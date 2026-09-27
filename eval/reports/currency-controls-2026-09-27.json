@@ -1,0 +1,2421 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-09-27T19:57:20.503Z",
+  "revision": "471417f51840af01e6e596e9533d1ec0728e03c3",
+  "dataset_sha256": "002b087be09ed90e08350a32f86cc6e277f388ac1cc6bd9ca41fe7e23bb6c3f6",
+  "source_sha256": "38bfa2f1fae908c006aa0182f89cd44d77fd3665d3e298c7f44adaae4b7483d1",
+  "profile_sha256": "bdf893e8607dfceb9d4e97c31cf417c91b153d05ac1bb32ae6a7a814c163ff23",
+  "cli_sha256": "6c59d9b14d0e441813b7d7ecc0837ff028ba09ce26760518aa08188cec206601",
+  "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "profile": {
+    "schema_version": 1,
+    "model_repo": "tencent/Hy-MT2-1.8B-GGUF",
+    "model_revision": "a0c709d9fac510f2c807aa3af52872340dc37a4a",
+    "model_file_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+    "model_file_bytes": 1133080448,
+    "model_alias": "auralis-hy-mt2-1.8b-q4",
+    "runtime_build_info": "b10977-0ecb159c9",
+    "min_context_tokens": 2048,
+    "prompt_version": 4,
+    "temperature": 0.7,
+    "top_p": 0.6,
+    "top_k": 20,
+    "repeat_penalty": 1.05,
+    "max_tokens_per_line": 256,
+    "max_response_bytes": 1048576,
+    "timeout_seconds": 120
+  },
+  "repetitions_planned": 3,
+  "runs": [
+    {
+      "repetition": 1,
+      "run_id": "b2ec5d23-2c37-4e2f-871c-a5c8935a666f",
+      "translation_elapsed_ms": 9435.7356,
+      "request_elapsed_sum_ms": 3116.573599999998,
+      "output_sha256": "d46a3ba04f3b338cf81992b2e363a3f967b7116348009a7e3b1375855b71ef6d",
+      "status": {
+        "schema_version": 3,
+        "translation_id": "27ead1b8-580a-454c-b5ce-579013f9fb73",
+        "run_id": "b2ec5d23-2c37-4e2f-871c-a5c8935a666f",
+        "source_sha256": "38bfa2f1fae908c006aa0182f89cd44d77fd3665d3e298c7f44adaae4b7483d1",
+        "state": "validated",
+        "pause_requested": false,
+        "completed_blocks": 3,
+        "total_blocks": 3,
+        "warning_count": 0,
+        "selected_result_id": "4c60db86-e8b2-4f63-8018-ee0cb4426bd9",
+        "review_state": "needs_review"
+      },
+      "structural_checks": "passed",
+      "rows": [
+        {
+          "example_id": "c01",
+          "candidate": "Эта бутылка воды 3,5 юаня, две бутылки вместе 7 юаней."
+        },
+        {
+          "example_id": "c02",
+          "candidate": "Эта чашка чая 5 юаней."
+        },
+        {
+          "example_id": "c03",
+          "candidate": "Всего 12,8 юаня."
+        },
+        {
+          "example_id": "c04",
+          "candidate": "Ищу тебя 0,2 юаня."
+        },
+        {
+          "example_id": "c05",
+          "candidate": "Каждая билетка 35 юаней."
+        },
+        {
+          "example_id": "c06",
+          "candidate": "Эта книга 19,9 юаня."
+        },
+        {
+          "example_id": "c07",
+          "candidate": "Невеликая сумма — 0,5 юаня."
+        },
+        {
+          "example_id": "c08",
+          "candidate": "Цена составляет 2,53 юаня."
+        },
+        {
+          "example_id": "c09",
+          "candidate": "Платил 300 юаней, осталось 20 юаней."
+        },
+        {
+          "example_id": "c10",
+          "candidate": "Эта одежда 120,5 юаня."
+        },
+        {
+          "example_id": "c11",
+          "candidate": "Эта бутылка воды 5 долларов."
+        },
+        {
+          "example_id": "c12",
+          "candidate": "Билеты 10 евро."
+        },
+        {
+          "example_id": "c13",
+          "candidate": "Эта книга 200 иен."
+        },
+        {
+          "example_id": "c14",
+          "candidate": "Билет 50 рублей."
+        },
+        {
+          "example_id": "c15",
+          "candidate": "Этот товар стоит 7 шекелей."
+        },
+        {
+          "example_id": "c16",
+          "candidate": "Эта бутылка воды 3 шиллинга."
+        },
+        {
+          "example_id": "c17",
+          "candidate": "Эта книга 10 гонконгских долларов."
+        },
+        {
+          "example_id": "c18",
+          "candidate": "Дайте мне три камня."
+        },
+        {
+          "example_id": "c19",
+          "candidate": "Разделите шоколад на четыре куска."
+        },
+        {
+          "example_id": "c20",
+          "candidate": "У нас остается пять минут."
+        }
+      ],
+      "offline_reexport_ms": 70.05580000000191,
+      "offline_reexport": "byte_identical"
+    },
+    {
+      "repetition": 2,
+      "run_id": "8bd4298d-c860-4a1e-b973-90a6cd8c6503",
+      "translation_elapsed_ms": 9264.485500000003,
+      "request_elapsed_sum_ms": 3316.5926,
+      "output_sha256": "7ee2588090d385d220073edba01dde2f5ffe00e28adbe219451776e8f8a794bc",
+      "status": {
+        "schema_version": 3,
+        "translation_id": "74b58c16-073a-45ca-87f2-52c6b715a4df",
+        "run_id": "8bd4298d-c860-4a1e-b973-90a6cd8c6503",
+        "source_sha256": "38bfa2f1fae908c006aa0182f89cd44d77fd3665d3e298c7f44adaae4b7483d1",
+        "state": "validated",
+        "pause_requested": false,
+        "completed_blocks": 3,
+        "total_blocks": 3,
+        "warning_count": 0,
+        "selected_result_id": "f5cf8b19-81ee-4dde-aedc-4733ea1e2919",
+        "review_state": "needs_review"
+      },
+      "structural_checks": "passed",
+      "rows": [
+        {
+          "example_id": "c01",
+          "candidate": "Эта бутылка воды 3,5 юаня, две бутылки вместе 7 юаней."
+        },
+        {
+          "example_id": "c02",
+          "candidate": "Эта чашка чая 5 юаней."
+        },
+        {
+          "example_id": "c03",
+          "candidate": "Всего 12,8 юаня."
+        },
+        {
+          "example_id": "c04",
+          "candidate": "Ищу тебя 0,2 юаня."
+        },
+        {
+          "example_id": "c05",
+          "candidate": "Каждая билетка 35 юаней."
+        },
+        {
+          "example_id": "c06",
+          "candidate": "Эта книга 19,9 юаня."
+        },
+        {
+          "example_id": "c07",
+          "candidate": "Небольшая сумма — 0,5 юаня."
+        },
+        {
+          "example_id": "c08",
+          "candidate": "Цена составляет 2,53 юаня."
+        },
+        {
+          "example_id": "c09",
+          "candidate": "Платил 300 юаней, осталось 20 юаней."
+        },
+        {
+          "example_id": "c10",
+          "candidate": "Эта одежда 120,5 юаня."
+        },
+        {
+          "example_id": "c11",
+          "candidate": "Эта бутылка воды 5 долларов."
+        },
+        {
+          "example_id": "c12",
+          "candidate": "Билеты 10 евро."
+        },
+        {
+          "example_id": "c13",
+          "candidate": "Эта книга 200 иен."
+        },
+        {
+          "example_id": "c14",
+          "candidate": "Билет 50 рублей."
+        },
+        {
+          "example_id": "c15",
+          "candidate": "Этот товар стоит 7 шекелей."
+        },
+        {
+          "example_id": "c16",
+          "candidate": "Эта бутылка воды 3 шиллинга."
+        },
+        {
+          "example_id": "c17",
+          "candidate": "Эта книга 10 гонконгских долларов."
+        },
+        {
+          "example_id": "c18",
+          "candidate": "Дайте мне три камня."
+        },
+        {
+          "example_id": "c19",
+          "candidate": "Разделите шоколад на четыре куска."
+        },
+        {
+          "example_id": "c20",
+          "candidate": "У нас остается пять минут."
+        }
+      ],
+      "offline_reexport_ms": 61.82999999999811,
+      "offline_reexport": "byte_identical"
+    },
+    {
+      "repetition": 3,
+      "run_id": "bb74b41b-9e06-46d5-b9fa-a9cda2683dfd",
+      "translation_elapsed_ms": 9325.2519,
+      "request_elapsed_sum_ms": 3149.891900000006,
+      "output_sha256": "7055addb8cc237075261fada7209af621eb03b12881af2569d02b34c6280b3d0",
+      "status": {
+        "schema_version": 3,
+        "translation_id": "165a1fb4-1524-47d7-8906-35cee302c2ad",
+        "run_id": "bb74b41b-9e06-46d5-b9fa-a9cda2683dfd",
+        "source_sha256": "38bfa2f1fae908c006aa0182f89cd44d77fd3665d3e298c7f44adaae4b7483d1",
+        "state": "validated",
+        "pause_requested": false,
+        "completed_blocks": 3,
+        "total_blocks": 3,
+        "warning_count": 0,
+        "selected_result_id": "5704ee48-0a67-4b2c-8531-7a61e52a66f5",
+        "review_state": "needs_review"
+      },
+      "structural_checks": "passed",
+      "rows": [
+        {
+          "example_id": "c01",
+          "candidate": "Эта бутылка воды 3,5 юаня, две бутылки вместе — 7 юаней."
+        },
+        {
+          "example_id": "c02",
+          "candidate": "Эта чашка чая 5 юаней."
+        },
+        {
+          "example_id": "c03",
+          "candidate": "Всего 12,8 юаня."
+        },
+        {
+          "example_id": "c04",
+          "candidate": "Ищу тебя 0,2 юаня."
+        },
+        {
+          "example_id": "c05",
+          "candidate": "Каждая билетка 35 юаней."
+        },
+        {
+          "example_id": "c06",
+          "candidate": "Эта книга 19,9 юаня."
+        },
+        {
+          "example_id": "c07",
+          "candidate": "Небольшая сумма ещё 0,5 юаня."
+        },
+        {
+          "example_id": "c08",
+          "candidate": "Цена составляет 2,53 юаня."
+        },
+        {
+          "example_id": "c09",
+          "candidate": "Платил 300 юаней, осталось 20 юаней."
+        },
+        {
+          "example_id": "c10",
+          "candidate": "Эта одежда 120,5 юаня."
+        },
+        {
+          "example_id": "c11",
+          "candidate": "Эта бутылка воды 5 долларов."
+        },
+        {
+          "example_id": "c12",
+          "candidate": "Билеты 10 евро."
+        },
+        {
+          "example_id": "c13",
+          "candidate": "Эта книга 200 иен."
+        },
+        {
+          "example_id": "c14",
+          "candidate": "Билет 50 рублей."
+        },
+        {
+          "example_id": "c15",
+          "candidate": "Этот товар стоит 7 шекелей."
+        },
+        {
+          "example_id": "c16",
+          "candidate": "Эта бутылка воды 3 шиллинга."
+        },
+        {
+          "example_id": "c17",
+          "candidate": "Эта книга 10 гонконгских долларов."
+        },
+        {
+          "example_id": "c18",
+          "candidate": "Дайте мне три камня."
+        },
+        {
+          "example_id": "c19",
+          "candidate": "Разделите шоколад на четыре куска."
+        },
+        {
+          "example_id": "c20",
+          "candidate": "У нас остается пять минут."
+        }
+      ],
+      "offline_reexport_ms": 61.8721000000005,
+      "offline_reexport": "byte_identical"
+    }
+  ],
+  "failures": [],
+  "hardware": {
+    "os": "Windows_NT 10.0.19045 x64",
+    "cpu": "Intel(R) Core(TM) i7-6900K CPU @ 3.20GHz",
+    "logical_cpus": 16,
+    "total_ram_bytes": 51458560000,
+    "gpu": "NVIDIA GeForce RTX 3070, 8192 MiB, 595.79"
+  },
+  "methodology": {
+    "clock": "Node performance.now(), monotonic milliseconds",
+    "server": "One persistent server; first timed file follows readiness, other files reuse the loaded model. No claim of cold OS cache.",
+    "request": "Loopback proxy times POST /v1/chat/completions through complete response body. Includes proxy/HTTP overhead; llama.cpp token timings are separate.",
+    "cache": "llama.cpp --cache-ram 0; slot/prompt behavior otherwise defaults. Repeated identical prompts can reuse the runtime prompt cache.",
+    "resources": "Sampled every 1 second. GPU usage includes other applications; process working set is not private allocation. Peaks are approximate.",
+    "dataset": "Independent authored development controls for monetary shorthand, foreign currencies and physical pieces; AI-proposed Russian references, not a human-reviewed holdout.",
+    "scope": "Twenty standalone Chinese lines; prompt v4, no context or glossary, synthetic CRLF SRT. Proposed references are not sent to the model. Not a subtitle holdout or language-release gate.",
+    "currency": "Recognized source amounts are protected as ordered tokens in inference-only text, then restored by the adapter after token validation. Raw candidate and accepted_candidate differ intentionally. Unrecognized amounts remain model translated."
+  },
+  "code_snapshot": {
+    "crates/auralis-translation-llamacpp/src/provider.rs": "20243a0cfd751d4f7b57a7cf2aa9b01232701b1490db9043e4d3f1988be5679c",
+    "crates/auralis-translation-llamacpp/src/chinese_fidelity_prompt.rs": "3ab8d5563496047a4af345d0ca5ad28e2ef7aa50cbc6ef23eebb3688059816f3",
+    "crates/auralis-translation-llamacpp/src/chinese_money_terms.rs": "7ebf15d18c83f2c892f89856a9735aae2c409d6c9a19cece7c6ae976b3deb267",
+    "crates/auralis-translation-llamacpp/src/chinese_number.rs": "78203d3bd9041bdacc3bc56e8402d9b9d473d90510326f021c1374e53dd3240b",
+    "eval/scripts/public-demo-benchmark.mjs": "30a27a9e30e127c53dc5ae9f15b57766ad2daf8753b6f1361c1f95c08b489f5f"
+  },
+  "server_arguments": [
+    "--model",
+    "<supplied-model.gguf>",
+    "--alias",
+    "auralis-hy-mt2-1.8b-q4",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "5716",
+    "-c",
+    "2048",
+    "-ngl",
+    "99",
+    "--cache-ram",
+    "0",
+    "--parallel",
+    "1",
+    "--jinja"
+  ],
+  "server_startup_ms": 2137.7464999999997,
+  "source_preservation": "byte_identical",
+  "result": "passed",
+  "requests": [
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:29.574Z",
+      "request_sha256": "9ef04e9f9537826c5f3e41d26654366751fde7db6b92db5dbf39a1cd6b102b2d",
+      "example_id": "c01",
+      "source_sha256": "fe414cdcef9a030efe848c24562766ad19a17a97a801f7e62ea291cec10d7dd9",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这瓶水__AURALIS_MONEY_0__，两瓶一共__AURALIS_MONEY_1__。",
+      "elapsed_ms": 456.5681000000004,
+      "http_status": 200,
+      "candidate": "Эта бутылка воды __AURALIS_MONEY_0__, две бутылки вместе __AURALIS_MONEY_1__.",
+      "usage": {
+        "completion_tokens": 38,
+        "prompt_tokens": 77,
+        "total_tokens": 115,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 77,
+        "prompt_ms": 166.587,
+        "prompt_per_token_ms": 2.1634675324675325,
+        "prompt_per_second": 462.22094161008965,
+        "predicted_n": 38,
+        "predicted_ms": 280.71,
+        "predicted_per_token_ms": 7.586756756756756,
+        "predicted_per_second": 131.80862812154894
+      },
+      "accepted_candidate": "Эта бутылка воды 3,5 юаня, две бутылки вместе 7 юаней."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:30.032Z",
+      "request_sha256": "5f5b1c86185407c2deeae4f675d6c5074159361a04544f4b1e23be6b07d9781a",
+      "example_id": "c02",
+      "source_sha256": "0f1fa17e7fd009a79225970af945eecd13b83ee56f7489d6da1254f4b285a93f",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这杯茶__AURALIS_MONEY_0__。",
+      "elapsed_ms": 157.5602999999992,
+      "http_status": 200,
+      "candidate": "Эта чашка чая __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 18,
+        "prompt_tokens": 63,
+        "total_tokens": 81,
+        "prompt_tokens_details": {
+          "cached_tokens": 49
+        }
+      },
+      "timings": {
+        "cache_n": 49,
+        "prompt_n": 14,
+        "prompt_ms": 16.477,
+        "prompt_per_token_ms": 1.1769285714285715,
+        "prompt_per_second": 849.6692359045943,
+        "predicted_n": 18,
+        "predicted_ms": 136.387,
+        "predicted_per_token_ms": 8.022764705882352,
+        "predicted_per_second": 124.64531077008806
+      },
+      "accepted_candidate": "Эта чашка чая 5 юаней."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:30.191Z",
+      "request_sha256": "f620004a5cc00f3f356ccb3a44f365b3be1ff60d2e1ab49ba20beb2e5c7dc221",
+      "example_id": "c03",
+      "source_sha256": "8a5b4914265d7731f1c834266e998d7e66121b2f904c65e92102f21ea9047f1c",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n一共__AURALIS_MONEY_0__。",
+      "elapsed_ms": 120.59909999999945,
+      "http_status": 200,
+      "candidate": "Всего__AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 14,
+        "prompt_tokens": 61,
+        "total_tokens": 75,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 13.964,
+        "prompt_per_token_ms": 1.0741538461538462,
+        "prompt_per_second": 930.9653394442853,
+        "predicted_n": 14,
+        "predicted_ms": 102.244,
+        "predicted_per_token_ms": 7.864923076923077,
+        "predicted_per_second": 127.14682524157897
+      },
+      "accepted_candidate": "Всего 12,8 юаня."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:30.312Z",
+      "request_sha256": "455649349cd274eb419fe4001cc538088af9f28437573955d3453abfb46678a1",
+      "example_id": "c04",
+      "source_sha256": "db295623020d4753cce912174628b805b1bb05c29aa9723bfab90839d2a83355",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n找你__AURALIS_MONEY_0__。",
+      "elapsed_ms": 142.3053,
+      "http_status": 200,
+      "candidate": "Ищу тебя __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 17,
+        "prompt_tokens": 62,
+        "total_tokens": 79,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 14,
+        "prompt_ms": 14.763,
+        "prompt_per_token_ms": 1.0545,
+        "prompt_per_second": 948.316737790422,
+        "predicted_n": 17,
+        "predicted_ms": 123.095,
+        "predicted_per_token_ms": 7.6934375,
+        "predicted_per_second": 129.98090905398269
+      },
+      "accepted_candidate": "Ищу тебя 0,2 юаня."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:30.456Z",
+      "request_sha256": "684acbb05c835ec317da27fa77e537488306ca402bf84ae73631304626cabbf8",
+      "example_id": "c05",
+      "source_sha256": "497f12cc8037e467ab0fabf5a7491f783d73a12e7e165267dd7dcfdb45f3c1f1",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n每张票__AURALIS_MONEY_0__。",
+      "elapsed_ms": 146.4475999999995,
+      "http_status": 200,
+      "candidate": "Каждая билетка __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 19,
+        "prompt_tokens": 62,
+        "total_tokens": 81,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 14,
+        "prompt_ms": 13.25,
+        "prompt_per_token_ms": 0.9464285714285714,
+        "prompt_per_second": 1056.6037735849056,
+        "predicted_n": 19,
+        "predicted_ms": 128.649,
+        "predicted_per_token_ms": 7.147166666666667,
+        "predicted_per_second": 139.91558426416063
+      },
+      "accepted_candidate": "Каждая билетка 35 юаней."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:30.603Z",
+      "request_sha256": "61807f137ffa35d6c599108e6c33d8eae62b8fdc7bbaa2ef275deb8da071a251",
+      "example_id": "c06",
+      "source_sha256": "bbca5fdd4330f4871fdf59bfe4ce905470d7c640942c6882becbb1d45d50eedf",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这本书__AURALIS_MONEY_0__。",
+      "elapsed_ms": 122.130799999999,
+      "http_status": 200,
+      "candidate": "Эта книга __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 15,
+        "prompt_tokens": 61,
+        "total_tokens": 76,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 14.434,
+        "prompt_per_token_ms": 1.1103076923076922,
+        "prompt_per_second": 900.651240127477,
+        "predicted_n": 15,
+        "predicted_ms": 103.248,
+        "predicted_per_token_ms": 7.374857142857143,
+        "predicted_per_second": 135.59584689291802
+      },
+      "accepted_candidate": "Эта книга 19,9 юаня."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:30.727Z",
+      "request_sha256": "29794fb96c816ca9cf0238cd90863d09e18019d07b1bb323c0639688a0e218cd",
+      "example_id": "c07",
+      "source_sha256": "746acd982f727d0acd5e02f19ed56edb20f0b70ffaeb1bb8e7867004dda0b6be",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n零钱还有__AURALIS_MONEY_0__。",
+      "elapsed_ms": 163.80389999999898,
+      "http_status": 200,
+      "candidate": "Невеликая сумма — __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 20,
+        "prompt_tokens": 63,
+        "total_tokens": 83,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 15,
+        "prompt_ms": 14.979,
+        "prompt_per_token_ms": 0.9985999999999999,
+        "prompt_per_second": 1001.4019627478469,
+        "predicted_n": 20,
+        "predicted_ms": 144.427,
+        "predicted_per_token_ms": 7.601421052631578,
+        "predicted_per_second": 131.55434925602555
+      },
+      "accepted_candidate": "Невеликая сумма — 0,5 юаня."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:30.891Z",
+      "request_sha256": "6e7531fb2fea8240e210d8665fbbe338279e42c1e5c620581ef47c46a6b9867f",
+      "example_id": "c08",
+      "source_sha256": "6fc8c81d88c14d95d3cad323ad07491fbd6c2231aadeb19c08d22f6bf4da3fcd",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n价格是__AURALIS_MONEY_0__。",
+      "elapsed_ms": 131.1224999999995,
+      "http_status": 200,
+      "candidate": "Цена составляет__AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 15,
+        "prompt_tokens": 61,
+        "total_tokens": 76,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 14.118,
+        "prompt_per_token_ms": 1.086,
+        "prompt_per_second": 920.8103130755064,
+        "predicted_n": 15,
+        "predicted_ms": 112.765,
+        "predicted_per_token_ms": 8.054642857142857,
+        "predicted_per_second": 124.15199751696005
+      },
+      "accepted_candidate": "Цена составляет 2,53 юаня."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:31.048Z",
+      "request_sha256": "7e66ef40b92a405c2c9bdece44b7a30103b27cc1281053e4dcc9c1b478ca2a3f",
+      "example_id": "c09",
+      "source_sha256": "018b59304d75010af3fdef2297ba09d42add85832edc4eb4d753b9ca82ac585e",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n付了__AURALIS_MONEY_0__，还剩__AURALIS_MONEY_1__。",
+      "elapsed_ms": 213.8086000000003,
+      "http_status": 200,
+      "candidate": "Платил__AURALIS_MONEY_0__, осталось__AURALIS_MONEY_1__.",
+      "usage": {
+        "completion_tokens": 28,
+        "prompt_tokens": 74,
+        "total_tokens": 102,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 26,
+        "prompt_ms": 12.728,
+        "prompt_per_token_ms": 0.48953846153846153,
+        "prompt_per_second": 2042.7404148334383,
+        "predicted_n": 28,
+        "predicted_ms": 196.178,
+        "predicted_per_token_ms": 7.265851851851852,
+        "predicted_per_second": 137.63011142941613
+      },
+      "accepted_candidate": "Платил 300 юаней, осталось 20 юаней."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:31.263Z",
+      "request_sha256": "ceb69d017a47f2dda00c6936fffb6e53dc9f3b29844b41d27b49ea17f0e9ec41",
+      "example_id": "c10",
+      "source_sha256": "d79781f31ccabab1c98af6f6770242f717b58d2ca34fe646f08dcc6a913d55d8",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这件衣服__AURALIS_MONEY_0__。",
+      "elapsed_ms": 122.58159999999953,
+      "http_status": 200,
+      "candidate": "Эта одежда __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 16,
+        "prompt_tokens": 62,
+        "total_tokens": 78,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 14,
+        "prompt_ms": 13.145,
+        "prompt_per_token_ms": 0.9389285714285714,
+        "prompt_per_second": 1065.0437428680107,
+        "predicted_n": 16,
+        "predicted_ms": 105.133,
+        "predicted_per_token_ms": 7.008866666666666,
+        "predicted_per_second": 142.67641939257894
+      },
+      "accepted_candidate": "Эта одежда 120,5 юаня."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:31.386Z",
+      "request_sha256": "9c325fb779bf84bfaaf6acd33ebd815639b155a840161b6db484ab15d7ae9d24",
+      "example_id": "c11",
+      "source_sha256": "08ad536c81d05f322f728a4a921b6c12485de9b71e222ebaf5f6204ead05094f",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这瓶水__AURALIS_MONEY_0__。",
+      "elapsed_ms": 167.02850000000035,
+      "http_status": 200,
+      "candidate": "Эта бутылка воды __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 19,
+        "prompt_tokens": 63,
+        "total_tokens": 82,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 15,
+        "prompt_ms": 14.132,
+        "prompt_per_token_ms": 0.9421333333333333,
+        "prompt_per_second": 1061.420888763091,
+        "predicted_n": 19,
+        "predicted_ms": 148.53,
+        "predicted_per_token_ms": 8.251666666666667,
+        "predicted_per_second": 121.1876388608362
+      },
+      "accepted_candidate": "Эта бутылка воды 5 долларов."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:31.554Z",
+      "request_sha256": "be9d29caf6db6176eaeade625dc9a5fda07c9f8bd649ce3be677100aac7b9443",
+      "example_id": "c12",
+      "source_sha256": "5b43146b2830e01a0350006fac7731fd1c29bf0dad003cfcce47781ef7247fab",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n门票__AURALIS_MONEY_0__。",
+      "elapsed_ms": 122.57340000000113,
+      "http_status": 200,
+      "candidate": "Билеты__AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 14,
+        "prompt_tokens": 61,
+        "total_tokens": 75,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 16.766,
+        "prompt_per_token_ms": 1.2896923076923075,
+        "prompt_per_second": 775.3787426935465,
+        "predicted_n": 14,
+        "predicted_ms": 101.53,
+        "predicted_per_token_ms": 7.8100000000000005,
+        "predicted_per_second": 128.04097311139563
+      },
+      "accepted_candidate": "Билеты 10 евро."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:31.678Z",
+      "request_sha256": "61807f137ffa35d6c599108e6c33d8eae62b8fdc7bbaa2ef275deb8da071a251",
+      "example_id": "c13",
+      "source_sha256": "740b927de383df31b65b5f10c154fda4b0ddb272f0a8bb766aa3a4fe573f3fe4",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这本书__AURALIS_MONEY_0__。",
+      "elapsed_ms": 132.6999999999989,
+      "http_status": 200,
+      "candidate": "Эта книга __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 15,
+        "prompt_tokens": 61,
+        "total_tokens": 76,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 15.199,
+        "prompt_per_token_ms": 1.1691538461538462,
+        "prompt_per_second": 855.3194289097967,
+        "predicted_n": 15,
+        "predicted_ms": 113.251,
+        "predicted_per_token_ms": 8.089357142857143,
+        "predicted_per_second": 123.61921749035326
+      },
+      "accepted_candidate": "Эта книга 200 иен."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:31.811Z",
+      "request_sha256": "69ba8e20539c792f60e172590da42e64011ec2c55f36a40c7b1fadee0db9c43b",
+      "example_id": "c14",
+      "source_sha256": "c086842dbff2e95c44e180c6cdf018be02043d61fee3389179347d74ec8a8a3c",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n车票__AURALIS_MONEY_0__。",
+      "elapsed_ms": 120.82350000000042,
+      "http_status": 200,
+      "candidate": "Билет__AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 14,
+        "prompt_tokens": 61,
+        "total_tokens": 75,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 13.49,
+        "prompt_per_token_ms": 1.0376923076923077,
+        "prompt_per_second": 963.6767976278725,
+        "predicted_n": 14,
+        "predicted_ms": 102.632,
+        "predicted_per_token_ms": 7.894769230769231,
+        "predicted_per_second": 126.66614701067891
+      },
+      "accepted_candidate": "Билет 50 рублей."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:31.933Z",
+      "request_sha256": "0cc936276046a9f1606d2bb67a15f500dfd8c7185d6eb66893233d62f25463f9",
+      "example_id": "c15",
+      "source_sha256": "7649aa66434e835539b54d22cb5b6e80454998c42f5f85e09419e23e4495585d",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这件商品__AURALIS_MONEY_0__。",
+      "elapsed_ms": 173.48909999999887,
+      "http_status": 200,
+      "candidate": "Этот товар стоит __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 20,
+        "prompt_tokens": 62,
+        "total_tokens": 82,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 14,
+        "prompt_ms": 16.607,
+        "prompt_per_token_ms": 1.1862142857142857,
+        "prompt_per_second": 843.0180044559523,
+        "predicted_n": 20,
+        "predicted_ms": 152.714,
+        "predicted_per_token_ms": 8.037578947368422,
+        "predicted_per_second": 124.41557421061592
+      },
+      "accepted_candidate": "Этот товар стоит 7 шекелей."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:32.107Z",
+      "request_sha256": "9c325fb779bf84bfaaf6acd33ebd815639b155a840161b6db484ab15d7ae9d24",
+      "example_id": "c16",
+      "source_sha256": "e8f0bb1b0d7f01189d651f77779c52c2137148334130c4208e62d460dd190398",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这瓶水__AURALIS_MONEY_0__。",
+      "elapsed_ms": 157.77460000000065,
+      "http_status": 200,
+      "candidate": "Эта бутылка воды __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 19,
+        "prompt_tokens": 63,
+        "total_tokens": 82,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 15,
+        "prompt_ms": 16.672,
+        "prompt_per_token_ms": 1.1114666666666666,
+        "prompt_per_second": 899.7120921305182,
+        "predicted_n": 19,
+        "predicted_ms": 136.644,
+        "predicted_per_token_ms": 7.591333333333334,
+        "predicted_per_second": 131.7291648370949
+      },
+      "accepted_candidate": "Эта бутылка воды 3 шиллинга."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:32.289Z",
+      "request_sha256": "61807f137ffa35d6c599108e6c33d8eae62b8fdc7bbaa2ef275deb8da071a251",
+      "example_id": "c17",
+      "source_sha256": "44fdf7fadf380c8976016ad4e1660483053d870a19d212fbf76d211eaaffa884",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这本书__AURALIS_MONEY_0__。",
+      "elapsed_ms": 135.32719999999972,
+      "http_status": 200,
+      "candidate": "Эта книга __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 15,
+        "prompt_tokens": 61,
+        "total_tokens": 76,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 16.38,
+        "prompt_per_token_ms": 1.26,
+        "prompt_per_second": 793.6507936507937,
+        "predicted_n": 15,
+        "predicted_ms": 114.619,
+        "predicted_per_token_ms": 8.187071428571429,
+        "predicted_per_second": 122.14379814864901
+      },
+      "accepted_candidate": "Эта книга 10 гонконгских долларов."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:32.425Z",
+      "request_sha256": "e39d8b5a585acc920384638f21f188c1de07415f157d3f992e8f113a257c68a0",
+      "example_id": "c18",
+      "source_sha256": "25d1efcfb457aafd9b9bd51f88b890eefee70506dcc914f33ec6bdc7566b0334",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n给我三块石头。",
+      "elapsed_ms": 81.65400000000045,
+      "http_status": 200,
+      "candidate": "Дайте мне три камня.",
+      "usage": {
+        "completion_tokens": 9,
+        "prompt_tokens": 29,
+        "total_tokens": 38,
+        "prompt_tokens_details": {
+          "cached_tokens": 9
+        }
+      },
+      "timings": {
+        "cache_n": 9,
+        "prompt_n": 20,
+        "prompt_ms": 15.589,
+        "prompt_per_token_ms": 0.77945,
+        "prompt_per_second": 1282.9559304637885,
+        "predicted_n": 9,
+        "predicted_ms": 61.719,
+        "predicted_per_token_ms": 7.714875,
+        "predicted_per_second": 129.61972812262027
+      },
+      "accepted_candidate": "Дайте мне три камня."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:32.508Z",
+      "request_sha256": "f91ab5cecc89a744c1f46f8bf2c03fb1aceeef9dfcb6382ffed817d405e7e955",
+      "example_id": "c19",
+      "source_sha256": "21822b98a7f0d97cbbb99601dcdfc49ffe76eea010da6e6b1ac989b7a1bbf8ab",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n把巧克力分成四块。",
+      "elapsed_ms": 146.9322000000011,
+      "http_status": 200,
+      "candidate": "Разделите шоколад на четыре куска.",
+      "usage": {
+        "completion_tokens": 17,
+        "prompt_tokens": 30,
+        "total_tokens": 47,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 7,
+        "prompt_ms": 15.069,
+        "prompt_per_token_ms": 2.152714285714286,
+        "prompt_per_second": 464.5298294511912,
+        "predicted_n": 17,
+        "predicted_ms": 127.816,
+        "predicted_per_token_ms": 7.9885,
+        "predicted_per_second": 125.17994617262315
+      },
+      "accepted_candidate": "Разделите шоколад на четыре куска."
+    },
+    {
+      "run": 1,
+      "started_at": "2026-09-27T19:57:32.655Z",
+      "request_sha256": "caa2218938b1d6961333bd23b07d99883f4fe7a317ce88d8f2d78c53dd14472a",
+      "example_id": "c20",
+      "source_sha256": "41fd606eaf7007c26eee2ec90bb1a458d51199b378bf16df2576357e863f3368",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n我们还剩五分钟。",
+      "elapsed_ms": 101.34330000000045,
+      "http_status": 200,
+      "candidate": "У нас остается пять минут.",
+      "usage": {
+        "completion_tokens": 12,
+        "prompt_tokens": 29,
+        "total_tokens": 41,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 6,
+        "prompt_ms": 12.281,
+        "prompt_per_token_ms": 2.0468333333333333,
+        "prompt_per_second": 488.55956355345654,
+        "predicted_n": 12,
+        "predicted_ms": 84.984,
+        "predicted_per_token_ms": 7.725818181818181,
+        "predicted_per_second": 129.43612915372304
+      },
+      "accepted_candidate": "У нас остается пять минут."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:38.779Z",
+      "request_sha256": "9ef04e9f9537826c5f3e41d26654366751fde7db6b92db5dbf39a1cd6b102b2d",
+      "example_id": "c01",
+      "source_sha256": "fe414cdcef9a030efe848c24562766ad19a17a97a801f7e62ea291cec10d7dd9",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这瓶水__AURALIS_MONEY_0__，两瓶一共__AURALIS_MONEY_1__。",
+      "elapsed_ms": 558.4150999999983,
+      "http_status": 200,
+      "candidate": "Эта бутылка воды __AURALIS_MONEY_0__, две бутылки вместе __AURALIS_MONEY_1__.",
+      "usage": {
+        "completion_tokens": 38,
+        "prompt_tokens": 77,
+        "total_tokens": 115,
+        "prompt_tokens_details": {
+          "cached_tokens": 9
+        }
+      },
+      "timings": {
+        "cache_n": 9,
+        "prompt_n": 68,
+        "prompt_ms": 111.769,
+        "prompt_per_token_ms": 1.6436617647058824,
+        "prompt_per_second": 608.3976773523965,
+        "predicted_n": 38,
+        "predicted_ms": 441.759,
+        "predicted_per_token_ms": 11.939432432432433,
+        "predicted_per_second": 83.75607514504516
+      },
+      "accepted_candidate": "Эта бутылка воды 3,5 юаня, две бутылки вместе 7 юаней."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:39.339Z",
+      "request_sha256": "5f5b1c86185407c2deeae4f675d6c5074159361a04544f4b1e23be6b07d9781a",
+      "example_id": "c02",
+      "source_sha256": "0f1fa17e7fd009a79225970af945eecd13b83ee56f7489d6da1254f4b285a93f",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这杯茶__AURALIS_MONEY_0__。",
+      "elapsed_ms": 160.8058000000019,
+      "http_status": 200,
+      "candidate": "Эта чашка чая __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 18,
+        "prompt_tokens": 63,
+        "total_tokens": 81,
+        "prompt_tokens_details": {
+          "cached_tokens": 49
+        }
+      },
+      "timings": {
+        "cache_n": 49,
+        "prompt_n": 14,
+        "prompt_ms": 16.722,
+        "prompt_per_token_ms": 1.1944285714285716,
+        "prompt_per_second": 837.2204281784475,
+        "predicted_n": 18,
+        "predicted_ms": 139.863,
+        "predicted_per_token_ms": 8.227235294117648,
+        "predicted_per_second": 121.54751435333147
+      },
+      "accepted_candidate": "Эта чашка чая 5 юаней."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:39.500Z",
+      "request_sha256": "f620004a5cc00f3f356ccb3a44f365b3be1ff60d2e1ab49ba20beb2e5c7dc221",
+      "example_id": "c03",
+      "source_sha256": "8a5b4914265d7731f1c834266e998d7e66121b2f904c65e92102f21ea9047f1c",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n一共__AURALIS_MONEY_0__。",
+      "elapsed_ms": 119.97989999999845,
+      "http_status": 200,
+      "candidate": "Всего__AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 14,
+        "prompt_tokens": 61,
+        "total_tokens": 75,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 13.904,
+        "prompt_per_token_ms": 1.0695384615384615,
+        "prompt_per_second": 934.9827387802072,
+        "predicted_n": 14,
+        "predicted_ms": 102.066,
+        "predicted_per_token_ms": 7.851230769230769,
+        "predicted_per_second": 127.3685654380499
+      },
+      "accepted_candidate": "Всего 12,8 юаня."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:39.621Z",
+      "request_sha256": "455649349cd274eb419fe4001cc538088af9f28437573955d3453abfb46678a1",
+      "example_id": "c04",
+      "source_sha256": "db295623020d4753cce912174628b805b1bb05c29aa9723bfab90839d2a83355",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n找你__AURALIS_MONEY_0__。",
+      "elapsed_ms": 141.181700000001,
+      "http_status": 200,
+      "candidate": "Ищу тебя__AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 17,
+        "prompt_tokens": 62,
+        "total_tokens": 79,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 14,
+        "prompt_ms": 16.503,
+        "prompt_per_token_ms": 1.1787857142857143,
+        "prompt_per_second": 848.3306065563836,
+        "predicted_n": 17,
+        "predicted_ms": 120.662,
+        "predicted_per_token_ms": 7.541375,
+        "predicted_per_second": 132.60181332979727
+      },
+      "accepted_candidate": "Ищу тебя 0,2 юаня."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:39.763Z",
+      "request_sha256": "684acbb05c835ec317da27fa77e537488306ca402bf84ae73631304626cabbf8",
+      "example_id": "c05",
+      "source_sha256": "497f12cc8037e467ab0fabf5a7491f783d73a12e7e165267dd7dcfdb45f3c1f1",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n每张票__AURALIS_MONEY_0__。",
+      "elapsed_ms": 167.45349999999962,
+      "http_status": 200,
+      "candidate": "Каждая билетка __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 19,
+        "prompt_tokens": 62,
+        "total_tokens": 81,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 14,
+        "prompt_ms": 14.653,
+        "prompt_per_token_ms": 1.0466428571428572,
+        "prompt_per_second": 955.4357469460178,
+        "predicted_n": 19,
+        "predicted_ms": 148.598,
+        "predicted_per_token_ms": 8.255444444444445,
+        "predicted_per_second": 121.13218212896538
+      },
+      "accepted_candidate": "Каждая билетка 35 юаней."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:39.932Z",
+      "request_sha256": "61807f137ffa35d6c599108e6c33d8eae62b8fdc7bbaa2ef275deb8da071a251",
+      "example_id": "c06",
+      "source_sha256": "bbca5fdd4330f4871fdf59bfe4ce905470d7c640942c6882becbb1d45d50eedf",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这本书__AURALIS_MONEY_0__。",
+      "elapsed_ms": 131.13839999999982,
+      "http_status": 200,
+      "candidate": "Эта книга __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 15,
+        "prompt_tokens": 61,
+        "total_tokens": 76,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 15.065,
+        "prompt_per_token_ms": 1.1588461538461539,
+        "prompt_per_second": 862.9273149684701,
+        "predicted_n": 15,
+        "predicted_ms": 112.059,
+        "predicted_per_token_ms": 8.004214285714285,
+        "predicted_per_second": 124.93418645534942
+      },
+      "accepted_candidate": "Эта книга 19,9 юаня."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:40.064Z",
+      "request_sha256": "29794fb96c816ca9cf0238cd90863d09e18019d07b1bb323c0639688a0e218cd",
+      "example_id": "c07",
+      "source_sha256": "746acd982f727d0acd5e02f19ed56edb20f0b70ffaeb1bb8e7867004dda0b6be",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n零钱还有__AURALIS_MONEY_0__。",
+      "elapsed_ms": 170.31780000000072,
+      "http_status": 200,
+      "candidate": "Небольшая сумма — __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 19,
+        "prompt_tokens": 63,
+        "total_tokens": 82,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 15,
+        "prompt_ms": 17.637,
+        "prompt_per_token_ms": 1.1758,
+        "prompt_per_second": 850.4847763225039,
+        "predicted_n": 19,
+        "predicted_ms": 148.474,
+        "predicted_per_token_ms": 8.248555555555555,
+        "predicted_per_second": 121.23334725271766
+      },
+      "accepted_candidate": "Небольшая сумма — 0,5 юаня."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:40.236Z",
+      "request_sha256": "6e7531fb2fea8240e210d8665fbbe338279e42c1e5c620581ef47c46a6b9867f",
+      "example_id": "c08",
+      "source_sha256": "6fc8c81d88c14d95d3cad323ad07491fbd6c2231aadeb19c08d22f6bf4da3fcd",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n价格是__AURALIS_MONEY_0__。",
+      "elapsed_ms": 136.9572999999982,
+      "http_status": 200,
+      "candidate": "Цена составляет__AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 15,
+        "prompt_tokens": 61,
+        "total_tokens": 76,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 16.957,
+        "prompt_per_token_ms": 1.3043846153846155,
+        "prompt_per_second": 766.6450433449312,
+        "predicted_n": 15,
+        "predicted_ms": 115.959,
+        "predicted_per_token_ms": 8.282785714285714,
+        "predicted_per_second": 120.73232780551746
+      },
+      "accepted_candidate": "Цена составляет 2,53 юаня."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:40.394Z",
+      "request_sha256": "7e66ef40b92a405c2c9bdece44b7a30103b27cc1281053e4dcc9c1b478ca2a3f",
+      "example_id": "c09",
+      "source_sha256": "018b59304d75010af3fdef2297ba09d42add85832edc4eb4d753b9ca82ac585e",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n付了__AURALIS_MONEY_0__，还剩__AURALIS_MONEY_1__。",
+      "elapsed_ms": 241.89750000000276,
+      "http_status": 200,
+      "candidate": "Платил__AURALIS_MONEY_0__, осталось__AURALIS_MONEY_1__.",
+      "usage": {
+        "completion_tokens": 28,
+        "prompt_tokens": 74,
+        "total_tokens": 102,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 26,
+        "prompt_ms": 13.978,
+        "prompt_per_token_ms": 0.5376153846153846,
+        "prompt_per_second": 1860.0658177135501,
+        "predicted_n": 28,
+        "predicted_ms": 223.293,
+        "predicted_per_token_ms": 8.270111111111111,
+        "predicted_per_second": 120.91735970227458
+      },
+      "accepted_candidate": "Платил 300 юаней, осталось 20 юаней."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:40.637Z",
+      "request_sha256": "ceb69d017a47f2dda00c6936fffb6e53dc9f3b29844b41d27b49ea17f0e9ec41",
+      "example_id": "c10",
+      "source_sha256": "d79781f31ccabab1c98af6f6770242f717b58d2ca34fe646f08dcc6a913d55d8",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这件衣服__AURALIS_MONEY_0__。",
+      "elapsed_ms": 144.34400000000096,
+      "http_status": 200,
+      "candidate": "Эта одежда __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 16,
+        "prompt_tokens": 62,
+        "total_tokens": 78,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 14,
+        "prompt_ms": 17.508,
+        "prompt_per_token_ms": 1.2505714285714284,
+        "prompt_per_second": 799.6344528215674,
+        "predicted_n": 16,
+        "predicted_ms": 122.657,
+        "predicted_per_token_ms": 8.177133333333334,
+        "predicted_per_second": 122.29224585633106
+      },
+      "accepted_candidate": "Эта одежда 120,5 юаня."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:40.783Z",
+      "request_sha256": "9c325fb779bf84bfaaf6acd33ebd815639b155a840161b6db484ab15d7ae9d24",
+      "example_id": "c11",
+      "source_sha256": "08ad536c81d05f322f728a4a921b6c12485de9b71e222ebaf5f6204ead05094f",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这瓶水__AURALIS_MONEY_0__。",
+      "elapsed_ms": 164.32450000000244,
+      "http_status": 200,
+      "candidate": "Эта бутылка воды __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 19,
+        "prompt_tokens": 63,
+        "total_tokens": 82,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 15,
+        "prompt_ms": 16.112,
+        "prompt_per_token_ms": 1.0741333333333332,
+        "prompt_per_second": 930.9831181727906,
+        "predicted_n": 19,
+        "predicted_ms": 144.053,
+        "predicted_per_token_ms": 8.002944444444445,
+        "predicted_per_second": 124.95400998243703
+      },
+      "accepted_candidate": "Эта бутылка воды 5 долларов."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:40.948Z",
+      "request_sha256": "be9d29caf6db6176eaeade625dc9a5fda07c9f8bd649ce3be677100aac7b9443",
+      "example_id": "c12",
+      "source_sha256": "5b43146b2830e01a0350006fac7731fd1c29bf0dad003cfcce47781ef7247fab",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n门票__AURALIS_MONEY_0__。",
+      "elapsed_ms": 114.92469999999958,
+      "http_status": 200,
+      "candidate": "Билеты__AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 14,
+        "prompt_tokens": 61,
+        "total_tokens": 75,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 11.095,
+        "prompt_per_token_ms": 0.8534615384615385,
+        "prompt_per_second": 1171.6989634970705,
+        "predicted_n": 14,
+        "predicted_ms": 99.656,
+        "predicted_per_token_ms": 7.665846153846155,
+        "predicted_per_second": 130.44874367825318
+      },
+      "accepted_candidate": "Билеты 10 евро."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:41.064Z",
+      "request_sha256": "61807f137ffa35d6c599108e6c33d8eae62b8fdc7bbaa2ef275deb8da071a251",
+      "example_id": "c13",
+      "source_sha256": "740b927de383df31b65b5f10c154fda4b0ddb272f0a8bb766aa3a4fe573f3fe4",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这本书__AURALIS_MONEY_0__。",
+      "elapsed_ms": 135.86339999999836,
+      "http_status": 200,
+      "candidate": "Эта книга __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 15,
+        "prompt_tokens": 61,
+        "total_tokens": 76,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 13.238,
+        "prompt_per_token_ms": 1.0183076923076924,
+        "prompt_per_second": 982.021453391751,
+        "predicted_n": 15,
+        "predicted_ms": 118.246,
+        "predicted_per_token_ms": 8.446142857142856,
+        "predicted_per_second": 118.39723965292696
+      },
+      "accepted_candidate": "Эта книга 200 иен."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:41.201Z",
+      "request_sha256": "69ba8e20539c792f60e172590da42e64011ec2c55f36a40c7b1fadee0db9c43b",
+      "example_id": "c14",
+      "source_sha256": "c086842dbff2e95c44e180c6cdf018be02043d61fee3389179347d74ec8a8a3c",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n车票__AURALIS_MONEY_0__。",
+      "elapsed_ms": 124.1756000000023,
+      "http_status": 200,
+      "candidate": "Билет__AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 14,
+        "prompt_tokens": 61,
+        "total_tokens": 75,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 14.816,
+        "prompt_per_token_ms": 1.1396923076923078,
+        "prompt_per_second": 877.4298056155507,
+        "predicted_n": 14,
+        "predicted_ms": 104.794,
+        "predicted_per_token_ms": 8.061076923076923,
+        "predicted_per_second": 124.05290379220185
+      },
+      "accepted_candidate": "Билет 50 рублей."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:41.326Z",
+      "request_sha256": "0cc936276046a9f1606d2bb67a15f500dfd8c7185d6eb66893233d62f25463f9",
+      "example_id": "c15",
+      "source_sha256": "7649aa66434e835539b54d22cb5b6e80454998c42f5f85e09419e23e4495585d",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这件商品__AURALIS_MONEY_0__。",
+      "elapsed_ms": 169.5111999999972,
+      "http_status": 200,
+      "candidate": "Этот товар стоит __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 20,
+        "prompt_tokens": 62,
+        "total_tokens": 82,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 14,
+        "prompt_ms": 15.121,
+        "prompt_per_token_ms": 1.0800714285714286,
+        "prompt_per_second": 925.8646914886581,
+        "predicted_n": 20,
+        "predicted_ms": 150.104,
+        "predicted_per_token_ms": 7.9002105263157905,
+        "predicted_per_second": 126.57890529233065
+      },
+      "accepted_candidate": "Этот товар стоит 7 шекелей."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:41.496Z",
+      "request_sha256": "9c325fb779bf84bfaaf6acd33ebd815639b155a840161b6db484ab15d7ae9d24",
+      "example_id": "c16",
+      "source_sha256": "e8f0bb1b0d7f01189d651f77779c52c2137148334130c4208e62d460dd190398",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这瓶水__AURALIS_MONEY_0__。",
+      "elapsed_ms": 166.52079999999842,
+      "http_status": 200,
+      "candidate": "Эта бутылка воды __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 19,
+        "prompt_tokens": 63,
+        "total_tokens": 82,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 15,
+        "prompt_ms": 14.027,
+        "prompt_per_token_ms": 0.9351333333333333,
+        "prompt_per_second": 1069.3662222855921,
+        "predicted_n": 19,
+        "predicted_ms": 147.709,
+        "predicted_per_token_ms": 8.206055555555556,
+        "predicted_per_second": 121.86122714255733
+      },
+      "accepted_candidate": "Эта бутылка воды 3 шиллинга."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:41.685Z",
+      "request_sha256": "61807f137ffa35d6c599108e6c33d8eae62b8fdc7bbaa2ef275deb8da071a251",
+      "example_id": "c17",
+      "source_sha256": "44fdf7fadf380c8976016ad4e1660483053d870a19d212fbf76d211eaaffa884",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这本书__AURALIS_MONEY_0__。",
+      "elapsed_ms": 125.60080000000016,
+      "http_status": 200,
+      "candidate": "Эта книга __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 15,
+        "prompt_tokens": 61,
+        "total_tokens": 76,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 16.541,
+        "prompt_per_token_ms": 1.2723846153846154,
+        "prompt_per_second": 785.9258811438244,
+        "predicted_n": 15,
+        "predicted_ms": 104.764,
+        "predicted_per_token_ms": 7.483142857142857,
+        "predicted_per_second": 133.6336909625444
+      },
+      "accepted_candidate": "Эта книга 10 гонконгских долларов."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:41.812Z",
+      "request_sha256": "e39d8b5a585acc920384638f21f188c1de07415f157d3f992e8f113a257c68a0",
+      "example_id": "c18",
+      "source_sha256": "25d1efcfb457aafd9b9bd51f88b890eefee70506dcc914f33ec6bdc7566b0334",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n给我三块石头。",
+      "elapsed_ms": 86.8714,
+      "http_status": 200,
+      "candidate": "Дайте мне три камня.",
+      "usage": {
+        "completion_tokens": 9,
+        "prompt_tokens": 29,
+        "total_tokens": 38,
+        "prompt_tokens_details": {
+          "cached_tokens": 9
+        }
+      },
+      "timings": {
+        "cache_n": 9,
+        "prompt_n": 20,
+        "prompt_ms": 15.906,
+        "prompt_per_token_ms": 0.7953,
+        "prompt_per_second": 1257.387149503332,
+        "predicted_n": 9,
+        "predicted_ms": 66.905,
+        "predicted_per_token_ms": 8.363125,
+        "predicted_per_second": 119.57252821164337
+      },
+      "accepted_candidate": "Дайте мне три камня."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:41.900Z",
+      "request_sha256": "f91ab5cecc89a744c1f46f8bf2c03fb1aceeef9dfcb6382ffed817d405e7e955",
+      "example_id": "c19",
+      "source_sha256": "21822b98a7f0d97cbbb99601dcdfc49ffe76eea010da6e6b1ac989b7a1bbf8ab",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n把巧克力分成四块。",
+      "elapsed_ms": 151.79469999999856,
+      "http_status": 200,
+      "candidate": "Разделите шоколад на четыре куска.",
+      "usage": {
+        "completion_tokens": 17,
+        "prompt_tokens": 30,
+        "total_tokens": 47,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 7,
+        "prompt_ms": 9.862,
+        "prompt_per_token_ms": 1.4088571428571428,
+        "prompt_per_second": 709.7951733928209,
+        "predicted_n": 17,
+        "predicted_ms": 137.923,
+        "predicted_per_token_ms": 8.6201875,
+        "predicted_per_second": 116.00675739361817
+      },
+      "accepted_candidate": "Разделите шоколад на четыре куска."
+    },
+    {
+      "run": 2,
+      "started_at": "2026-09-27T19:57:42.052Z",
+      "request_sha256": "caa2218938b1d6961333bd23b07d99883f4fe7a317ce88d8f2d78c53dd14472a",
+      "example_id": "c20",
+      "source_sha256": "41fd606eaf7007c26eee2ec90bb1a458d51199b378bf16df2576357e863f3368",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n我们还剩五分钟。",
+      "elapsed_ms": 104.51450000000114,
+      "http_status": 200,
+      "candidate": "У нас остается пять минут.",
+      "usage": {
+        "completion_tokens": 12,
+        "prompt_tokens": 29,
+        "total_tokens": 41,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 6,
+        "prompt_ms": 12.016,
+        "prompt_per_token_ms": 2.002666666666667,
+        "prompt_per_second": 499.33422103861517,
+        "predicted_n": 12,
+        "predicted_ms": 88.49,
+        "predicted_per_token_ms": 8.044545454545455,
+        "predicted_per_second": 124.3078313933778
+      },
+      "accepted_candidate": "У нас остается пять минут."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:48.216Z",
+      "request_sha256": "9ef04e9f9537826c5f3e41d26654366751fde7db6b92db5dbf39a1cd6b102b2d",
+      "example_id": "c01",
+      "source_sha256": "fe414cdcef9a030efe848c24562766ad19a17a97a801f7e62ea291cec10d7dd9",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这瓶水__AURALIS_MONEY_0__，两瓶一共__AURALIS_MONEY_1__。",
+      "elapsed_ms": 432.5777999999991,
+      "http_status": 200,
+      "candidate": "Эта бутылка воды __AURALIS_MONEY_0__, две бутылки вместе — __AURALIS_MONEY_1__.",
+      "usage": {
+        "completion_tokens": 39,
+        "prompt_tokens": 77,
+        "total_tokens": 116,
+        "prompt_tokens_details": {
+          "cached_tokens": 9
+        }
+      },
+      "timings": {
+        "cache_n": 9,
+        "prompt_n": 68,
+        "prompt_ms": 112.125,
+        "prompt_per_token_ms": 1.6488970588235294,
+        "prompt_per_second": 606.4659977703456,
+        "predicted_n": 39,
+        "predicted_ms": 315.485,
+        "predicted_per_token_ms": 8.302236842105264,
+        "predicted_per_second": 120.4494666941376
+      },
+      "accepted_candidate": "Эта бутылка воды 3,5 юаня, две бутылки вместе — 7 юаней."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:48.650Z",
+      "request_sha256": "5f5b1c86185407c2deeae4f675d6c5074159361a04544f4b1e23be6b07d9781a",
+      "example_id": "c02",
+      "source_sha256": "0f1fa17e7fd009a79225970af945eecd13b83ee56f7489d6da1254f4b285a93f",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这杯茶__AURALIS_MONEY_0__。",
+      "elapsed_ms": 155.71490000000267,
+      "http_status": 200,
+      "candidate": "Эта чашка чая __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 18,
+        "prompt_tokens": 63,
+        "total_tokens": 81,
+        "prompt_tokens_details": {
+          "cached_tokens": 49
+        }
+      },
+      "timings": {
+        "cache_n": 49,
+        "prompt_n": 14,
+        "prompt_ms": 11.996,
+        "prompt_per_token_ms": 0.8568571428571429,
+        "prompt_per_second": 1167.0556852284094,
+        "predicted_n": 18,
+        "predicted_ms": 139.416,
+        "predicted_per_token_ms": 8.200941176470588,
+        "predicted_per_second": 121.93722384805187
+      },
+      "accepted_candidate": "Эта чашка чая 5 юаней."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:48.806Z",
+      "request_sha256": "f620004a5cc00f3f356ccb3a44f365b3be1ff60d2e1ab49ba20beb2e5c7dc221",
+      "example_id": "c03",
+      "source_sha256": "8a5b4914265d7731f1c834266e998d7e66121b2f904c65e92102f21ea9047f1c",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n一共__AURALIS_MONEY_0__。",
+      "elapsed_ms": 122.84010000000126,
+      "http_status": 200,
+      "candidate": "Всего__AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 14,
+        "prompt_tokens": 61,
+        "total_tokens": 75,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 14.183,
+        "prompt_per_token_ms": 1.091,
+        "prompt_per_second": 916.590284142988,
+        "predicted_n": 14,
+        "predicted_ms": 104.354,
+        "predicted_per_token_ms": 8.02723076923077,
+        "predicted_per_second": 124.57596258888015
+      },
+      "accepted_candidate": "Всего 12,8 юаня."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:48.930Z",
+      "request_sha256": "455649349cd274eb419fe4001cc538088af9f28437573955d3453abfb46678a1",
+      "example_id": "c04",
+      "source_sha256": "db295623020d4753cce912174628b805b1bb05c29aa9723bfab90839d2a83355",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n找你__AURALIS_MONEY_0__。",
+      "elapsed_ms": 148.99199999999837,
+      "http_status": 200,
+      "candidate": "Ищу тебя __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 17,
+        "prompt_tokens": 62,
+        "total_tokens": 79,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 14,
+        "prompt_ms": 17.335,
+        "prompt_per_token_ms": 1.2382142857142857,
+        "prompt_per_second": 807.6146524372656,
+        "predicted_n": 17,
+        "predicted_ms": 127.273,
+        "predicted_per_token_ms": 7.9545625,
+        "predicted_per_second": 125.71401632710787
+      },
+      "accepted_candidate": "Ищу тебя 0,2 юаня."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:49.080Z",
+      "request_sha256": "684acbb05c835ec317da27fa77e537488306ca402bf84ae73631304626cabbf8",
+      "example_id": "c05",
+      "source_sha256": "497f12cc8037e467ab0fabf5a7491f783d73a12e7e165267dd7dcfdb45f3c1f1",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n每张票__AURALIS_MONEY_0__。",
+      "elapsed_ms": 148.5789999999979,
+      "http_status": 200,
+      "candidate": "Каждая билетка __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 19,
+        "prompt_tokens": 62,
+        "total_tokens": 81,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 14,
+        "prompt_ms": 14.485,
+        "prompt_per_token_ms": 1.0346428571428572,
+        "prompt_per_second": 966.5170866413532,
+        "predicted_n": 19,
+        "predicted_ms": 129.765,
+        "predicted_per_token_ms": 7.209166666666666,
+        "predicted_per_second": 138.71228759680963
+      },
+      "accepted_candidate": "Каждая билетка 35 юаней."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:49.230Z",
+      "request_sha256": "61807f137ffa35d6c599108e6c33d8eae62b8fdc7bbaa2ef275deb8da071a251",
+      "example_id": "c06",
+      "source_sha256": "bbca5fdd4330f4871fdf59bfe4ce905470d7c640942c6882becbb1d45d50eedf",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这本书__AURALIS_MONEY_0__。",
+      "elapsed_ms": 131.1703000000016,
+      "http_status": 200,
+      "candidate": "Эта книга __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 15,
+        "prompt_tokens": 61,
+        "total_tokens": 76,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 14.498,
+        "prompt_per_token_ms": 1.1152307692307692,
+        "prompt_per_second": 896.6754035039316,
+        "predicted_n": 15,
+        "predicted_ms": 112.383,
+        "predicted_per_token_ms": 8.027357142857143,
+        "predicted_per_second": 124.57400140590659
+      },
+      "accepted_candidate": "Эта книга 19,9 юаня."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:49.362Z",
+      "request_sha256": "29794fb96c816ca9cf0238cd90863d09e18019d07b1bb323c0639688a0e218cd",
+      "example_id": "c07",
+      "source_sha256": "746acd982f727d0acd5e02f19ed56edb20f0b70ffaeb1bb8e7867004dda0b6be",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n零钱还有__AURALIS_MONEY_0__。",
+      "elapsed_ms": 174.61959999999817,
+      "http_status": 200,
+      "candidate": "Небольшая сумма ещё __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 21,
+        "prompt_tokens": 63,
+        "total_tokens": 84,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 15,
+        "prompt_ms": 17.056,
+        "prompt_per_token_ms": 1.1370666666666667,
+        "prompt_per_second": 879.4559099437148,
+        "predicted_n": 21,
+        "predicted_ms": 152.908,
+        "predicted_per_token_ms": 7.6453999999999995,
+        "predicted_per_second": 130.79760378789862
+      },
+      "accepted_candidate": "Небольшая сумма ещё 0,5 юаня."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:49.538Z",
+      "request_sha256": "6e7531fb2fea8240e210d8665fbbe338279e42c1e5c620581ef47c46a6b9867f",
+      "example_id": "c08",
+      "source_sha256": "6fc8c81d88c14d95d3cad323ad07491fbd6c2231aadeb19c08d22f6bf4da3fcd",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n价格是__AURALIS_MONEY_0__。",
+      "elapsed_ms": 121.95709999999963,
+      "http_status": 200,
+      "candidate": "Цена составляет__AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 15,
+        "prompt_tokens": 61,
+        "total_tokens": 76,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 15.189,
+        "prompt_per_token_ms": 1.1683846153846154,
+        "prompt_per_second": 855.8825465797617,
+        "predicted_n": 15,
+        "predicted_ms": 101.819,
+        "predicted_per_token_ms": 7.272785714285715,
+        "predicted_per_second": 137.49889509816438
+      },
+      "accepted_candidate": "Цена составляет 2,53 юаня."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:49.866Z",
+      "request_sha256": "7e66ef40b92a405c2c9bdece44b7a30103b27cc1281053e4dcc9c1b478ca2a3f",
+      "example_id": "c09",
+      "source_sha256": "018b59304d75010af3fdef2297ba09d42add85832edc4eb4d753b9ca82ac585e",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n付了__AURALIS_MONEY_0__，还剩__AURALIS_MONEY_1__。",
+      "elapsed_ms": 240.1193000000021,
+      "http_status": 200,
+      "candidate": "Платил__AURALIS_MONEY_0__, осталось__AURALIS_MONEY_1__.",
+      "usage": {
+        "completion_tokens": 28,
+        "prompt_tokens": 74,
+        "total_tokens": 102,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 26,
+        "prompt_ms": 19.523,
+        "prompt_per_token_ms": 0.7508846153846154,
+        "prompt_per_second": 1331.7625364954158,
+        "predicted_n": 28,
+        "predicted_ms": 216.318,
+        "predicted_per_token_ms": 8.011777777777779,
+        "predicted_per_second": 124.81624275372369
+      },
+      "accepted_candidate": "Платил 300 юаней, осталось 20 юаней."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:50.107Z",
+      "request_sha256": "ceb69d017a47f2dda00c6936fffb6e53dc9f3b29844b41d27b49ea17f0e9ec41",
+      "example_id": "c10",
+      "source_sha256": "d79781f31ccabab1c98af6f6770242f717b58d2ca34fe646f08dcc6a913d55d8",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这件衣服__AURALIS_MONEY_0__。",
+      "elapsed_ms": 139.72079999999914,
+      "http_status": 200,
+      "candidate": "Эта одежда __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 16,
+        "prompt_tokens": 62,
+        "total_tokens": 78,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 14,
+        "prompt_ms": 17.046,
+        "prompt_per_token_ms": 1.2175714285714285,
+        "prompt_per_second": 821.3070515076852,
+        "predicted_n": 16,
+        "predicted_ms": 118.336,
+        "predicted_per_token_ms": 7.8890666666666664,
+        "predicted_per_second": 126.7577068685776
+      },
+      "accepted_candidate": "Эта одежда 120,5 юаня."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:50.248Z",
+      "request_sha256": "9c325fb779bf84bfaaf6acd33ebd815639b155a840161b6db484ab15d7ae9d24",
+      "example_id": "c11",
+      "source_sha256": "08ad536c81d05f322f728a4a921b6c12485de9b71e222ebaf5f6204ead05094f",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这瓶水__AURALIS_MONEY_0__。",
+      "elapsed_ms": 158.48359999999957,
+      "http_status": 200,
+      "candidate": "Эта бутылка воды __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 19,
+        "prompt_tokens": 63,
+        "total_tokens": 82,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 15,
+        "prompt_ms": 11.963,
+        "prompt_per_token_ms": 0.7975333333333333,
+        "prompt_per_second": 1253.8660871018976,
+        "predicted_n": 19,
+        "predicted_ms": 142.223,
+        "predicted_per_token_ms": 7.9012777777777785,
+        "predicted_per_second": 126.56180786511322
+      },
+      "accepted_candidate": "Эта бутылка воды 5 долларов."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:50.407Z",
+      "request_sha256": "be9d29caf6db6176eaeade625dc9a5fda07c9f8bd649ce3be677100aac7b9443",
+      "example_id": "c12",
+      "source_sha256": "5b43146b2830e01a0350006fac7731fd1c29bf0dad003cfcce47781ef7247fab",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n门票__AURALIS_MONEY_0__。",
+      "elapsed_ms": 129.4239000000016,
+      "http_status": 200,
+      "candidate": "Билеты__AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 14,
+        "prompt_tokens": 61,
+        "total_tokens": 75,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 16.323,
+        "prompt_per_token_ms": 1.2556153846153846,
+        "prompt_per_second": 796.4222263064387,
+        "predicted_n": 14,
+        "predicted_ms": 108.893,
+        "predicted_per_token_ms": 8.376384615384616,
+        "predicted_per_second": 119.3832477753391
+      },
+      "accepted_candidate": "Билеты 10 евро."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:50.538Z",
+      "request_sha256": "61807f137ffa35d6c599108e6c33d8eae62b8fdc7bbaa2ef275deb8da071a251",
+      "example_id": "c13",
+      "source_sha256": "740b927de383df31b65b5f10c154fda4b0ddb272f0a8bb766aa3a4fe573f3fe4",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这本书__AURALIS_MONEY_0__。",
+      "elapsed_ms": 127.77999999999884,
+      "http_status": 200,
+      "candidate": "Эта книга __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 15,
+        "prompt_tokens": 61,
+        "total_tokens": 76,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 16.952,
+        "prompt_per_token_ms": 1.304,
+        "prompt_per_second": 766.8711656441717,
+        "predicted_n": 15,
+        "predicted_ms": 106.057,
+        "predicted_per_token_ms": 7.5755,
+        "predicted_per_second": 132.0044881525972
+      },
+      "accepted_candidate": "Эта книга 200 иен."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:50.667Z",
+      "request_sha256": "69ba8e20539c792f60e172590da42e64011ec2c55f36a40c7b1fadee0db9c43b",
+      "example_id": "c14",
+      "source_sha256": "c086842dbff2e95c44e180c6cdf018be02043d61fee3389179347d74ec8a8a3c",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n车票__AURALIS_MONEY_0__。",
+      "elapsed_ms": 123.37300000000323,
+      "http_status": 200,
+      "candidate": "Билет__AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 14,
+        "prompt_tokens": 61,
+        "total_tokens": 75,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 16.301,
+        "prompt_per_token_ms": 1.2539230769230767,
+        "prompt_per_second": 797.4970860683394,
+        "predicted_n": 14,
+        "predicted_ms": 101.797,
+        "predicted_per_token_ms": 7.8305384615384614,
+        "predicted_per_second": 127.70513865831018
+      },
+      "accepted_candidate": "Билет 50 рублей."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:50.791Z",
+      "request_sha256": "0cc936276046a9f1606d2bb67a15f500dfd8c7185d6eb66893233d62f25463f9",
+      "example_id": "c15",
+      "source_sha256": "7649aa66434e835539b54d22cb5b6e80454998c42f5f85e09419e23e4495585d",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这件商品__AURALIS_MONEY_0__。",
+      "elapsed_ms": 162.4285000000018,
+      "http_status": 200,
+      "candidate": "Этот товар стоит __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 20,
+        "prompt_tokens": 62,
+        "total_tokens": 82,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 14,
+        "prompt_ms": 15.564,
+        "prompt_per_token_ms": 1.1117142857142857,
+        "prompt_per_second": 899.5116936520176,
+        "predicted_n": 20,
+        "predicted_ms": 142.506,
+        "predicted_per_token_ms": 7.500315789473684,
+        "predicted_per_second": 133.3277195346161
+      },
+      "accepted_candidate": "Этот товар стоит 7 шекелей."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:50.955Z",
+      "request_sha256": "9c325fb779bf84bfaaf6acd33ebd815639b155a840161b6db484ab15d7ae9d24",
+      "example_id": "c16",
+      "source_sha256": "e8f0bb1b0d7f01189d651f77779c52c2137148334130c4208e62d460dd190398",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这瓶水__AURALIS_MONEY_0__。",
+      "elapsed_ms": 157.4552999999978,
+      "http_status": 200,
+      "candidate": "Эта бутылка воды __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 19,
+        "prompt_tokens": 63,
+        "total_tokens": 82,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 15,
+        "prompt_ms": 15.162,
+        "prompt_per_token_ms": 1.0108000000000001,
+        "prompt_per_second": 989.3153937475266,
+        "predicted_n": 19,
+        "predicted_ms": 137.963,
+        "predicted_per_token_ms": 7.66461111111111,
+        "predicted_per_second": 130.46976363227824
+      },
+      "accepted_candidate": "Эта бутылка воды 3 шиллинга."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:51.140Z",
+      "request_sha256": "61807f137ffa35d6c599108e6c33d8eae62b8fdc7bbaa2ef275deb8da071a251",
+      "example_id": "c17",
+      "source_sha256": "44fdf7fadf380c8976016ad4e1660483053d870a19d212fbf76d211eaaffa884",
+      "prompt": "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n这本书__AURALIS_MONEY_0__。",
+      "elapsed_ms": 142.2383000000009,
+      "http_status": 200,
+      "candidate": "Эта книга __AURALIS_MONEY_0__.",
+      "usage": {
+        "completion_tokens": 15,
+        "prompt_tokens": 61,
+        "total_tokens": 76,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "timings": {
+        "cache_n": 48,
+        "prompt_n": 13,
+        "prompt_ms": 14.024,
+        "prompt_per_token_ms": 1.0787692307692307,
+        "prompt_per_second": 926.9823160296635,
+        "predicted_n": 15,
+        "predicted_ms": 123.688,
+        "predicted_per_token_ms": 8.834857142857143,
+        "predicted_per_second": 113.18802147338464
+      },
+      "accepted_candidate": "Эта книга 10 гонконгских долларов."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:51.283Z",
+      "request_sha256": "e39d8b5a585acc920384638f21f188c1de07415f157d3f992e8f113a257c68a0",
+      "example_id": "c18",
+      "source_sha256": "25d1efcfb457aafd9b9bd51f88b890eefee70506dcc914f33ec6bdc7566b0334",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n给我三块石头。",
+      "elapsed_ms": 92.41719999999987,
+      "http_status": 200,
+      "candidate": "Дайте мне три камня.",
+      "usage": {
+        "completion_tokens": 9,
+        "prompt_tokens": 29,
+        "total_tokens": 38,
+        "prompt_tokens_details": {
+          "cached_tokens": 9
+        }
+      },
+      "timings": {
+        "cache_n": 9,
+        "prompt_n": 20,
+        "prompt_ms": 16.325,
+        "prompt_per_token_ms": 0.8162499999999999,
+        "prompt_per_second": 1225.114854517611,
+        "predicted_n": 9,
+        "predicted_ms": 72.011,
+        "predicted_per_token_ms": 9.001375,
+        "predicted_per_second": 111.09413839552292
+      },
+      "accepted_candidate": "Дайте мне три камня."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:51.376Z",
+      "request_sha256": "f91ab5cecc89a744c1f46f8bf2c03fb1aceeef9dfcb6382ffed817d405e7e955",
+      "example_id": "c19",
+      "source_sha256": "21822b98a7f0d97cbbb99601dcdfc49ffe76eea010da6e6b1ac989b7a1bbf8ab",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n把巧克力分成四块。",
+      "elapsed_ms": 135.49570000000313,
+      "http_status": 200,
+      "candidate": "Разделите шоколад на четыре куска.",
+      "usage": {
+        "completion_tokens": 17,
+        "prompt_tokens": 30,
+        "total_tokens": 47,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 7,
+        "prompt_ms": 12.676,
+        "prompt_per_token_ms": 1.810857142857143,
+        "prompt_per_second": 552.224676554118,
+        "predicted_n": 17,
+        "predicted_ms": 118.717,
+        "predicted_per_token_ms": 7.4198125,
+        "predicted_per_second": 134.77429517255322
+      },
+      "accepted_candidate": "Разделите шоколад на четыре куска."
+    },
+    {
+      "run": 3,
+      "started_at": "2026-09-27T19:57:51.513Z",
+      "request_sha256": "caa2218938b1d6961333bd23b07d99883f4fe7a317ce88d8f2d78c53dd14472a",
+      "example_id": "c20",
+      "source_sha256": "41fd606eaf7007c26eee2ec90bb1a458d51199b378bf16df2576357e863f3368",
+      "prompt": "Translate the following text into Russian. Note that you should only output the translated result without any additional explanation:\n我们还剩五分钟。",
+      "elapsed_ms": 104.5054999999993,
+      "http_status": 200,
+      "candidate": "У нас остается пять минут.",
+      "usage": {
+        "completion_tokens": 12,
+        "prompt_tokens": 29,
+        "total_tokens": 41,
+        "prompt_tokens_details": {
+          "cached_tokens": 23
+        }
+      },
+      "timings": {
+        "cache_n": 23,
+        "prompt_n": 6,
+        "prompt_ms": 12.188,
+        "prompt_per_token_ms": 2.0313333333333334,
+        "prompt_per_second": 492.2874958976042,
+        "predicted_n": 12,
+        "predicted_ms": 88.105,
+        "predicted_per_token_ms": 8.009545454545455,
+        "predicted_per_second": 124.85103002099767
+      },
+      "accepted_candidate": "У нас остается пять минут."
+    }
+  ],
+  "resource_samples": [
+    {
+      "gpu": "3810, 12",
+      "time": "2026-09-27T19:57:23.8257513Z",
+      "working_set_bytes": 1513381888,
+      "cpu_seconds": 1.671875
+    },
+    {
+      "gpu": "3807, 12",
+      "time": "2026-09-27T19:57:24.9667585Z",
+      "working_set_bytes": 1513463808,
+      "cpu_seconds": 1.671875
+    },
+    {
+      "gpu": "3805, 14",
+      "time": "2026-09-27T19:57:26.0495064Z",
+      "working_set_bytes": 1513463808,
+      "cpu_seconds": 1.671875
+    },
+    {
+      "gpu": "3792, 15",
+      "time": "2026-09-27T19:57:27.1349930Z",
+      "working_set_bytes": 1513463808,
+      "cpu_seconds": 1.671875
+    },
+    {
+      "gpu": "3794, 15",
+      "time": "2026-09-27T19:57:28.2065212Z",
+      "working_set_bytes": 1513463808,
+      "cpu_seconds": 1.671875
+    },
+    {
+      "gpu": "3819, 37",
+      "time": "2026-09-27T19:57:29.2845428Z",
+      "working_set_bytes": 1513463808,
+      "cpu_seconds": 1.671875
+    },
+    {
+      "gpu": "3815, 79",
+      "time": "2026-09-27T19:57:30.3700167Z",
+      "working_set_bytes": 1535229952,
+      "cpu_seconds": 2.453125
+    },
+    {
+      "gpu": "3812, 62",
+      "time": "2026-09-27T19:57:31.4476426Z",
+      "working_set_bytes": 1535463424,
+      "cpu_seconds": 3.46875
+    },
+    {
+      "gpu": "3799, 87",
+      "time": "2026-09-27T19:57:32.5345151Z",
+      "working_set_bytes": 1535557632,
+      "cpu_seconds": 4.546875
+    },
+    {
+      "gpu": "3787, 13",
+      "time": "2026-09-27T19:57:33.6172812Z",
+      "working_set_bytes": 1539448832,
+      "cpu_seconds": 4.765625
+    },
+    {
+      "gpu": "3786, 24",
+      "time": "2026-09-27T19:57:34.6995948Z",
+      "working_set_bytes": 1539448832,
+      "cpu_seconds": 4.765625
+    },
+    {
+      "gpu": "3802, 25",
+      "time": "2026-09-27T19:57:35.7782510Z",
+      "working_set_bytes": 1539448832,
+      "cpu_seconds": 4.765625
+    },
+    {
+      "gpu": "3795, 30",
+      "time": "2026-09-27T19:57:36.8569981Z",
+      "working_set_bytes": 1539448832,
+      "cpu_seconds": 4.765625
+    },
+    {
+      "gpu": "3790, 30",
+      "time": "2026-09-27T19:57:37.9336227Z",
+      "working_set_bytes": 1539448832,
+      "cpu_seconds": 4.765625
+    },
+    {
+      "gpu": "3790, 33",
+      "time": "2026-09-27T19:57:39.0137512Z",
+      "working_set_bytes": 1539543040,
+      "cpu_seconds": 5
+    },
+    {
+      "gpu": "3798, 84",
+      "time": "2026-09-27T19:57:40.0958401Z",
+      "working_set_bytes": 1539641344,
+      "cpu_seconds": 6.046875
+    },
+    {
+      "gpu": "3827, 88",
+      "time": "2026-09-27T19:57:41.1777658Z",
+      "working_set_bytes": 1539653632,
+      "cpu_seconds": 7.078125
+    },
+    {
+      "gpu": "3804, 80",
+      "time": "2026-09-27T19:57:42.2687594Z",
+      "working_set_bytes": 1539686400,
+      "cpu_seconds": 8
+    },
+    {
+      "gpu": "3804, 12",
+      "time": "2026-09-27T19:57:43.3536260Z",
+      "working_set_bytes": 1539686400,
+      "cpu_seconds": 8
+    },
+    {
+      "gpu": "3808, 26",
+      "time": "2026-09-27T19:57:44.4297016Z",
+      "working_set_bytes": 1539686400,
+      "cpu_seconds": 8
+    },
+    {
+      "gpu": "3818, 26",
+      "time": "2026-09-27T19:57:45.5104275Z",
+      "working_set_bytes": 1539686400,
+      "cpu_seconds": 8
+    },
+    {
+      "gpu": "3810, 28",
+      "time": "2026-09-27T19:57:46.5907263Z",
+      "working_set_bytes": 1539686400,
+      "cpu_seconds": 8
+    },
+    {
+      "gpu": "3814, 27",
+      "time": "2026-09-27T19:57:47.6749040Z",
+      "working_set_bytes": 1539686400,
+      "cpu_seconds": 8
+    },
+    {
+      "gpu": "3814, 89",
+      "time": "2026-09-27T19:57:48.7574906Z",
+      "working_set_bytes": 1539715072,
+      "cpu_seconds": 8.53125
+    },
+    {
+      "gpu": "3810, 78",
+      "time": "2026-09-27T19:57:49.8414892Z",
+      "working_set_bytes": 1539715072,
+      "cpu_seconds": 9.4375
+    },
+    {
+      "gpu": "3771, 78",
+      "time": "2026-09-27T19:57:50.9180179Z",
+      "working_set_bytes": 1539866624,
+      "cpu_seconds": 10.484375
+    },
+    {
+      "gpu": "2354, 81",
+      "time": "2026-09-27T19:57:51.9990123Z",
+      "working_set_bytes": 1539866624,
+      "cpu_seconds": 11.234375
+    }
+  ],
+  "resource_sampling_error": null,
+  "finished_at": "2026-09-27T19:57:52.246Z"
+}

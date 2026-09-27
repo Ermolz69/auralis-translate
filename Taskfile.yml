@@ -1,6 +1,29 @@
 version: "3"
 
 tasks:
+  eval:currency-prompts:
+    desc: Explore direct terminology prompts before selecting a versioned file profile
+    cmds:
+      - node eval/scripts/currency-prompt-probe.mjs
+  eval:currency-controls:
+    desc: Repeat independent Chinese prices, named foreign currencies and nonmonetary pieces
+    env:
+      AURALIS_DEMO_PROFILE: models/manifests/hy_mt2_1_8b_q4_k_m.fidelity.experimental.json
+      AURALIS_DEMO_DATASET: eval/corpora/currency-controls-v1.json
+    cmds:
+      - task: build:release
+      - node eval/scripts/public-demo-benchmark.mjs
+  eval:public-demo:fidelity:
+    desc: Compare the Chinese fidelity profile on the original twenty development lines
+    env:
+      AURALIS_DEMO_PROFILE: models/manifests/hy_mt2_1_8b_q4_k_m.fidelity.experimental.json
+    cmds:
+      - task: build:release
+      - node eval/scripts/public-demo-benchmark.mjs
+  test:fidelity:
+    desc: Verify profile versioning, Chinese admission and unchanged legacy provider behavior
+    cmds:
+      - cargo test --offline -p auralis-translation-llamacpp --test profile_contract --test protocol
   site:preview:
     desc: Preview the single report on loopback without exposing repository files
     cmds:
