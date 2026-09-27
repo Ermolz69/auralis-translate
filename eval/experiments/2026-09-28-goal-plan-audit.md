@@ -1,6 +1,6 @@
 # Goal scope and regression planning audit
 
-Status: local planning/report verification passed, 28 September 2026. No Goal is activated
+Status: planning/report verification and Pages publication passed, 28 September 2026. No Goal is activated
 and no model, training, migration, fuzz or audio experiment is executed here.
 
 ## Gaps and additions
@@ -35,6 +35,18 @@ architecture document 014 and Auralis code/submodule pin stay outside the change
 Chrome local-preview inspection confirmed the 49 task rows, six document links,
 the added completion/regression/retry/rollback note and explicit not-started Goal
 label. The note/links were visually inspected in a real browser screenshot.
-Publication is pending; its remote result will be recorded after deployment.
+The live page and its additional note/document links were visually inspected after
+deployment; no JavaScript errors were logged. Embedded data reports 49 tasks,
+six document identities, 5 done, 4 ready, 32 planned and 8 deferred; no implementation
+task is running. A screenshot is retained in the ignored local cache.
 No production Rust/model/audio behavior is changed, so expensive real-model and
 Rust checks are not repeated for this slice.
+
+## Publication
+
+Planning commit `5049720d052fb91e7a0d7a780a49b81d7e0fc1f6` was pushed to `main`.
+Both author and committer match the verified primary global Git name/email.
+[Pages run 36353324098](https://github.com/Ermolz69/auralis-translate/actions/runs/36353324098)
+completed with `success`. The [live progress](https://ermolz69.github.io/auralis-translate/#delivery-plan)
+matches the canonical backlog; the goal prompt link is present. This follow-up
+record adds publication evidence only, not model/language/audio results.
