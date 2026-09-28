@@ -26,7 +26,9 @@ All v5 manifests record template SHA-256
 `7eed5a47e3679f8b20113dd2842bf581b9760c56d83c84283b57884c3e4414a1`.
 The previous v5 template and real observations remain in Git/report history.
 
-Open: real same-source no-term/term comparisons, externally reviewed term
-provenance, semantic controls, long-file token/quality evidence, and the
-singular-actor `REG-002` failure. No deterministic test claims that a model
-obeyed the term or that synthetic provenance represents a person.
+The subsequent [real paired probe](2026-09-28-v5-terms-paired-results.md)
+compares three same-source authored scenes and retains an earlier failed
+budget attempt. Open: externally reviewed term provenance, broader semantic
+controls, long-file token/quality evidence, and the singular-actor `REG-002`
+failure. No deterministic test claims that a model obeyed the term or that
+synthetic provenance represents a person.

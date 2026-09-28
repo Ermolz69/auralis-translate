@@ -11,10 +11,12 @@ const corpusBytes = await read('eval/corpora/scene-pronoun-regression-v1.json');
 const firstBytes = await read('eval/reports/scene-context-smoke-2026-09-28.json');
 const reportBytes = await read('eval/reports/scene-pronoun-regression-2026-09-28.json');
 const repairBytes = await read('eval/reports/scene-number-repair-2026-09-28.json');
+const afterTermsBytes = await read('eval/reports/scene-pronoun-after-terms-2026-09-28.json');
 const corpus = JSON.parse(corpusBytes);
 const first = JSON.parse(firstBytes);
 const report = JSON.parse(reportBytes);
 const repair = JSON.parse(repairBytes);
+const afterTerms = JSON.parse(afterTermsBytes);
 
 assert.equal(index.schema_version, 1);
 assert.equal(index.id, 'REG-002');
@@ -23,6 +25,7 @@ assert.equal(index.human_review, 'missing');
 assert.equal(index.original_scene_report_sha256, digest(firstBytes));
 assert.equal(index.regression_report_sha256, digest(reportBytes));
 assert.equal(index.attempted_repair_report_sha256, digest(repairBytes));
+assert.equal(index.after_terms_report_sha256, digest(afterTermsBytes));
 assert.equal(index.regression_corpus_sha256, digest(corpusBytes));
 assert.equal(index.scene_profile_sha256, report.profile_sha256.scene);
 assert.equal(corpus.provenance, 'ai_authored_unreviewed');
@@ -103,5 +106,13 @@ for (const row of repair.cases) {
 }
 assert.deepEqual(repair.cases.slice(0, 3).map(row => row.arms[1].accepted_target), ['Приехали.', 'Приехали.', 'Прибыли.']);
 assert.equal(repair.cases[3].arms[1].accepted_target, 'Прибыли.');
+assert.equal(afterTerms.corpus_sha256, report.corpus_sha256);
+assert.equal(afterTerms.status, 'passed_structural_probe');
+assert.equal(afterTerms.failures.length, 0);
+assert.equal(afterTerms.requests.length, 72);
+assert.equal(afterTerms.requests.filter(request => request.path === '/v1/chat/completions').length, 24);
+assert.deepEqual(afterTerms.cases.map(row => row.id), corpus.cases.map(row => row.id));
+assert.deepEqual(afterTerms.cases.map(row => row.arms[1].accepted_target), ['Приехали.', 'Приехали.', 'Приехали.', 'Прибыли.']);
+assert(afterTerms.cases.every(row => row.arms.every(arm => arm.offline_reexport === 'byte_identical')));
 await fs.access(path.join(root, index.evidence_record));
-console.log('REG-002 verified: original and failed prompt-repair singular/plural evidence retained with related and negative controls; no human acceptance claimed.');
+console.log('REG-002 verified: original, failed repair and current v5-template singular/plural evidence retained with related and negative controls; no human acceptance claimed.');
