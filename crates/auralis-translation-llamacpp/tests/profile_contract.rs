@@ -13,6 +13,30 @@ const FIDELITY_PROFILE: &[u8] =
     include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.fidelity.experimental.json");
 const LARGE_FIDELITY_PROFILE: &[u8] =
     include_bytes!("../../../models/manifests/hy_mt2_7b_q4_k_m.fidelity.experimental.json");
+const V5_SCENE_PROFILE: &[u8] = include_bytes!(
+    "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v5_scene.experimental.json"
+);
+
+#[test]
+fn v5_scene_profile_requires_a_bounded_token_reserve() -> Result<(), Box<dyn Error>> {
+    let profile = ModelProfile::from_json(V5_SCENE_PROFILE)?;
+    assert_eq!(profile.prompt_version, 5);
+    assert_eq!(profile.min_context_tokens, Some(2048));
+    assert_eq!(profile.token_safety_margin_tokens, Some(64));
+    let mut value: serde_json::Value = serde_json::from_slice(V5_SCENE_PROFILE)?;
+    for bad in [
+        serde_json::Value::Null,
+        serde_json::json!(0),
+        serde_json::json!(513),
+    ] {
+        value["token_safety_margin_tokens"] = bad;
+        assert!(ModelProfile::from_json(&serde_json::to_vec(&value)?).is_err());
+    }
+    value["token_safety_margin_tokens"] = serde_json::json!(64);
+    value["max_tokens_per_line"] = serde_json::json!(2048);
+    assert!(ModelProfile::from_json(&serde_json::to_vec(&value)?).is_err());
+    Ok(())
+}
 
 #[test]
 fn model_sizes_share_policy_but_keep_separate_identity() -> Result<(), Box<dyn Error>> {

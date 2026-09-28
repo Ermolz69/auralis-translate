@@ -12,6 +12,7 @@ const MAX_CONTEXT_SEGMENTS: usize = 8;
 const MAX_CONTEXT_BYTES: usize = 64 * 1024;
 const MAX_GLOSSARY_BYTES: usize = 32 * 1024;
 const MAX_GLOSSARY_ENTRIES: usize = 128;
+const MAX_TOKEN_SAFETY_MARGIN: u32 = 512;
 
 fn default_target_segments() -> usize {
     DEFAULT_TARGET_SEGMENTS
@@ -46,6 +47,8 @@ pub struct ModelProfile {
     pub context_after_segments: usize,
     #[serde(default)]
     pub max_context_bytes: usize,
+    #[serde(default)]
+    pub token_safety_margin_tokens: Option<u32>,
     #[serde(default)]
     pub max_glossary_bytes: usize,
     #[serde(default)]
@@ -139,8 +142,17 @@ impl ModelProfile {
                 && (self.max_glossary_bytes == 0 || self.max_glossary_entries == 0))
             || (self.prompt_version == 5
                 && ((self.context_before_segments + self.context_after_segments > 0
-                    && self.max_context_bytes == 0)
+                    && (self.max_context_bytes == 0
+                        || self.token_safety_margin_tokens.is_none()
+                        || self.min_context_tokens.is_none()))
                     || self.max_block_attempts != 1))
+            || self.token_safety_margin_tokens.is_some_and(|margin| {
+                self.prompt_version != 5
+                    || !(1..=MAX_TOKEN_SAFETY_MARGIN).contains(&margin)
+                    || self.min_context_tokens.is_none_or(|context| {
+                        context <= self.max_tokens_per_line.saturating_add(margin)
+                    })
+            })
         {
             return Err(ProfileError::Invalid("prompt and context policy disagree"));
         }

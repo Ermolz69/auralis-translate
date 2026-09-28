@@ -20,6 +20,7 @@ fn file_context_requires_scene_map_before_state_creation() -> Result<(), Box<dyn
     let mut value: serde_json::Value = serde_json::from_slice(PROFILE)?;
     value["context_before_segments"] = 1.into();
     value["max_context_bytes"] = 4096.into();
+    value["token_safety_margin_tokens"] = 64.into();
     std::fs::write(&profile, serde_json::to_vec(&value)?)?;
     let result = Command::new(env!("CARGO_BIN_EXE_auralis-translation-cli"))
         .args([
@@ -57,6 +58,7 @@ fn scene_map_is_frozen_for_resume_and_rejects_changed_evidence() -> Result<(), B
     value["context_before_segments"] = 1.into();
     value["context_after_segments"] = 1.into();
     value["max_context_bytes"] = 4096.into();
+    value["token_safety_margin_tokens"] = 64.into();
     std::fs::write(&profile, serde_json::to_vec(&value)?)?;
     let source_hash = SourceHash::digest(original.as_bytes());
     let bad = serde_json::json!({

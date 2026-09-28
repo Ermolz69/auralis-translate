@@ -18,6 +18,8 @@ const CHAT_PATH: &str = "/v1/chat/completions";
 const HEALTH_PATH: &str = "/health";
 const PROPS_PATH: &str = "/props";
 const MODELS_PATH: &str = "/v1/models";
+const APPLY_TEMPLATE_PATH: &str = "/apply-template";
+const TOKENIZE_PATH: &str = "/tokenize";
 const RESPONSE_SCHEMA_VERSION: u32 = 1;
 
 pub struct LlamaCppProvider {
@@ -136,6 +138,100 @@ impl LlamaCppProvider {
         decode_chat_response(&self.http.request(request, preparation)?)
     }
 
+    fn preflight_post(
+        &self,
+        path: &str,
+        body: serde_json::Value,
+        control: Option<(&dyn RunControl, RunId)>,
+    ) -> Result<serde_json::Value, ProviderError> {
+        let endpoint = self
+            .base
+            .join(path)
+            .map_err(|_| ProviderError("invalid llama.cpp token endpoint".into()))?;
+        let check = || match control {
+            Some((control, run_id)) => match control.pause_requested(run_id) {
+                Ok(false) => Ok(()),
+                Ok(true) => Err(ProviderError("request paused".into())),
+                Err(error) => Err(ProviderError(error.to_string())),
+            },
+            None => Ok(()),
+        };
+        let preparation: Option<&dyn PreparationControl> =
+            control.map(|_| &check as &dyn PreparationControl);
+        let request = self.http.client().post(endpoint).json(&body);
+        serde_json::from_slice(&self.http.request(request, preparation)?)
+            .map_err(|_| ProviderError("invalid llama.cpp token preflight JSON".into()))
+    }
+
+    fn rendered_chat_tokens(
+        &self,
+        prompt_text: &str,
+        control: Option<(&dyn RunControl, RunId)>,
+    ) -> Result<usize, ProviderError> {
+        let template = self.preflight_post(
+            APPLY_TEMPLATE_PATH,
+            json!({
+                "model": self.profile.model_alias,
+                "messages": [{"role": "user", "content": prompt_text}],
+                "response_format": crate::contextual_prompt_v5::response_format(),
+            }),
+            control,
+        )?;
+        let rendered = template["prompt"]
+            .as_str()
+            .filter(|prompt| !prompt.is_empty())
+            .ok_or_else(|| ProviderError("llama.cpp returned no rendered chat prompt".into()))?;
+        let tokenized = self.preflight_post(
+            TOKENIZE_PATH,
+            json!({"content": rendered, "add_special": false, "parse_special": true}),
+            control,
+        )?;
+        let tokens = tokenized["tokens"]
+            .as_array()
+            .filter(|tokens| {
+                !tokens.is_empty() && tokens.iter().all(|token| token.as_u64().is_some())
+            })
+            .ok_or_else(|| ProviderError("llama.cpp returned invalid prompt tokens".into()))?;
+        Ok(tokens.len())
+    }
+
+    fn budgeted_v5_prompt(
+        &self,
+        segment: &auralis_translation::SourceSegment,
+        line_index: usize,
+        context: &[auralis_translation::SourceSegment],
+        prepared: &crate::chinese_fidelity_prompt::ChineseFidelityPrompt,
+        control: Option<(&dyn RunControl, RunId)>,
+    ) -> Result<String, ProviderError> {
+        let context_limit = self.profile.min_context_tokens.ok_or_else(|| {
+            ProviderError("v5 context profile has no tokenizer context limit".into())
+        })?;
+        let safety = self
+            .profile
+            .token_safety_margin_tokens
+            .ok_or_else(|| ProviderError("v5 context profile has no token safety margin".into()))?;
+        let available = context_limit
+            .checked_sub(self.profile.max_tokens_per_line)
+            .and_then(|remaining| remaining.checked_sub(safety))
+            .ok_or_else(|| ProviderError("v5 response reserve exceeds model context".into()))?;
+        let mut selected = context.to_vec();
+        loop {
+            let prompt =
+                crate::contextual_prompt_v5::render(segment, line_index, &selected, prepared);
+            if self.rendered_chat_tokens(&prompt, control)? <= available as usize {
+                return Ok(prompt);
+            }
+            let Some((farthest, _)) = selected.iter().enumerate().max_by_key(|(_, cue)| {
+                (cue.id().get().abs_diff(segment.id().get()), cue.id().get())
+            }) else {
+                return Err(ProviderError(
+                    "v5 target exceeds rendered token budget".into(),
+                ));
+            };
+            selected.remove(farthest);
+        }
+    }
+
     fn translate_controlled(
         &self,
         batch: &TranslationBatch,
@@ -202,12 +298,22 @@ impl LlamaCppProvider {
                     let prepared = crate::chinese_fidelity_prompt::ChineseFidelityPrompt::prepare(
                         source_line,
                     )?;
-                    let prompt_text = crate::contextual_prompt_v5::render(
-                        segment,
-                        line_index,
-                        batch.context(),
-                        &prepared,
-                    );
+                    let prompt_text = if self.profile.token_safety_margin_tokens.is_some() {
+                        self.budgeted_v5_prompt(
+                            segment,
+                            line_index,
+                            batch.context(),
+                            &prepared,
+                            control,
+                        )?
+                    } else {
+                        crate::contextual_prompt_v5::render(
+                            segment,
+                            line_index,
+                            batch.context(),
+                            &prepared,
+                        )
+                    };
                     let candidate = self.translate_line(
                         prompt_text,
                         source_line,
