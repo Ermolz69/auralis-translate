@@ -69,7 +69,7 @@ does not activate implementation by being stored here.
 | RELEASE-03 | Clean Windows and desktop release gate | deferred | HOST-02, HOST-03 | G9 unseeded/offline and final native workflow, no mock substitute |
 | RELEASE-04 | Chinese translation release candidate | planned | RELEASE-05 | G1–G9 decision record, notices, hashes, rollback and explicit exclusions |
 | RELEASE-05 | Audit committed final candidate and regression dossier | planned | RELEASE-01, RELEASE-02, RELEASE-03, EVAL-04, HOST-04 | Gate/artifact/identity agreement, exact-target checks, publication and reviewed severity dispositions; [acceptance](RELEASE_ACCEPTANCE.md) |
-| VOICE-01 | Reviewed spoken-script handoff contract | ready | CTX-01, EVAL-01 | Result lineage, cue/timing/speaker mapping and separately reviewed number/name adaptation |
+| VOICE-01 | Reviewed spoken-script handoff contract | in_progress | CTX-01, EVAL-01 | Auralis local `feat/real-tts-pilot` commit `bc71330` binds selected verified result, cue/timing/speaker/voice and separate adaptation review fields; real reviewer identity/evidence, managed persistence and worker re-verification remain open |
 | VOICE-02 | Real Russian TTS selection and adapter | planned | VOICE-01, LONG-06 | Auralis-owned real audio, resource lease, engine/voice identity and cancellation; exploratory Windows SAPI adapter and failed two-cue fit at Auralis `2812bc2` do not satisfy dependencies or A2/A3 |
 | VOICE-03 | Duration fit, mixing and mux policy | planned | VOICE-02 | Measured fit tolerance, playable mapped segments, preserved meaning and separate artifacts |
 | VOICE-04 | Human-listened three-scene dubbing pilot | planned | VOICE-03, RELEASE-01, VOICE-07 | Reviewed translation input, 10–20-minute scenes, proposed audio gates and reviewer evidence |
@@ -82,7 +82,7 @@ does not activate implementation by being stored here.
 ## Current handoff
 
 The next independently executable tasks are `CTX-02`, `DATA-03`, `DATA-04`,
-`EVAL-04` and `VOICE-01`.
+`EVAL-04` and the unfinished `VOICE-01` handoff.
 `PLAN-01` has passed planning-artifact and generated-progress checks; publication
 is tracked separately in its acceptance record. `PLAN-03` freezes the user-started
 Goal in its [scope record](../eval/experiments/2026-09-28-goal-scope-v1.md).
