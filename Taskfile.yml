@@ -7,6 +7,10 @@ tasks:
       - cargo test --offline -p auralis-translation --test scene_map --test planned_batches
       - cargo test --offline -p auralis-translation-formats --test srt_context_plan
       - cargo test --offline -p auralis-translation-cli --test context_v5_admission
+  test:long-scene-plan:
+    desc: Check exact coverage and scene isolation across 1024, 4096 and 10000 owned targets
+    cmds:
+      - cargo test --offline -p auralis-translation --test long_scene_planner
   eval:regression:check:
     desc: Validate permanent failure evidence and required related and negative controls
     cmds:
