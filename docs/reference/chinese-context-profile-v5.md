@@ -12,9 +12,14 @@ The adapter accepts prompt versions 1–5, sends one line per HTTP request,
 uses byte ceilings for context/terms, and lets v4 reject both. File-based v5
 admits a context window only through a source-hashed, full-coverage scene map.
 The map and its evidence ID are saved in the run state; resume rejects altered
-bytes. The planner limits context to each declared scene. It still has no
-rendered-token counter or approved-term ledger. `CTX-02`, `CTX-03` and
-`LONG-01` must close those boundaries before release.
+bytes. The planner limits context to each declared scene. The scene-enabled
+1.8B profile measures its rendered chat template through the pinned server's
+`/apply-template` and `/tokenize` endpoints, reserves response and safety
+tokens, and removes farthest context deterministically. The first
+[real probe](../../eval/experiments/2026-09-28-scene-context-results.md)
+matched `/tokenize` counts to server usage but found a singular/plural
+translation regression. Target/batch resizing, approved terms and longer
+files remain open under `CTX-02`, `CTX-03` and `LONG-01`.
 
 ## Purpose and admission
 

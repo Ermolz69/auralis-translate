@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "id": "REG-002",
+  "status": "open_semantic_unreviewed",
+  "severity": "major",
+  "source_family": "ai_authored_development_scene",
+  "failure": "A singular explicitly named Chinese actor was rendered with a Russian plural predicate after adding scene context.",
+  "expected_invariant": "Preserve the singular or plural actor stated in the same-scene Chinese source; do not force singular in the explicit two-person negative control.",
+  "reproduction_case_id": "r01",
+  "related_case_ids": ["r02", "r03"],
+  "negative_case_ids": ["r04"],
+  "original_scene_report_sha256": "cd6c4e609ab62c765212a3a388c479d926971b8545a62168ba24a3e40451fdfb",
+  "regression_report_sha256": "ccb56c18632982d5ba841185c31e033b82ecc5a213e1048ee443bca766a2cc2b",
+  "regression_corpus_sha256": "63f15c9613890460e86b2ab1d9019f3fb092c3e61ae1f4ea55ac14823c336243",
+  "scene_profile_sha256": "dc2df47b15d0eb8b7ef8d040572821ce304e5e916bb0c420ad77ee611863c68e",
+  "human_review": "missing",
+  "evidence_record": "eval/experiments/2026-09-28-scene-context-results.md"
+}

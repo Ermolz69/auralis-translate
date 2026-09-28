@@ -24,7 +24,8 @@ freezing state to exercise resume and tamper rejection; it did not generate a
 translation. `task lint` passed after resolving range and argument-count
 warnings. `task test:context-v5` passed existing adapter/profile/CLI checks.
 
-Open work: actual model context requests and source-aware paired comparison,
-rendered chat-template token counting and deterministic trimming, approved
-terms, failed-attempt retention and real long-file evidence. No human reviewer
-has accepted scene semantics or Russian output.
+Later [paired real scene evidence](2026-09-28-scene-context-results.md)
+measured model requests and rendered-token counts, and exposed a semantic
+actor-number defect. Open work: target/batch budgeting, approved terms,
+failed-attempt retention and real long-file evidence. No human reviewer has
+accepted scene semantics or Russian output.

@@ -95,11 +95,13 @@ case hash. `task site:build` and `task site:check` passed with the former 420
 requests retained and four v5 evidence files checked/linked in the single
 Tailwind-CDN HTML. These checks do not establish semantic quality.
 
-`CTX-02` remains in progress. A later slice implemented scene map admission,
-source-only context selection and resume identity, with mock/contract checks.
-It still needs real scene-context measurement, approved term provenance,
-actual rendered-token budgeting, raw rejected-attempt persistence and typed
-provider outcomes. `CTX-03` and `LONG-01` own linked pieces. The current v5
+`CTX-02` remains in progress. Later slices implemented scene map admission,
+source-only context selection, resume identity and
+[real measured scene prompts](2026-09-28-scene-context-results.md). Those
+prompts exposed a singular/plural defect despite structural success. It still
+needs approved term provenance, complete target/batch token budgeting, raw
+rejected-attempt persistence and typed provider outcomes. `CTX-03` and
+`LONG-01` own linked pieces. The current v5
 no-context control is worse on several source facts than v4 and cannot replace
 it. `CTX-04` needs same-source paired context/model runs and independent blind
 review. No G1–G9 language, long-file or audio gate is passed here.

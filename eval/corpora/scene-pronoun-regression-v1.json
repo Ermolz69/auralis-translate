@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "corpus_id": "scene-pronoun-regression-v1",
+  "provenance": "ai_authored_unreviewed",
+  "split": "development",
+  "cases": [
+    {
+      "id": "r01",
+      "category": "singular_masculine_reproduction",
+      "target_zh": "到了。",
+      "relevant": {
+        "before_zh": ["哥哥刚下车。"],
+        "after_zh": ["门开了。"],
+        "reference_ru": "Он уже приехал.",
+        "expected_facts": ["One older brother arrived"],
+        "prohibited_facts": ["Do not change the actor to plural or feminine"]
+      }
+    },
+    {
+      "id": "r02",
+      "category": "singular_feminine_related",
+      "target_zh": "到了。",
+      "relevant": {
+        "before_zh": ["姐姐刚下车。"],
+        "after_zh": ["门开了。"],
+        "reference_ru": "Она уже приехала.",
+        "expected_facts": ["One older sister arrived"],
+        "prohibited_facts": ["Do not change the actor to plural or masculine"]
+      }
+    },
+    {
+      "id": "r03",
+      "category": "singular_masculine_related",
+      "target_zh": "到了。",
+      "relevant": {
+        "before_zh": ["弟弟刚下车。"],
+        "after_zh": ["门开了。"],
+        "reference_ru": "Он уже приехал.",
+        "expected_facts": ["One younger brother arrived"],
+        "prohibited_facts": ["Do not change the actor to plural or feminine"]
+      }
+    },
+    {
+      "id": "r04",
+      "category": "plural_negative_control",
+      "target_zh": "到了。",
+      "relevant": {
+        "before_zh": ["两个哥哥刚下车。"],
+        "after_zh": ["门开了。"],
+        "reference_ru": "Они уже приехали.",
+        "expected_facts": ["Two older brothers arrived"],
+        "prohibited_facts": ["Do not force a singular actor where the source explicitly says two"]
+      }
+    }
+  ]
+}

@@ -12,11 +12,37 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/regression-index.test.mjs
       - node eval/scripts/check-regression-index.mjs
+      - node eval/scripts/check-scene-pronoun-regression.mjs
   test:context-v5:
     desc: Verify the experimental v5 request and strict response boundary
     cmds:
       - cargo test --offline -p auralis-translation-llamacpp --test context_v5 --test profile_contract
       - cargo test --offline -p auralis-translation-cli --test context_v5_admission
+  eval:context:scene:smoke:
+    desc: Compare bounded real v5 source context on two identical authored Chinese scenes
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:context:scene:check
+      - task: build:release
+      - node eval/scripts/scene-context-smoke.mjs
+  eval:context:scene:check:
+    desc: Check the bounded paired scene benchmark script before running a model
+    cmds:
+      - node --check eval/scripts/scene-context-smoke.mjs
+  eval:context:scene:regression:
+    desc: Run the observed pronoun failure and three new same-source paired controls
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_SCENE_DATASET: eval/corpora/scene-pronoun-regression-v1.json
+      AURALIS_SCENE_CASE_IDS: r01,r02,r03,r04
+      AURALIS_SCENE_EXPERIMENT: scene-pronoun-regression-v1
+    cmds:
+      - task: eval:context:scene:check
+      - task: build:release
+      - node eval/scripts/scene-context-smoke.mjs
   eval:context:v5:smoke:
     desc: Run bounded real-model v5 JSON admission on the frozen authored twenty lines
     env:
