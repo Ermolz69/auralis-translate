@@ -32,10 +32,10 @@ assert.deepEqual(data.v5_envelope, { sha256: v5.sha256, profile_sha256: v5.profi
 assert(html.includes('id="v5-envelope"'));
 assert.equal((html.match(/href="https:\/\/github.com\/Ermolz69\/auralis-translate\/blob\/main\/eval\/reports\/v5-/g) ?? []).length, 4);
 const scene = await loadSceneContext(root);
-assert.deepEqual(data.scene_context, { sha256: scene.sha256, profile_sha256: scene.profileHash, smoke_chat_requests: 10, regression_chat_requests: 24, regression_id: 'REG-002', human_review: 'missing' });
+assert.deepEqual(data.scene_context, { sha256: scene.sha256, profile_sha256: scene.profileHash, old_profile_sha256: scene.oldProfileHash, smoke_chat_requests: 10, regression_chat_requests: 24, repair_chat_requests: 24, regression_id: 'REG-002', human_review: 'missing' });
 assert(html.includes('id="scene-context"'));
 assert.equal((html.match(/data-scene-row=/g) ?? []).length, 6);
-assert.equal((html.match(/href="https:\/\/github.com\/Ermolz69\/auralis-translate\/blob\/main\/eval\/reports\/scene-/g) ?? []).length, 2);
+assert.equal((html.match(/href="https:\/\/github.com\/Ermolz69\/auralis-translate\/blob\/main\/eval\/reports\/scene-/g) ?? []).length, 3);
 assert.equal((html.match(/data-plan-task=/g) ?? []).length, data.delivery_plan.total_tasks);
 assert(html.indexOf('id="model-comparison"') < html.indexOf('id="delivery-plan"'));
 assert(html.indexOf('id="delivery-plan"') < html.indexOf('id="currency-fix"'));
@@ -62,4 +62,4 @@ for (const script of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))
 }
 assert(!/(?:E:\\\\|C:\\\\Users\\\\|00ermzahar@|gh[pousr]_[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)/.test(html));
 assert(!/<script[^>]+src="(?!https:\/\/cdn\.jsdelivr\.net\/npm\/@tailwindcss\/browser@4")/.test(html));
-console.log('Public HTML verified: 420 prior requests retained, four earlier v5 and two paired scene reports linked and checked, 40 model comparison rows, evidence identity, scripts and single-file publication boundary.');
+console.log('Public HTML verified: 420 prior requests retained, four earlier v5 and three paired scene reports linked and checked, 40 model comparison rows, evidence identity, scripts and single-file publication boundary.');

@@ -43,18 +43,6 @@ tasks:
       - task: eval:context:scene:check
       - task: build:release
       - node eval/scripts/scene-context-smoke.mjs
-  eval:context:scene:number-repair:
-    desc: Run the predeclared actor-number v5 prompt repair on the retained development scenes
-    env:
-      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
-      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
-      AURALIS_SCENE_DATASET: eval/corpora/scene-pronoun-regression-v1.json
-      AURALIS_SCENE_CASE_IDS: r01,r02,r03,r04
-      AURALIS_SCENE_EXPERIMENT: scene-number-repair-v1
-    cmds:
-      - task: eval:context:scene:check
-      - task: build:release
-      - node eval/scripts/scene-context-smoke.mjs
   eval:context:v5:smoke:
     desc: Run bounded real-model v5 JSON admission on the frozen authored twenty lines
     env:

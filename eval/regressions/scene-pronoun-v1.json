@@ -11,6 +11,7 @@
   "negative_case_ids": ["r04"],
   "original_scene_report_sha256": "cd6c4e609ab62c765212a3a388c479d926971b8545a62168ba24a3e40451fdfb",
   "regression_report_sha256": "ccb56c18632982d5ba841185c31e033b82ecc5a213e1048ee443bca766a2cc2b",
+  "attempted_repair_report_sha256": "35d0ce177248e4d0c2ace0c4681d0259283bc2d0d84891cca7601b03be4d1d24",
   "regression_corpus_sha256": "63f15c9613890460e86b2ab1d9019f3fb092c3e61ae1f4ea55ac14823c336243",
   "scene_profile_sha256": "dc2df47b15d0eb8b7ef8d040572821ce304e5e916bb0c420ad77ee611863c68e",
   "human_review": "missing",

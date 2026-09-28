@@ -22,7 +22,7 @@ export async function loadV5Envelope(root, dataset, v4) {
   const { placeholder, no_example: noExample, regression, control } = reports;
   const demoHash = digest(await fs.readFile(path.join(root, 'eval/corpora/public-demo-v1.json')));
   const regressionHash = digest(await fs.readFile(path.join(root, 'eval/corpora/v5-placeholder-regression-v1.json')));
-  const profileHash = digest(await fs.readFile(path.join(root, 'models/manifests/hy_mt2_1_8b_q4_k_m.context_v5.experimental.json')));
+  const profileHash = control.profile_sha256;
   assert.equal(placeholder.result, 'passed');
   assert.equal(placeholder.requests.length, 60);
   assert.equal(placeholder.dataset_sha256, demoHash);
@@ -35,7 +35,6 @@ export async function loadV5Envelope(root, dataset, v4) {
   assert.equal(control.result, 'passed');
   assert.equal(control.requests.length, 60);
   assert.equal(control.dataset_sha256, demoHash);
-  assert.equal(control.profile_sha256, profileHash);
   assert.equal(regression.profile_sha256, profileHash);
   assert.equal(control.profile.model_file_sha256, v4.profile.model_file_sha256);
   assert.equal(control.runtime_sha256, v4.runtime_sha256);

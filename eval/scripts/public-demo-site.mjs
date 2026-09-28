@@ -70,7 +70,7 @@ payload.currency = currency;
 payload.model_comparison = modelComparison;
 payload.delivery_plan = deliveryPlan;
 payload.v5_envelope = { sha256: v5Envelope.sha256, profile_sha256: v5Envelope.profileHash, copied_count: v5Envelope.copied_count };
-payload.scene_context = { sha256: sceneContext.sha256, profile_sha256: sceneContext.profileHash, smoke_chat_requests: sceneContext.smoke_chat_requests, regression_chat_requests: sceneContext.regression_chat_requests, regression_id: sceneContext.regression_id, human_review: sceneContext.human_review };
+payload.scene_context = { sha256: sceneContext.sha256, profile_sha256: sceneContext.profileHash, old_profile_sha256: sceneContext.oldProfileHash, smoke_chat_requests: sceneContext.smoke_chat_requests, regression_chat_requests: sceneContext.regression_chat_requests, repair_chat_requests: sceneContext.repair_chat_requests, regression_id: sceneContext.regression_id, human_review: sceneContext.human_review };
 const json = JSON.stringify(payload).replaceAll('<', '\\u003c');
 const runRows = benchmark.runs.map(run => `<tr><th scope="row">${run.repetition}</th><td>${number(run.translation_elapsed_ms)}</td><td>${number(run.request_elapsed_sum_ms)}</td><td>${number(run.translation_elapsed_ms - run.request_elapsed_sum_ms)}</td><td>${number(run.offline_reexport_ms)}</td><td>${run.status.completed_blocks}/${run.status.total_blocks}</td></tr>`).join('');
 const cards = dataset.examples.map((row, index) => {

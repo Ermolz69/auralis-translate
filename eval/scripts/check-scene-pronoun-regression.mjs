@@ -10,9 +10,11 @@ const index = JSON.parse(await read('eval/regressions/scene-pronoun-v1.json'));
 const corpusBytes = await read('eval/corpora/scene-pronoun-regression-v1.json');
 const firstBytes = await read('eval/reports/scene-context-smoke-2026-09-28.json');
 const reportBytes = await read('eval/reports/scene-pronoun-regression-2026-09-28.json');
+const repairBytes = await read('eval/reports/scene-number-repair-2026-09-28.json');
 const corpus = JSON.parse(corpusBytes);
 const first = JSON.parse(firstBytes);
 const report = JSON.parse(reportBytes);
+const repair = JSON.parse(repairBytes);
 
 assert.equal(index.schema_version, 1);
 assert.equal(index.id, 'REG-002');
@@ -20,6 +22,7 @@ assert.equal(index.status, 'open_semantic_unreviewed');
 assert.equal(index.human_review, 'missing');
 assert.equal(index.original_scene_report_sha256, digest(firstBytes));
 assert.equal(index.regression_report_sha256, digest(reportBytes));
+assert.equal(index.attempted_repair_report_sha256, digest(repairBytes));
 assert.equal(index.regression_corpus_sha256, digest(corpusBytes));
 assert.equal(index.scene_profile_sha256, report.profile_sha256.scene);
 assert.equal(corpus.provenance, 'ai_authored_unreviewed');
@@ -73,5 +76,32 @@ assert.deepEqual(observed.get('r01'), ['Пришло.', 'Прибыли.']);
 assert.deepEqual(observed.get('r02'), ['Пришло.', 'Приехали.']);
 assert.deepEqual(observed.get('r03'), ['Пришло.', 'Приехали.']);
 assert.deepEqual(observed.get('r04'), ['Пришло.', 'Прибыли.']);
+assert.equal(repair.corpus_sha256, report.corpus_sha256);
+assert.equal(repair.status, 'passed_structural_probe');
+assert.equal(repair.requests.length, 72);
+assert.equal(repair.requests.filter(request => request.path === '/v1/chat/completions').length, 24);
+assert.deepEqual(repair.cases.map(row => row.id), corpus.cases.map(row => row.id));
+for (const row of repair.cases) {
+  const old = report.cases.find(candidate => candidate.id === row.id);
+  assert.equal(row.source_sha256, old.source_sha256);
+  assert.deepEqual(row.arms.map(arm => arm.arm), ['baseline', 'scene']);
+  assert(row.arms.every(arm => arm.offline_reexport === 'byte_identical'));
+  for (const arm of row.arms) {
+    const active = `${row.id}:${arm.arm}`;
+    const chats = repair.requests.filter(request => request.arm === active && request.path === '/v1/chat/completions');
+    assert.equal(chats.length, 3);
+    const targetChat = chats.find(request => JSON.parse(request.request.messages[0].content.split('Input JSON:\n')[1]).target_slots[0].segment_id === row.target_id);
+    assert(targetChat?.request.messages[0].content.includes('Preserve explicit singular or plural actors'));
+    assert(!targetChat.request.messages[0].content.includes(corpus.cases.find(candidate => candidate.id === row.id).relevant.reference_ru));
+    assert.equal(JSON.parse(targetChat.raw_candidate).translations[0].text, arm.accepted_target);
+    if (arm.arm === 'scene') {
+      const tokens = repair.requests.filter(request => request.arm === active && request.path === '/tokenize');
+      assert.equal(tokens.length, chats.length);
+      tokens.forEach((measurement, position) => assert.equal(measurement.token_count, chats[position].usage.prompt_tokens));
+    }
+  }
+}
+assert.deepEqual(repair.cases.slice(0, 3).map(row => row.arms[1].accepted_target), ['Приехали.', 'Приехали.', 'Прибыли.']);
+assert.equal(repair.cases[3].arms[1].accepted_target, 'Прибыли.');
 await fs.access(path.join(root, index.evidence_record));
-console.log('REG-002 verified: exact singular/plural failure retained with two related and one negative control; no human acceptance claimed.');
+console.log('REG-002 verified: original and failed prompt-repair singular/plural evidence retained with related and negative controls; no human acceptance claimed.');
