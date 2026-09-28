@@ -1,7 +1,7 @@
 use crate::PreparationControl;
 use crate::RequestControlPolicy;
 use auralis_translation::ProviderError;
-use reqwest::{Client, RequestBuilder};
+use reqwest::{Client, RequestBuilder, StatusCode};
 use std::time::Duration;
 use tokio::runtime::Runtime;
 
@@ -10,6 +10,31 @@ pub(crate) struct LocalHttp {
     runtime: Runtime,
     control_policy: RequestControlPolicy,
     response_limit: usize,
+}
+
+pub(crate) struct HttpResponse {
+    pub(crate) status: StatusCode,
+    pub(crate) body: Vec<u8>,
+    pub(crate) truncated: bool,
+}
+
+impl HttpResponse {
+    pub(crate) fn body_result(&self) -> Result<&[u8], ProviderError> {
+        if self.truncated {
+            return Err(ProviderError::Permanent(
+                "llama.cpp response exceeds profile limit".into(),
+            ));
+        }
+        if !self.status.is_success() {
+            let message = format!("llama.cpp returned HTTP {}", self.status);
+            return Err(if matches!(self.status.as_u16(), 502..=504) {
+                ProviderError::Transient(message)
+            } else {
+                ProviderError::Permanent(message)
+            });
+        }
+        Ok(&self.body)
+    }
 }
 
 impl LocalHttp {
@@ -46,6 +71,16 @@ impl LocalHttp {
         request: RequestBuilder,
         control: Option<&dyn PreparationControl>,
     ) -> Result<Vec<u8>, ProviderError> {
+        let response = self.request_with_status(request, control)?;
+        response.body_result()?;
+        Ok(response.body)
+    }
+
+    pub(crate) fn request_with_status(
+        &self,
+        request: RequestBuilder,
+        control: Option<&dyn PreparationControl>,
+    ) -> Result<HttpResponse, ProviderError> {
         self.runtime.block_on(async {
             let result = {
                 let response = self.read_response(request);
@@ -70,26 +105,26 @@ impl LocalHttp {
         })
     }
 
-    async fn read_response(&self, request: RequestBuilder) -> Result<Vec<u8>, ProviderError> {
+    async fn read_response(&self, request: RequestBuilder) -> Result<HttpResponse, ProviderError> {
         let mut response = request.send().await.map_err(transport_error)?;
-        if !response.status().is_success() {
-            let message = format!("llama.cpp returned HTTP {}", response.status());
-            return Err(if matches!(response.status().as_u16(), 502..=504) {
-                ProviderError::Transient(message)
-            } else {
-                ProviderError::Permanent(message)
-            });
-        }
+        let status = response.status();
         let mut bytes = Vec::new();
         while let Some(chunk) = response.chunk().await.map_err(transport_error)? {
             if chunk.len() > self.response_limit.saturating_sub(bytes.len()) {
-                return Err(ProviderError::Permanent(
-                    "llama.cpp response exceeds profile limit".into(),
-                ));
+                bytes.extend_from_slice(&chunk[..self.response_limit.saturating_sub(bytes.len())]);
+                return Ok(HttpResponse {
+                    status,
+                    body: bytes,
+                    truncated: true,
+                });
             }
             bytes.extend_from_slice(&chunk);
         }
-        Ok(bytes)
+        Ok(HttpResponse {
+            status,
+            body: bytes,
+            truncated: false,
+        })
     }
 }
 

@@ -209,11 +209,12 @@ impl LlamaCppProvider {
         let preparation: Option<&dyn PreparationControl> =
             control.map(|_| &check as &dyn PreparationControl);
         let clock = Instant::now();
-        let response = self.http.request(request, preparation);
+        let response = self.http.request_with_status(request, preparation);
         let translated = response
             .as_ref()
             .map_err(|error| ProviderError::Permanent(error.to_string()))
-            .and_then(|raw| decode_chat_response(raw))
+            .and_then(|http| http.body_result())
+            .and_then(decode_chat_response)
             .and_then(|candidate| {
                 crate::contextual_prompt_v5::decode(&candidate, segment, line_index)
             })
@@ -222,7 +223,8 @@ impl LlamaCppProvider {
             let (prompt_tokens, completion_tokens) = response
                 .as_ref()
                 .ok()
-                .map_or((None, None), |raw| response_usage(raw));
+                .and_then(|http| http.body_result().ok())
+                .map_or((None, None), response_usage);
             let outcome = match (&response, &translated) {
                 (_, Ok(_)) => InferenceRequestOutcome::ValidatedLine,
                 (Err(error), _) if error.to_string().contains("paused") => {
@@ -236,6 +238,13 @@ impl LlamaCppProvider {
                 }
                 (Err(ProviderError::Transient(_)), _) => InferenceRequestOutcome::TransportFailure,
                 (Err(_), _) => InferenceRequestOutcome::OtherPermanent,
+                (Ok(http), _) if http.truncated => InferenceRequestOutcome::OtherPermanent,
+                (Ok(http), _) if matches!(http.status.as_u16(), 502..=504) => {
+                    InferenceRequestOutcome::TransportFailure
+                }
+                (Ok(http), _) if !http.status.is_success() => {
+                    InferenceRequestOutcome::OtherPermanent
+                }
                 (Ok(_), Err(error))
                     if error.to_string().contains("invalid v5 translation JSON")
                         || error
@@ -250,7 +259,7 @@ impl LlamaCppProvider {
             let finish = InferenceRequestFinish {
                 request_id: start.request_id,
                 outcome,
-                raw_response: response.as_ref().ok().cloned(),
+                raw_response: response.as_ref().ok().map(|http| http.body.clone()),
                 restored_candidate: translated.as_ref().ok().cloned(),
                 prompt_tokens,
                 completion_tokens,
@@ -263,7 +272,10 @@ impl LlamaCppProvider {
         }
         match response {
             Err(error) => Err(error),
-            Ok(_) => translated,
+            Ok(http) => match http.body_result() {
+                Err(error) => Err(error),
+                Ok(_) => translated,
+            },
         }
     }
 

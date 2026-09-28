@@ -1,7 +1,7 @@
 use auralis_translation::{
     InferenceRequestFinish, InferenceRequestJournal, InferenceRequestOutcome,
     InferenceRequestStart, LanguageCode, LanguagePair, RunId, SegmentId, SourceHash, SourceSegment,
-    TranslationBatch, TranslationId, translate_batch,
+    TranslationBatch, TranslationId, TranslationProvider, translate_batch,
 };
 use auralis_translation_llamacpp::{LlamaCppProvider, ModelProfile};
 use serde_json::Value;
@@ -107,6 +107,93 @@ fn v5_records_rendered_request_and_rejected_raw_response() -> Result<(), Box<dyn
     assert!(finishes[0].restored_candidate.is_none());
     let request: Value = serde_json::from_slice(&starts[0].rendered_request)?;
     assert_eq!(request["response_format"]["type"], "json_object");
+    Ok(())
+}
+
+#[test]
+fn v5_retains_bounded_http_error_bodies_with_retry_classification() -> Result<(), Box<dyn Error>> {
+    for (status, body, expected_outcome, retryable) in [
+        (
+            "503 Service Unavailable",
+            r#"{"error":"model busy"}"#,
+            InferenceRequestOutcome::TransportFailure,
+            true,
+        ),
+        (
+            "400 Bad Request",
+            r#"{"error":"invalid template"}"#,
+            InferenceRequestOutcome::OtherPermanent,
+            false,
+        ),
+    ] {
+        let listener = TcpListener::bind("127.0.0.1:0")?;
+        let address = listener.local_addr()?;
+        let server = std::thread::spawn(move || serve_with_chat_status(&listener, body, status));
+        let journal = Arc::new(RecordedRequests::default());
+        let provider = LlamaCppProvider::new(
+            &format!("http://{address}/"),
+            ModelProfile::from_json(PROFILE)?,
+        )?
+        .with_inference_journal(journal.clone());
+        let error = match provider.translate(&batch(false)?) {
+            Err(error) => error,
+            Ok(_) => return Err("HTTP failure must reject".into()),
+        };
+        assert_eq!(error.is_retryable(), retryable);
+        assert!(
+            error
+                .to_string()
+                .contains(status.split(' ').next().ok_or("no status")?)
+        );
+        server.join().map_err(|_| "server panicked")??;
+        let starts = journal.starts.lock().map_err(|_| "journal lock poisoned")?;
+        let finishes = journal
+            .finishes
+            .lock()
+            .map_err(|_| "journal lock poisoned")?;
+        assert_eq!(starts.len(), 1);
+        assert_eq!(finishes.len(), 1);
+        assert_eq!(starts[0].request_id, finishes[0].request_id);
+        assert_eq!(finishes[0].outcome, expected_outcome);
+        assert_eq!(finishes[0].raw_response.as_deref(), Some(body.as_bytes()));
+        assert!(finishes[0].restored_candidate.is_none());
+    }
+    Ok(())
+}
+
+#[test]
+fn v5_rejects_oversized_http_body_and_retains_only_bounded_prefix() -> Result<(), Box<dyn Error>> {
+    let listener = TcpListener::bind("127.0.0.1:0")?;
+    let address = listener.local_addr()?;
+    let body = r#"{"error":"oversized server diagnostic"}"#;
+    let server = std::thread::spawn(move || {
+        serve_with_chat_status(&listener, body, "503 Service Unavailable")
+    });
+    let journal = Arc::new(RecordedRequests::default());
+    let mut profile: Value = serde_json::from_slice(PROFILE)?;
+    profile["max_response_bytes"] = 8.into();
+    let provider = LlamaCppProvider::new(
+        &format!("http://{address}/"),
+        ModelProfile::from_json(&serde_json::to_vec(&profile)?)?,
+    )?
+    .with_inference_journal(journal.clone());
+    let error = match provider.translate(&batch(false)?) {
+        Err(error) => error,
+        Ok(_) => return Err("oversized body must reject".into()),
+    };
+    assert!(!error.is_retryable());
+    assert!(error.to_string().contains("exceeds profile limit"));
+    server.join().map_err(|_| "server panicked")??;
+    let finishes = journal
+        .finishes
+        .lock()
+        .map_err(|_| "journal lock poisoned")?;
+    assert_eq!(finishes.len(), 1);
+    assert_eq!(finishes[0].outcome, InferenceRequestOutcome::OtherPermanent);
+    assert_eq!(
+        finishes[0].raw_response.as_deref(),
+        Some(&body.as_bytes()[..8])
+    );
     Ok(())
 }
 
@@ -391,6 +478,23 @@ fn serve_with_mode(
     candidate: &str,
     oversized_when_far: bool,
 ) -> Result<Value, String> {
+    serve_custom(listener, candidate, oversized_when_far, "200 OK")
+}
+
+fn serve_with_chat_status(
+    listener: &TcpListener,
+    body: &str,
+    status: &str,
+) -> Result<Value, String> {
+    serve_custom(listener, body, false, status)
+}
+
+fn serve_custom(
+    listener: &TcpListener,
+    candidate: &str,
+    oversized_when_far: bool,
+    chat_status: &str,
+) -> Result<Value, String> {
     loop {
         let (mut stream, _) = listener.accept().map_err(|error| error.to_string())?;
         stream
@@ -441,11 +545,17 @@ fn serve_with_mode(
                 };
                 serde_json::json!({"tokens": (1..=count).collect::<Vec<_>>()}).to_string()
             },
-            "/v1/chat/completions" => serde_json::json!({"choices":[{"message":{"content":candidate},"finish_reason":"stop"}]}).to_string(),
+            "/v1/chat/completions" if chat_status == "200 OK" => serde_json::json!({"choices":[{"message":{"content":candidate},"finish_reason":"stop"}]}).to_string(),
+            "/v1/chat/completions" => candidate.to_owned(),
             _ => return Err(format!("unexpected path: {path}")),
         };
+        let status = if path == "/v1/chat/completions" {
+            chat_status
+        } else {
+            "200 OK"
+        };
         let response = format!(
-            "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",
+            "HTTP/1.1 {status}\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",
             body.len()
         );
         stream
