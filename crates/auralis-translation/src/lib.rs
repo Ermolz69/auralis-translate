@@ -9,10 +9,13 @@ pub use application::{
 };
 pub use domain::{
     ApprovedTerm, ApprovedTerms, BlockCheckpoint, BlockPolicy, ContractError, DiagnosticCode,
-    Glossary, GlossaryEntry, IdError, LanguageCode, LanguagePair, ProviderResponse, ResultId,
-    RetryPolicy, ReviewState, RunId, RunProgress, RunState, SceneMap, SegmentId, SourceHash,
-    SourceSegment, TargetSegment, TranslationBatch, TranslationDiagnostic, TranslationId,
+    Glossary, GlossaryEntry, IdError, InferenceRequestFinish, InferenceRequestId,
+    InferenceRequestOutcome, InferenceRequestStart, LanguageCode, LanguagePair, ProviderResponse,
+    ResultId, RetryPolicy, ReviewState, RunId, RunProgress, RunState, SceneMap, SegmentId,
+    SourceHash, SourceSegment, TargetSegment, TranslationBatch, TranslationDiagnostic,
+    TranslationId,
 };
 pub use ports::{
-    CheckpointStore, ProgressSink, ProviderError, RunControl, TranslationProvider, VerifiedRenderer,
+    CheckpointStore, InferenceRequestJournal, ProgressSink, ProviderError, RunControl,
+    TranslationProvider, VerifiedRenderer,
 };

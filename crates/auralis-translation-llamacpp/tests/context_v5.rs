@@ -1,16 +1,114 @@
 use auralis_translation::{
-    LanguageCode, LanguagePair, RunId, SegmentId, SourceHash, SourceSegment, TranslationBatch,
-    TranslationId, translate_batch,
+    InferenceRequestFinish, InferenceRequestJournal, InferenceRequestOutcome,
+    InferenceRequestStart, LanguageCode, LanguagePair, RunId, SegmentId, SourceHash, SourceSegment,
+    TranslationBatch, TranslationId, translate_batch,
 };
 use auralis_translation_llamacpp::{LlamaCppProvider, ModelProfile};
 use serde_json::Value;
 use std::error::Error;
 use std::io::{Read, Write};
 use std::net::TcpListener;
+use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
 const PROFILE: &[u8] =
     include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v5.experimental.json");
+
+#[derive(Default)]
+struct RecordedRequests {
+    starts: Mutex<Vec<InferenceRequestStart>>,
+    finishes: Mutex<Vec<InferenceRequestFinish>>,
+    fail_begin: bool,
+}
+
+impl InferenceRequestJournal for RecordedRequests {
+    fn begin(&self, start: &InferenceRequestStart) -> Result<(), Box<dyn Error + Send + Sync>> {
+        if self.fail_begin {
+            return Err("injected journal failure".into());
+        }
+        self.starts
+            .lock()
+            .map_err(|_| "journal lock poisoned")?
+            .push(start.clone());
+        Ok(())
+    }
+
+    fn finish(&self, finish: &InferenceRequestFinish) -> Result<(), Box<dyn Error + Send + Sync>> {
+        self.finishes
+            .lock()
+            .map_err(|_| "journal lock poisoned")?
+            .push(finish.clone());
+        Ok(())
+    }
+}
+
+#[test]
+fn v5_does_not_call_model_when_request_identity_cannot_be_saved() -> Result<(), Box<dyn Error>> {
+    let listener = TcpListener::bind("127.0.0.1:0")?;
+    listener.set_nonblocking(true)?;
+    let journal = Arc::new(RecordedRequests {
+        fail_begin: true,
+        ..Default::default()
+    });
+    let provider = LlamaCppProvider::new(
+        &format!("http://{}/", listener.local_addr()?),
+        ModelProfile::from_json(PROFILE)?,
+    )?
+    .with_inference_journal(journal.clone());
+    assert!(translate_batch(&provider, &batch(false)?).is_err());
+    assert!(
+        matches!(listener.accept(), Err(error) if error.kind() == std::io::ErrorKind::WouldBlock)
+    );
+    assert!(
+        journal
+            .starts
+            .lock()
+            .map_err(|_| "journal lock poisoned")?
+            .is_empty()
+    );
+    Ok(())
+}
+
+#[test]
+fn v5_records_rendered_request_and_rejected_raw_response() -> Result<(), Box<dyn Error>> {
+    let listener = TcpListener::bind("127.0.0.1:0")?;
+    let address = listener.local_addr()?;
+    let server = std::thread::spawn(move || serve(&listener, "not json"));
+    let journal = Arc::new(RecordedRequests::default());
+    let provider = LlamaCppProvider::new(
+        &format!("http://{address}/"),
+        ModelProfile::from_json(PROFILE)?,
+    )?
+    .with_inference_journal(journal.clone());
+    let batch = batch(false)?;
+    assert!(translate_batch(&provider, &batch).is_err());
+    server.join().map_err(|_| "server panicked")??;
+    let starts = journal.starts.lock().map_err(|_| "journal lock poisoned")?;
+    let finishes = journal
+        .finishes
+        .lock()
+        .map_err(|_| "journal lock poisoned")?;
+    assert_eq!(starts.len(), 1);
+    assert_eq!(finishes.len(), 1);
+    assert_eq!(starts[0].run_id, batch.run_id());
+    assert_eq!(starts[0].batch_fingerprint, batch.fingerprint());
+    assert_eq!(starts[0].segment_id, batch.targets()[0].id());
+    assert_eq!(starts[0].request_id, finishes[0].request_id);
+    assert_eq!(
+        finishes[0].outcome,
+        InferenceRequestOutcome::MalformedCandidate
+    );
+    assert!(
+        finishes[0]
+            .raw_response
+            .as_ref()
+            .is_some_and(|raw| raw.windows(8).any(|bytes| bytes == b"not json"))
+    );
+    assert!(finishes[0].restored_candidate.is_none());
+    let request: Value = serde_json::from_slice(&starts[0].rendered_request)?;
+    assert_eq!(request["response_format"]["type"], "json_object");
+    Ok(())
+}
 
 #[test]
 fn v5_sends_only_source_slots_and_restores_protected_money() -> Result<(), Box<dyn Error>> {

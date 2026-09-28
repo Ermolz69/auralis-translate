@@ -6,13 +6,17 @@ use crate::{
     local_http::LocalHttp,
 };
 use auralis_translation::{
-    LanguageCode, ProviderError, ProviderResponse, RunControl, RunId, TargetSegment,
-    TranslationBatch, TranslationProvider,
+    InferenceRequestFinish, InferenceRequestId, InferenceRequestJournal, InferenceRequestOutcome,
+    InferenceRequestStart, LanguageCode, ProviderError, ProviderResponse, RunControl, RunId,
+    TargetSegment, TranslationBatch, TranslationProvider,
 };
 use reqwest::Url;
+use reqwest::header::CONTENT_TYPE;
 use serde_json::json;
 use sha2::{Digest, Sha256};
-use std::time::Duration;
+use std::sync::Arc;
+use std::time::{Duration, Instant};
+use uuid::Uuid;
 
 const CHAT_PATH: &str = "/v1/chat/completions";
 const HEALTH_PATH: &str = "/health";
@@ -27,6 +31,7 @@ pub struct LlamaCppProvider {
     base: Url,
     endpoint: Url,
     profile: ModelProfile,
+    inference_journal: Option<Arc<dyn InferenceRequestJournal>>,
 }
 
 impl LlamaCppProvider {
@@ -64,7 +69,13 @@ impl LlamaCppProvider {
             base,
             endpoint,
             profile,
+            inference_journal: None,
         })
+    }
+
+    pub fn with_inference_journal(mut self, journal: Arc<dyn InferenceRequestJournal>) -> Self {
+        self.inference_journal = Some(journal);
+        self
     }
 
     pub fn probe_server(&self) -> Result<ServerReport, ProviderError> {
@@ -136,6 +147,124 @@ impl LlamaCppProvider {
         let preparation: Option<&dyn PreparationControl> =
             control.map(|_| &check as &dyn PreparationControl);
         decode_chat_response(&self.http.request(request, preparation)?)
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn translate_v5_line(
+        &self,
+        batch: &TranslationBatch,
+        segment: &auralis_translation::SourceSegment,
+        line_index: usize,
+        source_line: &str,
+        prompt_text: String,
+        prepared: &crate::chinese_fidelity_prompt::ChineseFidelityPrompt,
+        control: Option<(&dyn RunControl, RunId)>,
+    ) -> Result<String, ProviderError> {
+        let payload = json!({
+            "model": self.profile.model_alias,
+            "messages": [{"role": "user", "content": prompt_text}],
+            "temperature": self.profile.temperature,
+            "top_p": self.profile.top_p,
+            "top_k": self.profile.top_k,
+            "repeat_penalty": self.profile.repeat_penalty,
+            "max_tokens": self.profile.max_tokens_per_line,
+            "stream": false,
+            "response_format": crate::contextual_prompt_v5::response_format(),
+        });
+        let rendered_request = serde_json::to_vec(&payload)
+            .map_err(|_| ProviderError::Permanent("v5 request cannot be serialized".into()))?;
+        let start = InferenceRequestStart {
+            request_id: InferenceRequestId::new(Uuid::new_v4())
+                .ok_or_else(|| ProviderError::Permanent("invalid inference request ID".into()))?,
+            run_id: batch.run_id(),
+            batch_fingerprint: batch.fingerprint(),
+            segment_id: segment.id(),
+            line_index: u32::try_from(line_index)
+                .map_err(|_| ProviderError::Permanent("line index exceeds journal range".into()))?,
+            rendered_request: rendered_request.clone(),
+        };
+        if let Some(journal) = &self.inference_journal {
+            journal
+                .begin(&start)
+                .map_err(|error| ProviderError::Storage(error.to_string()))?;
+        }
+        let request = self
+            .http
+            .client()
+            .post(self.endpoint.clone())
+            .header(CONTENT_TYPE, "application/json")
+            .header(
+                "x-auralis-source-sha256",
+                format!("{:x}", Sha256::digest(source_line.as_bytes())),
+            )
+            .body(rendered_request);
+        let check = || match control {
+            Some((control, run_id)) => match control.pause_requested(run_id) {
+                Ok(false) => Ok(()),
+                Ok(true) => Err(ProviderError::Permanent("request paused".into())),
+                Err(error) => Err(ProviderError::Permanent(error.to_string())),
+            },
+            None => Ok(()),
+        };
+        let preparation: Option<&dyn PreparationControl> =
+            control.map(|_| &check as &dyn PreparationControl);
+        let clock = Instant::now();
+        let response = self.http.request(request, preparation);
+        let translated = response
+            .as_ref()
+            .map_err(|error| ProviderError::Permanent(error.to_string()))
+            .and_then(|raw| decode_chat_response(raw))
+            .and_then(|candidate| {
+                crate::contextual_prompt_v5::decode(&candidate, segment, line_index)
+            })
+            .and_then(|decoded| prepared.restore(&decoded));
+        if let Some(journal) = &self.inference_journal {
+            let (prompt_tokens, completion_tokens) = response
+                .as_ref()
+                .ok()
+                .map_or((None, None), |raw| response_usage(raw));
+            let outcome = match (&response, &translated) {
+                (_, Ok(_)) => InferenceRequestOutcome::ValidatedLine,
+                (Err(error), _) if error.to_string().contains("paused") => {
+                    InferenceRequestOutcome::Paused
+                }
+                (Err(error), _)
+                    if error.to_string().contains("timeout")
+                        || error.to_string().contains("timed out") =>
+                {
+                    InferenceRequestOutcome::Timeout
+                }
+                (Err(ProviderError::Transient(_)), _) => InferenceRequestOutcome::TransportFailure,
+                (Err(_), _) => InferenceRequestOutcome::OtherPermanent,
+                (Ok(_), Err(error))
+                    if error.to_string().contains("invalid v5 translation JSON")
+                        || error
+                            .to_string()
+                            .contains("invalid llama.cpp response JSON") =>
+                {
+                    InferenceRequestOutcome::MalformedCandidate
+                }
+                (Ok(_), Err(_)) => InferenceRequestOutcome::InvalidCandidate,
+            };
+            let error_detail = translated.as_ref().err().map(ToString::to_string);
+            let finish = InferenceRequestFinish {
+                request_id: start.request_id,
+                outcome,
+                raw_response: response.as_ref().ok().cloned(),
+                restored_candidate: translated.as_ref().ok().cloned(),
+                prompt_tokens,
+                completion_tokens,
+                elapsed_ms: u64::try_from(clock.elapsed().as_millis()).unwrap_or(u64::MAX),
+                error_detail,
+            };
+            journal
+                .finish(&finish)
+                .map_err(|error| ProviderError::Storage(error.to_string()))?;
+        }
+        match response {
+            Err(error) => Err(error),
+            Ok(_) => translated,
+        }
     }
 
     fn preflight_post(
@@ -353,15 +482,15 @@ impl LlamaCppProvider {
                             batch.approved_terms(),
                         )
                     };
-                    let candidate = self.translate_line(
-                        prompt_text,
+                    lines.push(self.translate_v5_line(
+                        batch,
+                        segment,
+                        line_index,
                         source_line,
+                        prompt_text,
+                        &prepared,
                         control,
-                        Some(crate::contextual_prompt_v5::response_format()),
-                    )?;
-                    let decoded =
-                        crate::contextual_prompt_v5::decode(&candidate, segment, line_index)?;
-                    lines.push(prepared.restore(&decoded)?);
+                    )?);
                     continue;
                 }
                 let prompt_text = match self.profile.prompt_version {
@@ -391,6 +520,18 @@ impl LlamaCppProvider {
             translations,
         })
     }
+}
+
+fn response_usage(raw: &[u8]) -> (Option<u32>, Option<u32>) {
+    let Ok(value) = serde_json::from_slice::<serde_json::Value>(raw) else {
+        return (None, None);
+    };
+    let tokens = |field: &str| {
+        value["usage"][field]
+            .as_u64()
+            .and_then(|count| u32::try_from(count).ok())
+    };
+    (tokens("prompt_tokens"), tokens("completion_tokens"))
 }
 
 impl TranslationProvider for LlamaCppProvider {

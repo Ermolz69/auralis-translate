@@ -9,10 +9,13 @@ use auralis_translation::{
 use auralis_translation_llamacpp::{
     LlamaCppProvider, ModelProfile, RequestControlPolicy, verify_server_with_control,
 };
-use auralis_translation_sqlite::{ResultSpec, RunSpec, RunStop, SqliteConfig, TranslateDb};
+use auralis_translation_sqlite::{
+    ResultSpec, RunSpec, RunStop, SqliteConfig, SqliteInferenceRequestSink, TranslateDb,
+};
 use std::error::Error;
 use std::ffi::OsStr;
 use std::path::Path;
+use std::sync::Arc;
 use uuid::Uuid;
 
 pub(crate) const DATABASE_FILE: &str = "auralis-translate.sqlite";
@@ -106,6 +109,23 @@ pub(crate) fn execute(
         SqliteConfig::default(),
     )?;
     let attempt = db.begin_guarded_attempt(run, None, guard)?;
+    let journal = match SqliteInferenceRequestSink::open(
+        &config.state_dir.join(DATABASE_FILE),
+        SqliteConfig::default(),
+        attempt,
+    ) {
+        Ok(journal) => journal,
+        Err(error) => {
+            db.stop_attempt(
+                run.run_id,
+                attempt,
+                RunStop::Failed,
+                "inference journal unavailable",
+            )?;
+            return Err(Box::new(error));
+        }
+    };
+    let provider = provider.with_inference_journal(Arc::new(journal));
     let output = match plan.execute_with_policy(&provider, db, reporter, &control_db, retry) {
         Ok(output) => output,
         Err(DocumentRunError::Paused(error)) => {

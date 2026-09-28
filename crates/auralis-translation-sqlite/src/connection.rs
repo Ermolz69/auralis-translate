@@ -1,15 +1,18 @@
 use crate::repositories::{
     attempt_admission, attempt_repository, checkpoint_repository, edit_commit, edit_provenance,
-    edit_selection, project_cleanup, result_repository, run_repository, segment_repository,
-    translation_repository,
+    edit_selection, inference_request_repository, project_cleanup, result_repository,
+    run_repository, segment_repository, translation_repository,
 };
 use crate::{
     AttemptId, AttemptStartGuard, BranchEditSpec, CheckpointSpec, DbError, EditProvenance,
-    EditSelection, EditSpec, ResultRecord, ResultSpec, RunDiagnostic, RunSpec, RunStop,
-    SegmentSpec, SqliteConfig, TranslationSpec,
+    EditSelection, EditSpec, InferenceRequestRecord, ResultRecord, ResultSpec, RunDiagnostic,
+    RunSpec, RunStop, SegmentSpec, SqliteConfig, TranslationSpec,
 };
 use crate::{diagnostic_codec, migrations};
-use auralis_translation::{ResultId, RunControl, RunId, RunState, TranslationId, VerifiedRenderer};
+use auralis_translation::{
+    InferenceRequestFinish, InferenceRequestStart, ResultId, RunControl, RunId, RunState,
+    TranslationId, VerifiedRenderer,
+};
 use rusqlite::Connection;
 use std::path::Path;
 
@@ -76,6 +79,28 @@ impl TranslateDb {
 
     pub fn checkpoints(&self, run_id: RunId) -> Result<Vec<CheckpointSpec>, DbError> {
         checkpoint_repository::load(&self.connection, run_id)
+    }
+
+    pub fn begin_inference_request(
+        &mut self,
+        attempt_id: AttemptId,
+        start: &InferenceRequestStart,
+    ) -> Result<(), DbError> {
+        inference_request_repository::begin(&mut self.connection, attempt_id, start)
+    }
+
+    pub fn finish_inference_request(
+        &mut self,
+        finish: &InferenceRequestFinish,
+    ) -> Result<(), DbError> {
+        inference_request_repository::finish(&mut self.connection, finish)
+    }
+
+    pub fn inference_requests(
+        &self,
+        run_id: RunId,
+    ) -> Result<Vec<InferenceRequestRecord>, DbError> {
+        inference_request_repository::load(&self.connection, run_id)
     }
 
     pub fn diagnostics(&self, run_id: RunId) -> Result<Vec<RunDiagnostic>, DbError> {

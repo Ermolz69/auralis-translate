@@ -10,7 +10,7 @@ fn migration_and_ensure_are_idempotent_across_reopen() -> Result<(), Box<dyn Err
     let directory = test_directory()?;
     let path = directory.join("auralis-translate.sqlite");
     let mut db = TranslateDb::open(&path, SqliteConfig::default())?;
-    assert_eq!(db.schema_version()?, 6);
+    assert_eq!(db.schema_version()?, 7);
     let translation = translation_spec()?;
     let run = run_spec()?;
     db.ensure_translation(&translation)?;
@@ -20,7 +20,7 @@ fn migration_and_ensure_are_idempotent_across_reopen() -> Result<(), Box<dyn Err
     drop(db);
 
     let db = TranslateDb::open(&path, SqliteConfig::default())?;
-    assert_eq!(db.schema_version()?, 6);
+    assert_eq!(db.schema_version()?, 7);
     let stored_translation = db.translation(translation.translation_id)?;
     let stored_run = db.run(run.run_id)?;
     assert_eq!(stored_translation.source_hash, translation.source_hash);
@@ -70,11 +70,11 @@ fn refuses_database_from_a_newer_schema() -> Result<(), Box<dyn Error>> {
     let directory = test_directory()?;
     let path = directory.join("future.sqlite");
     let connection = Connection::open(&path)?;
-    connection.pragma_update(None, "user_version", 7)?;
+    connection.pragma_update(None, "user_version", 8)?;
     drop(connection);
     assert!(matches!(
         TranslateDb::open(&path, SqliteConfig::default()),
-        Err(DbError::UnsupportedSchemaVersion(7))
+        Err(DbError::UnsupportedSchemaVersion(8))
     ));
     std::fs::remove_dir_all(directory)?;
     Ok(())
@@ -90,7 +90,7 @@ fn upgrades_existing_v1_run_without_losing_it() -> Result<(), Box<dyn Error>> {
     drop(connection);
 
     let mut db = TranslateDb::open(&path, SqliteConfig::default())?;
-    assert_eq!(db.schema_version()?, 6);
+    assert_eq!(db.schema_version()?, 7);
     let translation = translation_spec()?;
     let run = run_spec()?;
     db.ensure_translation(&translation)?;
@@ -141,7 +141,7 @@ fn upgrades_existing_v2_run_and_adds_edit_selections() -> Result<(), Box<dyn Err
     drop(connection);
 
     let db = TranslateDb::open(&path, SqliteConfig::default())?;
-    assert_eq!(db.schema_version()?, 6);
+    assert_eq!(db.schema_version()?, 7);
     assert_eq!(db.run(run.run_id)?.translation_id, run.translation_id);
     let connection = Connection::open(&path)?;
     let table: String = connection.query_row(
@@ -170,7 +170,7 @@ fn upgrades_v3_and_prevents_recreating_deleted_project_translation() -> Result<(
     drop(connection);
 
     let mut database = TranslateDb::open(&path, SqliteConfig::default())?;
-    assert_eq!(database.schema_version()?, 6);
+    assert_eq!(database.schema_version()?, 7);
     let translation = translation_spec()?;
     database.ensure_translation(&translation)?;
     assert!(database.delete_project_translation(translation.translation_id, "project-1")?);
@@ -179,6 +179,64 @@ fn upgrades_v3_and_prevents_recreating_deleted_project_translation() -> Result<(
         Err(DbError::Conflict(_))
     ));
     drop(database);
+    std::fs::remove_dir_all(directory)?;
+    Ok(())
+}
+
+#[test]
+fn upgrades_v6_without_changing_existing_run_or_source() -> Result<(), Box<dyn Error>> {
+    let directory = test_directory()?;
+    let path = directory.join("v6.sqlite");
+    let connection = Connection::open(&path)?;
+    for sql in [
+        include_str!("../migrations/0001_initial.sql"),
+        include_str!("../migrations/0002_pause_request.sql"),
+        include_str!("../migrations/0003_result_edit_selections.sql"),
+        include_str!("../migrations/0004_deleted_translations.sql"),
+        include_str!("../migrations/0005_control_revision.sql"),
+        include_str!("../migrations/0006_result_edit_provenance.sql"),
+    ] {
+        connection.execute_batch(sql)?;
+    }
+    let translation = translation_spec()?;
+    let run = run_spec()?;
+    connection.execute(
+        "INSERT INTO translations (translation_id, project_id, source_artifact_id, source_sha256,
+            source_format, source_language, target_language) VALUES (?1, ?2, ?3, ?4, 'srt', 'zh', 'ru')",
+        params![translation.translation_id.to_string(), translation.project_id,
+            translation.source_artifact_id, translation.source_hash.to_string()],
+    )?;
+    connection.execute(
+        "INSERT INTO runs (run_id, translation_id, state, source_sha256, profile_fingerprint,
+            parser_version, policy_fingerprint, block_plan_json, pause_requested)
+         VALUES (?1, ?2, 'requested', ?3, ?4, ?5, ?6, '[[1]]', 0)",
+        params![
+            run.run_id.to_string(),
+            run.translation_id.to_string(),
+            run.source_hash.to_string(),
+            run.profile_fingerprint,
+            run.parser_version,
+            run.policy_fingerprint
+        ],
+    )?;
+    connection.pragma_update(None, "user_version", 6)?;
+    drop(connection);
+    let db = TranslateDb::open(&path, SqliteConfig::default())?;
+    assert_eq!(db.schema_version()?, 7);
+    assert_eq!(
+        db.translation(translation.translation_id)?.source_hash,
+        translation.source_hash
+    );
+    assert_eq!(db.run(run.run_id)?.blocks, run.blocks);
+    drop(db);
+    let db = TranslateDb::open(&path, SqliteConfig::default())?;
+    assert_eq!(
+        db.translation(translation.translation_id)?.source_hash,
+        translation.source_hash
+    );
+    assert_eq!(db.run(run.run_id)?.blocks, run.blocks);
+    assert!(db.inference_requests(run.run_id)?.is_empty());
+    drop(db);
     std::fs::remove_dir_all(directory)?;
     Ok(())
 }

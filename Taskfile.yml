@@ -1,6 +1,11 @@
 version: "3"
 
 tasks:
+  test:inference-journal:
+    desc: Verify durable inference request identity, failure retention and schema upgrade
+    cmds:
+      - cargo test --offline -p auralis-translation-sqlite --test inference_requests --test migrations
+      - cargo test --offline -p auralis-translation-llamacpp --test context_v5
   test:scene-map:
     desc: Verify scene-bound context, frozen map admission and resume identity
     cmds:

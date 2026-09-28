@@ -4,6 +4,7 @@ mod config;
 mod connection;
 mod diagnostic_codec;
 mod error;
+mod inference_request_sink;
 mod migrations;
 mod repositories;
 mod specs;
@@ -12,9 +13,11 @@ pub use attempt_start_guard::AttemptStartGuard;
 pub use config::SqliteConfig;
 pub use connection::TranslateDb;
 pub use error::DbError;
+pub use inference_request_sink::SqliteInferenceRequestSink;
 pub use specs::{
     AttemptId, BranchEditSpec, CheckpointSpec, EditProvenance, EditSelection, EditSpec,
-    ResultRecord, ResultSpec, RunDiagnostic, RunSpec, RunStop, SegmentSpec, TranslationSpec,
+    InferenceRequestRecord, ResultRecord, ResultSpec, RunDiagnostic, RunSpec, RunStop, SegmentSpec,
+    TranslationSpec,
 };
 mod attempt_start_control;
 pub use attempt_start_control::AttemptStartControl;

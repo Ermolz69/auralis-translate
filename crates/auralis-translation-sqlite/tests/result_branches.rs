@@ -180,10 +180,10 @@ fn v5_upgrade_retains_old_results_without_inventing_ancestry() -> Result<(), Box
         f.db.commit_edit(&edit(f.first.result_id, 2, 2, "Пока.")?, &f.plan)?;
     drop(f.db);
     let connection = Connection::open(&f.path)?;
-    connection.execute_batch("DROP TABLE result_edit_provenance; PRAGMA user_version = 5;")?;
+    connection.execute_batch("DROP TABLE inference_requests; DROP TABLE result_edit_provenance; PRAGMA user_version = 5;")?;
     drop(connection);
     f.db = TranslateDb::open(&f.path, SqliteConfig::default())?;
-    assert_eq!(f.db.schema_version()?, 6);
+    assert_eq!(f.db.schema_version()?, 7);
     assert_eq!(f.db.result(second.result_id)?, second);
     assert_eq!(f.db.result_edit_provenance(second.result_id)?, None);
     assert_eq!(f.db.result_edits(second.result_id)?.len(), 1);
