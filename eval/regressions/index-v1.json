@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "index_id": "zh-ru-development-regressions-v1",
+  "entries": [
+    {
+      "id": "REG-001",
+      "source_family": "authored-dialogue",
+      "split": "development",
+      "category": "prompt_output_copy",
+      "severity": "major",
+      "status": "observed_absent_in_schema_profile",
+      "failure_source_ids": ["zh08", "zh19"],
+      "reproduction_case_ids": ["v5p01", "v5p02"],
+      "related_case_ids": ["v5p03", "v5p04"],
+      "negative_case_ids": ["v5p05"],
+      "expected_invariant": "Translate each Chinese target; never accept the generic Russian example phrase as the target translation.",
+      "failure_literal": "Русский текст",
+      "affected_profile_sha256": "eb46696ca0b710bdaf76749e19c579dff70bd8608590460ef37f7cbd8424a714",
+      "checked_profile_sha256": "df15d3e4672438a3181e9c97c582660485677c649885988ed5a9dce33119b3a7",
+      "failed_report_sha256": "f55890924ed12e08f14fdef03c74001a420c6ff0857b1e7208d7a6841d2074d3",
+      "regression_report_sha256": "b0b5f486b7bf7209172bedd0a1214a49da77ecc54bbc236e1e4bc81bc6dca147",
+      "control_report_sha256": "05bb1dbdc72815b1928a5e81ca2523967929f4eac936c3c70a23c9a0f3d4c969",
+      "last_outcome": "The literal occurred in both original IDs in all three failed-profile runs and in none of the 15 related/control or 60 same-source schema-profile requests. Semantic idiom errors remain open for review.",
+      "evidence_record": "eval/experiments/2026-09-28-v5-envelope-evidence.md"
+    }
+  ]
+}

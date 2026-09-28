@@ -1,6 +1,11 @@
 version: "3"
 
 tasks:
+  eval:regression:check:
+    desc: Validate permanent failure evidence and required related and negative controls
+    cmds:
+      - node --test --test-isolation=none eval/scripts/tests/regression-index.test.mjs
+      - node eval/scripts/check-regression-index.mjs
   test:context-v5:
     desc: Verify the experimental v5 request and strict response boundary
     cmds:
