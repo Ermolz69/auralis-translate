@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "experiment": "inference-journal-paired-v1",
+  "report_sha256": "7877cbbe8f2ddf286cb3848de3a8315fb0977ced7b9444123a258f8041e1a5a4",
+  "checked": [
+    {
+      "arm": "p01:baseline",
+      "chats": 3,
+      "run_id": "5461e33e-d818-463e-86d9-b577920a8709"
+    },
+    {
+      "arm": "p01:scene",
+      "chats": 3,
+      "run_id": "9c51bb39-7a28-4a3d-9d12-bf62932ca4b0"
+    }
+  ],
+  "status": "passed"
+}

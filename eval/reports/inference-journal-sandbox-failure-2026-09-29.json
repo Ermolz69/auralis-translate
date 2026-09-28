@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "experiment": "inference-journal-paired-v1",
+  "status": "failed_before_inference",
+  "command": "task eval:journal:paired",
+  "stage": "Node child-process spawn before model doctor or server start",
+  "error_code": "EPERM",
+  "cause": "The workspace sandbox denied process creation",
+  "chat_requests": 0,
+  "all_http_requests": 0,
+  "disposition": "Retained failure; same frozen plan rerun with authorized local process access"
+}
