@@ -4,7 +4,8 @@ Status: `CTX-05` contract, 28 September 2026. This defines the policy required
 before v5 inference. Existing v1–v4 profiles keep their saved identities and
 default one-attempt behavior. The current core accepts `max_block_attempts`
 1–3. The implementation now repeats only typed transient provider failures
-within that bound; durable per-attempt evidence is still open.
+within that bound. The [v5 CLI inference journal](../architecture/015-inference-request-journal.md)
+now retains chat-completion attempts; preflight and host attempt coverage remains open.
 
 ## Typed outcomes
 
