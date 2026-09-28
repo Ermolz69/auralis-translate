@@ -41,7 +41,7 @@ does not activate implementation by being stored here.
 | DATA-04 | Sealed independent release holdout | planned | DATA-01, EVAL-01 | At least 300 eligible cues; independent groups/references, no tuning exposure |
 | DATA-05 | Audit alignment, leakage and reviewer coverage | planned | DATA-03, DATA-04 | Whole-source duplicates/splits, reference provenance, rights, exclusions and balanced review categories checked |
 | EVAL-01 | Blind review, scoring and adjudication protocol | ready | BASE-03 | Human/source-aware rubrics, critical taxonomy, denominators and reviewer availability |
-| CTX-01 | Specify composable prompt v5 | ready | BASE-03 | Source windows, approved terms, fidelity, identity and strict output mapping contract |
+| CTX-01 | Specify composable prompt v5 | done | BASE-03 | [v5 contract](reference/chinese-context-profile-v5.md): source-only scene windows, approved terms, fidelity, identity, token budget and strict slot mapping; documentation checks only |
 | CTX-02 | Implement v5 without changing v1–v4 | planned | CTX-01, DATA-02, CTX-05 | Target/context separation; invalid IDs/tokens rejected; legacy profile checks pass |
 | CTX-03 | Scene terms and speaker evidence | planned | DATA-03, CTX-01 | Explicit approved facts with scope/hash; no invented speaker or automatic summary authority |
 | CTX-04 | Paired context/model ablation | planned | CTX-02, CTX-03, EVAL-01 | Budgeted repeated 60-case comparison, unrelated/insufficient-context controls and blinded review |
@@ -81,12 +81,13 @@ does not activate implementation by being stored here.
 
 ## Current handoff
 
-The next independently executable tasks are `DATA-01`, `CTX-01` and `EVAL-01`.
+The next independently executable tasks are `DATA-01` and `EVAL-01`.
 `PLAN-01` has passed planning-artifact and generated-progress checks; publication
 is tracked separately in its acceptance record. `PLAN-03` freezes the user-started
 Goal in its [scope record](../eval/experiments/2026-09-28-goal-scope-v1.md).
-It does not claim v5, training, a voice engine or any release gate. The earlier
+It does not claim implemented v5, training, a voice engine or any release gate. The earlier
 `PLAN-02` planning audit remains a separate accepted scope.
+`CTX-01` now specifies v5; `CTX-02` still waits for data and bounded failure policy.
 
 Deferred UI, optional adaptation/precision and ASR remain visible. A completed
 translation CLI milestone does not close the desktop release or audio milestone.
