@@ -34,7 +34,7 @@ does not activate implementation by being stored here.
 | BASE-03 | Matched 1.8B/7B development comparison | done | BASE-01 | 240 real requests, AI editorial review and [experiment](../eval/experiments/2026-09-27-model-size-comparison.md) |
 | PLAN-01 | Delivery plan, canonical progress and agent rules | done | BASE-03 | Documents/generated task progress; plan/docs/site and browser DOM checks passed; [acceptance record](../eval/experiments/2026-09-28-delivery-plan.md) tracks publication |
 | PLAN-02 | Audit planning gaps and define goal completion | done | PLAN-01 | Release/regression/goal contracts, 49-task dependencies, six document identities and checked progress; [audit record](../eval/experiments/2026-09-28-goal-plan-audit.md) |
-| PLAN-03 | Freeze finite execution scope and gate bindings | ready | PLAN-02 | Versioned required/optional/excluded IDs, candidate scope, resources, external prerequisites and deferred UI decision |
+| PLAN-03 | Freeze finite execution scope and gate bindings | done | PLAN-02 | [Scope v1](../eval/experiments/2026-09-28-goal-scope-v1.md): required/optional/excluded IDs, resources, gate bindings and external prerequisites; deferred UI remains required |
 | DATA-01 | Source rights, provenance, scene and split schema | ready | BASE-03 | Schema examples validate; rights/alignment exclusions and whole-source grouping documented |
 | DATA-02 | Sixty context contrast cases | planned | DATA-01, CTX-01 | Five categories, four scenarios per target, references/prohibited facts and IDs frozen |
 | DATA-03 | Licensed development subtitle scenes | planned | DATA-01 | Approximately 200 eligible cues; source/scene/speaker provenance and aligned references |
@@ -81,12 +81,12 @@ does not activate implementation by being stored here.
 
 ## Current handoff
 
-The next independently executable tasks are `PLAN-03`, `DATA-01`, `CTX-01` and `EVAL-01`.
+The next independently executable tasks are `DATA-01`, `CTX-01` and `EVAL-01`.
 `PLAN-01` has passed planning-artifact and generated-progress checks; publication
-is tracked separately in its acceptance record. This request creates the plan, not v5, a trained adapter
-or a voice engine. No implementation task is silently promoted to `in_progress`.
-`PLAN-02` has passed the planning audit. Its goal template is ready to submit later;
-storing it here does not start a Goal, training, migration or audio implementation.
+is tracked separately in its acceptance record. `PLAN-03` freezes the user-started
+Goal in its [scope record](../eval/experiments/2026-09-28-goal-scope-v1.md).
+It does not claim v5, training, a voice engine or any release gate. The earlier
+`PLAN-02` planning audit remains a separate accepted scope.
 
 Deferred UI, optional adaptation/precision and ASR remain visible. A completed
 translation CLI milestone does not close the desktop release or audio milestone.
