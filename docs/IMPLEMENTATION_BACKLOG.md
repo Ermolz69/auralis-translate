@@ -45,7 +45,7 @@ does not activate implementation by being stored here.
 | CTX-02 | Implement v5 without changing v1–v4 | planned | CTX-01, DATA-02, CTX-05 | Target/context separation; invalid IDs/tokens rejected; legacy profile checks pass |
 | CTX-03 | Scene terms and speaker evidence | planned | DATA-03, CTX-01 | Explicit approved facts with scope/hash; no invented speaker or automatic summary authority |
 | CTX-04 | Paired context/model ablation | planned | CTX-02, CTX-03, EVAL-01 | Budgeted repeated 60-case comparison, unrelated/insufficient-context controls and blinded review |
-| CTX-05 | Specify bounded failure, retry and review policy | ready | CTX-01, EVAL-02 | Versioned attempt/time budgets, typed outcomes, rejected evidence, no partial publication or silent model change |
+| CTX-05 | Specify bounded failure, retry and review policy | done | CTX-01, EVAL-02 | [Policy v1](reference/bounded-failure-policy-v1.md) and [invalid-slot retry regression](../eval/experiments/2026-09-28-invalid-slot-retry.md); typed provider errors/raw attempts remain for CTX-02 |
 | EVAL-02 | General comparison and evidence schema | done | CTX-01, EVAL-01 | [Record v1](evaluation/010-comparison-record-v1.md), fixture-only [example](../eval/reports/experiment-record-example-v1.json) and seven schema tests; real comparisons remain open |
 | EVAL-03 | Context and long-file HTML presentation | planned | EVAL-02, CTX-04 | Same evidence identities; scene/target/seam views, review labels, counts, public rights and raw downloads |
 | EVAL-04 | Implement maintained regression and adversarial tiers | ready | CTX-01, EVAL-02 | Permanent bug index, generative/metamorphic/source-instruction controls and change-triggered checks; [policy](evaluation/008-regression-and-adversarial-checks.md) |
@@ -82,7 +82,7 @@ does not activate implementation by being stored here.
 ## Current handoff
 
 The next independently executable tasks are `DATA-02`, `DATA-03`, `DATA-04`,
-`CTX-05`, `EVAL-04` and `VOICE-01`.
+`EVAL-04` and `VOICE-01`.
 `PLAN-01` has passed planning-artifact and generated-progress checks; publication
 is tracked separately in its acceptance record. `PLAN-03` freezes the user-started
 Goal in its [scope record](../eval/experiments/2026-09-28-goal-scope-v1.md).
@@ -90,8 +90,8 @@ It does not claim implemented v5, training, a voice engine or any release gate. 
 `PLAN-02` planning audit remains a separate accepted scope.
 `CTX-01` specifies v5, `DATA-01` supplies a checked source inventory, and
 `EVAL-01` freezes the review protocol while recording unavailable human review;
-`EVAL-02` now checks future evidence shape; `CTX-02` still waits for context
-cases and bounded failure policy.
+`EVAL-02` checks future evidence shape, and `CTX-05` specifies bounded failure
+while fixing one structural retry defect. `CTX-02` still waits for context cases.
 
 Deferred UI, optional adaptation/precision and ASR remain visible. A completed
 translation CLI milestone does not close the desktop release or audio milestone.

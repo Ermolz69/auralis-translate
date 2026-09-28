@@ -2,8 +2,8 @@ mod support;
 
 use auralis_translation::{
     BlockCheckpoint, CheckpointStore, ProgressSink, ProviderError, ProviderResponse, RetryPolicy,
-    RunControl, RunId, RunProgress, TranslateRunError, TranslationBatch, TranslationProvider,
-    translate_planned_run_with_policy,
+    RunControl, RunId, RunProgress, TargetSegment, TranslateBatchError, TranslateRunError,
+    TranslationBatch, TranslationProvider, translate_planned_run_with_policy,
 };
 use std::{cell::Cell, error::Error, io};
 use support::{EchoProvider, sample_batch};
@@ -110,6 +110,81 @@ fn retry_budget_exhaustion_saves_no_checkpoint() -> Result<(), Box<dyn Error>> {
     assert!(store.0.is_empty());
     assert_eq!(progress.0.len(), 1);
     assert_eq!(progress.0[0].committed_blocks, 0);
+    Ok(())
+}
+
+#[derive(Clone, Copy)]
+enum InvalidShape {
+    Missing,
+    Duplicate,
+    ExtraContextId,
+    EmptyText,
+}
+
+struct InvalidThenEcho {
+    calls: Cell<u32>,
+    shape: InvalidShape,
+}
+
+impl TranslationProvider for InvalidThenEcho {
+    fn translate(&self, batch: &TranslationBatch) -> Result<ProviderResponse, ProviderError> {
+        self.calls.set(self.calls.get() + 1);
+        let mut response = EchoProvider.translate(batch)?;
+        if self.calls.get() == 1 {
+            match self.shape {
+                InvalidShape::Missing => {
+                    response.translations.pop();
+                }
+                InvalidShape::Duplicate => {
+                    response.translations.push(response.translations[0].clone());
+                }
+                InvalidShape::ExtraContextId => {
+                    response.translations.push(TargetSegment {
+                        id: batch.context()[0].id(),
+                        lines: vec!["вне цели".into()],
+                    });
+                }
+                InvalidShape::EmptyText => response.translations[0].lines[0].clear(),
+            }
+        }
+        Ok(response)
+    }
+}
+
+#[test]
+fn invalid_slot_mapping_is_not_retried_or_checkpointed() -> Result<(), Box<dyn Error>> {
+    let batch = sample_batch()?;
+    let planned = vec![batch.targets().iter().map(|target| target.id()).collect()];
+    for shape in [
+        InvalidShape::Missing,
+        InvalidShape::Duplicate,
+        InvalidShape::ExtraContextId,
+        InvalidShape::EmptyText,
+    ] {
+        let provider = InvalidThenEcho {
+            calls: Cell::new(0),
+            shape,
+        };
+        let mut store = MemoryStore::default();
+        let mut progress = Progress::default();
+        let result = translate_planned_run_with_policy(
+            &provider,
+            &mut store,
+            &planned,
+            std::slice::from_ref(&batch),
+            &mut progress,
+            &NoPause,
+            RetryPolicy::new(2).ok_or("invalid retry policy")?,
+        );
+        assert!(matches!(
+            result,
+            Err(TranslateRunError::Batch(TranslateBatchError::Contract(_)))
+        ));
+        assert_eq!(provider.calls.get(), 1);
+        assert!(store.0.is_empty());
+        assert_eq!(progress.0.len(), 1);
+        assert_eq!(progress.0[0].committed_blocks, 0);
+    }
     Ok(())
 }
 

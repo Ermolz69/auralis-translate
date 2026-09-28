@@ -1,4 +1,7 @@
-use super::{TranslateRunError, diagnose_batch::diagnose_batch, translate_batch_with_control};
+use super::{
+    TranslateBatchError, TranslateRunError, diagnose_batch::diagnose_batch,
+    translate_batch_with_control,
+};
 use crate::domain::valid_line;
 use crate::{
     BlockCheckpoint, CheckpointStore, ProgressSink, RetryPolicy, RunControl, RunId, RunProgress,
@@ -152,6 +155,9 @@ pub fn translate_planned_run_with_policy<S: CheckpointStore>(
                 check_pause(control, first.run_id())?;
                 match translated {
                     Ok(translated) => break translated,
+                    Err(error @ TranslateBatchError::Contract(_)) => {
+                        return Err(TranslateRunError::Batch(error));
+                    }
                     Err(_) if attempt_count < retry.max_attempts() => continue,
                     Err(error) => return Err(TranslateRunError::Batch(error)),
                 }
