@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "title": "V5 placeholder-copy regression and unseen controls",
+  "source_language": "zh",
+  "target_language": "ru",
+  "provenance": "Original Chinese development lines and new related controls authored by Ulya (AI assistant); proposed Russian meanings are unreviewed and never sent to the model.",
+  "timings": "Synthetic four-second SRT cues; not original media timings.",
+  "examples": [
+    {"id":"v5p01","category":"Observed idiom failure","source":"别再绕圈子了，有话就直说。","reference":"Хватит ходить вокруг да около. Говори прямо.","meaning":"The speaker demands a direct answer; the source is not a request for generic Russian text."},
+    {"id":"v5p02","category":"Observed signal failure","source":"你刚才说什么？信号不好，我没听清。","reference":"Что ты только что сказал? Связь плохая, я не расслышал.","meaning":"The speaker asks for repetition because the connection obscured speech."},
+    {"id":"v5p03","category":"Unseen idiom relation","source":"别拐弯抹角，直接回答我。","reference":"Не ходи вокруг да около, ответь мне прямо.","meaning":"New wording and imperative tests directness without borrowing the observed target string."},
+    {"id":"v5p04","category":"Unseen broken phone relation","source":"电话断断续续的，你能再说一遍吗？","reference":"Связь прерывается. Можешь повторить?","meaning":"New wording tests a request to repeat over an intermittent phone connection."},
+    {"id":"v5p05","category":"Unrelated negative control","source":"门已经关上了。","reference":"Дверь уже закрыта.","meaning":"A simple unrelated statement must not acquire the idiom or connection facts."}
+  ]
+}

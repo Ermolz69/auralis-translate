@@ -55,15 +55,18 @@ export async function freeLoopbackPort() {
 
 export async function waitForHealthyServer(url, process, timeoutMs) {
   const deadline = Date.now() + timeoutMs;
+  let lastObservation = 'no health response';
   while (Date.now() < deadline) {
     if (process.child.exitCode !== null || process.child.signalCode !== null) {
       throw new Error(`Model server exited before readiness\n${process.stderr}`);
     }
     try {
       const response = await fetch(`${url}health`, { signal: AbortSignal.timeout(1000) });
-      if (response.ok && (await response.json()).status === 'ok') return;
-    } catch { /* Readiness may briefly refuse connections during model loading. */ }
+      const body = await response.json();
+      if (response.ok && body.status === 'ok') return;
+      lastObservation = `HTTP ${response.status}, status=${JSON.stringify(body.status ?? null)}`;
+    } catch (error) { lastObservation = error.message; }
     await delay(200);
   }
-  throw new Error(`Model server readiness timed out\n${process.stderr}`);
+  throw new Error(`Model server readiness timed out; last observation: ${lastObservation}\n${process.stderr}`);
 }

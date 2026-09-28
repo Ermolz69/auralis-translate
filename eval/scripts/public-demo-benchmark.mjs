@@ -12,8 +12,8 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const datasetFile = process.env.AURALIS_DEMO_DATASET ?? 'eval/corpora/public-demo-v1.json';
 const datasetBytes = await fs.readFile(path.resolve(root, datasetFile));
 const dataset = JSON.parse(datasetBytes);
-assert.equal(dataset.examples.length, 20);
-assert.equal(new Set(dataset.examples.map(row => row.id)).size, 20);
+assert(dataset.examples.length >= 1 && dataset.examples.length <= 20);
+assert.equal(new Set(dataset.examples.map(row => row.id)).size, dataset.examples.length);
 const profileFile = process.env.AURALIS_DEMO_PROFILE ?? 'models/manifests/hy_mt2_1_8b_q4_k_m.checked.experimental.json';
 const profileBytes = await fs.readFile(path.resolve(root, profileFile));
 const profile = JSON.parse(profileBytes);
@@ -23,7 +23,7 @@ const serverPath = process.env.AURALIS_TEST_LLAMA_SERVER;
 const modelPath = process.env.AURALIS_TEST_GGUF;
 assert(serverPath && modelPath, 'Supply already installed runtime and model paths');
 const executable = path.join(root, 'target/release/auralis-translation-cli.exe');
-const parent = path.join(root, '.cache/eval/public-demo');
+const parent = path.resolve(root, process.env.AURALIS_DEMO_ROOT ?? '.cache/eval/public-demo');
 await fs.mkdir(parent, { recursive: true });
 const workspace = await fs.mkdtemp(path.join(parent, 'run-'));
 console.log(`Benchmark workspace: ${workspace}`);
@@ -49,13 +49,14 @@ const report = {
   cli_sha256: digest(await fs.readFile(executable)), runtime_sha256: digest(await fs.readFile(serverPath)),
   profile, repetitions_planned: 3, runs: [], failures: [],
   hardware: { os: `${os.type()} ${os.release()} ${os.arch()}`, cpu: os.cpus()[0].model, logical_cpus: os.cpus().length, total_ram_bytes: os.totalmem(), gpu: gpu.stdout.trim() },
-  methodology: { clock: 'Node performance.now(), monotonic milliseconds', server: 'One persistent server; first timed file follows readiness, other files reuse the loaded model. No claim of cold OS cache.', request: 'Loopback proxy times POST /v1/chat/completions through complete response body. Includes proxy/HTTP overhead; llama.cpp token timings are separate.', cache: 'llama.cpp --cache-ram 0; slot/prompt behavior otherwise defaults. Repeated identical prompts can reuse the runtime prompt cache.', resources: 'Sampled every 1 second from server spawn, including startup where captured. GPU usage includes other applications; process working set is not private allocation. Peaks are approximate.', dataset: dataset.provenance, scope: `Twenty standalone Chinese lines; prompt v${profile.prompt_version}, no context or glossary, synthetic CRLF SRT. Proposed references are not sent to the model. Not a subtitle holdout or language-release gate.` },
+  methodology: { clock: 'Node performance.now(), monotonic milliseconds', server: 'One persistent server; first timed file follows readiness, other files reuse the loaded model. No claim of cold OS cache.', request: 'Loopback proxy times POST /v1/chat/completions through complete response body. Includes proxy/HTTP overhead; llama.cpp token timings are separate.', cache: 'llama.cpp --cache-ram 0; slot/prompt behavior otherwise defaults. Repeated identical prompts can reuse the runtime prompt cache.', resources: 'Sampled every 1 second from server spawn, including startup where captured. GPU usage includes other applications; process working set is not private allocation. Peaks are approximate.', dataset: dataset.provenance, scope: `${dataset.examples.length} standalone Chinese lines; prompt v${profile.prompt_version}, no context or glossary, synthetic CRLF SRT. Proposed references are not sent to the model. Not a subtitle holdout or language-release gate.` },
 };
 report.code_snapshot = {};
 for (const file of ['crates/auralis-translation-llamacpp/src/provider.rs', 'crates/auralis-translation-llamacpp/src/chinese_fidelity_prompt.rs', 'crates/auralis-translation-llamacpp/src/chinese_money_terms.rs', 'crates/auralis-translation-llamacpp/src/chinese_number.rs', 'eval/scripts/public-demo-benchmark.mjs']) {
   report.code_snapshot[file] = digest(await fs.readFile(path.join(root, file)));
 }
-report.methodology.currency = profile.prompt_version === 4 ? 'Recognized source amounts are protected as ordered tokens in inference-only text, then restored by the adapter after token validation. Raw candidate and accepted_candidate differ intentionally. Unrecognized amounts remain model translated.' : 'No monetary protection.';
+report.methodology.currency = [4, 5].includes(profile.prompt_version) ? 'Recognized source amounts are protected as ordered tokens in inference-only text, then restored by the adapter after token validation. Raw candidate and accepted_candidate differ intentionally. Unrecognized amounts remain model translated.' : 'No monetary protection.';
+if (profile.prompt_version === 5) report.code_snapshot['crates/auralis-translation-llamacpp/src/contextual_prompt_v5.rs'] = digest(await fs.readFile(path.join(root, 'crates/auralis-translation-llamacpp/src/contextual_prompt_v5.rs')));
 const inspection = await cli(['inspect', sourcePath]);
 let server, sampler, proxy;
 let activeRun;
@@ -94,10 +95,11 @@ try {
   const args = ['--model', modelPath, '--alias', profile.model_alias, '--host', '127.0.0.1', '--port', String(runtimePort), '-c', String(profile.min_context_tokens), '-ngl', '99', '--cache-ram', '0', '--parallel', '1', '--jinja'];
   report.server_arguments = args.map(value => value === modelPath ? '<supplied-model.gguf>' : value);
   const started = performance.now();
-  server = startProcess(serverPath, args, root, process.env, { maxCaptureCharacters: 4 * 1024 * 1024 });
+  const serverEnv = { ...process.env, PATH: `${path.dirname(serverPath)};${path.join(root, '.cache/runtime/cudart')};${process.env.PATH}` };
+  server = startProcess(serverPath, args, root, serverEnv, { maxCaptureCharacters: 4 * 1024 * 1024 });
   const sampleScript = `$ErrorActionPreference='Stop'; while ($true) { $p = Get-Process -Id ${server.child.pid} -ErrorAction SilentlyContinue; if (!$p) { break }; $g = & nvidia-smi --query-gpu=memory.used,utilization.gpu --format=csv,noheader,nounits; @{time=[DateTime]::UtcNow.ToString('o');working_set_bytes=$p.WorkingSet64;cpu_seconds=$p.CPU;gpu=$g} | ConvertTo-Json -Compress; Start-Sleep -Milliseconds 1000 }`;
   sampler = startProcess('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', sampleScript], root);
-  await waitForHealthyServer(runtimeUrl, server, 180_000);
+  await waitForHealthyServer(runtimeUrl, server, Number(process.env.AURALIS_SERVER_READINESS_MS ?? 180_000));
   report.server_startup_ms = performance.now() - started;
   console.log(`Server ready in ${report.server_startup_ms.toFixed(3)} ms`);
   for (let repetition = 1; repetition <= 3; repetition++) {
@@ -117,12 +119,13 @@ try {
     const templateFile = path.join(runRoot, 'template.json');
     await cli(['template', output, templateFile]);
     const translations = JSON.parse(await fs.readFile(templateFile, 'utf8')).translations;
-    assert.equal(translations.length, 20);
+    assert.equal(translations.length, dataset.examples.length);
     translations.forEach((row, index) => { assert.equal(row.id, index + 1); assert.equal(row.lines.length, 1); });
     const runRequests = requests.filter(row => row.run === repetition);
-    assert(runRequests.length >= 20);
+    assert(runRequests.length >= dataset.examples.length);
     for (const row of dataset.examples) assert(runRequests.some(request => request.example_id === row.id && request.http_status === 200));
     for (const request of runRequests) request.accepted_candidate = translations[dataset.examples.findIndex(row => row.id === request.example_id)].lines[0];
+    if (process.env.AURALIS_FORBIDDEN_OUTPUT && translations.some(row => row.lines[0].trim() === process.env.AURALIS_FORBIDDEN_OUTPUT)) throw new Error('Known placeholder output was accepted');
     report.runs.push({ repetition, run_id: runId, translation_elapsed_ms: translated.elapsed_ms, request_elapsed_sum_ms: runRequests.reduce((sum, row) => sum + row.elapsed_ms, 0), output_sha256: digest(bytes), status, structural_checks: 'passed', rows: translations.map((row, index) => ({ example_id: dataset.examples[index].id, candidate: row.lines[0] })) });
     assert.deepEqual(await fs.readFile(sourcePath), source);
     console.log(`Repeat ${repetition}: ${translated.elapsed_ms.toFixed(3)} ms; ${runRequests.length} real model requests; protected bytes verified`);

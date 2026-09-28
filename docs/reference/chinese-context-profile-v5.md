@@ -1,14 +1,17 @@
 # Chinese contextual fidelity profile v5
 
-Status: experimental contract for `CTX-01`, 28 September 2026. No v5 runtime,
-model quality or language gate is certified by this document. The existing
+Status: experimental contract for `CTX-01`, 28 September 2026. A later
+[partial v5 envelope implementation](../../eval/experiments/2026-09-28-v5-envelope-evidence.md)
+has real no-context JSON observations but no scene-context, model-quality or
+language gate. The existing
 [v4 fidelity](chinese-fidelity-profile-v1.md), [v3 glossary](glossary-v1.md) and
 v1/v2 request behavior remain byte-identical for their saved runs. A v5 run has
 a new manifest, policy and template identity; it cannot resume a v1–v4 run.
 
-The current adapter accepts prompt versions 1–4, sends one line per HTTP request,
-uses byte ceilings for context/terms, and lets v4 reject both. The current
-planner has no explicit scene map or rendered-token counter. `CTX-02`,
+The adapter accepts prompt versions 1–5, sends one line per HTTP request,
+uses byte ceilings for context/terms, and lets v4 reject both. File-based v5
+rejects a context window until an explicit scene map exists. The current
+planner has no scene map or rendered-token counter. `CTX-02`,
 `CTX-03` and `LONG-01` must implement these missing boundaries; this contract
 does not label them implemented.
 

@@ -1,6 +1,35 @@
 version: "3"
 
 tasks:
+  test:context-v5:
+    desc: Verify the experimental v5 request and strict response boundary
+    cmds:
+      - cargo test --offline -p auralis-translation-llamacpp --test context_v5 --test profile_contract
+      - cargo test --offline -p auralis-translation-cli --test context_v5_admission
+  eval:context:v5:smoke:
+    desc: Run bounded real-model v5 JSON admission on the frozen authored twenty lines
+    env:
+      AURALIS_DEMO_PROFILE: models/manifests/hy_mt2_1_8b_q4_k_m.context_v5.experimental.json
+      AURALIS_DEMO_ROOT: .cache/eval/context-v5-smoke
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_SERVER_READINESS_MS: '30000'
+    cmds:
+      - task: build:release
+      - node eval/scripts/public-demo-benchmark.mjs
+  eval:context:v5:regression:
+    desc: Repeat observed placeholder failures plus new related and unrelated Chinese controls
+    env:
+      AURALIS_DEMO_PROFILE: models/manifests/hy_mt2_1_8b_q4_k_m.context_v5.experimental.json
+      AURALIS_DEMO_DATASET: eval/corpora/v5-placeholder-regression-v1.json
+      AURALIS_DEMO_ROOT: .cache/eval/context-v5-regression
+      AURALIS_FORBIDDEN_OUTPUT: Русский текст
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_SERVER_READINESS_MS: '30000'
+    cmds:
+      - task: build:release
+      - node eval/scripts/public-demo-benchmark.mjs
   eval:context:cases:build:
     desc: Rebuild the authored context corpus from its seed table
     cmds:
