@@ -1,6 +1,20 @@
 version: "3"
 
 tasks:
+  eval:journal:paired:
+    desc: Compare one frozen authored Chinese scene with and without context and verify real SQLite chat traces
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_SCENE_DATASET: eval/corpora/context-contrasts-v1.json
+      AURALIS_SCENE_CASE_IDS: p01
+      AURALIS_SCENE_EXPERIMENT: inference-journal-paired-v1
+    cmds:
+      - task: eval:context:scene:check
+      - python -c "import ast; from pathlib import Path; ast.parse(Path('eval/scripts/check-inference-journal.py').read_text(encoding='utf-8'))"
+      - task: build:release
+      - node eval/scripts/scene-context-smoke.mjs
+      - python eval/scripts/check-inference-journal.py .cache/eval/inference-journal-paired-v1/latest.txt
   test:inference-journal:
     desc: Verify durable inference request identity, failure retention and schema upgrade
     cmds:
