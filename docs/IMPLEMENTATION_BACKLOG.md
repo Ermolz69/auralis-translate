@@ -38,15 +38,15 @@ does not activate implementation by being stored here.
 | DATA-01 | Source rights, provenance, scene and split schema | done | BASE-03 | [Inventory v1](reference/source-inventory-v1.md), authored [checked example](../eval/corpora/source-inventory-example-v1.json), six semantic tests and fixture SHA; real sources remain open |
 | DATA-02 | Sixty context contrast cases | ready | DATA-01, CTX-01 | Five categories, four scenarios per target, references/prohibited facts and IDs frozen |
 | DATA-03 | Licensed development subtitle scenes | ready | DATA-01 | Approximately 200 eligible cues; source/scene/speaker provenance and aligned references |
-| DATA-04 | Sealed independent release holdout | planned | DATA-01, EVAL-01 | At least 300 eligible cues; independent groups/references, no tuning exposure |
+| DATA-04 | Sealed independent release holdout | ready | DATA-01, EVAL-01 | At least 300 eligible cues; independent groups/references, no tuning exposure; reviewer/source admission still needed |
 | DATA-05 | Audit alignment, leakage and reviewer coverage | planned | DATA-03, DATA-04 | Whole-source duplicates/splits, reference provenance, rights, exclusions and balanced review categories checked |
-| EVAL-01 | Blind review, scoring and adjudication protocol | ready | BASE-03 | Human/source-aware rubrics, critical taxonomy, denominators and reviewer availability |
+| EVAL-01 | Blind review, scoring and adjudication protocol | done | BASE-03 | [Protocol v1](evaluation/009-blind-source-review.md): source-aware rubric, critical taxonomy, denominators, adjudication and explicit reviewer absence; no human score claimed |
 | CTX-01 | Specify composable prompt v5 | done | BASE-03 | [v5 contract](reference/chinese-context-profile-v5.md): source-only scene windows, approved terms, fidelity, identity, token budget and strict slot mapping; documentation checks only |
 | CTX-02 | Implement v5 without changing v1–v4 | planned | CTX-01, DATA-02, CTX-05 | Target/context separation; invalid IDs/tokens rejected; legacy profile checks pass |
 | CTX-03 | Scene terms and speaker evidence | planned | DATA-03, CTX-01 | Explicit approved facts with scope/hash; no invented speaker or automatic summary authority |
 | CTX-04 | Paired context/model ablation | planned | CTX-02, CTX-03, EVAL-01 | Budgeted repeated 60-case comparison, unrelated/insufficient-context controls and blinded review |
 | CTX-05 | Specify bounded failure, retry and review policy | planned | CTX-01, EVAL-02 | Versioned attempt/time budgets, typed outcomes, rejected evidence, no partial publication or silent model change |
-| EVAL-02 | General comparison and evidence schema | planned | CTX-01, EVAL-01 | Frozen identities, failures, timings/quantiles, raw/restored/accepted outputs and reproducibility |
+| EVAL-02 | General comparison and evidence schema | ready | CTX-01, EVAL-01 | Frozen identities, failures, timings/quantiles, raw/restored/accepted outputs and reproducibility |
 | EVAL-03 | Context and long-file HTML presentation | planned | EVAL-02, CTX-04 | Same evidence identities; scene/target/seam views, review labels, counts, public rights and raw downloads |
 | EVAL-04 | Implement maintained regression and adversarial tiers | planned | CTX-01, EVAL-02 | Permanent bug index, generative/metamorphic/source-instruction controls and change-triggered checks; [policy](evaluation/008-regression-and-adversarial-checks.md) |
 | LONG-01 | Token-budgeted scene and batch planner | planned | CTX-02, CTX-03 | Actual rendered-token budgets; deterministic context trimming and complete cue mapping |
@@ -69,7 +69,7 @@ does not activate implementation by being stored here.
 | RELEASE-03 | Clean Windows and desktop release gate | deferred | HOST-02, HOST-03 | G9 unseeded/offline and final native workflow, no mock substitute |
 | RELEASE-04 | Chinese translation release candidate | planned | RELEASE-05 | G1–G9 decision record, notices, hashes, rollback and explicit exclusions |
 | RELEASE-05 | Audit committed final candidate and regression dossier | planned | RELEASE-01, RELEASE-02, RELEASE-03, EVAL-04, HOST-04 | Gate/artifact/identity agreement, exact-target checks, publication and reviewed severity dispositions; [acceptance](RELEASE_ACCEPTANCE.md) |
-| VOICE-01 | Reviewed spoken-script handoff contract | planned | CTX-01, EVAL-01 | Result lineage, cue/timing/speaker mapping and separately reviewed number/name adaptation |
+| VOICE-01 | Reviewed spoken-script handoff contract | ready | CTX-01, EVAL-01 | Result lineage, cue/timing/speaker mapping and separately reviewed number/name adaptation |
 | VOICE-02 | Real Russian TTS selection and adapter | planned | VOICE-01, LONG-06 | Auralis-owned real audio, resource lease, engine/voice identity and cancellation |
 | VOICE-03 | Duration fit, mixing and mux policy | planned | VOICE-02 | Measured fit tolerance, playable mapped segments, preserved meaning and separate artifacts |
 | VOICE-04 | Human-listened three-scene dubbing pilot | planned | VOICE-03, RELEASE-01, VOICE-07 | Reviewed translation input, 10–20-minute scenes, proposed audio gates and reviewer evidence |
@@ -81,13 +81,15 @@ does not activate implementation by being stored here.
 
 ## Current handoff
 
-The next independently executable tasks are `DATA-02`, `DATA-03` and `EVAL-01`.
+The next independently executable tasks are `DATA-02`, `DATA-03`, `DATA-04`,
+`EVAL-02` and `VOICE-01`.
 `PLAN-01` has passed planning-artifact and generated-progress checks; publication
 is tracked separately in its acceptance record. `PLAN-03` freezes the user-started
 Goal in its [scope record](../eval/experiments/2026-09-28-goal-scope-v1.md).
 It does not claim implemented v5, training, a voice engine or any release gate. The earlier
 `PLAN-02` planning audit remains a separate accepted scope.
-`CTX-01` specifies v5, and `DATA-01` supplies a checked source inventory;
+`CTX-01` specifies v5, `DATA-01` supplies a checked source inventory, and
+`EVAL-01` freezes the review protocol while recording unavailable human review;
 `CTX-02` still waits for context cases and bounded failure policy.
 
 Deferred UI, optional adaptation/precision and ASR remain visible. A completed
