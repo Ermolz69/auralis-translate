@@ -36,13 +36,13 @@ does not activate implementation by being stored here.
 | PLAN-02 | Audit planning gaps and define goal completion | done | PLAN-01 | Release/regression/goal contracts, 49-task dependencies, six document identities and checked progress; [audit record](../eval/experiments/2026-09-28-goal-plan-audit.md) |
 | PLAN-03 | Freeze finite execution scope and gate bindings | done | PLAN-02 | [Scope v1](../eval/experiments/2026-09-28-goal-scope-v1.md): required/optional/excluded IDs, resources, gate bindings and external prerequisites; deferred UI remains required |
 | DATA-01 | Source rights, provenance, scene and split schema | done | BASE-03 | [Inventory v1](reference/source-inventory-v1.md), authored [checked example](../eval/corpora/source-inventory-example-v1.json), six semantic tests and fixture SHA; real sources remain open |
-| DATA-02 | Sixty context contrast cases | ready | DATA-01, CTX-01 | Five categories, four scenarios per target, references/prohibited facts and IDs frozen |
+| DATA-02 | Sixty context contrast cases | done | DATA-01, CTX-01 | [Corpus acceptance](../eval/experiments/2026-09-28-context-contrasts-v1.md): 60 targets, 240 paired scenarios, frozen IDs/hash and source-only request projection; AI-authored development data, no human score |
 | DATA-03 | Licensed development subtitle scenes | ready | DATA-01 | Approximately 200 eligible cues; source/scene/speaker provenance and aligned references |
 | DATA-04 | Sealed independent release holdout | ready | DATA-01, EVAL-01 | At least 300 eligible cues; independent groups/references, no tuning exposure; reviewer/source admission still needed |
 | DATA-05 | Audit alignment, leakage and reviewer coverage | planned | DATA-03, DATA-04 | Whole-source duplicates/splits, reference provenance, rights, exclusions and balanced review categories checked |
 | EVAL-01 | Blind review, scoring and adjudication protocol | done | BASE-03 | [Protocol v1](evaluation/009-blind-source-review.md): source-aware rubric, critical taxonomy, denominators, adjudication and explicit reviewer absence; no human score claimed |
 | CTX-01 | Specify composable prompt v5 | done | BASE-03 | [v5 contract](reference/chinese-context-profile-v5.md): source-only scene windows, approved terms, fidelity, identity, token budget and strict slot mapping; documentation checks only |
-| CTX-02 | Implement v5 without changing v1–v4 | planned | CTX-01, DATA-02, CTX-05 | Target/context separation; invalid IDs/tokens rejected; legacy profile checks pass |
+| CTX-02 | Implement v5 without changing v1–v4 | ready | CTX-01, DATA-02, CTX-05 | Target/context separation; invalid IDs/tokens rejected; legacy profile checks pass |
 | CTX-03 | Scene terms and speaker evidence | planned | DATA-03, CTX-01 | Explicit approved facts with scope/hash; no invented speaker or automatic summary authority |
 | CTX-04 | Paired context/model ablation | planned | CTX-02, CTX-03, EVAL-01 | Budgeted repeated 60-case comparison, unrelated/insufficient-context controls and blinded review |
 | CTX-05 | Specify bounded failure, retry and review policy | done | CTX-01, EVAL-02 | [Policy v1](reference/bounded-failure-policy-v1.md) and [invalid-slot retry regression](../eval/experiments/2026-09-28-invalid-slot-retry.md); typed provider errors/raw attempts remain for CTX-02 |
@@ -81,7 +81,7 @@ does not activate implementation by being stored here.
 
 ## Current handoff
 
-The next independently executable tasks are `DATA-02`, `DATA-03`, `DATA-04`,
+The next independently executable tasks are `CTX-02`, `DATA-03`, `DATA-04`,
 `EVAL-04` and `VOICE-01`.
 `PLAN-01` has passed planning-artifact and generated-progress checks; publication
 is tracked separately in its acceptance record. `PLAN-03` freezes the user-started
@@ -91,7 +91,9 @@ It does not claim implemented v5, training, a voice engine or any release gate. 
 `CTX-01` specifies v5, `DATA-01` supplies a checked source inventory, and
 `EVAL-01` freezes the review protocol while recording unavailable human review;
 `EVAL-02` checks future evidence shape, and `CTX-05` specifies bounded failure
-while fixing one structural retry defect. `CTX-02` still waits for context cases.
+while fixing one structural retry defect. `DATA-02` freezes 60 authored
+development context contrasts; `CTX-02` can now implement the source-only v5
+profile. Independent language review remains open.
 
 Deferred UI, optional adaptation/precision and ASR remain visible. A completed
 translation CLI milestone does not close the desktop release or audio milestone.

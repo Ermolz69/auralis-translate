@@ -1,0 +1,2840 @@
+{
+  "schema_version": 1,
+  "corpus_id": "authored-zh-ru-context-contrasts-v1",
+  "provenance": "ai_authored_unreviewed",
+  "split": "development",
+  "cases": [
+    {
+      "id": "p01",
+      "category": "pronoun",
+      "target_zh": "到了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Уже на месте.",
+        "expected_facts": [
+          "An arrival; actor unspecified"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "哥哥刚下车。"
+        ],
+        "after_zh": [
+          "门开了。"
+        ],
+        "reference_ru": "Он уже приехал.",
+        "expected_facts": [
+          "The older brother arrived"
+        ],
+        "prohibited_facts": [
+          "The older sister arrived"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "今天的天气很好。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "姐姐刚下车。"
+        ],
+        "after_zh": [
+          "门开了。"
+        ],
+        "reference_ru": "Она уже приехала.",
+        "expected_facts": [
+          "The older sister arrived"
+        ],
+        "prohibited_facts": [
+          "The older brother arrived"
+        ]
+      }
+    },
+    {
+      "id": "p02",
+      "category": "pronoun",
+      "target_zh": "回来了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Вернулись.",
+        "expected_facts": [
+          "A return; actor unspecified"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "爸爸出门买菜。"
+        ],
+        "after_zh": [
+          "脚步声响了。"
+        ],
+        "reference_ru": "Он вернулся.",
+        "expected_facts": [
+          "The father returned"
+        ],
+        "prohibited_facts": [
+          "The mother returned"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "门外停着一辆车。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "妈妈出门买菜。"
+        ],
+        "after_zh": [
+          "脚步声响了。"
+        ],
+        "reference_ru": "Она вернулась.",
+        "expected_facts": [
+          "The mother returned"
+        ],
+        "prohibited_facts": [
+          "The father returned"
+        ]
+      }
+    },
+    {
+      "id": "p03",
+      "category": "pronoun",
+      "target_zh": "答应了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Согласились.",
+        "expected_facts": [
+          "Agreement; actor unspecified"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "弟弟考虑了很久。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Он согласился.",
+        "expected_facts": [
+          "The younger brother agreed"
+        ],
+        "prohibited_facts": [
+          "The younger sister agreed"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "墙上挂着一幅画。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "妹妹考虑了很久。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Она согласилась.",
+        "expected_facts": [
+          "The younger sister agreed"
+        ],
+        "prohibited_facts": [
+          "The younger brother agreed"
+        ]
+      }
+    },
+    {
+      "id": "p04",
+      "category": "pronoun",
+      "target_zh": "先走了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Уже ушли.",
+        "expected_facts": [
+          "Departure; actor unspecified"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "男老师提前收拾好了东西。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Он ушёл первым.",
+        "expected_facts": [
+          "The male teacher left first"
+        ],
+        "prohibited_facts": [
+          "The female teacher left first"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "窗户还开着。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "女老师提前收拾好了东西。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Она ушла первой.",
+        "expected_facts": [
+          "The female teacher left first"
+        ],
+        "prohibited_facts": [
+          "The male teacher left first"
+        ]
+      }
+    },
+    {
+      "id": "p05",
+      "category": "pronoun",
+      "target_zh": "还没说话。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Пока молчат.",
+        "expected_facts": [
+          "No speech yet; actor unspecified"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "那位男医生一直看着病历。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Он ещё ничего не сказал.",
+        "expected_facts": [
+          "The male doctor has not spoken"
+        ],
+        "prohibited_facts": [
+          "The female doctor has not spoken"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "桌上有一本旧书。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "那位女医生一直看着病历。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Она ещё ничего не сказала.",
+        "expected_facts": [
+          "The female doctor has not spoken"
+        ],
+        "prohibited_facts": [
+          "The male doctor has not spoken"
+        ]
+      }
+    },
+    {
+      "id": "p06",
+      "category": "pronoun",
+      "target_zh": "终于笑了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Наконец улыбнулись.",
+        "expected_facts": [
+          "A smile; actor unspecified"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "儿子看完了信。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Он наконец улыбнулся.",
+        "expected_facts": [
+          "The son smiled"
+        ],
+        "prohibited_facts": [
+          "The daughter smiled"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "院子里有三棵树。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "女儿看完了信。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Она наконец улыбнулась.",
+        "expected_facts": [
+          "The daughter smiled"
+        ],
+        "prohibited_facts": [
+          "The son smiled"
+        ]
+      }
+    },
+    {
+      "id": "p07",
+      "category": "pronoun",
+      "target_zh": "已经睡了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Уже спят.",
+        "expected_facts": [
+          "Sleep; actor unspecified"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "叔叔忙了一整天。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Он уже спит.",
+        "expected_facts": [
+          "The uncle is asleep"
+        ],
+        "prohibited_facts": [
+          "The aunt is asleep"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "路灯刚亮。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "阿姨忙了一整天。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Она уже спит.",
+        "expected_facts": [
+          "The aunt is asleep"
+        ],
+        "prohibited_facts": [
+          "The uncle is asleep"
+        ]
+      }
+    },
+    {
+      "id": "p08",
+      "category": "pronoun",
+      "target_zh": "忘了钥匙。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Ключи забыли.",
+        "expected_facts": [
+          "Keys were forgotten; actor unspecified"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "男邻居站在门口。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Он забыл ключи.",
+        "expected_facts": [
+          "The male neighbor forgot keys"
+        ],
+        "prohibited_facts": [
+          "The female neighbor forgot keys"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "电梯在一楼。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "女邻居站在门口。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Она забыла ключи.",
+        "expected_facts": [
+          "The female neighbor forgot keys"
+        ],
+        "prohibited_facts": [
+          "The male neighbor forgot keys"
+        ]
+      }
+    },
+    {
+      "id": "p09",
+      "category": "pronoun",
+      "target_zh": "在等你。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Вас ждут.",
+        "expected_facts": [
+          "Someone waits; actor unspecified"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "经理是个男人。"
+        ],
+        "after_zh": [
+          "他在大厅里。"
+        ],
+        "reference_ru": "Он ждёт вас.",
+        "expected_facts": [
+          "The male manager waits"
+        ],
+        "prohibited_facts": [
+          "The female manager waits"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "杯子里还有水。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "经理是个女人。"
+        ],
+        "after_zh": [
+          "她在大厅里。"
+        ],
+        "reference_ru": "Она ждёт вас.",
+        "expected_facts": [
+          "The female manager waits"
+        ],
+        "prohibited_facts": [
+          "The male manager waits"
+        ]
+      }
+    },
+    {
+      "id": "p10",
+      "category": "pronoun",
+      "target_zh": "没看见。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Не заметили.",
+        "expected_facts": [
+          "No sighting; actor unspecified"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "哥哥刚从街上回来。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Он не видел.",
+        "expected_facts": [
+          "The older brother did not see"
+        ],
+        "prohibited_facts": [
+          "The older sister did not see"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "楼下有人唱歌。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "姐姐刚从街上回来。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Она не видела.",
+        "expected_facts": [
+          "The older sister did not see"
+        ],
+        "prohibited_facts": [
+          "The older brother did not see"
+        ]
+      }
+    },
+    {
+      "id": "p11",
+      "category": "pronoun",
+      "target_zh": "他已经到了。",
+      "uncertain_when_isolated": false,
+      "isolated": {
+        "reference_ru": "Он уже на месте.",
+        "expected_facts": [
+          "A male referent has arrived"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "王明坐的是早班车。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Он уже приехал.",
+        "expected_facts": [
+          "The male referent is Wang Ming"
+        ],
+        "prohibited_facts": [
+          "The male referent is Chen Tao"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "屋顶上有只鸟。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "陈涛坐的是早班车。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Он уже приехал.",
+        "expected_facts": [
+          "The male referent is Chen Tao"
+        ],
+        "prohibited_facts": [
+          "The male referent is Wang Ming"
+        ]
+      }
+    },
+    {
+      "id": "p12",
+      "category": "pronoun",
+      "target_zh": "请您坐。",
+      "uncertain_when_isolated": false,
+      "isolated": {
+        "reference_ru": "Присаживайтесь, пожалуйста.",
+        "expected_facts": [
+          "Formal polite invitation to sit"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "那位老教授走进了房间。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Присаживайтесь, пожалуйста.",
+        "expected_facts": [
+          "The addressee is an older professor"
+        ],
+        "prohibited_facts": [
+          "The addressee is an unknown guest"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "墙上的钟慢了五分钟。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "一位陌生客人走进了房间。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Присаживайтесь, пожалуйста.",
+        "expected_facts": [
+          "The addressee is an unknown guest"
+        ],
+        "prohibited_facts": [
+          "The addressee is an older professor"
+        ]
+      }
+    },
+    {
+      "id": "s01",
+      "category": "split_negation",
+      "target_zh": "没有。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Нет.",
+        "expected_facts": [
+          "Negation without stated object"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "你看见他了吗？"
+        ],
+        "after_zh": [],
+        "reference_ru": "Нет, не видел.",
+        "expected_facts": [
+          "The speaker did not see him"
+        ],
+        "prohibited_facts": [
+          "The speaker has no money left"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "今天的天气很好。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "你还有钱吗？"
+        ],
+        "after_zh": [],
+        "reference_ru": "Нет, денег больше нет.",
+        "expected_facts": [
+          "The speaker has no money left"
+        ],
+        "prohibited_facts": [
+          "The speaker did not see him"
+        ]
+      }
+    },
+    {
+      "id": "s02",
+      "category": "split_negation",
+      "target_zh": "不是。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Нет, это не так.",
+        "expected_facts": [
+          "Denial with unspecified proposition"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "是你签的这份合同吗？"
+        ],
+        "after_zh": [],
+        "reference_ru": "Нет, это подписал не я.",
+        "expected_facts": [
+          "The speaker denies signing"
+        ],
+        "prohibited_facts": [
+          "The document is not the original"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "门外停着一辆车。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "这是原件吗？"
+        ],
+        "after_zh": [],
+        "reference_ru": "Нет, это не оригинал.",
+        "expected_facts": [
+          "The document is not the original"
+        ],
+        "prohibited_facts": [
+          "The speaker denies signing"
+        ]
+      }
+    },
+    {
+      "id": "s03",
+      "category": "split_negation",
+      "target_zh": "还没。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Ещё нет.",
+        "expected_facts": [
+          "Something has not happened yet"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "报告写完了吗？"
+        ],
+        "after_zh": [],
+        "reference_ru": "Ещё не закончил.",
+        "expected_facts": [
+          "The report is unfinished"
+        ],
+        "prohibited_facts": [
+          "The train has not arrived"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "墙上挂着一幅画。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "火车到了吗？"
+        ],
+        "after_zh": [],
+        "reference_ru": "Поезд ещё не прибыл.",
+        "expected_facts": [
+          "The train has not arrived"
+        ],
+        "prohibited_facts": [
+          "The report is unfinished"
+        ]
+      }
+    },
+    {
+      "id": "s04",
+      "category": "split_negation",
+      "target_zh": "别这样。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Не надо так.",
+        "expected_facts": [
+          "A prohibition without specified action"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "你刚才说的话太伤人了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Не говори так.",
+        "expected_facts": [
+          "The rebuke concerns hurtful speech"
+        ],
+        "prohibited_facts": [
+          "The rebuke concerns a dangerous action"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "窗户还开着。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "你拿刀对着自己。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Не делай этого.",
+        "expected_facts": [
+          "The rebuke concerns a dangerous action"
+        ],
+        "prohibited_facts": [
+          "The rebuke concerns hurtful speech"
+        ]
+      }
+    },
+    {
+      "id": "s05",
+      "category": "split_negation",
+      "target_zh": "还差一点。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Ещё чуть-чуть не хватает.",
+        "expected_facts": [
+          "A small shortfall without unit"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "账单是五十元，我们只有四十九元。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Немного не хватает денег.",
+        "expected_facts": [
+          "The shortfall concerns money"
+        ],
+        "prohibited_facts": [
+          "The shortfall concerns a puzzle piece"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "桌上有一本旧书。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "拼图还缺最后一块。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Не хватает ещё одной детали.",
+        "expected_facts": [
+          "The shortfall concerns a puzzle piece"
+        ],
+        "prohibited_facts": [
+          "The shortfall concerns money"
+        ]
+      }
+    },
+    {
+      "id": "s06",
+      "category": "split_negation",
+      "target_zh": "算了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Ладно, забудем.",
+        "expected_facts": [
+          "A decision to drop something"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "这杯茶太烫了，别给我了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Не надо, отменим.",
+        "expected_facts": [
+          "The speaker cancels an order"
+        ],
+        "prohibited_facts": [
+          "The speaker forgives an accident"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "院子里有三棵树。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "你不是故意打碎杯子的。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Ладно, забудем об этом.",
+        "expected_facts": [
+          "The speaker forgives an accident"
+        ],
+        "prohibited_facts": [
+          "The speaker cancels an order"
+        ]
+      }
+    },
+    {
+      "id": "s07",
+      "category": "split_negation",
+      "target_zh": "不要了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Больше не надо.",
+        "expected_facts": [
+          "Refusal or stopping without object"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "这件外套你还买吗？"
+        ],
+        "after_zh": [],
+        "reference_ru": "Нет, куртка мне больше не нужна.",
+        "expected_facts": [
+          "The speaker declines the coat"
+        ],
+        "prohibited_facts": [
+          "The speaker stops the work"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "路灯刚亮。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "这项工作还继续吗？"
+        ],
+        "after_zh": [],
+        "reference_ru": "Нет, эту работу больше не продолжаем.",
+        "expected_facts": [
+          "The speaker stops the work"
+        ],
+        "prohibited_facts": [
+          "The speaker declines the coat"
+        ]
+      }
+    },
+    {
+      "id": "s08",
+      "category": "split_negation",
+      "target_zh": "行不行？",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Можно или нет?",
+        "expected_facts": [
+          "A yes-or-no feasibility question"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "我们今晚能进图书馆吗？"
+        ],
+        "after_zh": [],
+        "reference_ru": "Нас сегодня пустят в библиотеку или нет?",
+        "expected_facts": [
+          "The question is about entry permission"
+        ],
+        "prohibited_facts": [
+          "The question is about device function"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "电梯在一楼。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "修过的收音机现在能用吗？"
+        ],
+        "after_zh": [],
+        "reference_ru": "Радио теперь работает или нет?",
+        "expected_facts": [
+          "The question is about device function"
+        ],
+        "prohibited_facts": [
+          "The question is about entry permission"
+        ]
+      }
+    },
+    {
+      "id": "s09",
+      "category": "split_negation",
+      "target_zh": "还要吗？",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Ещё нужно?",
+        "expected_facts": [
+          "An offer of more without object"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "你的茶喝完了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Ещё чаю?",
+        "expected_facts": [
+          "The offer concerns tea"
+        ],
+        "prohibited_facts": [
+          "The offer concerns tickets"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "杯子里还有水。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "我们已经买了两张票。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Нужны ещё билеты?",
+        "expected_facts": [
+          "The offer concerns tickets"
+        ],
+        "prohibited_facts": [
+          "The offer concerns tea"
+        ]
+      }
+    },
+    {
+      "id": "s10",
+      "category": "split_negation",
+      "target_zh": "也不是不行。",
+      "uncertain_when_isolated": false,
+      "isolated": {
+        "reference_ru": "В принципе возможно.",
+        "expected_facts": [
+          "Double negation leaves a possibility"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "这条路绕一点，但能到。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Не то чтобы нельзя.",
+        "expected_facts": [
+          "The route remains possible"
+        ],
+        "prohibited_facts": [
+          "The meeting remains possible"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "楼下有人唱歌。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "明天可以开会，只是得改时间。"
+        ],
+        "after_zh": [],
+        "reference_ru": "В принципе можно.",
+        "expected_facts": [
+          "The meeting remains possible"
+        ],
+        "prohibited_facts": [
+          "The route remains possible"
+        ]
+      }
+    },
+    {
+      "id": "s11",
+      "category": "split_negation",
+      "target_zh": "别急着走。",
+      "uncertain_when_isolated": false,
+      "isolated": {
+        "reference_ru": "Не спеши уходить.",
+        "expected_facts": [
+          "Do not leave immediately"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "车还有十分钟才来。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Не спеши уходить.",
+        "expected_facts": [
+          "The bus is ten minutes away"
+        ],
+        "prohibited_facts": [
+          "A speaker is still finishing a sentence"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "屋顶上有只鸟。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "她还有一句话没说完。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Не уходи пока.",
+        "expected_facts": [
+          "A speaker is still finishing a sentence"
+        ],
+        "prohibited_facts": [
+          "The bus is ten minutes away"
+        ]
+      }
+    },
+    {
+      "id": "s12",
+      "category": "split_negation",
+      "target_zh": "先等等。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Подождём немного.",
+        "expected_facts": [
+          "Wait briefly; object unstated"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "医生还在看检查结果。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Подождём ответа врача.",
+        "expected_facts": [
+          "The wait concerns a medical result"
+        ],
+        "prohibited_facts": [
+          "The wait concerns baking bread"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "墙上的钟慢了五分钟。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "面包还在烤箱里。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Подождём, пока хлеб испечётся.",
+        "expected_facts": [
+          "The wait concerns baking bread"
+        ],
+        "prohibited_facts": [
+          "The wait concerns a medical result"
+        ]
+      }
+    },
+    {
+      "id": "n01",
+      "category": "name_term",
+      "target_zh": "小林来了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Сяолинь пришёл.",
+        "expected_facts": [
+          "A person called Xiaolin arrived"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "小林是上海来的同事，中文名写作小林。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Сяолинь пришёл.",
+        "expected_facts": [
+          "The Chinese colleague Xiaolin arrived"
+        ],
+        "prohibited_facts": [
+          "The Japanese colleague Kobayashi arrived"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "今天的天气很好。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "小林是日本来的同事，姓氏读作こばやし。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Кобаяси пришёл.",
+        "expected_facts": [
+          "The Japanese colleague Kobayashi arrived"
+        ],
+        "prohibited_facts": [
+          "The Chinese colleague Xiaolin arrived"
+        ]
+      }
+    },
+    {
+      "id": "n02",
+      "category": "name_term",
+      "target_zh": "苹果坏了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Яблоко испортилось.",
+        "expected_facts": [
+          "Apple is ambiguous between fruit and device"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "桌上的苹果放了太久。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Яблоко испортилось.",
+        "expected_facts": [
+          "The fruit spoiled"
+        ],
+        "prohibited_facts": [
+          "The Apple phone broke"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "门外停着一辆车。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "他的苹果手机突然黑屏。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Его телефон Apple сломался.",
+        "expected_facts": [
+          "The Apple phone broke"
+        ],
+        "prohibited_facts": [
+          "The fruit spoiled"
+        ]
+      }
+    },
+    {
+      "id": "n03",
+      "category": "name_term",
+      "target_zh": "白雪回来了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Белый снег вернулся.",
+        "expected_facts": [
+          "Bai Xue may be a name or snow"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "白雪是我妹妹的名字。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Бай Сюэ вернулась.",
+        "expected_facts": [
+          "A woman named Bai Xue returned"
+        ],
+        "prohibited_facts": [
+          "Snow returned to the mountain"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "墙上挂着一幅画。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "山上又开始下雪。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Белый снег вернулся.",
+        "expected_facts": [
+          "Snow returned to the mountain"
+        ],
+        "prohibited_facts": [
+          "A woman named Bai Xue returned"
+        ]
+      }
+    },
+    {
+      "id": "n04",
+      "category": "name_term",
+      "target_zh": "大海不见了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Моря не видно.",
+        "expected_facts": [
+          "Dahai may be a name or sea"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "大海是我们队员的名字。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Дахай пропал.",
+        "expected_facts": [
+          "A teammate named Dahai is missing"
+        ],
+        "prohibited_facts": [
+          "The sea is hidden by fog"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "窗户还开着。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "雾把整个海岸都盖住了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Моря больше не видно.",
+        "expected_facts": [
+          "The sea is hidden by fog"
+        ],
+        "prohibited_facts": [
+          "A teammate named Dahai is missing"
+        ]
+      }
+    },
+    {
+      "id": "n05",
+      "category": "name_term",
+      "target_zh": "红梅开了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Красная слива зацвела.",
+        "expected_facts": [
+          "Hongmei may be a name or flowering plum"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "院里的红梅树等了一个冬天。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Красная слива зацвела.",
+        "expected_facts": [
+          "A red plum tree blossomed"
+        ],
+        "prohibited_facts": [
+          "A shop named Hongmei opened"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "桌上有一本旧书。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "红梅是街角那家新店的名字。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Магазин «Хунмэй» открылся.",
+        "expected_facts": [
+          "A shop named Hongmei opened"
+        ],
+        "prohibited_facts": [
+          "A red plum tree blossomed"
+        ]
+      }
+    },
+    {
+      "id": "n06",
+      "category": "name_term",
+      "target_zh": "老虎来了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Тигр пришёл.",
+        "expected_facts": [
+          "Tiger may be an animal or nickname"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "动物园把那只老虎放出来了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Тигр подошёл.",
+        "expected_facts": [
+          "An animal tiger arrived"
+        ],
+        "prohibited_facts": [
+          "A man nicknamed Tiger arrived"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "院子里有三棵树。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "大家都叫王强老虎。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Лаоху пришёл.",
+        "expected_facts": [
+          "A man nicknamed Tiger arrived"
+        ],
+        "prohibited_facts": [
+          "An animal tiger arrived"
+        ]
+      }
+    },
+    {
+      "id": "n07",
+      "category": "name_term",
+      "target_zh": "长安到了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Чанъань прибыл.",
+        "expected_facts": [
+          "Changan may be a place or car brand"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "列车下一站就是长安。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Мы приехали в Чанъань.",
+        "expected_facts": [
+          "The train reached Changan station"
+        ],
+        "prohibited_facts": [
+          "A Changan-brand car arrived"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "路灯刚亮。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "我订的长安汽车刚进院子。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Машина Changan приехала.",
+        "expected_facts": [
+          "A Changan-brand car arrived"
+        ],
+        "prohibited_facts": [
+          "The train reached Changan station"
+        ]
+      }
+    },
+    {
+      "id": "n08",
+      "category": "name_term",
+      "target_zh": "青山变了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Зелёные горы изменились.",
+        "expected_facts": [
+          "Qingshan may be a name or landscape"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "青山是导演，他最近不一样了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Циншань изменился.",
+        "expected_facts": [
+          "The director Qingshan changed"
+        ],
+        "prohibited_facts": [
+          "The landscape changed"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "电梯在一楼。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "这些年山上的树被砍光了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Зелёные горы изменились.",
+        "expected_facts": [
+          "The landscape changed"
+        ],
+        "prohibited_facts": [
+          "The director Qingshan changed"
+        ]
+      }
+    },
+    {
+      "id": "n09",
+      "category": "name_term",
+      "target_zh": "春天来了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Пришла весна.",
+        "expected_facts": [
+          "Spring may be a season or a person"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "今天比昨天暖和多了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Пришла весна.",
+        "expected_facts": [
+          "The season spring arrived"
+        ],
+        "prohibited_facts": [
+          "The woman named Chuntian arrived"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "杯子里还有水。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "春天是新同事的名字，她刚到门口。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Чуньтянь пришла.",
+        "expected_facts": [
+          "The woman named Chuntian arrived"
+        ],
+        "prohibited_facts": [
+          "The season spring arrived"
+        ]
+      }
+    },
+    {
+      "id": "n10",
+      "category": "name_term",
+      "target_zh": "豆豆没吃饭。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Дуду не поел.",
+        "expected_facts": [
+          "Doudou identity is unknown"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "豆豆是我五岁的儿子。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Дуду не поел.",
+        "expected_facts": [
+          "Doudou is a child who skipped food"
+        ],
+        "prohibited_facts": [
+          "Doudou is a dog that skipped food"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "楼下有人唱歌。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "豆豆是我养的那只小狗。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Пёс Дуду не поел.",
+        "expected_facts": [
+          "Doudou is a dog that skipped food"
+        ],
+        "prohibited_facts": [
+          "Doudou is a child who skipped food"
+        ]
+      }
+    },
+    {
+      "id": "n11",
+      "category": "name_term",
+      "target_zh": "主任来了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Пришёл руководитель.",
+        "expected_facts": [
+          "Director title lacks institution"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "医院的主任正在查房。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Пришёл заведующий отделением.",
+        "expected_facts": [
+          "The title is hospital department head"
+        ],
+        "prohibited_facts": [
+          "The title is school administrator"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "屋顶上有只鸟。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "学校教务处的主任正在巡课。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Пришёл заведующий учебной частью.",
+        "expected_facts": [
+          "The title is school administrator"
+        ],
+        "prohibited_facts": [
+          "The title is hospital department head"
+        ]
+      }
+    },
+    {
+      "id": "n12",
+      "category": "name_term",
+      "target_zh": "他叫王明。",
+      "uncertain_when_isolated": false,
+      "isolated": {
+        "reference_ru": "Его зовут Ван Мин.",
+        "expected_facts": [
+          "A man is named Wang Ming"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "这是新来的中国同事，他叫王明。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Его зовут Ван Мин.",
+        "expected_facts": [
+          "The name has the approved Chinese reading"
+        ],
+        "prohibited_facts": [
+          "A subtitle preserves the written name without invented Japanese reading"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "墙上的钟慢了五分钟。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "这是电影里的日本角色，字幕沿用中文写法王明。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Его зовут Ван Мин.",
+        "expected_facts": [
+          "A subtitle preserves the written name without invented Japanese reading"
+        ],
+        "prohibited_facts": [
+          "The name has the approved Chinese reading"
+        ]
+      }
+    },
+    {
+      "id": "m01",
+      "category": "money_fact",
+      "target_zh": "找你五块。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Верну тебе пять.",
+        "expected_facts": [
+          "Five units returned; unit uncertain"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "你给我十元，东西只要五元。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Вот пять юаней сдачи.",
+        "expected_facts": [
+          "Five yuan change is owed to the buyer"
+        ],
+        "prohibited_facts": [
+          "Five physical pieces must be found"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "今天的天气很好。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "拼图还差五块，我去找。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Найду тебе пять деталей.",
+        "expected_facts": [
+          "Five physical pieces must be found"
+        ],
+        "prohibited_facts": [
+          "Five yuan change is owed to the buyer"
+        ]
+      }
+    },
+    {
+      "id": "m02",
+      "category": "money_fact",
+      "target_zh": "还差三块。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Не хватает ещё трёх.",
+        "expected_facts": [
+          "Three units are missing"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "票价十元，我们只有七元。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Не хватает трёх юаней.",
+        "expected_facts": [
+          "Three yuan are missing"
+        ],
+        "prohibited_facts": [
+          "Three physical boards are missing"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "门外停着一辆车。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "桌子要拼好，还缺三块木板。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Не хватает трёх досок.",
+        "expected_facts": [
+          "Three physical boards are missing"
+        ],
+        "prohibited_facts": [
+          "Three yuan are missing"
+        ]
+      }
+    },
+    {
+      "id": "m03",
+      "category": "money_fact",
+      "target_zh": "两块就够了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Двух хватит.",
+        "expected_facts": [
+          "Two units suffice"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "每人交两元就够。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Двух юаней хватит.",
+        "expected_facts": [
+          "Two yuan suffice"
+        ],
+        "prohibited_facts": [
+          "Two roof tiles suffice"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "墙上挂着一幅画。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "修屋顶只要两块瓦。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Двух черепиц хватит.",
+        "expected_facts": [
+          "Two roof tiles suffice"
+        ],
+        "prohibited_facts": [
+          "Two yuan suffice"
+        ]
+      }
+    },
+    {
+      "id": "m04",
+      "category": "money_fact",
+      "target_zh": "给他十块。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Дай ему десять.",
+        "expected_facts": [
+          "Give ten unspecified units"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "他买水还差十元。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Дай ему десять юаней.",
+        "expected_facts": [
+          "Ten yuan are given"
+        ],
+        "prohibited_facts": [
+          "Ten bricks are given"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "窗户还开着。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "他要修墙，需要十块砖。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Дай ему десять кирпичей.",
+        "expected_facts": [
+          "Ten bricks are given"
+        ],
+        "prohibited_facts": [
+          "Ten yuan are given"
+        ]
+      }
+    },
+    {
+      "id": "m05",
+      "category": "money_fact",
+      "target_zh": "还给她五十。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Верни ей пятьдесят.",
+        "expected_facts": [
+          "Fifty unspecified units returned"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "她借了我五十元，现在要还钱。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Верни ей пятьдесят юаней.",
+        "expected_facts": [
+          "Fifty yuan debt is repaid to her"
+        ],
+        "prohibited_facts": [
+          "Fifty photos are returned to her"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "桌上有一本旧书。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "她把五十张照片借给了你。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Верни ей пятьдесят фотографий.",
+        "expected_facts": [
+          "Fifty photos are returned to her"
+        ],
+        "prohibited_facts": [
+          "Fifty yuan debt is repaid to her"
+        ]
+      }
+    },
+    {
+      "id": "m06",
+      "category": "money_fact",
+      "target_zh": "一百二十。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Сто двадцать.",
+        "expected_facts": [
+          "The number is 120 without unit"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "店员问这件衣服多少钱。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Сто двадцать юаней.",
+        "expected_facts": [
+          "The price is 120 yuan"
+        ],
+        "prohibited_facts": [
+          "The count is 120 people"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "院子里有三棵树。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "老师问礼堂里有多少人。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Сто двадцать человек.",
+        "expected_facts": [
+          "The count is 120 people"
+        ],
+        "prohibited_facts": [
+          "The price is 120 yuan"
+        ]
+      }
+    },
+    {
+      "id": "m07",
+      "category": "money_fact",
+      "target_zh": "他给了我五十。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Он дал мне пятьдесят.",
+        "expected_facts": [
+          "A man gave fifty unspecified units"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "我们说好用人民币结账。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Он дал мне пятьдесят юаней.",
+        "expected_facts": [
+          "He gave fifty yuan"
+        ],
+        "prohibited_facts": [
+          "He gave fifty US dollars"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "路灯刚亮。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "这家店只收美元。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Он дал мне пятьдесят долларов.",
+        "expected_facts": [
+          "He gave fifty US dollars"
+        ],
+        "prohibited_facts": [
+          "He gave fifty yuan"
+        ]
+      }
+    },
+    {
+      "id": "m08",
+      "category": "money_fact",
+      "target_zh": "剩两块。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Осталось две штуки.",
+        "expected_facts": [
+          "Two units remain"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "钱袋里原来有十元。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Осталось два юаня.",
+        "expected_facts": [
+          "Two yuan remain"
+        ],
+        "prohibited_facts": [
+          "Two puzzle pieces remain"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "电梯在一楼。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "拼图已经拼得差不多了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Остались две детали.",
+        "expected_facts": [
+          "Two puzzle pieces remain"
+        ],
+        "prohibited_facts": [
+          "Two yuan remain"
+        ]
+      }
+    },
+    {
+      "id": "m09",
+      "category": "money_fact",
+      "target_zh": "五元还是五美元？",
+      "uncertain_when_isolated": false,
+      "isolated": {
+        "reference_ru": "Пять юаней или пять долларов?",
+        "expected_facts": [
+          "The choice is yuan versus US dollars"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "价签上同时印着人民币和美元。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Пять юаней или пять долларов?",
+        "expected_facts": [
+          "Two distinct currency options remain"
+        ],
+        "prohibited_facts": [
+          "No exchange-rate conversion is implied"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "杯子里还有水。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "店员问的是纸币种类，不是汇率。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Пять юаней или пять долларов?",
+        "expected_facts": [
+          "No exchange-rate conversion is implied"
+        ],
+        "prohibited_facts": [
+          "Two distinct currency options remain"
+        ]
+      }
+    },
+    {
+      "id": "m10",
+      "category": "money_fact",
+      "target_zh": "先令还在吗？",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Шиллинг ещё здесь?",
+        "expected_facts": [
+          "Shilling may name currency or a person"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "收藏家把那枚旧先令放在盒里。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Старый шиллинг ещё на месте?",
+        "expected_facts": [
+          "A currency coin is sought"
+        ],
+        "prohibited_facts": [
+          "A person surnamed Shilling is sought"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "楼下有人唱歌。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "先令是这位客人的姓。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Господин Шиллинг ещё здесь?",
+        "expected_facts": [
+          "A person surnamed Shilling is sought"
+        ],
+        "prohibited_facts": [
+          "A currency coin is sought"
+        ]
+      }
+    },
+    {
+      "id": "m11",
+      "category": "money_fact",
+      "target_zh": "这两块不是钱。",
+      "uncertain_when_isolated": false,
+      "isolated": {
+        "reference_ru": "Эти две штуки — не деньги.",
+        "expected_facts": [
+          "Two physical pieces are explicitly not money"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "他指着两块石头解释。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Эти два камня — не деньги.",
+        "expected_facts": [
+          "Two stones are not money"
+        ],
+        "prohibited_facts": [
+          "Two boards are not money"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "屋顶上有只鸟。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "他拿着两块木板解释。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Эти две доски — не деньги.",
+        "expected_facts": [
+          "Two boards are not money"
+        ],
+        "prohibited_facts": [
+          "Two stones are not money"
+        ]
+      }
+    },
+    {
+      "id": "m12",
+      "category": "money_fact",
+      "target_zh": "别少给她一元。",
+      "uncertain_when_isolated": false,
+      "isolated": {
+        "reference_ru": "Не дай ей на один юань меньше.",
+        "expected_facts": [
+          "Do not underpay her by one yuan"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "工资已经算好了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Не недоплати ей один юань.",
+        "expected_facts": [
+          "An employee must receive full pay"
+        ],
+        "prohibited_facts": [
+          "A customer must receive one yuan change"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "墙上的钟慢了五分钟。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "找零时她应该拿回一元。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Не недодай ей один юань сдачи.",
+        "expected_facts": [
+          "A customer must receive one yuan change"
+        ],
+        "prohibited_facts": [
+          "An employee must receive full pay"
+        ]
+      }
+    },
+    {
+      "id": "i01",
+      "category": "idiom_irony",
+      "target_zh": "真行啊。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Ну и дела.",
+        "expected_facts": [
+          "Praise or sarcasm is unresolved"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "你第一次就把机器修好了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Ну молодец!",
+        "expected_facts": [
+          "Sincere praise for a successful repair"
+        ],
+        "prohibited_facts": [
+          "Sarcasm about breaking a repaired machine"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "今天的天气很好。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "你又把刚修好的机器弄坏了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Ну и мастер ты!",
+        "expected_facts": [
+          "Sarcasm about breaking a repaired machine"
+        ],
+        "prohibited_facts": [
+          "Sincere praise for a successful repair"
+        ]
+      }
+    },
+    {
+      "id": "i02",
+      "category": "idiom_irony",
+      "target_zh": "好样的。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Вот это да.",
+        "expected_facts": [
+          "Positive or ironic assessment is unresolved"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "她冒雨把孩子送回了家。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Молодец!",
+        "expected_facts": [
+          "Sincere praise for helping a child"
+        ],
+        "prohibited_facts": [
+          "Sarcasm about abandoning a promise"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "门外停着一辆车。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "他答应帮忙却自己跑了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Ну молодец, нечего сказать.",
+        "expected_facts": [
+          "Sarcasm about abandoning a promise"
+        ],
+        "prohibited_facts": [
+          "Sincere praise for helping a child"
+        ]
+      }
+    },
+    {
+      "id": "i03",
+      "category": "idiom_irony",
+      "target_zh": "你可真会说话。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Ну ты умеешь говорить.",
+        "expected_facts": [
+          "Tone of speaking skill is unresolved"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "你的安慰让她终于笑了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Ты умеешь подобрать слова.",
+        "expected_facts": [
+          "Sincere praise for comfort"
+        ],
+        "prohibited_facts": [
+          "Reproach for a hurtful remark"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "墙上挂着一幅画。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "你当众揭了他的伤疤。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Ну ты и умеешь говорить.",
+        "expected_facts": [
+          "Reproach for a hurtful remark"
+        ],
+        "prohibited_facts": [
+          "Sincere praise for comfort"
+        ]
+      }
+    },
+    {
+      "id": "i04",
+      "category": "idiom_irony",
+      "target_zh": "这下好了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Вот теперь хорошо.",
+        "expected_facts": [
+          "Outcome evaluation is unresolved"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "医生说检查结果正常。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Ну вот, теперь всё хорошо.",
+        "expected_facts": [
+          "Relief after good medical news"
+        ],
+        "prohibited_facts": [
+          "Ironic reaction to being locked out"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "窗户还开着。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "钥匙被你锁在屋里了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Ну вот, теперь приехали.",
+        "expected_facts": [
+          "Ironic reaction to being locked out"
+        ],
+        "prohibited_facts": [
+          "Relief after good medical news"
+        ]
+      }
+    },
+    {
+      "id": "i05",
+      "category": "idiom_irony",
+      "target_zh": "太及时了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Как вовремя.",
+        "expected_facts": [
+          "Timing praise or sarcasm is unresolved"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "救护车在病人昏倒前赶到了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Как вовремя они приехали!",
+        "expected_facts": [
+          "Sincere relief at timely ambulance"
+        ],
+        "prohibited_facts": [
+          "Sarcasm about a late umbrella"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "桌上有一本旧书。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "雨停后你才把伞送来。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Ну очень вовремя ты принёс зонт.",
+        "expected_facts": [
+          "Sarcasm about a late umbrella"
+        ],
+        "prohibited_facts": [
+          "Sincere relief at timely ambulance"
+        ]
+      }
+    },
+    {
+      "id": "i06",
+      "category": "idiom_irony",
+      "target_zh": "你真聪明。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Ты очень умён.",
+        "expected_facts": [
+          "Compliment tone is unresolved"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "你发现了没人看出的错误。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Ты правда молодец, заметил ошибку.",
+        "expected_facts": [
+          "Sincere praise for detecting an error"
+        ],
+        "prohibited_facts": [
+          "Sarcasm for exposing a password"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "院子里有三棵树。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "密码被你写在门上了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Ну и умник же ты.",
+        "expected_facts": [
+          "Sarcasm for exposing a password"
+        ],
+        "prohibited_facts": [
+          "Sincere praise for detecting an error"
+        ]
+      }
+    },
+    {
+      "id": "i07",
+      "category": "idiom_irony",
+      "target_zh": "终于来了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Наконец пришли.",
+        "expected_facts": [
+          "Arrival emotion is unresolved"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "我们等的医生及时赶到了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Наконец-то врач пришёл.",
+        "expected_facts": [
+          "Relief at doctor arrival"
+        ],
+        "prohibited_facts": [
+          "Reproach for arriving after everyone left"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "路灯刚亮。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "大家都散场了你才出现。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Ну наконец-то явился.",
+        "expected_facts": [
+          "Reproach for arriving after everyone left"
+        ],
+        "prohibited_facts": [
+          "Relief at doctor arrival"
+        ]
+      }
+    },
+    {
+      "id": "i08",
+      "category": "idiom_irony",
+      "target_zh": "还真热闹。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Как оживлённо.",
+        "expected_facts": [
+          "Scene tone is unresolved"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "街上正在举行节日游行。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Как здесь оживлённо!",
+        "expected_facts": [
+          "Pleasure at a festival crowd"
+        ],
+        "prohibited_facts": [
+          "Displeasure at neighbors making noise"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "电梯在一楼。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "深夜邻居又在大吵大闹。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Ну и шум у них.",
+        "expected_facts": [
+          "Displeasure at neighbors making noise"
+        ],
+        "prohibited_facts": [
+          "Pleasure at a festival crowd"
+        ]
+      }
+    },
+    {
+      "id": "i09",
+      "category": "idiom_irony",
+      "target_zh": "真有你的。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Ну ты даёшь.",
+        "expected_facts": [
+          "Praise or reproach is unresolved"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "你一个人完成了大家的工作。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Вот это ты молодец!",
+        "expected_facts": [
+          "Praise for finishing shared work"
+        ],
+        "prohibited_facts": [
+          "Reproach for deleting files"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "杯子里还有水。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "你把所有人的文件都删了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Ну и натворил ты дел.",
+        "expected_facts": [
+          "Reproach for deleting files"
+        ],
+        "prohibited_facts": [
+          "Praise for finishing shared work"
+        ]
+      }
+    },
+    {
+      "id": "i10",
+      "category": "idiom_irony",
+      "target_zh": "这可有意思了。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Вот это интересно.",
+        "expected_facts": [
+          "Interest may be positive or ominous"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "他发现了古书里隐藏的地图。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Вот это интересно!",
+        "expected_facts": [
+          "Curiosity about a hidden map"
+        ],
+        "prohibited_facts": [
+          "Unease about a missing witness"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "楼下有人唱歌。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "最重要的证人突然失踪了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Вот теперь становится интересно.",
+        "expected_facts": [
+          "Unease about a missing witness"
+        ],
+        "prohibited_facts": [
+          "Curiosity about a hidden map"
+        ]
+      }
+    },
+    {
+      "id": "i11",
+      "category": "idiom_irony",
+      "target_zh": "我真是谢谢你。",
+      "uncertain_when_isolated": true,
+      "isolated": {
+        "reference_ru": "Я тебе очень благодарен.",
+        "expected_facts": [
+          "Thanks may be sincere or biting"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "你冒雨把药送来了。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Я правда тебе очень благодарен.",
+        "expected_facts": [
+          "Sincere thanks for bringing medicine"
+        ],
+        "prohibited_facts": [
+          "Biting sarcasm about exposing a secret"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "屋顶上有只鸟。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "你把我的秘密告诉了所有人。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Ну спасибо тебе большое.",
+        "expected_facts": [
+          "Biting sarcasm about exposing a secret"
+        ],
+        "prohibited_facts": [
+          "Sincere thanks for bringing medicine"
+        ]
+      }
+    },
+    {
+      "id": "i12",
+      "category": "idiom_irony",
+      "target_zh": "别绕弯子。",
+      "uncertain_when_isolated": false,
+      "isolated": {
+        "reference_ru": "Не ходи вокруг да около.",
+        "expected_facts": [
+          "A request for direct speech"
+        ],
+        "prohibited_facts": [
+          "Do not invent a referent, unit, motive or fact absent from this isolated target"
+        ]
+      },
+      "relevant": {
+        "before_zh": [
+          "我们只有一分钟，你直接说结果。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Говори прямо, времени мало.",
+        "expected_facts": [
+          "The speaker requests a direct result"
+        ],
+        "prohibited_facts": [
+          "The speaker requests the withheld reason"
+        ]
+      },
+      "unrelated": {
+        "before_zh": [
+          "墙上的钟慢了五分钟。"
+        ],
+        "after_zh": []
+      },
+      "counterfactual": {
+        "before_zh": [
+          "你答应了却一直不说原因。"
+        ],
+        "after_zh": [],
+        "reference_ru": "Хватит ходить вокруг да около, объясни причину.",
+        "expected_facts": [
+          "The speaker requests the withheld reason"
+        ],
+        "prohibited_facts": [
+          "The speaker requests a direct result"
+        ]
+      }
+    }
+  ]
+}

@@ -1,6 +1,15 @@
 version: "3"
 
 tasks:
+  eval:context:cases:build:
+    desc: Rebuild the authored context corpus from its seed table
+    cmds:
+      - node eval/scripts/build-context-cases.mjs
+  eval:context:cases:check:
+    desc: Validate authored four-scenario Chinese context contrasts and frozen IDs
+    cmds:
+      - node --test --test-isolation=none eval/scripts/tests/context-cases.test.mjs
+      - node eval/scripts/check-context-cases.mjs eval/corpora/context-contrasts-v1.json
   eval:report:check:
     desc: Validate versioned comparison evidence and failure-retention controls
     cmds:
