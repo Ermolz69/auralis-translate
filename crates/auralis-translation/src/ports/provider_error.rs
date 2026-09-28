@@ -1,11 +1,22 @@
 use std::fmt;
 
 #[derive(Debug)]
-pub struct ProviderError(pub String);
+pub enum ProviderError {
+    Permanent(String),
+    Transient(String),
+}
+
+impl ProviderError {
+    pub fn is_retryable(&self) -> bool {
+        matches!(self, Self::Transient(_))
+    }
+}
 
 impl fmt::Display for ProviderError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        self.0.fmt(f)
+        match self {
+            Self::Permanent(message) | Self::Transient(message) => message.fmt(f),
+        }
     }
 }
 

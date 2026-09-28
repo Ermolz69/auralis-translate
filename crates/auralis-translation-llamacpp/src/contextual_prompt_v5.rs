@@ -13,7 +13,7 @@ pub(crate) fn approved_terms_bytes(terms: &[ApprovedTerm]) -> Result<usize, Prov
     let payload = terms.iter().map(term_payload).collect::<Vec<_>>();
     serde_json::to_vec(&payload)
         .map(|bytes| bytes.len())
-        .map_err(|_| ProviderError("approved terms cannot be serialized".into()))
+        .map_err(|_| ProviderError::Permanent("approved terms cannot be serialized".into()))
 }
 
 fn term_payload(term: &ApprovedTerm) -> Value {
@@ -132,19 +132,19 @@ pub(crate) fn decode(
     line_index: usize,
 ) -> Result<String, ProviderError> {
     let response: Response = serde_json::from_str(candidate)
-        .map_err(|_| ProviderError("invalid v5 translation JSON".into()))?;
+        .map_err(|_| ProviderError::Permanent("invalid v5 translation JSON".into()))?;
     let [translation] = response.translations.as_slice() else {
-        return Err(ProviderError(
+        return Err(ProviderError::Permanent(
             "v5 response changed target slot count".into(),
         ));
     };
     if translation.segment_id != target.id().get() || translation.line_index != line_index {
-        return Err(ProviderError(
+        return Err(ProviderError::Permanent(
             "v5 response changed target slot identity".into(),
         ));
     }
     if translation.text.trim().is_empty() || translation.text.chars().any(char::is_control) {
-        return Err(ProviderError(
+        return Err(ProviderError::Permanent(
             "v5 response contains invalid target text".into(),
         ));
     }

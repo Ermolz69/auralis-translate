@@ -34,9 +34,10 @@ pub fn hash_file_with_control(
             hasher.update(&buffer[..count]);
             bytes = bytes
                 .checked_add(
-                    u64::try_from(count).map_err(|error| ProviderError(error.to_string()))?,
+                    u64::try_from(count)
+                        .map_err(|error| ProviderError::Permanent(error.to_string()))?,
                 )
-                .ok_or_else(|| ProviderError("model file is too large".into()))?;
+                .ok_or_else(|| ProviderError::Permanent("model file is too large".into()))?;
             if !started {
                 tracing::info!(
                     event_name = "translation_model_hash_started",
@@ -65,5 +66,5 @@ pub fn hash_file_with_control(
 }
 
 fn io_error(error: std::io::Error) -> ProviderError {
-    ProviderError(error.to_string())
+    ProviderError::Permanent(error.to_string())
 }

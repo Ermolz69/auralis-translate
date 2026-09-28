@@ -280,6 +280,12 @@ tasks:
       - cargo test --offline -p auralis-translation-llamacpp --test request_cancellation
       - cargo test --offline -p auralis-translation --test retry_policy
       - cargo test --offline -p auralis-translation-cli --test cli_resume pause_preserves_committed_blocks_and_resume_finishes
+  test:retry-policy:
+    desc: Verify transient-only retries through the provider, core and durable CLI
+    cmds:
+      - cargo test --offline -p auralis-translation-llamacpp --test request_cancellation
+      - cargo test --offline -p auralis-translation --test retry_policy
+      - cargo test --offline -p auralis-translation-cli --test cli_resume cli_profile_retry_limit_is_recorded_in_checkpoint
   fmt:
     cmds:
       - cargo fmt --all -- --check

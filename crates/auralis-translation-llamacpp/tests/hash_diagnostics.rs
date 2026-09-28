@@ -28,7 +28,7 @@ fn observed_partial_read_finishes_failed_and_fresh_check_has_distinct_complete_i
         let control = || {
             checks.set(checks.get() + 1);
             if checks.get() == 4 {
-                Err(ProviderError("preparation cancelled".into()))
+                Err(ProviderError::Permanent("preparation cancelled".into()))
             } else {
                 Ok(())
             }
@@ -86,10 +86,10 @@ fn cancelled_before_open_has_no_started_record_or_observed_bytes() -> Result<(),
         .finish();
     tracing::subscriber::with_default(subscriber, || {
         let result = hash_file_with_control(std::path::Path::new("missing-model"), &|| {
-            Err(ProviderError("preparation cancelled".into()))
+            Err(ProviderError::Permanent("preparation cancelled".into()))
         });
         assert!(
-            matches!(result, Err(ProviderError(message)) if message == "preparation cancelled")
+            matches!(result, Err(ProviderError::Permanent(message)) if message == "preparation cancelled")
         );
     });
     let records = capture.records()?;

@@ -75,7 +75,7 @@ fn readiness_probe_disconnects_on_preparation_cancellation() -> Result<(), Box<d
                 if worker_flag.load(Ordering::SeqCst) == 0 {
                     Ok(())
                 } else {
-                    Err(ProviderError("preparation cancelled".into()))
+                    Err(ProviderError::Permanent("preparation cancelled".into()))
                 }
             };
             finished_tx
@@ -104,6 +104,50 @@ fn validates_control_poll_bounds() {
     assert!(RequestControlPolicy::new(Duration::from_millis(10)).is_some());
     assert!(RequestControlPolicy::new(Duration::from_millis(1000)).is_some());
     assert!(RequestControlPolicy::new(Duration::from_millis(1001)).is_none());
+}
+
+#[test]
+fn only_temporary_http_failures_are_retryable() -> Result<(), Box<dyn Error>> {
+    for (status, retryable) in [(400, false), (502, true), (503, true), (504, true)] {
+        let listener = TcpListener::bind("127.0.0.1:0")?;
+        let endpoint = format!("http://{}/", listener.local_addr()?);
+        let server = std::thread::spawn(move || -> Result<(), String> {
+            let mut stream = accept_request(&listener)?;
+            write!(
+                stream,
+                "HTTP/1.1 {status} Failure\r\nContent-Length: 0\r\nConnection: close\r\n\r\n"
+            )
+            .map_err(|cause| cause.to_string())
+        });
+        let provider = LlamaCppProvider::new(&endpoint, ModelProfile::from_json(PROFILE)?)?;
+        let error = match provider.translate(&batch()?) {
+            Ok(_) => return Err("HTTP failure was accepted".into()),
+            Err(error) => error,
+        };
+        assert_eq!(error.is_retryable(), retryable, "HTTP {status}");
+        server.join().map_err(|_| "server panicked")??;
+    }
+    Ok(())
+}
+
+#[test]
+fn malformed_model_response_is_permanent() -> Result<(), Box<dyn Error>> {
+    let listener = TcpListener::bind("127.0.0.1:0")?;
+    let endpoint = format!("http://{}/", listener.local_addr()?);
+    let server = std::thread::spawn(move || -> Result<(), String> {
+        let mut stream = accept_request(&listener)?;
+        stream
+            .write_all(b"HTTP/1.1 200 OK\r\nContent-Length: 2\r\nConnection: close\r\n\r\n{}")
+            .map_err(|cause| cause.to_string())
+    });
+    let provider = LlamaCppProvider::new(&endpoint, ModelProfile::from_json(PROFILE)?)?;
+    let error = match provider.translate(&batch()?) {
+        Ok(_) => return Err("malformed response was accepted".into()),
+        Err(error) => error,
+    };
+    assert!(!error.is_retryable());
+    server.join().map_err(|_| "server panicked")??;
+    Ok(())
 }
 
 #[test]

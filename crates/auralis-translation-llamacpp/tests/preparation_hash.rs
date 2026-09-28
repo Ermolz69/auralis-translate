@@ -14,7 +14,7 @@ fn model_hash_stops_between_chunks_and_a_fresh_check_completes() -> Result<(), B
     let control = || {
         checks.set(checks.get() + 1);
         if checks.get() == 4 {
-            Err(ProviderError("preparation cancelled".into()))
+            Err(ProviderError::Permanent("preparation cancelled".into()))
         } else {
             Ok(())
         }
@@ -34,7 +34,9 @@ fn model_hash_stops_between_chunks_and_a_fresh_check_completes() -> Result<(), B
 
 #[test]
 fn cancelled_preparation_does_not_open_the_model() {
-    let control = || Err(ProviderError("preparation cancelled".into()));
+    let control = || Err(ProviderError::Permanent("preparation cancelled".into()));
     let result = hash_file_with_control(std::path::Path::new("missing-model"), &control);
-    assert!(matches!(result, Err(ProviderError(message)) if message == "preparation cancelled"));
+    assert!(
+        matches!(result, Err(ProviderError::Permanent(message)) if message == "preparation cancelled")
+    );
 }

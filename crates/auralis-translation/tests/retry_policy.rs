@@ -18,7 +18,7 @@ impl TranslationProvider for FailThenEcho {
         let call = self.calls.get() + 1;
         self.calls.set(call);
         if call <= self.fail_until {
-            return Err(ProviderError("injected provider failure".into()));
+            return Err(ProviderError::Transient("injected provider failure".into()));
         }
         EchoProvider.translate(batch)
     }
@@ -113,6 +113,46 @@ fn retry_budget_exhaustion_saves_no_checkpoint() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
+#[test]
+fn permanent_provider_failure_is_not_retried_or_checkpointed() -> Result<(), Box<dyn Error>> {
+    struct PermanentFailure(Cell<u32>);
+    impl TranslationProvider for PermanentFailure {
+        fn translate(&self, batch: &TranslationBatch) -> Result<ProviderResponse, ProviderError> {
+            self.0.set(self.0.get() + 1);
+            if self.0.get() == 1 {
+                Err(ProviderError::Permanent("invalid model response".into()))
+            } else {
+                EchoProvider.translate(batch)
+            }
+        }
+    }
+
+    let batch = sample_batch()?;
+    let planned = vec![batch.targets().iter().map(|target| target.id()).collect()];
+    let provider = PermanentFailure(Cell::new(0));
+    let mut store = MemoryStore::default();
+    let mut progress = Progress::default();
+    let result = translate_planned_run_with_policy(
+        &provider,
+        &mut store,
+        &planned,
+        std::slice::from_ref(&batch),
+        &mut progress,
+        &NoPause,
+        RetryPolicy::new(3).ok_or("invalid retry policy")?,
+    );
+    assert!(matches!(
+        result,
+        Err(TranslateRunError::Batch(TranslateBatchError::Provider(
+            ProviderError::Permanent(_)
+        )))
+    ));
+    assert_eq!(provider.0.get(), 1);
+    assert!(store.0.is_empty());
+    assert_eq!(progress.0.len(), 1);
+    Ok(())
+}
+
 #[derive(Clone, Copy)]
 enum InvalidShape {
     Missing,
@@ -204,7 +244,9 @@ struct InterruptedProvider<'a> {
 
 impl TranslationProvider for InterruptedProvider<'_> {
     fn translate(&self, _: &TranslationBatch) -> Result<ProviderResponse, ProviderError> {
-        Err(ProviderError("uncontrolled provider path was used".into()))
+        Err(ProviderError::Permanent(
+            "uncontrolled provider path was used".into(),
+        ))
     }
 
     fn translate_with_control(
@@ -215,7 +257,7 @@ impl TranslationProvider for InterruptedProvider<'_> {
         self.calls.set(self.calls.get() + 1);
         self.control.0.set(true);
         if self.fail {
-            Err(ProviderError("interrupted request".into()))
+            Err(ProviderError::Permanent("interrupted request".into()))
         } else {
             EchoProvider.translate(batch)
         }

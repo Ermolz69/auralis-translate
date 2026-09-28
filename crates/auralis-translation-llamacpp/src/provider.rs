@@ -39,21 +39,21 @@ impl LlamaCppProvider {
         profile: ModelProfile,
         control_policy: RequestControlPolicy,
     ) -> Result<Self, ProviderError> {
-        let base =
-            Url::parse(base_url).map_err(|_| ProviderError("invalid llama.cpp URL".into()))?;
+        let base = Url::parse(base_url)
+            .map_err(|_| ProviderError::Permanent("invalid llama.cpp URL".into()))?;
         if base.scheme() != "http"
             || !matches!(base.host_str(), Some("127.0.0.1" | "::1" | "localhost"))
             || base.path() != "/"
             || base.query().is_some()
             || base.fragment().is_some()
         {
-            return Err(ProviderError(
+            return Err(ProviderError::Permanent(
                 "llama.cpp URL must be a local HTTP root".into(),
             ));
         }
         let endpoint = base
             .join(CHAT_PATH)
-            .map_err(|_| ProviderError("invalid llama.cpp endpoint".into()))?;
+            .map_err(|_| ProviderError::Permanent("invalid llama.cpp endpoint".into()))?;
         let http = LocalHttp::new(
             Duration::from_secs(profile.timeout_seconds),
             profile.max_response_bytes,
@@ -91,7 +91,7 @@ impl LlamaCppProvider {
         let endpoint = self
             .base
             .join(path)
-            .map_err(|_| ProviderError("invalid llama.cpp probe endpoint".into()))?;
+            .map_err(|_| ProviderError::Permanent("invalid llama.cpp probe endpoint".into()))?;
         self.http
             .request(self.http.client().get(endpoint), Some(control))
     }
@@ -128,8 +128,8 @@ impl LlamaCppProvider {
         let check = || match control {
             Some((control, run_id)) => match control.pause_requested(run_id) {
                 Ok(false) => Ok(()),
-                Ok(true) => Err(ProviderError("request paused".into())),
-                Err(error) => Err(ProviderError(error.to_string())),
+                Ok(true) => Err(ProviderError::Permanent("request paused".into())),
+                Err(error) => Err(ProviderError::Permanent(error.to_string())),
             },
             None => Ok(()),
         };
@@ -147,12 +147,12 @@ impl LlamaCppProvider {
         let endpoint = self
             .base
             .join(path)
-            .map_err(|_| ProviderError("invalid llama.cpp token endpoint".into()))?;
+            .map_err(|_| ProviderError::Permanent("invalid llama.cpp token endpoint".into()))?;
         let check = || match control {
             Some((control, run_id)) => match control.pause_requested(run_id) {
                 Ok(false) => Ok(()),
-                Ok(true) => Err(ProviderError("request paused".into())),
-                Err(error) => Err(ProviderError(error.to_string())),
+                Ok(true) => Err(ProviderError::Permanent("request paused".into())),
+                Err(error) => Err(ProviderError::Permanent(error.to_string())),
             },
             None => Ok(()),
         };
@@ -160,7 +160,7 @@ impl LlamaCppProvider {
             control.map(|_| &check as &dyn PreparationControl);
         let request = self.http.client().post(endpoint).json(&body);
         serde_json::from_slice(&self.http.request(request, preparation)?)
-            .map_err(|_| ProviderError("invalid llama.cpp token preflight JSON".into()))
+            .map_err(|_| ProviderError::Permanent("invalid llama.cpp token preflight JSON".into()))
     }
 
     fn rendered_chat_tokens(
@@ -180,7 +180,9 @@ impl LlamaCppProvider {
         let rendered = template["prompt"]
             .as_str()
             .filter(|prompt| !prompt.is_empty())
-            .ok_or_else(|| ProviderError("llama.cpp returned no rendered chat prompt".into()))?;
+            .ok_or_else(|| {
+                ProviderError::Permanent("llama.cpp returned no rendered chat prompt".into())
+            })?;
         let tokenized = self.preflight_post(
             TOKENIZE_PATH,
             json!({"content": rendered, "add_special": false, "parse_special": true}),
@@ -191,7 +193,9 @@ impl LlamaCppProvider {
             .filter(|tokens| {
                 !tokens.is_empty() && tokens.iter().all(|token| token.as_u64().is_some())
             })
-            .ok_or_else(|| ProviderError("llama.cpp returned invalid prompt tokens".into()))?;
+            .ok_or_else(|| {
+                ProviderError::Permanent("llama.cpp returned invalid prompt tokens".into())
+            })?;
         Ok(tokens.len())
     }
 
@@ -205,16 +209,17 @@ impl LlamaCppProvider {
         control: Option<(&dyn RunControl, RunId)>,
     ) -> Result<String, ProviderError> {
         let context_limit = self.profile.min_context_tokens.ok_or_else(|| {
-            ProviderError("v5 context profile has no tokenizer context limit".into())
+            ProviderError::Permanent("v5 context profile has no tokenizer context limit".into())
         })?;
-        let safety = self
-            .profile
-            .token_safety_margin_tokens
-            .ok_or_else(|| ProviderError("v5 context profile has no token safety margin".into()))?;
+        let safety = self.profile.token_safety_margin_tokens.ok_or_else(|| {
+            ProviderError::Permanent("v5 context profile has no token safety margin".into())
+        })?;
         let available = context_limit
             .checked_sub(self.profile.max_tokens_per_line)
             .and_then(|remaining| remaining.checked_sub(safety))
-            .ok_or_else(|| ProviderError("v5 response reserve exceeds model context".into()))?;
+            .ok_or_else(|| {
+                ProviderError::Permanent("v5 response reserve exceeds model context".into())
+            })?;
         let mut selected = context.to_vec();
         loop {
             let prompt = crate::contextual_prompt_v5::render(
@@ -230,7 +235,7 @@ impl LlamaCppProvider {
             let Some((farthest, _)) = selected.iter().enumerate().max_by_key(|(_, cue)| {
                 (cue.id().get().abs_diff(segment.id().get()), cue.id().get())
             }) else {
-                return Err(ProviderError(
+                return Err(ProviderError::Permanent(
                     "v5 target exceeds rendered token budget".into(),
                 ));
             };
@@ -246,35 +251,39 @@ impl LlamaCppProvider {
         if matches!(self.profile.prompt_version, 4 | 5)
             && batch.language_pair().source() != LanguageCode::Chinese
         {
-            return Err(ProviderError(
+            return Err(ProviderError::Permanent(
                 "Chinese fidelity profile requires Chinese source".into(),
             ));
         }
         if matches!(self.profile.prompt_version, 1 | 4) && !batch.context().is_empty() {
-            return Err(ProviderError(
+            return Err(ProviderError::Permanent(
                 "experimental profile has no context support".into(),
             ));
         }
         if self.profile.prompt_version != 3 && !batch.glossary().is_empty() {
-            return Err(ProviderError(
+            return Err(ProviderError::Permanent(
                 "profile does not support glossary entries".into(),
             ));
         }
         if batch.glossary().len() > self.profile.max_glossary_entries {
-            return Err(ProviderError("glossary exceeds profile entry limit".into()));
+            return Err(ProviderError::Permanent(
+                "glossary exceeds profile entry limit".into(),
+            ));
         }
         let glossary_bytes = prompt::glossary_payload_bytes(batch.glossary())
-            .map_err(|error| ProviderError(error.to_string()))?;
+            .map_err(|error| ProviderError::Permanent(error.to_string()))?;
         if glossary_bytes > self.profile.max_glossary_bytes {
-            return Err(ProviderError("glossary exceeds profile byte limit".into()));
+            return Err(ProviderError::Permanent(
+                "glossary exceeds profile byte limit".into(),
+            ));
         }
         if self.profile.prompt_version != 5 && !batch.approved_terms().is_empty() {
-            return Err(ProviderError(
+            return Err(ProviderError::Permanent(
                 "profile does not support approved terms".into(),
             ));
         }
         if batch.approved_terms().len() > self.profile.max_approved_terms_entries {
-            return Err(ProviderError(
+            return Err(ProviderError::Permanent(
                 "approved terms exceed profile entry limit".into(),
             ));
         }
@@ -284,7 +293,7 @@ impl LlamaCppProvider {
             crate::contextual_prompt_v5::approved_terms_bytes(batch.approved_terms())?
         };
         if terms_bytes > self.profile.max_approved_terms_bytes {
-            return Err(ProviderError(
+            return Err(ProviderError::Permanent(
                 "approved terms exceed profile byte limit".into(),
             ));
         }
@@ -295,7 +304,9 @@ impl LlamaCppProvider {
             .map(String::len)
             .sum();
         if context_bytes > self.profile.max_context_bytes {
-            return Err(ProviderError("context exceeds profile byte limit".into()));
+            return Err(ProviderError::Permanent(
+                "context exceeds profile byte limit".into(),
+            ));
         }
         let mut translations = Vec::with_capacity(batch.targets().len());
         for segment in batch.targets() {
@@ -362,7 +373,11 @@ impl LlamaCppProvider {
                         batch.context(),
                         &segment_glossary,
                     ),
-                    _ => return Err(ProviderError("unsupported prompt version".into())),
+                    _ => {
+                        return Err(ProviderError::Permanent(
+                            "unsupported prompt version".into(),
+                        ));
+                    }
                 };
                 lines.push(self.translate_line(prompt_text, source_line, control, None)?);
             }

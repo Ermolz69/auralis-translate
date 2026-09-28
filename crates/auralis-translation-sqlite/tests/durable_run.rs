@@ -38,7 +38,7 @@ impl TranslationProvider for CountingProvider {
         let call = self.calls.get() + 1;
         self.calls.set(call);
         if self.fail_on_call == Some(call) {
-            return Err(ProviderError("injected model failure".into()));
+            return Err(ProviderError::Permanent("injected model failure".into()));
         }
         Ok(ProviderResponse {
             schema_version: 1,

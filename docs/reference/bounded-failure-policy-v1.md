@@ -3,8 +3,8 @@
 Status: `CTX-05` contract, 28 September 2026. This defines the policy required
 before v5 inference. Existing v1–v4 profiles keep their saved identities and
 default one-attempt behavior. The current core accepts `max_block_attempts`
-1–3, but a non-default value retries every batch error. The v5 implementation
-must narrow that behavior and persist attempt evidence.
+1–3. The implementation now repeats only typed transient provider failures
+within that bound; durable per-attempt evidence is still open.
 
 ## Typed outcomes
 
@@ -53,13 +53,16 @@ changed source, model, prompt, context/scene, terms or tokenizer. Retry after a
 storage failure must inspect committed state first, not regenerate and duplicate
 an accepted block. A human correction creates a new immutable result lineage.
 
-The current `ProviderError` is a string, so transport, response parsing and
-money-token validation are not reliably distinguished. `CTX-02` must introduce
-typed provider causes before enabling any v5 automatic retry. The bounded core
-fix in this slice stops repeating a core `ContractError` even under a legacy
-non-default retry budget; provider-string classification remains an explicit
-open implementation gap. The existing pause check retains precedence. No
-unbounded regenerate-until-reference-match behavior is permitted.
+`ProviderError` now distinguishes transient from permanent failures. Connection,
+timeout, request-send and response-body transport failures, plus local HTTP 502–504, are
+transient. HTTP 400 and other statuses, malformed response JSON, invalid slots,
+protected-token failures and token-budget rejection are permanent. A non-default
+`max_block_attempts` repeats only transient provider failures; the default is one
+attempt. The existing pause check retains precedence. This is a coarse retry
+classification, not the complete typed outcome taxonomy above. Durable raw
+attempts, explicit run-stage wall budgets and resource-failure disposition remain
+open under `CTX-02`. No unbounded regenerate-until-reference-match behavior is
+permitted.
 
 ## Required regression controls
 
@@ -67,8 +70,10 @@ The minimal reproduction is a provider that returns a response with a missing
 target slot on its first call and a valid response on its second. Under a
 two-attempt policy, the first structural error must stop after one call, with
 zero checkpoints and no progress claim. A separate transient-provider control
-continues to show the historical opt-in retry path; the v5 typed policy must
-later narrow it. Additional v5 checks cover truncated JSON, duplicate/extra
+continues to show the opt-in retry path. [The typed retry regression](../../eval/experiments/2026-09-28-typed-provider-retry.md)
+adds a permanent first failure followed by a valid response that must never be
+requested, plus HTTP 400/502–504 and malformed-body controls. Additional v5
+checks cover truncated JSON, duplicate/extra
 IDs, empty text, context-copy instructions, money tokens, source collisions,
 timeouts, OOM, pause at commit/export and changed resume identity. Any newly
 confirmed failure gets its own minimal case and unseen related controls under
@@ -79,6 +84,6 @@ confirmed failure gets its own minimal case and unseen related controls under
 The [invalid-slot regression](../../eval/experiments/2026-09-28-invalid-slot-retry.md)
 records the concrete core defect, minimal reproduction, three related invalid
 shapes, a transient-provider control and pause control. `task fmt:fix` and
-`task test:request-cancellation` passed for the changed core path. The typed
-provider and durable raw-attempt implementation remains assigned to `CTX-02`;
-this task specifies their contract without claiming those paths complete.
+`task test:request-cancellation` passed for the changed core path. Typed retry
+classification is linked above; durable raw-attempt implementation remains
+assigned to `CTX-02`.

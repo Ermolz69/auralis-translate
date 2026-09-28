@@ -67,7 +67,7 @@ fn interrupted_runtime_verification_keeps_the_installed_package() -> Result<(), 
     let control = || {
         checks.set(checks.get() + 1);
         if checks.get() == 8 {
-            Err(auralis_translation::ProviderError(
+            Err(auralis_translation::ProviderError::Permanent(
                 "verification cancelled".into(),
             ))
         } else {

@@ -722,7 +722,7 @@ fn cli_profile_retry_limit_is_recorded_in_checkpoint() -> Result<(), Box<dyn Err
 
     let listener = TcpListener::bind("127.0.0.1:0")?;
     let endpoint = format!("http://{}/", listener.local_addr()?);
-    let server = std::thread::spawn(move || serve(listener, 2, Some(1), None, "Привет."));
+    let server = std::thread::spawn(move || serve_retryable_failure_then_success(listener));
     let output = command(&[
         "translate",
         path(&source_path)?,
@@ -906,6 +906,50 @@ fn serve(
         stream
             .write_all(response.as_bytes())
             .map_err(|error| error.to_string())?;
+    }
+    Ok(())
+}
+
+fn serve_retryable_failure_then_success(listener: TcpListener) -> Result<(), String> {
+    listener
+        .set_nonblocking(true)
+        .map_err(|error| error.to_string())?;
+    let started = Instant::now();
+    for request_index in 1..=2 {
+        let mut stream = loop {
+            match listener.accept() {
+                Ok((stream, _)) => break stream,
+                Err(error) if error.kind() == std::io::ErrorKind::WouldBlock => {
+                    if started.elapsed() > Duration::from_secs(20) {
+                        return Err(format!("timed out waiting for request {request_index}"));
+                    }
+                    std::thread::sleep(Duration::from_millis(10));
+                }
+                Err(error) => return Err(error.to_string()),
+            }
+        };
+        stream
+            .set_read_timeout(Some(Duration::from_secs(5)))
+            .map_err(|error| error.to_string())?;
+        read_request(&mut stream)?;
+        if request_index == 1 {
+            stream
+                .write_all(
+                    b"HTTP/1.1 503 Unavailable\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
+                )
+                .map_err(|error| error.to_string())?;
+        } else {
+            let body = serde_json::json!({
+                "choices": [{"message": {"content": "Привет."}, "finish_reason": "stop"}]
+            })
+            .to_string();
+            write!(
+                stream,
+                "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",
+                body.len()
+            )
+            .map_err(|error| error.to_string())?;
+        }
     }
     Ok(())
 }

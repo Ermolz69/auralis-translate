@@ -73,15 +73,17 @@ impl LocalHttp {
     async fn read_response(&self, request: RequestBuilder) -> Result<Vec<u8>, ProviderError> {
         let mut response = request.send().await.map_err(transport_error)?;
         if !response.status().is_success() {
-            return Err(ProviderError(format!(
-                "llama.cpp returned HTTP {}",
-                response.status()
-            )));
+            let message = format!("llama.cpp returned HTTP {}", response.status());
+            return Err(if matches!(response.status().as_u16(), 502..=504) {
+                ProviderError::Transient(message)
+            } else {
+                ProviderError::Permanent(message)
+            });
         }
         let mut bytes = Vec::new();
         while let Some(chunk) = response.chunk().await.map_err(transport_error)? {
             if chunk.len() > self.response_limit.saturating_sub(bytes.len()) {
-                return Err(ProviderError(
+                return Err(ProviderError::Permanent(
                     "llama.cpp response exceeds profile limit".into(),
                 ));
             }
@@ -92,7 +94,7 @@ impl LocalHttp {
 }
 
 fn error(cause: impl std::fmt::Display) -> ProviderError {
-    ProviderError(cause.to_string())
+    ProviderError::Permanent(cause.to_string())
 }
 
 fn transport_error(cause: reqwest::Error) -> ProviderError {
@@ -104,5 +106,9 @@ fn transport_error(cause: reqwest::Error) -> ProviderError {
         message.push_str(&cause.to_string());
         source = cause.source();
     }
-    ProviderError(message)
+    if cause.is_connect() || cause.is_timeout() || cause.is_body() || cause.is_request() {
+        ProviderError::Transient(message)
+    } else {
+        ProviderError::Permanent(message)
+    }
 }

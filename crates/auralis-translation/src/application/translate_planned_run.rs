@@ -155,10 +155,11 @@ pub fn translate_planned_run_with_policy<S: CheckpointStore>(
                 check_pause(control, first.run_id())?;
                 match translated {
                     Ok(translated) => break translated,
-                    Err(error @ TranslateBatchError::Contract(_)) => {
-                        return Err(TranslateRunError::Batch(error));
+                    Err(TranslateBatchError::Provider(ref error))
+                        if error.is_retryable() && attempt_count < retry.max_attempts() =>
+                    {
+                        continue;
                     }
-                    Err(_) if attempt_count < retry.max_attempts() => continue,
                     Err(error) => return Err(TranslateRunError::Batch(error)),
                 }
             };

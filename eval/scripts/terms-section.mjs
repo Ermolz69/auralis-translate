@@ -19,7 +19,10 @@ export async function loadTermsProbe(root) {
   assert.equal(failed.requests.filter(row => row.path === '/v1/chat/completions').length, 15);
   assert.equal(report.corpus_sha256, digest(corpusBytes));
   assert.equal(report.profile_sha256.no_terms, report.profile_sha256.terms);
-  assert.equal(report.profile_sha256.terms, digest(await fs.readFile(path.join(root, 'models/manifests/hy_mt2_1_8b_q4_k_m.context_v5_scene_terms.experimental.json'))));
+  const measuredProfileHash = digest(await fs.readFile(path.join(root, 'eval/profiles/2026-09-28-hy_mt2_1_8b_q4_k_m.context_v5_scene_terms.experimental.json')));
+  const activeProfileHash = digest(await fs.readFile(path.join(root, 'models/manifests/hy_mt2_1_8b_q4_k_m.context_v5_scene_terms.experimental.json')));
+  assert.equal(report.profile_sha256.terms, measuredProfileHash);
+  assert.notEqual(activeProfileHash, measuredProfileHash, 'historical term evidence must not be relabelled as the current profile');
   assert.equal(report.cases.length, 3);
   assert.equal(report.requests.filter(row => row.path === '/v1/chat/completions').length, 18);
   assert.equal(report.requests.length, 72);

@@ -84,7 +84,7 @@ pub(crate) fn execute(
     let check = || {
         preparation
             .check()
-            .map_err(|cause| auralis_translation::ProviderError(cause.to_string()))
+            .map_err(|cause| auralis_translation::ProviderError::Permanent(cause.to_string()))
     };
     let verification = verify_server_with_control(&provider, &profile, &check);
     db.check_attempt_start(guard)?;

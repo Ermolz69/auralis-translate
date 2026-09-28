@@ -22,7 +22,7 @@ impl TranslationProvider for FailableProvider {
         let call = self.calls.get() + 1;
         self.calls.set(call);
         if self.fail_on_call == Some(call) {
-            return Err(ProviderError("injected failure".into()));
+            return Err(ProviderError::Permanent("injected failure".into()));
         }
         Ok(ProviderResponse {
             schema_version: 1,

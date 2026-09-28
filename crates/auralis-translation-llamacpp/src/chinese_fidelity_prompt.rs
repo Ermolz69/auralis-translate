@@ -16,7 +16,7 @@ pub(crate) struct ProtectedMoneyFact {
 impl ChineseFidelityPrompt {
     pub fn prepare(source: &str) -> Result<Self, ProviderError> {
         if source.contains("__AURALIS_MONEY_") {
-            return Err(ProviderError(
+            return Err(ProviderError::Permanent(
                 "source collides with protected money tokens".into(),
             ));
         }
@@ -59,22 +59,22 @@ impl ChineseFidelityPrompt {
         let mut last_position = None;
         for (token, target) in &self.replacements {
             if self.text.matches(token).count() != candidate.matches(token).count() {
-                return Err(ProviderError(
+                return Err(ProviderError::Permanent(
                     "model changed a protected monetary token".into(),
                 ));
             }
-            let position = candidate
-                .find(token)
-                .ok_or_else(|| ProviderError("model omitted a protected monetary token".into()))?;
+            let position = candidate.find(token).ok_or_else(|| {
+                ProviderError::Permanent("model omitted a protected monetary token".into())
+            })?;
             if last_position.is_some_and(|last| position < last) {
-                return Err(ProviderError(
+                return Err(ProviderError::Permanent(
                     "model reordered protected monetary tokens".into(),
                 ));
             }
             last_position = Some(position);
-            let position = restored
-                .find(token)
-                .ok_or_else(|| ProviderError("protected token restoration failed".into()))?;
+            let position = restored.find(token).ok_or_else(|| {
+                ProviderError::Permanent("protected token restoration failed".into())
+            })?;
             let end = position + token.len();
             let before = restored[..position]
                 .chars()
@@ -92,7 +92,7 @@ impl ChineseFidelityPrompt {
             restored.replace_range(position..end, &spaced);
         }
         if restored.contains("__AURALIS_MONEY_") {
-            return Err(ProviderError(
+            return Err(ProviderError::Permanent(
                 "model invented a protected monetary token".into(),
             ));
         }
