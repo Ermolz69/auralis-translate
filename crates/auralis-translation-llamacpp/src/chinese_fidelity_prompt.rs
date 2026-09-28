@@ -2,7 +2,15 @@ use auralis_translation::ProviderError;
 
 pub(crate) struct ChineseFidelityPrompt {
     pub text: String,
+    pub source_for_translation: String,
+    pub protected_facts: Vec<ProtectedMoneyFact>,
     replacements: Vec<(String, String)>,
+}
+
+pub(crate) struct ProtectedMoneyFact {
+    pub token: String,
+    pub original_span: String,
+    pub normalized_ru: String,
 }
 
 impl ChineseFidelityPrompt {
@@ -16,12 +24,18 @@ impl ChineseFidelityPrompt {
         let chars: Vec<_> = source.chars().collect();
         let mut masked = String::new();
         let mut replacements = Vec::new();
+        let mut protected_facts = Vec::new();
         let mut cursor = 0;
         for (index, term) in terms.iter().enumerate() {
             let token = format!("__AURALIS_MONEY_{index}__");
             masked.extend(chars[cursor..term.start].iter());
             masked.push_str(&token);
             cursor = term.end;
+            protected_facts.push(ProtectedMoneyFact {
+                token: token.clone(),
+                original_span: chars[term.start..term.end].iter().collect(),
+                normalized_ru: term.target.clone(),
+            });
             replacements.push((token, term.target.clone()));
         }
         masked.extend(chars[cursor..].iter());
@@ -32,7 +46,12 @@ impl ChineseFidelityPrompt {
                 "Translate the following text into Russian. Copy every __AURALIS_MONEY_N__ token exactly, without translating, removing or duplicating it. Each token represents a protected monetary amount. Only output the translated result without explanation:\n{masked}"
             )
         };
-        Ok(Self { text, replacements })
+        Ok(Self {
+            text,
+            source_for_translation: masked,
+            protected_facts,
+            replacements,
+        })
     }
 
     pub fn restore(&self, candidate: &str) -> Result<String, ProviderError> {

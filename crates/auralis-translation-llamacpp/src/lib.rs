@@ -2,6 +2,7 @@ mod asset_download;
 mod chinese_fidelity_prompt;
 mod chinese_money_terms;
 mod chinese_number;
+mod contextual_prompt_v5;
 mod decode_chat_response;
 mod local_http;
 mod offline_install;

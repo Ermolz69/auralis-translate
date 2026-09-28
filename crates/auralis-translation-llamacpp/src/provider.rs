@@ -99,8 +99,9 @@ impl LlamaCppProvider {
         prompt_text: String,
         source: &str,
         control: Option<(&dyn RunControl, RunId)>,
+        response_format: Option<serde_json::Value>,
     ) -> Result<String, ProviderError> {
-        let request = json!({
+        let mut request = json!({
             "model": self.profile.model_alias,
             "messages": [{"role": "user", "content": prompt_text}],
             "temperature": self.profile.temperature,
@@ -110,6 +111,9 @@ impl LlamaCppProvider {
             "max_tokens": self.profile.max_tokens_per_line,
             "stream": false
         });
+        if let Some(format) = response_format {
+            request["response_format"] = format;
+        }
         let request = self
             .http
             .client()
@@ -137,7 +141,7 @@ impl LlamaCppProvider {
         batch: &TranslationBatch,
         control: Option<(&dyn RunControl, RunId)>,
     ) -> Result<ProviderResponse, ProviderError> {
-        if self.profile.prompt_version == 4
+        if matches!(self.profile.prompt_version, 4 | 5)
             && batch.language_pair().source() != LanguageCode::Chinese
         {
             return Err(ProviderError(
@@ -190,8 +194,29 @@ impl LlamaCppProvider {
                         source_line,
                     )?;
                     let candidate =
-                        self.translate_line(prepared.text.clone(), source_line, control)?;
+                        self.translate_line(prepared.text.clone(), source_line, control, None)?;
                     lines.push(prepared.restore(&candidate)?);
+                    continue;
+                }
+                if self.profile.prompt_version == 5 {
+                    let prepared = crate::chinese_fidelity_prompt::ChineseFidelityPrompt::prepare(
+                        source_line,
+                    )?;
+                    let prompt_text = crate::contextual_prompt_v5::render(
+                        segment,
+                        line_index,
+                        batch.context(),
+                        &prepared,
+                    );
+                    let candidate = self.translate_line(
+                        prompt_text,
+                        source_line,
+                        control,
+                        Some(crate::contextual_prompt_v5::response_format()),
+                    )?;
+                    let decoded =
+                        crate::contextual_prompt_v5::decode(&candidate, segment, line_index)?;
+                    lines.push(prepared.restore(&decoded)?);
                     continue;
                 }
                 let prompt_text = match self.profile.prompt_version {
@@ -205,7 +230,7 @@ impl LlamaCppProvider {
                     ),
                     _ => return Err(ProviderError("unsupported prompt version".into())),
                 };
-                lines.push(self.translate_line(prompt_text, source_line, control)?);
+                lines.push(self.translate_line(prompt_text, source_line, control, None)?);
             }
             translations.push(TargetSegment {
                 id: segment.id(),

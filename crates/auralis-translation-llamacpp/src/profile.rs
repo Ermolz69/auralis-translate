@@ -36,6 +36,8 @@ pub struct ModelProfile {
     #[serde(default)]
     pub min_context_tokens: Option<u32>,
     pub prompt_version: u32,
+    #[serde(default)]
+    pub prompt_template_sha256: Option<String>,
     #[serde(default = "default_target_segments")]
     pub target_segments_per_block: usize,
     #[serde(default)]
@@ -99,8 +101,15 @@ impl ModelProfile {
                 "runtime identity fields are incomplete",
             ));
         }
-        if !matches!(self.prompt_version, 1..=4) {
+        if !matches!(self.prompt_version, 1..=5) {
             return Err(ProfileError::Invalid("unsupported prompt version"));
+        }
+        if (self.prompt_version == 5
+            && self.prompt_template_sha256.as_deref()
+                != Some(crate::contextual_prompt_v5::template_sha256().as_str()))
+            || (self.prompt_version != 5 && self.prompt_template_sha256.is_some())
+        {
+            return Err(ProfileError::Invalid("prompt template identity differs"));
         }
         if !(1..=MAX_TARGET_SEGMENTS).contains(&self.target_segments_per_block)
             || self.context_before_segments > MAX_CONTEXT_SEGMENTS
@@ -120,7 +129,7 @@ impl ModelProfile {
                 && (self.target_segments_per_block != 1
                     || self.context_before_segments + self.context_after_segments == 0
                     || self.max_context_bytes == 0))
-            || (self.prompt_version == 3 && self.target_segments_per_block != 1)
+            || (matches!(self.prompt_version, 3 | 5) && self.target_segments_per_block != 1)
             || (self.prompt_version == 3
                 && self.context_before_segments + self.context_after_segments > 0
                 && self.max_context_bytes == 0)
@@ -128,6 +137,10 @@ impl ModelProfile {
                 && (self.max_glossary_bytes != 0 || self.max_glossary_entries != 0))
             || (self.prompt_version == 3
                 && (self.max_glossary_bytes == 0 || self.max_glossary_entries == 0))
+            || (self.prompt_version == 5
+                && ((self.context_before_segments + self.context_after_segments > 0
+                    && self.max_context_bytes == 0)
+                    || self.max_block_attempts != 1))
         {
             return Err(ProfileError::Invalid("prompt and context policy disagree"));
         }

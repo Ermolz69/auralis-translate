@@ -54,7 +54,7 @@ fn fidelity_profile_is_versioned_without_changing_legacy_fingerprints() -> Resul
         serde_json::from_slice::<serde_json::Value>(FIDELITY_PROFILE)?
     );
     for (key, bad) in [
-        ("prompt_version", serde_json::json!(5)),
+        ("prompt_version", serde_json::json!(6)),
         ("context_before_segments", serde_json::json!(1)),
         ("max_context_bytes", serde_json::json!(4096)),
         ("max_glossary_entries", serde_json::json!(16)),
