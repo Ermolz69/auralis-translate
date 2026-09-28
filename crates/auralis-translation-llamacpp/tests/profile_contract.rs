@@ -16,6 +16,45 @@ const LARGE_FIDELITY_PROFILE: &[u8] =
 const V5_SCENE_PROFILE: &[u8] = include_bytes!(
     "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v5_scene.experimental.json"
 );
+const V5_BASELINE_PROFILE: &[u8] =
+    include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v5.experimental.json");
+const LARGE_V5_BASELINE_PROFILE: &[u8] =
+    include_bytes!("../../../models/manifests/hy_mt2_7b_q4_k_m.context_v5.experimental.json");
+const LARGE_V5_SCENE_PROFILE: &[u8] =
+    include_bytes!("../../../models/manifests/hy_mt2_7b_q4_k_m.context_v5_scene.experimental.json");
+
+#[test]
+fn large_v5_profiles_change_only_model_identity() -> Result<(), Box<dyn Error>> {
+    for (small_bytes, large_bytes) in [
+        (V5_BASELINE_PROFILE, LARGE_V5_BASELINE_PROFILE),
+        (V5_SCENE_PROFILE, LARGE_V5_SCENE_PROFILE),
+    ] {
+        let large_profile = ModelProfile::from_json(large_bytes)?;
+        assert_eq!(large_profile.prompt_version, 5);
+        assert_eq!(large_profile.model_file_bytes, Some(4_624_648_896));
+        let mut small: serde_json::Value = serde_json::from_slice(small_bytes)?;
+        let mut large: serde_json::Value = serde_json::from_slice(large_bytes)?;
+        for key in [
+            "model_repo",
+            "model_revision",
+            "model_file_sha256",
+            "model_file_bytes",
+            "model_alias",
+        ] {
+            assert_ne!(small[key], large[key]);
+            small
+                .as_object_mut()
+                .ok_or("small profile is not an object")?
+                .remove(key);
+            large
+                .as_object_mut()
+                .ok_or("large profile is not an object")?
+                .remove(key);
+        }
+        assert_eq!(small, large);
+    }
+    Ok(())
+}
 
 #[test]
 fn v5_scene_profile_requires_a_bounded_token_reserve() -> Result<(), Box<dyn Error>> {

@@ -11,10 +11,14 @@ import { sceneRequestBudget } from './scene-request-budget.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const termsMode = process.env.AURALIS_SCENE_TERMS_MODE === '1';
+const modelVariant = process.env.AURALIS_SCENE_MODEL_VARIANT ?? '1.8b';
+assert(['1.8b', '7b'].includes(modelVariant), 'Unsupported scene model variant');
+assert(modelVariant !== '7b' || !termsMode, 'The 7B scene probe has no term-ledger profile');
 const datasetFile = process.env.AURALIS_SCENE_DATASET ?? 'eval/corpora/context-contrasts-v1.json';
 const corpusPath = path.join(root, datasetFile);
-const baselinePath = path.join(root, 'models/manifests/hy_mt2_1_8b_q4_k_m.context_v5.experimental.json');
-const sceneProfilePath = path.join(root, 'models/manifests/hy_mt2_1_8b_q4_k_m.context_v5_scene.experimental.json');
+const manifestStem = modelVariant === '7b' ? 'hy_mt2_7b_q4_k_m' : 'hy_mt2_1_8b_q4_k_m';
+const baselinePath = path.join(root, `models/manifests/${manifestStem}.context_v5.experimental.json`);
+const sceneProfilePath = path.join(root, `models/manifests/${manifestStem}.context_v5_scene.experimental.json`);
 const termsProfilePath = path.join(root, 'models/manifests/hy_mt2_1_8b_q4_k_m.context_v5_scene_terms.experimental.json');
 const serverPath = process.env.AURALIS_TEST_LLAMA_SERVER;
 const modelPath = process.env.AURALIS_TEST_GGUF;
@@ -50,6 +54,7 @@ const runtimeUrl = `http://127.0.0.1:${runtimePort}/`;
 const report = {
   schema_version: 1,
   experiment,
+  model_variant: modelVariant,
   status: 'running',
   started_at: new Date().toISOString(),
   corpus_sha256: digest(corpusBytes),
@@ -67,6 +72,8 @@ const report = {
 };
 const git = await waitForExit(startProcess('git', ['rev-parse', 'HEAD'], root), 10_000);
 report.revision = git.stdout.trim();
+const status = await waitForExit(startProcess('git', ['status', '--porcelain'], root), 10_000);
+report.git_status_porcelain = status.stdout.trim();
 const command = async args => {
   const start = performance.now();
   const child = startProcess(executable, args, root);
