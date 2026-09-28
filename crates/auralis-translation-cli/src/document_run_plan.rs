@@ -49,6 +49,31 @@ impl DocumentRunPlan {
         }
     }
 
+    #[allow(clippy::too_many_arguments)]
+    pub fn with_scene_map(
+        format: &str,
+        source: &[u8],
+        translation_id: TranslationId,
+        run_id: RunId,
+        pair: LanguagePair,
+        policy: BlockPolicy,
+        scene_end_ids: &[SegmentId],
+        scene_snapshot_hash: SourceHash,
+    ) -> Result<Self, Box<dyn Error>> {
+        if format != Self::SRT_FORMAT {
+            return Err("scene maps require SRT source".into());
+        }
+        Ok(Self::Srt(SrtRunPlan::with_scene_map(
+            source,
+            translation_id,
+            run_id,
+            pair,
+            policy,
+            scene_end_ids,
+            scene_snapshot_hash,
+        )?))
+    }
+
     pub fn source_format(&self) -> &'static str {
         match self {
             Self::Srt(_) => Self::SRT_FORMAT,
@@ -79,7 +104,7 @@ impl DocumentRunPlan {
 
     pub fn policy_fingerprint(&self, policy: BlockPolicy) -> SourceHash {
         match self {
-            Self::Srt(_) => SrtRunPlan::policy_fingerprint(policy),
+            Self::Srt(plan) => plan.policy_fingerprint_for_run(policy),
             Self::Vtt(_) => VttRunPlan::policy_fingerprint(policy),
         }
     }

@@ -10,10 +10,11 @@ a new manifest, policy and template identity; it cannot resume a v1–v4 run.
 
 The adapter accepts prompt versions 1–5, sends one line per HTTP request,
 uses byte ceilings for context/terms, and lets v4 reject both. File-based v5
-rejects a context window until an explicit scene map exists. The current
-planner has no scene map or rendered-token counter. `CTX-02`,
-`CTX-03` and `LONG-01` must implement these missing boundaries; this contract
-does not label them implemented.
+admits a context window only through a source-hashed, full-coverage scene map.
+The map and its evidence ID are saved in the run state; resume rejects altered
+bytes. The planner limits context to each declared scene. It still has no
+rendered-token counter or approved-term ledger. `CTX-02`, `CTX-03` and
+`LONG-01` must close those boundaries before release.
 
 ## Purpose and admission
 

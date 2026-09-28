@@ -4,7 +4,7 @@ use super::{
 use crate::inspect;
 use auralis_translation::{
     CheckpointStore, Glossary, LanguagePair, PlannedBatches, ProgressSink, RetryPolicy, RunControl,
-    RunId, SegmentId, SourceHash, TargetSegment, TranslationId, TranslationProvider,
+    RunId, SceneMap, SegmentId, SourceHash, TargetSegment, TranslationId, TranslationProvider,
     VerifiedRenderer, translate_planned_run, translate_planned_run_with_control,
     translate_planned_run_with_policy, translate_planned_run_with_progress,
 };
@@ -13,6 +13,7 @@ pub struct SrtRunPlan {
     document: SrtDocument,
     planned: PlannedBatches,
     source_hash: SourceHash,
+    scene_identity: Option<SourceHash>,
 }
 
 impl SrtRunPlan {
@@ -38,23 +39,79 @@ impl SrtRunPlan {
         policy: SrtBlockPolicy,
         glossary: Option<&Glossary>,
     ) -> Result<Self, SrtPlanError> {
+        Self::create(source, translation_id, run_id, pair, policy, glossary, None)
+    }
+
+    pub fn with_scene_map(
+        source: &[u8],
+        translation_id: TranslationId,
+        run_id: RunId,
+        pair: LanguagePair,
+        policy: SrtBlockPolicy,
+        scene_end_ids: &[SegmentId],
+        scene_snapshot_hash: SourceHash,
+    ) -> Result<Self, SrtPlanError> {
+        Self::create(
+            source,
+            translation_id,
+            run_id,
+            pair,
+            policy,
+            None,
+            Some((scene_end_ids, scene_snapshot_hash)),
+        )
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn create(
+        source: &[u8],
+        translation_id: TranslationId,
+        run_id: RunId,
+        pair: LanguagePair,
+        policy: SrtBlockPolicy,
+        glossary: Option<&Glossary>,
+        scene: Option<(&[SegmentId], SourceHash)>,
+    ) -> Result<Self, SrtPlanError> {
         let document = inspect(source).map_err(SrtPlanError::Inspect)?;
         let source_hash = SourceHash::digest(source);
         let segments = document.source_segments().map_err(SrtPlanError::Contract)?;
-        let planned = PlannedBatches::new(
-            &segments,
-            translation_id,
-            run_id,
-            source_hash,
-            pair,
-            policy,
-            glossary,
-        )
-        .map_err(SrtPlanError::Contract)?;
+        let (planned, scene_identity) = if let Some((end_ids, snapshot_hash)) = scene {
+            let map = SceneMap::new(&segments, end_ids).map_err(SrtPlanError::Contract)?;
+            let planned = PlannedBatches::with_scenes(
+                &segments,
+                &map,
+                translation_id,
+                run_id,
+                source_hash,
+                pair,
+                policy,
+                glossary,
+            )
+            .map_err(SrtPlanError::Contract)?;
+            let mut identity = Vec::new();
+            identity.extend_from_slice(&map.fingerprint().bytes());
+            identity.extend_from_slice(&snapshot_hash.bytes());
+            (planned, Some(SourceHash::digest(&identity)))
+        } else {
+            (
+                PlannedBatches::new(
+                    &segments,
+                    translation_id,
+                    run_id,
+                    source_hash,
+                    pair,
+                    policy,
+                    glossary,
+                )
+                .map_err(SrtPlanError::Contract)?,
+                None,
+            )
+        };
         Ok(Self {
             document,
             planned,
             source_hash,
+            scene_identity,
         })
     }
 
@@ -92,6 +149,17 @@ impl SrtRunPlan {
             bytes.extend_from_slice(&(policy.context_before_segments() as u64).to_le_bytes());
             bytes.extend_from_slice(&(policy.context_after_segments() as u64).to_le_bytes());
         }
+        SourceHash::digest(&bytes)
+    }
+
+    pub fn policy_fingerprint_for_run(&self, policy: SrtBlockPolicy) -> SourceHash {
+        let base = Self::policy_fingerprint(policy);
+        let Some(scene_identity) = self.scene_identity else {
+            return base;
+        };
+        let mut bytes = Vec::new();
+        bytes.extend_from_slice(&base.bytes());
+        bytes.extend_from_slice(&scene_identity.bytes());
         SourceHash::digest(&bytes)
     }
 

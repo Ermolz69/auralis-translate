@@ -12,9 +12,11 @@ source, renders an envelope with one target slot, source-only context, empty
 approved terms and original/masked monetary facts, and requests a JSON object.
 It rejects duplicate/unknown fields, wrong slot IDs or counts, empty/control
 text, changed/invented/reordered money tokens, malformed/trailing JSON and
-non-Chinese source. The v5 profile permits one attempt per block. The file CLI
-rejects nonzero v5 context windows before creating state because it has no
-scene map yet. Legacy v1–v4 manifests and prompts remain separate.
+non-Chinese source. The v5 profile permits one attempt per block. The initial
+real measurements below used context disabled. A later
+[scene-map slice](2026-09-28-scene-map-admission.md) admits explicit file
+context but has no real quality measurement yet. Legacy v1–v4 manifests and
+prompts remain separate.
 
 The first [60-request real report](../reports/v5-envelope-placeholder-2026-09-28.json)
 accepted the literal `Русский текст` for source IDs `zh08` and `zh19` in all
@@ -93,8 +95,9 @@ case hash. `task site:build` and `task site:check` passed with the former 420
 requests retained and four v5 evidence files checked/linked in the single
 Tailwind-CDN HTML. These checks do not establish semantic quality.
 
-`CTX-02` remains in progress. It still needs an admitted immutable scene map,
-source-only context selection and resume identity, approved term provenance,
+`CTX-02` remains in progress. A later slice implemented scene map admission,
+source-only context selection and resume identity, with mock/contract checks.
+It still needs real scene-context measurement, approved term provenance,
 actual rendered-token budgeting, raw rejected-attempt persistence and typed
 provider outcomes. `CTX-03` and `LONG-01` own linked pieces. The current v5
 no-context control is worse on several source facts than v4 and cannot replace

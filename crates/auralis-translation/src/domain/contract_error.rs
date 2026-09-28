@@ -12,6 +12,7 @@ pub enum ContractError {
     ResponseLines,
     InvalidGlossary,
     GlossaryConflict,
+    InvalidSceneMap,
 }
 
 impl fmt::Display for ContractError {

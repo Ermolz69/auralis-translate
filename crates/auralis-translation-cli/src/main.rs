@@ -21,6 +21,7 @@ mod offline_install_command;
 mod online_install_command;
 mod pause_command;
 mod read_source;
+mod scene_map_input;
 mod source_snapshot;
 mod stale_output;
 mod status_command;

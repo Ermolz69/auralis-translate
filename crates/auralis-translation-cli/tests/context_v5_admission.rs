@@ -1,6 +1,7 @@
 #[path = "support/machine_workspace.rs"]
 mod machine_workspace;
 
+use auralis_translation::SourceHash;
 use std::error::Error;
 use std::process::Command;
 
@@ -39,5 +40,92 @@ fn file_context_requires_scene_map_before_state_creation() -> Result<(), Box<dyn
     assert!(!state.exists());
     assert!(!output.exists());
     assert_eq!(std::fs::read(source)?, original);
+    Ok(())
+}
+
+#[test]
+fn scene_map_is_frozen_for_resume_and_rejects_changed_evidence() -> Result<(), Box<dyn Error>> {
+    let workspace = machine_workspace::MachineWorkspace::new()?;
+    let source = workspace.0.join("source.srt");
+    let profile = workspace.0.join("profile.json");
+    let scene = workspace.0.join("scene.json");
+    let state = workspace.0.join("state");
+    let output = workspace.0.join("result.srt");
+    let original = "1\n00:00:01,000 --> 00:00:02,000\n你好。\n\n2\n00:00:02,000 --> 00:00:03,000\n谢谢。\n\n3\n00:00:03,000 --> 00:00:04,000\n再见。\n";
+    std::fs::write(&source, original)?;
+    let mut value: serde_json::Value = serde_json::from_slice(PROFILE)?;
+    value["context_before_segments"] = 1.into();
+    value["context_after_segments"] = 1.into();
+    value["max_context_bytes"] = 4096.into();
+    std::fs::write(&profile, serde_json::to_vec(&value)?)?;
+    let source_hash = SourceHash::digest(original.as_bytes());
+    let bad = serde_json::json!({
+        "schema_version": 1,
+        "source_sha256": source_hash.to_string(),
+        "evidence_id": "scene-review-001",
+        "scene_end_ids": [1]
+    });
+    std::fs::write(&scene, serde_json::to_vec(&bad)?)?;
+    let start = |state: &std::path::Path| {
+        Command::new(env!("CARGO_BIN_EXE_auralis-translation-cli"))
+            .arg("translate-v5-scene")
+            .arg(&source)
+            .arg(state)
+            .arg(&profile)
+            .arg(&scene)
+            .arg("http://127.0.0.1:1/")
+            .arg(&output)
+            .output()
+    };
+    let rejected = start(&state)?;
+    assert!(!rejected.status.success());
+    assert!(!state.exists());
+    let valid = serde_json::json!({
+        "schema_version": 1,
+        "source_sha256": source_hash.to_string(),
+        "evidence_id": "scene-review-001",
+        "scene_end_ids": [2, 3]
+    });
+    let saved = serde_json::to_vec(&valid)?;
+    std::fs::write(&scene, &saved)?;
+    let started = start(&state)?;
+    assert!(!started.status.success());
+    let stdout = String::from_utf8(started.stdout)?;
+    let run_id = stdout
+        .split_whitespace()
+        .find_map(|item| item.strip_prefix("run_id="))
+        .ok_or("missing run ID")?;
+    let managed = state.join("scene-maps").join(format!("{run_id}.json"));
+    assert_eq!(std::fs::read(&managed)?, saved);
+    assert_eq!(std::fs::read(&source)?, original.as_bytes());
+    std::fs::write(&scene, b"changed external file")?;
+    let resumed = Command::new(env!("CARGO_BIN_EXE_auralis-translation-cli"))
+        .args([
+            "resume",
+            state.to_str().ok_or("state path")?,
+            run_id,
+            profile.to_str().ok_or("profile path")?,
+            "http://127.0.0.1:1/",
+            output.to_str().ok_or("output path")?,
+        ])
+        .output()?;
+    assert!(!resumed.status.success());
+    assert!(!String::from_utf8_lossy(&resumed.stderr).contains("frozen run"));
+    let mut changed = valid;
+    changed["evidence_id"] = "scene-review-002".into();
+    std::fs::write(&managed, serde_json::to_vec(&changed)?)?;
+    let rejected_resume = Command::new(env!("CARGO_BIN_EXE_auralis-translation-cli"))
+        .args([
+            "resume",
+            state.to_str().ok_or("state path")?,
+            run_id,
+            profile.to_str().ok_or("profile path")?,
+            "http://127.0.0.1:1/",
+            output.to_str().ok_or("output path")?,
+        ])
+        .output()?;
+    assert!(!rejected_resume.status.success());
+    assert!(String::from_utf8_lossy(&rejected_resume.stderr).contains("frozen run"));
+    assert!(!output.exists());
     Ok(())
 }

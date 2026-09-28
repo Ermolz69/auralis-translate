@@ -1,8 +1,8 @@
 use crate::document_run_plan::DocumentRunPlan;
 use crate::durable_workflow::{DATABASE_FILE, SOURCE_DIRECTORY, block_policy, load_profile};
-use crate::managed_glossary;
 use crate::read_source::{read_source, read_vtt_source};
 use crate::source_snapshot::source_snapshot;
+use crate::{managed_glossary, scene_map_input};
 use auralis_translation::{RunId, SourceHash};
 use auralis_translation_llamacpp::ModelProfile;
 use auralis_translation_sqlite::{RunSpec, SqliteConfig, TranslateDb};
@@ -82,7 +82,8 @@ pub(crate) fn load(
             "model profile differs from frozen run",
         ));
     }
-    let policy = block_policy(&profile)?;
+    let scene = scene_map_input::load(&state_dir, run_id, &source)?;
+    let policy = block_policy(&profile, scene.is_some())?;
     let glossary = managed_glossary::load(&state_dir, run.glossary_revision.as_deref())?;
     if glossary.is_some() && profile.prompt_version != 3 {
         return Err(crate::reporting::CliFailure::boxed(
@@ -90,15 +91,34 @@ pub(crate) fn load(
             "frozen glossary requires a glossary-capable profile",
         ));
     }
-    let plan = DocumentRunPlan::new(
-        &translation.source_format,
-        &source,
-        translation.translation_id,
-        run_id,
-        translation.language_pair,
-        policy,
-        glossary.as_ref(),
-    )?;
+    let plan = if let Some(scene) = &scene {
+        if profile.prompt_version != 5 {
+            return Err(crate::reporting::CliFailure::boxed(
+                crate::reporting::ErrorCode::Conflict,
+                "frozen scene map requires a v5 profile",
+            ));
+        }
+        DocumentRunPlan::with_scene_map(
+            &translation.source_format,
+            &source,
+            translation.translation_id,
+            run_id,
+            translation.language_pair,
+            policy,
+            &scene.end_ids,
+            scene.snapshot_hash,
+        )?
+    } else {
+        DocumentRunPlan::new(
+            &translation.source_format,
+            &source,
+            translation.translation_id,
+            run_id,
+            translation.language_pair,
+            policy,
+            glossary.as_ref(),
+        )?
+    };
     if plan.blocks() != run.blocks
         || run.parser_version != plan.parser_version()
         || run.policy_fingerprint != plan.policy_fingerprint(policy).to_string()

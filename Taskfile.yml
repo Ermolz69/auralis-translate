@@ -1,6 +1,12 @@
 version: "3"
 
 tasks:
+  test:scene-map:
+    desc: Verify scene-bound context, frozen map admission and resume identity
+    cmds:
+      - cargo test --offline -p auralis-translation --test scene_map --test planned_batches
+      - cargo test --offline -p auralis-translation-formats --test srt_context_plan
+      - cargo test --offline -p auralis-translation-cli --test context_v5_admission
   eval:regression:check:
     desc: Validate permanent failure evidence and required related and negative controls
     cmds:

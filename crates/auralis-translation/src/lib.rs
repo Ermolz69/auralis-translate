@@ -10,8 +10,8 @@ pub use application::{
 pub use domain::{
     BlockCheckpoint, BlockPolicy, ContractError, DiagnosticCode, Glossary, GlossaryEntry, IdError,
     LanguageCode, LanguagePair, ProviderResponse, ResultId, RetryPolicy, ReviewState, RunId,
-    RunProgress, RunState, SegmentId, SourceHash, SourceSegment, TargetSegment, TranslationBatch,
-    TranslationDiagnostic, TranslationId,
+    RunProgress, RunState, SceneMap, SegmentId, SourceHash, SourceSegment, TargetSegment,
+    TranslationBatch, TranslationDiagnostic, TranslationId,
 };
 pub use ports::{
     CheckpointStore, ProgressSink, ProviderError, RunControl, TranslationProvider, VerifiedRenderer,

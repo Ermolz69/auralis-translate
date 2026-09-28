@@ -31,9 +31,13 @@ pub(crate) fn load_profile(path: &Path) -> Result<(ModelProfile, SourceHash), Bo
     Ok((profile, SourceHash::digest(&bytes)))
 }
 
-pub(crate) fn block_policy(profile: &ModelProfile) -> Result<BlockPolicy, Box<dyn Error>> {
+pub(crate) fn block_policy(
+    profile: &ModelProfile,
+    has_scene_map: bool,
+) -> Result<BlockPolicy, Box<dyn Error>> {
     if profile.prompt_version == 5
         && (profile.context_before_segments != 0 || profile.context_after_segments != 0)
+        && !has_scene_map
     {
         return Err("v5 file context requires an explicit scene map".into());
     }

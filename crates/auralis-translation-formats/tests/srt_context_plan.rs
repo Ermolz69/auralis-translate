@@ -78,3 +78,54 @@ fn adjacent_context_is_read_only_and_changes_frozen_block_identity() -> Result<(
     );
     Ok(())
 }
+
+#[test]
+fn explicit_scene_boundaries_keep_context_inside_each_scene() -> Result<(), Box<dyn Error>> {
+    let translation_id = TranslationId::parse("11111111-1111-4111-8111-111111111111")?;
+    let run_id = RunId::parse("22222222-2222-4222-8222-222222222222")?;
+    let pair = LanguagePair::new(LanguageCode::Chinese, LanguageCode::Russian)?;
+    let policy = SrtBlockPolicy::with_context(1, 1, 1).ok_or("invalid policy")?;
+    let ends = [
+        SegmentId::new(2).ok_or("invalid ID")?,
+        SegmentId::new(3).ok_or("invalid ID")?,
+    ];
+    let scene_hash = auralis_translation::SourceHash::digest(b"reviewed scene map");
+    let plan = SrtRunPlan::with_scene_map(
+        SOURCE,
+        translation_id,
+        run_id,
+        pair,
+        policy,
+        &ends,
+        scene_hash,
+    )?;
+    let provider = RecordingProvider(RefCell::new(Vec::new()));
+    let mut store = MemoryStore::default();
+    assert_eq!(plan.execute(&provider, &mut store)?, SOURCE);
+    assert_eq!(
+        provider.0.into_inner(),
+        vec![
+            vec![ends[0]],
+            vec![SegmentId::new(1).ok_or("invalid ID")?],
+            vec![]
+        ]
+    );
+    assert_ne!(
+        plan.policy_fingerprint_for_run(policy),
+        SrtRunPlan::policy_fingerprint(policy)
+    );
+    let changed = SrtRunPlan::with_scene_map(
+        SOURCE,
+        translation_id,
+        run_id,
+        pair,
+        policy,
+        &ends,
+        auralis_translation::SourceHash::digest(b"different review"),
+    )?;
+    assert_ne!(
+        plan.policy_fingerprint_for_run(policy),
+        changed.policy_fingerprint_for_run(policy)
+    );
+    Ok(())
+}

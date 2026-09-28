@@ -1,8 +1,9 @@
 use crate::{
-    BlockPolicy, ContractError, Glossary, LanguagePair, RunId, SegmentId, SourceHash,
+    BlockPolicy, ContractError, Glossary, LanguagePair, RunId, SceneMap, SegmentId, SourceHash,
     SourceSegment, TranslationBatch, TranslationId,
 };
 use std::collections::HashSet;
+use std::ops::Range;
 
 pub struct PlannedBatches {
     batches: Vec<TranslationBatch>,
@@ -19,6 +20,51 @@ impl PlannedBatches {
         policy: BlockPolicy,
         glossary: Option<&Glossary>,
     ) -> Result<Self, ContractError> {
+        Self::validate(segments, glossary)?;
+        let whole_file = 0..segments.len();
+        Self::build(
+            segments,
+            std::slice::from_ref(&whole_file),
+            translation_id,
+            run_id,
+            source_hash,
+            pair,
+            policy,
+            glossary,
+        )
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    pub fn with_scenes(
+        segments: &[SourceSegment],
+        scene_map: &SceneMap,
+        translation_id: TranslationId,
+        run_id: RunId,
+        source_hash: SourceHash,
+        pair: LanguagePair,
+        policy: BlockPolicy,
+        glossary: Option<&Glossary>,
+    ) -> Result<Self, ContractError> {
+        Self::validate(segments, glossary)?;
+        if !scene_map.matches(segments) {
+            return Err(ContractError::InvalidSceneMap);
+        }
+        Self::build(
+            segments,
+            scene_map.ranges(),
+            translation_id,
+            run_id,
+            source_hash,
+            pair,
+            policy,
+            glossary,
+        )
+    }
+
+    fn validate(
+        segments: &[SourceSegment],
+        glossary: Option<&Glossary>,
+    ) -> Result<(), ContractError> {
         if segments.is_empty() {
             return Err(ContractError::EmptyTargets);
         }
@@ -38,33 +84,54 @@ impl PlannedBatches {
         }) {
             return Err(ContractError::InvalidGlossary);
         }
+        Ok(())
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn build(
+        segments: &[SourceSegment],
+        ranges: &[Range<usize>],
+        translation_id: TranslationId,
+        run_id: RunId,
+        source_hash: SourceHash,
+        pair: LanguagePair,
+        policy: BlockPolicy,
+        glossary: Option<&Glossary>,
+    ) -> Result<Self, ContractError> {
         let mut batches = Vec::new();
         let mut ids = Vec::new();
-        for (block_index, targets) in segments.chunks(policy.max_target_segments()).enumerate() {
-            let start = block_index * policy.max_target_segments();
-            let end = start + targets.len();
-            let before = start.saturating_sub(policy.context_before_segments());
-            let after = end
-                .saturating_add(policy.context_after_segments())
-                .min(segments.len());
-            let context = segments[before..start]
-                .iter()
-                .chain(&segments[end..after])
-                .cloned()
-                .collect::<Vec<_>>();
-            let applied_glossary = glossary
-                .map(|glossary| glossary.applicable(targets, &context))
-                .unwrap_or_default();
-            ids.push(targets.iter().map(SourceSegment::id).collect());
-            batches.push(TranslationBatch::with_glossary(
-                translation_id,
-                run_id,
-                source_hash,
-                pair,
-                targets.to_vec(),
-                context,
-                applied_glossary,
-            )?);
+        for scene in ranges {
+            for (block_index, targets) in segments[scene.clone()]
+                .chunks(policy.max_target_segments())
+                .enumerate()
+            {
+                let start = scene.start + block_index * policy.max_target_segments();
+                let end = start + targets.len();
+                let before = start
+                    .saturating_sub(policy.context_before_segments())
+                    .max(scene.start);
+                let after = end
+                    .saturating_add(policy.context_after_segments())
+                    .min(scene.end);
+                let context = segments[before..start]
+                    .iter()
+                    .chain(&segments[end..after])
+                    .cloned()
+                    .collect::<Vec<_>>();
+                let applied_glossary = glossary
+                    .map(|glossary| glossary.applicable(targets, &context))
+                    .unwrap_or_default();
+                ids.push(targets.iter().map(SourceSegment::id).collect());
+                batches.push(TranslationBatch::with_glossary(
+                    translation_id,
+                    run_id,
+                    source_hash,
+                    pair,
+                    targets.to_vec(),
+                    context,
+                    applied_glossary,
+                )?);
+            }
         }
         Ok(Self { batches, ids })
     }

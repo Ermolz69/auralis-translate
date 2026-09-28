@@ -7,7 +7,7 @@ use crate::reporting::{CliEvent, CommandOutput};
 use crate::source_snapshot::source_snapshot;
 use crate::start_input::StartInput;
 use crate::write_new::write_new;
-use crate::{glossary_input, managed_glossary};
+use crate::{glossary_input, managed_glossary, scene_map_input};
 use auralis_translation::{LanguageCode, LanguagePair, RunId, TranslationId};
 use auralis_translation_sqlite::{RunSpec, SqliteConfig, TranslateDb, TranslationSpec};
 use std::error::Error;
@@ -24,6 +24,7 @@ pub(crate) fn run(
         state_dir,
         profile_path,
         glossary_path,
+        scene_map_path,
         endpoint,
         output_path,
         format,
@@ -49,6 +50,17 @@ pub(crate) fn run(
     let glossary_snapshot = glossary_path
         .map(|path| glossary_input::read(Path::new(path)))
         .transpose()?;
+    let scene_snapshot = scene_map_path
+        .map(|path| scene_map_input::read(Path::new(path), &source))
+        .transpose()?;
+    if scene_snapshot.is_some()
+        && (profile.prompt_version != 5 || format != DocumentRunPlan::SRT_FORMAT)
+    {
+        return Err(crate::reporting::CliFailure::boxed(
+            crate::reporting::ErrorCode::InvalidInput,
+            "scene maps require an SRT v5 profile",
+        ));
+    }
     if glossary_snapshot.is_some() && profile.prompt_version != 3 {
         return Err(crate::reporting::CliFailure::boxed(
             crate::reporting::ErrorCode::InvalidInput,
@@ -59,22 +71,38 @@ pub(crate) fn run(
         TranslationId::new(Uuid::new_v4()).ok_or("failed to create translation ID")?;
     let run_id = RunId::new(Uuid::new_v4()).ok_or("failed to create run ID")?;
     let pair = LanguagePair::new(LanguageCode::Chinese, LanguageCode::Russian)?;
-    let block_policy = block_policy(&profile)?;
-    let plan = DocumentRunPlan::new(
-        format,
-        &source,
-        translation_id,
-        run_id,
-        pair,
-        block_policy,
-        glossary_snapshot.as_ref().map(|(glossary, _, _)| glossary),
-    )?;
+    let block_policy = block_policy(&profile, scene_snapshot.is_some())?;
+    let plan = if let Some(scene) = &scene_snapshot {
+        DocumentRunPlan::with_scene_map(
+            format,
+            &source,
+            translation_id,
+            run_id,
+            pair,
+            block_policy,
+            &scene.end_ids,
+            scene.snapshot_hash,
+        )?
+    } else {
+        DocumentRunPlan::new(
+            format,
+            &source,
+            translation_id,
+            run_id,
+            pair,
+            block_policy,
+            glossary_snapshot.as_ref().map(|(glossary, _, _)| glossary),
+        )?
+    };
 
     let state_dir = Path::new(state_dir);
     std::fs::create_dir_all(state_dir)?;
     let state_dir = std::fs::canonicalize(state_dir)?;
     if let Some((_, hash, bytes)) = &glossary_snapshot {
         managed_glossary::store(&state_dir, *hash, bytes)?;
+    }
+    if let Some(scene) = &scene_snapshot {
+        scene_map_input::store(&state_dir, run_id, scene)?;
     }
     let source_dir = state_dir.join(SOURCE_DIRECTORY);
     std::fs::create_dir_all(&source_dir)?;
