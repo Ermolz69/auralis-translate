@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "inventory_id": "authored-fixture-inventory-v1",
+  "fixture_only": true,
+  "sources": [
+    {
+      "id": "authored-fixture-zh-srt-v1",
+      "group_id": "authored-fixture-series",
+      "split": "development",
+      "state": "source_checked",
+      "source_url": "https://github.com/Ermolz69/auralis-translate/blob/main/eval/corpora/fixtures/inventory-example.zh.srt",
+      "revision": "authored-fixture-v1",
+      "retrieved_at": "2026-09-28T15:30:00Z",
+      "sha256": "9350c270d221ffd545ae422f18924fe82407c3fe26974af21209ceba9d48d4ac",
+      "language": "zh",
+      "script": "Hans",
+      "format": "strict_srt_v1",
+      "cue_count": 2,
+      "local_fixture_path": "eval/corpora/fixtures/inventory-example.zh.srt",
+      "media_url": null,
+      "rights": {
+        "subtitle": {
+          "decision": "approved",
+          "license": "Project-authored fixture",
+          "evidence_url": "https://github.com/Ermolz69/auralis-translate/blob/main/eval/corpora/fixtures/inventory-example.zh.srt",
+          "attribution": "Auralis Translate authored fixture",
+          "internal_use": true,
+          "public_redistribution": true
+        },
+        "reference": { "decision": "unknown" },
+        "audio": { "decision": "unknown" }
+      },
+      "scenes": [
+        {
+          "id": "fixture-scene-1",
+          "cue_ids": [1, 2],
+          "exclusions": [{ "cue_id": 2, "reason": "Authored non-dialogue end card" }],
+          "alignment": { "state": "none" },
+          "reference": { "state": "none" }
+        }
+      ]
+    }
+  ]
+}

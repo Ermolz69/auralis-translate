@@ -1,6 +1,11 @@
 version: "3"
 
 tasks:
+  eval:data:check:
+    desc: Validate source inventory examples and cross-source admission controls
+    cmds:
+      - node --test --test-isolation=none eval/scripts/tests/source-inventory.test.mjs
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/source-inventory-example-v1.json
   plan:check:
     desc: Validate canonical delivery backlog states, dependencies and completion evidence
     cmds:
