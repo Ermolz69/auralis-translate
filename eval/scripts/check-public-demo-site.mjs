@@ -43,6 +43,9 @@ assert(html.includes('id="v5-terms"'));
 assert.equal((html.match(/data-terms-row=/g) ?? []).length, 3);
 assert.equal((html.match(/href="https:\/\/github.com\/Ermolz69\/auralis-translate\/blob\/main\/eval\/reports\/v5-terms-paired-/g) ?? []).length, 2);
 assert(html.includes('id="retry-policy"'));
+assert(html.includes('id="voice-handoff"'));
+assert(html.includes('2026-09-28-voice-handoff-immutability.md'));
+assert(html.includes('A1–A6 остаются открытыми'));
 assert(html.includes('2026-09-28-typed-provider-retry.md'));
 assert(html.includes('HTTP 502–504'));
 assert.equal((html.match(/data-plan-task=/g) ?? []).length, data.delivery_plan.total_tasks);
@@ -71,4 +74,4 @@ for (const script of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))
 }
 assert(!/(?:E:\\\\|C:\\\\Users\\\\|00ermzahar@|gh[pousr]_[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)/.test(html));
 assert(!/<script[^>]+src="(?!https:\/\/cdn\.jsdelivr\.net\/npm\/@tailwindcss\/browser@4")/.test(html));
-console.log('Public HTML verified: 420 prior requests retained, four earlier v5, four scene and two terms reports linked and checked, typed retry record, 40 model comparison rows, evidence identity, scripts and single-file publication boundary.');
+console.log('Public HTML verified: 420 prior requests retained, four earlier v5, four scene and two terms reports linked and checked, typed retry and partial voice-handoff records, 40 model comparison rows, evidence identity, scripts and single-file publication boundary.');
