@@ -1,6 +1,6 @@
 use super::{
-    ContractError, Glossary, GlossaryEntry, LanguageCode, LanguagePair, RunId, SourceHash,
-    SourceSegment, TranslationId,
+    ApprovedTerm, ApprovedTerms, ContractError, Glossary, GlossaryEntry, LanguageCode,
+    LanguagePair, RunId, SourceHash, SourceSegment, TranslationId,
 };
 use sha2::{Digest, Sha256};
 use std::collections::HashSet;
@@ -8,6 +8,7 @@ use std::collections::HashSet;
 pub const TRANSLATION_BATCH_SCHEMA_VERSION: u32 = 1;
 const BATCH_FINGERPRINT_VERSION: u32 = 1;
 const GLOSSARY_FINGERPRINT_VERSION: u32 = 1;
+const APPROVED_TERMS_FINGERPRINT_VERSION: u32 = 1;
 
 #[derive(Clone, Debug)]
 pub struct TranslationBatch {
@@ -18,6 +19,7 @@ pub struct TranslationBatch {
     targets: Vec<SourceSegment>,
     context: Vec<SourceSegment>,
     glossary: Vec<GlossaryEntry>,
+    approved_terms: Vec<ApprovedTerm>,
 }
 
 impl TranslationBatch {
@@ -49,6 +51,50 @@ impl TranslationBatch {
         context: Vec<SourceSegment>,
         glossary: Vec<GlossaryEntry>,
     ) -> Result<Self, ContractError> {
+        Self::create(
+            translation_id,
+            run_id,
+            source_hash,
+            language_pair,
+            targets,
+            context,
+            glossary,
+            Vec::new(),
+        )
+    }
+
+    pub fn with_approved_terms(
+        translation_id: TranslationId,
+        run_id: RunId,
+        source_hash: SourceHash,
+        language_pair: LanguagePair,
+        targets: Vec<SourceSegment>,
+        context: Vec<SourceSegment>,
+        approved_terms: Vec<ApprovedTerm>,
+    ) -> Result<Self, ContractError> {
+        Self::create(
+            translation_id,
+            run_id,
+            source_hash,
+            language_pair,
+            targets,
+            context,
+            Vec::new(),
+            approved_terms,
+        )
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn create(
+        translation_id: TranslationId,
+        run_id: RunId,
+        source_hash: SourceHash,
+        language_pair: LanguagePair,
+        targets: Vec<SourceSegment>,
+        context: Vec<SourceSegment>,
+        glossary: Vec<GlossaryEntry>,
+        approved_terms: Vec<ApprovedTerm>,
+    ) -> Result<Self, ContractError> {
         if targets.is_empty() {
             return Err(ContractError::EmptyTargets);
         }
@@ -61,12 +107,29 @@ impl TranslationBatch {
             return Err(ContractError::DuplicateSegmentId);
         }
         Glossary::validate_entries(&glossary)?;
+        if !approved_terms.is_empty() {
+            ApprovedTerms::new(approved_terms.clone())?;
+        }
+        if !glossary.is_empty() && !approved_terms.is_empty() {
+            return Err(ContractError::InvalidApprovedTerms);
+        }
         if glossary.iter().any(|entry| {
             entry
                 .segment_ids()
                 .is_some_and(|scope| !targets.iter().any(|target| scope.contains(&target.id())))
         }) {
             return Err(ContractError::InvalidGlossary);
+        }
+        if approved_terms.iter().any(|entry| {
+            !targets.iter().any(|target| {
+                entry.segment_ids().contains(&target.id())
+                    && target
+                        .lines()
+                        .iter()
+                        .any(|line| line.contains(entry.source()))
+            })
+        }) {
+            return Err(ContractError::InvalidApprovedTerms);
         }
         Ok(Self {
             translation_id,
@@ -76,6 +139,7 @@ impl TranslationBatch {
             targets,
             context,
             glossary,
+            approved_terms,
         })
     }
 
@@ -111,6 +175,10 @@ impl TranslationBatch {
         &self.glossary
     }
 
+    pub fn approved_terms(&self) -> &[ApprovedTerm] {
+        &self.approved_terms
+    }
+
     pub fn fingerprint(&self) -> SourceHash {
         let mut hasher = Sha256::new();
         hasher.update(BATCH_FINGERPRINT_VERSION.to_le_bytes());
@@ -142,6 +210,24 @@ impl TranslationBatch {
                         }
                     }
                 }
+            }
+        }
+        if !self.approved_terms.is_empty() {
+            hasher.update(APPROVED_TERMS_FINGERPRINT_VERSION.to_le_bytes());
+            hasher.update((self.approved_terms.len() as u64).to_le_bytes());
+            for entry in &self.approved_terms {
+                hash_text(&mut hasher, entry.source());
+                hash_text(&mut hasher, entry.target());
+                hasher.update((entry.allowed_forms().len() as u64).to_le_bytes());
+                for form in entry.allowed_forms() {
+                    hash_text(&mut hasher, form);
+                }
+                hasher.update((entry.segment_ids().len() as u64).to_le_bytes());
+                for id in entry.segment_ids() {
+                    hasher.update(id.get().to_le_bytes());
+                }
+                hash_text(&mut hasher, entry.reviewer_id());
+                hash_text(&mut hasher, entry.evidence_id());
             }
         }
         SourceHash::from_bytes(hasher.finalize().into())

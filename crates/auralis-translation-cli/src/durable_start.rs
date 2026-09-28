@@ -7,7 +7,7 @@ use crate::reporting::{CliEvent, CommandOutput};
 use crate::source_snapshot::source_snapshot;
 use crate::start_input::StartInput;
 use crate::write_new::write_new;
-use crate::{glossary_input, managed_glossary, scene_map_input};
+use crate::{glossary_input, managed_glossary, scene_map_input, terms_input};
 use auralis_translation::{LanguageCode, LanguagePair, RunId, TranslationId};
 use auralis_translation_sqlite::{RunSpec, SqliteConfig, TranslateDb, TranslationSpec};
 use std::error::Error;
@@ -25,6 +25,7 @@ pub(crate) fn run(
         profile_path,
         glossary_path,
         scene_map_path,
+        terms_path,
         endpoint,
         output_path,
         format,
@@ -53,6 +54,14 @@ pub(crate) fn run(
     let scene_snapshot = scene_map_path
         .map(|path| scene_map_input::read(Path::new(path), &source))
         .transpose()?;
+    let terms_snapshot = terms_path
+        .map(|path| {
+            let scene = scene_snapshot
+                .as_ref()
+                .ok_or("terms ledger requires scene map")?;
+            terms_input::read(Path::new(path), &source, scene.snapshot_hash)
+        })
+        .transpose()?;
     if scene_snapshot.is_some()
         && (profile.prompt_version != 5 || format != DocumentRunPlan::SRT_FORMAT)
     {
@@ -67,12 +76,34 @@ pub(crate) fn run(
             "model profile does not support glossary prompts",
         ));
     }
+    if terms_snapshot.is_some()
+        && (profile.prompt_version != 5
+            || profile.max_approved_terms_bytes == 0
+            || profile.max_approved_terms_entries == 0)
+    {
+        return Err(crate::reporting::CliFailure::boxed(
+            crate::reporting::ErrorCode::InvalidInput,
+            "model profile does not support approved terms",
+        ));
+    }
     let translation_id =
         TranslationId::new(Uuid::new_v4()).ok_or("failed to create translation ID")?;
     let run_id = RunId::new(Uuid::new_v4()).ok_or("failed to create run ID")?;
     let pair = LanguagePair::new(LanguageCode::Chinese, LanguageCode::Russian)?;
     let block_policy = block_policy(&profile, scene_snapshot.is_some())?;
-    let plan = if let Some(scene) = &scene_snapshot {
+    let plan = if let (Some(scene), Some(terms)) = (&scene_snapshot, &terms_snapshot) {
+        DocumentRunPlan::with_scene_map_and_terms(
+            format,
+            &source,
+            translation_id,
+            run_id,
+            pair,
+            block_policy,
+            &scene.end_ids,
+            scene.snapshot_hash,
+            &terms.terms,
+        )?
+    } else if let Some(scene) = &scene_snapshot {
         DocumentRunPlan::with_scene_map(
             format,
             &source,
@@ -103,6 +134,9 @@ pub(crate) fn run(
     }
     if let Some(scene) = &scene_snapshot {
         scene_map_input::store(&state_dir, run_id, scene)?;
+    }
+    if let Some(terms) = &terms_snapshot {
+        terms_input::store(&state_dir, run_id, terms)?;
     }
     let source_dir = state_dir.join(SOURCE_DIRECTORY);
     std::fs::create_dir_all(&source_dir)?;
@@ -136,7 +170,12 @@ pub(crate) fn run(
         policy_fingerprint: plan.policy_fingerprint(block_policy).to_string(),
         glossary_revision: glossary_snapshot
             .as_ref()
-            .map(|(_, hash, _)| hash.to_string()),
+            .map(|(_, hash, _)| hash.to_string())
+            .or_else(|| {
+                terms_snapshot
+                    .as_ref()
+                    .map(|terms| terms.snapshot_hash.to_string())
+            }),
         blocks: plan.blocks().to_vec(),
     };
     db.ensure_run(&run)?;

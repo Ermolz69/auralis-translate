@@ -25,6 +25,7 @@ mod scene_map_input;
 mod source_snapshot;
 mod stale_output;
 mod status_command;
+mod terms_input;
 
 mod vtt_inspect_command;
 mod vtt_manual_command;

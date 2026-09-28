@@ -3,10 +3,11 @@ use super::{
 };
 use crate::inspect;
 use auralis_translation::{
-    CheckpointStore, Glossary, LanguagePair, PlannedBatches, ProgressSink, RetryPolicy, RunControl,
-    RunId, SceneMap, SegmentId, SourceHash, TargetSegment, TranslationId, TranslationProvider,
-    VerifiedRenderer, translate_planned_run, translate_planned_run_with_control,
-    translate_planned_run_with_policy, translate_planned_run_with_progress,
+    ApprovedTerms, CheckpointStore, Glossary, LanguagePair, PlannedBatches, ProgressSink,
+    RetryPolicy, RunControl, RunId, SceneMap, SegmentId, SourceHash, TargetSegment, TranslationId,
+    TranslationProvider, VerifiedRenderer, translate_planned_run,
+    translate_planned_run_with_control, translate_planned_run_with_policy,
+    translate_planned_run_with_progress,
 };
 
 pub struct SrtRunPlan {
@@ -39,7 +40,16 @@ impl SrtRunPlan {
         policy: SrtBlockPolicy,
         glossary: Option<&Glossary>,
     ) -> Result<Self, SrtPlanError> {
-        Self::create(source, translation_id, run_id, pair, policy, glossary, None)
+        Self::create(
+            source,
+            translation_id,
+            run_id,
+            pair,
+            policy,
+            glossary,
+            None,
+            None,
+        )
     }
 
     pub fn with_scene_map(
@@ -59,6 +69,30 @@ impl SrtRunPlan {
             policy,
             None,
             Some((scene_end_ids, scene_snapshot_hash)),
+            None,
+        )
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    pub fn with_scene_map_and_terms(
+        source: &[u8],
+        translation_id: TranslationId,
+        run_id: RunId,
+        pair: LanguagePair,
+        policy: SrtBlockPolicy,
+        scene_end_ids: &[SegmentId],
+        scene_snapshot_hash: SourceHash,
+        terms: &ApprovedTerms,
+    ) -> Result<Self, SrtPlanError> {
+        Self::create(
+            source,
+            translation_id,
+            run_id,
+            pair,
+            policy,
+            None,
+            Some((scene_end_ids, scene_snapshot_hash)),
+            Some(terms),
         )
     }
 
@@ -71,28 +105,47 @@ impl SrtRunPlan {
         policy: SrtBlockPolicy,
         glossary: Option<&Glossary>,
         scene: Option<(&[SegmentId], SourceHash)>,
+        approved_terms: Option<&ApprovedTerms>,
     ) -> Result<Self, SrtPlanError> {
         let document = inspect(source).map_err(SrtPlanError::Inspect)?;
         let source_hash = SourceHash::digest(source);
         let segments = document.source_segments().map_err(SrtPlanError::Contract)?;
         let (planned, scene_identity) = if let Some((end_ids, snapshot_hash)) = scene {
             let map = SceneMap::new(&segments, end_ids).map_err(SrtPlanError::Contract)?;
-            let planned = PlannedBatches::with_scenes(
-                &segments,
-                &map,
-                translation_id,
-                run_id,
-                source_hash,
-                pair,
-                policy,
-                glossary,
-            )
+            let planned = if let Some(terms) = approved_terms {
+                PlannedBatches::with_scenes_and_terms(
+                    &segments,
+                    &map,
+                    translation_id,
+                    run_id,
+                    source_hash,
+                    pair,
+                    policy,
+                    terms,
+                )
+            } else {
+                PlannedBatches::with_scenes(
+                    &segments,
+                    &map,
+                    translation_id,
+                    run_id,
+                    source_hash,
+                    pair,
+                    policy,
+                    glossary,
+                )
+            }
             .map_err(SrtPlanError::Contract)?;
             let mut identity = Vec::new();
             identity.extend_from_slice(&map.fingerprint().bytes());
             identity.extend_from_slice(&snapshot_hash.bytes());
             (planned, Some(SourceHash::digest(&identity)))
         } else {
+            if approved_terms.is_some() {
+                return Err(SrtPlanError::Contract(
+                    auralis_translation::ContractError::InvalidApprovedTerms,
+                ));
+            }
             (
                 PlannedBatches::new(
                     &segments,

@@ -7,12 +7,15 @@ import { performance } from 'node:perf_hooks';
 import { fileURLToPath } from 'node:url';
 import { digest, verifyProtectedBytes } from './flores-file-fixture.mjs';
 import { freeLoopbackPort, startProcess, stopProcess, waitForExit, waitForHealthyServer } from './local-process.mjs';
+import { sceneRequestBudget } from './scene-request-budget.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+const termsMode = process.env.AURALIS_SCENE_TERMS_MODE === '1';
 const datasetFile = process.env.AURALIS_SCENE_DATASET ?? 'eval/corpora/context-contrasts-v1.json';
 const corpusPath = path.join(root, datasetFile);
 const baselinePath = path.join(root, 'models/manifests/hy_mt2_1_8b_q4_k_m.context_v5.experimental.json');
 const sceneProfilePath = path.join(root, 'models/manifests/hy_mt2_1_8b_q4_k_m.context_v5_scene.experimental.json');
+const termsProfilePath = path.join(root, 'models/manifests/hy_mt2_1_8b_q4_k_m.context_v5_scene_terms.experimental.json');
 const serverPath = process.env.AURALIS_TEST_LLAMA_SERVER;
 const modelPath = process.env.AURALIS_TEST_GGUF;
 assert(serverPath && modelPath, 'Taskfile must provide checked local model and runtime paths');
@@ -26,13 +29,17 @@ const cases = ids.map(id => {
   assert(row && row.relevant, `Missing frozen development case: ${id}`);
   return row;
 });
-const profiles = {
+const profiles = termsMode ? {
+  no_terms: { path: termsProfilePath, bytes: await fs.readFile(termsProfilePath) },
+  terms: { path: termsProfilePath, bytes: await fs.readFile(termsProfilePath) },
+} : {
   baseline: { path: baselinePath, bytes: await fs.readFile(baselinePath) },
   scene: { path: sceneProfilePath, bytes: await fs.readFile(sceneProfilePath) },
 };
 for (const profile of Object.values(profiles)) profile.parsed = JSON.parse(profile.bytes);
-assert.equal(profiles.baseline.parsed.model_file_sha256, profiles.scene.parsed.model_file_sha256);
-assert.equal(profiles.baseline.parsed.prompt_template_sha256, profiles.scene.parsed.prompt_template_sha256);
+const [firstProfile, secondProfile] = Object.values(profiles);
+assert.equal(firstProfile.parsed.model_file_sha256, secondProfile.parsed.model_file_sha256);
+assert.equal(firstProfile.parsed.prompt_template_sha256, secondProfile.parsed.prompt_template_sha256);
 const experiment = process.env.AURALIS_SCENE_EXPERIMENT ?? 'scene-context-smoke-v1';
 assert(/^[a-z0-9-]+$/u.test(experiment));
 const parent = path.join(root, '.cache/eval', experiment);
@@ -49,11 +56,13 @@ const report = {
   profile_sha256: Object.fromEntries(Object.entries(profiles).map(([name, profile]) => [name, digest(profile.bytes)])),
   cli_sha256: digest(await fs.readFile(executable)),
   runtime_sha256: digest(await fs.readFile(serverPath)),
-  model_sha256_verified_by_doctor: profiles.scene.parsed.model_file_sha256,
-  model_revision: profiles.scene.parsed.model_revision,
+  model_sha256_verified_by_doctor: secondProfile.parsed.model_file_sha256,
+  model_revision: secondProfile.parsed.model_revision,
   hardware: { os: `${os.type()} ${os.release()} ${os.arch()}`, cpu: os.cpus()[0].model, total_ram_bytes: os.totalmem() },
   limits: { files: cases.length * 2, chat_requests: 0, all_http_requests: 0, run_wall_ms: 600_000, repetitions: 1 },
-  methodology: 'Paired complete authored SRT scenes; same source bytes per arm; references are retained only in this report; baseline has no context and scene arm has reviewed-by-no-human source boundaries. AI review is separate.',
+  methodology: termsMode
+    ? 'Paired complete AI-authored SRT scenes; same source, profile, map and runtime; only synthetic scoped terms differ. Reviewer IDs are fixture claims, not human approval. References stay outside model requests.'
+    : 'Paired complete authored SRT scenes; same source bytes per arm; references are retained only in this report; baseline has no context and scene arm has reviewed-by-no-human source boundaries. AI review is separate.',
   cases: [], requests: [], failures: [], commands: [],
 };
 const git = await waitForExit(startProcess('git', ['rev-parse', 'HEAD'], root), 10_000);
@@ -87,17 +96,29 @@ for (const row of cases) {
   const mapPath = path.join(caseDir, 'scene-map.json');
   const mapBytes = Buffer.from(JSON.stringify(map));
   await fs.writeFile(mapPath, mapBytes, { flag: 'wx' });
-  sources.set(row.id, { source, sourcePath, mapPath, mapBytes, cueCount: lines.length, targetId: row.relevant.before_zh.length + 1 });
-  report.cases.push({ id: row.id, category: row.category, source_sha256: digest(source), scene_map_sha256: digest(mapBytes), target_id: row.relevant.before_zh.length + 1, expected_facts: row.relevant.expected_facts, prohibited_facts: row.relevant.prohibited_facts, proposed_reference_ru: row.relevant.reference_ru, arms: [] });
+  let termsPath, termsBytes;
+  const targetId = row.relevant.before_zh.length + 1;
+  if (termsMode) {
+    assert(Array.isArray(row.terms) && row.terms.length > 0, 'Terms mode needs an authored source-scoped fixture ledger');
+    const ledger = { schema_version: 1, source_sha256: digest(source), scene_map_sha256: digest(mapBytes), terms: row.terms.map(term => ({
+      source: term.source, target: term.target, allowed_forms: term.allowed_forms ?? [],
+      segment_ids: [targetId], reviewer_id: 'ai-authored-fixture-unreviewed', evidence_id: `${corpus.corpus_id}:${row.id}`,
+    })) };
+    termsBytes = Buffer.from(JSON.stringify(ledger));
+    termsPath = path.join(caseDir, 'terms.json');
+    await fs.writeFile(termsPath, termsBytes, { flag: 'wx' });
+  }
+  sources.set(row.id, { source, sourcePath, mapPath, mapBytes, termsPath, cueCount: lines.length, targetId });
+  report.cases.push({ id: row.id, category: row.category, source_sha256: digest(source), scene_map_sha256: digest(mapBytes), terms_sha256: termsBytes ? digest(termsBytes) : null, target_id: targetId, expected_facts: row.relevant.expected_facts, prohibited_facts: row.relevant.prohibited_facts, proposed_reference_ru: row.relevant.reference_ru, arms: [] });
 }
 const cueCount = [...sources.values()].reduce((sum, fixture) => sum + fixture.cueCount, 0);
 report.limits.chat_requests = 2 * cueCount + 2;
-report.limits.all_http_requests = 4 * cueCount + 6 * cases.length + 8;
+report.limits.all_http_requests = sceneRequestBudget(cueCount, cases.length);
 let server, sampler, proxy;
 let activeArm = null;
 let runStart = performance.now();
 try {
-  const doctor = startProcess(executable, ['doctor', sceneProfilePath, modelPath], root);
+  const doctor = startProcess(executable, ['doctor', secondProfile.path, modelPath], root);
   await waitForExit(doctor, 180_000);
   report.doctor = doctor.stdout.trim();
   proxy = http.createServer(async (request, response) => {
@@ -137,7 +158,7 @@ try {
   });
   await new Promise(resolve => proxy.listen(0, '127.0.0.1', resolve));
   const proxyUrl = `http://127.0.0.1:${proxy.address().port}/`;
-  const serverArgs = ['--model', modelPath, '--alias', profiles.scene.parsed.model_alias, '--host', '127.0.0.1', '--port', String(runtimePort), '-c', '2048', '-ngl', '99', '--cache-ram', '0', '--parallel', '1', '--jinja'];
+  const serverArgs = ['--model', modelPath, '--alias', secondProfile.parsed.model_alias, '--host', '127.0.0.1', '--port', String(runtimePort), '-c', '2048', '-ngl', '99', '--cache-ram', '0', '--parallel', '1', '--jinja'];
   report.server_arguments = serverArgs.map(value => value === modelPath ? '<verified-model.gguf>' : value);
   const serverEnv = { ...process.env, PATH: `${path.dirname(serverPath)};${path.join(root, '.cache/runtime/cudart')};${process.env.PATH}` };
   server = startProcess(serverPath, serverArgs, root, serverEnv, { maxCaptureCharacters: 4 * 1024 * 1024 });
@@ -149,16 +170,18 @@ try {
     const fixture = sources.get(row.id);
     const caseReport = report.cases.find(candidate => candidate.id === row.id);
     const originalInspection = await command(['inspect', fixture.sourcePath]);
-    for (const arm of ['baseline', 'scene']) {
+    for (const arm of Object.keys(profiles)) {
       activeArm = `${row.id}:${arm}`;
       const armDir = path.join(workspace, row.id, arm);
       await fs.mkdir(armDir);
       const state = path.join(armDir, 'state');
       const output = path.join(armDir, 'candidate.ru.srt');
       const profile = profiles[arm];
-      const args = arm === 'scene'
-        ? ['translate-v5-scene', fixture.sourcePath, state, profile.path, fixture.mapPath, proxyUrl, output]
-        : ['translate', fixture.sourcePath, state, profile.path, proxyUrl, output];
+      const args = arm === 'terms'
+        ? ['translate-v5-scene-terms', fixture.sourcePath, state, profile.path, fixture.mapPath, fixture.termsPath, proxyUrl, output]
+        : arm === 'scene' || arm === 'no_terms'
+          ? ['translate-v5-scene', fixture.sourcePath, state, profile.path, fixture.mapPath, proxyUrl, output]
+          : ['translate', fixture.sourcePath, state, profile.path, proxyUrl, output];
       const started = performance.now();
       const stdout = await command(args);
       const runId = stdout.match(/run_id=([0-9a-f-]{36})/u)?.[1];
@@ -188,6 +211,25 @@ try {
     await command(['resume', arm.state, arm.run_id, profile.path, proxyUrl, exported]);
     assert.equal(digest(await fs.readFile(exported)), arm.output_sha256);
     arm.offline_reexport = 'byte_identical';
+  }
+  if (termsMode) {
+    for (const row of report.cases) {
+      const chats = report.requests.filter(entry => entry.path === '/v1/chat/completions' && entry.arm?.startsWith(`${row.id}:`));
+      const targetTerms = { no_terms: 0, terms: 0 };
+      for (const entry of chats) {
+        const envelope = JSON.parse(entry.request.messages[0].content.split('Input JSON:\n')[1]);
+        const arm = entry.arm.split(':')[1];
+        assert(!entry.request.messages[0].content.includes(row.proposed_reference_ru), 'A reference entered a model prompt');
+        assert(Array.isArray(envelope.approved_terms));
+        if (arm === 'no_terms') assert.equal(envelope.approved_terms.length, 0);
+        else if (envelope.target_slots[0].segment_id === row.target_id) {
+          assert.equal(envelope.approved_terms.length, 1);
+          assert.equal(envelope.approved_terms[0].reviewer_id, 'ai-authored-fixture-unreviewed');
+          targetTerms.terms += 1;
+        } else assert.equal(envelope.approved_terms.length, 0);
+      }
+      assert.equal(targetTerms.terms, 1, 'Exactly one target request must receive the scoped term');
+    }
   }
   report.status = 'passed_structural_probe';
 } catch (error) {

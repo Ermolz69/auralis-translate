@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "corpus_id": "v5-terms-paired-v1",
+  "provenance": "ai_authored_unreviewed",
+  "split": "development",
+  "cases": [
+    {
+      "id": "t01",
+      "category": "name_and_context",
+      "target_zh": "小王到了。",
+      "terms": [{"source": "小王", "target": "Сяо Ван", "allowed_forms": []}],
+      "relevant": {
+        "before_zh": ["小李在门口等。"],
+        "after_zh": ["两个人进去了。"],
+        "reference_ru": "Сяо Ван пришёл.",
+        "expected_facts": ["Xiao Wang arrived; Xiao Li is only in context"],
+        "prohibited_facts": ["Do not replace Xiao Wang with Xiao Li", "Do not invent an amount"]
+      }
+    },
+    {
+      "id": "t02",
+      "category": "name_and_negation",
+      "target_zh": "小王还没到。",
+      "terms": [{"source": "小王", "target": "Сяо Ван", "allowed_forms": []}],
+      "relevant": {
+        "before_zh": ["小李先到了。"],
+        "after_zh": ["大家继续等。"],
+        "reference_ru": "Сяо Ван ещё не пришёл.",
+        "expected_facts": ["Xiao Wang has not arrived; Xiao Li already arrived"],
+        "prohibited_facts": ["Do not drop the negation", "Do not transfer Xiao Li's arrival to Xiao Wang"]
+      }
+    },
+    {
+      "id": "t03",
+      "category": "name_and_money",
+      "target_zh": "小王付了三元。",
+      "terms": [{"source": "小王", "target": "Сяо Ван", "allowed_forms": []}],
+      "relevant": {
+        "before_zh": ["老板喊了他的名字。"],
+        "after_zh": ["收银员给他收据。"],
+        "reference_ru": "Сяо Ван заплатил 3 юаня.",
+        "expected_facts": ["Xiao Wang paid three yuan"],
+        "prohibited_facts": ["Do not change the amount or currency", "Do not change payer to cashier"]
+      }
+    }
+  ]
+}

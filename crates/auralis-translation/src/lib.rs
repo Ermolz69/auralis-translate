@@ -8,10 +8,10 @@ pub use application::{
     translate_planned_run_with_policy, translate_planned_run_with_progress,
 };
 pub use domain::{
-    BlockCheckpoint, BlockPolicy, ContractError, DiagnosticCode, Glossary, GlossaryEntry, IdError,
-    LanguageCode, LanguagePair, ProviderResponse, ResultId, RetryPolicy, ReviewState, RunId,
-    RunProgress, RunState, SceneMap, SegmentId, SourceHash, SourceSegment, TargetSegment,
-    TranslationBatch, TranslationDiagnostic, TranslationId,
+    ApprovedTerm, ApprovedTerms, BlockCheckpoint, BlockPolicy, ContractError, DiagnosticCode,
+    Glossary, GlossaryEntry, IdError, LanguageCode, LanguagePair, ProviderResponse, ResultId,
+    RetryPolicy, ReviewState, RunId, RunProgress, RunState, SceneMap, SegmentId, SourceHash,
+    SourceSegment, TargetSegment, TranslationBatch, TranslationDiagnostic, TranslationId,
 };
 pub use ports::{
     CheckpointStore, ProgressSink, ProviderError, RunControl, TranslationProvider, VerifiedRenderer,

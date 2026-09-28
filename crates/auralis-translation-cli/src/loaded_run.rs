@@ -2,7 +2,7 @@ use crate::document_run_plan::DocumentRunPlan;
 use crate::durable_workflow::{DATABASE_FILE, SOURCE_DIRECTORY, block_policy, load_profile};
 use crate::read_source::{read_source, read_vtt_source};
 use crate::source_snapshot::source_snapshot;
-use crate::{managed_glossary, scene_map_input};
+use crate::{managed_glossary, scene_map_input, terms_input};
 use auralis_translation::{RunId, SourceHash};
 use auralis_translation_llamacpp::ModelProfile;
 use auralis_translation_sqlite::{RunSpec, SqliteConfig, TranslateDb};
@@ -84,7 +84,22 @@ pub(crate) fn load(
     }
     let scene = scene_map_input::load(&state_dir, run_id, &source)?;
     let policy = block_policy(&profile, scene.is_some())?;
-    let glossary = managed_glossary::load(&state_dir, run.glossary_revision.as_deref())?;
+    let terms = if profile.prompt_version == 5 {
+        terms_input::load(
+            &state_dir,
+            run_id,
+            run.glossary_revision.as_deref(),
+            &source,
+            scene.as_ref().map(|map| map.snapshot_hash),
+        )?
+    } else {
+        None
+    };
+    let glossary = if profile.prompt_version == 3 {
+        managed_glossary::load(&state_dir, run.glossary_revision.as_deref())?
+    } else {
+        None
+    };
     if glossary.is_some() && profile.prompt_version != 3 {
         return Err(crate::reporting::CliFailure::boxed(
             crate::reporting::ErrorCode::InvalidInput,
@@ -98,16 +113,30 @@ pub(crate) fn load(
                 "frozen scene map requires a v5 profile",
             ));
         }
-        DocumentRunPlan::with_scene_map(
-            &translation.source_format,
-            &source,
-            translation.translation_id,
-            run_id,
-            translation.language_pair,
-            policy,
-            &scene.end_ids,
-            scene.snapshot_hash,
-        )?
+        if let Some(terms) = &terms {
+            DocumentRunPlan::with_scene_map_and_terms(
+                &translation.source_format,
+                &source,
+                translation.translation_id,
+                run_id,
+                translation.language_pair,
+                policy,
+                &scene.end_ids,
+                scene.snapshot_hash,
+                &terms.terms,
+            )?
+        } else {
+            DocumentRunPlan::with_scene_map(
+                &translation.source_format,
+                &source,
+                translation.translation_id,
+                run_id,
+                translation.language_pair,
+                policy,
+                &scene.end_ids,
+                scene.snapshot_hash,
+            )?
+        }
     } else {
         DocumentRunPlan::new(
             &translation.source_format,

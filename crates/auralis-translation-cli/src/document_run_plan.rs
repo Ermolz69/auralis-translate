@@ -1,8 +1,8 @@
 use crate::document_run_error::DocumentRunError;
 use auralis_translation::ProgressSink;
 use auralis_translation::{
-    BlockPolicy, Glossary, LanguagePair, RetryPolicy, RunId, SegmentId, SourceHash, TargetSegment,
-    TranslationId, VerifiedRenderer,
+    ApprovedTerms, BlockPolicy, Glossary, LanguagePair, RetryPolicy, RunId, SegmentId, SourceHash,
+    TargetSegment, TranslationId, VerifiedRenderer,
 };
 use auralis_translation_formats::srt::{SrtRunError, SrtRunPlan};
 use auralis_translation_formats::vtt::{VttRunError, VttRunPlan};
@@ -71,6 +71,33 @@ impl DocumentRunPlan {
             policy,
             scene_end_ids,
             scene_snapshot_hash,
+        )?))
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    pub fn with_scene_map_and_terms(
+        format: &str,
+        source: &[u8],
+        translation_id: TranslationId,
+        run_id: RunId,
+        pair: LanguagePair,
+        policy: BlockPolicy,
+        scene_end_ids: &[SegmentId],
+        scene_snapshot_hash: SourceHash,
+        terms: &ApprovedTerms,
+    ) -> Result<Self, Box<dyn Error>> {
+        if format != Self::SRT_FORMAT {
+            return Err("scene maps require SRT source".into());
+        }
+        Ok(Self::Srt(SrtRunPlan::with_scene_map_and_terms(
+            source,
+            translation_id,
+            run_id,
+            pair,
+            policy,
+            scene_end_ids,
+            scene_snapshot_hash,
+            terms,
         )?))
     }
 

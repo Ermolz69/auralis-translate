@@ -22,6 +22,31 @@ tasks:
     cmds:
       - cargo test --offline -p auralis-translation-llamacpp --test context_v5 --test profile_contract
       - cargo test --offline -p auralis-translation-cli --test context_v5_admission
+  test:v5-terms:
+    desc: Verify source-scoped v5 terms, bounded prompt admission and durable ledger identity
+    cmds:
+      - cargo test --offline -p auralis-translation --test approved_terms
+      - cargo test --offline -p auralis-translation-formats --test srt_approved_terms
+      - cargo test --offline -p auralis-translation-llamacpp --test v5_terms
+      - cargo test --offline -p auralis-translation-cli --test v5_terms_admission
+  eval:v5-terms:check:
+    desc: Check the bounded paired real-model terms probe before execution
+    cmds:
+      - node --check eval/scripts/scene-context-smoke.mjs
+      - node --test --test-isolation=none eval/scripts/tests/scene-request-budget.test.mjs
+  eval:v5-terms:paired:
+    desc: Compare synthetic source-scoped terms against no terms on three identical authored scenes
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_SCENE_DATASET: eval/corpora/v5-terms-paired-v1.json
+      AURALIS_SCENE_CASE_IDS: t01,t02,t03
+      AURALIS_SCENE_TERMS_MODE: '1'
+      AURALIS_SCENE_EXPERIMENT: v5-terms-paired-v2
+    cmds:
+      - task: eval:v5-terms:check
+      - task: build:release
+      - node eval/scripts/scene-context-smoke.mjs
   eval:context:scene:smoke:
     desc: Compare bounded real v5 source context on two identical authored Chinese scenes
     env:
@@ -45,6 +70,18 @@ tasks:
       AURALIS_SCENE_EXPERIMENT: scene-pronoun-regression-v1
     cmds:
       - task: eval:context:scene:check
+      - task: build:release
+      - node eval/scripts/scene-context-smoke.mjs
+  eval:context:scene:after-terms:
+    desc: Recheck the frozen actor-number regression after changing the v5 prompt template
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_SCENE_DATASET: eval/corpora/scene-pronoun-regression-v1.json
+      AURALIS_SCENE_CASE_IDS: r01,r02,r03,r04
+      AURALIS_SCENE_EXPERIMENT: scene-pronoun-after-terms-v1
+    cmds:
+      - task: eval:v5-terms:check
       - task: build:release
       - node eval/scripts/scene-context-smoke.mjs
   eval:context:v5:smoke:

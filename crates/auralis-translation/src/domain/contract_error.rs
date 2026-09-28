@@ -12,6 +12,8 @@ pub enum ContractError {
     ResponseLines,
     InvalidGlossary,
     GlossaryConflict,
+    InvalidApprovedTerms,
+    ApprovedTermsConflict,
     InvalidSceneMap,
 }
 

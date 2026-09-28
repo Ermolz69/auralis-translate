@@ -8,7 +8,7 @@
   "runtime_build_info": "b10977-0ecb159c9",
   "min_context_tokens": 2048,
   "prompt_version": 5,
-  "prompt_template_sha256": "08abb6e2acbb1641fc3fc5dc841a04435108663655dbfeed4837a857af27e70a",
+  "prompt_template_sha256": "7eed5a47e3679f8b20113dd2842bf581b9760c56d83c84283b57884c3e4414a1",
   "target_segments_per_block": 1,
   "context_before_segments": 0,
   "context_after_segments": 0,

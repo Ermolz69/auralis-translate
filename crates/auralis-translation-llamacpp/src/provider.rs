@@ -201,6 +201,7 @@ impl LlamaCppProvider {
         line_index: usize,
         context: &[auralis_translation::SourceSegment],
         prepared: &crate::chinese_fidelity_prompt::ChineseFidelityPrompt,
+        approved_terms: &[auralis_translation::ApprovedTerm],
         control: Option<(&dyn RunControl, RunId)>,
     ) -> Result<String, ProviderError> {
         let context_limit = self.profile.min_context_tokens.ok_or_else(|| {
@@ -216,8 +217,13 @@ impl LlamaCppProvider {
             .ok_or_else(|| ProviderError("v5 response reserve exceeds model context".into()))?;
         let mut selected = context.to_vec();
         loop {
-            let prompt =
-                crate::contextual_prompt_v5::render(segment, line_index, &selected, prepared);
+            let prompt = crate::contextual_prompt_v5::render(
+                segment,
+                line_index,
+                &selected,
+                prepared,
+                approved_terms,
+            );
             if self.rendered_chat_tokens(&prompt, control)? <= available as usize {
                 return Ok(prompt);
             }
@@ -262,6 +268,26 @@ impl LlamaCppProvider {
         if glossary_bytes > self.profile.max_glossary_bytes {
             return Err(ProviderError("glossary exceeds profile byte limit".into()));
         }
+        if self.profile.prompt_version != 5 && !batch.approved_terms().is_empty() {
+            return Err(ProviderError(
+                "profile does not support approved terms".into(),
+            ));
+        }
+        if batch.approved_terms().len() > self.profile.max_approved_terms_entries {
+            return Err(ProviderError(
+                "approved terms exceed profile entry limit".into(),
+            ));
+        }
+        let terms_bytes = if batch.approved_terms().is_empty() {
+            0
+        } else {
+            crate::contextual_prompt_v5::approved_terms_bytes(batch.approved_terms())?
+        };
+        if terms_bytes > self.profile.max_approved_terms_bytes {
+            return Err(ProviderError(
+                "approved terms exceed profile byte limit".into(),
+            ));
+        }
         let context_bytes: usize = batch
             .context()
             .iter()
@@ -304,6 +330,7 @@ impl LlamaCppProvider {
                             line_index,
                             batch.context(),
                             &prepared,
+                            batch.approved_terms(),
                             control,
                         )?
                     } else {
@@ -312,6 +339,7 @@ impl LlamaCppProvider {
                             line_index,
                             batch.context(),
                             &prepared,
+                            batch.approved_terms(),
                         )
                     };
                     let candidate = self.translate_line(

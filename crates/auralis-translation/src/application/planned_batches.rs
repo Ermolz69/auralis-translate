@@ -1,6 +1,6 @@
 use crate::{
-    BlockPolicy, ContractError, Glossary, LanguagePair, RunId, SceneMap, SegmentId, SourceHash,
-    SourceSegment, TranslationBatch, TranslationId,
+    ApprovedTerms, BlockPolicy, ContractError, Glossary, LanguagePair, RunId, SceneMap, SegmentId,
+    SourceHash, SourceSegment, TranslationBatch, TranslationId,
 };
 use std::collections::HashSet;
 use std::ops::Range;
@@ -31,6 +31,7 @@ impl PlannedBatches {
             pair,
             policy,
             glossary,
+            None,
         )
     }
 
@@ -58,6 +59,36 @@ impl PlannedBatches {
             pair,
             policy,
             glossary,
+            None,
+        )
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    pub fn with_scenes_and_terms(
+        segments: &[SourceSegment],
+        scene_map: &SceneMap,
+        translation_id: TranslationId,
+        run_id: RunId,
+        source_hash: SourceHash,
+        pair: LanguagePair,
+        policy: BlockPolicy,
+        terms: &ApprovedTerms,
+    ) -> Result<Self, ContractError> {
+        Self::validate(segments, None)?;
+        if !scene_map.matches(segments) {
+            return Err(ContractError::InvalidSceneMap);
+        }
+        terms.validate_against(segments)?;
+        Self::build(
+            segments,
+            scene_map.ranges(),
+            translation_id,
+            run_id,
+            source_hash,
+            pair,
+            policy,
+            None,
+            Some(terms),
         )
     }
 
@@ -97,6 +128,7 @@ impl PlannedBatches {
         pair: LanguagePair,
         policy: BlockPolicy,
         glossary: Option<&Glossary>,
+        approved_terms: Option<&ApprovedTerms>,
     ) -> Result<Self, ContractError> {
         let mut batches = Vec::new();
         let mut ids = Vec::new();
@@ -121,16 +153,29 @@ impl PlannedBatches {
                 let applied_glossary = glossary
                     .map(|glossary| glossary.applicable(targets, &context))
                     .unwrap_or_default();
+                let batch = if let Some(terms) = approved_terms {
+                    TranslationBatch::with_approved_terms(
+                        translation_id,
+                        run_id,
+                        source_hash,
+                        pair,
+                        targets.to_vec(),
+                        context,
+                        terms.applicable(targets),
+                    )?
+                } else {
+                    TranslationBatch::with_glossary(
+                        translation_id,
+                        run_id,
+                        source_hash,
+                        pair,
+                        targets.to_vec(),
+                        context,
+                        applied_glossary,
+                    )?
+                };
                 ids.push(targets.iter().map(SourceSegment::id).collect());
-                batches.push(TranslationBatch::with_glossary(
-                    translation_id,
-                    run_id,
-                    source_hash,
-                    pair,
-                    targets.to_vec(),
-                    context,
-                    applied_glossary,
-                )?);
+                batches.push(batch);
             }
         }
         Ok(Self { batches, ids })

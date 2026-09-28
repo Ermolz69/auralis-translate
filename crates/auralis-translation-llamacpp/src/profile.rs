@@ -12,6 +12,8 @@ const MAX_CONTEXT_SEGMENTS: usize = 8;
 const MAX_CONTEXT_BYTES: usize = 64 * 1024;
 const MAX_GLOSSARY_BYTES: usize = 32 * 1024;
 const MAX_GLOSSARY_ENTRIES: usize = 128;
+const MAX_APPROVED_TERMS_BYTES: usize = 32 * 1024;
+const MAX_APPROVED_TERMS_ENTRIES: usize = 128;
 const MAX_TOKEN_SAFETY_MARGIN: u32 = 512;
 
 fn default_target_segments() -> usize {
@@ -53,6 +55,10 @@ pub struct ModelProfile {
     pub max_glossary_bytes: usize,
     #[serde(default)]
     pub max_glossary_entries: usize,
+    #[serde(default)]
+    pub max_approved_terms_bytes: usize,
+    #[serde(default)]
+    pub max_approved_terms_entries: usize,
     #[serde(default = "default_block_attempts")]
     pub max_block_attempts: u32,
     pub temperature: f64,
@@ -120,6 +126,8 @@ impl ModelProfile {
             || self.max_context_bytes > MAX_CONTEXT_BYTES
             || self.max_glossary_bytes > MAX_GLOSSARY_BYTES
             || self.max_glossary_entries > MAX_GLOSSARY_ENTRIES
+            || self.max_approved_terms_bytes > MAX_APPROVED_TERMS_BYTES
+            || self.max_approved_terms_entries > MAX_APPROVED_TERMS_ENTRIES
             || RetryPolicy::new(self.max_block_attempts).is_none()
         {
             return Err(ProfileError::Invalid("block or context limits are invalid"));
@@ -140,6 +148,12 @@ impl ModelProfile {
                 && (self.max_glossary_bytes != 0 || self.max_glossary_entries != 0))
             || (self.prompt_version == 3
                 && (self.max_glossary_bytes == 0 || self.max_glossary_entries == 0))
+            || (self.prompt_version != 5
+                && (self.max_approved_terms_bytes != 0 || self.max_approved_terms_entries != 0))
+            || (self.max_approved_terms_bytes == 0) != (self.max_approved_terms_entries == 0)
+            || (self.prompt_version == 5
+                && self.max_approved_terms_bytes > 0
+                && (self.token_safety_margin_tokens.is_none() || self.min_context_tokens.is_none()))
             || (self.prompt_version == 5
                 && ((self.context_before_segments + self.context_after_segments > 0
                     && (self.max_context_bytes == 0

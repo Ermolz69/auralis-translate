@@ -18,8 +18,10 @@ bytes. The planner limits context to each declared scene. The scene-enabled
 tokens, and removes farthest context deterministically. The first
 [real probe](../../eval/experiments/2026-09-28-scene-context-results.md)
 matched `/tokenize` counts to server usage but found a singular/plural
-translation regression. Target/batch resizing, approved terms and longer
-files remain open under `CTX-02`, `CTX-03` and `LONG-01`.
+translation regression. An experimental explicit terms ledger now has source,
+scene, scope and provenance admission checks; independently reviewed term data
+and semantic evaluation remain open. Target/batch resizing and longer files
+remain open under `CTX-02`, `CTX-03` and `LONG-01`.
 
 ## Purpose and admission
 
@@ -45,6 +47,20 @@ source, approved target/forms, applicable segment IDs, reviewer/evidence ID and
 snapshot hash. A model suggestion or inferred speaker is not an approved fact.
 The v3 glossary snapshot remains valid for v3; v5 terms require this stronger
 provenance. Speaker identity is omitted unless separately evidenced and approved.
+
+The initial v5 terms ledger is a separate, bounded JSON input with
+`schema_version`, `source_sha256`, `scene_map_sha256` and a nonempty `terms`
+array. Each term has `source`, `target`, `allowed_forms`, explicit
+`segment_ids`, `reviewer_id` and `evidence_id`. Every scope ID must belong to
+the admitted source, and the source spelling must occur in each scoped target
+cue. Duplicate or overlapping scopes for the same source spelling are
+rejected. A term is sent only for an applicable target line containing its
+source spelling; neighboring context never grants term authority. The ledger
+bytes are copied into managed run state and hashed into run identity. A changed
+ledger, source, scene map, term scope or evidence ID rejects resume. Reviewer
+and evidence fields are provenance claims in the input; an external human
+review record must still be verified before these are treated as approved
+terms for release evidence.
 
 ## Request and response boundary
 

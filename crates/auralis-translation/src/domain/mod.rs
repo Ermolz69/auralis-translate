@@ -1,3 +1,5 @@
+mod approved_term;
+mod approved_terms;
 mod block_checkpoint;
 mod block_policy;
 mod contract_error;
@@ -23,6 +25,8 @@ mod translation_batch;
 mod translation_diagnostic;
 mod translation_id;
 
+pub use approved_term::ApprovedTerm;
+pub use approved_terms::ApprovedTerms;
 pub use block_checkpoint::BlockCheckpoint;
 pub use block_policy::BlockPolicy;
 pub use contract_error::ContractError;
