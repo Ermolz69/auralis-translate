@@ -8,6 +8,9 @@ const copy = () => structuredClone(original);
 
 test('authored example accounts for every source cue and explicit exclusion', () => {
   assert.deepEqual(validateSourceInventory(copy()), { source_count: 1, group_count: 1, eligible_cues: 1 });
+  const precise = copy();
+  precise.sources[0].retrieved_at = '2026-09-28T15:30:00.123Z';
+  assert.equal(validateSourceInventory(precise).eligible_cues, 1);
 });
 
 test('a related source cannot cross the development and holdout split', () => {

@@ -136,7 +136,7 @@ export function validateSourceInventory(inventory) {
       if (source.sha256 !== null || source.cue_count !== null || source.scenes.length !== 0) fail(at, 'rights-only state cannot claim parsed source');
       continue;
     }
-    if (typeof source.retrieved_at !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/u.test(source.retrieved_at)
+    if (typeof source.retrieved_at !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?Z$/u.test(source.retrieved_at)
         || Number.isNaN(Date.parse(source.retrieved_at))) fail(`${at}.retrieved_at`, 'must be a UTC retrieval timestamp');
     if (typeof source.sha256 !== 'string' || !SHA256.test(source.sha256)) fail(`${at}.sha256`, 'must be a lowercase SHA-256');
     positive(source.cue_count, `${at}.cue_count`);

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "experiment_id": "schema-fixture-v1",
+  "fixture_only": true,
+  "status": "stopped",
+  "stop_reason": "Schema fixture only; no model request or review was performed",
+  "started_at": "2026-09-28T00:00:00Z",
+  "finished_at": "2026-09-28T00:00:00Z",
+  "plan": {
+    "frozen_at": "2026-09-28T00:00:00Z",
+    "task_ids": ["eval-02"],
+    "question": "Can the report contract retain a paired attempt and its failures?",
+    "source_manifest_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "split": "synthetic",
+    "cases": [{
+      "id": "fixture-case-1",
+      "source_id": "authored-fixture-zh-srt-v1",
+      "scene_id": "fixture-scene-1",
+      "target_id": "cue-1-line-0",
+      "source_sha256": "9350c270d221ffd545ae422f18924fe82407c3fe26974af21209ceba9d48d4ac",
+      "reference_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "expected_meaning": "A greeting addresses Amin; fixture only, not a reviewed reference",
+      "prohibited_facts": []
+    }],
+    "variants": [{
+      "id": "fixture-variant-1",
+      "model_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "profile_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "prompt_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "runtime_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "tokenizer_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "context_policy_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "terms_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "decoding": { "temperature": 0.7, "top_p": 0.6 }
+    }],
+    "repetitions": 1,
+    "max_requests": 2,
+    "max_total_tokens": 4096,
+    "max_wall_ms": 1000,
+    "stop_criteria": "Stop on any resource or identity error"
+  },
+  "environment": null,
+  "attempts": [],
+  "measurements": null,
+  "summary": {
+    "attempted": 0,
+    "accepted": 0,
+    "rejected": 0,
+    "unknown_token_attempts": 0,
+    "elapsed_p50_ms": null,
+    "elapsed_p95_ms": null,
+    "quantile_method": "nearest_rank"
+  },
+  "review": {
+    "kind": "none",
+    "reviewer_id": null,
+    "eligible": 0,
+    "reviewed": 0,
+    "critical_unresolved": 0,
+    "source_aware": false
+  }
+}
