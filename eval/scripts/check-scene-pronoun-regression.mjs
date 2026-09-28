@@ -12,11 +12,14 @@ const firstBytes = await read('eval/reports/scene-context-smoke-2026-09-28.json'
 const reportBytes = await read('eval/reports/scene-pronoun-regression-2026-09-28.json');
 const repairBytes = await read('eval/reports/scene-number-repair-2026-09-28.json');
 const afterTermsBytes = await read('eval/reports/scene-pronoun-after-terms-2026-09-28.json');
+const largeScreenBytes = await read('eval/reports/context-7b-p01-screen-2026-09-29.json');
+const largeJournalCheck = JSON.parse(await read('eval/reports/context-7b-p01-screen-journal-check-2026-09-29.json'));
 const corpus = JSON.parse(corpusBytes);
 const first = JSON.parse(firstBytes);
 const report = JSON.parse(reportBytes);
 const repair = JSON.parse(repairBytes);
 const afterTerms = JSON.parse(afterTermsBytes);
+const largeScreen = JSON.parse(largeScreenBytes);
 
 assert.equal(index.schema_version, 1);
 assert.equal(index.id, 'REG-002');
@@ -26,6 +29,8 @@ assert.equal(index.original_scene_report_sha256, digest(firstBytes));
 assert.equal(index.regression_report_sha256, digest(reportBytes));
 assert.equal(index.attempted_repair_report_sha256, digest(repairBytes));
 assert.equal(index.after_terms_report_sha256, digest(afterTermsBytes));
+assert.equal(index.large_model_screen_report_sha256, digest(largeScreenBytes));
+assert.equal(index.large_model_scene_profile_sha256, largeScreen.profile_sha256.scene);
 assert.equal(index.regression_corpus_sha256, digest(corpusBytes));
 assert.equal(index.scene_profile_sha256, report.profile_sha256.scene);
 assert.equal(corpus.provenance, 'ai_authored_unreviewed');
@@ -114,5 +119,30 @@ assert.equal(afterTerms.requests.filter(request => request.path === '/v1/chat/co
 assert.deepEqual(afterTerms.cases.map(row => row.id), corpus.cases.map(row => row.id));
 assert.deepEqual(afterTerms.cases.map(row => row.arms[1].accepted_target), ['Приехали.', 'Приехали.', 'Приехали.', 'Прибыли.']);
 assert(afterTerms.cases.every(row => row.arms.every(arm => arm.offline_reexport === 'byte_identical')));
+assert.equal(largeScreen.status, 'passed_structural_probe');
+assert.equal(largeScreen.failures.length, 0);
+assert.equal(largeScreen.requests.length, 18);
+assert.equal(largeScreen.requests.filter(request => request.path === '/v1/chat/completions').length, 6);
+assert.equal(largeScreen.limits.files, 2);
+assert(largeScreen.requests.length <= largeScreen.limits.all_http_requests);
+assert(largeScreen.requests.filter(request => request.path === '/v1/chat/completions').length <= largeScreen.limits.chat_requests);
+assert.equal(largeScreen.cases.length, 1);
+assert.equal(largeScreen.cases[0].source_sha256, first.cases.find(row => row.id === 'p01').source_sha256);
+assert.equal(largeScreen.cases[0].scene_map_sha256, first.cases.find(row => row.id === 'p01').scene_map_sha256);
+assert.deepEqual(largeScreen.cases[0].arms.map(arm => arm.accepted_target), ['Прибыли.', 'Мы приехали.']);
+assert(largeScreen.cases[0].arms.every(arm => arm.offline_reexport === 'byte_identical'));
+assert.equal(largeJournalCheck.status, 'passed');
+assert.equal(largeJournalCheck.report_sha256, digest(largeScreenBytes));
+assert.deepEqual(largeJournalCheck.checked.map(row => row.chats), [3, 3]);
+for (const request of largeScreen.requests.filter(entry => entry.path === '/v1/chat/completions')) {
+  assert(!request.request.messages[0].content.includes(largeScreen.cases[0].proposed_reference_ru));
+}
+const largeSceneChats = largeScreen.requests.filter(entry => entry.arm === 'p01:scene' && entry.path === '/v1/chat/completions');
+const largeSceneTokens = largeScreen.requests.filter(entry => entry.arm === 'p01:scene' && entry.path === '/tokenize');
+assert.equal(largeSceneTokens.length, largeSceneChats.length);
+largeSceneTokens.forEach((measurement, position) => {
+  assert.equal(measurement.token_count, largeSceneChats[position].usage.prompt_tokens);
+  assert(measurement.token_count + 256 + 64 <= 2048);
+});
 await fs.access(path.join(root, index.evidence_record));
-console.log('REG-002 verified: original, failed repair and current v5-template singular/plural evidence retained with related and negative controls; no human acceptance claimed.');
+console.log('REG-002 verified: original, failed repair, current v5-template and 7B p01 recurrence retained with related and negative controls; no human acceptance claimed.');

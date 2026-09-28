@@ -34,10 +34,12 @@ assert.deepEqual(data.v5_envelope, { sha256: v5.sha256, profile_sha256: v5.profi
 assert(html.includes('id="v5-envelope"'));
 assert.equal((html.match(/href="https:\/\/github.com\/Ermolz69\/auralis-translate\/blob\/main\/eval\/reports\/v5-(?:envelope|schema)-/g) ?? []).length, 4);
 const scene = await loadSceneContext(root);
-assert.deepEqual(data.scene_context, { sha256: scene.sha256, profile_sha256: scene.profileHash, old_profile_sha256: scene.oldProfileHash, smoke_chat_requests: 10, regression_chat_requests: 24, repair_chat_requests: 24, after_terms_chat_requests: 24, regression_id: 'REG-002', human_review: 'missing' });
+assert.deepEqual(data.scene_context, { sha256: scene.sha256, profile_sha256: scene.profileHash, old_profile_sha256: scene.oldProfileHash, smoke_chat_requests: 10, regression_chat_requests: 24, repair_chat_requests: 24, after_terms_chat_requests: 24, large_screen_chat_requests: 6, large_screen: { baseline: 'Прибыли.', scene: 'Мы приехали.' }, regression_id: 'REG-002', human_review: 'missing' });
 assert(html.includes('id="scene-context"'));
 assert.equal((html.match(/data-scene-row=/g) ?? []).length, 6);
-assert.equal((html.match(/href="https:\/\/github.com\/Ermolz69\/auralis-translate\/blob\/main\/eval\/reports\/scene-/g) ?? []).length, 4);
+assert.equal((html.match(/href="https:\/\/github.com\/Ermolz69\/auralis-translate\/blob\/main\/eval\/reports\/(?:scene-|context-7b-p01-screen)/g) ?? []).length, 5);
+assert(html.includes('7B Q4_K_M на том же исходнике'));
+assert(html.includes('context-7b-p01-screen-2026-09-29.json'));
 const terms = await loadTermsProbe(root);
 assert.deepEqual(data.terms_probe, { success_sha256: terms.success_sha256, failure_sha256: terms.failure_sha256, profile_sha256: terms.profile_sha256, corpus_sha256: terms.corpus_sha256, chat_requests: 18, loopback_requests: 72 });
 assert(html.includes('id="v5-terms"'));
@@ -83,4 +85,4 @@ for (const script of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))
 }
 assert(!/(?:E:\\\\|C:\\\\Users\\\\|00ermzahar@|gh[pousr]_[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)/.test(html));
 assert(!/<script[^>]+src="(?!https:\/\/cdn\.jsdelivr\.net\/npm\/@tailwindcss\/browser@4")/.test(html));
-console.log('Public HTML verified: 420 prior requests retained, earlier v5/scene/terms reports and six real journaled chats linked and checked, typed retry and partial voice-handoff records, 40 model comparison rows, evidence identity, scripts and single-file publication boundary.');
+console.log('Public HTML verified: 420 prior requests retained, v5/scene/terms and 7B actor-number evidence linked, six real journaled chats checked, typed retry and partial voice-handoff records, 40 model comparison rows, evidence identity, scripts and single-file publication boundary.');

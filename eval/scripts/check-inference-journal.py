@@ -53,6 +53,10 @@ def main() -> None:
                     raise ValueError(f"{arm_key}: run/request identity differs")
                 if json.loads(body) != entry["request"]:
                     raise ValueError(f"{arm_key}: rendered request differs")
+                prompt = entry["request"]["messages"][0]["content"]
+                reference = case.get("proposed_reference_ru")
+                if reference and reference in prompt:
+                    raise ValueError(f"{arm_key}: proposed reference entered model input")
                 if raw != entry["raw_response"].encode("utf-8"):
                     raise ValueError(f"{arm_key}: raw model response differs")
                 if outcome != "validated_line" or not restored or elapsed_ms < 0:
@@ -68,7 +72,7 @@ def main() -> None:
     result = {"schema_version": 1, "experiment": report["experiment"],
               "report_sha256": sha256((workspace / "report.json").read_bytes()),
               "checked": checked, "status": "passed"}
-    (workspace / "journal-check.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    (workspace / "journal-check.json").write_bytes((json.dumps(result, indent=2) + "\n").encode("utf-8"))
     print(json.dumps(result, ensure_ascii=False))
 
 

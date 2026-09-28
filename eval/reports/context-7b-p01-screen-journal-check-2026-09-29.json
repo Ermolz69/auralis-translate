@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "experiment": "context-7b-p01-screen-v1",
+  "report_sha256": "ef5b8ad94bbf49fc34f866884f4d3d12162bbdfb08221711b13696cbf348e98e",
+  "checked": [
+    {
+      "arm": "p01:baseline",
+      "chats": 3,
+      "run_id": "f79966fa-09ab-4f2b-8a4e-e8c9ce69c115"
+    },
+    {
+      "arm": "p01:scene",
+      "chats": 3,
+      "run_id": "a63e0c89-22d3-42c5-90f1-694fa6ee9b6c"
+    }
+  ],
+  "status": "passed"
+}

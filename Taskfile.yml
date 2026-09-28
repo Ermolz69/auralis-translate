@@ -29,6 +29,10 @@ tasks:
       - task: test:model-profiles
       - task: build:release
       - node eval/scripts/scene-context-smoke.mjs
+  eval:context:7b:journal:check:
+    desc: Match every real 7B p01 chat body and accepted target to its durable SQLite journal
+    cmds:
+      - python eval/scripts/check-inference-journal.py .cache/eval/context-7b-p01-screen-v1/latest.txt
   test:inference-journal:
     desc: Verify durable inference request identity, failure retention and schema upgrade
     cmds:
