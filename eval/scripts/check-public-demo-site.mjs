@@ -120,6 +120,8 @@ assert(html.includes('88 / 1024'));
 assert(html.includes('АРУ-0089'));
 assert(html.includes('2026-09-29-reg009-long-cli-prefix-repair-capture-correction.json'));
 assert(html.includes('long-v6-cyrillic-code-transposition-v1.json'));
+assert(html.includes('REG-015 и новая проверка'));
+assert(html.includes('AUR-0089: АUR-0089: Поезд отправится в 08:10.'));
 const auralisPrivateSpeech = await loadAuralisPrivateSpeech(root);
 assert.deepEqual(data.auralis_private_speech, auralisPrivateSpeech);
 assert(html.includes('id="auralis-private-speech"'));
