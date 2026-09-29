@@ -712,6 +712,23 @@ tasks:
     cmds:
       - task: eval:data:youtube:mingfay:caption:preflight
       - node eval/scripts/acquire-youtube-mingfay-caption.mjs
+
+  eval:data:youtube:mingfay:caption:inspect:
+    desc: Record mixed-language lines, timing order and strict parser outcome for the retained Chinese track
+    cmds:
+      - cargo build --offline -p auralis-translation-cli
+      - node eval/scripts/inspect-youtube-mingfay-caption.mjs
+
+  eval:data:youtube:mingfay:caption:derive:check:
+    desc: Check authored controls for Chinese-only caption extraction and cue reordering
+    cmds:
+      - node --test --test-isolation=none eval/scripts/tests/mandarin-triline-srt.test.mjs
+
+  eval:data:youtube:mingfay:caption:derive:
+    desc: Build a private Chinese-only chronological derivative from the frozen trilingual track
+    cmds:
+      - task: eval:data:youtube:mingfay:caption:derive:check
+      - node eval/scripts/derive-youtube-mingfay-caption.mjs
   eval:data:candidates:bytes:
     desc: Check all retained Commons candidate bytes against the non-admitted inventory
     cmds:

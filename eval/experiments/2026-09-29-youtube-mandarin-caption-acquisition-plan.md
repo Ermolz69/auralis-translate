@@ -29,3 +29,24 @@ audio alignment separately. The platform metadata has no license field. Do
 not publish raw captions/media, infer usage rights, create a Russian reference
 from another language, or treat the source as a sealed holdout. A real model
 comparison requires a further frozen development experiment.
+
+## Frozen derivative decision after source inspection
+
+The one acquired response was HTTP 200, 32,400 bytes, SHA-256
+`A875C0A84AB0C3A9B44A1B5A2BE0C6F3D5B885ED82D241D386057C0DBD5AB436`.
+The strict parser accepted all 230 cues. Every cue has three text lines:
+Pinyin, one Han-containing Chinese line, then English. Cue 230 is unique and
+has an earlier start (`12:41.966`) than cue 229 (`13:43.833`). The first
+sandboxed CLI launch failed with `EPERM`; a permission-adjusted rerun passed.
+Both exact attempts remain in ignored storage.
+
+For a **private development derivative only**, `task
+eval:data:youtube:mingfay:caption:derive` requires that raw hash, exactly 230
+cues, three lines with Han characters only in the middle line, unique numeric
+labels and timings within 13:47. It copies the middle line verbatim, sorts by
+start time with original position as tie breaker, assigns new sequential
+labels and writes a complete original-to-derived cue map. The raw caption
+remains immutable. The derivative is a new source artifact, not a correction
+to the published creator track or an approved reference. A separate strict
+parser check and speech alignment review must follow; observed subtitle
+errors and rights uncertainty remain visible.
