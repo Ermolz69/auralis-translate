@@ -14,6 +14,7 @@ import { loadLongV5Failure } from './long-v5-failure-section.mjs';
 import { loadTermsProbe } from './terms-section.mjs';
 import { loadInferenceJournal } from './inference-journal-section.mjs';
 import { loadPreflightJournal } from './preflight-journal-section.mjs';
+import { loadSapiMultivoice } from './sapi-multivoice-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const html = await fs.readFile(path.join(root, 'site/index.html'), 'utf8');
@@ -74,6 +75,12 @@ assert(html.includes('2026-09-29-sapi-synthetic-media.md'));
 assert(html.includes('восьмисекундный синтетический клип'));
 assert(html.includes('2026-09-29-sapi-cancellation.md'));
 assert(html.includes('Проверена одна граница отмены'));
+const sapiMultivoice = await loadSapiMultivoice(root);
+assert.deepEqual(data.sapi_multivoice, sapiMultivoice);
+assert(html.includes('2026-09-29-sapi-multivoice.md'));
+assert(html.includes('2026-09-29-sapi-multivoice-pwsh-probe.json'));
+assert(html.includes('превышают исходные окна на 1164 и 1269 мс'));
+assert(html.includes('Слуховая оценка и воспроизведение итогового ролика не проводились'));
 assert(html.includes('2026-09-28-typed-provider-retry.md'));
 assert(html.includes('HTTP 502–504'));
 const journal = await loadInferenceJournal(root);
@@ -115,4 +122,4 @@ for (const script of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))
 }
 assert(!/(?:E:\\\\|C:\\\\Users\\\\|00ermzahar@|gh[pousr]_[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)/.test(html));
 assert(!/<script[^>]+src="(?!https:\/\/cdn\.jsdelivr\.net\/npm\/@tailwindcss\/browser@4")/.test(html));
-console.log('Public HTML verified: 420 prior requests retained, four-scene 1.8B/7B comparison and 269-request failed long-scene journal linked, v5/terms and bounded SAPI cancellation evidence preserved, 40 model comparison rows, evidence identity, scripts and single-file publication boundary.');
+console.log('Public HTML verified: 420 prior requests retained, four-scene 1.8B/7B comparison and 269-request failed long-scene journal linked, v5/terms and SAPI cancellation/two-voice fit evidence preserved, 40 model comparison rows, evidence identity, scripts and single-file publication boundary.');
