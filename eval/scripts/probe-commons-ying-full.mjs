@@ -8,14 +8,19 @@ import { digest, verifyProtectedBytes } from './flores-file-fixture.mjs';
 import { freeLoopbackPort, startProcess, stopProcess, waitForExit, waitForHealthyServer } from './local-process.mjs';
 
 const root = path.resolve('.');
-const experiment = 'commons-ying-full-7b-v1';
+const resumeMode = process.argv[2] === '--resume';
+assert(process.argv.length === (resumeMode ? 3 : 2), 'Only --resume is supported');
+const experiment = resumeMode ? 'commons-ying-full-7b-resume-v1' : 'commons-ying-full-7b-v1';
+const failedWorkspace = path.join(root, '.cache/eval/commons-ying-full-7b-v1/run-z2fnYf');
+const failedReportSha256 = 'f08a248dac388a8d327e3c2c714c1b61fcba1f70b64b3be65a7150f07ade706c';
 const sourcePath = path.join(root, '.cache/eval/commons-ying-1238607314/source.zh.srt');
 const sourceSha256 = '505913bd7046b28c873307562a55d567043f8703bc00375c3485853b87c420d9';
 const profilePath = path.join(root, 'models/manifests/hy_mt2_7b_q4_k_m.context_v5_scene.experimental.json');
 const modelPath = process.env.AURALIS_TEST_GGUF;
 const serverPath = process.env.AURALIS_TEST_LLAMA_SERVER;
 const cliPath = path.join(root, 'target/release/auralis-translation-cli.exe');
-const limits = { chat_requests: 105, all_http_requests: 400, model_wall_ms: 900_000,
+const limits = { chat_requests: resumeMode ? 80 : 105, all_http_requests: resumeMode ? 310 : 400,
+  model_wall_ms: resumeMode ? 600_000 : 900_000,
   readiness_ms: 180_000, repetitions: 1 };
 assert.equal(process.platform, 'win32');
 assert(modelPath && path.isAbsolute(modelPath) && serverPath && path.isAbsolute(serverPath));
@@ -52,6 +57,26 @@ let runStart;
 let activeCommand;
 let deadlineTimer;
 try {
+  if (resumeMode) {
+    const failedBytes = await fs.readFile(path.join(failedWorkspace, 'report.json'));
+    assert.equal(digest(failedBytes), failedReportSha256, 'Retained failed run changed');
+    const failed = JSON.parse(failedBytes);
+    assert.equal(failed.status, 'failed');
+    assert.equal(failed.source_sha256, sourceSha256);
+    assert.equal(failed.profile_sha256, report.profile_sha256);
+    assert.equal(failed.cli_sha256, report.cli_sha256);
+    assert.equal(failed.runtime_sha256, report.runtime_sha256);
+    assert.equal(failed.requests.filter(row => row.path === '/v1/chat/completions').length, 27);
+    assert.equal(digest(await fs.readFile(path.join(failedWorkspace, 'scene-map.json'))), report.scene_map_sha256);
+    const originalState = path.join(failedWorkspace, 'state');
+    const originalDbSha256 = digest(await fs.readFile(path.join(originalState, 'auralis-translate.sqlite')));
+    await fs.cp(originalState, statePath, { recursive: true, errorOnExist: true, force: false });
+    assert.equal(digest(await fs.readFile(path.join(originalState, 'auralis-translate.sqlite'))), originalDbSha256);
+    assert.equal(digest(await fs.readFile(path.join(statePath, 'auralis-translate.sqlite'))), originalDbSha256);
+    report.resume_of = { failed_report_sha256: failedReportSha256,
+      copied_state_db_sha256: originalDbSha256,
+      run_id: 'f06ac654-6dce-4075-8fba-b53693e20974', saved_blocks: 26 };
+  }
   for (const file of [modelPath, serverPath, cliPath]) assert((await fs.stat(file)).isFile());
   const git = await waitForExit(startProcess('git', ['rev-parse', 'HEAD'], root), 10_000);
   report.revision = git.stdout.trim();
@@ -140,10 +165,13 @@ try {
     activeCommand?.child.kill(); server?.child.kill(); }, limits.model_wall_ms);
   const originalInspection = await command(['inspect', sourcePath]);
   const translateStarted = performance.now();
-  const stdout = await command(['translate-v5-scene', sourcePath, statePath,
-    profilePath, mapPath, proxyUrl, outputPath], limits.model_wall_ms);
+  const args = resumeMode ? ['resume', statePath, report.resume_of.run_id,
+    profilePath, proxyUrl, outputPath]
+    : ['translate-v5-scene', sourcePath, statePath, profilePath, mapPath, proxyUrl, outputPath];
+  const stdout = await command(args, limits.model_wall_ms);
   report.translation_elapsed_ms = Math.round(performance.now() - translateStarted);
-  const runId = stdout.match(/run_id=([0-9a-f-]{36})/u)?.[1];
+  const runId = resumeMode ? report.resume_of.run_id
+    : stdout.match(/run_id=([0-9a-f-]{36})/u)?.[1];
   assert(runId, 'Missing durable run ID');
   report.run_id = runId;
   report.run_status = JSON.parse(await command(['status', statePath, runId]));
