@@ -33,7 +33,7 @@ assert.equal(process.platform, 'win32');
 assert(serverPath && path.isAbsolute(serverPath));
 assert(modelPath && path.isAbsolute(modelPath));
 const executable = path.join(root, 'target/release/auralis-translation-cli.exe');
-assert.equal(digest(await fs.readFile(executable)), '76ab2844996a3d68e9be96035f22f32bfcad79e085a5eacdeddbfa27626452a');
+assert.equal(digest(await fs.readFile(executable)), '76ab2844996a3d68e9be96035f22f32bfcad79e085a5eacdecddbfa27626452a');
 assert.equal(digest(await fs.readFile(serverPath)), '6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4');
 assert.equal(await hashFile(modelPath), modelSha256);
 for (const [name, expected] of Object.entries(expectedDbHashes)) {
