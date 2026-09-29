@@ -11,7 +11,7 @@ import { loadV5Envelope } from './v5-envelope-section.mjs';
 import { loadSceneContext } from './scene-context-section.mjs';
 import { loadPronounCrossModel } from './pronoun-cross-model-section.mjs';
 import { loadLongV5Failure } from './long-v5-failure-section.mjs';
-import { loadLongV6Outcomes } from './long-v6-outcomes-section.mjs';
+import { loadLongV6Outcomes, loadLongV6ModelScreen } from './long-v6-outcomes-section.mjs';
 import { loadTermsProbe } from './terms-section.mjs';
 import { loadInferenceJournal } from './inference-journal-section.mjs';
 import { loadPreflightJournal } from './preflight-journal-section.mjs';
@@ -61,6 +61,12 @@ assert(html.includes('982/1 024'));
 assert(html.includes('Реплика 983: ответ оборвался по лимиту'));
 assert(html.includes('Все 3688 запросов'));
 assert(html.includes('2026-09-29-long-v6-relocated-continuation-failure-journal.json.gz'));
+const longV6Screen = await loadLongV6ModelScreen(root);
+assert.deepEqual(data.long_v6_model_screen, longV6Screen);
+assert(html.includes('id="long-v6-model-screen"'));
+assert.equal((html.match(/<td>Сегодня, как обычно<\/td>/g) ?? []).length, 4);
+assert(html.includes('Все 16 сырых запросов и ответов'));
+assert(html.includes('long-v6-today-omission-v1.json'));
 assert(html.includes('Восстановление сработало; полный перевод остановлен'));
 assert(html.includes('1 024 китайские реплики'));
 assert.equal((html.match(/href="https:\/\/github.com\/Ermolz69\/auralis-translate\/blob\/main\/eval\/reports\/2026-09-29-long-v5-scene-failure/g) ?? []).length, 2);
@@ -130,4 +136,4 @@ for (const script of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))
 }
 assert(!/(?:E:\\\\|C:\\\\Users\\\\|00ermzahar@|gh[pousr]_[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)/.test(html));
 assert(!/<script[^>]+src="(?!https:\/\/cdn\.jsdelivr\.net\/npm\/@tailwindcss\/browser@4")/.test(html));
-console.log('Public HTML verified: 420 prior requests retained, v5 and v6 failed long-scene journals linked, four-scene 1.8B/7B comparison, v5/terms and SAPI evidence preserved, 40 model comparison rows, evidence identity, scripts and single-file publication boundary.');
+console.log('Public HTML verified: 420 prior requests retained, v5/v6 failed long-scene journals and 16 paired REG-006 requests linked, context and model comparisons, SAPI evidence, report identity and single-file publication boundary.');
