@@ -31,7 +31,8 @@ labels the media CC BY-SA 4.0 and credits Wikitongues and Brian Zhao. The
 has a general Commons unstructured-text CC BY-SA notice. Those facts do not
 establish the source transcription's origin, text attribution, separate
 Russian reference rights or permission to publish a derived audio track.
-The candidate remains `discovered`, with subtitle/audio/reference rights
+The candidate is `inspected_candidate` in the
+[non-admitted inventory](../corpora/commons-inspected-candidates-v1.json), with subtitle/audio/reference rights
 unapproved. No model request or public source-text redistribution occurred.
 
 The earlier [Ying candidate](2026-09-29-commons-ying-source-acquisition.md)

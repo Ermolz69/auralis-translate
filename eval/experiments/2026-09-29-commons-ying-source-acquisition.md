@@ -30,11 +30,21 @@ labels the media CC BY-SA 4.0 and credits Wikitongues and Ying Li. The
 shows a general Commons unstructured-text CC BY-SA notice. These observations
 do not settle the source transcription's origin, text attribution or any
 Russian derivative's rights. The [Commons reuse guide](https://commons.wikimedia.org/wiki/Commons:Reusing_content_outside_Wikimedia)
-calls for item-level licensing and attribution checks. The candidate remains
-`discovered`; subtitle, audio and reference rights are unapproved. No model
+calls for item-level licensing and attribution checks. The candidate is
+`inspected_candidate` in the [non-admitted inventory](../corpora/commons-inspected-candidates-v1.json);
+subtitle, audio and reference rights are unapproved. No model
 request, source-aware human review or public text redistribution was made.
+
+The media description also links an [Amara video page](https://amara.org/v/cRgQ/).
+On 29 September 2026 that URL returned an 88,121-byte login page, retained
+only in ignored local storage with SHA-256
+`5733a157f437a4fb0e290fb64f195ab84d0f78d783e6dbfb8214f83376586732`.
+Its login destination identifies Amara video `QLx4WkMaXs0c`; the public
+subtitle-language metadata request returned HTTP 403. Neither response identifies
+the Chinese caption author or establishes that the Commons text was copied from
+Amara. The Amara link is a provenance lead, not a license or attribution decision.
 
 Next admission steps are a recorded source-text rights decision, source/audio
 alignment and scene/speaker audit, reviewed Russian reference on the same cue
-grid, and a controlled inventory manifest. The 93 cues cannot by themselves
+grid, and an admitted development inventory version. The 93 cues cannot by themselves
 fill the approximately 200-cue development target or the independent holdout.
