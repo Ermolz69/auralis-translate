@@ -14,7 +14,11 @@ raw-byte SHA-256 after acquisition, `language: zh`, `script: Hans|Hant`,
 `format: strict_srt_v1`, inspected `cue_count`, optional `media_url`, separate
 subtitle/reference/audio rights, and ordered scenes. A source may be metadata
 only while `discovered`, `rights_checked` or `rejected`; it may not invent a
-hash, parsed cue count or scene. Rejection includes an explicit reason.
+hash, parsed cue count or scene. `inspected_candidate` records exact downloaded
+bytes and a strict parser cue count while subtitle rights remain unresolved. It
+requires an unassigned split, no admitted scenes or reference, and contributes
+zero eligible cues. This is a technical observation, not source admission.
+Rejection includes an explicit reason.
 
 Every right has `decision: unknown|approved|rejected`. An approved right needs
 its license or grant, evidence URL, attribution, explicit internal-use approval
@@ -45,6 +49,13 @@ legally sufficient; those are human and item-level admission checks.
 
 The example's `local_fixture_path` is restricted to an owned SRT fixture under
 `eval/corpora/fixtures/`. The Taskfile checker recalculates its raw SHA-256.
+The separate [Commons candidate inventory](../../eval/corpora/commons-inspected-candidates-v1.json)
+uses `local_candidate_path` only under ignored `.cache/eval/<candidate-id>/source.zh.srt`.
+`task eval:data:check` checks its schema and reports 365 inspected candidate
+cues with zero eligible cues. On the acquisition machine,
+`task eval:data:candidates:bytes` additionally hashes all three retained raw
+files; it cannot pass without those local bytes. Neither task clears rights,
+speech alignment or references.
 Production licensed text and media stay in controlled storage outside the code
 repository; published manifests contain only permitted metadata and excerpts.
 The verifier does not download a third-party source, normalize raw bytes, infer
@@ -58,9 +69,9 @@ with a new inventory version; old records and failures remain available.
 
 ## DATA-01 acceptance
 
-`task eval:data:check` passes six semantic tests: example and exclusions,
+`task eval:data:check` passes seven semantic tests: example and exclusions,
 cross-split group rejection, separate subtitle/reference rights, named human
-review, complete ordered cue mapping, and fixture holdout rejection. It checks
+review, complete ordered cue mapping, candidate non-admission, and fixture holdout rejection. It checks
 the authored fixture's raw SHA-256. These tests certify the schema mechanics;
 they do not certify any real source, rights decision or bilingual review.
 `task plan:check` passes all 49 backlog IDs and dependencies;

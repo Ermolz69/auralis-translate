@@ -1,6 +1,6 @@
 const SHA256 = /^[a-f0-9]{64}$/u;
 const ID = /^[a-z0-9][a-z0-9._-]*$/u;
-const STATES = new Set(['discovered', 'rights_checked', 'source_checked', 'reference_reviewed', 'development_only', 'holdout_frozen', 'rejected']);
+const STATES = new Set(['discovered', 'inspected_candidate', 'rights_checked', 'source_checked', 'reference_reviewed', 'development_only', 'holdout_frozen', 'rejected']);
 const SPLITS = new Set(['unassigned', 'training', 'development', 'holdout', 'excluded']);
 const RIGHTS = new Set(['unknown', 'approved', 'rejected']);
 const REVIEW = new Set(['none', 'ai_proposed', 'human_reviewed']);
@@ -97,9 +97,10 @@ export function validateSourceInventory(inventory) {
   const sourceIds = new Set();
   const groupSplits = new Map();
   let eligibleCues = 0;
+  let inspectedCandidateCues = 0;
   for (const [index, source] of inventory.sources.entries()) {
     const at = `inventory.sources[${index}]`;
-    exactKeys(source, ['id', 'group_id', 'split', 'state', 'source_url', 'revision', 'retrieved_at', 'sha256', 'language', 'script', 'format', 'cue_count', 'rights', 'scenes'], ['media_url', 'rejection_reason', 'local_fixture_path'], at);
+    exactKeys(source, ['id', 'group_id', 'split', 'state', 'source_url', 'revision', 'retrieved_at', 'sha256', 'language', 'script', 'format', 'cue_count', 'rights', 'scenes'], ['media_url', 'rejection_reason', 'local_fixture_path', 'local_candidate_path'], at);
     if (!Array.isArray(source.scenes)) fail(`${at}.scenes`, 'must be an array');
     id(source.id, `${at}.id`);
     id(source.group_id, `${at}.group_id`);
@@ -116,6 +117,11 @@ export function validateSourceInventory(inventory) {
         || !/^eval\/corpora\/fixtures\/[a-z0-9._-]+\.srt$/u.test(source.local_fixture_path))) {
       fail(`${at}.local_fixture_path`, 'must name an owned SRT fixture only in a fixture inventory');
     }
+    if (source.local_candidate_path !== undefined && (inventory.fixture_only || source.state !== 'inspected_candidate'
+        || typeof source.local_candidate_path !== 'string'
+        || !/^\.cache\/eval\/[a-z0-9][a-z0-9-]*\/source\.zh\.srt$/u.test(source.local_candidate_path))) {
+      fail(`${at}.local_candidate_path`, 'must name an ignored source candidate only in inspected_candidate state');
+    }
     if (source.language !== 'zh' || !['Hans', 'Hant'].includes(source.script) || source.format !== 'strict_srt_v1') {
       fail(at, 'is outside the frozen Chinese strict-SRT scope');
     }
@@ -129,6 +135,19 @@ export function validateSourceInventory(inventory) {
       if (source.sha256 !== null || source.cue_count !== null || source.scenes.length !== 0) {
         fail(at, 'metadata-only sources cannot claim inspected bytes or scenes');
       }
+      continue;
+    }
+    if (source.state === 'inspected_candidate') {
+      if (source.split !== 'unassigned' || ['subtitle', 'reference', 'audio'].some(kind => source.rights[kind].decision !== 'unknown')
+          || source.sha256 === null || source.cue_count === null || source.scenes.length !== 0
+          || source.local_candidate_path === undefined) {
+        fail(at, 'inspected candidates require unassigned split, unresolved subtitle rights, parsed bytes and no admitted scenes');
+      }
+      if (typeof source.retrieved_at !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?Z$/u.test(source.retrieved_at)
+          || Number.isNaN(Date.parse(source.retrieved_at))) fail(`${at}.retrieved_at`, 'must be a UTC retrieval timestamp');
+      if (typeof source.sha256 !== 'string' || !SHA256.test(source.sha256)) fail(`${at}.sha256`, 'must be a lowercase SHA-256');
+      positive(source.cue_count, `${at}.cue_count`);
+      inspectedCandidateCues += source.cue_count;
       continue;
     }
     if (source.rights.subtitle.decision !== 'approved') fail(`${at}.rights.subtitle`, 'must approve subtitle rights before source admission');
@@ -149,5 +168,5 @@ export function validateSourceInventory(inventory) {
       fail(`${at}.split`, 'holdout requires a non-fixture sealed inventory');
     }
   }
-  return { source_count: sourceIds.size, group_count: groupSplits.size, eligible_cues: eligibleCues };
+  return { source_count: sourceIds.size, group_count: groupSplits.size, inspected_candidate_cues: inspectedCandidateCues, eligible_cues: eligibleCues };
 }

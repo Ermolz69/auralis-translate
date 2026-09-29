@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "inventory_id": "commons-inspected-candidates-v1",
+  "fixture_only": false,
+  "sources": [
+    {
+      "id": "commons-ying-1238607314",
+      "group_id": "wikitongues-ying-henan",
+      "split": "unassigned",
+      "state": "inspected_candidate",
+      "source_url": "https://commons.wikimedia.org/w/index.php?title=TimedText:WIKITONGUES-_Ying_speaking_Henan_Chinese.webm.zh-cn.srt&oldid=1238607314",
+      "revision": "1238607314",
+      "retrieved_at": "2026-09-29T04:24:08Z",
+      "sha256": "505913bd7046b28c873307562a55d567043f8703bc00375c3485853b87c420d9",
+      "language": "zh",
+      "script": "Hans",
+      "format": "strict_srt_v1",
+      "cue_count": 93,
+      "local_candidate_path": ".cache/eval/commons-ying-1238607314/source.zh.srt",
+      "media_url": "https://commons.wikimedia.org/wiki/File:WIKITONGUES-_Ying_speaking_Henan_Chinese.webm",
+      "rights": { "subtitle": { "decision": "unknown" }, "reference": { "decision": "unknown" }, "audio": { "decision": "unknown" } },
+      "scenes": []
+    },
+    {
+      "id": "commons-guiyangese-516184835",
+      "group_id": "wikitongues-changjiu-chaofen-guiyangese",
+      "split": "unassigned",
+      "state": "inspected_candidate",
+      "source_url": "https://commons.wikimedia.org/w/index.php?title=TimedText:WIKITONGUES-_Changjiu_and_Chaofen_speaking_Guiyangese.webm.zh-hans.srt&oldid=516184835",
+      "revision": "516184835",
+      "retrieved_at": "2026-09-29T04:33:19Z",
+      "sha256": "084389c003799447f5e8c3e02ee92aa6d0d76df55b7ccf01c1bcf186dd7212c4",
+      "language": "zh",
+      "script": "Hans",
+      "format": "strict_srt_v1",
+      "cue_count": 66,
+      "local_candidate_path": ".cache/eval/commons-guiyangese-516184835/source.zh.srt",
+      "media_url": "https://commons.wikimedia.org/wiki/File:WIKITONGUES-_Changjiu_and_Chaofen_speaking_Guiyangese.webm",
+      "rights": { "subtitle": { "decision": "unknown" }, "reference": { "decision": "unknown" }, "audio": { "decision": "unknown" } },
+      "scenes": []
+    },
+    {
+      "id": "commons-train-1144114810",
+      "group_id": "sleeper-train-shenzhen-beijing-crh2e",
+      "split": "unassigned",
+      "state": "inspected_candidate",
+      "source_url": "https://commons.wikimedia.org/w/index.php?title=TimedText:250_KMH-2400_KM-12_Hour_Sleeper_Train_Across_China_%EF%BD%9CShenzhen-Beijing_on_CRH2E-2463_%28%E7%BA%B5%E5%90%91%E5%8A%A8%E5%8D%A7%29.webm.zh-hans.srt&oldid=1144114810",
+      "revision": "1144114810",
+      "retrieved_at": "2026-09-29T07:01:15Z",
+      "sha256": "ccc47105cdc2c782d82421d9790e5babf5801a8196d1b6b744d6b8df71bf9b4c",
+      "language": "zh",
+      "script": "Hans",
+      "format": "strict_srt_v1",
+      "cue_count": 206,
+      "local_candidate_path": ".cache/eval/commons-train-1144114810/source.zh.srt",
+      "media_url": "https://commons.wikimedia.org/wiki/File:250_KMH-2400_KM-12_Hour_Sleeper_Train_Across_China_%EF%BD%9CShenzhen-Beijing_on_CRH2E-2463_%28%E7%BA%B5%E5%90%91%E5%8A%A8%E5%8D%A7%29.webm",
+      "rights": { "subtitle": { "decision": "unknown" }, "reference": { "decision": "unknown" }, "audio": { "decision": "unknown" } },
+      "scenes": []
+    }
+  ]
+}

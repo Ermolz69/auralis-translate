@@ -4,13 +4,35 @@ import test from 'node:test';
 import { validateSourceInventory } from '../source-inventory.mjs';
 
 const original = JSON.parse(await readFile(new URL('../../corpora/source-inventory-example-v1.json', import.meta.url), 'utf8'));
+const candidates = JSON.parse(await readFile(new URL('../../corpora/commons-inspected-candidates-v1.json', import.meta.url), 'utf8'));
 const copy = () => structuredClone(original);
 
 test('authored example accounts for every source cue and explicit exclusion', () => {
-  assert.deepEqual(validateSourceInventory(copy()), { source_count: 1, group_count: 1, eligible_cues: 1 });
+  assert.deepEqual(validateSourceInventory(copy()), { source_count: 1, group_count: 1, inspected_candidate_cues: 0, eligible_cues: 1 });
   const precise = copy();
   precise.sources[0].retrieved_at = '2026-09-28T15:30:00.123Z';
   assert.equal(validateSourceInventory(precise).eligible_cues, 1);
+});
+
+test('inspected Commons bytes remain separate from eligible development or holdout cues', () => {
+  assert.deepEqual(validateSourceInventory(structuredClone(candidates)), {
+    source_count: 3, group_count: 3, inspected_candidate_cues: 365, eligible_cues: 0,
+  });
+  const split = structuredClone(candidates);
+  split.sources[0].split = 'development';
+  assert.throws(() => validateSourceInventory(split), /inspected candidates require unassigned split/u);
+  const rights = structuredClone(candidates);
+  rights.sources[0].rights.subtitle = structuredClone(original.sources[0].rights.subtitle);
+  assert.throws(() => validateSourceInventory(rights), /inspected candidates require unassigned split/u);
+  const scenes = structuredClone(candidates);
+  scenes.sources[0].scenes = structuredClone(original.sources[0].scenes);
+  assert.throws(() => validateSourceInventory(scenes), /inspected candidates require unassigned split/u);
+  const escapedPath = structuredClone(candidates);
+  escapedPath.sources[0].local_candidate_path = '../source.zh.srt';
+  assert.throws(() => validateSourceInventory(escapedPath), /ignored source candidate/u);
+  const missingPath = structuredClone(candidates);
+  delete missingPath.sources[0].local_candidate_path;
+  assert.throws(() => validateSourceInventory(missingPath), /inspected candidates require unassigned split/u);
 });
 
 test('a related source cannot cross the development and holdout split', () => {

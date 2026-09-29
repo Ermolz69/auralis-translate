@@ -675,6 +675,11 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/source-inventory.test.mjs
       - node eval/scripts/check-source-inventory.mjs eval/corpora/source-inventory-example-v1.json
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-inspected-candidates-v1.json
+  eval:data:candidates:bytes:
+    desc: Check all retained Commons candidate bytes against the non-admitted inventory
+    cmds:
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-inspected-candidates-v1.json --require-candidate-bytes
   plan:check:
     desc: Validate canonical delivery backlog states, dependencies and completion evidence
     cmds:
