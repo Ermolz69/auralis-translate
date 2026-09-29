@@ -416,6 +416,11 @@ tasks:
     cmds:
       - cargo test --offline -p auralis-translation --test identifier_diagnostics
       - cargo test --offline -p auralis-translation-sqlite --test identifier_diagnostic_persistence
+  test:provider-review-diagnostics:
+    desc: Reject invalid provider review flags and retain valid flags across SQLite reopen
+    cmds:
+      - cargo test --offline -p auralis-translation --test provider_review_diagnostics
+      - cargo test --offline -p auralis-translation-sqlite --test provider_review_diagnostic_persistence
   test:time-diagnostics:
     desc: Check source clock-time warning and reopened SQLite checkpoint evidence
     cmds:

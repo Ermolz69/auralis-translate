@@ -81,6 +81,12 @@ does not activate implementation by being stored here.
 
 ## Current handoff
 
+`CTX-02` and `EVAL-04` now have an opt-in [provider review diagnostic
+contract](reference/provider-review-diagnostic-v1.md) and core/SQLite checks.
+The new `source_prefix_inserted` flag is validated before checkpoint commit and
+again on resume. It is reserved for deterministic code insertion requiring review;
+no repair policy or model profile has been selected, and REG-009 stays open.
+
 The next independently executable tasks are `CTX-02`, `DATA-03`, `DATA-04`,
 `EVAL-04` and the unfinished `VOICE-01` handoff.
 REG-009 now records a durable exact-identifier warning on new runs, while

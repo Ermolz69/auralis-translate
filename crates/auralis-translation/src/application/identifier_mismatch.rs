@@ -1,12 +1,12 @@
 pub fn source_identifier_mismatch(source: &str, candidate: &str) -> bool {
-    let mut source_ids = identifiers(source);
-    let mut candidate_ids = identifiers(candidate);
+    let mut source_ids = source_identifiers(source);
+    let mut candidate_ids = source_identifiers(candidate);
     source_ids.sort_unstable();
     candidate_ids.sort_unstable();
     source_ids != candidate_ids
 }
 
-fn identifiers(text: &str) -> Vec<&str> {
+pub fn source_identifiers(text: &str) -> Vec<&str> {
     let mut found = Vec::new();
     let mut previous = None;
     for (start, first) in text.char_indices() {

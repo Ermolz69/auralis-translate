@@ -1,11 +1,14 @@
 use super::{
-    TranslateBatchError, TranslateRunError, diagnose_batch::diagnose_batch,
-    translate_batch_with_control,
+    TranslateBatchError, TranslateRunError,
+    diagnose_batch::diagnose_batch,
+    translate_batch_with_diagnostics::{
+        translate_batch_with_diagnostics, valid_source_prefix_diagnostic,
+    },
 };
 use crate::domain::valid_line;
 use crate::{
-    BlockCheckpoint, CheckpointStore, ProgressSink, RetryPolicy, RunControl, RunId, RunProgress,
-    SegmentId, TargetSegment, TranslationBatch, TranslationProvider,
+    BlockCheckpoint, CheckpointStore, DiagnosticCode, ProgressSink, RetryPolicy, RunControl, RunId,
+    RunProgress, SegmentId, TargetSegment, TranslationBatch, TranslationProvider,
 };
 use std::collections::{HashMap, HashSet};
 
@@ -148,10 +151,10 @@ pub fn translate_planned_run_with_policy<S: CheckpointStore>(
             checkpoint
         } else {
             let mut attempt_count = 0;
-            let translated = loop {
+            let (translated, provider_diagnostics) = loop {
                 check_pause(control, first.run_id())?;
                 attempt_count += 1;
-                let translated = translate_batch_with_control(provider, batch, control);
+                let translated = translate_batch_with_diagnostics(provider, batch, control);
                 check_pause(control, first.run_id())?;
                 match translated {
                     Ok(translated) => break translated,
@@ -166,11 +169,13 @@ pub fn translate_planned_run_with_policy<S: CheckpointStore>(
             check_pause(control, first.run_id())?;
             let block_index = u32::try_from(index)
                 .map_err(|_| TranslateRunError::InvalidPlan("too many blocks"))?;
+            let mut diagnostics = diagnose_batch(batch, &translated);
+            diagnostics.extend(provider_diagnostics);
             let checkpoint = BlockCheckpoint {
                 run_id: batch.run_id(),
                 block_index,
                 input_fingerprint: batch.fingerprint(),
-                diagnostics: diagnose_batch(batch, &translated),
+                diagnostics,
                 accepted: translated,
                 attempt_count,
             };
@@ -233,6 +238,16 @@ fn validate_checkpoint<E>(
     }) {
         return Err(TranslateRunError::InvalidCheckpoint(
             "saved diagnostic lies outside target lines",
+        ));
+    }
+    let mut review_flags = HashSet::new();
+    if checkpoint.diagnostics.iter().any(|diagnostic| {
+        diagnostic.code == DiagnosticCode::SourcePrefixInserted
+            && (!valid_source_prefix_diagnostic(batch, &checkpoint.accepted, diagnostic)
+                || !review_flags.insert((diagnostic.segment_id, diagnostic.line_index)))
+    }) {
+        return Err(TranslateRunError::InvalidCheckpoint(
+            "saved source-prefix review flag differs from accepted text",
         ));
     }
     Ok(())

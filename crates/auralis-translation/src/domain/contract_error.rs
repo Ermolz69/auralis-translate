@@ -10,6 +10,7 @@ pub enum ContractError {
     UnsupportedSchemaVersion,
     ResponseIds,
     ResponseLines,
+    ResponseDiagnostics,
     InvalidGlossary,
     GlossaryConflict,
     InvalidApprovedTerms,
