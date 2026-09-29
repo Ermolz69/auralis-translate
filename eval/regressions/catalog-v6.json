@@ -1,0 +1,23 @@
+{
+  "schema_version": 6,
+  "catalog_id": "zh-ru-development-regressions-v6",
+  "base_catalog_file": "catalog-v5.json",
+  "base_catalog_sha256": "76533235bdffcb1763ab58ab5035788dfaa583a6efec60964e69f5086f27a5cc",
+  "entries": [
+    {
+      "id": "REG-014",
+      "pack_file": "long-v6-cyrillic-code-transposition-v1.json",
+      "pack_sha256": "d09815dc8044396d451afbcf9b5c3e5d064eeb18094cf8d8782a2565727e22bd",
+      "source_family": "project_authored_synthetic_long_file",
+      "split": "development",
+      "category": "cyrillic_source_identifier_transposition",
+      "profile_scope": "1.8B checked v6 source-prefix repair full CLI run, cue 89",
+      "expected_invariant": "A Cyrillic or altered identifier must never be silently converted into an accepted source ASCII code; retain the raw candidate, checkpoint prefix and no partial output.",
+      "severity": "major",
+      "related_control_count": 4,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-29-reg-009-long-cli-soak-results.md",
+      "last_outcome": "Real CLI run rejected Cyrillic АРУ-0089 at cue 89 and stopped with 88 checkpoints, no published result or SRT."
+    }
+  ]
+}

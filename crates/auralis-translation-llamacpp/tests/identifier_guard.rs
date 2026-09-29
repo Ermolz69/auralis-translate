@@ -217,6 +217,53 @@ fn ambiguous_codes_and_nonprefix_sources_still_fail_without_a_checkpoint()
 }
 
 #[test]
+fn real_cyrillic_transposition_stays_rejected_with_related_and_negative_controls()
+-> Result<(), Box<dyn Error>> {
+    let source = "工程 AUR-0089：列车将在 08:10 出发。";
+    for candidate in [
+        "АРУ-0089: Поезд отправится в 08:10.",
+        "АУР-0089: Поезд отправится в 08:10.",
+        "АРУ-0090: Поезд отправится в 08:10.",
+        "AUR-0090: Поезд отправится в 08:10.",
+        "AUR-0089 и AUR-0089: Поезд отправится в 08:10.",
+    ] {
+        let (result, store, journal, _) =
+            run_case_with_profile(PREFIX_REPAIR_PROFILE, source, candidate)?;
+        assert!(result.is_err(), "{candidate}");
+        assert!(store.0.is_empty(), "{candidate}");
+        let attempts = journal.0.lock().map_err(|_| "journal poisoned")?;
+        assert_eq!(
+            attempts[0].outcome,
+            InferenceRequestOutcome::InvalidCandidate
+        );
+        assert_eq!(attempts[0].restored_candidate.as_deref(), Some(candidate));
+        assert!(attempts[0].raw_response.is_some());
+    }
+    let (exact, store, _, _) = run_case_with_profile(
+        PREFIX_REPAIR_PROFILE,
+        source,
+        "AUR-0089: Поезд отправится в 08:10.",
+    )?;
+    assert_eq!(exact?[0].lines, ["AUR-0089: Поезд отправится в 08:10."]);
+    assert!(store.0[0].diagnostics.is_empty());
+    let (omitted, store, _, _) =
+        run_case_with_profile(PREFIX_REPAIR_PROFILE, source, "Поезд отправится в 08:10.")?;
+    assert_eq!(omitted?[0].lines, ["AUR-0089: Поезд отправится в 08:10."]);
+    assert_eq!(
+        store.0[0].diagnostics[0].code,
+        DiagnosticCode::SourcePrefixInserted
+    );
+    let (no_code, store, _, _) = run_case_with_profile(
+        PREFIX_REPAIR_PROFILE,
+        "列车将在 08:10 出发。",
+        "Поезд отправится в 08:10.",
+    )?;
+    assert_eq!(no_code?[0].lines, ["Поезд отправится в 08:10."]);
+    assert!(store.0[0].diagnostics.is_empty());
+    Ok(())
+}
+
+#[test]
 fn strict_mismatch_stops_before_checkpoint_and_retains_raw_candidate() -> Result<(), Box<dyn Error>>
 {
     for candidate in [

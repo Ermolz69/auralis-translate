@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "experiment": "long-v6-prefix-repair-1024-v1",
+  "corrected_at": "2026-09-29T14:28:23.779Z",
+  "original_summary_sha256": "c707284d397d6eb451ab7443dce0007bb0147ae273b05bfb663420a60bc268bd",
+  "archive_sha256": "752173e81de4084d7a548734622fa4477b3909dc882cb918f4b1082b132761bd",
+  "original_fields": {
+    "no_partial_publication": false,
+    "offline_reexport_identical": false
+  },
+  "corrected_fields": {
+    "no_partial_publication": true,
+    "offline_reexport_identical": null
+  },
+  "evidence": {
+    "persisted_results": 0,
+    "published_output": false,
+    "checkpoints": 88
+  },
+  "reason": "The first capture derived failure fields from a success-only report instead of the retained SQLite result count and output-file absence."
+}
