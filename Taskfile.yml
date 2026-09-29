@@ -77,6 +77,15 @@ tasks:
       - task: test:model-profiles
       - task: build:release
       - node eval/scripts/scene-context-smoke.mjs
+  eval:context:pronouns:journal:check:
+    desc: Match both four-scene model reports to durable tokenizer and chat requests
+    cmds:
+      - python eval/scripts/check-inference-journal.py .cache/eval/pronouns-1b-p01-p04-v1/latest.txt
+      - python eval/scripts/check-inference-journal.py .cache/eval/pronouns-7b-p01-p04-v1/latest.txt
+  eval:context:pronouns:report:check:
+    desc: Validate frozen matched 1.8B/7B actor-context reports and source-only prompts
+    cmds:
+      - node eval/scripts/check-scene-pronoun-regression.mjs
   test:inference-journal:
     desc: Verify durable inference request identity, failure retention and schema upgrade
     cmds:

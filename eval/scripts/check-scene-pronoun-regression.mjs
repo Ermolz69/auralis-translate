@@ -3,6 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { digest } from './flores-file-fixture.mjs';
+import { loadPronounCrossModel } from './pronoun-cross-model-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const read = async relative => fs.readFile(path.join(root, relative));
@@ -145,4 +146,7 @@ largeSceneTokens.forEach((measurement, position) => {
   assert(measurement.token_count + 256 + 64 <= 2048);
 });
 await fs.access(path.join(root, index.evidence_record));
-console.log('REG-002 verified: original, failed repair, current v5-template and 7B p01 recurrence retained with related and negative controls; no human acceptance claimed.');
+const crossModel = await loadPronounCrossModel(root);
+assert.equal(crossModel.rows.length, 4);
+assert.equal(crossModel.human_review, 'missing');
+console.log('REG-002 verified: original, failed repair, current v5-template, 7B screen and matched four-scene 1.8B/7B recurrence retained; no human acceptance claimed.');

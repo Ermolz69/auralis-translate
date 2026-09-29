@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "experiment": "pronouns-1b-p01-p04-v1",
+  "attempt": 1,
+  "phase": "local process startup before doctor, runtime or model request",
+  "command": "task eval:context:pronouns:1b:probe",
+  "error_code": "EPERM",
+  "error_operation": "Node child_process.spawn while reading Git HEAD",
+  "model_requests": 0,
+  "outcome": "sandbox denied child process creation; same frozen task succeeded on permitted retry"
+}

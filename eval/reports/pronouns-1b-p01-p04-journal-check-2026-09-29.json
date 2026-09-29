@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "experiment": "pronouns-1b-p01-p04-v1",
+  "report_sha256": "7c2dc3bf8b5cdcaf93e50d9cda7824ac125401581f53e5934b8adf51040bf21b",
+  "checked": [
+    {
+      "arm": "p01:baseline",
+      "chats": 3,
+      "preflights": 0,
+      "run_id": "7b835c78-e349-4b4d-aa4b-ab45f895c08a"
+    },
+    {
+      "arm": "p01:scene",
+      "chats": 3,
+      "preflights": 6,
+      "run_id": "eb4ef4ee-46be-4e0d-b511-90a94b13ccc7"
+    },
+    {
+      "arm": "p02:baseline",
+      "chats": 3,
+      "preflights": 0,
+      "run_id": "d8583656-6e26-4cc1-8f4b-37b6051e7df2"
+    },
+    {
+      "arm": "p02:scene",
+      "chats": 3,
+      "preflights": 6,
+      "run_id": "c2c65095-1376-4691-a565-acba9b41f1cd"
+    },
+    {
+      "arm": "p03:baseline",
+      "chats": 2,
+      "preflights": 0,
+      "run_id": "9c9963d6-5025-4be8-a570-8df9746ca53d"
+    },
+    {
+      "arm": "p03:scene",
+      "chats": 2,
+      "preflights": 4,
+      "run_id": "f60aa7af-72c4-423e-ba15-2b6ad70b7811"
+    },
+    {
+      "arm": "p04:baseline",
+      "chats": 2,
+      "preflights": 0,
+      "run_id": "f8a55aa6-3df1-43e0-8f33-c15a0cfa97ab"
+    },
+    {
+      "arm": "p04:scene",
+      "chats": 2,
+      "preflights": 4,
+      "run_id": "393985b1-d1d1-46b1-83a4-24404546c3e6"
+    }
+  ],
+  "status": "passed"
+}
