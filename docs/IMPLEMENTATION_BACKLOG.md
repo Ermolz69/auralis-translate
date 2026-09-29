@@ -92,6 +92,10 @@ now rejects such candidates before checkpoint commit under a separate checked
 profile. This protects output integrity but cannot complete the long file on
 the observed 1.8B responses; an effective preservation strategy and human
 quality evidence remain open.
+An [offline prefix-repair screen](../eval/experiments/2026-09-29-reg-009-prefix-repair-results.md)
+on the same archived output improved exact-code coverage from 615 to 1,271 of
+1,280 lines, with 9 mismatches and a separate wrong-content cue still open.
+The proposal is unselected and has no human adequacy evidence.
 The [v2 regression catalog](../eval/experiments/2026-09-29-regression-catalog-v2.md)
 now pins all REG-001–009 packs and evidence. Its first audit exposed a missing
 REG-008 negative control; the v2 pack and pre-spawn environment check close

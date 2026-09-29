@@ -316,6 +316,7 @@ tasks:
       - task: eval:cli:long:v6:postlength:check
       - node --test --test-isolation=none eval/scripts/tests/long-v6-identifier-regression.test.mjs
       - task: eval:reg009:prompt:check
+      - task: eval:reg009:prefix-repair:check
       - task: test:identifier-guard
   eval:regression:catalog:check:
     desc: Verify the complete REG-001 through REG-009 evidence catalog and surface control gaps
@@ -325,6 +326,10 @@ tasks:
     desc: Measure conservative exact-code prefix repair on the archived synthetic long-file output
     cmds:
       - node eval/scripts/probe-reg009-prefix-repair.mjs
+  eval:reg009:prefix-repair:check:
+    desc: Verify the retained REG-009 prefix-repair screen and all unchanged failures
+    cmds:
+      - node eval/scripts/check-reg009-prefix-repair.mjs
   test:context-v5:
     desc: Verify the experimental v5 request and strict response boundary
     cmds:

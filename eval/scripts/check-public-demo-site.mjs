@@ -67,6 +67,9 @@ assert(html.includes('исходная инструкция сохранила �
 assert(html.includes('2026-09-29-reg-009-identifier-prompt-summary.json'));
 assert(html.includes('strict-source-identifier-guard-v1.md'));
 assert(html.includes('полный реальный файл с этим профилем не проверен'));
+assert(html.includes('615 → 1271 совпадений, 656 вставок, 9 ошибок осталось'));
+assert(html.includes('реплике 129'));
+assert(html.includes('2026-09-29-reg-009-prefix-repair-screen.json'));
 assert(html.includes('id="long-v6-postlength"'));
 assert(html.includes('665 / 1280'));
 assert(html.includes('2026-09-29-long-v6-postlength-v2-journal.json.gz'));
