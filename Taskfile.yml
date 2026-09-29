@@ -516,6 +516,22 @@ tasks:
     cmds:
       - node --check eval/scripts/capture-reg014-cue89-decode.mjs
       - node eval/scripts/capture-reg014-cue89-decode.mjs --check
+  eval:reg009:greedy81:preflight:
+    desc: Pin the same 81 archived source-only requests with only temperature changed to zero
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - node --check eval/scripts/probe-reg009-greedy81.mjs
+      - node eval/scripts/probe-reg009-greedy81.mjs --preflight
+  eval:reg009:greedy81:probe:
+    desc: Run the bounded same-source greedy screen after its plan and runner are committed
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:reg009:greedy81:preflight
+      - node eval/scripts/probe-reg009-greedy81.mjs
   eval:cli:long:v6:prefix-repair:resources:
     desc: Summarize retained sampled process and device memory without claiming isolated GPU use
     cmds:
