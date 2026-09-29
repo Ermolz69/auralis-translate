@@ -92,6 +92,10 @@ now rejects such candidates before checkpoint commit under a separate checked
 profile. This protects output integrity but cannot complete the long file on
 the observed 1.8B responses; an effective preservation strategy and human
 quality evidence remain open.
+The [v2 regression catalog](../eval/experiments/2026-09-29-regression-catalog-v2.md)
+now pins all REG-001–009 packs and evidence. Its first audit exposed a missing
+REG-008 negative control; the v2 pack and pre-spawn environment check close
+that local gap while preserving the v1 evidence. `EVAL-04` remains in progress.
 `PLAN-01` has passed planning-artifact and generated-progress checks; publication
 is tracked separately in its acceptance record. `PLAN-03` freezes the user-started
 Goal in its [scope record](../eval/experiments/2026-09-28-goal-scope-v1.md).

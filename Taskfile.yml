@@ -301,6 +301,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/regression-index.test.mjs
       - node eval/scripts/check-regression-index.mjs
+      - task: eval:regression:catalog:check
       - node eval/scripts/check-scene-pronoun-regression.mjs
       - task: eval:cli:long:v5:failure-check
       - task: eval:cli:long:v6:timeout-check
@@ -316,6 +317,10 @@ tasks:
       - node --test --test-isolation=none eval/scripts/tests/long-v6-identifier-regression.test.mjs
       - task: eval:reg009:prompt:check
       - task: test:identifier-guard
+  eval:regression:catalog:check:
+    desc: Verify the complete REG-001 through REG-009 evidence catalog and surface control gaps
+    cmds:
+      - node eval/scripts/check-regression-catalog-v2.mjs
   test:context-v5:
     desc: Verify the experimental v5 request and strict response boundary
     cmds:
