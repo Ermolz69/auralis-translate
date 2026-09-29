@@ -447,6 +447,25 @@ tasks:
     cmds:
       - node --check eval/scripts/probe-reg009-live-prefix-repair.mjs
       - node eval/scripts/probe-reg009-live-prefix-repair.mjs --preflight
+  eval:cli:long:v6:prefix-repair:preflight:
+    desc: Check frozen 1024-cue source and exact opt-in profile before the real CLI soak
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - node --check eval/scripts/cli-long-v6-prefix-repair.mjs
+      - node eval/scripts/cli-long-v6-prefix-repair.mjs --preflight
+      - task: test:source-prefix-repair
+      - task: build:release
+      - target/release/auralis-translation-cli.exe doctor models/manifests/hy_mt2_1_8b_q4_k_m.context_v6_prefix_repair.experimental.json .cache/models/Hy-MT2-1.8B-Q4_K_M.gguf
+  eval:cli:long:v6:prefix-repair:probe:
+    desc: Run one bounded 1024-cue real-model CLI interruption and resume under opt-in repair
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:cli:long:v6:prefix-repair:preflight
+      - node eval/scripts/cli-long-v6-prefix-repair.mjs
   eval:reg009:live-prefix:probe:
     desc: Run one bounded 81-request real-model source-prefix screen
     env:
