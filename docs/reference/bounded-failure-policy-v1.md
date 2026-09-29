@@ -5,7 +5,9 @@ before v5 inference. Existing v1–v4 profiles keep their saved identities and
 default one-attempt behavior. The current core accepts `max_block_attempts`
 1–3. The implementation now repeats only typed transient provider failures
 within that bound. The [v5 CLI inference journal](../architecture/015-inference-request-journal.md)
-now retains chat-completion attempts; preflight and host attempt coverage remains open.
+now retains chat-completion attempts. The standalone CLI records model
+verification before attempt admission in run-level diagnostics. Auralis host
+preparation coverage remains open.
 
 ## Typed outcomes
 

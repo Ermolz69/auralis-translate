@@ -58,6 +58,18 @@ fn checked_profile_probes_server_and_hashes_reported_local_model() -> Result<(),
     assert!(String::from_utf8_lossy(&output.stderr).contains("model_ready alias="));
     assert!(String::from_utf8(std::fs::read(&output_path)?)?.contains("Привет."));
     assert_eq!(std::fs::read(&source_path)?, SOURCE);
+    let good_db = rusqlite::Connection::open(state_dir.join("auralis-translate.sqlite"))?;
+    let (good_outcome, good_detail): (String, String) = good_db.query_row(
+        "SELECT code, detail_json FROM diagnostics WHERE stage = 'model_preflight'",
+        [],
+        |row| Ok((row.get(0)?, row.get(1)?)),
+    )?;
+    assert_eq!(good_outcome, "verified");
+    let good_detail: serde_json::Value = serde_json::from_str(&good_detail)?;
+    assert_eq!(good_detail["model_alias"], MODEL_ALIAS);
+    assert_eq!(good_detail["runtime_build"], BUILD_INFO);
+    assert_eq!(good_detail["context_tokens"], 2048);
+    drop(good_db);
 
     profile["model_file_sha256"] =
         serde_json::json!(SourceHash::digest(b"different model").to_string());
@@ -98,6 +110,22 @@ fn checked_profile_probes_server_and_hashes_reported_local_model() -> Result<(),
     assert_eq!(db.run_state(run_id)?, RunState::Requested);
     assert!(db.checkpoints(run_id)?.is_empty());
     drop(db);
+    let bad_db = rusqlite::Connection::open(state_dir.join("auralis-translate.sqlite"))?;
+    let (bad_outcome, bad_detail): (String, String) = bad_db.query_row(
+        "SELECT code, detail_json FROM diagnostics WHERE stage = 'model_preflight'",
+        [],
+        |row| Ok((row.get(0)?, row.get(1)?)),
+    )?;
+    assert_eq!(bad_outcome, "failed");
+    let bad_detail: serde_json::Value = serde_json::from_str(&bad_detail)?;
+    assert_eq!(bad_detail["category"], "permanent");
+    assert!(
+        bad_detail["reason"]
+            .as_str()
+            .unwrap_or_default()
+            .contains("hash differs")
+    );
+    drop(bad_db);
     std::fs::remove_dir_all(directory)?;
     Ok(())
 }

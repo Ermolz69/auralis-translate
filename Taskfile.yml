@@ -788,6 +788,8 @@ tasks:
     cmds:
       - cargo test --offline -p auralis-translation-llamacpp --test preparation_hash --test hash_diagnostics --test request_cancellation --test offline_install
       - cargo test --offline -p auralis-translation-cli --test preparation_pause
+      - cargo test --offline -p auralis-translation-cli --test verified_server
+      - cargo test --offline -p auralis-translation-sqlite --test model_preflight
   test:admission:
     desc: Verify stale start rejection, repeated pause, competing attempts and v4 migration
     cmds:

@@ -5,6 +5,7 @@ pub(crate) mod edit_commit;
 pub(crate) mod edit_provenance;
 pub(crate) mod edit_selection;
 pub(crate) mod inference_request_repository;
+pub(crate) mod model_preflight_repository;
 pub(crate) mod project_cleanup;
 pub(crate) mod result_repository;
 pub(crate) mod run_repository;

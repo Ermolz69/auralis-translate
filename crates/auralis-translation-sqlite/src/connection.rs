@@ -1,12 +1,12 @@
 use crate::repositories::{
     attempt_admission, attempt_repository, checkpoint_repository, edit_commit, edit_provenance,
-    edit_selection, inference_request_repository, project_cleanup, result_repository,
-    run_repository, segment_repository, translation_repository,
+    edit_selection, inference_request_repository, model_preflight_repository, project_cleanup,
+    result_repository, run_repository, segment_repository, translation_repository,
 };
 use crate::{
     AttemptId, AttemptStartGuard, BranchEditSpec, CheckpointSpec, DbError, EditProvenance,
-    EditSelection, EditSpec, InferenceRequestRecord, ResultRecord, ResultSpec, RunDiagnostic,
-    RunSpec, RunStop, SegmentSpec, SqliteConfig, TranslationSpec,
+    EditSelection, EditSpec, InferenceRequestRecord, ModelPreflightOutcome, ResultRecord,
+    ResultSpec, RunDiagnostic, RunSpec, RunStop, SegmentSpec, SqliteConfig, TranslationSpec,
 };
 use crate::{diagnostic_codec, migrations};
 use auralis_translation::{
@@ -140,6 +140,20 @@ impl TranslateDb {
 
     pub fn check_attempt_start(&self, guard: AttemptStartGuard) -> Result<(), DbError> {
         attempt_admission::check(&self.connection, guard)
+    }
+
+    pub fn begin_model_preflight(&mut self, guard: AttemptStartGuard) -> Result<i64, DbError> {
+        model_preflight_repository::begin(&mut self.connection, guard)
+    }
+
+    pub fn finish_model_preflight(
+        &self,
+        run_id: RunId,
+        diagnostic_id: i64,
+        outcome: ModelPreflightOutcome,
+        detail: &serde_json::Value,
+    ) -> Result<(), DbError> {
+        model_preflight_repository::finish(&self.connection, run_id, diagnostic_id, outcome, detail)
     }
 
     pub fn begin_guarded_attempt(

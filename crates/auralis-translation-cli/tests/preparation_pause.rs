@@ -151,6 +151,12 @@ fn initial_and_repeated_resume_pause_interrupt_cli_preflight() -> Result<(), Box
             raw.query_row("SELECT COUNT(*) FROM run_attempts", [], |row| row.get(0))?;
         let results: i64 = raw.query_row("SELECT COUNT(*) FROM results", [], |row| row.get(0))?;
         assert_eq!((attempts, results), (0, 0));
+        let preflights: i64 = raw.query_row(
+            "SELECT COUNT(*) FROM diagnostics WHERE run_id = ?1 AND stage = 'model_preflight' AND code = 'paused'",
+            [&run],
+            |row| row.get(0),
+        )?;
+        assert_eq!(preflights, if resume { 2 } else { 1 });
         assert!(!output.exists());
         assert_eq!(std::fs::read(&source)?, SOURCE);
     }

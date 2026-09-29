@@ -4,18 +4,21 @@ use crate::report_result::report_result;
 use crate::reporting::{CliEvent, CliFailure, CommandOutput, ErrorCode};
 use crate::write_new::write_new;
 use auralis_translation::{
-    BlockPolicy, ResultId, RetryPolicy, ReviewState, RunState, SourceHash, VerifiedRenderer,
+    BlockPolicy, ProviderError, ResultId, RetryPolicy, ReviewState, RunState, SourceHash,
+    VerifiedRenderer,
 };
 use auralis_translation_llamacpp::{
     LlamaCppProvider, ModelProfile, RequestControlPolicy, verify_server_with_control,
 };
 use auralis_translation_sqlite::{
-    ResultSpec, RunSpec, RunStop, SqliteConfig, SqliteInferenceRequestSink, TranslateDb,
+    ModelPreflightOutcome, ResultSpec, RunSpec, RunStop, SqliteConfig, SqliteInferenceRequestSink,
+    TranslateDb,
 };
 use std::error::Error;
 use std::ffi::OsStr;
 use std::path::Path;
 use std::sync::Arc;
+use std::time::Instant;
 use uuid::Uuid;
 
 pub(crate) const DATABASE_FILE: &str = "auralis-translate.sqlite";
@@ -79,6 +82,8 @@ pub(crate) fn execute(
     let retry = RetryPolicy::new(profile.max_block_attempts)
         .ok_or("model profile has an invalid block attempt limit")?;
     let provider = LlamaCppProvider::new(endpoint, profile.clone())?;
+    let preflight_id = db.begin_model_preflight(guard)?;
+    let preflight_started = Instant::now();
     let preparation = auralis_translation_sqlite::AttemptStartControl::new(
         db,
         guard,
@@ -90,7 +95,50 @@ pub(crate) fn execute(
             .map_err(|cause| auralis_translation::ProviderError::Permanent(cause.to_string()))
     };
     let verification = verify_server_with_control(&provider, &profile, &check);
-    db.check_attempt_start(guard)?;
+    if let Err(error) = db.check_attempt_start(guard) {
+        let outcome = if matches!(error, auralis_translation_sqlite::DbError::PauseRequested) {
+            ModelPreflightOutcome::Paused
+        } else {
+            ModelPreflightOutcome::Stale
+        };
+        db.finish_model_preflight(
+            run.run_id,
+            preflight_id,
+            outcome,
+            &serde_json::json!({"elapsed_ms": preflight_started.elapsed().as_millis(), "reason": error.to_string()}),
+        )?;
+        return Err(Box::new(error));
+    }
+    if let Err(error) = &verification {
+        let category = match error {
+            ProviderError::Permanent(_) => "permanent",
+            ProviderError::Transient(_) => "transient",
+            ProviderError::Storage(_) => "storage",
+        };
+        db.finish_model_preflight(
+            run.run_id,
+            preflight_id,
+            ModelPreflightOutcome::Failed,
+            &serde_json::json!({"elapsed_ms": preflight_started.elapsed().as_millis(), "category": category, "reason": error.to_string()}),
+        )?;
+    } else {
+        let report = verification.as_ref().ok().and_then(Option::as_ref);
+        db.finish_model_preflight(
+            run.run_id,
+            preflight_id,
+            if report.is_some() {
+                ModelPreflightOutcome::Verified
+            } else {
+                ModelPreflightOutcome::NotRequired
+            },
+            &serde_json::json!({
+                "elapsed_ms": preflight_started.elapsed().as_millis(),
+                "model_alias": report.map(|value| value.model_alias.as_str()),
+                "runtime_build": report.map(|value| value.build_info.as_str()),
+                "context_tokens": report.map(|value| value.context_tokens),
+            }),
+        )?;
+    }
     if let Some(report) = verification? {
         if reporter.is_machine() {
             reporter.emit(CliEvent::ModelReady {

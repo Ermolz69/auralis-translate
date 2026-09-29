@@ -32,9 +32,17 @@ retains raw bounded replies and a parsed-shape outcome, including rejected
 tokenizer responses and HTTP failures. A journal write failure stops the next
 network request or translation; preflight rows are never accepted subtitle
 lines. Existing chat rows migrate with an explicit chat kind and unchanged
-bytes. Model verification before the run attempt and Auralis host attempts
-remain outside this journal. The journal's presence does not establish
-translation quality, model resource bounds or whole-file recovery.
+bytes. The standalone CLI records model verification separately in the
+existing run-level `diagnostics` table before it admits a run attempt. It
+inserts `model_preflight/pending` under the captured admission guard, then
+finalizes that row as `verified`, `not_required`, `failed`, `paused` or `stale`.
+The detail records monotonic elapsed milliseconds; success records alias,
+build and context, while failure records the provider category and reason.
+A crash leaves a visible pending row. A newer pause still prevents an attempt
+and checkpoint and takes precedence over a verification failure. An unchecked
+profile is `not_required`, never `verified`. Auralis host preparation remains
+outside this journal. The journal's presence does not establish translation
+quality, model resource bounds or whole-file recovery.
 
 Schema 8 is forward-only: a schema-7 binary rejects an upgraded database.
 Before any production rollout, preserve a restorable copy of the schema-7
