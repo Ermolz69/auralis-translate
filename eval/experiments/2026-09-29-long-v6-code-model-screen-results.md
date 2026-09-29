@@ -81,3 +81,13 @@ The release candidate remains unselected. To roll back this evaluation-only
 slice, revert its report, catalog, checker, Taskfile and site commits; keep the
 predeclared plan and raw archives for audit. No production model/profile or
 translation checkpoint was changed by this screen.
+
+## Publication verification
+
+The checked Pages source was committed as `30cc2b6de795e8b8e04d4a0396ceccea026e76b4`.
+[Pages run 36567172077](https://github.com/Ermolz69/auralis-translate/actions/runs/36567172077)
+completed successfully. The [published report](https://ermolz69.github.io/auralis-translate/)
+returned HTTP 200 and 953,774 bytes; its SHA-256 matched `site/index.html`
+exactly at `0e481caba354294d5e5675e74a83af655cb3ab47fcd2c0beb3f7da09f0c7b3e9`.
+The fetched page contained the new long-v6 model section and the Tailwind CDN
+script. Earlier measurements remain in the same single-file report.
