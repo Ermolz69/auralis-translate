@@ -38,3 +38,6 @@ plus a candidate with a clock time, amount or negation, source prefix boundary,
 non-prefix code, and checkpoint reopen. The contract checks structural fact
 preservation, not semantic accuracy. Real same-source model comparison is
 separately frozen in the [development plan](../../eval/experiments/2026-09-29-reg-009-live-prefix-repair-plan.md).
+The [CLI recovery fixture](../../eval/experiments/2026-09-29-reg-009-cli-recovery-fixture.md)
+checks durable raw and accepted evidence, failed-run non-publication and
+offline re-export through the SQLite product path.

@@ -24,6 +24,10 @@ source-only journal SHA-256
 Seeds 101/202/303 gave 81 complete, zero-retry requests. No Russian reference
 was in a prompt. The screen projects the fixture-tested Rust policy onto each
 raw HTTP answer; it does not execute the full SQLite product path.
+The separate [CLI recovery fixture](2026-09-29-reg-009-cli-recovery-fixture.md)
+now checks that product path using synthetic loopback responses, including a
+rejected second cue, checkpoint reopen and offline re-export. It does not add
+a real-model product-path observation to this 81-request screen.
 
 | Measure | Raw model | Projected opt-in policy |
 | --- | ---: | ---: |

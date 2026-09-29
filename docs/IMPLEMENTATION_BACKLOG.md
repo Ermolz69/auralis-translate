@@ -90,6 +90,9 @@ identifier, retaining the raw response and a review flag. [Fixture
 acceptance](../eval/experiments/2026-09-29-reg-009-prefix-repair-fixture.md)
 and the [bounded 81-request real-model screen](../eval/experiments/2026-09-29-reg-009-live-prefix-repair-results.md)
 show 36 raw exact codes, 81 after policy projection and 45 required review flags.
+The [CLI/SQLite fixture](../eval/experiments/2026-09-29-reg-009-cli-recovery-fixture.md)
+now checks a rejected second cue, no partial result, reopened checkpoint and
+journal evidence, resume, and offline byte-identical export.
 The screen also retained [REG-012](../eval/regressions/long-v6-first-person-loss-v1.json)
 first-person loss and [REG-013](../eval/regressions/long-v6-restart-grammar-v1.json)
 Russian fluency failures with related and negative controls. The policy is

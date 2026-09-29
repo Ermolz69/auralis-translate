@@ -434,10 +434,11 @@ tasks:
     cmds:
       - cargo test --offline -p auralis-translation-llamacpp --test identifier_guard
   test:source-prefix-repair:
-    desc: Check opt-in source-prefix insertion, unchanged prompts, rejected controls and review flags
+    desc: Check opt-in source-prefix insertion, rejected controls, SQLite recovery and review flags
     cmds:
       - cargo test --offline -p auralis-translation-llamacpp --test identifier_guard
       - task: test:provider-review-diagnostics
+      - cargo test --offline -p auralis-translation-cli --test source_prefix_repair_cli
   eval:reg009:live-prefix:preflight:
     desc: Verify pinned model, runtime, profile, source archive and 81 source-only requests
     env:
