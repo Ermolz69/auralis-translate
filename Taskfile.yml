@@ -384,14 +384,22 @@ tasks:
       - node --test --test-isolation=none eval/scripts/tests/long-v6-cyrillic-transposition-regression.test.mjs
       - node --test --test-isolation=none eval/scripts/tests/cue89-omission-regression.test.mjs
       - node --test --test-isolation=none eval/scripts/tests/greedy-restart-regression.test.mjs
+      - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
       - task: eval:long:v6:code-model:result:check
       - task: eval:reg009:prompt:check
       - task: eval:reg009:prefix-repair:check
       - task: eval:reg009:live-prefix:check
       - task: test:identifier-guard
       - task: test:time-diagnostics
+
+  eval:regression:mingfay:private:check:
+    desc: Recheck exact private natural-source failures and authored related controls
+    env:
+      AURALIS_REQUIRE_PRIVATE_NATURAL: '1'
+    cmds:
+      - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-017 packs and all control counts
+    desc: Verify versioned REG-001 through REG-019 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -401,6 +409,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v7.mjs
       - node eval/scripts/check-regression-catalog-v8.mjs
       - node eval/scripts/check-regression-catalog-v9.mjs
+      - node eval/scripts/check-regression-catalog-v10.mjs
   eval:reg009:prefix-repair:probe:
     desc: Measure conservative exact-code prefix repair on the archived synthetic long-file output
     cmds:
@@ -797,7 +806,29 @@ tasks:
   eval:natural:mingfay:journal:check:
     desc: Match the two natural-source proxy traces against durable model journals
     cmds:
+      - task: eval:natural:mingfay:1b:journal:check
+      - task: eval:natural:mingfay:7b:journal:check
+
+  eval:natural:mingfay:compare:check:
+    desc: Verify the matched private natural-source model runs and summarize exact resource/token evidence
+    cmds:
+      - task: eval:natural:mingfay:journal:check
+      - node eval/scripts/check-mingfay-natural-model-screen.mjs
+
+  eval:natural:mingfay:capture:
+    desc: Archive only the redacted verified same-source model metrics for public reporting
+    cmds:
+      - task: eval:natural:mingfay:compare:check
+      - node eval/scripts/capture-mingfay-natural-summary.mjs
+
+  eval:natural:mingfay:1b:journal:check:
+    desc: Check the 1.8B natural-source raw requests against durable SQLite
+    cmds:
       - python eval/scripts/check-inference-journal.py .cache/eval/mingfay-natural-1b-v1/latest.txt
+
+  eval:natural:mingfay:7b:journal:check:
+    desc: Check the 7B natural-source raw requests against durable SQLite
+    cmds:
       - python eval/scripts/check-inference-journal.py .cache/eval/mingfay-natural-7b-v1/latest.txt
   eval:data:candidates:bytes:
     desc: Check all retained Commons candidate bytes against the non-admitted inventory
