@@ -63,3 +63,13 @@ passed `task rs:resolve:translate`, `task rs:resolve:application`,
 `task voice:handoff:check` (14 passed), `task rs:clippy`, `task rs:fmt` and
 `task docs:check`. This pin and fix remain in the local Auralis branch pending
 authorization to publish that repository.
+
+Publication check: the existing GitHub Pages workflow run
+`36570065289` succeeded for site commit `37e7a67`. A fresh request to the
+[live page](https://ermolz69.github.io/auralis-translate/) returned HTTP 200 and
+958,814 bytes. Its SHA-256 matched the committed `site/index.html` at
+`1d70731f46c4453fa264f1db21dcb5544a6de47332e42b507b0012d09e56478d`;
+the Tailwind browser CDN script and this SAPI section were present. The page links to
+this report on Translate `main`, not to the unpublished Auralis branch. A
+fresh request for that report returned HTTP 200 and matched the local source
+hash after commit `291dc10`.
