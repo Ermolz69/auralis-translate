@@ -117,6 +117,15 @@ existing advisory contract, so a separately versioned
 clock-time differences before checkpoint in fixtures. Full-file completion,
 human review and false-positive measurement remain open. [REG-016](../eval/regressions/cue89-omitted-code-and-time-guard-v1.json)
 retains the actual omission and new related/negative controls in catalog v8.
+The [81-request paired greedy screen](../eval/experiments/2026-09-29-reg009-greedy-81-results.md)
+then compared the same 27 beginning/seam/middle/end synthetic cues and three
+seeds against the archived temperature-0.7 responses. Raw exact codes stayed
+36/81, with six paired gains and six losses; every greedy cue had one unique
+output across seeds. [REG-017](../eval/regressions/greedy-restart-grammar-v1.json)
+retains a new three-seed cue-510 restart-grammar recurrence and related
+same-source controls in catalog v9. Greedy decoding is unselected; human
+review and a completed real long file remain required for `CTX-02`, `EVAL-04`
+and `LONG-03`.
 
 The next independently executable tasks are `CTX-02`, `DATA-03`, `DATA-04`,
 `EVAL-04` and the unfinished `VOICE-01` handoff.
