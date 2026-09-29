@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "id": "REG-007",
+  "status": "open_assistant_detected_semantic_quality",
+  "severity": "major",
+  "source_family": "project_authored_synthetic_long_file",
+  "failure": "Both sampled 1.8B v6 answers for the negative REG-006 control omitted the explicit source time 今天 (today) while retaining a plausible meeting-as-usual sentence.",
+  "expected_invariant": "A target that explicitly states a meeting proceeds today must retain that day; structural JSON validity alone is not evidence of fact preservation.",
+  "reproduction": {
+    "source_zh": "工程 AUR-0983：阿明说，会议照常在今天举行。",
+    "source_context_ids": [982, 984],
+    "target_segment_id": 983,
+    "seeds": [101, 202],
+    "observed_1b_candidates": [
+      "Инженер АУР-0983: Амин сказал, что встреча состоится как обычно.",
+      "Амин сказал, что собрание состоится как обычно."
+    ],
+    "expected_sense_unreviewed": "Amin says the meeting goes ahead today as scheduled."
+  },
+  "related_controls": [
+    { "id": "today-rescheduled", "source_zh": "工程 AUR-0983：阿明说，会议改到今天举行。", "expected_sense_unreviewed": "Amin says the meeting has been moved to today." },
+    { "id": "tomorrow-as-usual", "source_zh": "工程 AUR-0983：阿明说，会议照常在明天举行。", "expected_sense_unreviewed": "Amin says the meeting goes ahead tomorrow as scheduled." }
+  ],
+  "negative_control": { "id": "as-usual-no-date", "source_zh": "工程 AUR-0983：阿明说，会议照常举行。", "expected_sense_unreviewed": "Amin says the meeting goes ahead as scheduled, with no explicit day." },
+  "paired_probe_summary_sha256": "f1d9f31f99a0f986e8cbb39566dbf5cb63b3004d72f3eb85c711743c80eafc4d",
+  "paired_probe_requests_gzip_sha256": "8db3b4a924bbe2fe54693415914b945781f74ea960e9caed93df4848c52fe083",
+  "human_review": "missing",
+  "evidence_record": "eval/experiments/2026-09-29-reg-006-paired-model-probe-results.md"
+}

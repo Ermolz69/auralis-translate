@@ -1,0 +1,807 @@
+{
+  "schema_version": 1,
+  "experiment": "reg-006-v6-1b-7b-paired-v1",
+  "status": "complete_observations_unreviewed",
+  "started_at": "2026-09-29T08:43:08.532Z",
+  "identity": {
+    "regression_sha256": "f6ae08bae71af06ce534f450053658dc9bc8157562672cf3e85493bc376071ad",
+    "archived_failure_journal_sha256": "09944a0cefd47eb124fa780157bf6fc5d27bec1db4c7c19612500ec7bd49c388",
+    "archived_failed_request_sha256": "0f0aacf448be18e9d1eaf253da3356892755400be033f937d61fe86456505f8c",
+    "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+    "cli_sha256": "76ab2844996a3d68e9be96035f22f32bfcad79e085a5eacdecddbfa27626452a",
+    "models": [
+      {
+        "key": "1b",
+        "alias": "auralis-hy-mt2-1.8b-q4",
+        "revision": "a0c709d9fac510f2c807aa3af52872340dc37a4a",
+        "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+        "profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5"
+      },
+      {
+        "key": "7b",
+        "alias": "auralis-hy-mt2-7b-q4",
+        "revision": "ab8472660ac61fac25f1af43fac2599d52a8a775",
+        "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+        "profile_sha256": "e7e2d7745cb283a88984da202eb511f0144b2bc51bc6eb01727515a51e7aa06f"
+      }
+    ]
+  },
+  "budget": {
+    "seeds": [
+      101,
+      202
+    ],
+    "cases": [
+      "zh-983-amin-tomorrow",
+      "zh-983-amin-day-after",
+      "zh-983-ahua-tomorrow",
+      "zh-983-amin-today"
+    ],
+    "chat_requests": 16,
+    "server_starts": 2,
+    "per_request_ms": 120000,
+    "total_wall_ms": 1200000,
+    "no_retries": true
+  },
+  "source_group": "project_authored_development",
+  "sealed_holdout": false,
+  "human_review": "missing",
+  "quality_verdict": "unreviewed",
+  "requests": [
+    {
+      "model": "1b",
+      "case_id": "zh-983-amin-tomorrow",
+      "seed": 101,
+      "request_sha256": "95b6a01ce5fe07327440628c7e8445fc7a728e7cafe311f0fcc3ff8e6adf2d33",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Амин сказал, что встреча отложена на завтра.",
+      "usage": {
+        "completion_tokens": 39,
+        "prompt_tokens": 313,
+        "total_tokens": 352,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsed_ms": 3577
+    },
+    {
+      "model": "1b",
+      "case_id": "zh-983-amin-day-after",
+      "seed": 101,
+      "request_sha256": "8096c58c39acf96269a6a798280a750e5a06e7d7013b559f35caddcce85b92d5",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженер AUR-0983: Амин сказал, что встреча перенесена на послезавтра.",
+      "usage": {
+        "completion_tokens": 56,
+        "prompt_tokens": 313,
+        "total_tokens": 369,
+        "prompt_tokens_details": {
+          "cached_tokens": 278
+        }
+      },
+      "elapsed_ms": 2446
+    },
+    {
+      "model": "1b",
+      "case_id": "zh-983-ahua-tomorrow",
+      "seed": 101,
+      "request_sha256": "70538b97d07f1e0a8141227626813f3ada0cec9f95e1d6f7fd7701131bbc2c3f",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Авха сказал, что встреча отложена на завтра.",
+      "usage": {
+        "completion_tokens": 40,
+        "prompt_tokens": 313,
+        "total_tokens": 353,
+        "prompt_tokens_details": {
+          "cached_tokens": 274
+        }
+      },
+      "elapsed_ms": 1970
+    },
+    {
+      "model": "1b",
+      "case_id": "zh-983-amin-today",
+      "seed": 101,
+      "request_sha256": "f9ead58fe07c276a2130e115d8de18e16635856608101c7d6d15e137678c75f4",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженер АУР-0983: Амин сказал, что встреча состоится как обычно.",
+      "usage": {
+        "completion_tokens": 52,
+        "prompt_tokens": 315,
+        "total_tokens": 367,
+        "prompt_tokens_details": {
+          "cached_tokens": 274
+        }
+      },
+      "elapsed_ms": 2383
+    },
+    {
+      "model": "1b",
+      "case_id": "zh-983-amin-tomorrow",
+      "seed": 202,
+      "request_sha256": "849d2f1826cb00090119a8f32663b5d97afde2c0124711452cf79bcb0c3e3fbe",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженер AUR-0983: Амин сказал, что встреча отложена на завтра.",
+      "usage": {
+        "completion_tokens": 50,
+        "prompt_tokens": 313,
+        "total_tokens": 363,
+        "prompt_tokens_details": {
+          "cached_tokens": 278
+        }
+      },
+      "elapsed_ms": 2209
+    },
+    {
+      "model": "1b",
+      "case_id": "zh-983-amin-day-after",
+      "seed": 202,
+      "request_sha256": "6cce86fdfec205fa7169fd3ec419b7a7d64821cdbd137629e8539c9decb6b50f",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженер AUR-0983: Амин сказал, что встреча перенесена на послезавтра.",
+      "usage": {
+        "completion_tokens": 56,
+        "prompt_tokens": 313,
+        "total_tokens": 369,
+        "prompt_tokens_details": {
+          "cached_tokens": 278
+        }
+      },
+      "elapsed_ms": 2336
+    },
+    {
+      "model": "1b",
+      "case_id": "zh-983-ahua-tomorrow",
+      "seed": 202,
+      "request_sha256": "68b1f997a8790c407629169cc46c25b74817bcdeebdb14e3fd4cc06f4498bffd",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Авха сказал, что встреча отложена на завтра.",
+      "usage": {
+        "completion_tokens": 40,
+        "prompt_tokens": 313,
+        "total_tokens": 353,
+        "prompt_tokens_details": {
+          "cached_tokens": 274
+        }
+      },
+      "elapsed_ms": 1851
+    },
+    {
+      "model": "1b",
+      "case_id": "zh-983-amin-today",
+      "seed": 202,
+      "request_sha256": "ee991d9432cd886aa7a6f7272275f664b6bc6aaa0a141ab2fac3058a4b947920",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Амин сказал, что собрание состоится как обычно.",
+      "usage": {
+        "completion_tokens": 40,
+        "prompt_tokens": 315,
+        "total_tokens": 355,
+        "prompt_tokens_details": {
+          "cached_tokens": 274
+        }
+      },
+      "elapsed_ms": 1871
+    },
+    {
+      "model": "7b",
+      "case_id": "zh-983-amin-tomorrow",
+      "seed": 101,
+      "request_sha256": "76710d29485744c44f01416cd47c5e0910737a57d693acc49c75540952275cd2",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Проект AUR-0983: Амин сказал, что собрание откладывается на завтра.",
+      "usage": {
+        "completion_tokens": 53,
+        "prompt_tokens": 335,
+        "total_tokens": 388,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsed_ms": 16757
+    },
+    {
+      "model": "7b",
+      "case_id": "zh-983-amin-day-after",
+      "seed": 101,
+      "request_sha256": "b087223ca0eafee49ec770f1b9b1cbd5d663a798bd1b6439492e142dacaa65a8",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Проект AUR-0983: Амин сказал, что встреча переносится на позавтра.",
+      "usage": {
+        "completion_tokens": 54,
+        "prompt_tokens": 335,
+        "total_tokens": 389,
+        "prompt_tokens_details": {
+          "cached_tokens": 295
+        }
+      },
+      "elapsed_ms": 8458
+    },
+    {
+      "model": "7b",
+      "case_id": "zh-983-ahua-tomorrow",
+      "seed": 101,
+      "request_sha256": "115584ebbbc903b5cc57788bbe7a6747dedb0e40dd1d982a19d65e38faf6708c",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Проект AUR-0983: А Хуа сказал, что собрание отложено на завтра.",
+      "usage": {
+        "completion_tokens": 53,
+        "prompt_tokens": 335,
+        "total_tokens": 388,
+        "prompt_tokens_details": {
+          "cached_tokens": 291
+        }
+      },
+      "elapsed_ms": 8281
+    },
+    {
+      "model": "7b",
+      "case_id": "zh-983-amin-today",
+      "seed": 101,
+      "request_sha256": "04a0592b6bf1d2dab93195162ed0a51c36330870efdc4b6bc4a67de52568d7d9",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Проект AUR-0983: Амин сказал, что собрание пройдет как обычно сегодня.",
+      "usage": {
+        "completion_tokens": 57,
+        "prompt_tokens": 339,
+        "total_tokens": 396,
+        "prompt_tokens_details": {
+          "cached_tokens": 291
+        }
+      },
+      "elapsed_ms": 9125
+    },
+    {
+      "model": "7b",
+      "case_id": "zh-983-amin-tomorrow",
+      "seed": 202,
+      "request_sha256": "a0d21152433554d7893bc7de9a911c4555d0c6ff49bede2942e6d3fce5181eb6",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Проект AUR-0983: Амин сказал, что собрание откладывается на завтра.",
+      "usage": {
+        "completion_tokens": 53,
+        "prompt_tokens": 335,
+        "total_tokens": 388,
+        "prompt_tokens_details": {
+          "cached_tokens": 295
+        }
+      },
+      "elapsed_ms": 8159
+    },
+    {
+      "model": "7b",
+      "case_id": "zh-983-amin-day-after",
+      "seed": 202,
+      "request_sha256": "ea42f32dd7bcd6df030b81a5635d155d277e0cb339d69c85f3da9f6b14b50d96",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Проект AUR-0983: Амин сказал, что встреча переносится на позавтра.",
+      "usage": {
+        "completion_tokens": 54,
+        "prompt_tokens": 335,
+        "total_tokens": 389,
+        "prompt_tokens_details": {
+          "cached_tokens": 295
+        }
+      },
+      "elapsed_ms": 8350
+    },
+    {
+      "model": "7b",
+      "case_id": "zh-983-ahua-tomorrow",
+      "seed": 202,
+      "request_sha256": "b79eac6ce1e576fa43b4a54efa7f7d9f3ba96b85eb298834686a9fffda3de41c",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Проект AUR-0983: А Хуа сказал, что собрание откладывается на завтра.",
+      "usage": {
+        "completion_tokens": 55,
+        "prompt_tokens": 335,
+        "total_tokens": 390,
+        "prompt_tokens_details": {
+          "cached_tokens": 291
+        }
+      },
+      "elapsed_ms": 8758
+    },
+    {
+      "model": "7b",
+      "case_id": "zh-983-amin-today",
+      "seed": 202,
+      "request_sha256": "f8544bf4e5866169ccc088e0224b730401fde25ca380521f2a04d3344b3f78c6",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Проект AUR-0983: Амин сказал, что собрание пройдет как обычно сегодня.",
+      "usage": {
+        "completion_tokens": 57,
+        "prompt_tokens": 339,
+        "total_tokens": 396,
+        "prompt_tokens_details": {
+          "cached_tokens": 291
+        }
+      },
+      "elapsed_ms": 8857
+    }
+  ],
+  "failures": [],
+  "resources": {
+    "1b": {
+      "interval_ms": 5000,
+      "samples": [
+        {
+          "created_at": "2026-09-29T08:43:10.353Z",
+          "tracked_pids": [
+            24608
+          ],
+          "processes": [
+            {
+              "Id": 24608,
+              "WorkingSet64": 2104508416,
+              "PrivateMemorySize64": 1053507584,
+              "CPU": 6.03125
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 823, 8192",
+          "errors": []
+        },
+        {
+          "created_at": "2026-09-29T08:43:15.347Z",
+          "tracked_pids": [
+            24608
+          ],
+          "processes": [
+            {
+              "Id": 24608,
+              "WorkingSet64": 2107133952,
+              "PrivateMemorySize64": 1058013184,
+              "CPU": 46.0625
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 823, 8192",
+          "errors": []
+        },
+        {
+          "created_at": "2026-09-29T08:43:20.358Z",
+          "tracked_pids": [
+            24608
+          ],
+          "processes": [
+            {
+              "Id": 24608,
+              "WorkingSet64": 2107187200,
+              "PrivateMemorySize64": 1057861632,
+              "CPU": 86.125
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 826, 8192",
+          "errors": []
+        },
+        {
+          "created_at": "2026-09-29T08:43:25.369Z",
+          "tracked_pids": [
+            24608
+          ],
+          "processes": [
+            {
+              "Id": 24608,
+              "WorkingSet64": 2107453440,
+              "PrivateMemorySize64": 1058947072,
+              "CPU": 124.859375
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 824, 8192",
+          "errors": []
+        }
+      ],
+      "limitations": "Sampled working set/private memory of tracked processes; device-wide GPU use includes other applications. Not an isolated peak or release hardware gate."
+    },
+    "7b": {
+      "interval_ms": 5000,
+      "samples": [
+        {
+          "created_at": "2026-09-29T08:43:36.037Z",
+          "tracked_pids": [
+            10224
+          ],
+          "processes": [
+            {
+              "Id": 10224,
+              "WorkingSet64": 8410103808,
+              "PrivateMemorySize64": 3907149824,
+              "CPU": 11.859375
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 821, 8192",
+          "errors": []
+        },
+        {
+          "created_at": "2026-09-29T08:43:41.045Z",
+          "tracked_pids": [
+            10224
+          ],
+          "processes": [
+            {
+              "Id": 10224,
+              "WorkingSet64": 8410103808,
+              "PrivateMemorySize64": 3907149824,
+              "CPU": 51.90625
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 818, 8192",
+          "errors": []
+        },
+        {
+          "created_at": "2026-09-29T08:43:46.047Z",
+          "tracked_pids": [
+            10224
+          ],
+          "processes": [
+            {
+              "Id": 10224,
+              "WorkingSet64": 8412192768,
+              "PrivateMemorySize64": 3910057984,
+              "CPU": 92.640625
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 824, 8192",
+          "errors": []
+        },
+        {
+          "created_at": "2026-09-29T08:43:51.052Z",
+          "tracked_pids": [
+            10224
+          ],
+          "processes": [
+            {
+              "Id": 10224,
+              "WorkingSet64": 8412643328,
+              "PrivateMemorySize64": 3911303168,
+              "CPU": 132.703125
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 824, 8192",
+          "errors": []
+        },
+        {
+          "created_at": "2026-09-29T08:43:56.061Z",
+          "tracked_pids": [
+            10224
+          ],
+          "processes": [
+            {
+              "Id": 10224,
+              "WorkingSet64": 8413224960,
+              "PrivateMemorySize64": 3911692288,
+              "CPU": 172.46875
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 821, 8192",
+          "errors": []
+        },
+        {
+          "created_at": "2026-09-29T08:44:01.076Z",
+          "tracked_pids": [
+            10224
+          ],
+          "processes": [
+            {
+              "Id": 10224,
+              "WorkingSet64": 8413216768,
+              "PrivateMemorySize64": 3911757824,
+              "CPU": 211.71875
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 828, 8192",
+          "errors": []
+        },
+        {
+          "created_at": "2026-09-29T08:44:06.088Z",
+          "tracked_pids": [
+            10224
+          ],
+          "processes": [
+            {
+              "Id": 10224,
+              "WorkingSet64": 8413233152,
+              "PrivateMemorySize64": 3911950336,
+              "CPU": 247.59375
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 821, 8192",
+          "errors": []
+        },
+        {
+          "created_at": "2026-09-29T08:44:11.086Z",
+          "tracked_pids": [
+            10224
+          ],
+          "processes": [
+            {
+              "Id": 10224,
+              "WorkingSet64": 8411725824,
+              "PrivateMemorySize64": 3910959104,
+              "CPU": 286.0625
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 821, 8192",
+          "errors": []
+        },
+        {
+          "created_at": "2026-09-29T08:44:16.098Z",
+          "tracked_pids": [
+            10224
+          ],
+          "processes": [
+            {
+              "Id": 10224,
+              "WorkingSet64": 8413216768,
+              "PrivateMemorySize64": 3911618560,
+              "CPU": 327.109375
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 826, 8192",
+          "errors": []
+        },
+        {
+          "created_at": "2026-09-29T08:44:21.108Z",
+          "tracked_pids": [
+            10224
+          ],
+          "processes": [
+            {
+              "Id": 10224,
+              "WorkingSet64": 8413245440,
+              "PrivateMemorySize64": 3911868416,
+              "CPU": 366.484375
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 820, 8192",
+          "errors": []
+        },
+        {
+          "created_at": "2026-09-29T08:44:26.120Z",
+          "tracked_pids": [
+            10224
+          ],
+          "processes": [
+            {
+              "Id": 10224,
+              "WorkingSet64": 8413052928,
+              "PrivateMemorySize64": 3911462912,
+              "CPU": 406.578125
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 819, 8192",
+          "errors": []
+        },
+        {
+          "created_at": "2026-09-29T08:44:31.126Z",
+          "tracked_pids": [
+            10224
+          ],
+          "processes": [
+            {
+              "Id": 10224,
+              "WorkingSet64": 8411643904,
+              "PrivateMemorySize64": 3909812224,
+              "CPU": 444.078125
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 822, 8192",
+          "errors": []
+        },
+        {
+          "created_at": "2026-09-29T08:44:36.133Z",
+          "tracked_pids": [
+            10224
+          ],
+          "processes": [
+            {
+              "Id": 10224,
+              "WorkingSet64": 8411635712,
+              "PrivateMemorySize64": 3909660672,
+              "CPU": 483.96875
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 822, 8192",
+          "errors": []
+        },
+        {
+          "created_at": "2026-09-29T08:44:41.134Z",
+          "tracked_pids": [
+            10224
+          ],
+          "processes": [
+            {
+              "Id": 10224,
+              "WorkingSet64": 8412651520,
+              "PrivateMemorySize64": 3911000064,
+              "CPU": 516.375
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 820, 8192",
+          "errors": []
+        },
+        {
+          "created_at": "2026-09-29T08:44:46.138Z",
+          "tracked_pids": [
+            10224
+          ],
+          "processes": [
+            {
+              "Id": 10224,
+              "WorkingSet64": 8412647424,
+              "PrivateMemorySize64": 3910918144,
+              "CPU": 555.71875
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 818, 8192",
+          "errors": []
+        },
+        {
+          "created_at": "2026-09-29T08:44:51.141Z",
+          "tracked_pids": [
+            10224
+          ],
+          "processes": [
+            {
+              "Id": 10224,
+              "WorkingSet64": 8411688960,
+              "PrivateMemorySize64": 3909857280,
+              "CPU": 594.53125
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 821, 8192",
+          "errors": []
+        },
+        {
+          "created_at": "2026-09-29T08:44:56.144Z",
+          "tracked_pids": [
+            10224
+          ],
+          "processes": [
+            {
+              "Id": 10224,
+              "WorkingSet64": 8411688960,
+              "PrivateMemorySize64": 3909857280,
+              "CPU": 630.984375
+            }
+          ],
+          "gpu_device": "NVIDIA GeForce RTX 3070, 821, 8192",
+          "errors": []
+        }
+      ],
+      "limitations": "Sampled working set/private memory of tracked processes; device-wide GPU use includes other applications. Not an isolated peak or release hardware gate."
+    }
+  },
+  "planned_requests": [
+    {
+      "model": "1b",
+      "case_id": "zh-983-amin-tomorrow",
+      "seed": 101,
+      "request_sha256": "95b6a01ce5fe07327440628c7e8445fc7a728e7cafe311f0fcc3ff8e6adf2d33"
+    },
+    {
+      "model": "1b",
+      "case_id": "zh-983-amin-day-after",
+      "seed": 101,
+      "request_sha256": "8096c58c39acf96269a6a798280a750e5a06e7d7013b559f35caddcce85b92d5"
+    },
+    {
+      "model": "1b",
+      "case_id": "zh-983-ahua-tomorrow",
+      "seed": 101,
+      "request_sha256": "70538b97d07f1e0a8141227626813f3ada0cec9f95e1d6f7fd7701131bbc2c3f"
+    },
+    {
+      "model": "1b",
+      "case_id": "zh-983-amin-today",
+      "seed": 101,
+      "request_sha256": "f9ead58fe07c276a2130e115d8de18e16635856608101c7d6d15e137678c75f4"
+    },
+    {
+      "model": "1b",
+      "case_id": "zh-983-amin-tomorrow",
+      "seed": 202,
+      "request_sha256": "849d2f1826cb00090119a8f32663b5d97afde2c0124711452cf79bcb0c3e3fbe"
+    },
+    {
+      "model": "1b",
+      "case_id": "zh-983-amin-day-after",
+      "seed": 202,
+      "request_sha256": "6cce86fdfec205fa7169fd3ec419b7a7d64821cdbd137629e8539c9decb6b50f"
+    },
+    {
+      "model": "1b",
+      "case_id": "zh-983-ahua-tomorrow",
+      "seed": 202,
+      "request_sha256": "68b1f997a8790c407629169cc46c25b74817bcdeebdb14e3fd4cc06f4498bffd"
+    },
+    {
+      "model": "1b",
+      "case_id": "zh-983-amin-today",
+      "seed": 202,
+      "request_sha256": "ee991d9432cd886aa7a6f7272275f664b6bc6aaa0a141ab2fac3058a4b947920"
+    },
+    {
+      "model": "7b",
+      "case_id": "zh-983-amin-tomorrow",
+      "seed": 101,
+      "request_sha256": "76710d29485744c44f01416cd47c5e0910737a57d693acc49c75540952275cd2"
+    },
+    {
+      "model": "7b",
+      "case_id": "zh-983-amin-day-after",
+      "seed": 101,
+      "request_sha256": "b087223ca0eafee49ec770f1b9b1cbd5d663a798bd1b6439492e142dacaa65a8"
+    },
+    {
+      "model": "7b",
+      "case_id": "zh-983-ahua-tomorrow",
+      "seed": 101,
+      "request_sha256": "115584ebbbc903b5cc57788bbe7a6747dedb0e40dd1d982a19d65e38faf6708c"
+    },
+    {
+      "model": "7b",
+      "case_id": "zh-983-amin-today",
+      "seed": 101,
+      "request_sha256": "04a0592b6bf1d2dab93195162ed0a51c36330870efdc4b6bc4a67de52568d7d9"
+    },
+    {
+      "model": "7b",
+      "case_id": "zh-983-amin-tomorrow",
+      "seed": 202,
+      "request_sha256": "a0d21152433554d7893bc7de9a911c4555d0c6ff49bede2942e6d3fce5181eb6"
+    },
+    {
+      "model": "7b",
+      "case_id": "zh-983-amin-day-after",
+      "seed": 202,
+      "request_sha256": "ea42f32dd7bcd6df030b81a5635d155d277e0cb339d69c85f3da9f6b14b50d96"
+    },
+    {
+      "model": "7b",
+      "case_id": "zh-983-ahua-tomorrow",
+      "seed": 202,
+      "request_sha256": "b79eac6ce1e576fa43b4a54efa7f7d9f3ba96b85eb298834686a9fffda3de41c"
+    },
+    {
+      "model": "7b",
+      "case_id": "zh-983-amin-today",
+      "seed": 202,
+      "request_sha256": "f8544bf4e5866169ccc088e0224b730401fde25ca380521f2a04d3344b3f78c6"
+    }
+  ],
+  "finished_at": "2026-09-29T08:44:57.017Z",
+  "wall_elapsed_ms": 108486
+}

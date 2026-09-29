@@ -129,6 +129,15 @@ natural-language release gates incomplete. It does not invalidate the prior
 timeout or copied-state failures, and no automatic model rerun is authorized by
 that experiment's exhausted budget.
 
+The [matched REG-006 screen](../eval/experiments/2026-09-29-reg-006-paired-model-probe-results.md)
+adds 16 same-source 1.8B/7B v6 chat observations with pinned models, raw
+responses, timing and resource series. Both models passed 8/8 JSON checks in
+this small screen; the earlier 1.8B length failure remains. Assistant review
+found two 1.8B omissions of explicit `今天`, now retained as `REG-007` with
+source-only related and negative controls. The 7B model kept that date in the
+two matched observations but used wording needing Russian editorial review.
+No model, long-file, human language or audio gate is promoted by this probe.
+
 Deferred UI, optional adaptation/precision and ASR remain visible. A completed
 translation CLI milestone does not close the desktop release or audio milestone.
 Reclassify a deferred task only when its stated condition or owner scheduling

@@ -208,6 +208,16 @@ tasks:
       - target/release/auralis-translation-cli.exe doctor models/manifests/hy_mt2_1_8b_q4_k_m.context_v6_slot.experimental.json .cache/models/Hy-MT2-1.8B-Q4_K_M.gguf
       - target/release/auralis-translation-cli.exe doctor models/manifests/hy_mt2_7b_q4_k_m.context_v6_slot.experimental.json .cache/models/Hy-MT2-7B-Q4_K_M.gguf
       - node eval/scripts/probe-long-v6-length-models.mjs
+  eval:long:v6:length:capture:
+    desc: Archive the complete matched REG-006 model screen with raw responses and resource logs
+    requires:
+      vars: [REPORT_DIR]
+    cmds:
+      - node eval/scripts/capture-long-v6-length-model-probe.mjs "{{.REPORT_DIR}}"
+  eval:long:v6:length:check:
+    desc: Verify the archived REG-006 paired model screen without model or workspace access
+    cmds:
+      - node eval/scripts/check-long-v6-length-model-probe.mjs
   eval:cli:long:v5:failure-check:
     desc: Verify retained long-scene rejection, all request bodies and source identity
     cmds:
@@ -238,6 +248,8 @@ tasks:
       - node --test eval/scripts/tests/long-run-budget.test.mjs
       - node --test eval/scripts/tests/relocate-copied-source.test.mjs
       - node --test eval/scripts/tests/long-v6-length-regression.test.mjs
+      - task: eval:long:v6:length:check
+      - node --test eval/scripts/tests/long-v6-today-regression.test.mjs
   test:context-v5:
     desc: Verify the experimental v5 request and strict response boundary
     cmds:
