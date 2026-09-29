@@ -26,6 +26,7 @@ import { loadSapiOriginalWindow } from './sapi-original-window-section.mjs';
 import { loadAuralisPrivateSpeech } from './auralis-private-speech-section.mjs';
 import { loadManagedSpeech } from './managed-speech-section.mjs';
 import { loadSourceCandidates } from './source-candidate-section.mjs';
+import { loadNaturalScreen } from './natural-screen-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const html = await fs.readFile(path.join(root, 'site/index.html'), 'utf8');
@@ -45,6 +46,7 @@ assert.deepEqual(data.currency, await loadCurrencyReport(root, data.dataset));
 assert.deepEqual(data.model_comparison, await loadModelComparison(root));
 assert.deepEqual(data.delivery_plan, await loadDeliveryPlan(root));
 assert.deepEqual(data.source_candidates, await loadSourceCandidates(root));
+assert.deepEqual(data.natural_screen, await loadNaturalScreen(root));
 assert.deepEqual(data.source_candidates, {
   source_count: 5,
   inspected_cues: 718,
@@ -59,6 +61,10 @@ assert(html.includes('id="source-candidates"'));
 assert(html.includes('718 проверенных реплик, 0 допущенных'));
 assert(html.includes('Ранее были проверены 4 источника Commons и 488 реплик'));
 assert(html.includes('2026-09-29-youtube-mingfay-caption-candidate.md'));
+assert(html.includes('id="natural-screen"'));
+assert(html.includes('Одинаковые 16 реплик: 1.8B и 7B'));
+assert(html.includes('REG-018/019'));
+assert(html.includes('2026-09-29-mingfay-media-download-failure.md'));
 assert(html.includes('2026-09-29-commons-cc-commerce-candidate.md'));
 assert(html.includes('id="release-readiness"'));
 assert(html.includes('2026-09-29-release-readiness-after-reg015.md'));

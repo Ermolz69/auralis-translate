@@ -25,6 +25,7 @@ import { loadSapiOriginalWindow, renderSapiOriginalWindow } from './sapi-origina
 import { loadAuralisPrivateSpeech, renderAuralisPrivateSpeech } from './auralis-private-speech-section.mjs';
 import { loadManagedSpeech, renderManagedSpeech } from './managed-speech-section.mjs';
 import { loadSourceCandidates, renderSourceCandidates } from './source-candidate-section.mjs';
+import { loadNaturalScreen, renderNaturalScreen } from './natural-screen-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const dataset = JSON.parse(await fs.readFile(path.join(root, 'eval/corpora/public-demo-v1.json'), 'utf8'));
@@ -55,6 +56,7 @@ const sapiOriginalWindow = await loadSapiOriginalWindow(root);
 const auralisPrivateSpeech = await loadAuralisPrivateSpeech(root);
 const managedSpeech = await loadManagedSpeech(root);
 const sourceCandidates = await loadSourceCandidates(root);
+const naturalScreen = await loadNaturalScreen(root);
 const evidencePath = path.join(root, 'eval/reports/public-demo-2026-09-27.json');
 if (process.argv[2] === '--capture') {
   const workspace = (await fs.readFile(path.join(root, '.cache/eval/public-demo/latest.txt'), 'utf8')).trim();
@@ -127,6 +129,7 @@ payload.sapi_original_window_fit = sapiOriginalWindow;
 payload.auralis_private_speech = auralisPrivateSpeech;
 payload.managed_speech = managedSpeech;
 payload.source_candidates = sourceCandidates;
+payload.natural_screen = naturalScreen;
 payload.terms_probe = { success_sha256: termsProbe.success_sha256, failure_sha256: termsProbe.failure_sha256, profile_sha256: termsProbe.profile_sha256, corpus_sha256: termsProbe.corpus_sha256, chat_requests: termsProbe.chat_requests, loopback_requests: termsProbe.loopback_requests };
 const json = JSON.stringify(payload).replaceAll('<', '\\u003c');
 const runRows = benchmark.runs.map(run => `<tr><th scope="row">${run.repetition}</th><td>${number(run.translation_elapsed_ms)}</td><td>${number(run.request_elapsed_sum_ms)}</td><td>${number(run.translation_elapsed_ms - run.request_elapsed_sum_ms)}</td><td>${number(run.offline_reexport_ms)}</td><td>${run.status.completed_blocks}/${run.status.total_blocks}</td></tr>`).join('');
@@ -164,6 +167,7 @@ ${renderModelComparison(modelComparison, escape, number)}
 ${renderDeliveryProgress(deliveryPlan, escape)}
 <section id="release-readiness" class="my-8 rounded-2xl border border-amber-300 bg-amber-50 p-5 md:p-7"><p class="text-sm font-semibold text-amber-900">Текущий вывод · выпуск не принят</p><h2 class="mt-2 text-2xl font-bold">G1–G9 и A1–A6 остаются открытыми</h2><p class="mt-3 max-w-4xl text-slate-700">Прежний синтетический длинный файл завершился структурно, но содержит 665 потерь или замен кодов и одну подтверждённую подмену содержания следующей репликой. Узкая вставка кода восстановила 45 пропусков в 81-запросном экране, однако новый реальный запуск через CLI остановился на 89-й реплике из 1 024 после кириллической подмены кода; итоговый SRT не опубликован. Ошибки действующего лица и русского языка остаются. Парный экран 1.8B/7B выявил у 7B замену одной двери несколькими в 12/12 ответах; модель не выбрана. Два настоящих SAPI-голоса уложены в короткие искусственные окна ускорением, однако человек не оценивал речь. Нужны лицензионный естественный источник, независимая китайско-русская проверка, слушатели, чистая Windows-машина и решение по отложенному desktop-этапу. Финальный RELEASE-05 нельзя провести на этом кандидате.</p><div class="mt-3 flex flex-wrap gap-4 text-sm font-semibold text-blue-700"><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-29-reg-009-long-cli-soak-results.md">Последний отказ и ограничения (EN)</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-29-release-readiness-after-reg015.md">Текущий неполный аудит (EN)</a></div></section>
 ${renderSourceCandidates(sourceCandidates)}
+${renderNaturalScreen(naturalScreen)}
 ${renderV5Envelope(v5Envelope, dataset, currency.benchmark, escape, number)}
 ${renderSceneContext(sceneContext, escape)}
 ${renderPronounCrossModel(pronounCrossModel, escape)}
