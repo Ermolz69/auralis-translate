@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "id": "REG-011",
+  "status": "open_model_number_preservation",
+  "severity": "major",
+  "source_family": "project_authored_synthetic_long_file",
+  "source_report_sha256": "bc1cfa86cb10f1abe21672169e2ded759595a23bd93aab393b81cf390e5630d5",
+  "source_journal_sha256": "0288327d57f37b093996e4ba4f3e3b499b68286cca00f9af13fdb3f708839bc6",
+  "affected_model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+  "failure": {
+    "cue_id": 2,
+    "seed": 101,
+    "request_sha256": "e015185e534b39b0eb0ff78abbee71d0a19291c6b11de678eada4e0d3ed9ed75",
+    "source_zh": "工程 AUR-0002：不要打开这扇门。",
+    "accepted_ru": "Проект AUR-0002: не открывайте эти двери.",
+    "required_meaning": "Do not open this one door; keep the prohibition and singular number."
+  },
+  "expected_invariant": "A candidate for a source that refers to one door must not silently change the referent to multiple doors, even if the JSON slot and identifier are valid.",
+  "related_controls": [
+    { "cue_id": 130, "seed": 101 },
+    { "cue_id": 506, "seed": 101 },
+    { "cue_id": 1018, "seed": 101 },
+    { "cue_id": 2, "seed": 202 },
+    { "cue_id": 130, "seed": 202 },
+    { "cue_id": 506, "seed": 202 },
+    { "cue_id": 1018, "seed": 202 },
+    { "cue_id": 2, "seed": 303 },
+    { "cue_id": 130, "seed": 303 },
+    { "cue_id": 506, "seed": 303 },
+    { "cue_id": 1018, "seed": 303 }
+  ],
+  "negative_controls": [
+    { "id": "singular_correct", "source_zh": "不要打开这扇门。", "candidate_ru": "Не открывайте эту дверь.", "expected_plural_error": false },
+    { "id": "plural_correct", "source_zh": "不要打开这些门。", "candidate_ru": "Не открывайте эти двери.", "expected_plural_error": false },
+    { "id": "singular_plural_error", "source_zh": "不要打开这扇门。", "candidate_ru": "Не открывайте эти двери.", "expected_plural_error": true },
+    { "id": "plural_singular_error", "source_zh": "不要打开这些门。", "candidate_ru": "Не открывайте эту дверь.", "expected_plural_error": false }
+  ],
+  "human_review": "missing",
+  "release_gate": "open"
+}

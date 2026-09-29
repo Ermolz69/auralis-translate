@@ -301,6 +301,17 @@ tasks:
     cmds:
       - task: eval:long:v6:code-model:preflight
       - node eval/scripts/probe-long-v6-code-model-screen.mjs
+  eval:long:v6:code-model:capture:
+    desc: Archive all paired real-model responses, timing and sampled resources from the finished screen
+    requires:
+      vars: [REPORT_DIR]
+    cmds:
+      - node --check eval/scripts/capture-long-v6-code-model-screen.mjs
+      - node eval/scripts/capture-long-v6-code-model-screen.mjs "{{.REPORT_DIR}}"
+  eval:long:v6:code-model:result:check:
+    desc: Verify archived one-factor model pairs, raw responses, exact facts and resource samples
+    cmds:
+      - node eval/scripts/check-long-v6-code-model-screen.mjs
   eval:long:v6:length:model-probe:
     desc: Compare checked 1.8B and 7B v6 requests on the frozen REG-006 source facts
     env:
@@ -363,15 +374,18 @@ tasks:
       - task: eval:cli:long:v6:postlength:check
       - node --test --test-isolation=none eval/scripts/tests/long-v6-identifier-regression.test.mjs
       - node --test --test-isolation=none eval/scripts/tests/long-v6-neighbor-content-regression.test.mjs
+      - node --test --test-isolation=none eval/scripts/tests/long-v6-singular-door-regression.test.mjs
+      - task: eval:long:v6:code-model:result:check
       - task: eval:reg009:prompt:check
       - task: eval:reg009:prefix-repair:check
       - task: test:identifier-guard
       - task: test:time-diagnostics
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-010 packs and all control counts
+    desc: Verify versioned REG-001 through REG-011 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
+      - node eval/scripts/check-regression-catalog-v4.mjs
   eval:reg009:prefix-repair:probe:
     desc: Measure conservative exact-code prefix repair on the archived synthetic long-file output
     cmds:

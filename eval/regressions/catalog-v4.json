@@ -1,0 +1,23 @@
+{
+  "schema_version": 4,
+  "catalog_id": "zh-ru-development-regressions-v4",
+  "base_catalog_file": "catalog-v3.json",
+  "base_catalog_sha256": "296371b2812259d6a3821da707f6c1e5dee9d81bc38337af4f56d66507689a78",
+  "entries": [
+    {
+      "id": "REG-011",
+      "pack_file": "long-v6-singular-door-v1.json",
+      "pack_sha256": "19c2bfd475c8081725e6999b769ed34027583895c91556173197e6ac08b326e6",
+      "source_family": "project_authored_synthetic_long_file",
+      "split": "development",
+      "category": "singular_source_plural_candidate",
+      "profile_scope": "7B v6 target-bound synthetic long-file model screen, seeds 101/202/303",
+      "expected_invariant": "A candidate for a source that refers to one door must not silently change the referent to multiple doors, even if the JSON slot and identifier are valid.",
+      "severity": "major",
+      "related_control_count": 11,
+      "negative_control_count": 4,
+      "evidence_record": "eval/experiments/2026-09-29-long-v6-code-model-screen-results.md",
+      "last_outcome": "The 7B model pluralized the singular door on all 12 archived pairs; 1.8B kept singular on the same cues/seeds; model selection and human review remain open."
+    }
+  ]
+}

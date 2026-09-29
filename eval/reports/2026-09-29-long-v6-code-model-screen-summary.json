@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "experiment": "long-v6-code-model-1b-7b-paired-v1",
+  "outcome": "development_model_fact_screen_unreviewed",
+  "source_group": "project_authored_synthetic_development",
+  "sealed_holdout": false,
+  "human_review": "missing",
+  "quality_verdict": "unreviewed",
+  "model_selection": "unselected",
+  "release_gate": "open",
+  "identity": {
+    "git_head": "650ef982fbeca8de75bb3fcbcf7274c1c18db970",
+    "git_status": "M docs/architecture/014-result-history-selection.md",
+    "harness_sha256": "60695ce776970beaec9a4e3a3b51195c0b81b25e269ba5c0d400daf1712b7c82",
+    "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+    "archive_sha256": "4037c071a17ef38ed7b9bc4989601ef8da0784fb39881b9138abb9d008701a8c",
+    "models": [
+      {
+        "key": "1b",
+        "alias": "auralis-hy-mt2-1.8b-q4",
+        "revision": "a0c709d9fac510f2c807aa3af52872340dc37a4a",
+        "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+        "profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5",
+        "prompt_template_sha256": "137efcbd09400d7ad2ab6c257077f96e09d7ff0c2eac2a35c067cdcbd7ef6a18"
+      },
+      {
+        "key": "7b",
+        "alias": "auralis-hy-mt2-7b-q4",
+        "revision": "ab8472660ac61fac25f1af43fac2599d52a8a775",
+        "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+        "profile_sha256": "e7e2d7745cb283a88984da202eb511f0144b2bc51bc6eb01727515a51e7aa06f",
+        "prompt_template_sha256": "137efcbd09400d7ad2ab6c257077f96e09d7ff0c2eac2a35c067cdcbd7ef6a18"
+      }
+    ]
+  },
+  "budget": {
+    "cue_ids": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      129,
+      130,
+      505,
+      506,
+      507,
+      508,
+      509,
+      510,
+      511,
+      512,
+      513,
+      1017,
+      1018,
+      1019,
+      1020,
+      1021,
+      1022,
+      1023,
+      1024
+    ],
+    "seeds": [
+      101,
+      202,
+      303
+    ],
+    "models": [
+      "1b",
+      "7b"
+    ],
+    "chat_requests": 162,
+    "server_starts": 2,
+    "per_request_ms": 120000,
+    "total_wall_ms": 1500000,
+    "no_retries": true
+  },
+  "started_at": "2026-09-29T11:46:45.186Z",
+  "finished_at": "2026-09-29T12:06:22.283Z",
+  "wall_elapsed_ms": 1177096,
+  "model_summaries": {
+    "1b": {
+      "requests": 81,
+      "structurally_valid": 81,
+      "exact_identifier": 36,
+      "exact_numeric_facts": 81,
+      "prompt_tokens": 23859,
+      "completion_tokens": 3385,
+      "request_elapsed_sum_ms": 211136,
+      "request_elapsed_p50_ms": 2590,
+      "request_elapsed_p95_ms": 3091,
+      "resources": {
+        "sample_count": 47,
+        "sampling_errors": 0,
+        "peak_tracked_working_set_bytes": 2113560576,
+        "peak_tracked_private_bytes": 1068523520,
+        "peak_device_gpu_mib": 859,
+        "limitation": "Sampled working set/private memory of tracked processes; device-wide GPU use includes other applications. Not an isolated peak or release hardware gate."
+      }
+    },
+    "7b": {
+      "requests": 81,
+      "structurally_valid": 81,
+      "exact_identifier": 73,
+      "exact_numeric_facts": 81,
+      "prompt_tokens": 25467,
+      "completion_tokens": 3823,
+      "request_elapsed_sum_ms": 916336,
+      "request_elapsed_p50_ms": 11649,
+      "request_elapsed_p95_ms": 13058,
+      "resources": {
+        "sample_count": 187,
+        "sampling_errors": 0,
+        "peak_tracked_working_set_bytes": 8400084992,
+        "peak_tracked_private_bytes": 3918893056,
+        "peak_device_gpu_mib": 855,
+        "limitation": "Sampled working set/private memory of tracked processes; device-wide GPU use includes other applications. Not an isolated peak or release hardware gate."
+      }
+    }
+  },
+  "paired": {
+    "code_better_7b": 38,
+    "code_worse_7b": 1,
+    "code_same": 42,
+    "numeric_better_7b": 0,
+    "numeric_worse_7b": 0,
+    "numeric_same": 81
+  },
+  "report_file": "2026-09-29-long-v6-code-model-screen-report.json",
+  "report_sha256": "bc1cfa86cb10f1abe21672169e2ded759595a23bd93aab393b81cf390e5630d5",
+  "requests_file": "2026-09-29-long-v6-code-model-screen-requests.jsonl.gz",
+  "requests_gzip_sha256": "0288327d57f37b093996e4ba4f3e3b499b68286cca00f9af13fdb3f708839bc6",
+  "requests_uncompressed_sha256": "8ad38b20040d5953d85495f7e8c0f65cd2810b21151ef5c50111f7b854184f1f",
+  "resources": {
+    "1b": {
+      "file": "2026-09-29-long-v6-code-model-screen-1b-resources.jsonl.gz",
+      "gzip_sha256": "3e8524f6dfdbb11580686adf81de907755e49649e592870986dd68a6a63787eb",
+      "uncompressed_sha256": "9bdb2ec30d8d86c2f5e31b8a7e2d7fadfb63ea2389aaa70182a3c4564799346c"
+    },
+    "7b": {
+      "file": "2026-09-29-long-v6-code-model-screen-7b-resources.jsonl.gz",
+      "gzip_sha256": "5cf90ea8b7cfc1e905acfebc3e922877239ff8fbbdb1409f6fcf88b09233394d",
+      "uncompressed_sha256": "f0e4be2977130a50612124b84663f4676496eb1c3a3f6530c430d8d5514077d8"
+    }
+  },
+  "local_server_log_sha256": {
+    "1b": "0c42004c13f76ba12907a7d801d8f3d74c5eca38248ef62fc9de8e70fa0bbab6",
+    "7b": "4c693da53c1ec51ac56666cbcc9da381160a3eb65b5405c64f34dd49800388d1"
+  }
+}
