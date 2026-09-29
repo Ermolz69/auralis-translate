@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "experiment": "inference-preflight-p01-v1",
+  "report_sha256": "5dfc21fc10c62c04eacd4d4a14033ec6c6e50dce09399b0a5f5ba895915a67d8",
+  "checked": [
+    {
+      "arm": "p01:baseline",
+      "chats": 3,
+      "preflights": 0,
+      "run_id": "c84103dd-270a-4d58-81b5-228c1641eded"
+    },
+    {
+      "arm": "p01:scene",
+      "chats": 3,
+      "preflights": 6,
+      "run_id": "f861cc1c-1b25-4ba8-8db7-008a935cd5c2"
+    }
+  ],
+  "status": "passed"
+}

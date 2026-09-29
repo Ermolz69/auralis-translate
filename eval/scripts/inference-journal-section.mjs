@@ -46,7 +46,7 @@ export function renderInferenceJournal(journal, escape) {
 <p class="mt-3 max-w-4xl text-slate-700">Один авторский китайский файл, три реплики, одинаковый исходник в обеих руках: <span lang="zh">${sourceLine}</span>. Запросы, сырые ответы, токены и принятые строки сверены с отдельными неизменяемыми записями журнала.</p>
 <div class="mt-4 grid gap-3 sm:grid-cols-2"><div class="rounded-xl border border-slate-200 bg-white p-4"><p class="text-sm text-slate-500">Без соседнего контекста</p><p class="mt-1 text-lg font-semibold">${escape(baseline.accepted_target)}</p></div><div class="rounded-xl border border-slate-200 bg-white p-4"><p class="text-sm text-slate-500">Контекст той же сцены</p><p class="mt-1 text-lg font-semibold">${escape(scene.accepted_target)}</p></div></div>
 <p class="mt-3 text-sm text-amber-900">ИИ-разбор исходника: контекстный вариант снова даёт множественное число для явно единственного старшего брата. Независимая человеческая оценка отсутствует; три реплики не подтверждают качество длинного файла.</p>
-<p class="mt-3 text-sm text-slate-600">Всего 18 локальных HTTP-вызовов; журнал охватывает 6 chat-запросов. Tokenizer preflight и вызовы Auralis worker ещё не покрыты.</p>
+<p class="mt-3 text-sm text-slate-600">В этом историческом прогоне было 18 локальных HTTP-вызовов; журнал охватывал 6 chat-запросов. Tokenizer preflight в этой версии журнала ещё не сохранялся.</p>
 <div class="mt-3 flex flex-wrap gap-4 text-sm font-semibold text-blue-700"><a class="underline" href="${github}${resultsPath}">Метод и ограничения (EN)</a><a class="underline" href="${github}${reportPath}">Сырой отчёт</a><a class="underline" href="${github}${checkPath}">Проверка журнала</a></div>
 </section>`;
 }

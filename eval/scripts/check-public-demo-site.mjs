@@ -11,6 +11,7 @@ import { loadV5Envelope } from './v5-envelope-section.mjs';
 import { loadSceneContext } from './scene-context-section.mjs';
 import { loadTermsProbe } from './terms-section.mjs';
 import { loadInferenceJournal } from './inference-journal-section.mjs';
+import { loadPreflightJournal } from './preflight-journal-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const html = await fs.readFile(path.join(root, 'site/index.html'), 'utf8');
@@ -61,6 +62,13 @@ assert(html.includes('id="inference-journal"'));
 assert(html.includes('Пришло.') && html.includes('Приехали.'));
 assert(html.includes('inference-journal-paired-2026-09-29.json'));
 assert(html.includes('inference-journal-paired-check-2026-09-29.json'));
+const preflight = await loadPreflightJournal(root);
+assert.deepEqual(data.preflight_journal, { sha256: preflight.sha256, chats: 6, preflights: 6, status: 'passed' });
+assert(html.includes('id="preflight-journal"'));
+assert(html.includes('6 из 6 preflight-запросов сохранены'));
+assert(html.includes('inference-preflight-p01-2026-09-29.json'));
+assert(html.includes('inference-preflight-p01-check-2026-09-29.json'));
+assert(html.includes('inference-preflight-sandbox-failure-2026-09-29.json'));
 assert.equal((html.match(/data-plan-task=/g) ?? []).length, data.delivery_plan.total_tasks);
 assert(html.indexOf('id="model-comparison"') < html.indexOf('id="delivery-plan"'));
 assert(html.indexOf('id="delivery-plan"') < html.indexOf('id="currency-fix"'));
@@ -87,4 +95,4 @@ for (const script of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))
 }
 assert(!/(?:E:\\\\|C:\\\\Users\\\\|00ermzahar@|gh[pousr]_[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)/.test(html));
 assert(!/<script[^>]+src="(?!https:\/\/cdn\.jsdelivr\.net\/npm\/@tailwindcss\/browser@4")/.test(html));
-console.log('Public HTML verified: 420 prior requests retained, v5/scene/terms and 7B actor-number evidence linked, six real journaled chats checked, typed retry and partial voice-handoff records, 40 model comparison rows, evidence identity, scripts and single-file publication boundary.');
+console.log('Public HTML verified: 420 prior requests retained, v5/scene/terms and 7B actor-number evidence linked, six real chats plus six tokenizer preflights checked, typed retry and partial voice-handoff records, 40 model comparison rows, evidence identity, scripts and single-file publication boundary.');
