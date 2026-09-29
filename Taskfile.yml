@@ -488,6 +488,22 @@ tasks:
     desc: Inspect the final real-model chat failures from the archived long CLI run
     cmds:
       - node eval/scripts/capture-long-v6-prefix-repair.mjs --failure
+  eval:reg014:decode:preflight:
+    desc: Verify the exact failed cue-89 request, model, runtime and six paired decoding requests
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - node --check eval/scripts/probe-reg014-cue89-decode.mjs
+      - node eval/scripts/probe-reg014-cue89-decode.mjs --preflight
+  eval:reg014:decode:probe:
+    desc: Compare temperature 0.7 and greedy decoding on the same failed real-model request
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:reg014:decode:preflight
+      - node eval/scripts/probe-reg014-cue89-decode.mjs
   eval:cli:long:v6:prefix-repair:resources:
     desc: Summarize retained sampled process and device memory without claiming isolated GPU use
     cmds:
