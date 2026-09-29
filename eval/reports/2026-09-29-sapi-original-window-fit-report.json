@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "experiment_id": "SAPI-ORIGINAL-WINDOW-TEMPO-2026-09-29-v1",
+  "status": "passed_technical_probe",
+  "started_at": "2026-09-29T10:51:41.084Z",
+  "human_listening_review": "not_performed",
+  "production_media_pipeline": "not_implemented",
+  "source_probe_sha256": "c229e64c9619548ea4c7174b17b17e1a7a7c1ea625eead2c1b732cdf591bcc45",
+  "ffmpeg_sha256": "4044b3924c977ad31229d504c5d5b8685f9553124fbaff6e9c99048b42830341",
+  "ffprobe_sha256": "fc37ca23d31ee08bb8f7e108edf3822f6ef3efc1a8d306bbe0b779190230710b",
+  "fitted": [
+    {
+      "index": 0,
+      "voice_id": "Microsoft Irina Desktop",
+      "spoken_text": "Пожалуйста, проверьте результат.",
+      "original_sha256": "798763e6c70c455cabe9e21d55b74350a1c08ce8671ba468cde13cad48db3d80",
+      "original_duration_ms": 3564,
+      "window_ms": 2400,
+      "tempo_factor": 1.5329032258064517,
+      "fitted_duration_ms": 2316,
+      "fitted_sha256": "ca01fcf0cd5b2e53b145099afab2d0bd0cc574d5fa2c2e312ec81a6e3ffe895f",
+      "fitted_file": "fitted-0.wav"
+    },
+    {
+      "index": 1,
+      "voice_id": "Microsoft Pavel",
+      "spoken_text": "Пожалуйста, проверьте результат.",
+      "original_sha256": "51915592e334218d9cbe8851abe71befc214a87d1834273493576a757c237af1",
+      "original_duration_ms": 3169,
+      "window_ms": 1900,
+      "tempo_factor": 1.7364383561643835,
+      "fitted_duration_ms": 1812,
+      "fitted_sha256": "52da038fa614a7272fb93bdee1823994a6c9e3ad45d8d3eb31040294db662083",
+      "fitted_file": "fitted-1.wav"
+    }
+  ],
+  "original_windows_ms": [
+    [
+      0,
+      2400
+    ],
+    [
+      2400,
+      4300
+    ]
+  ],
+  "output_sha256": "21167f4b9fc70afafeed598c183813d803a05840ede7d94385695fd91cca8fd1",
+  "output_bytes": 62674,
+  "streams": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "codec_type": "video",
+        "width": 640,
+        "height": 360
+      },
+      {
+        "codec_name": "aac",
+        "codec_type": "audio",
+        "sample_rate": "48000",
+        "channels": 1
+      }
+    ],
+    "format": {
+      "duration": "5.000000"
+    }
+  },
+  "decoded_audio": {
+    "sample_rate_hz": 22050,
+    "first": {
+      "rms": 955.1569926323378,
+      "peak": 6819,
+      "clipped_samples": 0
+    },
+    "seam": {
+      "rms": 0,
+      "peak": 0,
+      "clipped_samples": 0
+    },
+    "second": {
+      "rms": 1717.5038568843736,
+      "peak": 20359,
+      "clipped_samples": 0
+    },
+    "all": {
+      "rms": 1172.3543211029325,
+      "peak": 20359,
+      "clipped_samples": 0
+    }
+  },
+  "ffmpeg_version": "ffmpeg version n8.1.2 Copyright (c) 2000-2026 the FFmpeg developers",
+  "ffprobe_version": "ffprobe version n8.1.2 Copyright (c) 2007-2026 the FFmpeg developers",
+  "finished_at": "2026-09-29T10:51:42.727Z",
+  "elapsed_ms": 1644
+}

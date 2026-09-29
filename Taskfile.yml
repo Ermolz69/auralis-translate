@@ -531,7 +531,12 @@ tasks:
     desc: Verify report data integrity, embedded scripts and public artifact boundaries
     cmds:
       - task: eval:slot-schema:check
+      - task: eval:voice:original-window:check
       - node eval/scripts/check-public-demo-site.mjs
+  eval:voice:original-window:check:
+    desc: Verify retained real-SAPI original-window tempo and playback metadata
+    cmds:
+      - node eval/scripts/check-sapi-original-window.mjs
   eval:public-demo:
     desc: Measure three real checked-model runs on twenty authored Chinese SRT examples
     cmds:

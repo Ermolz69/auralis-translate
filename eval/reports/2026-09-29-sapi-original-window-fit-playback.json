@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "status": "player_process_completed",
+  "clip_sha256": "21167f4b9fc70afafeed598c183813d803a05840ede7d94385695fd91cca8fd1",
+  "player_version": "ffplay version 8.1.2-full_build-www.gyan.dev Copyright (c) 2003-2026 the FFmpeg developers",
+  "human_listening_review": "not_performed",
+  "completed_at": "2026-09-29T10:52:16.276Z"
+}
