@@ -680,6 +680,12 @@ tasks:
     desc: Check all retained Commons candidate bytes against the non-admitted inventory
     cmds:
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-inspected-candidates-v1.json --require-candidate-bytes
+  eval:data:candidates:inspect:
+    desc: Reparse retained Commons candidate bytes with the strict CLI and verify inventory cue counts
+    cmds:
+      - task: eval:data:candidates:bytes
+      - cargo build --offline -p auralis-translation-cli
+      - node eval/scripts/check-source-candidate-inspection.mjs
   plan:check:
     desc: Validate canonical delivery backlog states, dependencies and completion evidence
     cmds:

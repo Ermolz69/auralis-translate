@@ -54,8 +54,12 @@ uses `local_candidate_path` only under ignored `.cache/eval/<candidate-id>/sourc
 `task eval:data:check` checks its schema and reports 365 inspected candidate
 cues with zero eligible cues. On the acquisition machine,
 `task eval:data:candidates:bytes` additionally hashes all three retained raw
-files; it cannot pass without those local bytes. Neither task clears rights,
-speech alignment or references.
+files; it cannot pass without those local bytes.
+`task eval:data:candidates:inspect` then runs the strict CLI inspector and
+checks each CLI source hash and ordered cue count against the inventory. The
+[observed recheck](../../eval/experiments/2026-09-29-commons-candidate-parser-recheck.md)
+passed 93 + 66 + 206 cues. None of these tasks clears rights, speech alignment
+or references.
 Production licensed text and media stay in controlled storage outside the code
 repository; published manifests contain only permitted metadata and excerpts.
 The verifier does not download a third-party source, normalize raw bytes, infer
