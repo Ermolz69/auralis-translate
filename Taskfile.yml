@@ -315,6 +315,7 @@ tasks:
       - task: eval:cli:long:v6:postlength:check
       - node --test --test-isolation=none eval/scripts/tests/long-v6-identifier-regression.test.mjs
       - task: eval:reg009:prompt:check
+      - task: test:identifier-guard
   test:context-v5:
     desc: Verify the experimental v5 request and strict response boundary
     cmds:
@@ -337,6 +338,10 @@ tasks:
     cmds:
       - cargo test --offline -p auralis-translation --test identifier_diagnostics
       - cargo test --offline -p auralis-translation-sqlite --test identifier_diagnostic_persistence
+  test:identifier-guard:
+    desc: Check opt-in strict v6 identifier rejection, journal evidence and legacy advisory behavior
+    cmds:
+      - cargo test --offline -p auralis-translation-llamacpp --test identifier_guard
   eval:v5-terms:check:
     desc: Check the bounded paired real-model terms probe before execution
     cmds:

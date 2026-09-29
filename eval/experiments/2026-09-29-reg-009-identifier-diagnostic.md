@@ -36,3 +36,6 @@ negation, cohesion, natural-corpus review and release gates remain open.
 
 The first [matched prompt reminder screen](2026-09-29-reg-009-prompt-screen-results.md)
 found 2/8 exact identifiers in both arms. That instruction is not adopted.
+The separate [strict guard candidate](../../docs/reference/strict-source-identifier-guard-v1.md)
+rejects this mismatch before checkpoint commit; its real long-file completion
+and language quality remain untested.

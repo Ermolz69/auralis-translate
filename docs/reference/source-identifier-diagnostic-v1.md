@@ -23,9 +23,11 @@ This addition is **advisory** for existing profiles: it saves the model text
 and a typed checkpoint diagnostic without changing source, output, retry or
 frozen prompt/profile identities. Historical checkpoints and results remain
 readable. A complete result carrying this diagnostic is still `needs_review`;
-it must not pass a source-identifier release gate. Strict rejection or a
-deterministic protected-slot strategy requires a new versioned candidate and
-same-source model comparison, because changing v6 acceptance in place would
-invalidate existing checkpoint compatibility. This v1 rule is intentionally
+it must not pass a source-identifier release gate. The
+[opt-in strict guard](strict-source-identifier-guard-v1.md) has a separate
+checked profile identity and rejects mismatches before checkpoint commit.
+The same-source prompt reminder screen found no preservation gain, so the
+strict candidate is a safety boundary rather than a selected long-file
+solution. This v1 rule is intentionally
 narrow; Chinese names, numbers, negation, other code grammars and semantic
 equivalence still require separate checks and human review.

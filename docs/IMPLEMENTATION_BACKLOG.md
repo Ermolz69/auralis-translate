@@ -86,7 +86,12 @@ The next independently executable tasks are `CTX-02`, `DATA-03`, `DATA-04`,
 REG-009 now records a durable exact-identifier warning on new runs, while
 the 1,024-cue v6 result remains a failed semantic baseline with its original
 bytes and checkpoint history. The diagnostic does not close `CTX-02` or
-`EVAL-04`; a versioned preservation strategy and matched model evidence remain.
+`EVAL-04`. The [matched reminder screen](../eval/experiments/2026-09-29-reg-009-prompt-screen-results.md)
+found no code-preservation gain. An [opt-in strict guard](reference/strict-source-identifier-guard-v1.md)
+now rejects such candidates before checkpoint commit under a separate checked
+profile. This protects output integrity but cannot complete the long file on
+the observed 1.8B responses; an effective preservation strategy and human
+quality evidence remain open.
 `PLAN-01` has passed planning-artifact and generated-progress checks; publication
 is tracked separately in its acceptance record. `PLAN-03` freezes the user-started
 Goal in its [scope record](../eval/experiments/2026-09-28-goal-scope-v1.md).

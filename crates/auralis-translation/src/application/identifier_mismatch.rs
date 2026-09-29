@@ -1,4 +1,4 @@
-pub(super) fn identifier_mismatch(source: &str, candidate: &str) -> bool {
+pub fn source_identifier_mismatch(source: &str, candidate: &str) -> bool {
     let mut source_ids = identifiers(source);
     let mut candidate_ids = identifiers(candidate);
     source_ids.sort_unstable();

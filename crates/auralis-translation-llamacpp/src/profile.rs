@@ -40,6 +40,8 @@ pub struct ModelProfile {
     pub min_context_tokens: Option<u32>,
     pub prompt_version: u32,
     #[serde(default)]
+    pub strict_source_identifiers: bool,
+    #[serde(default)]
     pub prompt_template_sha256: Option<String>,
     #[serde(default = "default_target_segments")]
     pub target_segments_per_block: usize,
@@ -112,6 +114,13 @@ impl ModelProfile {
         }
         if !matches!(self.prompt_version, 1..=6) {
             return Err(ProfileError::Invalid("unsupported prompt version"));
+        }
+        if self.strict_source_identifiers
+            && (self.prompt_version != 6 || self.model_file_bytes.is_none())
+        {
+            return Err(ProfileError::Invalid(
+                "strict source identifiers require a checked v6 profile",
+            ));
         }
         let expected_template = match self.prompt_version {
             5 => Some(crate::contextual_prompt_v5::template_sha256()),

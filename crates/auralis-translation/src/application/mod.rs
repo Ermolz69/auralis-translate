@@ -8,6 +8,7 @@ mod translate_planned_run;
 mod translate_run_error;
 mod validate_batch_response;
 
+pub use identifier_mismatch::source_identifier_mismatch;
 pub use planned_batches::PlannedBatches;
 pub use translate_batch::translate_batch;
 pub use translate_batch_error::TranslateBatchError;

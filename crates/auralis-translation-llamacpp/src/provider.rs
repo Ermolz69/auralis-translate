@@ -9,6 +9,7 @@ use auralis_translation::{
     InferenceRequestFinish, InferenceRequestId, InferenceRequestJournal, InferenceRequestKind,
     InferenceRequestOutcome, InferenceRequestStart, LanguageCode, ProviderError, ProviderResponse,
     RunControl, RunId, SegmentId, SourceHash, TargetSegment, TranslationBatch, TranslationProvider,
+    source_identifier_mismatch,
 };
 use reqwest::Url;
 use reqwest::header::CONTENT_TYPE;
@@ -227,7 +228,7 @@ impl LlamaCppProvider {
             control.map(|_| &check as &dyn PreparationControl);
         let clock = Instant::now();
         let response = self.http.request_with_status(request, preparation);
-        let translated = response
+        let restored = response
             .as_ref()
             .map_err(|error| ProviderError::Permanent(error.to_string()))
             .and_then(|http| http.body_result())
@@ -236,6 +237,18 @@ impl LlamaCppProvider {
                 crate::contextual_prompt_v5::decode(&candidate, segment, line_index)
             })
             .and_then(|decoded| prepared.restore(&decoded));
+        let restored_candidate = restored.as_ref().ok().cloned();
+        let translated = if self.profile.strict_source_identifiers
+            && restored_candidate
+                .as_deref()
+                .is_some_and(|candidate| source_identifier_mismatch(source_line, candidate))
+        {
+            Err(ProviderError::Permanent(
+                "source identifier mismatch in restored target line".into(),
+            ))
+        } else {
+            restored
+        };
         if let Some(journal) = &self.inference_journal {
             let (prompt_tokens, completion_tokens) = response
                 .as_ref()
@@ -277,7 +290,7 @@ impl LlamaCppProvider {
                 request_id: start.request_id,
                 outcome,
                 raw_response: response.as_ref().ok().map(|http| http.body.clone()),
-                restored_candidate: translated.as_ref().ok().cloned(),
+                restored_candidate,
                 prompt_tokens,
                 completion_tokens,
                 elapsed_ms: u64::try_from(clock.elapsed().as_millis()).unwrap_or(u64::MAX),
