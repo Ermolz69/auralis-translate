@@ -148,6 +148,10 @@ assert(html.includes('2026-09-29-reg009-long-cli-prefix-repair-capture-correctio
 assert(html.includes('long-v6-cyrillic-code-transposition-v1.json'));
 assert(html.includes('REG-015 и новая проверка'));
 assert(html.includes('AUR-0089: АUR-0089: Поезд отправится в 08:10.'));
+assert(html.includes('id="host-staged-gap"'));
+assert(html.includes('2026-09-29-host-historical-staged-gap.md'));
+assert(html.includes('остальные сценарии восстановления, длинный естественный перевод и полный выпуск остаются открытыми'));
+assert(!html.includes('auralis-native-e2e-'), 'Private native fixture paths must stay off the public page');
 const auralisPrivateSpeech = await loadAuralisPrivateSpeech(root);
 assert.deepEqual(data.auralis_private_speech, auralisPrivateSpeech);
 assert(html.includes('id="auralis-private-speech"'));
