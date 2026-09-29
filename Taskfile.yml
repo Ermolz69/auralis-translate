@@ -158,6 +158,19 @@ tasks:
     desc: Verify the archived v6 timeout, durable prefix and absence of a published result
     cmds:
       - node eval/scripts/check-long-v6-timeout.mjs
+  eval:cli:long:v6:continue-timeout:
+    desc: Resume a verified copy of the retained 964-block v6 timeout under a new 30-minute experiment
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - node --check eval/scripts/cli-long-v6-timeout-continuation.mjs
+      - task: eval:cli:long:v6:timeout-check
+      - task: eval:load:checks
+      - task: test:context-v6
+      - task: build:release
+      - target/release/auralis-translation-cli.exe doctor models/manifests/hy_mt2_1_8b_q4_k_m.context_v6_slot.experimental.json .cache/models/Hy-MT2-1.8B-Q4_K_M.gguf
+      - node eval/scripts/cli-long-v6-timeout-continuation.mjs
   eval:cli:long:v5:failure-check:
     desc: Verify retained long-scene rejection, all request bodies and source identity
     cmds:
