@@ -283,6 +283,24 @@ tasks:
     desc: Verify immutable REG-010 raw responses, paired prompts, measured facts and inconclusive verdict
     cmds:
       - node eval/scripts/check-reg010-neighbor-context.mjs
+  eval:long:v6:code-model:preflight:
+    desc: Verify pinned 1.8B/7B weights and 162 matched source-only requests before the long-file fact screen
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - node --check eval/scripts/probe-long-v6-code-model-screen.mjs
+      - node eval/scripts/probe-long-v6-code-model-screen.mjs --preflight
+  eval:long:v6:code-model:probe:
+    desc: Run the predeclared serial 1.8B/7B exact-fact screen on beginning, seam and end cues
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:long:v6:code-model:preflight
+      - node eval/scripts/probe-long-v6-code-model-screen.mjs
   eval:long:v6:length:model-probe:
     desc: Compare checked 1.8B and 7B v6 requests on the frozen REG-006 source facts
     env:
