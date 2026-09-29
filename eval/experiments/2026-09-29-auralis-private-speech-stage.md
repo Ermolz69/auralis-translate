@@ -4,8 +4,10 @@ Status: `VOICE-01`/`VOICE-02` engineering evidence, not A1–A6 acceptance.
 The tested Auralis application commit was
 `1a9ce76971794ecad68d67892573eb897dd4f85e` on the local
 `feat/real-tts-pilot` branch; a separate evidence commit is `15485b6`.
-The [Auralis stage contract and result](https://github.com/Ermolz69/auralis/blob/feat/real-tts-pilot/docs/voice/010-private-speech-stage-result.md)
-record the implementation and exact command. This Translate record uses a
+The Auralis worktree's `docs/voice/009-private-speech-stage-contract.md` and
+`docs/voice/010-private-speech-stage-result.md` record the implementation and
+exact command. The Auralis branch remains local, so those documents are not
+linked from the public report. This Translate record uses a
 byte-identical copy of the Auralis machine-readable evidence, SHA-256
 `579e31afec34e74d4f61c78755e18ce8524d4e18fd3f48dbf0e3921816b328c5`.
 Raw WAVs remain private under the Auralis worktree `.cache` and are not on
@@ -49,3 +51,15 @@ passed pinned media verification, decoding and an idempotent evidence recheck;
 `task docs:check` passed. The first docs check encountered sandbox-only Node
 `spawn EPERM`; its permitted retry passed. These checks prove an application
 stage and real technical audio generation, not a listened or shippable pilot.
+
+The Auralis submodule was advanced locally to this Translate commit,
+`37e7a6714aa85d007986687d6b703658893ae493`, in Auralis commit `4230a53`.
+The update initially failed to compile because Auralis still constructed the
+old tuple `ProviderError`; after typed error mapping, `task rs:test:translate`
+found an obsolete SQLite schema-v6 assertion. The corrected Auralis adapter
+passed `task rs:resolve:translate`, `task rs:resolve:application`,
+`task rs:test:translate` (15 ordinary tests, two opt-in real tests ignored),
+`task voice:stage:check` (3 passed, real probe ignored),
+`task voice:handoff:check` (14 passed), `task rs:clippy`, `task rs:fmt` and
+`task docs:check`. This pin and fix remain in the local Auralis branch pending
+authorization to publish that repository.
