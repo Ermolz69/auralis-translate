@@ -1,0 +1,22 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { loadLongV5Failure } from './long-v5-failure-section.mjs';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+const result = await loadLongV5Failure(root);
+const regression = JSON.parse(await fs.readFile(path.join(root, 'eval/regressions/long-v5-neighbor-slot-v1.json')));
+assert.equal(regression.id, 'REG-003');
+assert.equal(regression.report_sha256, result.report_sha256);
+assert.equal(regression.journal_gzip_sha256, result.journal_sha256);
+assert.equal(regression.reproduction.target_segment_id, result.expected_slot);
+assert.equal(regression.reproduction.returned_segment_id, result.returned_slot);
+assert.equal(regression.reproduction.source, result.failed_source);
+assert.equal(regression.reproduction.candidate_text, result.returned_text);
+assert.equal(regression.related_controls.length, 2);
+assert(regression.negative_control.includes('target ID 72'));
+assert.equal(result.expected_slot, 72);
+assert.equal(result.returned_slot, 73);
+assert.equal(result.request_count, 269);
+console.log(`Long v5 failure evidence verified: ${result.saved_blocks}/${result.planned_blocks} saved, ${result.request_count} requests, slot ${result.expected_slot} -> ${result.returned_slot}`);

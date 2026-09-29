@@ -496,6 +496,103 @@ fn v5_rejects_changed_slot_identity_and_extra_context_slot() -> Result<(), Box<d
 }
 
 #[test]
+fn v5_neighbor_id_failure_retains_raw_candidate_without_accepting_target_text()
+-> Result<(), Box<dyn Error>> {
+    let target = SourceSegment::new(
+        SegmentId::new(72).ok_or("invalid target ID")?,
+        427_000,
+        431_000,
+        vec!["工程 AUR-0072：这不是最后一班车。".into()],
+    )?;
+    let context = [
+        (71, 421_000, "工程 AUR-0071：阿明说，会议推迟到明天。"),
+        (73, 433_000, "工程 AUR-0073：列车将在 08:10 出发。"),
+    ]
+    .into_iter()
+    .map(|(id, start, line)| {
+        Ok(SourceSegment::new(
+            SegmentId::new(id).ok_or("invalid context ID")?,
+            start,
+            start + 4_000,
+            vec![line.into()],
+        )?)
+    })
+    .collect::<Result<Vec<_>, Box<dyn Error>>>()?;
+    let batch = TranslationBatch::new(
+        TranslationId::parse("11111111-1111-4111-8111-111111111111")?,
+        RunId::parse("22222222-2222-4222-8222-222222222222")?,
+        SourceHash::digest(b"neighbor-identity-reproduction"),
+        LanguagePair::new(LanguageCode::Chinese, LanguageCode::Russian)?,
+        vec![target],
+        context,
+    )?;
+    let mut profile: Value = serde_json::from_slice(PROFILE)?;
+    profile["context_before_segments"] = 1.into();
+    profile["context_after_segments"] = 1.into();
+    profile["max_context_bytes"] = 4096.into();
+    profile["token_safety_margin_tokens"] = 64.into();
+    for (returned_id, line_index, accepted) in [
+        (73, 0, false),
+        (71, 0, false),
+        (72, 1, false),
+        (72, 0, true),
+    ] {
+        let candidate = format!(
+            "{{\"translations\":[{{\"line_index\":{line_index},\"segment_id\":{returned_id},\"text\":\"Это не последний поезд.\"}}]}}"
+        );
+        let listener = TcpListener::bind("127.0.0.1:0")?;
+        let address = listener.local_addr()?;
+        let response = candidate.clone();
+        let server = std::thread::spawn(move || serve(&listener, &response));
+        let journal = Arc::new(RecordedRequests::default());
+        let provider = LlamaCppProvider::new(
+            &format!("http://{address}/"),
+            ModelProfile::from_json(&serde_json::to_vec(&profile)?)?,
+        )?
+        .with_inference_journal(journal.clone());
+        let result = translate_batch(&provider, &batch);
+        let request = server.join().map_err(|_| "server panicked")??;
+        let prompt = request["messages"][0]["content"]
+            .as_str()
+            .ok_or("missing prompt")?;
+        let envelope: Value = serde_json::from_str(
+            prompt
+                .split_once("Input JSON:\n")
+                .ok_or("missing envelope")?
+                .1,
+        )?;
+        assert_eq!(envelope["target_slots"][0]["segment_id"], 72);
+        assert_eq!(envelope["source_context"][0]["segment_id"], 71);
+        assert_eq!(envelope["source_context"][1]["segment_id"], 73);
+        let finishes = journal
+            .finishes
+            .lock()
+            .map_err(|_| "journal lock poisoned")?;
+        assert_eq!(finishes.len(), 3);
+        let raw: Value = serde_json::from_slice(
+            finishes[2]
+                .raw_response
+                .as_ref()
+                .ok_or("missing raw response")?,
+        )?;
+        assert_eq!(raw["choices"][0]["message"]["content"], candidate);
+        if accepted {
+            let translated = result?;
+            assert_eq!(translated[0].lines, ["Это не последний поезд."]);
+            assert_eq!(finishes[2].outcome, InferenceRequestOutcome::ValidatedLine);
+        } else {
+            assert!(result.is_err());
+            assert_eq!(
+                finishes[2].outcome,
+                InferenceRequestOutcome::InvalidCandidate
+            );
+            assert!(finishes[2].restored_candidate.is_none());
+        }
+    }
+    Ok(())
+}
+
+#[test]
 fn v5_rejects_duplicate_fields_prose_empty_text_and_token_changes() -> Result<(), Box<dyn Error>> {
     for candidate in [
         r#"{"translations":[],"translations":[{"segment_id":2,"line_index":0,"text":"Текст"}]}"#,

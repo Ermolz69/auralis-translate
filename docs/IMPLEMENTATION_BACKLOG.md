@@ -95,6 +95,14 @@ while fixing one structural retry defect. `DATA-02` freezes 60 authored
 development context contrasts; `CTX-02` can now implement the source-only v5
 profile. Independent language review remains open.
 
+The predeclared [v5 1,024-cue real-model recovery attempt](../eval/experiments/2026-09-29-long-v5-scene-failure.md)
+adds partial `CTX-02`/`LONG-01`/`LONG-03` evidence and open `REG-003` under
+`EVAL-04`: exact 16-block recovery reached 71/1,024 durable blocks, then the
+1.8B model returned context ID 73 for target 72. The raw 269-request journal
+and a neighbor-ID regression are retained. Zero result or partial output was
+published. The full long-file, quality and resource gates remain incomplete;
+the `planned` long-task statuses have not been promoted by this failed soak.
+
 Deferred UI, optional adaptation/precision and ASR remain visible. A completed
 translation CLI milestone does not close the desktop release or audio milestone.
 Reclassify a deferred task only when its stated condition or owner scheduling

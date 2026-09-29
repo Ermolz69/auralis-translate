@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "REG-003",
+  "status": "open_model_reliability",
+  "severity": "major",
+  "source_family": "project_authored_synthetic_long_file",
+  "failure": "The 1.8B v5 scene model returned the following context cue ID 73 while translating declared target cue 72 after a real interruption and resume.",
+  "expected_invariant": "Never accept or publish a model response with a segment or line ID different from the declared target; retain the raw response and committed prefix.",
+  "reproduction": {
+    "target_segment_id": 72,
+    "returned_segment_id": 73,
+    "line_index": 0,
+    "source": "工程 AUR-0072：这不是最后一班车。",
+    "candidate_text": "Это не последний поезд."
+  },
+  "related_controls": [
+    "previous context cue ID 71 with plausible target text must reject",
+    "target ID 72 with wrong line index 1 must reject"
+  ],
+  "negative_control": "target ID 72 and line index 0 with the same text is structurally accepted without a quality claim",
+  "report_sha256": "3861cf3b6ee3daf904490e4c9f0c02d8b48da084bcf12bb5a7ffd32cac3d218d",
+  "journal_gzip_sha256": "ea54a97843fb107e3181b66d60f80d1169fc85b40f5565dd05a49692dc7ebc58",
+  "human_review": "missing",
+  "evidence_record": "eval/experiments/2026-09-29-long-v5-scene-failure.md"
+}

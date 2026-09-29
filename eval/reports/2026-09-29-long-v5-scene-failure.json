@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "experiment": "long-v5-scene-1024-v1",
+  "captured_at": "2026-09-29T05:13:43.989Z",
+  "outcome": "failed_invalid_candidate",
+  "code_commit": "88858adb30f6a5d7869a20ace58817dae21067f9",
+  "task": "task eval:cli:long:v5:scene",
+  "run_id": "75a482ee-3aee-41e1-b460-af192026f209",
+  "source_sha256": "e9b760bdcce97de9f29f5fe671dbb927088f5a15119ebe3200e73e0408391bb3",
+  "fixture_manifest_sha256": "0527cab3c4ea38aa91ae65c6f4e52103d7e0c5cde1ab778dc7e9da1a46c43986",
+  "scene_map_sha256": "2b98f91bd13d5e5e1632f9570bac53b455b23c339cdaa2bba4c0963b5d593680",
+  "profile_sha256": "432a1b064397a96334d777dfa01a2cef58d367b37023f1f9175501969698df4d",
+  "source_cues": 1024,
+  "text_slots": 1280,
+  "planned_blocks": 1024,
+  "saved_blocks": 71,
+  "interrupted_blocks": 16,
+  "saved_prefix_preserved": true,
+  "partial_result_count": 0,
+  "partial_output_present": false,
+  "attempts": [
+    {
+      "attempt_id": 1,
+      "ended_at": 1790658406,
+      "stop_reason": "interrupted"
+    },
+    {
+      "attempt_id": 2,
+      "ended_at": 1790658611,
+      "stop_reason": "translation failed"
+    }
+  ],
+  "request_count": 269,
+  "requests_by_kind_outcome": [
+    {
+      "key": "apply_template:parsed_preflight_json",
+      "count": 90
+    },
+    {
+      "key": "tokenize:parsed_preflight_json",
+      "count": 89
+    },
+    {
+      "key": "chat_completion:validated_line",
+      "count": 88
+    },
+    {
+      "key": "tokenize:pending",
+      "count": 1
+    },
+    {
+      "key": "chat_completion:invalid_candidate",
+      "count": 1
+    }
+  ],
+  "failed_slot": {
+    "end_ms": 431000,
+    "line_index": 0,
+    "segment_id": 72,
+    "source_for_translation": "工程 AUR-0072：这不是最后一班车。",
+    "source_original": "工程 AUR-0072：这不是最后一班车。",
+    "start_ms": 427000
+  },
+  "supplied_context": [
+    {
+      "end_ms": 425000,
+      "lines": [
+        "工程 AUR-0071：阿明说，会议推迟到明天。"
+      ],
+      "relative_position": "before",
+      "segment_id": 71,
+      "start_ms": 421000
+    },
+    {
+      "end_ms": 437000,
+      "lines": [
+        "工程 AUR-0073：列车将在 08:10 出发。"
+      ],
+      "relative_position": "after",
+      "segment_id": 73,
+      "start_ms": 433000
+    }
+  ],
+  "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0, \\\"segment_id\\\":73, \\\"text\\\": \\\"Это не последний поезд.\\\"}]}\"}}],\"created\":1790658611,\"model\":\"auralis-hy-mt2-1.8b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":33,\"prompt_tokens\":290,\"total_tokens\":323,\"prompt_tokens_details\":{\"cached_tokens\":143}},\"id\":\"chatcmpl-f3w4NrbYG4z1MKHJYSmLXEVKXhGpPAsb\",\"timings\":{\"cache_n\":143,\"prompt_n\":147,\"prompt_ms\":1004.389,\"prompt_per_token_ms\":6.832578231292517,\"prompt_per_second\":146.3576363341295,\"predicted_n\":33,\"predicted_ms\":1172.536,\"predicted_per_token_ms\":36.64175,\"predicted_per_second\":27.291272933197785}}",
+  "candidate": "{\"translations\":[{\"line_index\":0, \"segment_id\":73, \"text\": \"Это не последний поезд.\"}]}",
+  "failing_request": {
+    "sequence": 269,
+    "request_id": "be596600-9952-4854-993b-9df1723dd06b",
+    "outcome": "invalid_candidate",
+    "error_detail": "v5 response changed target slot identity",
+    "prompt_tokens": 290,
+    "completion_tokens": 33,
+    "elapsed_ms": 2183
+  },
+  "journal_uncompressed_sha256": "7ba91f3bb3cfd2ca7c3d6852e6f9dd3f217134ed5aece97900476a06d5a097e5",
+  "journal_gzip_sha256": "ea54a97843fb107e3181b66d60f80d1169fc85b40f5565dd05a49692dc7ebc58",
+  "journal_file": "2026-09-29-long-v5-scene-failure-journal.json.gz",
+  "resources_sha256": "e9bd4d0654f78de5f5b28b48c1c5ccd7551bbc2bc5eed0c9d3443ce69423101c",
+  "failure_sha256": "d814da7eb0025108f42c0dbb381b35dfe5a252004907599a922f3a8a56c3f955",
+  "subtitle_holdout": false,
+  "bilingual_reviewed": false,
+  "quality_verdict": "unreviewed"
+}

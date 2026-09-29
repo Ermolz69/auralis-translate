@@ -112,12 +112,23 @@ tasks:
       - task: build:release
       - target/release/auralis-translation-cli.exe doctor models/manifests/hy_mt2_1_8b_q4_k_m.context_v5_scene.experimental.json .cache/models/Hy-MT2-1.8B-Q4_K_M.gguf
       - node eval/scripts/cli-long-v5-scene.mjs
+  eval:cli:long:v5:capture-failure:
+    desc: Preserve the frozen 2026-09-29 failed v5 long-scene run and complete journal
+    requires:
+      vars: [REPORT_DIR, OUTPUT_STEM]
+    cmds:
+      - node eval/scripts/capture-long-v5-failure.mjs "{{.REPORT_DIR}}" "{{.OUTPUT_STEM}}"
+  eval:cli:long:v5:failure-check:
+    desc: Verify retained long-scene rejection, all request bodies and source identity
+    cmds:
+      - node eval/scripts/check-long-v5-failure.mjs
   eval:regression:check:
     desc: Validate permanent failure evidence and required related and negative controls
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/regression-index.test.mjs
       - node eval/scripts/check-regression-index.mjs
       - node eval/scripts/check-scene-pronoun-regression.mjs
+      - task: eval:cli:long:v5:failure-check
   test:context-v5:
     desc: Verify the experimental v5 request and strict response boundary
     cmds:
