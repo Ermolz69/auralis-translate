@@ -24,7 +24,7 @@ async function hashFile(file) {
 }
 const expectedDbHashes = {
   'auralis-translate.sqlite': '2d4a823aa3c0ec6a9f32dff49df5929849683ffd3870b021343100cc6b2603d5',
-  'auralis-translate.sqlite-wal': 'c63ec0f00e04592b9addf0b5808fdbc6a254386fb3c73f3a7e19755b4e9f305',
+  'auralis-translate.sqlite-wal': 'c63ec0f00e04592b9addf0b5808fdbfc6a254386fb3c73f3a7e19755b4e9f305',
   'auralis-translate.sqlite-shm': '8eac92c7a76a6d4de10b0985d05814ad106494fdb0c750f46ecc864204ab1382',
 };
 const serverPath = process.env.AURALIS_TEST_LLAMA_SERVER;
