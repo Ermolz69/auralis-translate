@@ -6,6 +6,16 @@ tasks:
     cmds:
       - node --check eval/scripts/acquire-commons-ying-media.mjs
       - node eval/scripts/acquire-commons-ying-media.mjs
+  eval:natural:ying:7b:probe:
+    desc: Translate the complete 93-cue natural Commons candidate with one pinned 7B run
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:data:candidates:bytes
+      - task: build:release
+      - node --check eval/scripts/probe-commons-ying-full.mjs
+      - node eval/scripts/probe-commons-ying-full.mjs
   test:srt:generated:
     desc: Check deterministic SRT round-trip, protected bytes and unsupported-markup variants
     cmds:
