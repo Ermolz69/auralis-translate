@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import { startProcess, stopProcess, waitForExit } from './local-process.mjs';
 
 export async function runCheckedProcess({ command, args, cwd, env, timeoutMs, onStart }) {
+  assert(env && typeof env === 'object' && !Array.isArray(env),
+    'Postflight environment must be provided explicitly');
   const childProcess = startProcess(command, args, cwd, env, {
     maxCaptureCharacters: 4 * 1024 * 1024,
   });

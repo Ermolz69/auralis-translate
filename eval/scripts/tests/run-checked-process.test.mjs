@@ -16,6 +16,18 @@ test('postflight command inherits an explicit environment and captures completio
   assert.equal(started, 1);
 });
 
+test('postflight refuses an omitted environment before starting a child', async () => {
+  let started = 0;
+  await assert.rejects(runCheckedProcess({
+    command: process.execPath,
+    args: ['-e', 'process.stdout.write("should not run")'],
+    cwd: process.cwd(),
+    timeoutMs: 10_000,
+    onStart: () => { started += 1; },
+  }), /Postflight environment must be provided explicitly/u);
+  assert.equal(started, 0);
+});
+
 test('postflight command retains nonzero exit as failure', async () => {
   await assert.rejects(runCheckedProcess({
     command: process.execPath,

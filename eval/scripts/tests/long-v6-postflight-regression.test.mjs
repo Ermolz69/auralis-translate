@@ -8,6 +8,8 @@ import { test } from 'node:test';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 const pack = JSON.parse(fs.readFileSync(path.join(root,
   'eval/regressions/long-v6-postflight-tdz-v1.json')));
+const packV2 = JSON.parse(fs.readFileSync(path.join(root,
+  'eval/regressions/long-v6-postflight-tdz-v2.json')));
 
 test('REG-008 preserves the failed postflight and completed-but-unverified output identity', () => {
   assert.equal(pack.id, 'REG-008');
@@ -28,4 +30,14 @@ test('REG-008 keeps success, nonzero exit and timeout controls distinct', () => 
   assert(pack.related_controls.some(control => control.includes('nonzero')));
   assert(pack.related_controls.some(control => control.includes('timeout')));
   assert.equal(pack.release_gate, 'open');
+});
+
+test('REG-008 v2 retains v1 evidence and declares the omitted-environment negative control', () => {
+  const originalBytes = fs.readFileSync(path.join(root,
+    'eval/regressions/long-v6-postflight-tdz-v1.json'));
+  assert.equal(packV2.source_pack_v1_sha256,
+    createHash('sha256').update(originalBytes).digest('hex'));
+  const { source_pack_v1_sha256, negative_control, ...retained } = packV2;
+  assert.deepEqual({ ...retained, schema_version: 1 }, pack);
+  assert.match(negative_control, /before spawning/u);
 });
