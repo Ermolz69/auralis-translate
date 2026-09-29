@@ -236,6 +236,15 @@ tasks:
     desc: Verify archived post-length structural recovery and 665 retained identifier losses
     cmds:
       - node eval/scripts/check-long-v6-postlength-v2.mjs
+  eval:reg009:prompt:probe:
+    desc: Compare bounded same-source v6 requests with and without one exact-identifier reminder
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - node --check eval/scripts/probe-reg009-identifier-prompt.mjs
+      - task: eval:cli:long:v6:postlength:check
+      - node eval/scripts/probe-reg009-identifier-prompt.mjs
   eval:long:v6:length:model-probe:
     desc: Compare checked 1.8B and 7B v6 requests on the frozen REG-006 source facts
     env:
