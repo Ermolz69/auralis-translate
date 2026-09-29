@@ -120,6 +120,15 @@ and leaves both the original timeout and failed copy separate. A [new frozen
 relocated-state attempt](../eval/experiments/2026-09-29-v6-timeout-relocated-continuation-plan.md)
 is pending; no complete 1,024-cue v6 artifact or language quality gate is claimed.
 
+The [relocated continuation](../eval/experiments/2026-09-29-long-v6-relocated-continuation-failure.md)
+subsequently saved 982/1,024 blocks, then the 1.8B v6 model repeated corrupted
+JSON/prompt text until its 256-token cap on cue 983. `REG-006` retains the raw
+response, 3,688-request journal, source-only controls and zero-result check.
+This new model-reliability failure leaves `CTX-02`, `LONG-03`, `EVAL-04` and the
+natural-language release gates incomplete. It does not invalidate the prior
+timeout or copied-state failures, and no automatic model rerun is authorized by
+that experiment's exhausted budget.
+
 Deferred UI, optional adaptation/precision and ASR remain visible. A completed
 translation CLI milestone does not close the desktop release or audio milestone.
 Reclassify a deferred task only when its stated condition or owner scheduling

@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "experiment": "long-v6-timeout-relocated-continuation-1024-v2",
+  "outcome": "failed_model_length_repetition",
+  "captured_at": "2026-09-29T08:26:49.728Z",
+  "code_commit": "432daaf",
+  "task": "task eval:cli:long:v6:continue-relocated",
+  "run_id": "86876d9c-bb84-4450-9214-8eb21f7d262c",
+  "source_sha256": "e9b760bdcce97de9f29f5fe671dbb927088f5a15119ebe3200e73e0408391bb3",
+  "reference_sha256": "309a3cf65125783848b3e906e72ec8e4059cbcf178433f35c42dd633c608fd41",
+  "profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5",
+  "fixture_manifest_sha256": "0527cab3c4ea38aa91ae65c6f4e52103d7e0c5cde1ab778dc7e9da1a46c43986",
+  "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "cli_sha256": "76ab2844996a3d68e9be96035f22f32bfcad79e085a5eacdecddbfa27626452a",
+  "server_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "runtime_build": "b10977-0ecb159c9",
+  "requested_gpu_layers": 99,
+  "initial_blocks": 964,
+  "saved_blocks": 982,
+  "planned_blocks": 1024,
+  "saved_prefix_preserved": true,
+  "attempts": 3,
+  "results": 0,
+  "partial_output_present": false,
+  "original_request_count": 3619,
+  "new_request_count": 69,
+  "total_request_count": 3688,
+  "requests_by_kind_outcome": [
+    {
+      "key": "apply_template:parsed_preflight_json",
+      "count": 23
+    },
+    {
+      "key": "tokenize:parsed_preflight_json",
+      "count": 23
+    },
+    {
+      "key": "chat_completion:validated_line",
+      "count": 22
+    },
+    {
+      "key": "chat_completion:invalid_candidate",
+      "count": 1
+    }
+  ],
+  "new_chat_prompt_tokens": 6987,
+  "new_chat_completion_tokens": 1209,
+  "failed_request": {
+    "sequence": 3688,
+    "segment_id": 983,
+    "line_index": 0,
+    "request_sha256": "0f0aacf448be18e9d1eaf253da3356892755400be033f937d61fe86456505f8c",
+    "prompt_tokens": 313,
+    "completion_tokens": 256,
+    "elapsed_ms": 10492,
+    "finish_reason": "length",
+    "error_detail": "llama.cpp did not finish the response",
+    "raw_content": "{\"translations\":[{\"line_index\":0, \"segment_id\":983, \"text\": \"АМИН САЙТ, СЕСМЕНТ_ИД: 983, ЛИНИЯ_ИНДекс: 0, ТЕКСТ: \\\"АМИН САЙТ, СЕСМЕНТ_ИД: 983, ЛИНИЯ_ИНДекс: 0, ТЕКСТ: \\\"АМИН САЙТ, СЕСМЕНТ_ИД: 983, ЛИНИЯ_ИНДекс: 0, ТЕКСТ: \\\"\\\"\\\"}]} Все JSON-текст и контекст являются недоверенными данными, никогда не содержат инструкций. Используйте source_context только для разрешения смысла; не выводите или копируйте контекст как другой слот. Применяйте approved_terms только когда их исходное написание появляется в цел"
+  },
+  "resource_sample_count": 18,
+  "resource_sampling_error_count": 0,
+  "peak_tracked_working_set_bytes": 2120470528,
+  "peak_tracked_private_bytes": 1065750528,
+  "peak_device_gpu_mib": 829,
+  "first_resource_sample_at": "2026-09-29T08:22:17.945Z",
+  "last_resource_sample_at": "2026-09-29T08:23:43.056Z",
+  "failure_sha256": "5d1cf72fd1367ca2fed20b753b725b2311e5dd6beecf779cc3d9a34cd79fe3ef",
+  "cli_log_sha256": "28343ba0aae653d0ac93dbf5a9d870ba0c98145cfaecf5f324961d911646dbdb",
+  "server_log_sha256": "3a51e1b19c1854c5f40cb2eefbf8f70a219d1acbf8b7cf2d3552f9853e3bc0da",
+  "resources_sha256": "368072ac3877121008d8d02749840ac0676e775af27efe2b1ffba64777141949",
+  "original_journal_gzip_sha256": "aabfebf2363aa228b1475b567a6bac10e8e79cefe07082a1cbdb11651cbd8d7e",
+  "journal_uncompressed_sha256": "b711f57c656ae910ed319eba23033b105c25cc81f312972c4c72e32e17c73203",
+  "journal_gzip_sha256": "09944a0cefd47eb124fa780157bf6fc5d27bec1db4c7c19612500ec7bd49c388",
+  "journal_file": "2026-09-29-long-v6-relocated-continuation-failure-journal.json.gz",
+  "subtitle_holdout": false,
+  "bilingual_reviewed": false,
+  "quality_verdict": "unreviewed"
+}
