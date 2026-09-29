@@ -8,6 +8,7 @@ import { loadModelComparison, renderModelComparison } from './model-comparison-s
 import { loadDeliveryPlan, renderDeliveryProgress } from './delivery-progress-section.mjs';
 import { loadV5Envelope, renderV5Envelope } from './v5-envelope-section.mjs';
 import { loadSceneContext, renderSceneContext } from './scene-context-section.mjs';
+import { loadPronounCrossModel, renderPronounCrossModel } from './pronoun-cross-model-section.mjs';
 import { loadTermsProbe, renderTermsProbe } from './terms-section.mjs';
 import { loadInferenceJournal, renderInferenceJournal } from './inference-journal-section.mjs';
 import { loadPreflightJournal, renderPreflightJournal } from './preflight-journal-section.mjs';
@@ -21,6 +22,7 @@ const modelComparison = await loadModelComparison(root);
 const deliveryPlan = await loadDeliveryPlan(root);
 const v5Envelope = await loadV5Envelope(root, dataset, currency.benchmark);
 const sceneContext = await loadSceneContext(root);
+const pronounCrossModel = await loadPronounCrossModel(root);
 const termsProbe = await loadTermsProbe(root);
 const inferenceJournal = await loadInferenceJournal(root);
 const preflightJournal = await loadPreflightJournal(root);
@@ -77,6 +79,7 @@ payload.model_comparison = modelComparison;
 payload.delivery_plan = deliveryPlan;
 payload.v5_envelope = { sha256: v5Envelope.sha256, profile_sha256: v5Envelope.profileHash, copied_count: v5Envelope.copied_count };
 payload.scene_context = { sha256: sceneContext.sha256, profile_sha256: sceneContext.profileHash, old_profile_sha256: sceneContext.oldProfileHash, smoke_chat_requests: sceneContext.smoke_chat_requests, regression_chat_requests: sceneContext.regression_chat_requests, repair_chat_requests: sceneContext.repair_chat_requests, after_terms_chat_requests: sceneContext.after_terms_chat_requests, large_screen_chat_requests: sceneContext.large_screen_chat_requests, large_screen: sceneContext.largeScreen, regression_id: sceneContext.regression_id, human_review: sceneContext.human_review };
+payload.pronoun_cross_model = pronounCrossModel;
 payload.inference_journal = { sha256: inferenceJournal.sha256, chats: inferenceJournal.chats, status: inferenceJournal.check.status };
 payload.preflight_journal = { sha256: preflightJournal.sha256, chats: 6, preflights: 6, status: preflightJournal.check.status };
 payload.terms_probe = { success_sha256: termsProbe.success_sha256, failure_sha256: termsProbe.failure_sha256, profile_sha256: termsProbe.profile_sha256, corpus_sha256: termsProbe.corpus_sha256, chat_requests: termsProbe.chat_requests, loopback_requests: termsProbe.loopback_requests };
@@ -110,12 +113,13 @@ const html = `<!doctype html>
 :root{color-scheme:light}body{margin:0;font-family:Segoe UI,Arial,sans-serif;color:#172033;background:#fff;font-size:16px;line-height:1.6}*{box-sizing:border-box}a{color:inherit}button{font:inherit;cursor:pointer}.shell{max-width:1440px;margin:auto;padding:0 28px}.label{font-size:14px;font-weight:600;color:#526074;margin:0 0 10px}.measurement{width:100%;border-collapse:collapse;text-align:left;font-size:14px;min-width:760px}.measurement th,.measurement td{border-bottom:1px solid #e2e8f0;padding:12px 14px;vertical-align:top}.measurement thead{background:#f1f5f9}.measurement th{font-weight:600}.measurement td:not(:nth-child(2)){font-variant-numeric:tabular-nums}details summary{padding:4px 0}code{overflow-wrap:anywhere;font-size:14px}p{overflow-wrap:anywhere}.hash{font-family:Consolas,monospace;font-size:13px;word-break:break-all}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #2563eb;outline-offset:4px}.run-button[aria-pressed=true]{background:#1d4ed8;color:white;border-color:#1d4ed8}@media(max-width:640px){.shell{padding:0 18px}.comparison{grid-template-columns:1fr}.measurement{font-size:14px}}@media print{button,nav{display:none}details{display:block}article{break-inside:avoid}body{font-size:12pt}}
 </style></head>
 <body>
-<header class="border-b border-slate-200"><div class="shell flex flex-wrap items-center justify-between gap-4 py-5"><a class="text-lg font-bold tracking-tight" href="#top">AURALIS <span class="font-normal text-slate-500">/ Translate</span></a><nav class="flex flex-wrap gap-5 text-sm text-slate-600" aria-label="Разделы отчёта"><a href="#model-comparison">1.8B / 7B</a><a href="#delivery-plan">План и прогресс</a><a href="#v5-envelope">v5 JSON</a><a href="#scene-context">Контекст сцен</a><a href="#v5-terms">Термины</a><a href="#retry-policy">Повторы</a><a href="#inference-journal">Журнал запросов</a><a href="#preflight-journal">Токены</a><a href="#voice-handoff">Озвучка</a><a href="#examples">История 20 примеров</a><a href="#measurements">Замеры v1</a><a href="#method">Методика</a></nav></div></header>
+<header class="border-b border-slate-200"><div class="shell flex flex-wrap items-center justify-between gap-4 py-5"><a class="text-lg font-bold tracking-tight" href="#top">AURALIS <span class="font-normal text-slate-500">/ Translate</span></a><nav class="flex flex-wrap gap-5 text-sm text-slate-600" aria-label="Разделы отчёта"><a href="#model-comparison">1.8B / 7B</a><a href="#delivery-plan">План и прогресс</a><a href="#v5-envelope">v5 JSON</a><a href="#scene-context">Контекст сцен</a><a href="#pronoun-cross-model">Четыре сцены</a><a href="#v5-terms">Термины</a><a href="#retry-policy">Повторы</a><a href="#inference-journal">Журнал запросов</a><a href="#preflight-journal">Токены</a><a href="#voice-handoff">Озвучка</a><a href="#examples">История 20 примеров</a><a href="#measurements">Замеры v1</a><a href="#method">Методика</a></nav></div></header>
 <main id="top" class="shell pb-16">
 ${renderModelComparison(modelComparison, escape, number)}
 ${renderDeliveryProgress(deliveryPlan, escape)}
 ${renderV5Envelope(v5Envelope, dataset, currency.benchmark, escape, number)}
 ${renderSceneContext(sceneContext, escape)}
+${renderPronounCrossModel(pronounCrossModel, escape)}
 ${renderTermsProbe(termsProbe, escape)}
 <section id="retry-policy" class="my-8 scroll-mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-5 md:p-7"><p class="text-sm font-semibold text-slate-600">Инженерная регрессия · CTX-02 / EVAL-04</p><h2 class="mt-2 text-2xl font-bold">Повтор только после временного сбоя</h2><p class="mt-3 max-w-4xl text-slate-700">Раньше лимит попыток повторял и повреждённый ответ модели. Теперь HTTP 502–504 и временный сетевой сбой могут быть повторены в пределах профиля; HTTP 400, некорректный JSON, нарушение ID и защищённых фактов останавливают блок без checkpoint. Пауза сохраняет приоритет.</p><p class="mt-3 text-sm text-slate-600">Локальные детерминированные проверки: 7 проверок HTTP и отмены, 5 проверок политики ядра, 1 сквозная проверка CLI с отказом 503 и успешным повтором. Это не испытание отказа настоящей модели или восстановления полного файла.</p><a class="mt-3 inline-block text-sm font-semibold text-blue-700 underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-28-typed-provider-retry.md">Воспроизведение и ограничения (EN)</a></section>
 ${renderInferenceJournal(inferenceJournal, escape)}
