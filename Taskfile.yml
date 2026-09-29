@@ -132,6 +132,10 @@ tasks:
       - node --check eval/scripts/slot-schema-ablation.mjs
       - task: build:release
       - node eval/scripts/slot-schema-ablation.mjs
+  eval:slot-schema:check:
+    desc: Check archived paired schema requests, raw responses, target IDs and bounded identity
+    cmds:
+      - node eval/scripts/check-slot-schema-ablation.mjs
   eval:regression:check:
     desc: Validate permanent failure evidence and required related and negative controls
     cmds:
@@ -325,6 +329,7 @@ tasks:
   site:check:
     desc: Verify report data integrity, embedded scripts and public artifact boundaries
     cmds:
+      - task: eval:slot-schema:check
       - node eval/scripts/check-public-demo-site.mjs
   eval:public-demo:
     desc: Measure three real checked-model runs on twenty authored Chinese SRT examples
