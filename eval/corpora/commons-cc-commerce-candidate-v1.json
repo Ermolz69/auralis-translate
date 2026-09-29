@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "inventory_id": "commons-cc-commerce-candidate-v1",
+  "fixture_only": false,
+  "sources": [
+    {
+      "id": "commons-cc-commerce-906218083",
+      "group_id": "cc-commerce-video-2007",
+      "split": "unassigned",
+      "state": "inspected_candidate",
+      "source_url": "https://commons.wikimedia.org/w/index.php?title=TimedText:Creative_Commons_and_Commerce.ogv.zh.srt&oldid=906218083&action=raw",
+      "revision": "906218083",
+      "retrieved_at": "2026-09-29T17:07:45Z",
+      "sha256": "df2af6ad32f12b55c3067469228d3b9674b7c35e7d8540acd294dd0f986fe46f",
+      "language": "zh",
+      "script": "Hans",
+      "format": "strict_srt_v1",
+      "cue_count": 123,
+      "local_candidate_path": ".cache/eval/commons-cc-commerce-906218083/source.zh.srt",
+      "media_url": "https://commons.wikimedia.org/wiki/File:Creative_Commons_and_Commerce.ogv",
+      "rights": { "subtitle": { "decision": "unknown" }, "reference": { "decision": "unknown" }, "audio": { "decision": "unknown" } },
+      "scenes": []
+    }
+  ]
+}

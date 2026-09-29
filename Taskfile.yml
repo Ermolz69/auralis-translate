@@ -681,6 +681,7 @@ tasks:
       - node --test --test-isolation=none eval/scripts/tests/source-inventory.test.mjs
       - node eval/scripts/check-source-inventory.mjs eval/corpora/source-inventory-example-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-inspected-candidates-v1.json
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-cc-commerce-candidate-v1.json
   eval:data:candidates:bytes:
     desc: Check all retained Commons candidate bytes against the non-admitted inventory
     cmds:
@@ -691,6 +692,18 @@ tasks:
       - task: eval:data:candidates:bytes
       - cargo build --offline -p auralis-translation-cli
       - node eval/scripts/check-source-candidate-inspection.mjs
+  eval:data:commons:cc-commerce:acquire:
+    desc: Fetch one pinned Commons Chinese subtitle revision into ignored candidate storage
+    env:
+      NODE_USE_ENV_PROXY: '1'
+    cmds:
+      - node eval/scripts/acquire-cc-commerce-candidate.mjs
+  eval:data:commons:cc-commerce:inspect:
+    desc: Recheck the pinned CC commerce candidate hash and strict SRT cue mapping
+    cmds:
+      - task: eval:data:commons:cc-commerce:acquire
+      - cargo build --offline -p auralis-translation-cli
+      - node eval/scripts/check-cc-commerce-candidate.mjs
   plan:check:
     desc: Validate canonical delivery backlog states, dependencies and completion evidence
     cmds:
