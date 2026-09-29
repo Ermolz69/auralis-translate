@@ -1,0 +1,4 @@
+{
+  "created_at": "2026-09-29T09:16:33.941Z",
+  "error": "ReferenceError: Cannot access 'process' before initialization\n    at callCli (file:///E:/Anything/Projects/Commercial/auralis-translate/eval/scripts/cli-long-v6-postlength-resume.mjs:102:56)\n    at file:///E:/Anything/Projects/Commercial/auralis-translate/eval/scripts/cli-long-v6-postlength-resume.mjs:134:34"
+}

@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "REG-008",
+  "category": "long_file_postflight_harness",
+  "severity": "major",
+  "source_experiment": "long-v6-postlength-resume-1024-v3",
+  "source_commit": "7729599",
+  "failure_report": "eval/reports/2026-09-29-long-v6-postlength-harness-failure.json",
+  "failure_report_sha256": "86e94ca61160561cdc2ae3148931c179fc80e31006e47bc4b3f31c6fa4f2ea73",
+  "source_cue_count": 1024,
+  "observed_checkpoints_before_postflight": 1024,
+  "observed_results_before_postflight": 1,
+  "observed_output_sha256": "cc2f4b3c88433cf59223bb35cfc95cdfeeed0c079c068106e7ef485369bd2e2b",
+  "observed_error": "ReferenceError: Cannot access 'process' before initialization",
+  "minimal_reproduction": "const process = startProcess(executable, args, root, process.env)",
+  "cause": "The local declaration shadows the global process binding during its own initializer.",
+  "expected_invariant": "Postflight CLI inspect, template and offline export must start with an explicit inherited environment after a validated long run, without a model request or changed checkpoint.",
+  "related_controls": [
+    "A successful child receives the explicit environment and returns captured stdout.",
+    "A nonzero child exit remains a failure with stderr retained.",
+    "A hung child stops at its finite wall timeout."
+  ],
+  "quality_verdict": "unreviewed",
+  "release_gate": "open"
+}

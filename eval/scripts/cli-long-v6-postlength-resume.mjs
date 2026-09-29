@@ -11,6 +11,7 @@ import { freeLoopbackPort, startProcess, stopProcess, waitForExit, waitForHealth
 import { runtimeSampler } from './runtime-sampler.mjs';
 import { translationWaitMs } from './long-run-budget.mjs';
 import { relocateCopiedSource } from './relocate-copied-source.mjs';
+import { runCheckedProcess } from './run-checked-process.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const original = path.join(root, '.cache/eval/long-v6-relocated-continuation-runs/continuation-cXUYur');
@@ -99,12 +100,10 @@ const calls = [];
 let server, cli, sampler, resourceReport;
 let serverLog = '';
 const callCli = async (args, timeoutMs = 60_000) => {
-  const process = startProcess(executable, args, root, process.env, { maxCaptureCharacters: 4 * 1024 * 1024 });
-  calls.push({ args, process });
-  try { await waitForExit(process, remaining(timeoutMs)); }
-  finally { await stopProcess(process); }
-  assert(!process.stdoutTruncated && !process.stderrTruncated);
-  return process.stdout;
+  return runCheckedProcess({ command: executable, args, cwd: root, env: process.env,
+    timeoutMs: remaining(timeoutMs), onStart: (childProcess) => {
+      calls.push({ args, process: childProcess });
+    } });
 };
 try {
   const port = await freeLoopbackPort();
