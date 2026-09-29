@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "inventory_id": "youtube-mingfay-candidate-v1",
+  "fixture_only": false,
+  "sources": [
+    {
+      "id": "mingfay-walk-chinese-derivative-v1",
+      "group_id": "mingfay-neighborhood-walk-0hotgjket7q",
+      "split": "unassigned",
+      "state": "inspected_candidate",
+      "source_url": "https://www.youtube.com/watch?v=0hoTgJKET7Q",
+      "revision": "regular-zh-CN-SRT-response-a875c0a8-derivative-v1",
+      "retrieved_at": "2026-09-29T19:58:21.458Z",
+      "sha256": "42109fc054cba93b0ef343853628b6a248b31664786d579bdefa415ccaacf9ee",
+      "language": "zh",
+      "script": "Hans",
+      "format": "strict_srt_v1",
+      "cue_count": 230,
+      "local_candidate_path": ".cache/eval/youtube-mingfay-derived/source.zh.srt",
+      "media_url": "https://www.youtube.com/watch?v=0hoTgJKET7Q",
+      "rights": {
+        "subtitle": { "decision": "unknown" },
+        "reference": { "decision": "unknown" },
+        "audio": { "decision": "unknown" }
+      },
+      "scenes": []
+    }
+  ]
+}

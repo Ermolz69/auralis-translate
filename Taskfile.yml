@@ -682,6 +682,7 @@ tasks:
       - node eval/scripts/check-source-inventory.mjs eval/corpora/source-inventory-example-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-inspected-candidates-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-cc-commerce-candidate-v1.json
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/youtube-mingfay-candidate-v1.json
   eval:data:youtube:mingfay:preflight:
     desc: Check the declared video, pinned extractor and bounded metadata-only command
     env:
@@ -729,6 +730,23 @@ tasks:
     cmds:
       - task: eval:data:youtube:mingfay:caption:derive:check
       - node eval/scripts/derive-youtube-mingfay-caption.mjs
+
+  eval:data:youtube:mingfay:derivative:inspect:
+    desc: Re-derive and strictly inspect the frozen private Chinese-only SRT bytes
+    cmds:
+      - cargo build --offline -p auralis-translation-cli
+      - node eval/scripts/check-youtube-mingfay-derivative.mjs
+
+  eval:data:youtube:mingfay:candidate:materialize:
+    desc: Pin the checked private Chinese-only bytes at the source-inventory candidate path
+    cmds:
+      - node eval/scripts/materialize-youtube-mingfay-candidate.mjs
+
+  eval:data:youtube:mingfay:candidate:check:
+    desc: Validate the non-admitted Mandarin candidate inventory and exact retained bytes
+    cmds:
+      - task: eval:data:youtube:mingfay:candidate:materialize
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/youtube-mingfay-candidate-v1.json --require-candidate-bytes
   eval:data:candidates:bytes:
     desc: Check all retained Commons candidate bytes against the non-admitted inventory
     cmds:
