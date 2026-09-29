@@ -6,6 +6,8 @@ import path from 'node:path';
 import { performance } from 'node:perf_hooks';
 import { digest, verifyProtectedBytes } from './flores-file-fixture.mjs';
 import { freeLoopbackPort, startProcess, stopProcess, waitForExit, waitForHealthyServer } from './local-process.mjs';
+import { assertSavedPrefix, readRunSnapshot } from './cli-run-state.mjs';
+import { relocateCopiedSource } from './relocate-copied-source.mjs';
 
 const root = path.resolve('.');
 const resumeMode = process.argv[2] === '--resume';
@@ -56,6 +58,7 @@ let proxy;
 let runStart;
 let activeCommand;
 let deadlineTimer;
+let savedPrefix;
 try {
   if (resumeMode) {
     const failedBytes = await fs.readFile(path.join(failedWorkspace, 'report.json'));
@@ -73,9 +76,24 @@ try {
     await fs.cp(originalState, statePath, { recursive: true, errorOnExist: true, force: false });
     assert.equal(digest(await fs.readFile(path.join(originalState, 'auralis-translate.sqlite'))), originalDbSha256);
     assert.equal(digest(await fs.readFile(path.join(statePath, 'auralis-translate.sqlite'))), originalDbSha256);
+    const dbPath = path.join(statePath, 'auralis-translate.sqlite');
+    const runId = 'f06ac654-6dce-4075-8fba-b53693e20974';
+    savedPrefix = readRunSnapshot(dbPath, runId);
+    assert.equal(savedPrefix.checkpoints.length, 26);
+    assert.equal(savedPrefix.results.length, 0);
+    const relocated = await relocateCopiedSource({ dbPath, runId,
+      originalStateDir: originalState, copiedStateDir: statePath,
+      expectedSourceSha256: sourceSha256 });
+    const afterRelocation = readRunSnapshot(dbPath, runId);
+    assert.deepEqual(afterRelocation.run, savedPrefix.run);
+    assert.deepEqual(afterRelocation.checkpoints, savedPrefix.checkpoints);
+    assert.deepEqual(afterRelocation.attempts, savedPrefix.attempts);
+    assert.deepEqual(afterRelocation.results, savedPrefix.results);
+    assert.equal(afterRelocation.source.source_locator, relocated.copiedLocator);
+    assert.equal(digest(await fs.readFile(path.join(originalState, 'auralis-translate.sqlite'))), originalDbSha256);
     report.resume_of = { failed_report_sha256: failedReportSha256,
-      copied_state_db_sha256: originalDbSha256,
-      run_id: 'f06ac654-6dce-4075-8fba-b53693e20974', saved_blocks: 26 };
+      copied_state_db_sha256: originalDbSha256, copied_source_relocated: true,
+      run_id: runId, saved_blocks: 26 };
   }
   for (const file of [modelPath, serverPath, cliPath]) assert((await fs.stat(file)).isFile());
   const git = await waitForExit(startProcess('git', ['rev-parse', 'HEAD'], root), 10_000);
@@ -176,6 +194,13 @@ try {
   report.run_id = runId;
   report.run_status = JSON.parse(await command(['status', statePath, runId]));
   assert.equal(report.run_status.state, 'validated');
+  if (resumeMode) {
+    const completed = readRunSnapshot(path.join(statePath, 'auralis-translate.sqlite'), runId);
+    assertSavedPrefix(savedPrefix, completed);
+    assert.equal(completed.checkpoints.length, 93);
+    assert.equal(completed.results.length, 1);
+    report.saved_prefix_preserved = true;
+  }
   const output = await fs.readFile(outputPath);
   report.output_sha256 = digest(output);
   const translatedInspection = await command(['inspect', outputPath]);
