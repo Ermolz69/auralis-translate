@@ -747,6 +747,22 @@ tasks:
     cmds:
       - task: eval:data:youtube:mingfay:candidate:materialize
       - node eval/scripts/check-source-inventory.mjs eval/corpora/youtube-mingfay-candidate-v1.json --require-candidate-bytes
+
+  eval:data:youtube:mingfay:media:preflight:
+    desc: Verify the frozen video format and bounded private media download plan
+    env:
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - node --check eval/scripts/acquire-youtube-mingfay-media.mjs
+      - node eval/scripts/acquire-youtube-mingfay-media.mjs --preflight
+
+  eval:data:youtube:mingfay:media:acquire:
+    desc: Download one pinned 360p video/audio format for private local pilot only
+    env:
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - task: eval:data:youtube:mingfay:media:preflight
+      - node eval/scripts/acquire-youtube-mingfay-media.mjs
   eval:data:candidates:bytes:
     desc: Check all retained Commons candidate bytes against the non-admitted inventory
     cmds:
