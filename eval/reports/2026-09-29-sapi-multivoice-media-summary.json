@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "experiment_id": "SAPI-MULTIVOICE-MEDIA-2026-09-29-v1",
+  "status": "passed_technical_probe",
+  "auralis_branch": "feat/real-tts-pilot",
+  "auralis_plan_commit": "3b6b5cc",
+  "auralis_result_commit": "c788ddc",
+  "source_report_sha256": "d8e41a037fe509377a6e76bb59a5d98468af38b75c726e962db65cda036e89a0",
+  "playback_record_sha256": "8c781475f30301d98bf2924b7fe3d12b65d4cfcced468134fe85066a22dec4b",
+  "source_probe_sha256": "c229e64c9619548ea4c7174b17b17e1a7a7c1ea625eead2c1b732cdf591bcc45",
+  "fixture_sha256": "78cf0d9ac2d1f35e2f4dc0cecf77839c9a1a0f24f8c53ad19ea369346f85632c",
+  "ffmpeg_sha256": "4044b3924c977ad31229d504c5d5b8685f9553124fbaff6e9c99048b42830341",
+  "ffprobe_sha256": "fc37ca23d31ee08bb8f7e108edf3822f6ef3efc1a8d306bbe0b779190230710b",
+  "voices": [
+    {
+      "voice_id": "Microsoft Irina Desktop",
+      "wav_sha256": "798763e6c70c455cabe9e21d55b74350a1c08ce8671ba468cde13cad48db3d80",
+      "duration_ms": 3564,
+      "original_overrun_ms": 1164,
+      "original_window_ms": [0, 2400],
+      "synthetic_window_ms": [0, 4000]
+    },
+    {
+      "voice_id": "Microsoft Pavel",
+      "wav_sha256": "51915592e334218d9cbe8851abe71befc214a87d1834273493576a757c237af1",
+      "duration_ms": 3169,
+      "original_overrun_ms": 1269,
+      "original_window_ms": [2400, 4300],
+      "synthetic_window_ms": [4500, 8200]
+    }
+  ],
+  "media": {
+    "sha256": "fbf70171c36279ef87265d3de6422521408e3f963cd549567e21ea5f56e495f9",
+    "bytes": 96209,
+    "duration_ms": 10000,
+    "video": "h264 640x360 25 fps",
+    "audio": "aac mono 48000 Hz",
+    "decoded_pcm_sample_rate_hz": 22050,
+    "first_rms": 902.1479322005323,
+    "gap_rms": 0,
+    "second_rms": 1613.6661542773702,
+    "clipped_samples": 0
+  },
+  "playback": {
+    "status": "player_process_completed",
+    "player_version": "ffplay 8.1.2-full_build-www.gyan.dev"
+  },
+  "human_listening_review": "not_performed",
+  "natural_source": false,
+  "approved_spoken_script": false,
+  "original_cue_fit": "failed",
+  "production_media_pipeline": "not_implemented"
+}
