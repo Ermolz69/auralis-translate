@@ -46,16 +46,19 @@ assert.deepEqual(data.model_comparison, await loadModelComparison(root));
 assert.deepEqual(data.delivery_plan, await loadDeliveryPlan(root));
 assert.deepEqual(data.source_candidates, await loadSourceCandidates(root));
 assert.deepEqual(data.source_candidates, {
-  source_count: 4,
-  inspected_cues: 488,
+  source_count: 5,
+  inspected_cues: 718,
   eligible_cues: 0,
   commerce_revision: '906218083',
   commerce_cues: 123,
   commerce_sha256: 'df2af6ad32f12b55c3067469228d3b9674b7c35e7d8540acd294dd0f986fe46f',
+  mingfay_cues: 230,
+  mingfay_sha256: '42109fc054cba93b0ef343853628b6a248b31664786d579bdefa415ccaacf9ee',
 });
 assert(html.includes('id="source-candidates"'));
-assert(html.includes('488 проверенных реплик, 0 допущенных'));
-assert(html.includes('added machine transcribed subtitles'));
+assert(html.includes('718 проверенных реплик, 0 допущенных'));
+assert(html.includes('Ранее были проверены 4 источника Commons и 488 реплик'));
+assert(html.includes('2026-09-29-youtube-mingfay-caption-candidate.md'));
 assert(html.includes('2026-09-29-commons-cc-commerce-candidate.md'));
 assert(html.includes('id="release-readiness"'));
 assert(html.includes('2026-09-29-release-readiness-after-reg015.md'));
