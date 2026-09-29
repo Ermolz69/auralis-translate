@@ -19,6 +19,7 @@ import { loadInferenceJournal, renderInferenceJournal } from './inference-journa
 import { loadPreflightJournal, renderPreflightJournal } from './preflight-journal-section.mjs';
 import { loadSapiMultivoice, loadSapiMultivoiceMedia } from './sapi-multivoice-section.mjs';
 import { loadSapiOriginalWindow, renderSapiOriginalWindow } from './sapi-original-window-section.mjs';
+import { loadAuralisPrivateSpeech, renderAuralisPrivateSpeech } from './auralis-private-speech-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const dataset = JSON.parse(await fs.readFile(path.join(root, 'eval/corpora/public-demo-v1.json'), 'utf8'));
@@ -43,6 +44,7 @@ const preflightJournal = await loadPreflightJournal(root);
 const sapiMultivoice = await loadSapiMultivoice(root);
 const sapiMultivoiceMedia = await loadSapiMultivoiceMedia(root);
 const sapiOriginalWindow = await loadSapiOriginalWindow(root);
+const auralisPrivateSpeech = await loadAuralisPrivateSpeech(root);
 const evidencePath = path.join(root, 'eval/reports/public-demo-2026-09-27.json');
 if (process.argv[2] === '--capture') {
   const workspace = (await fs.readFile(path.join(root, '.cache/eval/public-demo/latest.txt'), 'utf8')).trim();
@@ -109,6 +111,7 @@ payload.preflight_journal = { sha256: preflightJournal.sha256, chats: 6, preflig
 payload.sapi_multivoice = sapiMultivoice;
 payload.sapi_multivoice_media = sapiMultivoiceMedia;
 payload.sapi_original_window_fit = sapiOriginalWindow;
+payload.auralis_private_speech = auralisPrivateSpeech;
 payload.terms_probe = { success_sha256: termsProbe.success_sha256, failure_sha256: termsProbe.failure_sha256, profile_sha256: termsProbe.profile_sha256, corpus_sha256: termsProbe.corpus_sha256, chat_requests: termsProbe.chat_requests, loopback_requests: termsProbe.loopback_requests };
 const json = JSON.stringify(payload).replaceAll('<', '\\u003c');
 const runRows = benchmark.runs.map(run => `<tr><th scope="row">${run.repetition}</th><td>${number(run.translation_elapsed_ms)}</td><td>${number(run.request_elapsed_sum_ms)}</td><td>${number(run.translation_elapsed_ms - run.request_elapsed_sum_ms)}</td><td>${number(run.offline_reexport_ms)}</td><td>${run.status.completed_blocks}/${run.status.total_blocks}</td></tr>`).join('');
@@ -155,6 +158,7 @@ ${renderIdentifierDiagnostic(identifierDiagnostic)}
 ${renderNeighborContext(neighborContext, escape)}
 ${renderLongV6ModelScreen(longV6ModelScreen, escape)}
 ${renderLongV6CodeModel(longV6CodeModel)}
+${renderAuralisPrivateSpeech(auralisPrivateSpeech)}
 <section id="slot-schema" class="scroll-mt-8 border-t border-slate-200 py-10"><p class="text-sm font-semibold uppercase tracking-[.12em] text-slate-600">Парное сравнение · реальная 1.8B · 29 сентября 2026</p><h2 class="mt-2 text-2xl font-semibold">Ограничение ID пока не доказало улучшение</h2><p class="mt-3 max-w-5xl text-slate-700">На том же авторском слоте 72 сравнили исходную JSON-схему и вариант с жёстко заданными ID 72 и индексом строки 0. Два одинаковых источника и семени на каждую пару, четыре сырых ответа. Оба варианта оба раза вернули ID 72 и «Это не последний поезд.», по 290/30 входных/выходных токенов. Прежний необработанный ответ с ID 73 остаётся подтверждённым сбоем, но эти два новых baseline-запроса его не повторили. Оснований менять рабочий профиль или считать длинный файл пройденным нет.</p><div class="mt-4 flex flex-wrap gap-4 text-sm font-semibold text-blue-700"><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/reports/2026-09-29-slot-schema-ablation.json">Все четыре запроса и сырых ответа</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-29-slot-schema-ablation-results.md">План, замеры и ограничения (EN)</a></div><p class="mt-3 text-xs text-slate-500">SHA-256 журнала: <code class="hash">7a53c67769e59cee113aea10fc25b4e04f77acc6aadd4d9b1fb918fe6d4473d5</code>. Человеческой оценки русского текста нет.</p></section>
 ${renderTermsProbe(termsProbe, escape)}
 <section id="retry-policy" class="my-8 scroll-mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-5 md:p-7"><p class="text-sm font-semibold text-slate-600">Инженерная регрессия · CTX-02 / EVAL-04</p><h2 class="mt-2 text-2xl font-bold">Повтор только после временного сбоя</h2><p class="mt-3 max-w-4xl text-slate-700">Раньше лимит попыток повторял и повреждённый ответ модели. Теперь HTTP 502–504 и временный сетевой сбой могут быть повторены в пределах профиля; HTTP 400, некорректный JSON, нарушение ID и защищённых фактов останавливают блок без checkpoint. Пауза сохраняет приоритет.</p><p class="mt-3 text-sm text-slate-600">Локальные детерминированные проверки: 7 проверок HTTP и отмены, 5 проверок политики ядра, 1 сквозная проверка CLI с отказом 503 и успешным повтором. Это не испытание отказа настоящей модели или восстановления полного файла.</p><a class="mt-3 inline-block text-sm font-semibold text-blue-700 underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-28-typed-provider-retry.md">Воспроизведение и ограничения (EN)</a></section>
