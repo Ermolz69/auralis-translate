@@ -112,6 +112,14 @@ bounded wait policy is fixed and checked, but a new predeclared continuation
 and a complete artifact are still required. This is partial `CTX-02`,
 `LONG-03` and `EVAL-04` engineering evidence, not translation acceptance.
 
+The first [copied-state continuation](../eval/experiments/2026-09-29-v6-timeout-continuation-v1-failure.md)
+failed before inference because its absolute managed-source locator still addressed
+the original state directory. `REG-005` retains the exact CLI/server failure logs,
+reproduces verified source relocation with altered-copy and unsafe-locator controls,
+and leaves both the original timeout and failed copy separate. A [new frozen
+relocated-state attempt](../eval/experiments/2026-09-29-v6-timeout-relocated-continuation-plan.md)
+is pending; no complete 1,024-cue v6 artifact or language quality gate is claimed.
+
 Deferred UI, optional adaptation/precision and ASR remain visible. A completed
 translation CLI milestone does not close the desktop release or audio milestone.
 Reclassify a deferred task only when its stated condition or owner scheduling

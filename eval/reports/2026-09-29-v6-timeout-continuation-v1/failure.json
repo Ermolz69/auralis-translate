@@ -1,0 +1,4 @@
+{
+  "created_at": "2026-09-29T08:12:26.604Z",
+  "error": "Error: Process failed: 1\nmanaged source lies outside the state directory\n\n    at waitForExit (file:///E:/Anything/Projects/Commercial/auralis-translate/eval/scripts/local-process.mjs:34:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async file:///E:/Anything/Projects/Commercial/auralis-translate/eval/scripts/cli-long-v6-timeout-continuation.mjs:106:3"
+}

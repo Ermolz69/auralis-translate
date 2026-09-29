@@ -158,6 +158,10 @@ tasks:
     desc: Verify the archived v6 timeout, durable prefix and absence of a published result
     cmds:
       - node eval/scripts/check-long-v6-timeout.mjs
+  eval:cli:long:v6:relocation-failure-check:
+    desc: Verify the retained first copied-state failure and unchanged original SQLite
+    cmds:
+      - node eval/scripts/check-v6-relocation-failure.mjs
   eval:cli:long:v6:continue-timeout:
     desc: Resume a verified copy of the retained 964-block v6 timeout under a new 30-minute experiment
     env:
@@ -171,6 +175,19 @@ tasks:
       - task: build:release
       - target/release/auralis-translation-cli.exe doctor models/manifests/hy_mt2_1_8b_q4_k_m.context_v6_slot.experimental.json .cache/models/Hy-MT2-1.8B-Q4_K_M.gguf
       - node eval/scripts/cli-long-v6-timeout-continuation.mjs
+  eval:cli:long:v6:continue-relocated:
+    desc: Resume a verified copy after explicit managed-source relocation under a separately frozen 30-minute experiment
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - node --check eval/scripts/cli-long-v6-relocated-continuation.mjs
+      - task: eval:cli:long:v6:timeout-check
+      - task: eval:load:checks
+      - task: test:context-v6
+      - task: build:release
+      - target/release/auralis-translation-cli.exe doctor models/manifests/hy_mt2_1_8b_q4_k_m.context_v6_slot.experimental.json .cache/models/Hy-MT2-1.8B-Q4_K_M.gguf
+      - node eval/scripts/cli-long-v6-relocated-continuation.mjs
   eval:cli:long:v5:failure-check:
     desc: Verify retained long-scene rejection, all request bodies and source identity
     cmds:
@@ -197,7 +214,9 @@ tasks:
       - node eval/scripts/check-scene-pronoun-regression.mjs
       - task: eval:cli:long:v5:failure-check
       - task: eval:cli:long:v6:timeout-check
+      - task: eval:cli:long:v6:relocation-failure-check
       - node --test eval/scripts/tests/long-run-budget.test.mjs
+      - node --test eval/scripts/tests/relocate-copied-source.test.mjs
   test:context-v5:
     desc: Verify the experimental v5 request and strict response boundary
     cmds:
@@ -538,6 +557,7 @@ tasks:
       - node --test eval/scripts/tests/long-file.test.mjs
       - node --test eval/scripts/tests/local-process.test.mjs
       - node --test eval/scripts/tests/long-run-budget.test.mjs
+      - node --test eval/scripts/tests/relocate-copied-source.test.mjs
   eval:cli:long:interruption:
     desc: Kill and resume real long SRT and WebVTT runs with supplied checked assets; retain local comparison and resource reports
     cmds:

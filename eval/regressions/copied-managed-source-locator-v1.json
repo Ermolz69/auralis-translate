@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "REG-005",
+  "status": "fixed_relocation_helper_pending_real_continuation",
+  "severity": "major",
+  "source_family": "project_authored_synthetic_long_file",
+  "failure": "A byte-identical copy of the stopped v6 state was rejected because its absolute managed-source locator still pointed into the original state directory.",
+  "expected_invariant": "Only a verified copy may rewrite its own managed-source locator; the original state and source remain byte-identical, and all run checkpoints and attempts remain unchanged.",
+  "reproduction": {
+    "saved_blocks": 964,
+    "planned_blocks": 1024,
+    "published_results": 0,
+    "cli_error": "managed source lies outside the state directory",
+    "new_model_requests": 0
+  },
+  "related_controls": [
+    "An altered copied managed-source file rejects relocation without updating SQLite.",
+    "A stored locator outside the original managed directory rejects relocation without updating SQLite."
+  ],
+  "negative_control": "A byte-identical managed-source copy with matching run and translation hashes may update only the copy's locator.",
+  "test_task": "task eval:load:checks",
+  "failure_cli_log_sha256": "4bce60f2b111913bed459d51d0aad3ce6a2c14c14e53ffa7c8aaa6613c880ae1",
+  "human_review": "not_applicable_to_state_relocation",
+  "evidence_record": "eval/experiments/2026-09-29-v6-timeout-continuation-v1-failure.md"
+}
