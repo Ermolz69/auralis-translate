@@ -5,6 +5,7 @@ import { digest } from './flores-file-fixture.mjs';
 
 const timeoutStem = '2026-09-29-long-v6-scene-timeout';
 const continuationStem = '2026-09-29-long-v6-relocated-continuation-failure';
+const postlengthStem = '2026-09-29-long-v6-postlength-v2';
 const repo = 'https://github.com/Ermolz69/auralis-translate/blob/main/';
 
 export async function loadLongV6Outcomes(root) {
@@ -73,8 +74,37 @@ export async function loadLongV6ModelScreen(root) {
     human_review: 'missing', quality_verdict: 'unreviewed', full_long_file: false };
 }
 
+export async function loadLongV6Postlength(root) {
+  const summaryBytes = await fs.readFile(path.join(root, `eval/reports/${postlengthStem}-summary.json`));
+  assert.equal(digest(summaryBytes), '8a1007c11133a5da95936e8d794c626b3869295fe3c068f28cb603c658fe9d4b');
+  const summary = JSON.parse(summaryBytes);
+  const reportBytes = await fs.readFile(path.join(root, `eval/reports/${summary.report_file}`));
+  assert.equal(digest(reportBytes), summary.report_sha256);
+  const report = JSON.parse(reportBytes);
+  assert.equal(summary.outcome, 'passed_structural_with_identifier_loss_after_harness_failure');
+  assert.equal(summary.quality_verdict, 'failed_identifier_preservation_unreviewed');
+  assert.equal(summary.initial_task_exit, 1);
+  assert.equal(summary.checkpoints_after, 1024);
+  assert.equal(summary.text_slot_count, 1280);
+  assert.equal(summary.identifier_violation_count, 665);
+  assert.equal(summary.offline_reexport, 'byte_identical');
+  assert.equal(report.identifier_violations.length, 665);
+  const examples = [
+    report.identifier_violations.find(row => row.segment_id === 2),
+    report.identifier_violations.find(row => row.segment_id >= 512),
+    report.identifier_violations.find(row => row.segment_id >= 1000),
+  ];
+  assert(examples.every(Boolean));
+  return { ...summary, summary_sha256: digest(summaryBytes), examples };
+}
+
 export function renderLongV6Outcomes(data, escape) {
   return `<section id="long-v6-outcomes" class="my-8 scroll-mt-8 rounded-2xl border border-amber-200 bg-amber-50 p-5 md:p-7"><p class="text-sm font-semibold text-amber-800">Инженерный опыт · v6 · не пройден</p><h2 class="mt-2 text-2xl font-bold">1 024 реплики: сохранение есть, полного перевода нет</h2><p class="mt-3 max-w-4xl text-slate-700">На том же авторском китайском SRT схема v6 связала ответ с целью: ранее ошибочный ID на реплике 72 не повторился в одном наблюдении. Первый длинный прогон остановил лимит тестового процесса на 964/1 024 блоках. Копия базы с прежним абсолютным путём исходника была отвергнута до инференса. После проверенного переноса пути в копии модель дошла до 982/1 024, затем на реплике 983 повторяла испорченный JSON и инструкции до лимита 256 токенов. CLI отверг ответ. Во всех трёх состояниях ноль готовых результатов и ни одного частичного SRT.</p><div class="mt-5 overflow-x-auto"><table class="measurement"><thead><tr><th>Попытка</th><th>Сохранённые блоки</th><th>Новые запросы</th><th>Причина остановки</th></tr></thead><tbody><tr><td>Исходная v6</td><td>${data.timeout.saved_blocks}/1 024</td><td>${data.timeout.request_count}</td><td>Лимит процесса ${data.timeout.process_timeout_ms / 60_000} минут</td></tr><tr><td>Первая копия</td><td>${data.copied_state.saved_blocks}/1 024</td><td>${data.copied_state.new_model_requests}</td><td>Абсолютный путь к управляемому исходнику</td></tr><tr><td>Проверенная копия</td><td>${data.continuation.saved_blocks}/1 024</td><td>${data.continuation.new_request_count}</td><td>Реплика ${data.continuation.failure_segment_id}: ответ оборвался по лимиту</td></tr></tbody></table></div><p class="mt-4 text-sm text-slate-700">Последний запрос: ${data.continuation.prompt_tokens} входных / ${data.continuation.completion_tokens} выходных токенов, ${data.continuation.request_elapsed_ms} мс; причина завершения <code>${escape(data.continuation.finish_reason)}</code>. Пиковая отслеживаемая рабочая память процессов ${(data.continuation.peak_tracked_working_set_bytes / 1024 ** 3).toFixed(2)} ГиБ. Показание GPU ${data.continuation.peak_device_gpu_mib} МиБ относится ко всему устройству и не доказывает выгрузку слоёв. Синтетический источник и отсутствие независимой проверки не подтверждают качество длинного естественного файла.</p><div class="mt-4 flex flex-wrap gap-4 text-sm font-semibold text-blue-700"><a class="underline" href="${repo}eval/experiments/2026-09-29-long-v6-scene-timeout.md">Первый лимит и условия</a><a class="underline" href="${repo}eval/experiments/2026-09-29-v6-timeout-continuation-v1-failure.md">Отказ первой копии</a><a class="underline" href="${repo}eval/experiments/2026-09-29-long-v6-relocated-continuation-failure.md">Разбор сбоя модели</a><a class="underline" href="${repo}eval/reports/${continuationStem}.json">Сводка и сырой ответ</a><a class="underline" href="${repo}eval/reports/${continuationStem}-journal.json.gz">Все ${data.continuation.total_request_count} запросов</a></div></section>`;
+}
+
+export function renderLongV6Postlength(data, escape) {
+  const exampleRows = data.examples.map(row => `<tr><th scope="row">${row.segment_id}</th><td lang="zh-Hans">${escape(row.source_zh)}</td><td>${escape(row.candidate_ru)}</td><td>${escape(row.expected_identifier)}</td></tr>`).join('');
+  return `<section id="long-v6-postlength" class="my-8 scroll-mt-8 rounded-2xl border border-rose-200 bg-rose-50 p-5 md:p-7"><p class="text-sm font-semibold text-rose-800">Позднее восстановление · 1 024 реплики · качество не пройдено</p><h2 class="mt-2 text-2xl font-bold">Файл собран, но в тексте потеряны коды</h2><p class="mt-3 max-w-4xl text-slate-700">После сохранённых 982 блоков та же 1.8B-модель завершила копию исходного запуска: ${data.checkpoints_after}/1 024 checkpoints, ${data.text_slot_count} строк, ${data.total_request_count} сырых запросов. Отдельная офлайн-проверка подтвердила порядок реплик, тайминг, защищённые байты и побайтно одинаковый повторный экспорт. Исходная задача завершилась с ошибкой проверочного скрипта; первая офлайн-проверка выявила потерю кодов. Оба сбоя сохранены, поздняя проверка не запускала модель повторно.</p><div class="mt-5 grid gap-3 sm:grid-cols-3"><div class="rounded-xl border border-rose-200 bg-white p-4"><p class="text-sm text-slate-600">Несохранённый код</p><p class="mt-1 text-2xl font-semibold">${data.identifier_violation_count} / ${data.text_slot_count}</p></div><div class="rounded-xl border border-rose-200 bg-white p-4"><p class="text-sm text-slate-600">Реплики с кодом во всех строках</p><p class="mt-1 text-2xl font-semibold">${data.code_preserved_cues} / ${data.cue_count}</p></div><div class="rounded-xl border border-rose-200 bg-white p-4"><p class="text-sm text-slate-600">Новые чаты после 982 блоков</p><p class="mt-1 text-2xl font-semibold">${data.new_chat_count}</p></div></div><p class="mt-4 text-sm text-slate-700">Из 665 нарушений: 656 пропусков, 8 кириллических записей «АУР» и 1 неверный либо повторный ASCII-код. Они есть в начале, середине и конце файла. Это факты внутри переводимых строк, а не форматная структура SRT; структурный результат нельзя считать качественным переводом. Китайско-русский редактор текст не оценивал; источник синтетический.</p><div class="mt-5 overflow-x-auto"><table class="measurement"><thead><tr><th>Реплика</th><th>Китайский исходник</th><th>Сохранённый русский текст</th><th>Ожидаемый код</th></tr></thead><tbody>${exampleRows}</tbody></table></div><p class="mt-4 text-sm text-slate-600">Новые чаты: ${data.new_chat_prompt_tokens} входных / ${data.new_chat_completion_tokens} выходных токенов, ${data.new_chat_elapsed_sum_ms.toLocaleString('ru-RU')} мс суммарного времени запросов. Пик отслеживаемой рабочей памяти ${(data.resources.peak_tracked_working_set_bytes / 1024 ** 3).toFixed(2)} ГиБ. Показание GPU ${data.resources.peak_device_gpu_mib} МиБ относится ко всему устройству. Естественный длинный файл, независимая оценка и выпуск остаются открытыми.</p><div class="mt-4 flex flex-wrap gap-4 text-sm font-semibold text-blue-700"><a class="underline" href="${repo}eval/experiments/2026-09-29-long-v6-postlength-results.md">Ход опыта и ограничения</a><a class="underline" href="${repo}eval/reports/${postlengthStem}-summary.json">Сводка JSON</a><a class="underline" href="${repo}eval/reports/${postlengthStem}-report.json">Все 665 нарушений и строки</a><a class="underline" href="${repo}eval/reports/${postlengthStem}-journal.json.gz">Все 3 847 сырых запросов</a></div></section>`;
 }
 
 export function renderLongV6ModelScreen(data, escape) {
