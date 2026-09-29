@@ -679,6 +679,20 @@ tasks:
     desc: Validate source inventory examples and cross-source admission controls
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/source-inventory.test.mjs
+  eval:data:youtube:mingfay:preflight:
+    desc: Check the declared video, pinned extractor and bounded metadata-only command
+    env:
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - node --check eval/scripts/inventory-youtube-mingfay.mjs
+      - node eval/scripts/inventory-youtube-mingfay.mjs --preflight
+  eval:data:youtube:mingfay:inventory:
+    desc: Inventory one declared Mandarin YouTube video's metadata and caption keys without downloading
+    env:
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - task: eval:data:youtube:mingfay:preflight
+      - node eval/scripts/inventory-youtube-mingfay.mjs
       - node eval/scripts/check-source-inventory.mjs eval/corpora/source-inventory-example-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-inspected-candidates-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-cc-commerce-candidate-v1.json
