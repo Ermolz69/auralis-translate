@@ -108,6 +108,15 @@ reproduction found that v1 can insert an ASCII code before a mixed-script
 `АUR-0089` candidate. An exclusive checked v2 manifest now rejects the
 lookalike before checkpoint commit, with related/negative controls. V1 and its
 real-run evidence remain unchanged; v2 has no real-model or human-quality gate.
+The bounded [cue-89 paired decoding screen](../eval/experiments/2026-09-29-reg014-cue89-decoding-results.md)
+found raw exact code in 2/3 temperature-0.7 and 3/3 greedy responses on one
+synthetic source; one 0.7 answer also lost source-prefix meaning. This does
+not select decoding for release. Its new changed-time control confirmed the
+existing advisory contract, so a separately versioned
+[strict-time v3 policy](reference/strict-source-clock-time-v1.md) now rejects
+clock-time differences before checkpoint in fixtures. Full-file completion,
+human review and false-positive measurement remain open. [REG-016](../eval/regressions/cue89-omitted-code-and-time-guard-v1.json)
+retains the actual omission and new related/negative controls in catalog v8.
 
 The next independently executable tasks are `CTX-02`, `DATA-03`, `DATA-04`,
 `EVAL-04` and the unfinished `VOICE-01` handoff.

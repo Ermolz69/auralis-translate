@@ -13,7 +13,7 @@ import { loadLongV5Failure, renderLongV5Failure } from './long-v5-failure-sectio
 import { loadLongV6Outcomes, loadLongV6ModelScreen, loadLongV6Postlength, renderLongV6Outcomes, renderLongV6ModelScreen, renderLongV6Postlength } from './long-v6-outcomes-section.mjs';
 import { loadLongV6CodeModel, renderLongV6CodeModel } from './long-v6-code-model-section.mjs';
 import { loadReg009LivePrefix, renderReg009LivePrefix } from './reg009-live-prefix-section.mjs';
-import { loadReg009LongCli, renderReg009LongCli } from './reg009-long-cli-section.mjs';
+import { loadReg009LongCli, renderReg009LongCli, renderReg014Decode } from './reg009-long-cli-section.mjs';
 import { loadIdentifierDiagnostic, renderIdentifierDiagnostic } from './identifier-diagnostic-section.mjs';
 import { loadNeighborContext, renderNeighborContext } from './neighbor-context-section.mjs';
 import { loadTermsProbe, renderTermsProbe } from './terms-section.mjs';
@@ -165,6 +165,7 @@ ${renderNeighborContext(neighborContext, escape)}
 ${renderLongV6ModelScreen(longV6ModelScreen, escape)}
 ${renderLongV6CodeModel(longV6CodeModel)}
 ${renderReg009LongCli(reg009LongCli)}
+${renderReg014Decode(reg009LongCli)}
 ${renderReg009LivePrefix(reg009LivePrefix)}
 ${renderAuralisPrivateSpeech(auralisPrivateSpeech)}
 <section id="slot-schema" class="scroll-mt-8 border-t border-slate-200 py-10"><p class="text-sm font-semibold uppercase tracking-[.12em] text-slate-600">Парное сравнение · реальная 1.8B · 29 сентября 2026</p><h2 class="mt-2 text-2xl font-semibold">Ограничение ID пока не доказало улучшение</h2><p class="mt-3 max-w-5xl text-slate-700">На том же авторском слоте 72 сравнили исходную JSON-схему и вариант с жёстко заданными ID 72 и индексом строки 0. Два одинаковых источника и семени на каждую пару, четыре сырых ответа. Оба варианта оба раза вернули ID 72 и «Это не последний поезд.», по 290/30 входных/выходных токенов. Прежний необработанный ответ с ID 73 остаётся подтверждённым сбоем, но эти два новых baseline-запроса его не повторили. Оснований менять рабочий профиль или считать длинный файл пройденным нет.</p><div class="mt-4 flex flex-wrap gap-4 text-sm font-semibold text-blue-700"><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/reports/2026-09-29-slot-schema-ablation.json">Все четыре запроса и сырых ответа</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-29-slot-schema-ablation-results.md">План, замеры и ограничения (EN)</a></div><p class="mt-3 text-xs text-slate-500">SHA-256 журнала: <code class="hash">7a53c67769e59cee113aea10fc25b4e04f77acc6aadd4d9b1fb918fe6d4473d5</code>. Человеческой оценки русского текста нет.</p></section>
