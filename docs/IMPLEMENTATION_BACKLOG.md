@@ -77,7 +77,15 @@ does not activate implementation by being stored here.
 | VOICE-06 | Dubbing pilot release decision | planned | VOICE-05, RELEASE-04 | Playback/listener results, media provenance and audio limits separate from translation gate |
 | VOICE-07 | Maintain speech and pronunciation regression controls | planned | VOICE-01, EVAL-04 | Real names/amounts/homographs/scene-boundary audio, lineage, fit/clipping and listening controls |
 | ASR-01 | Transcript creation/alignment without source subtitles | deferred | VOICE-01 | Separate Auralis real ASR contract and recognition/alignment evaluation; not needed for subtitle pilot |
+
 | LANGUAGE-01 | Separate Japanese admission and release evidence | deferred | RELEASE-04 | Japanese scenes, names, context, reviewers and independent G1–G9; no Chinese transfer claim |
+
+`VOICE-02` and `VOICE-07` also have a local Auralis
+[SAPI WAV boundary regression](../eval/experiments/2026-09-29-auralis-sapi-wav-boundary.md):
+malformed RIFF and incomplete PCM frames are rejected, and two retained real
+SAPI WAVs keep their pinned hashes and durations. This is technical parser
+evidence on a synthetic script; no human listening, fit acceptance or natural
+media pilot is claimed.
 
 ## Current handoff
 
