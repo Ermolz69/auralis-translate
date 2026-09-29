@@ -46,6 +46,8 @@ pub struct ModelProfile {
     #[serde(default)]
     pub source_prefix_repair_v2: bool,
     #[serde(default)]
+    pub strict_source_times: bool,
+    #[serde(default)]
     pub prompt_template_sha256: Option<String>,
     #[serde(default = "default_target_segments")]
     pub target_segments_per_block: usize,
@@ -143,6 +145,11 @@ impl ModelProfile {
         {
             return Err(ProfileError::Invalid(
                 "source prefix repair v2 requires an exclusive checked strict v6 profile",
+            ));
+        }
+        if self.strict_source_times && !self.source_prefix_repair_v2 {
+            return Err(ProfileError::Invalid(
+                "strict source times require checked source prefix repair v2",
             ));
         }
         let expected_template = match self.prompt_version {

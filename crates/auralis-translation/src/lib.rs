@@ -4,8 +4,8 @@ mod ports;
 
 pub use application::{
     PlannedBatches, TranslateBatchError, TranslateRunError, source_identifier_mismatch,
-    source_identifiers, translate_batch, translate_batch_with_control, translate_planned_run,
-    translate_planned_run_with_control, translate_planned_run_with_policy,
+    source_identifiers, source_time_mismatch, translate_batch, translate_batch_with_control,
+    translate_planned_run, translate_planned_run_with_control, translate_planned_run_with_policy,
     translate_planned_run_with_progress,
 };
 pub use domain::{

@@ -260,6 +260,15 @@ impl LlamaCppProvider {
                         )),
                         false,
                     )
+                } else if self.profile.strict_source_times
+                    && auralis_translation::source_time_mismatch(source_line, &candidate)
+                {
+                    (
+                        Err(ProviderError::Permanent(
+                            "source clock-time mismatch in restored target line".into(),
+                        )),
+                        false,
+                    )
                 } else {
                     (Ok(candidate), inserted)
                 }

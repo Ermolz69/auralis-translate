@@ -12,6 +12,7 @@ mod validate_batch_response;
 
 pub use identifier_mismatch::{source_identifier_mismatch, source_identifiers};
 pub use planned_batches::PlannedBatches;
+pub use time_mismatch::source_time_mismatch;
 pub use translate_batch::translate_batch;
 pub use translate_batch_error::TranslateBatchError;
 pub use translate_batch_with_control::translate_batch_with_control;

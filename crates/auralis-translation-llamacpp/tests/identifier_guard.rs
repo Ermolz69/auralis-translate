@@ -23,6 +23,9 @@ const PREFIX_REPAIR_PROFILE: &[u8] = include_bytes!(
 const PREFIX_REPAIR_V2_PROFILE: &[u8] = include_bytes!(
     "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v6_prefix_repair_v2.experimental.json"
 );
+const PREFIX_REPAIR_V3_PROFILE: &[u8] = include_bytes!(
+    "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v6_prefix_repair_v3.experimental.json"
+);
 
 #[derive(Default)]
 struct MemoryStore(Vec<BlockCheckpoint>);
@@ -282,6 +285,19 @@ fn real_cyrillic_transposition_stays_rejected_with_related_and_negative_controls
         store.0[0].diagnostics[0].code,
         DiagnosticCode::SourcePrefixInserted
     );
+    {
+        let candidate = "DOC-42: Поезд отправится в 08:10.";
+        let (result, store, journal, _) =
+            run_case_with_profile(PREFIX_REPAIR_PROFILE, source, candidate)?;
+        assert!(result.is_err(), "{candidate}");
+        assert!(store.0.is_empty(), "{candidate}");
+        assert_eq!(
+            journal.0.lock().map_err(|_| "journal poisoned")?[0]
+                .restored_candidate
+                .as_deref(),
+            Some(candidate)
+        );
+    }
     let (no_code, store, _, _) = run_case_with_profile(
         PREFIX_REPAIR_PROFILE,
         "列车将在 08:10 出发。",
@@ -289,6 +305,75 @@ fn real_cyrillic_transposition_stays_rejected_with_related_and_negative_controls
     )?;
     assert_eq!(no_code?[0].lines, ["Поезд отправится в 08:10."]);
     assert!(store.0[0].diagnostics.is_empty());
+    Ok(())
+}
+
+#[test]
+fn strict_time_profile_rejects_changed_or_missing_clock_time_before_checkpoint()
+-> Result<(), Box<dyn Error>> {
+    let source = "工程 AUR-0089：列车将在 08:10 出发。";
+    let profile = ModelProfile::from_json(PREFIX_REPAIR_V3_PROFILE)?;
+    assert!(profile.source_prefix_repair_v2);
+    assert!(profile.strict_source_times);
+    assert!(!ModelProfile::from_json(PREFIX_REPAIR_V2_PROFILE)?.strict_source_times);
+    let mut invalid: Value = serde_json::from_slice(PREFIX_REPAIR_PROFILE)?;
+    invalid["strict_source_times"] = json!(true);
+    assert!(ModelProfile::from_json(&serde_json::to_vec(&invalid)?).is_err());
+    for candidate in [
+        "Поезд отправится в 08:11.",
+        "Поезд отправится.",
+        "Поезд отправится в 08:10 и 08:10.",
+    ] {
+        let (legacy, legacy_store, _, legacy_request) =
+            run_case_with_profile(PREFIX_REPAIR_V2_PROFILE, source, candidate)?;
+        assert!(legacy.is_ok(), "{candidate}");
+        assert_eq!(legacy_store.0.len(), 1);
+        assert!(
+            legacy_store.0[0]
+                .diagnostics
+                .iter()
+                .any(|diagnostic| diagnostic.code == DiagnosticCode::TimeMismatch)
+        );
+        let (strict, strict_store, journal, strict_request) =
+            run_case_with_profile(PREFIX_REPAIR_V3_PROFILE, source, candidate)?;
+        assert_eq!(legacy_request, strict_request);
+        assert!(strict.is_err(), "{candidate}");
+        assert!(strict_store.0.is_empty(), "{candidate}");
+        let attempts = journal.0.lock().map_err(|_| "journal poisoned")?;
+        assert_eq!(
+            attempts[0].outcome,
+            InferenceRequestOutcome::InvalidCandidate
+        );
+        assert_eq!(attempts[0].restored_candidate.as_deref(), Some(candidate));
+        assert!(attempts[0].raw_response.is_some());
+    }
+    for candidate in ["Поезд отправится в 08:10.", "Поезд отправится в 8:10."]
+    {
+        let (accepted, store, _, _) =
+            run_case_with_profile(PREFIX_REPAIR_V3_PROFILE, source, candidate)?;
+        assert!(accepted.is_ok(), "{candidate}");
+        assert_eq!(store.0.len(), 1);
+        assert!(
+            !store.0[0]
+                .diagnostics
+                .iter()
+                .any(|diagnostic| diagnostic.code == DiagnosticCode::TimeMismatch)
+        );
+    }
+    let (exact, exact_store, _, _) = run_case_with_profile(
+        PREFIX_REPAIR_V3_PROFILE,
+        source,
+        "AUR-0089: Поезд отправится в 08:10.",
+    )?;
+    assert!(exact.is_ok());
+    assert!(exact_store.0[0].diagnostics.is_empty());
+    let (no_code, no_code_store, _, _) = run_case_with_profile(
+        PREFIX_REPAIR_V3_PROFILE,
+        "列车将在 08:10 出发。",
+        "Поезд отправится в 08:10.",
+    )?;
+    assert!(no_code.is_ok());
+    assert!(no_code_store.0[0].diagnostics.is_empty());
     Ok(())
 }
 
