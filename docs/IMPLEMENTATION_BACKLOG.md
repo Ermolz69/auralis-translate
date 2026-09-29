@@ -84,8 +84,13 @@ does not activate implementation by being stored here.
 `CTX-02` and `EVAL-04` now have an opt-in [provider review diagnostic
 contract](reference/provider-review-diagnostic-v1.md) and core/SQLite checks.
 The new `source_prefix_inserted` flag is validated before checkpoint commit and
-again on resume. It is reserved for deterministic code insertion requiring review;
-no repair policy or model profile has been selected, and REG-009 stays open.
+again on resume. A separate [development policy](reference/source-prefix-repair-v1.md)
+and checked experimental manifest insert only one unambiguous source-prefix
+identifier, retaining the raw response and a review flag. Its [bounded real-model
+screen](../eval/experiments/2026-09-29-reg-009-live-prefix-repair-plan.md) is
+predeclared after [fixture acceptance](../eval/experiments/2026-09-29-reg-009-prefix-repair-fixture.md).
+The policy is not selected for release; REG-009 and meaning review
+remain open.
 
 The next independently executable tasks are `CTX-02`, `DATA-03`, `DATA-04`,
 `EVAL-04` and the unfinished `VOICE-01` handoff.

@@ -6,10 +6,10 @@ use crate::{
     local_http::LocalHttp,
 };
 use auralis_translation::{
-    InferenceRequestFinish, InferenceRequestId, InferenceRequestJournal, InferenceRequestKind,
-    InferenceRequestOutcome, InferenceRequestStart, LanguageCode, ProviderError, ProviderResponse,
-    RunControl, RunId, SegmentId, SourceHash, TargetSegment, TranslationBatch, TranslationProvider,
-    source_identifier_mismatch,
+    DiagnosticCode, InferenceRequestFinish, InferenceRequestId, InferenceRequestJournal,
+    InferenceRequestKind, InferenceRequestOutcome, InferenceRequestStart, LanguageCode,
+    ProviderError, ProviderResponse, RunControl, RunId, SegmentId, SourceHash, TargetSegment,
+    TranslationBatch, TranslationDiagnostic, TranslationProvider, source_identifier_mismatch,
 };
 use reqwest::Url;
 use reqwest::header::CONTENT_TYPE;
@@ -176,7 +176,7 @@ impl LlamaCppProvider {
         prompt_text: String,
         prepared: &crate::chinese_fidelity_prompt::ChineseFidelityPrompt,
         control: Option<(&dyn RunControl, RunId)>,
-    ) -> Result<String, ProviderError> {
+    ) -> Result<(String, bool), ProviderError> {
         let payload = json!({
             "model": self.profile.model_alias,
             "messages": [{"role": "user", "content": prompt_text}],
@@ -238,16 +238,27 @@ impl LlamaCppProvider {
             })
             .and_then(|decoded| prepared.restore(&decoded));
         let restored_candidate = restored.as_ref().ok().cloned();
-        let translated = if self.profile.strict_source_identifiers
-            && restored_candidate
-                .as_deref()
-                .is_some_and(|candidate| source_identifier_mismatch(source_line, candidate))
-        {
-            Err(ProviderError::Permanent(
-                "source identifier mismatch in restored target line".into(),
-            ))
-        } else {
-            restored
+        let (translated, inserted_prefix) = match restored {
+            Ok(candidate) => {
+                let (candidate, inserted) = if self.profile.source_prefix_repair {
+                    crate::source_prefix_repair::apply(source_line, candidate)
+                } else {
+                    (candidate, false)
+                };
+                if self.profile.strict_source_identifiers
+                    && source_identifier_mismatch(source_line, &candidate)
+                {
+                    (
+                        Err(ProviderError::Permanent(
+                            "source identifier mismatch in restored target line".into(),
+                        )),
+                        false,
+                    )
+                } else {
+                    (Ok(candidate), inserted)
+                }
+            }
+            Err(error) => (Err(error), false),
         };
         if let Some(journal) = &self.inference_journal {
             let (prompt_tokens, completion_tokens) = response
@@ -304,7 +315,7 @@ impl LlamaCppProvider {
             Err(error) => Err(error),
             Ok(http) => match http.body_result() {
                 Err(error) => Err(error),
-                Ok(_) => translated,
+                Ok(_) => translated.map(|line| (line, inserted_prefix)),
             },
         }
     }
@@ -507,7 +518,7 @@ impl LlamaCppProvider {
         &self,
         batch: &TranslationBatch,
         control: Option<(&dyn RunControl, RunId)>,
-    ) -> Result<ProviderResponse, ProviderError> {
+    ) -> Result<(ProviderResponse, Vec<TranslationDiagnostic>), ProviderError> {
         if matches!(self.profile.prompt_version, 4..=6)
             && batch.language_pair().source() != LanguageCode::Chinese
         {
@@ -569,6 +580,7 @@ impl LlamaCppProvider {
             ));
         }
         let mut translations = Vec::with_capacity(batch.targets().len());
+        let mut diagnostics = Vec::new();
         for segment in batch.targets() {
             let segment_glossary = batch
                 .glossary()
@@ -606,7 +618,7 @@ impl LlamaCppProvider {
                             batch.approved_terms(),
                         )
                     };
-                    lines.push(self.translate_v5_line(
+                    let (line, inserted_prefix) = self.translate_v5_line(
                         batch,
                         segment,
                         line_index,
@@ -614,7 +626,19 @@ impl LlamaCppProvider {
                         prompt_text,
                         &prepared,
                         control,
-                    )?);
+                    )?;
+                    if inserted_prefix {
+                        diagnostics.push(TranslationDiagnostic {
+                            code: DiagnosticCode::SourcePrefixInserted,
+                            segment_id: segment.id(),
+                            line_index: u32::try_from(line_index).map_err(|_| {
+                                ProviderError::Permanent(
+                                    "line index exceeds diagnostic range".into(),
+                                )
+                            })?,
+                        });
+                    }
+                    lines.push(line);
                     continue;
                 }
                 let prompt_text = match self.profile.prompt_version {
@@ -639,10 +663,13 @@ impl LlamaCppProvider {
                 lines,
             });
         }
-        Ok(ProviderResponse {
-            schema_version: RESPONSE_SCHEMA_VERSION,
-            translations,
-        })
+        Ok((
+            ProviderResponse {
+                schema_version: RESPONSE_SCHEMA_VERSION,
+                translations,
+            },
+            diagnostics,
+        ))
     }
 }
 
@@ -692,7 +719,13 @@ fn parse_preflight_json(
 
 impl TranslationProvider for LlamaCppProvider {
     fn translate(&self, batch: &TranslationBatch) -> Result<ProviderResponse, ProviderError> {
+        if self.profile.source_prefix_repair {
+            return Err(ProviderError::Permanent(
+                "source prefix repair requires diagnostic-aware run".into(),
+            ));
+        }
         self.translate_controlled(batch, None)
+            .map(|(response, _)| response)
     }
 
     fn translate_with_control(
@@ -700,6 +733,20 @@ impl TranslationProvider for LlamaCppProvider {
         batch: &TranslationBatch,
         control: &dyn RunControl,
     ) -> Result<ProviderResponse, ProviderError> {
+        if self.profile.source_prefix_repair {
+            return Err(ProviderError::Permanent(
+                "source prefix repair requires diagnostic-aware run".into(),
+            ));
+        }
+        self.translate_controlled(batch, Some((control, batch.run_id())))
+            .map(|(response, _)| response)
+    }
+
+    fn translate_with_control_and_diagnostics(
+        &self,
+        batch: &TranslationBatch,
+        control: &dyn RunControl,
+    ) -> Result<(ProviderResponse, Vec<TranslationDiagnostic>), ProviderError> {
         self.translate_controlled(batch, Some((control, batch.run_id())))
     }
 }

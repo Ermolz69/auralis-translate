@@ -14,6 +14,7 @@ mod release_manifest;
 mod request_control_policy;
 mod response;
 mod server_report;
+mod source_prefix_repair;
 mod target_schema_v6;
 
 pub use model_hash::{hash_file, hash_file_with_control};

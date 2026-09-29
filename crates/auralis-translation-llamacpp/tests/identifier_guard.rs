@@ -17,6 +17,9 @@ const GUARDED_PROFILE: &[u8] = include_bytes!(
 const LEGACY_PROFILE: &[u8] = include_bytes!(
     "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v6_slot.experimental.json"
 );
+const PREFIX_REPAIR_PROFILE: &[u8] = include_bytes!(
+    "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v6_prefix_repair.experimental.json"
+);
 
 #[derive(Default)]
 struct MemoryStore(Vec<BlockCheckpoint>);
@@ -73,6 +76,143 @@ fn guard_manifest_is_distinct_and_restricted_to_checked_v6() -> Result<(), Box<d
             .remove(key);
     }
     assert!(ModelProfile::from_json(&serde_json::to_vec(&profile)?).is_err());
+    Ok(())
+}
+
+#[test]
+fn prefix_repair_manifest_requires_checked_strict_v6() -> Result<(), Box<dyn Error>> {
+    let profile = ModelProfile::from_json(PREFIX_REPAIR_PROFILE)?;
+    assert!(profile.strict_source_identifiers);
+    assert!(profile.source_prefix_repair);
+    assert_eq!(profile.prompt_version, 6);
+    let legacy = ModelProfile::from_json(GUARDED_PROFILE)?;
+    assert!(!legacy.source_prefix_repair);
+    for (field, value) in [
+        ("strict_source_identifiers", json!(false)),
+        ("prompt_version", json!(5)),
+        ("model_file_bytes", Value::Null),
+    ] {
+        let mut changed: Value = serde_json::from_slice(PREFIX_REPAIR_PROFILE)?;
+        changed[field] = value;
+        assert!(ModelProfile::from_json(&serde_json::to_vec(&changed)?).is_err());
+    }
+    Ok(())
+}
+
+#[test]
+fn missing_code_is_inserted_with_a_durable_review_flag_and_unchanged_prompt()
+-> Result<(), Box<dyn Error>> {
+    let source = "工程 AUR-0002：不要打开这扇门。";
+    let candidate = "Не открывайте эту дверь.";
+    let (baseline, baseline_store, _, baseline_request) = run_case(true, candidate)?;
+    assert!(baseline.is_err());
+    assert!(baseline_store.0.is_empty());
+
+    let (result, store, journal, request) =
+        run_case_with_profile(PREFIX_REPAIR_PROFILE, source, candidate)?;
+    assert_eq!(request, baseline_request);
+    assert_eq!(result?[0].lines, ["AUR-0002: Не открывайте эту дверь."]);
+    assert_eq!(store.0.len(), 1);
+    assert_eq!(store.0[0].diagnostics.len(), 1);
+    assert_eq!(
+        store.0[0].diagnostics[0].code,
+        DiagnosticCode::SourcePrefixInserted
+    );
+    let attempts = journal.0.lock().map_err(|_| "journal poisoned")?;
+    assert_eq!(attempts.len(), 1);
+    assert_eq!(attempts[0].restored_candidate.as_deref(), Some(candidate));
+    assert!(attempts[0].raw_response.is_some());
+    assert_eq!(attempts[0].outcome, InferenceRequestOutcome::ValidatedLine);
+    Ok(())
+}
+
+#[test]
+fn insertion_preserves_candidate_facts_and_accepts_the_exact_prefix_limit()
+-> Result<(), Box<dyn Error>> {
+    let prefix = format!("{} AUR-0002", "工".repeat(71));
+    assert_eq!(prefix.chars().count(), 80);
+    let source = format!("{prefix}：不要在 08:10 开门。");
+    let candidate = "Не открывайте дверь до 08:10; сохраните 12,00 руб.";
+    let (result, store, journal, _) =
+        run_case_with_profile(PREFIX_REPAIR_PROFILE, &source, candidate)?;
+    assert_eq!(result?[0].lines, [format!("AUR-0002: {candidate}")]);
+    assert_eq!(
+        store.0[0].diagnostics[0].code,
+        DiagnosticCode::SourcePrefixInserted
+    );
+    assert_eq!(
+        journal.0.lock().map_err(|_| "journal poisoned")?[0]
+            .restored_candidate
+            .as_deref(),
+        Some(candidate)
+    );
+    Ok(())
+}
+
+#[test]
+fn exact_or_noncode_candidates_are_not_changed() -> Result<(), Box<dyn Error>> {
+    for (source, candidate) in [
+        (
+            "工程 AUR-0002：不要打开这扇门。",
+            "Проект AUR-0002: не открывайте эту дверь.",
+        ),
+        ("列车将在 08:10 出发。", "Поезд отправится в 08:10."),
+        (
+            "工程 AUR-0002：08:10 不要打开这扇门。",
+            "AUR-0002: в 08:10 не открывайте эту дверь.",
+        ),
+    ] {
+        let (result, store, journal, _) =
+            run_case_with_profile(PREFIX_REPAIR_PROFILE, source, candidate)?;
+        assert_eq!(result?[0].lines, [candidate]);
+        assert_eq!(store.0.len(), 1);
+        assert!(store.0[0].diagnostics.is_empty());
+        assert_eq!(
+            journal.0.lock().map_err(|_| "journal poisoned")?[0]
+                .restored_candidate
+                .as_deref(),
+            Some(candidate)
+        );
+    }
+    Ok(())
+}
+
+#[test]
+fn ambiguous_codes_and_nonprefix_sources_still_fail_without_a_checkpoint()
+-> Result<(), Box<dyn Error>> {
+    let long_prefix = format!("{} AUR-0002：不要打开这扇门。", "工".repeat(81));
+    for (source, candidate) in [
+        (
+            "工程 AUR-0002：不要打开这扇门。",
+            "Проект AUR-0003: не открывайте эту дверь.",
+        ),
+        (
+            "工程 AUR-0002：不要打开这扇门。",
+            "Проект АУР-0002: не открывайте эту дверь.",
+        ),
+        (
+            "工程 AUR-0002：不要打开这扇门。",
+            "AUR-0002 и AUR-0002: не открывайте эту дверь.",
+        ),
+        ("工程 AUR-0002 与 DOC-42：已检查。", "Проверено."),
+        ("工程 AUR-0002 不要打开这扇门。", "Не открывайте эту дверь."),
+        (
+            "工程：AUR-0002 不要打开这扇门。",
+            "Не открывайте эту дверь.",
+        ),
+        (&long_prefix, "Не открывайте эту дверь."),
+    ] {
+        let (result, store, journal, _) =
+            run_case_with_profile(PREFIX_REPAIR_PROFILE, source, candidate)?;
+        assert!(result.is_err(), "{source}");
+        assert!(store.0.is_empty(), "{source}");
+        assert_eq!(
+            journal.0.lock().map_err(|_| "journal poisoned")?[0]
+                .restored_candidate
+                .as_deref(),
+            Some(candidate)
+        );
+    }
     Ok(())
 }
 
@@ -146,6 +286,22 @@ type CaseOutcome = (
 );
 
 fn run_case(strict: bool, candidate: &str) -> Result<CaseOutcome, Box<dyn Error>> {
+    run_case_with_profile(
+        if strict {
+            GUARDED_PROFILE
+        } else {
+            LEGACY_PROFILE
+        },
+        "工程 AUR-0002：不要打开这扇门。",
+        candidate,
+    )
+}
+
+fn run_case_with_profile(
+    profile_bytes: &[u8],
+    source: &str,
+    candidate: &str,
+) -> Result<CaseOutcome, Box<dyn Error>> {
     let listener = TcpListener::bind("127.0.0.1:0")?;
     let address = listener.local_addr()?;
     let response_text = candidate.to_owned();
@@ -200,11 +356,7 @@ fn run_case(strict: bool, candidate: &str) -> Result<CaseOutcome, Box<dyn Error>
         .map_err(|error| error.to_string())?;
         Ok(request)
     });
-    let mut profile: Value = serde_json::from_slice(if strict {
-        GUARDED_PROFILE
-    } else {
-        LEGACY_PROFILE
-    })?;
+    let mut profile: Value = serde_json::from_slice(profile_bytes)?;
     profile["context_before_segments"] = 0.into();
     profile["context_after_segments"] = 0.into();
     profile["max_context_bytes"] = 0.into();
@@ -225,7 +377,7 @@ fn run_case(strict: bool, candidate: &str) -> Result<CaseOutcome, Box<dyn Error>
             target_id,
             1000,
             2000,
-            vec!["工程 AUR-0002：不要打开这扇门。".into()],
+            vec![source.into()],
         )?],
         vec![],
     )?;

@@ -430,6 +430,27 @@ tasks:
     desc: Check opt-in strict v6 identifier rejection, journal evidence and legacy advisory behavior
     cmds:
       - cargo test --offline -p auralis-translation-llamacpp --test identifier_guard
+  test:source-prefix-repair:
+    desc: Check opt-in source-prefix insertion, unchanged prompts, rejected controls and review flags
+    cmds:
+      - cargo test --offline -p auralis-translation-llamacpp --test identifier_guard
+      - task: test:provider-review-diagnostics
+  eval:reg009:live-prefix:preflight:
+    desc: Verify pinned model, runtime, profile, source archive and 81 source-only requests
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - node --check eval/scripts/probe-reg009-live-prefix-repair.mjs
+      - node eval/scripts/probe-reg009-live-prefix-repair.mjs --preflight
+  eval:reg009:live-prefix:probe:
+    desc: Run one bounded 81-request real-model source-prefix screen
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:reg009:live-prefix:preflight
+      - node eval/scripts/probe-reg009-live-prefix-repair.mjs
   eval:v5-terms:check:
     desc: Check the bounded paired real-model terms probe before execution
     cmds:
