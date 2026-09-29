@@ -46,8 +46,11 @@ assert.equal(completed.results[0].output_sha256, digest(output));
 assert.equal(report.source_sha256, digest(source));
 assert.equal(report.output_sha256, digest(output));
 assert.equal(report.profile_sha256, digest(profile));
+assert.equal(report.model_sha256, JSON.parse(profile).model_file_sha256);
 assert.equal(report.scene_map_sha256, digest(sceneMap));
 assert.equal(report.fixture_manifest_sha256, digest(fixture));
+const runtimeSha256 = digest(await fs.readFile(report.runtime_executable));
+assert.equal(runtimeSha256, '6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4');
 assert.equal(runnerSummary.source_sha256, digest(source));
 assert.equal(runnerSummary.output_sha256, digest(output));
 assert.deepEqual(await fs.readFile(completed.source.source_locator), source);
@@ -96,6 +99,9 @@ const summary = {
   run_id: report.run_id, result_id: report.result_id,
   source_sha256: digest(source), output_sha256: digest(output),
   reference_sha256: digest(reference), profile_sha256: digest(profile),
+  model_sha256: report.model_sha256, runtime_build: report.runtime_build,
+  runtime_executable_sha256: runtimeSha256,
+  cli_executable_sha256: report.cli_executable_sha256,
   scene_map_sha256: digest(sceneMap), fixture_manifest_sha256: digest(fixture),
   report_sha256: digest(reportBytes), report_file: `${stem}-rows.json`,
   journal_uncompressed_sha256: digest(journal), journal_gzip_sha256: digest(journalGzip),

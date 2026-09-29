@@ -36,6 +36,10 @@ assert.equal(summary.output_sha256, digest(Buffer.from(journal.output_srt_utf8))
 assert.equal(summary.profile_sha256, digest(await fs.readFile(path.join(root,
   'models/manifests/hy_mt2_1_8b_q4_k_m.context_v6_slot.experimental.json'))));
 assert.equal(report.profile_sha256, summary.profile_sha256);
+assert.equal(report.model_sha256, summary.model_sha256);
+assert.equal(report.cli_executable_sha256, summary.cli_executable_sha256);
+assert.equal(summary.runtime_executable_sha256,
+  '6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4');
 assert.equal(report.source_sha256, summary.source_sha256);
 assert.equal(report.output_sha256, summary.output_sha256);
 assert.equal(report.quality_verdict, 'unreviewed');
