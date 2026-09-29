@@ -76,6 +76,15 @@ and `task site:check` passed; desktop and narrow browser views of the new sectio
 were inspected locally. The frozen prompt/source and prior measured screens
 remain unchanged.
 
+The existing [GitHub Pages report](https://ermolz69.github.io/auralis-translate/#reg009-live-prefix)
+was published from `b3ca1a4` by [workflow run 36579498512](https://github.com/Ermolz69/auralis-translate/actions/runs/36579498512)
+with a successful conclusion. The fetched live HTML and committed
+`site/index.html` had identical SHA-256
+`c92ef7f8627bf71baad047391c16ef659971f4cf5409ffb347f43b90c9656957`.
+The live page visibly contained the new section and Tailwind CDN; narrow and
+desktop local views were inspected before publication. The old measurements
+and open release decision remain displayed.
+
 No model profile, repair policy, Russian quality threshold or release candidate
 is selected. The corpus has only eight repeated target templates and no human
 Chinese/Russian or licensed natural-scene review. A full 1,024-cue opt-in run,
