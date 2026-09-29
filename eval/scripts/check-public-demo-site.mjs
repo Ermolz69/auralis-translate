@@ -10,6 +10,7 @@ import { loadDeliveryPlan } from './delivery-progress-section.mjs';
 import { loadV5Envelope } from './v5-envelope-section.mjs';
 import { loadSceneContext } from './scene-context-section.mjs';
 import { loadPronounCrossModel } from './pronoun-cross-model-section.mjs';
+import { loadLongV5Failure } from './long-v5-failure-section.mjs';
 import { loadTermsProbe } from './terms-section.mjs';
 import { loadInferenceJournal } from './inference-journal-section.mjs';
 import { loadPreflightJournal } from './preflight-journal-section.mjs';
@@ -48,6 +49,12 @@ assert(html.includes('id="pronoun-cross-model"'));
 assert.equal((html.match(/data-pronoun-row=/g) ?? []).length, 4);
 assert(html.includes('Мы прибыли.') && html.includes('Приехали.'));
 assert.equal((html.match(/href="https:\/\/github.com\/Ermolz69\/auralis-translate\/blob\/main\/eval\/reports\/pronouns-(?:1b|7b)-p01-p04-/g) ?? []).length, 4);
+const longFailure = await loadLongV5Failure(root);
+assert.deepEqual(data.long_v5_failure, longFailure);
+assert(html.includes('id="long-v5-failure"'));
+assert(html.includes('Восстановление сработало; полный перевод остановлен'));
+assert(html.includes('1 024 китайские реплики'));
+assert.equal((html.match(/href="https:\/\/github.com\/Ermolz69\/auralis-translate\/blob\/main\/eval\/reports\/2026-09-29-long-v5-scene-failure/g) ?? []).length, 2);
 const terms = await loadTermsProbe(root);
 assert.deepEqual(data.terms_probe, { success_sha256: terms.success_sha256, failure_sha256: terms.failure_sha256, profile_sha256: terms.profile_sha256, corpus_sha256: terms.corpus_sha256, chat_requests: 18, loopback_requests: 72 });
 assert(html.includes('id="v5-terms"'));
@@ -102,4 +109,4 @@ for (const script of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))
 }
 assert(!/(?:E:\\\\|C:\\\\Users\\\\|00ermzahar@|gh[pousr]_[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)/.test(html));
 assert(!/<script[^>]+src="(?!https:\/\/cdn\.jsdelivr\.net\/npm\/@tailwindcss\/browser@4")/.test(html));
-console.log('Public HTML verified: 420 prior requests retained, matched four-scene 1.8B/7B actor evidence and v5/terms linked, six journal chats plus six tokenizer preflights checked, typed retry and partial voice-handoff records, 40 model comparison rows, evidence identity, scripts and single-file publication boundary.');
+console.log('Public HTML verified: 420 prior requests retained, four-scene 1.8B/7B comparison and 269-request failed long-scene journal linked, v5/terms and voice-handoff evidence preserved, 40 model comparison rows, evidence identity, scripts and single-file publication boundary.');
