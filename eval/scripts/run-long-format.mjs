@@ -25,7 +25,9 @@ async function waitUntil(check, process, timeoutMs, description) {
   throw new Error(`${description}: timed out\n${process.stderr}`);
 }
 
-export async function runLongFormat({ root, workspace, format, config, configSha256, executable, profileBytes, serverPath, modelPath, gpuLayers, ramCacheMiB }) {
+export async function runLongFormat({ root, workspace, format, config, configSha256, executable, profileBytes, serverPath, modelPath, gpuLayers, ramCacheMiB, sceneEndIds = null, totalBudgetMs = Infinity }) {
+  assert(sceneEndIds === null || (format === 'srt' && Array.isArray(sceneEndIds) && sceneEndIds.length > 0 && sceneEndIds.at(-1) === config.cue_count));
+  assert(totalBudgetMs === Infinity || (Number.isInteger(totalBudgetMs) && totalBudgetMs > 0));
   await fs.mkdir(workspace);
   const fixture = longFileFixture(config, format);
   const sourcePath = path.join(workspace, `source.${format}`);
@@ -35,6 +37,14 @@ export async function runLongFormat({ root, workspace, format, config, configSha
   const profilePath = path.join(workspace, 'profile.json');
   const profile = JSON.parse(profileBytes);
   for (const [file, bytes] of [[sourcePath, fixture.source], [path.join(workspace, `reference.ru.${format}`), fixture.reference], [profilePath, profileBytes]]) await fs.writeFile(file, bytes, { flag: 'wx' });
+  let sceneMapPath, sceneMapBytes;
+  if (sceneEndIds !== null) {
+    assert.equal(profile.prompt_version, 5);
+    assert(sceneEndIds.every((id, index) => Number.isInteger(id) && id > (sceneEndIds[index - 1] ?? 0) && id <= config.cue_count));
+    sceneMapPath = path.join(workspace, 'scene-map.json');
+    sceneMapBytes = Buffer.from(JSON.stringify({ schema_version: 1, source_sha256: digest(fixture.source), evidence_id: 'project-authored-long-v5-scenes-v1', scene_end_ids: sceneEndIds }));
+    await fs.writeFile(sceneMapPath, sceneMapBytes, { flag: 'wx' });
+  }
   const exists = async (file) => Boolean(await fs.stat(file).catch(() => null));
   const calls = [];
   const servers = [];
@@ -43,11 +53,16 @@ export async function runLongFormat({ root, workspace, format, config, configSha
   let sampler;
   let resourceReport;
   const started = Date.now();
+  const withinBudget = limit => {
+    const remaining = totalBudgetMs - (Date.now() - started);
+    if (remaining <= 0) throw new Error(`Long-file experiment exceeded its ${totalBudgetMs} ms wall budget`);
+    return Math.min(limit, remaining);
+  };
   const cli = async (args, expectSuccess = true) => {
     const child = startProcess(executable, args, root, process.env, { maxCaptureCharacters: INSPECTION_CAPTURE_CHARACTERS });
     calls.push({ args, process: child });
     try {
-      await waitForExit(child, TRANSLATION_TIMEOUT_MS);
+      await waitForExit(child, withinBudget(TRANSLATION_TIMEOUT_MS));
       assert(expectSuccess, 'CLI accepted a conflicting operation');
     } catch (error) {
       if (expectSuccess || child.child.exitCode !== 1) { await stopProcess(child); throw error; }
@@ -62,7 +77,7 @@ export async function runLongFormat({ root, workspace, format, config, configSha
     if (ramCacheMiB !== undefined) args.push('--cache-ram', String(ramCacheMiB));
     server = startProcess(serverPath, args, root, process.env, { maxCaptureCharacters: SERVER_CAPTURE_CHARACTERS });
     servers.push(server);
-    await waitForHealthyServer(url, server, SERVER_TIMEOUT_MS);
+    await waitForHealthyServer(url, server, withinBudget(SERVER_TIMEOUT_MS));
     return url;
   };
   try {
@@ -76,14 +91,17 @@ export async function runLongFormat({ root, workspace, format, config, configSha
     const url = await startServer();
     sampler = runtimeSampler(path.join(workspace, 'resources.jsonl'), root, () => [server, activeCli].filter((child) => child && child.child.exitCode === null && child.child.signalCode === null).map((child) => child.child.pid));
     const initialStarted = Date.now();
-    activeCli = startProcess(executable, [format === 'srt' ? 'translate' : 'translate-vtt', sourcePath, stateDir, profilePath, url, outputPath], root);
+    const initialArgs = sceneMapPath
+      ? ['translate-v5-scene', sourcePath, stateDir, profilePath, sceneMapPath, url, outputPath]
+      : [format === 'srt' ? 'translate' : 'translate-vtt', sourcePath, stateDir, profilePath, url, outputPath];
+    activeCli = startProcess(executable, initialArgs, root);
     const initial = activeCli;
     calls.push({ args: ['initial-translation'], process: initial });
-    const runId = await waitUntil(() => initial.stdout.match(/run_id=([0-9a-f-]{36})/u)?.[1], initial, TRANSLATION_TIMEOUT_MS, 'durable run identity');
+    const runId = await waitUntil(() => initial.stdout.match(/run_id=([0-9a-f-]{36})/u)?.[1], initial, withinBudget(TRANSLATION_TIMEOUT_MS), 'durable run identity');
     const observed = await waitUntil(() => {
       const snapshot = readRunSnapshot(dbPath, runId);
       return snapshot.checkpoints.length >= config.crash_after_blocks ? snapshot : undefined;
-    }, initial, TRANSLATION_TIMEOUT_MS, 'saved-block injection point');
+    }, initial, withinBudget(TRANSLATION_TIMEOUT_MS), 'saved-block injection point');
     await stopProcess(initial);
     const interrupted = readRunSnapshot(dbPath, runId);
     const plannedBlocks = JSON.parse(interrupted.run.block_plan_json).length;
@@ -115,7 +133,7 @@ export async function runLongFormat({ root, workspace, format, config, configSha
       const saved = [...resume.stderr.matchAll(/saved_blocks=(\d+)\/\d+/gu)].at(-1)?.[1];
       if (saved && Number(saved) !== lastReported) { lastReported = Number(saved); console.log(`${format}: resumed progress ${saved}/${plannedBlocks}`); }
     }, 10_000);
-    try { await waitForExit(resume, TRANSLATION_TIMEOUT_MS); }
+    try { await waitForExit(resume, withinBudget(TRANSLATION_TIMEOUT_MS)); }
     finally { clearInterval(progressTimer); }
     const resumeElapsedMs = Date.now() - resumeStarted;
     const completed = readRunSnapshot(dbPath, runId);
@@ -159,6 +177,7 @@ export async function runLongFormat({ root, workspace, format, config, configSha
       interruption_elapsed_ms: interruptionElapsedMs, resume_elapsed_ms: resumeElapsedMs, full_elapsed_ms: Date.now() - started,
       code_preserved_cues: rows.filter((row) => row.code_preserved).length, exact_draft_matches: rows.filter((row) => row.exact_draft_match).length,
       subtitle_holdout: false, bilingual_reviewed: false, quality_verdict: 'unreviewed', resources: resourceReport, rows,
+      ...(sceneMapBytes ? { scene_map_sha256: digest(sceneMapBytes), scene_end_ids: sceneEndIds, wall_budget_ms: totalBudgetMs } : {}),
     };
     await fs.writeFile(path.join(workspace, 'completed-snapshot.json'), `${JSON.stringify(completed, null, 2)}\n`, { flag: 'wx' });
     await fs.writeFile(path.join(workspace, 'report.json'), `${JSON.stringify(report, null, 2)}\n`, { flag: 'wx' });

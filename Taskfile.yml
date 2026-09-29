@@ -101,6 +101,17 @@ tasks:
     desc: Check exact coverage and scene isolation across 1024, 4096 and 10000 owned targets
     cmds:
       - cargo test --offline -p auralis-translation --test long_scene_planner
+  eval:cli:long:v5:scene:
+    desc: Kill and resume a 1024-cue authored v5 scene SRT under the actual tokenizer budget
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:load:checks
+      - task: test:long-scene-plan
+      - task: build:release
+      - target/release/auralis-translation-cli.exe doctor models/manifests/hy_mt2_1_8b_q4_k_m.context_v5_scene.experimental.json .cache/models/Hy-MT2-1.8B-Q4_K_M.gguf
+      - node eval/scripts/cli-long-v5-scene.mjs
   eval:regression:check:
     desc: Validate permanent failure evidence and required related and negative controls
     cmds:
