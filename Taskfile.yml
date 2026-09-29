@@ -194,6 +194,20 @@ tasks:
       vars: [REPORT_DIR]
     cmds:
       - node eval/scripts/capture-long-v6-relocated-failure.mjs "{{.REPORT_DIR}}"
+  eval:long:v6:length:model-probe:
+    desc: Compare checked 1.8B and 7B v6 requests on the frozen REG-006 source facts
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - node --check eval/scripts/probe-long-v6-length-models.mjs
+      - task: eval:regression:check
+      - task: test:context-v6
+      - task: build:release
+      - target/release/auralis-translation-cli.exe doctor models/manifests/hy_mt2_1_8b_q4_k_m.context_v6_slot.experimental.json .cache/models/Hy-MT2-1.8B-Q4_K_M.gguf
+      - target/release/auralis-translation-cli.exe doctor models/manifests/hy_mt2_7b_q4_k_m.context_v6_slot.experimental.json .cache/models/Hy-MT2-7B-Q4_K_M.gguf
+      - node eval/scripts/probe-long-v6-length-models.mjs
   eval:cli:long:v5:failure-check:
     desc: Verify retained long-scene rejection, all request bodies and source identity
     cmds:

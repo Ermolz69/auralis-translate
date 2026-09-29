@@ -25,6 +25,8 @@ const LARGE_V5_SCENE_PROFILE: &[u8] =
 const V6_SLOT_PROFILE: &[u8] = include_bytes!(
     "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v6_slot.experimental.json"
 );
+const LARGE_V6_SLOT_PROFILE: &[u8] =
+    include_bytes!("../../../models/manifests/hy_mt2_7b_q4_k_m.context_v6_slot.experimental.json");
 
 #[test]
 fn v6_slot_profile_has_new_identity_and_rejects_schema_downgrade() -> Result<(), Box<dyn Error>> {
@@ -45,13 +47,17 @@ fn v6_slot_profile_has_new_identity_and_rejects_schema_downgrade() -> Result<(),
 }
 
 #[test]
-fn large_v5_profiles_change_only_model_identity() -> Result<(), Box<dyn Error>> {
+fn large_context_profiles_change_only_model_identity() -> Result<(), Box<dyn Error>> {
     for (small_bytes, large_bytes) in [
         (V5_BASELINE_PROFILE, LARGE_V5_BASELINE_PROFILE),
         (V5_SCENE_PROFILE, LARGE_V5_SCENE_PROFILE),
+        (V6_SLOT_PROFILE, LARGE_V6_SLOT_PROFILE),
     ] {
         let large_profile = ModelProfile::from_json(large_bytes)?;
-        assert_eq!(large_profile.prompt_version, 5);
+        assert_eq!(
+            large_profile.prompt_version,
+            ModelProfile::from_json(small_bytes)?.prompt_version
+        );
         assert_eq!(large_profile.model_file_bytes, Some(4_624_648_896));
         let mut small: serde_json::Value = serde_json::from_slice(small_bytes)?;
         let mut large: serde_json::Value = serde_json::from_slice(large_bytes)?;

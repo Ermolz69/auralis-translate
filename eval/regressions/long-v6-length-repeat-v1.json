@@ -22,10 +22,10 @@
     "request_sha256": "0f0aacf448be18e9d1eaf253da3356892755400be033f937d61fe86456505f8c"
   },
   "related_cases": [
-    { "id": "zh-985-amin-day-after", "source_zh": "工程 AUR-0985：阿明说，会议改到后天。", "expected_sense_unreviewed": "Amin says the meeting moves to the day after tomorrow." },
-    { "id": "zh-987-ahua-tomorrow", "source_zh": "工程 AUR-0987：阿华说，会议推迟到明天。", "expected_sense_unreviewed": "A Hua says the meeting is postponed until tomorrow." }
+    { "id": "zh-983-amin-day-after", "source_zh": "工程 AUR-0983：阿明说，会议改到后天。", "expected_sense_unreviewed": "Amin says the meeting moves to the day after tomorrow." },
+    { "id": "zh-983-ahua-tomorrow", "source_zh": "工程 AUR-0983：阿华说，会议推迟到明天。", "expected_sense_unreviewed": "A Hua says the meeting is postponed until tomorrow." }
   ],
-  "negative_control": { "id": "zh-989-amin-today", "source_zh": "工程 AUR-0989：阿明说，会议照常在今天举行。", "expected_sense_unreviewed": "Amin says the meeting goes ahead today as scheduled." },
+  "negative_control": { "id": "zh-983-amin-today", "source_zh": "工程 AUR-0983：阿明说，会议照常在今天举行。", "expected_sense_unreviewed": "Amin says the meeting goes ahead today as scheduled." },
   "failure_report_sha256": "c16f0015e958e5080827241a025f87b0cbe124134bfbf98afbc3e823417703f3",
   "journal_gzip_sha256": "09944a0cefd47eb124fa780157bf6fc5d27bec1db4c7c19612500ec7bd49c388",
   "human_review": "missing",

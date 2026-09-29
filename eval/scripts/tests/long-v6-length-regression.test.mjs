@@ -57,6 +57,7 @@ test('REG-006: failed model request has source context only, with no proposed re
 test('REG-006: related and negative source controls change day, speaker and assertion', () => {
   const cases = [regression.reproduction, ...regression.related_cases, regression.negative_control];
   assert.equal(new Set(cases.map(row => row.source_zh)).size, 4);
+  assert(cases.every(row => row.source_zh.startsWith('工程 AUR-0983：')));
   assert.equal(regression.related_cases.length, 2);
   assert.match(regression.related_cases[0].source_zh, /后天/u);
   assert.match(regression.related_cases[1].source_zh, /阿华/u);
