@@ -3,6 +3,7 @@ pub enum DiagnosticCode {
     UnchangedSource,
     NoCyrillic,
     GlossaryTermMissing,
+    IdentifierMismatch,
 }
 
 impl DiagnosticCode {
@@ -11,6 +12,7 @@ impl DiagnosticCode {
             Self::UnchangedSource => "unchanged_source",
             Self::NoCyrillic => "no_cyrillic",
             Self::GlossaryTermMissing => "glossary_term_missing",
+            Self::IdentifierMismatch => "identifier_mismatch",
         }
     }
 
@@ -19,6 +21,7 @@ impl DiagnosticCode {
             "unchanged_source" => Some(Self::UnchangedSource),
             "no_cyrillic" => Some(Self::NoCyrillic),
             "glossary_term_missing" => Some(Self::GlossaryTermMissing),
+            "identifier_mismatch" => Some(Self::IdentifierMismatch),
             _ => None,
         }
     }

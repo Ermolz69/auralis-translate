@@ -295,6 +295,7 @@ tasks:
       - task: eval:long:postflight:check
       - node --test eval/scripts/tests/long-v6-postflight-regression.test.mjs
       - task: eval:cli:long:v6:postlength:check
+      - node --test --test-isolation=none eval/scripts/tests/long-v6-identifier-regression.test.mjs
   test:context-v5:
     desc: Verify the experimental v5 request and strict response boundary
     cmds:
@@ -312,6 +313,11 @@ tasks:
       - cargo test --offline -p auralis-translation-formats --test srt_approved_terms
       - cargo test --offline -p auralis-translation-llamacpp --test v5_terms
       - cargo test --offline -p auralis-translation-cli --test v5_terms_admission
+  test:identifier-diagnostics:
+    desc: Check exact source identifier warnings and durable SQLite checkpoint persistence
+    cmds:
+      - cargo test --offline -p auralis-translation --test identifier_diagnostics
+      - cargo test --offline -p auralis-translation-sqlite --test identifier_diagnostic_persistence
   eval:v5-terms:check:
     desc: Check the bounded paired real-model terms probe before execution
     cmds:

@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "id": "REG-009",
+  "status": "open_model_fact_preservation",
+  "severity": "major",
+  "source_family": "project_authored_synthetic_long_file",
+  "source_report_sha256": "2795ce22ee0b87f38fc23723dbd9b2802334a48b584c527d3a00f94a32c14fb8",
+  "source_journal_sha256": "4037c071a17ef38ed7b9bc4989601ef8da0784fb39881b9138abb9d008701a8c",
+  "affected_profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5",
+  "failure": {
+    "segment_id": 2,
+    "line_index": 0,
+    "source_zh": "工程 AUR-0002：不要打开这扇门。",
+    "accepted_ru": "Не открывайте эту дверь.",
+    "required_identifier": "AUR-0002"
+  },
+  "expected_invariant": "An exact ASCII source identifier must appear with the same multiplicity in its translated target line; a warning must survive checkpoint reopen.",
+  "related_controls": [
+    { "id": "changed_digits", "source_zh": "工程 AUR-0003：不要打开这扇门。", "candidate_ru": "Проект AUR-0002: не открывайте эту дверь.", "expected_warning": true },
+    { "id": "cyrillic_lookalike", "source_zh": "工程 AUR-0002：不要打开这扇门。", "candidate_ru": "Проект АУР-0002: не открывайте эту дверь.", "expected_warning": true },
+    { "id": "duplicate_code", "source_zh": "工程 AUR-0002：不要打开这扇门。", "candidate_ru": "Проект AUR-0002, AUR-0002: не открывайте эту дверь.", "expected_warning": true },
+    { "id": "two_codes_reordered", "source_zh": "工程 AUR-0002 与 DOC-42 已检查。", "candidate_ru": "DOC-42 и AUR-0002 проверены.", "expected_warning": false }
+  ],
+  "negative_controls": [
+    { "id": "no_identifier", "source_zh": "列车将在 08:10 出发。", "candidate_ru": "Поезд отправится в 08:10.", "expected_warning": false },
+    { "id": "context_only_identifier", "source_zh": "不要打开这扇门。", "context_zh": "工程 AUR-0002：上一幕。", "candidate_ru": "Не открывайте эту дверь.", "expected_warning": false },
+    { "id": "exact_identifier", "source_zh": "工程 AUR-0002：不要打开这扇门。", "candidate_ru": "Проект AUR-0002: не открывайте эту дверь.", "expected_warning": false }
+  ],
+  "human_review": "missing",
+  "release_gate": "open"
+}
