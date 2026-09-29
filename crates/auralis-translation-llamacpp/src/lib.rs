@@ -14,6 +14,7 @@ mod release_manifest;
 mod request_control_policy;
 mod response;
 mod server_report;
+mod target_schema_v6;
 
 pub use model_hash::{hash_file, hash_file_with_control};
 pub use model_preflight::{verify_server, verify_server_with_control};

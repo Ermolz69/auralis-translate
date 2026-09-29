@@ -43,6 +43,14 @@ pub struct LlamaCppProvider {
 }
 
 impl LlamaCppProvider {
+    fn response_format(&self, segment_id: u32, line_index: usize) -> serde_json::Value {
+        if self.profile.prompt_version == 6 {
+            crate::target_schema_v6::response_format(segment_id, line_index)
+        } else {
+            crate::contextual_prompt_v5::response_format()
+        }
+    }
+
     pub fn new(base_url: &str, profile: ModelProfile) -> Result<Self, ProviderError> {
         Self::with_control_policy(base_url, profile, RequestControlPolicy::default())
     }
@@ -177,7 +185,7 @@ impl LlamaCppProvider {
             "repeat_penalty": self.profile.repeat_penalty,
             "max_tokens": self.profile.max_tokens_per_line,
             "stream": false,
-            "response_format": crate::contextual_prompt_v5::response_format(),
+            "response_format": self.response_format(segment.id().get(), line_index),
         });
         let rendered_request = serde_json::to_vec(&payload)
             .map_err(|_| ProviderError::Permanent("v5 request cannot be serialized".into()))?;
@@ -404,7 +412,7 @@ impl LlamaCppProvider {
             json!({
                 "model": self.profile.model_alias,
                 "messages": [{"role": "user", "content": prompt_text}],
-                "response_format": crate::contextual_prompt_v5::response_format(),
+                "response_format": self.response_format(target.segment_id.get(), usize::try_from(target.line_index).map_err(|_| ProviderError::Permanent("line index exceeds platform range".into()))?),
             }),
             target,
             control,
@@ -487,7 +495,7 @@ impl LlamaCppProvider {
         batch: &TranslationBatch,
         control: Option<(&dyn RunControl, RunId)>,
     ) -> Result<ProviderResponse, ProviderError> {
-        if matches!(self.profile.prompt_version, 4 | 5)
+        if matches!(self.profile.prompt_version, 4..=6)
             && batch.language_pair().source() != LanguageCode::Chinese
         {
             return Err(ProviderError::Permanent(
@@ -516,7 +524,7 @@ impl LlamaCppProvider {
                 "glossary exceeds profile byte limit".into(),
             ));
         }
-        if self.profile.prompt_version != 5 && !batch.approved_terms().is_empty() {
+        if !matches!(self.profile.prompt_version, 5 | 6) && !batch.approved_terms().is_empty() {
             return Err(ProviderError::Permanent(
                 "profile does not support approved terms".into(),
             ));
@@ -570,7 +578,7 @@ impl LlamaCppProvider {
                     lines.push(prepared.restore(&candidate)?);
                     continue;
                 }
-                if self.profile.prompt_version == 5 {
+                if matches!(self.profile.prompt_version, 5 | 6) {
                     let prepared = crate::chinese_fidelity_prompt::ChineseFidelityPrompt::prepare(
                         source_line,
                     )?;

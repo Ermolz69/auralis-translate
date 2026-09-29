@@ -110,14 +110,15 @@ impl ModelProfile {
                 "runtime identity fields are incomplete",
             ));
         }
-        if !matches!(self.prompt_version, 1..=5) {
+        if !matches!(self.prompt_version, 1..=6) {
             return Err(ProfileError::Invalid("unsupported prompt version"));
         }
-        if (self.prompt_version == 5
-            && self.prompt_template_sha256.as_deref()
-                != Some(crate::contextual_prompt_v5::template_sha256().as_str()))
-            || (self.prompt_version != 5 && self.prompt_template_sha256.is_some())
-        {
+        let expected_template = match self.prompt_version {
+            5 => Some(crate::contextual_prompt_v5::template_sha256()),
+            6 => Some(crate::target_schema_v6::template_sha256()),
+            _ => None,
+        };
+        if self.prompt_template_sha256.as_deref() != expected_template.as_deref() {
             return Err(ProfileError::Invalid("prompt template identity differs"));
         }
         if !(1..=MAX_TARGET_SEGMENTS).contains(&self.target_segments_per_block)
@@ -140,7 +141,7 @@ impl ModelProfile {
                 && (self.target_segments_per_block != 1
                     || self.context_before_segments + self.context_after_segments == 0
                     || self.max_context_bytes == 0))
-            || (matches!(self.prompt_version, 3 | 5) && self.target_segments_per_block != 1)
+            || (matches!(self.prompt_version, 3 | 5 | 6) && self.target_segments_per_block != 1)
             || (self.prompt_version == 3
                 && self.context_before_segments + self.context_after_segments > 0
                 && self.max_context_bytes == 0)
@@ -148,20 +149,20 @@ impl ModelProfile {
                 && (self.max_glossary_bytes != 0 || self.max_glossary_entries != 0))
             || (self.prompt_version == 3
                 && (self.max_glossary_bytes == 0 || self.max_glossary_entries == 0))
-            || (self.prompt_version != 5
+            || (!matches!(self.prompt_version, 5 | 6)
                 && (self.max_approved_terms_bytes != 0 || self.max_approved_terms_entries != 0))
             || (self.max_approved_terms_bytes == 0) != (self.max_approved_terms_entries == 0)
-            || (self.prompt_version == 5
+            || (matches!(self.prompt_version, 5 | 6)
                 && self.max_approved_terms_bytes > 0
                 && (self.token_safety_margin_tokens.is_none() || self.min_context_tokens.is_none()))
-            || (self.prompt_version == 5
+            || (matches!(self.prompt_version, 5 | 6)
                 && ((self.context_before_segments + self.context_after_segments > 0
                     && (self.max_context_bytes == 0
                         || self.token_safety_margin_tokens.is_none()
                         || self.min_context_tokens.is_none()))
                     || self.max_block_attempts != 1))
             || self.token_safety_margin_tokens.is_some_and(|margin| {
-                self.prompt_version != 5
+                !matches!(self.prompt_version, 5 | 6)
                     || !(1..=MAX_TOKEN_SAFETY_MARGIN).contains(&margin)
                     || self.min_context_tokens.is_none_or(|context| {
                         context <= self.max_tokens_per_line.saturating_add(margin)

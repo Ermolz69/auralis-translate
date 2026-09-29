@@ -84,7 +84,7 @@ pub(crate) fn load(
     }
     let scene = scene_map_input::load(&state_dir, run_id, &source)?;
     let policy = block_policy(&profile, scene.is_some())?;
-    let terms = if profile.prompt_version == 5 {
+    let terms = if matches!(profile.prompt_version, 5 | 6) {
         terms_input::load(
             &state_dir,
             run_id,
@@ -107,10 +107,10 @@ pub(crate) fn load(
         ));
     }
     let plan = if let Some(scene) = &scene {
-        if profile.prompt_version != 5 {
+        if !matches!(profile.prompt_version, 5 | 6) {
             return Err(crate::reporting::CliFailure::boxed(
                 crate::reporting::ErrorCode::Conflict,
-                "frozen scene map requires a v5 profile",
+                "frozen scene map requires a contextual profile",
             ));
         }
         if let Some(terms) = &terms {

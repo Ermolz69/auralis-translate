@@ -22,6 +22,27 @@ const LARGE_V5_BASELINE_PROFILE: &[u8] =
     include_bytes!("../../../models/manifests/hy_mt2_7b_q4_k_m.context_v5.experimental.json");
 const LARGE_V5_SCENE_PROFILE: &[u8] =
     include_bytes!("../../../models/manifests/hy_mt2_7b_q4_k_m.context_v5_scene.experimental.json");
+const V6_SLOT_PROFILE: &[u8] = include_bytes!(
+    "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v6_slot.experimental.json"
+);
+
+#[test]
+fn v6_slot_profile_has_new_identity_and_rejects_schema_downgrade() -> Result<(), Box<dyn Error>> {
+    let profile = ModelProfile::from_json(V6_SLOT_PROFILE)?;
+    assert_eq!(profile.prompt_version, 6);
+    assert_eq!(profile.target_segments_per_block, 1);
+    assert_eq!(profile.token_safety_margin_tokens, Some(64));
+    let mut value: serde_json::Value = serde_json::from_slice(V6_SLOT_PROFILE)?;
+    value["prompt_version"] = 5.into();
+    assert!(ModelProfile::from_json(&serde_json::to_vec(&value)?).is_err());
+    value["prompt_version"] = 6.into();
+    value["prompt_template_sha256"] =
+        serde_json::from_slice::<serde_json::Value>(V5_SCENE_PROFILE)?["prompt_template_sha256"]
+            .clone();
+    assert!(ModelProfile::from_json(&serde_json::to_vec(&value)?).is_err());
+    assert!(ModelProfile::from_json(V5_SCENE_PROFILE).is_ok());
+    Ok(())
+}
 
 #[test]
 fn large_v5_profiles_change_only_model_identity() -> Result<(), Box<dyn Error>> {

@@ -39,10 +39,10 @@ export async function runLongFormat({ root, workspace, format, config, configSha
   for (const [file, bytes] of [[sourcePath, fixture.source], [path.join(workspace, `reference.ru.${format}`), fixture.reference], [profilePath, profileBytes]]) await fs.writeFile(file, bytes, { flag: 'wx' });
   let sceneMapPath, sceneMapBytes;
   if (sceneEndIds !== null) {
-    assert.equal(profile.prompt_version, 5);
+    assert([5, 6].includes(profile.prompt_version));
     assert(sceneEndIds.every((id, index) => Number.isInteger(id) && id > (sceneEndIds[index - 1] ?? 0) && id <= config.cue_count));
     sceneMapPath = path.join(workspace, 'scene-map.json');
-    sceneMapBytes = Buffer.from(JSON.stringify({ schema_version: 1, source_sha256: digest(fixture.source), evidence_id: 'project-authored-long-v5-scenes-v1', scene_end_ids: sceneEndIds }));
+    sceneMapBytes = Buffer.from(JSON.stringify({ schema_version: 1, source_sha256: digest(fixture.source), evidence_id: `project-authored-long-v${profile.prompt_version}-scenes-v1`, scene_end_ids: sceneEndIds }));
     await fs.writeFile(sceneMapPath, sceneMapBytes, { flag: 'wx' });
   }
   const exists = async (file) => Boolean(await fs.stat(file).catch(() => null));
