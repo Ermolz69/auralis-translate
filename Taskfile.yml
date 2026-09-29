@@ -133,6 +133,21 @@ tasks:
       vars: [REPORT_DIR, OUTPUT_STEM]
     cmds:
       - node eval/scripts/capture-long-v5-failure.mjs "{{.REPORT_DIR}}" "{{.OUTPUT_STEM}}"
+  eval:cli:long:v6:capture:
+    desc: Archive the single completed v6 long-scene run, its rows and complete inference journal
+    requires:
+      vars: [REPORT_DIR, OUTPUT_STEM]
+    cmds:
+      - node eval/scripts/capture-long-v6.mjs "{{.REPORT_DIR}}" "{{.OUTPUT_STEM}}"
+  eval:cli:long:v6:check:
+    desc: Verify archived v6 long-scene identity, all requests, result and source checks
+    cmds:
+      - node eval/scripts/check-long-v6.mjs
+  eval:cli:long:v6:sample:
+    desc: Extract the frozen 43-cue start, middle, end and seam editorial sample with raw chat evidence
+    cmds:
+      - task: eval:cli:long:v6:check
+      - node eval/scripts/extract-long-v6-editorial-sample.mjs
   eval:cli:long:v5:failure-check:
     desc: Verify retained long-scene rejection, all request bodies and source identity
     cmds:
