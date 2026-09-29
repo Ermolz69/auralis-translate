@@ -148,6 +148,16 @@ tasks:
     cmds:
       - task: eval:cli:long:v6:check
       - node eval/scripts/extract-long-v6-editorial-sample.mjs
+  eval:cli:long:v6:capture-timeout:
+    desc: Retain the stopped v6 1024-cue attempt and complete SQLite request journal
+    requires:
+      vars: [REPORT_DIR]
+    cmds:
+      - node eval/scripts/capture-long-v6-timeout.mjs "{{.REPORT_DIR}}"
+  eval:cli:long:v6:timeout-check:
+    desc: Verify the archived v6 timeout, durable prefix and absence of a published result
+    cmds:
+      - node eval/scripts/check-long-v6-timeout.mjs
   eval:cli:long:v5:failure-check:
     desc: Verify retained long-scene rejection, all request bodies and source identity
     cmds:
@@ -173,6 +183,8 @@ tasks:
       - node eval/scripts/check-regression-index.mjs
       - node eval/scripts/check-scene-pronoun-regression.mjs
       - task: eval:cli:long:v5:failure-check
+      - task: eval:cli:long:v6:timeout-check
+      - node --test eval/scripts/tests/long-run-budget.test.mjs
   test:context-v5:
     desc: Verify the experimental v5 request and strict response boundary
     cmds:
@@ -509,8 +521,10 @@ tasks:
   eval:load:checks:
     desc: Check synthetic long-file fixture, checkpoint preservation and process-capture contracts
     cmds:
+      - node --check eval/scripts/run-long-format.mjs
       - node --test eval/scripts/tests/long-file.test.mjs
       - node --test eval/scripts/tests/local-process.test.mjs
+      - node --test eval/scripts/tests/long-run-budget.test.mjs
   eval:cli:long:interruption:
     desc: Kill and resume real long SRT and WebVTT runs with supplied checked assets; retain local comparison and resource reports
     cmds:

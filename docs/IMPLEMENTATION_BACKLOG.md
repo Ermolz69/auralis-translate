@@ -51,7 +51,7 @@ does not activate implementation by being stored here.
 | EVAL-04 | Implement maintained regression and adversarial tiers | in_progress | CTX-01, EVAL-02 | [Initial index](../eval/experiments/2026-09-28-regression-index-v1.md), [REG-002 scene actor evidence](../eval/experiments/2026-09-28-scene-context-results.md), [failed instruction repair](../eval/experiments/2026-09-28-scene-number-repair-results.md), [current-template recurrence](../eval/experiments/2026-09-28-scene-pronoun-after-terms-results.md), [7B recurrence](../eval/experiments/2026-09-29-context-7b-p01-screen-results.md), [four-scene 1.8B/7B controls](../eval/experiments/2026-09-29-pronoun-cross-model-results.md) and [typed retry regression](../eval/experiments/2026-09-28-typed-provider-retry.md) retain raw prompt-copy, actor-number and retry failures with related/negative controls; generative/metamorphic and broader coverage remain open under [policy](evaluation/008-regression-and-adversarial-checks.md) |
 | LONG-01 | Token-budgeted scene and batch planner | planned | CTX-02, CTX-03 | [Partial real 2,048-token preflight](../eval/experiments/2026-09-28-scene-context-results.md) and [owned 1,024/4,096/10,000-target planner checks](../eval/experiments/2026-09-28-long-scene-planner.md): chat template counts equal server usage, deterministic farthest-context trim and scene-limited mapping tested; target/batch sizing, real long-file token counts and quality remain open |
 | LONG-02 | Batch and seam-shift ablation | planned | LONG-01, CTX-04, EVAL-02 | Batches 1/4/8, shifts 0/1/3 on retained scenes; paired seam/interior review |
-| LONG-03 | Engineering soak ladder | planned | LONG-01, EVAL-02 | 1024/4096/10000-cue owned fixtures; resources, no duplicates, exact supported structure |
+| LONG-03 | Engineering soak ladder | planned | LONG-01, EVAL-02 | 1024/4096/10000-cue owned fixtures; [v5 model rejection](../eval/experiments/2026-09-29-long-v5-scene-failure.md) and [v6 runner timeout](../eval/experiments/2026-09-29-long-v6-scene-timeout.md) retain partial resources/checkpoints without a complete result; no duplicates, exact supported structure and longer tiers remain open |
 | LONG-04 | Complete natural-file quality pilot | planned | DATA-03, LONG-02, EVAL-01 | Three distinct sources, duration-tier gaps explicit; stratified and risk/boundary review |
 | LONG-05 | Extended interruption and rejection matrix | planned | LONG-03 | Runtime/CLI/pause/disk/OOM/mismatch probes; durable prefix, edits, no partial result |
 | LONG-06 | Stage timing, resource lease and SLA | planned | LONG-03, LONG-04, LONG-05 | Measured startup/decode/commit/export; declared resource limits and cancellation release |
@@ -102,6 +102,15 @@ adds partial `CTX-02`/`LONG-01`/`LONG-03` evidence and open `REG-003` under
 and a neighbor-ID regression are retained. Zero result or partial output was
 published. The full long-file, quality and resource gates remain incomplete;
 the `planned` long-task statuses have not been promoted by this failed soak.
+
+The same-source [v6 target-bound run](../eval/experiments/2026-09-29-long-v6-scene-timeout.md)
+passed cue 72's ID control and preserved 964/1,024 checkpoints, then the
+runner's hidden 60-minute process limit stopped it inside a declared
+120-minute total budget. The 3,619-request journal and `REG-004` budget
+reproduction are retained; zero result or partial SRT was published. The
+bounded wait policy is fixed and checked, but a new predeclared continuation
+and a complete artifact are still required. This is partial `CTX-02`,
+`LONG-03` and `EVAL-04` engineering evidence, not translation acceptance.
 
 Deferred UI, optional adaptation/precision and ASR remain visible. A completed
 translation CLI milestone does not close the desktop release or audio milestone.

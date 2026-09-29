@@ -7,6 +7,7 @@ import { longFileFixture, compareLongFile } from './long-file-fixture.mjs';
 import { readRunSnapshot, assertSavedPrefix } from './cli-run-state.mjs';
 import { freeLoopbackPort, startProcess, stopProcess, waitForExit, waitForHealthyServer } from './local-process.mjs';
 import { runtimeSampler } from './runtime-sampler.mjs';
+import { translationWaitMs } from './long-run-budget.mjs';
 
 const TRANSLATION_TIMEOUT_MS = 3_600_000;
 const SERVER_TIMEOUT_MS = 180_000;
@@ -58,11 +59,12 @@ export async function runLongFormat({ root, workspace, format, config, configSha
     if (remaining <= 0) throw new Error(`Long-file experiment exceeded its ${totalBudgetMs} ms wall budget`);
     return Math.min(limit, remaining);
   };
+  const translationWait = () => translationWaitMs(totalBudgetMs, Date.now() - started, TRANSLATION_TIMEOUT_MS);
   const cli = async (args, expectSuccess = true) => {
     const child = startProcess(executable, args, root, process.env, { maxCaptureCharacters: INSPECTION_CAPTURE_CHARACTERS });
     calls.push({ args, process: child });
     try {
-      await waitForExit(child, withinBudget(TRANSLATION_TIMEOUT_MS));
+      await waitForExit(child, translationWait());
       assert(expectSuccess, 'CLI accepted a conflicting operation');
     } catch (error) {
       if (expectSuccess || child.child.exitCode !== 1) { await stopProcess(child); throw error; }
@@ -97,11 +99,11 @@ export async function runLongFormat({ root, workspace, format, config, configSha
     activeCli = startProcess(executable, initialArgs, root);
     const initial = activeCli;
     calls.push({ args: ['initial-translation'], process: initial });
-    const runId = await waitUntil(() => initial.stdout.match(/run_id=([0-9a-f-]{36})/u)?.[1], initial, withinBudget(TRANSLATION_TIMEOUT_MS), 'durable run identity');
+    const runId = await waitUntil(() => initial.stdout.match(/run_id=([0-9a-f-]{36})/u)?.[1], initial, translationWait(), 'durable run identity');
     const observed = await waitUntil(() => {
       const snapshot = readRunSnapshot(dbPath, runId);
       return snapshot.checkpoints.length >= config.crash_after_blocks ? snapshot : undefined;
-    }, initial, withinBudget(TRANSLATION_TIMEOUT_MS), 'saved-block injection point');
+    }, initial, translationWait(), 'saved-block injection point');
     await stopProcess(initial);
     const interrupted = readRunSnapshot(dbPath, runId);
     const plannedBlocks = JSON.parse(interrupted.run.block_plan_json).length;
@@ -133,7 +135,7 @@ export async function runLongFormat({ root, workspace, format, config, configSha
       const saved = [...resume.stderr.matchAll(/saved_blocks=(\d+)\/\d+/gu)].at(-1)?.[1];
       if (saved && Number(saved) !== lastReported) { lastReported = Number(saved); console.log(`${format}: resumed progress ${saved}/${plannedBlocks}`); }
     }, 10_000);
-    try { await waitForExit(resume, withinBudget(TRANSLATION_TIMEOUT_MS)); }
+    try { await waitForExit(resume, translationWait()); }
     finally { clearInterval(progressTimer); }
     const resumeElapsedMs = Date.now() - resumeStarted;
     const completed = readRunSnapshot(dbPath, runId);

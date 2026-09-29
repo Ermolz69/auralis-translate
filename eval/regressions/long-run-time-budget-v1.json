@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "REG-004",
+  "status": "fixed_policy_pending_long_recheck",
+  "severity": "major",
+  "source_family": "project_authored_synthetic_long_file",
+  "failure": "A hidden 3600000 ms resumed-process cap stopped the v6 run at 964/1024 checkpoints although its declared total wall budget was 7200000 ms.",
+  "expected_invariant": "A bounded long-file translation may use its remaining declared total wall budget; an unbounded legacy run keeps the default process timeout.",
+  "reproduction": {
+    "total_wall_budget_ms": 7200000,
+    "hidden_process_timeout_ms": 3600000,
+    "observed_saved_blocks": 964,
+    "planned_blocks": 1024,
+    "published_results": 0
+  },
+  "related_controls": [
+    "A bounded run with a shorter remaining wall time receives only that remaining time.",
+    "An exhausted total wall budget stops instead of granting a fresh process timeout."
+  ],
+  "negative_control": "An unbounded legacy long-file run retains the one-hour process cap.",
+  "failure_report_sha256": "66b393595abca189f457fe414a4e7d508a21a8d6c4fd653cf9842f5e79242795",
+  "journal_gzip_sha256": "aabfebf2363aa228b1475b567a6bac10e8e79cefe07082a1cbdb11651cbd8d7e",
+  "human_review": "not_applicable_to_runner_budget",
+  "evidence_record": "eval/experiments/2026-09-29-long-v6-scene-timeout.md"
+}

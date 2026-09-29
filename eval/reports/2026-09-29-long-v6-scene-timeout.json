@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "experiment": "long-v6-slot-scene-1024-v1",
+  "outcome": "failed_runner_resume_process_timeout",
+  "captured_at": "2026-09-29T07:56:36.889Z",
+  "code_commit": "5c557cc6e8a0d87d9a9fb96c065d62b612ac437b",
+  "task": "task eval:cli:long:v6:scene",
+  "run_id": "86876d9c-bb84-4450-9214-8eb21f7d262c",
+  "source_sha256": "e9b760bdcce97de9f29f5fe671dbb927088f5a15119ebe3200e73e0408391bb3",
+  "reference_sha256": "309a3cf65125783848b3e906e72ec8e4059cbcf178433f35c42dd633c608fd41",
+  "fixture_manifest_sha256": "0527cab3c4ea38aa91ae65c6f4e52103d7e0c5cde1ab778dc7e9da1a46c43986",
+  "profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5",
+  "scene_map_sha256": "34cc010d90c605eb34491278ce80a0433c8fb1ae5e40fdc1c89fe7719388fd30",
+  "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "requested_gpu_layers": 99,
+  "runtime_build": "b10977-0ecb159c9",
+  "resumed_process_timeout_ms": 3600000,
+  "declared_total_wall_budget_ms": 7200000,
+  "interrupted_blocks": 16,
+  "saved_blocks": 964,
+  "planned_blocks": 1024,
+  "saved_prefix_preserved": true,
+  "result_count": 0,
+  "partial_output_present": false,
+  "request_count": 3619,
+  "requests_by_kind_outcome": [
+    {
+      "key": "apply_template:parsed_preflight_json",
+      "count": 1207
+    },
+    {
+      "key": "tokenize:parsed_preflight_json",
+      "count": 1206
+    },
+    {
+      "key": "chat_completion:validated_line",
+      "count": 1205
+    },
+    {
+      "key": "chat_completion:pending",
+      "count": 1
+    }
+  ],
+  "pending_request_count": 1,
+  "chat_prompt_tokens_recorded": 362918,
+  "chat_completion_tokens_recorded": 51005,
+  "resource_sample_count": 732,
+  "resource_sampling_error_count": 0,
+  "peak_tracked_working_set_bytes": 2139906048,
+  "peak_tracked_private_bytes": 1089175552,
+  "peak_device_gpu_mib": 823,
+  "first_resource_sample_at": "2026-09-29T06:52:33.033Z",
+  "last_resource_sample_at": "2026-09-29T07:53:33.512Z",
+  "failure_sha256": "ffd311bfc4565e9e3203f20a1fc7fb6a42734eb443a5faa05c19b0cf58179711",
+  "resources_sha256": "2fb45c6b9a4b2fff7d066964a15d71d4b31989155e2f3a90fac42a4e7bf6063c",
+  "cli_log_sha256": "831d8267cd86c5af1952446392313d91043f09f55e61fb1c501c528744ca02a9",
+  "server_log_sha256": [
+    "8fe98add3b6af27aa219bb75b18aeb9404891fcac132c153b41fbecb5c9aa6a8",
+    "17982fd01580e34514521cba17b318e4f3b570fb683e6bfaf9dab26c28039bb5"
+  ],
+  "journal_uncompressed_sha256": "0093402e553c04e3765b7655398f085559faea9ab86a056e60dc70149ce97457",
+  "journal_gzip_sha256": "aabfebf2363aa228b1475b567a6bac10e8e79cefe07082a1cbdb11651cbd8d7e",
+  "journal_file": "2026-09-29-long-v6-scene-timeout-journal.json.gz",
+  "subtitle_holdout": false,
+  "bilingual_reviewed": false,
+  "quality_verdict": "unreviewed"
+}
