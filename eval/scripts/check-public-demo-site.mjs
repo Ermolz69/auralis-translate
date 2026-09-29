@@ -42,6 +42,7 @@ assert.deepEqual(data.currency, await loadCurrencyReport(root, data.dataset));
 assert.deepEqual(data.model_comparison, await loadModelComparison(root));
 assert.deepEqual(data.delivery_plan, await loadDeliveryPlan(root));
 assert(html.includes('id="release-readiness"'));
+assert(html.includes('2026-09-29-release-readiness-after-reg015.md'));
 assert(html.includes('G1–G9 и A1–A6 остаются открытыми'));
 assert(html.includes('2026-09-29-reg-009-long-cli-soak-results.md'));
 const v5 = await loadV5Envelope(root, data.dataset, data.currency.benchmark);
