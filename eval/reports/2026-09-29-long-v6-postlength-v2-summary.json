@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "experiment": "long-v6-postlength-postflight-1024-v2",
+  "outcome": "passed_structural_with_identifier_loss_after_harness_failure",
+  "run_id": "86876d9c-bb84-4450-9214-8eb21f7d262c",
+  "result_id": "ce7c51e9-5f22-4e66-b648-267ed4aa772f",
+  "initial_task_exit": 1,
+  "reg_id": "REG-008",
+  "source_sha256": "e9b760bdcce97de9f29f5fe671dbb927088f5a15119ebe3200e73e0408391bb3",
+  "output_sha256": "cc2f4b3c88433cf59223bb35cfc95cdfeeed0c079c068106e7ef485369bd2e2b",
+  "profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5",
+  "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "cli_sha256": "76ab2844996a3d68e9be96035f22f32bfcad79e085a5eacdecddbfa27626452a",
+  "cue_count": 1024,
+  "text_slot_count": 1280,
+  "checkpoints_before": 982,
+  "checkpoints_after": 1024,
+  "saved_prefix_preserved": true,
+  "attempts": 4,
+  "result_count": 1,
+  "code_preserved_cues": 453,
+  "identifier_violation_count": 665,
+  "identifier_violation_counts": [
+    {
+      "category": "missing",
+      "count": 656
+    },
+    {
+      "category": "localized_cyrillic",
+      "count": 8
+    },
+    {
+      "category": "wrong_or_duplicate_ascii",
+      "count": 1
+    }
+  ],
+  "first_postflight_failure_sha256": "76b40774e69390635cb592b091e365cc70db5e60e9ee97e810650406e8c186b0",
+  "offline_reexport": "byte_identical",
+  "request_journal_unchanged_after_postflight": true,
+  "prior_request_count": 3688,
+  "new_request_count": 159,
+  "total_request_count": 3847,
+  "new_chat_count": 53,
+  "new_chat_prompt_tokens": 16063,
+  "new_chat_completion_tokens": 2334,
+  "new_chat_elapsed_sum_ms": 139157,
+  "resources": {
+    "sample_count": 34,
+    "sampling_errors": 0,
+    "peak_tracked_working_set_bytes": 2125377536,
+    "peak_tracked_private_bytes": 1072365568,
+    "peak_device_gpu_mib": 845,
+    "first_sample_at": "2026-09-29T09:13:46.627Z",
+    "last_sample_at": "2026-09-29T09:16:31.887Z"
+  },
+  "postflight_elapsed_ms": 651,
+  "initial_failure_sha256": "86e94ca61160561cdc2ae3148931c179fc80e31006e47bc4b3f31c6fa4f2ea73",
+  "report_file": "2026-09-29-long-v6-postlength-v2-report.json",
+  "report_sha256": "2795ce22ee0b87f38fc23723dbd9b2802334a48b584c527d3a00f94a32c14fb8",
+  "journal_file": "2026-09-29-long-v6-postlength-v2-journal.json.gz",
+  "journal_gzip_sha256": "4037c071a17ef38ed7b9bc4989601ef8da0784fb39881b9138abb9d008701a8c",
+  "journal_uncompressed_sha256": "3b8fc4b20dbf235f1084b8d6cf586a7b52f977c4bf4fd64e8ea91826d115a272",
+  "subtitle_holdout": false,
+  "bilingual_reviewed": false,
+  "quality_verdict": "failed_identifier_preservation_unreviewed"
+}

@@ -231,6 +231,11 @@ tasks:
       - task: eval:long:postflight:check
       - node --check eval/scripts/verify-long-v6-postlength-v2.mjs
       - node eval/scripts/verify-long-v6-postlength-v2.mjs
+
+  eval:cli:long:v6:postlength:check:
+    desc: Verify archived post-length structural recovery and 665 retained identifier losses
+    cmds:
+      - node eval/scripts/check-long-v6-postlength-v2.mjs
   eval:long:v6:length:model-probe:
     desc: Compare checked 1.8B and 7B v6 requests on the frozen REG-006 source facts
     env:
@@ -289,6 +294,7 @@ tasks:
       - node --test eval/scripts/tests/long-v6-today-regression.test.mjs
       - task: eval:long:postflight:check
       - node --test eval/scripts/tests/long-v6-postflight-regression.test.mjs
+      - task: eval:cli:long:v6:postlength:check
   test:context-v5:
     desc: Verify the experimental v5 request and strict response boundary
     cmds:
