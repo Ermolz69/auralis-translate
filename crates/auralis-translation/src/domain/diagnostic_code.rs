@@ -4,6 +4,7 @@ pub enum DiagnosticCode {
     NoCyrillic,
     GlossaryTermMissing,
     IdentifierMismatch,
+    TimeMismatch,
 }
 
 impl DiagnosticCode {
@@ -13,6 +14,7 @@ impl DiagnosticCode {
             Self::NoCyrillic => "no_cyrillic",
             Self::GlossaryTermMissing => "glossary_term_missing",
             Self::IdentifierMismatch => "identifier_mismatch",
+            Self::TimeMismatch => "time_mismatch",
         }
     }
 
@@ -22,6 +24,7 @@ impl DiagnosticCode {
             "no_cyrillic" => Some(Self::NoCyrillic),
             "glossary_term_missing" => Some(Self::GlossaryTermMissing),
             "identifier_mismatch" => Some(Self::IdentifierMismatch),
+            "time_mismatch" => Some(Self::TimeMismatch),
             _ => None,
         }
     }

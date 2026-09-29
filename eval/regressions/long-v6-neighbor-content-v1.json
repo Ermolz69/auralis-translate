@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "REG-010",
+  "status": "open_model_content_isolation",
+  "severity": "major",
+  "source_family": "project_authored_synthetic_long_file",
+  "source_report_sha256": "2795ce22ee0b87f38fc23723dbd9b2802334a48b584c527d3a00f94a32c14fb8",
+  "source_journal_sha256": "4037c071a17ef38ed7b9bc4989601ef8da0784fb39881b9138abb9d008701a8c",
+  "affected_profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5",
+  "failure": {
+    "segment_id": 129,
+    "line_index": 0,
+    "request_sha256": "16c4f08f7c712d281a3d8cfa4d3af56af236fcf690a56c02b7827a10a80ef2a9",
+    "source_zh": "工程 AUR-0129：列车将在 08:10 出发。",
+    "next_context_zh": "工程 AUR-0130：不要打开这扇门。",
+    "accepted_ru": "Инженер AUR-0130: Не открывайте эту дверь.",
+    "required_time": "08:10",
+    "expected_target_meaning": "The train departs at 08:10; the target must not state the next cue's door warning."
+  },
+  "expected_invariant": "A target cue must preserve its explicit clock time and meaning without copying the next context cue; correct JSON slot identity is insufficient.",
+  "related_controls": [
+    { "segment_id": 1, "request_sha256": "d8b471e2d98f8f134a178a5bfa70ff0e16ea5dc55f12620a98792a12d253391b", "expected_clock_time": "08:10", "next_cue_has_door_warning": true },
+    { "segment_id": 257, "request_sha256": "23ff49be2eb0483b2969737099697e17a03110a80dfba8baf044ba37b5c937ee", "expected_clock_time": "08:10", "next_cue_has_door_warning": true },
+    { "segment_id": 513, "request_sha256": "cc6494cac88a1c7e38b6c779f77b0fc2d88290190c67e811c9f67e3493a29bde", "expected_clock_time": "08:10", "next_cue_has_door_warning": true },
+    { "segment_id": 769, "request_sha256": "86a8d293ed0e11512bece44a4dd515f40864ef94680e78e872c05efe5da3fe87", "expected_clock_time": "08:10", "next_cue_has_door_warning": true },
+    { "id": "wrong_time", "source_zh": "列车将在 08:10 出发。", "candidate_ru": "Поезд отправится в 08:20.", "expected_warning": true },
+    { "id": "duplicate_time_loss", "source_zh": "08:10 和 08:10", "candidate_ru": "08:10", "expected_warning": true }
+  ],
+  "negative_controls": [
+    { "id": "equivalent_hour", "source_zh": "列车将在 08:10 出发。", "candidate_ru": "Поезд отправится в 8:10.", "expected_warning": false },
+    { "id": "context_only_time", "source_zh": "不要打开这扇门。", "context_zh": "列车将在 08:10 出发。", "candidate_ru": "Не открывайте дверь.", "expected_warning": false },
+    { "id": "time_reordered", "source_zh": "10:08 和 08:10", "candidate_ru": "08:10 и 10:08", "expected_warning": false },
+    { "id": "embedded_code", "source_zh": "代码 A08:10B", "candidate_ru": "Код изменён.", "expected_warning": false }
+  ],
+  "human_review": "missing",
+  "release_gate": "open"
+}

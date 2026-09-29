@@ -254,6 +254,23 @@ tasks:
     desc: Verify archived matched requests, unchanged source and exact identifier outcomes
     cmds:
       - node eval/scripts/check-reg009-identifier-prompt.mjs
+  eval:reg010:context:check:
+    desc: Verify REG-010 archived failure and planned matched context-only requests before inference
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - node --check eval/scripts/probe-reg010-neighbor-context.mjs
+      - node --test --test-isolation=none eval/scripts/tests/long-v6-neighbor-content-regression.test.mjs
+      - node eval/scripts/probe-reg010-neighbor-context.mjs --preflight
+  eval:reg010:context:probe:
+    desc: Compare thirty bounded real-model requests with and without the next source-context cue
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:reg010:context:check
+      - node eval/scripts/probe-reg010-neighbor-context.mjs
   eval:long:v6:length:model-probe:
     desc: Compare checked 1.8B and 7B v6 requests on the frozen REG-006 source facts
     env:
@@ -315,13 +332,16 @@ tasks:
       - node --test eval/scripts/tests/long-v6-postflight-regression.test.mjs
       - task: eval:cli:long:v6:postlength:check
       - node --test --test-isolation=none eval/scripts/tests/long-v6-identifier-regression.test.mjs
+      - node --test --test-isolation=none eval/scripts/tests/long-v6-neighbor-content-regression.test.mjs
       - task: eval:reg009:prompt:check
       - task: eval:reg009:prefix-repair:check
       - task: test:identifier-guard
+      - task: test:time-diagnostics
   eval:regression:catalog:check:
-    desc: Verify the complete REG-001 through REG-009 evidence catalog and surface control gaps
+    desc: Verify versioned REG-001 through REG-010 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
+      - node eval/scripts/check-regression-catalog-v3.mjs
   eval:reg009:prefix-repair:probe:
     desc: Measure conservative exact-code prefix repair on the archived synthetic long-file output
     cmds:
@@ -352,6 +372,11 @@ tasks:
     cmds:
       - cargo test --offline -p auralis-translation --test identifier_diagnostics
       - cargo test --offline -p auralis-translation-sqlite --test identifier_diagnostic_persistence
+  test:time-diagnostics:
+    desc: Check source clock-time warning and reopened SQLite checkpoint evidence
+    cmds:
+      - cargo test --offline -p auralis-translation --test time_diagnostics
+      - cargo test --offline -p auralis-translation-sqlite --test time_diagnostic_persistence
   test:identifier-guard:
     desc: Check opt-in strict v6 identifier rejection, journal evidence and legacy advisory behavior
     cmds:

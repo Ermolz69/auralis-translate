@@ -1,0 +1,23 @@
+{
+  "schema_version": 3,
+  "catalog_id": "zh-ru-development-regressions-v3",
+  "base_catalog_file": "catalog-v2.json",
+  "base_catalog_sha256": "aeff80653cab17387e2ba5f977fd35942fad3e678d1ca43272c49cac7521e6dc",
+  "entries": [
+    {
+      "id": "REG-010",
+      "pack_file": "long-v6-neighbor-content-v1.json",
+      "pack_sha256": "f97827507f2cb7794ada1747981ad79476fd18fc36c3482822314700240f9950",
+      "source_family": "project_authored_synthetic_long_file",
+      "split": "development",
+      "category": "next_cue_content_substitution",
+      "profile_scope": "1.8B v6 target-bound synthetic long-file baseline and advisory time diagnostic",
+      "expected_invariant": "A target cue must preserve its explicit clock time and meaning without copying the next context cue; correct JSON slot identity is insufficient.",
+      "severity": "major",
+      "related_control_count": 6,
+      "negative_control_count": 4,
+      "evidence_record": "eval/experiments/2026-09-29-reg-010-neighbor-content.md",
+      "last_outcome": "Cue 129 copied the next cue while retaining its own JSON slot; four same-pattern controls translated their source time correctly, but model isolation and human review remain open."
+    }
+  ]
+}

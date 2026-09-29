@@ -1,6 +1,7 @@
 mod diagnose_batch;
 mod identifier_mismatch;
 mod planned_batches;
+mod time_mismatch;
 mod translate_batch;
 mod translate_batch_error;
 mod translate_batch_with_control;

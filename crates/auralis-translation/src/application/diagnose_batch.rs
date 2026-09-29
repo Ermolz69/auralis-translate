@@ -1,4 +1,5 @@
 use super::identifier_mismatch::source_identifier_mismatch;
+use super::time_mismatch::source_time_mismatch;
 use crate::{DiagnosticCode, TargetSegment, TranslationBatch, TranslationDiagnostic};
 
 pub(crate) fn diagnose_batch(
@@ -39,6 +40,13 @@ pub(crate) fn diagnose_batch(
             if source_identifier_mismatch(source_line, translated_line) {
                 diagnostics.push(TranslationDiagnostic {
                     code: DiagnosticCode::IdentifierMismatch,
+                    segment_id: source.id(),
+                    line_index,
+                });
+            }
+            if source_time_mismatch(source_line, translated_line) {
+                diagnostics.push(TranslationDiagnostic {
+                    code: DiagnosticCode::TimeMismatch,
                     segment_id: source.id(),
                     line_index,
                 });
