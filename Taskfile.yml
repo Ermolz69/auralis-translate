@@ -262,6 +262,7 @@ tasks:
     cmds:
       - node --check eval/scripts/probe-reg010-neighbor-context.mjs
       - node --test --test-isolation=none eval/scripts/tests/long-v6-neighbor-content-regression.test.mjs
+      - task: eval:reg010:context:result:check
       - node eval/scripts/probe-reg010-neighbor-context.mjs --preflight
   eval:reg010:context:probe:
     desc: Compare thirty bounded real-model requests with and without the next source-context cue
@@ -271,6 +272,17 @@ tasks:
     cmds:
       - task: eval:reg010:context:check
       - node eval/scripts/probe-reg010-neighbor-context.mjs
+  eval:reg010:context:capture:
+    desc: Archive the completed bounded REG-010 screen and raw request/resource evidence
+    requires:
+      vars: [REPORT_DIR]
+    cmds:
+      - node --check eval/scripts/capture-reg010-neighbor-context.mjs
+      - node eval/scripts/capture-reg010-neighbor-context.mjs "{{.REPORT_DIR}}"
+  eval:reg010:context:result:check:
+    desc: Verify immutable REG-010 raw responses, paired prompts, measured facts and inconclusive verdict
+    cmds:
+      - node eval/scripts/check-reg010-neighbor-context.mjs
   eval:long:v6:length:model-probe:
     desc: Compare checked 1.8B and 7B v6 requests on the frozen REG-006 source facts
     env:

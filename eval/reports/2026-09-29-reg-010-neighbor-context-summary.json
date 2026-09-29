@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "experiment": "reg-010-v6-next-context-paired-v1",
+  "outcome": "inconclusive_no_baseline_recurrence_unreviewed",
+  "source_group": "project_authored_synthetic_development",
+  "sealed_holdout": false,
+  "human_review": "missing",
+  "quality_verdict": "unreviewed",
+  "release_gate": "open",
+  "git_head": "42af7c48677d97372999a5147811f7ea87f01235",
+  "git_dirty": "M docs/architecture/014-result-history-selection.md",
+  "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "server_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5",
+  "harness_sha256": "0f75e74031baa7b9019ea87a9dc8c8fdf9eb56bd17f77ebba48d16bff8dd8007",
+  "archive_sha256": "4037c071a17ef38ed7b9bc4989601ef8da0784fb39881b9138abb9d008701a8c",
+  "budget": {
+    "cue_ids": [
+      1,
+      129,
+      257,
+      513,
+      769
+    ],
+    "seeds": [
+      101,
+      202,
+      303
+    ],
+    "arms": [
+      "baseline",
+      "no_next_context"
+    ],
+    "chat_requests": 30,
+    "server_starts": 1,
+    "per_request_ms": 120000,
+    "total_wall_ms": 1200000,
+    "no_retries": true
+  },
+  "started_at": "2026-09-29T11:21:27.331Z",
+  "finished_at": "2026-09-29T11:22:52.621Z",
+  "wall_elapsed_ms": 85290,
+  "baseline": {
+    "requests": 15,
+    "structurally_valid": 15,
+    "exact_identifier": 15,
+    "source_time": 15,
+    "exact_next_cue_phrase": 0,
+    "prompt_tokens": 3831,
+    "completion_tokens": 692,
+    "request_elapsed_sum_ms": 38136
+  },
+  "no_next_context": {
+    "requests": 15,
+    "structurally_valid": 15,
+    "exact_identifier": 15,
+    "source_time": 15,
+    "exact_next_cue_phrase": 0,
+    "prompt_tokens": 3213,
+    "completion_tokens": 742,
+    "request_elapsed_sum_ms": 33486
+  },
+  "resources": {
+    "sample_count": 17,
+    "sampling_errors": 0,
+    "peak_tracked_working_set_bytes": 2113564672,
+    "peak_tracked_private_bytes": 1068285952,
+    "peak_device_gpu_mib": 847,
+    "limitation": "Sampled working set/private memory of tracked processes; device-wide GPU use includes other applications. Not an isolated peak or release hardware gate."
+  },
+  "report_file": "2026-09-29-reg-010-neighbor-context-report.json",
+  "report_sha256": "1c39f4a0016f44cf5094a90c47a77a2a6a1179ba3fa35c41f58088bd21b30a32",
+  "requests_file": "2026-09-29-reg-010-neighbor-context-requests.jsonl.gz",
+  "requests_gzip_sha256": "8a5d409b5e3df059e58078019b755333f4b3b7bccba05979d999cdee2dc96efa",
+  "requests_uncompressed_sha256": "60ae8d3db49fbeb150e6da7c26d8bfcf3bdb9d39070b65540760395721c4ccb0",
+  "resources_file": "2026-09-29-reg-010-neighbor-context-resources.jsonl.gz",
+  "resources_gzip_sha256": "c3b6deabdfd48be70b1fce5276d134c272034fce571fdd68d765f9faac05ae0d",
+  "server_log_local_sha256": "3a661a8f006cf46458b1b6410bab7aeb392084205d331469980b96f31c970d2c"
+}

@@ -92,6 +92,11 @@ now rejects such candidates before checkpoint commit under a separate checked
 profile. This protects output integrity but cannot complete the long file on
 the observed 1.8B responses; an effective preservation strategy and human
 quality evidence remain open.
+The [REG-010 neighbor-content screen](../eval/experiments/2026-09-29-reg-010-neighbor-content.md)
+adds a durable clock-time warning and 30 same-source real-model requests.
+Both arms kept the target time and code in 15/15; the original cue-129
+substitution did not recur, so context removal is unselected. Semantic
+isolation and independent long-file review remain open.
 An [offline prefix-repair screen](../eval/experiments/2026-09-29-reg-009-prefix-repair-results.md)
 on the same archived output improved exact-code coverage from 615 to 1,271 of
 1,280 lines, with 9 mismatches and a separate wrong-content cue still open.

@@ -1,0 +1,1227 @@
+{
+  "schema_version": 1,
+  "experiment": "reg-010-v6-next-context-paired-v1",
+  "status": "complete_observations_unreviewed",
+  "started_at": "2026-09-29T11:21:27.331Z",
+  "identity": {
+    "git_head": "42af7c48677d97372999a5147811f7ea87f01235",
+    "git_status": "M docs/architecture/014-result-history-selection.md",
+    "harness_sha256": "0f75e74031baa7b9019ea87a9dc8c8fdf9eb56bd17f77ebba48d16bff8dd8007",
+    "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+    "server_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+    "profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5",
+    "archive_sha256": "4037c071a17ef38ed7b9bc4989601ef8da0784fb39881b9138abb9d008701a8c"
+  },
+  "budget": {
+    "cue_ids": [
+      1,
+      129,
+      257,
+      513,
+      769
+    ],
+    "seeds": [
+      101,
+      202,
+      303
+    ],
+    "arms": [
+      "baseline",
+      "no_next_context"
+    ],
+    "chat_requests": 30,
+    "server_starts": 1,
+    "per_request_ms": 120000,
+    "total_wall_ms": 1200000,
+    "no_retries": true
+  },
+  "source_group": "project_authored_synthetic_development",
+  "sealed_holdout": false,
+  "human_review": "missing",
+  "quality_verdict": "unreviewed",
+  "planned_requests": [
+    {
+      "cue_id": 1,
+      "seed": 101,
+      "arm": "baseline",
+      "request_sha256": "e23561d3f6dc7de7df9b6c92c8cb5c0f8d45d5e106128a1cfab68e9917403ad3",
+      "prompt_sha256": "bcdd106c7d84a10f9379774a221c6d0a6146efaf221e0546c396fb077735b20a"
+    },
+    {
+      "cue_id": 1,
+      "seed": 101,
+      "arm": "no_next_context",
+      "request_sha256": "d94965bbe027a2740632e6f3a6656158e6414fa31d3e8c88b0a96db71c81a53a",
+      "prompt_sha256": "947646d2e6729adcc14ca22c7bcac24da7b89588eaafca7857686ebe1c3c89ce"
+    },
+    {
+      "cue_id": 129,
+      "seed": 101,
+      "arm": "no_next_context",
+      "request_sha256": "df815520e127fd9e6d1325cb0e01d98fd0a25de22c0cd95e21fee28ba2605c2a",
+      "prompt_sha256": "5fa93094930fcee0bf7d77fd0b76ed29e4540208aa036606928ed79060fb146f"
+    },
+    {
+      "cue_id": 129,
+      "seed": 101,
+      "arm": "baseline",
+      "request_sha256": "db44494210c7d1a90209f94816a1b3d6cbffad7c04ff8d66632f3563726bca3b",
+      "prompt_sha256": "ad8e6d6c7280bf7c9e6b0439c1528680ea64fc9b1a0fcc96dab9c7ea643ccb43"
+    },
+    {
+      "cue_id": 257,
+      "seed": 101,
+      "arm": "baseline",
+      "request_sha256": "983ae8b4767fb8efabc892a32e7c01584700212af6fd7f878ab9bdd3dd51293c",
+      "prompt_sha256": "918caad6fe6823fd19db120e65bff75613b5d8cc8297aaba95099d5c2711203d"
+    },
+    {
+      "cue_id": 257,
+      "seed": 101,
+      "arm": "no_next_context",
+      "request_sha256": "2562722649722295e123c5f4303bfd15a3eedb1d095113e603f209ac6c310a90",
+      "prompt_sha256": "953e68337a980710835f25ca0db682861e43a862408388637ca05bd53498ba28"
+    },
+    {
+      "cue_id": 513,
+      "seed": 101,
+      "arm": "no_next_context",
+      "request_sha256": "12ec656f66ab433bda58bd2bcb50557942b79a27039d97f0c732032560987da4",
+      "prompt_sha256": "e9763e17a40583d5bb64ba67bca4561fd88bfcfde0b318c169598728536c29d6"
+    },
+    {
+      "cue_id": 513,
+      "seed": 101,
+      "arm": "baseline",
+      "request_sha256": "d09d922287a25c836acdbc4f4625c74ae2d5b31d0c011fcf2bb1b747a9f75179",
+      "prompt_sha256": "1c744a8a64ad727561932b89fe4c7573616751cc51e3600ecefa421e283e8341"
+    },
+    {
+      "cue_id": 769,
+      "seed": 101,
+      "arm": "baseline",
+      "request_sha256": "bce22061eabf4bce83541d74e65f12bca41405e8e7ec1cba9b3800f04d2baa5c",
+      "prompt_sha256": "4d2b02f5492512a26ef5dd4d992b00933a00bd9e5b2020cb81af95ff51351f0d"
+    },
+    {
+      "cue_id": 769,
+      "seed": 101,
+      "arm": "no_next_context",
+      "request_sha256": "7c727accfb117c0a10f1adce5f4d954e39af32c5eded9e3a37968364853e04af",
+      "prompt_sha256": "bb7def1f73b354ec5008c5f3a82eefe6e359a21cc9d57b4ae2da75c896864c61"
+    },
+    {
+      "cue_id": 1,
+      "seed": 202,
+      "arm": "baseline",
+      "request_sha256": "19210ce1a2e158d1e46e7c95e0daf54c8cbb381b8daf482003433b43754ba1e7",
+      "prompt_sha256": "bcdd106c7d84a10f9379774a221c6d0a6146efaf221e0546c396fb077735b20a"
+    },
+    {
+      "cue_id": 1,
+      "seed": 202,
+      "arm": "no_next_context",
+      "request_sha256": "58b24cd5f011f3e42111107741478f791916536a220586f2aacbfc2ce327ffbd",
+      "prompt_sha256": "947646d2e6729adcc14ca22c7bcac24da7b89588eaafca7857686ebe1c3c89ce"
+    },
+    {
+      "cue_id": 129,
+      "seed": 202,
+      "arm": "no_next_context",
+      "request_sha256": "c021fffac3d654c52ff51b3165d385ba787a202f1bfdd2116b818c1d08f83d05",
+      "prompt_sha256": "5fa93094930fcee0bf7d77fd0b76ed29e4540208aa036606928ed79060fb146f"
+    },
+    {
+      "cue_id": 129,
+      "seed": 202,
+      "arm": "baseline",
+      "request_sha256": "4637562676b53c4961eac3ced8db93d55b3d3cb33bacbbd175d15a2bf0c19c7b",
+      "prompt_sha256": "ad8e6d6c7280bf7c9e6b0439c1528680ea64fc9b1a0fcc96dab9c7ea643ccb43"
+    },
+    {
+      "cue_id": 257,
+      "seed": 202,
+      "arm": "baseline",
+      "request_sha256": "a7ca92f76c732e9bc1ea92ad315c14c0a94495a01aa22aa0f867cb184429b281",
+      "prompt_sha256": "918caad6fe6823fd19db120e65bff75613b5d8cc8297aaba95099d5c2711203d"
+    },
+    {
+      "cue_id": 257,
+      "seed": 202,
+      "arm": "no_next_context",
+      "request_sha256": "8455b1832d68ad953527634ec3d6f345bd80aca15102036a1c20a368ca2ca03f",
+      "prompt_sha256": "953e68337a980710835f25ca0db682861e43a862408388637ca05bd53498ba28"
+    },
+    {
+      "cue_id": 513,
+      "seed": 202,
+      "arm": "no_next_context",
+      "request_sha256": "8799b112929c4f2dead94afc632b7c8d80d012cdebe081fb2ba683706c9305eb",
+      "prompt_sha256": "e9763e17a40583d5bb64ba67bca4561fd88bfcfde0b318c169598728536c29d6"
+    },
+    {
+      "cue_id": 513,
+      "seed": 202,
+      "arm": "baseline",
+      "request_sha256": "a0c6ebbb170acd11f2159e48b97d8699cd7255bd853353fe9309eb4038d991d1",
+      "prompt_sha256": "1c744a8a64ad727561932b89fe4c7573616751cc51e3600ecefa421e283e8341"
+    },
+    {
+      "cue_id": 769,
+      "seed": 202,
+      "arm": "baseline",
+      "request_sha256": "546283a5862421615f47fc39568464feba883a3b8b4a6a2ebb2695dfa69dcec0",
+      "prompt_sha256": "4d2b02f5492512a26ef5dd4d992b00933a00bd9e5b2020cb81af95ff51351f0d"
+    },
+    {
+      "cue_id": 769,
+      "seed": 202,
+      "arm": "no_next_context",
+      "request_sha256": "bf9cabd01f88f8d996a2e4943a63ad61f5efc7aaa93e46d889f0ac31ffb2d268",
+      "prompt_sha256": "bb7def1f73b354ec5008c5f3a82eefe6e359a21cc9d57b4ae2da75c896864c61"
+    },
+    {
+      "cue_id": 1,
+      "seed": 303,
+      "arm": "baseline",
+      "request_sha256": "7928ee39777e0fba500506219cd39c581bba5b83d78c37a17f404359b27a3365",
+      "prompt_sha256": "bcdd106c7d84a10f9379774a221c6d0a6146efaf221e0546c396fb077735b20a"
+    },
+    {
+      "cue_id": 1,
+      "seed": 303,
+      "arm": "no_next_context",
+      "request_sha256": "51161a65cbe8f18389214889f973d4a2bfa0c578c9c1852dc3b402876fe08561",
+      "prompt_sha256": "947646d2e6729adcc14ca22c7bcac24da7b89588eaafca7857686ebe1c3c89ce"
+    },
+    {
+      "cue_id": 129,
+      "seed": 303,
+      "arm": "no_next_context",
+      "request_sha256": "e6c598d07eea76d52a5dbd0be77e246d6edfebb90b879dbc534c6da8e55ca9ee",
+      "prompt_sha256": "5fa93094930fcee0bf7d77fd0b76ed29e4540208aa036606928ed79060fb146f"
+    },
+    {
+      "cue_id": 129,
+      "seed": 303,
+      "arm": "baseline",
+      "request_sha256": "bec2b30269bb94679111fdd2b5d2843d9aa3490043e007b376038c4e1df495b0",
+      "prompt_sha256": "ad8e6d6c7280bf7c9e6b0439c1528680ea64fc9b1a0fcc96dab9c7ea643ccb43"
+    },
+    {
+      "cue_id": 257,
+      "seed": 303,
+      "arm": "baseline",
+      "request_sha256": "2b1e78162e3839af7624e4b151df19a4c0e7f628ca0f1169aa4d01e891045507",
+      "prompt_sha256": "918caad6fe6823fd19db120e65bff75613b5d8cc8297aaba95099d5c2711203d"
+    },
+    {
+      "cue_id": 257,
+      "seed": 303,
+      "arm": "no_next_context",
+      "request_sha256": "83d791540cfa883034d8ff0451ebda0e5ba6021b74463e01fb4f3e2365248ba4",
+      "prompt_sha256": "953e68337a980710835f25ca0db682861e43a862408388637ca05bd53498ba28"
+    },
+    {
+      "cue_id": 513,
+      "seed": 303,
+      "arm": "no_next_context",
+      "request_sha256": "d537d4cb137fdf1778153b81da851949cb5d30da9a9e4e1b076d1df3ed60322a",
+      "prompt_sha256": "e9763e17a40583d5bb64ba67bca4561fd88bfcfde0b318c169598728536c29d6"
+    },
+    {
+      "cue_id": 513,
+      "seed": 303,
+      "arm": "baseline",
+      "request_sha256": "7d282a78671c0925e2580bc5cae62b732b734141f59c857fb07fd0ec2218a224",
+      "prompt_sha256": "1c744a8a64ad727561932b89fe4c7573616751cc51e3600ecefa421e283e8341"
+    },
+    {
+      "cue_id": 769,
+      "seed": 303,
+      "arm": "baseline",
+      "request_sha256": "50081a08b06ecff0b7db348b8d2500e3c50b16fdd5ccc2f65bdf5f37692d2e38",
+      "prompt_sha256": "4d2b02f5492512a26ef5dd4d992b00933a00bd9e5b2020cb81af95ff51351f0d"
+    },
+    {
+      "cue_id": 769,
+      "seed": 303,
+      "arm": "no_next_context",
+      "request_sha256": "dcbe43924e5aa9a57203a85e716f72ca69d0347514983ecffacc6128745c7cc0",
+      "prompt_sha256": "bb7def1f73b354ec5008c5f3a82eefe6e359a21cc9d57b4ae2da75c896864c61"
+    }
+  ],
+  "requests": [
+    {
+      "cue_id": 1,
+      "seed": 101,
+      "arm": "baseline",
+      "request_sha256": "e23561d3f6dc7de7df9b6c92c8cb5c0f8d45d5e106128a1cfab68e9917403ad3",
+      "prompt_sha256": "bcdd106c7d84a10f9379774a221c6d0a6146efaf221e0546c396fb077735b20a",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерный AUR-0001: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 47,
+        "prompt_tokens": 253,
+        "total_tokens": 300,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsed_ms": 3362
+    },
+    {
+      "cue_id": 1,
+      "seed": 101,
+      "arm": "no_next_context",
+      "request_sha256": "d94965bbe027a2740632e6f3a6656158e6414fa31d3e8c88b0a96db71c81a53a",
+      "prompt_sha256": "947646d2e6729adcc14ca22c7bcac24da7b89588eaafca7857686ebe1c3c89ce",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерный проект AUR-0001: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 49,
+        "prompt_tokens": 213,
+        "total_tokens": 262,
+        "prompt_tokens_details": {
+          "cached_tokens": 139
+        }
+      },
+      "elapsed_ms": 2287
+    },
+    {
+      "cue_id": 129,
+      "seed": 101,
+      "arm": "no_next_context",
+      "request_sha256": "df815520e127fd9e6d1325cb0e01d98fd0a25de22c0cd95e21fee28ba2605c2a",
+      "prompt_sha256": "5fa93094930fcee0bf7d77fd0b76ed29e4540208aa036606928ed79060fb146f",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерный объект AUR-0129: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 49,
+        "prompt_tokens": 213,
+        "total_tokens": 262,
+        "prompt_tokens_details": {
+          "cached_tokens": 149
+        }
+      },
+      "elapsed_ms": 2189
+    },
+    {
+      "cue_id": 129,
+      "seed": 101,
+      "arm": "baseline",
+      "request_sha256": "db44494210c7d1a90209f94816a1b3d6cbffad7c04ff8d66632f3563726bca3b",
+      "prompt_sha256": "ad8e6d6c7280bf7c9e6b0439c1528680ea64fc9b1a0fcc96dab9c7ea643ccb43",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженер AUR-0129: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 46,
+        "prompt_tokens": 253,
+        "total_tokens": 299,
+        "prompt_tokens_details": {
+          "cached_tokens": 139
+        }
+      },
+      "elapsed_ms": 2598
+    },
+    {
+      "cue_id": 257,
+      "seed": 101,
+      "arm": "baseline",
+      "request_sha256": "983ae8b4767fb8efabc892a32e7c01584700212af6fd7f878ab9bdd3dd51293c",
+      "prompt_sha256": "918caad6fe6823fd19db120e65bff75613b5d8cc8297aaba95099d5c2711203d",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженер AUR-0257: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 44,
+        "prompt_tokens": 257,
+        "total_tokens": 301,
+        "prompt_tokens_details": {
+          "cached_tokens": 143
+        }
+      },
+      "elapsed_ms": 2421
+    },
+    {
+      "cue_id": 257,
+      "seed": 101,
+      "arm": "no_next_context",
+      "request_sha256": "2562722649722295e123c5f4303bfd15a3eedb1d095113e603f209ac6c310a90",
+      "prompt_sha256": "953e68337a980710835f25ca0db682861e43a862408388637ca05bd53498ba28",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерный объект AUR-0257: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 49,
+        "prompt_tokens": 215,
+        "total_tokens": 264,
+        "prompt_tokens_details": {
+          "cached_tokens": 139
+        }
+      },
+      "elapsed_ms": 2365
+    },
+    {
+      "cue_id": 513,
+      "seed": 101,
+      "arm": "no_next_context",
+      "request_sha256": "12ec656f66ab433bda58bd2bcb50557942b79a27039d97f0c732032560987da4",
+      "prompt_sha256": "e9763e17a40583d5bb64ba67bca4561fd88bfcfde0b318c169598728536c29d6",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерный отчет AUR-0513: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 50,
+        "prompt_tokens": 215,
+        "total_tokens": 265,
+        "prompt_tokens_details": {
+          "cached_tokens": 149
+        }
+      },
+      "elapsed_ms": 2171
+    },
+    {
+      "cue_id": 513,
+      "seed": 101,
+      "arm": "baseline",
+      "request_sha256": "d09d922287a25c836acdbc4f4625c74ae2d5b31d0c011fcf2bb1b747a9f75179",
+      "prompt_sha256": "1c744a8a64ad727561932b89fe4c7573616751cc51e3600ecefa421e283e8341",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженер AUR-0513: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 47,
+        "prompt_tokens": 257,
+        "total_tokens": 304,
+        "prompt_tokens_details": {
+          "cached_tokens": 139
+        }
+      },
+      "elapsed_ms": 2578
+    },
+    {
+      "cue_id": 769,
+      "seed": 101,
+      "arm": "baseline",
+      "request_sha256": "bce22061eabf4bce83541d74e65f12bca41405e8e7ec1cba9b3800f04d2baa5c",
+      "prompt_sha256": "4d2b02f5492512a26ef5dd4d992b00933a00bd9e5b2020cb81af95ff51351f0d",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженер AUR-0769: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 46,
+        "prompt_tokens": 257,
+        "total_tokens": 303,
+        "prompt_tokens_details": {
+          "cached_tokens": 143
+        }
+      },
+      "elapsed_ms": 2585
+    },
+    {
+      "cue_id": 769,
+      "seed": 101,
+      "arm": "no_next_context",
+      "request_sha256": "7c727accfb117c0a10f1adce5f4d954e39af32c5eded9e3a37968364853e04af",
+      "prompt_sha256": "bb7def1f73b354ec5008c5f3a82eefe6e359a21cc9d57b4ae2da75c896864c61",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерный объект AUR-0769: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 49,
+        "prompt_tokens": 215,
+        "total_tokens": 264,
+        "prompt_tokens_details": {
+          "cached_tokens": 139
+        }
+      },
+      "elapsed_ms": 2245
+    },
+    {
+      "cue_id": 1,
+      "seed": 202,
+      "arm": "baseline",
+      "request_sha256": "19210ce1a2e158d1e46e7c95e0daf54c8cbb381b8daf482003433b43754ba1e7",
+      "prompt_sha256": "bcdd106c7d84a10f9379774a221c6d0a6146efaf221e0546c396fb077735b20a",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерный проект AUR-0001: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 49,
+        "prompt_tokens": 253,
+        "total_tokens": 302,
+        "prompt_tokens_details": {
+          "cached_tokens": 139
+        }
+      },
+      "elapsed_ms": 2577
+    },
+    {
+      "cue_id": 1,
+      "seed": 202,
+      "arm": "no_next_context",
+      "request_sha256": "58b24cd5f011f3e42111107741478f791916536a220586f2aacbfc2ce327ffbd",
+      "prompt_sha256": "947646d2e6729adcc14ca22c7bcac24da7b89588eaafca7857686ebe1c3c89ce",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерная работа AUR-0001: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 49,
+        "prompt_tokens": 213,
+        "total_tokens": 262,
+        "prompt_tokens_details": {
+          "cached_tokens": 139
+        }
+      },
+      "elapsed_ms": 2208
+    },
+    {
+      "cue_id": 129,
+      "seed": 202,
+      "arm": "no_next_context",
+      "request_sha256": "c021fffac3d654c52ff51b3165d385ba787a202f1bfdd2116b818c1d08f83d05",
+      "prompt_sha256": "5fa93094930fcee0bf7d77fd0b76ed29e4540208aa036606928ed79060fb146f",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерная задача AUR-0129: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 50,
+        "prompt_tokens": 213,
+        "total_tokens": 263,
+        "prompt_tokens_details": {
+          "cached_tokens": 149
+        }
+      },
+      "elapsed_ms": 2192
+    },
+    {
+      "cue_id": 129,
+      "seed": 202,
+      "arm": "baseline",
+      "request_sha256": "4637562676b53c4961eac3ced8db93d55b3d3cb33bacbbd175d15a2bf0c19c7b",
+      "prompt_sha256": "ad8e6d6c7280bf7c9e6b0439c1528680ea64fc9b1a0fcc96dab9c7ea643ccb43",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженер AUR-0129: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 47,
+        "prompt_tokens": 253,
+        "total_tokens": 300,
+        "prompt_tokens_details": {
+          "cached_tokens": 139
+        }
+      },
+      "elapsed_ms": 2440
+    },
+    {
+      "cue_id": 257,
+      "seed": 202,
+      "arm": "baseline",
+      "request_sha256": "a7ca92f76c732e9bc1ea92ad315c14c0a94495a01aa22aa0f867cb184429b281",
+      "prompt_sha256": "918caad6fe6823fd19db120e65bff75613b5d8cc8297aaba95099d5c2711203d",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженер AUR-0257: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 44,
+        "prompt_tokens": 257,
+        "total_tokens": 301,
+        "prompt_tokens_details": {
+          "cached_tokens": 143
+        }
+      },
+      "elapsed_ms": 2395
+    },
+    {
+      "cue_id": 257,
+      "seed": 202,
+      "arm": "no_next_context",
+      "request_sha256": "8455b1832d68ad953527634ec3d6f345bd80aca15102036a1c20a368ca2ca03f",
+      "prompt_sha256": "953e68337a980710835f25ca0db682861e43a862408388637ca05bd53498ba28",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерная задача AUR-0257: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 50,
+        "prompt_tokens": 215,
+        "total_tokens": 265,
+        "prompt_tokens_details": {
+          "cached_tokens": 139
+        }
+      },
+      "elapsed_ms": 2269
+    },
+    {
+      "cue_id": 513,
+      "seed": 202,
+      "arm": "no_next_context",
+      "request_sha256": "8799b112929c4f2dead94afc632b7c8d80d012cdebe081fb2ba683706c9305eb",
+      "prompt_sha256": "e9763e17a40583d5bb64ba67bca4561fd88bfcfde0b318c169598728536c29d6",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерная задача AUR-0513: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 50,
+        "prompt_tokens": 215,
+        "total_tokens": 265,
+        "prompt_tokens_details": {
+          "cached_tokens": 149
+        }
+      },
+      "elapsed_ms": 2218
+    },
+    {
+      "cue_id": 513,
+      "seed": 202,
+      "arm": "baseline",
+      "request_sha256": "a0c6ebbb170acd11f2159e48b97d8699cd7255bd853353fe9309eb4038d991d1",
+      "prompt_sha256": "1c744a8a64ad727561932b89fe4c7573616751cc51e3600ecefa421e283e8341",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженер AUR-0513: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 47,
+        "prompt_tokens": 257,
+        "total_tokens": 304,
+        "prompt_tokens_details": {
+          "cached_tokens": 139
+        }
+      },
+      "elapsed_ms": 2623
+    },
+    {
+      "cue_id": 769,
+      "seed": 202,
+      "arm": "baseline",
+      "request_sha256": "546283a5862421615f47fc39568464feba883a3b8b4a6a2ebb2695dfa69dcec0",
+      "prompt_sha256": "4d2b02f5492512a26ef5dd4d992b00933a00bd9e5b2020cb81af95ff51351f0d",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженер AUR-0769: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 44,
+        "prompt_tokens": 257,
+        "total_tokens": 301,
+        "prompt_tokens_details": {
+          "cached_tokens": 143
+        }
+      },
+      "elapsed_ms": 2405
+    },
+    {
+      "cue_id": 769,
+      "seed": 202,
+      "arm": "no_next_context",
+      "request_sha256": "bf9cabd01f88f8d996a2e4943a63ad61f5efc7aaa93e46d889f0ac31ffb2d268",
+      "prompt_sha256": "bb7def1f73b354ec5008c5f3a82eefe6e359a21cc9d57b4ae2da75c896864c61",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерная задача AUR-0769: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 50,
+        "prompt_tokens": 215,
+        "total_tokens": 265,
+        "prompt_tokens_details": {
+          "cached_tokens": 139
+        }
+      },
+      "elapsed_ms": 2258
+    },
+    {
+      "cue_id": 1,
+      "seed": 303,
+      "arm": "baseline",
+      "request_sha256": "7928ee39777e0fba500506219cd39c581bba5b83d78c37a17f404359b27a3365",
+      "prompt_sha256": "bcdd106c7d84a10f9379774a221c6d0a6146efaf221e0546c396fb077735b20a",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерный проект AUR-0001: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 49,
+        "prompt_tokens": 253,
+        "total_tokens": 302,
+        "prompt_tokens_details": {
+          "cached_tokens": 139
+        }
+      },
+      "elapsed_ms": 2524
+    },
+    {
+      "cue_id": 1,
+      "seed": 303,
+      "arm": "no_next_context",
+      "request_sha256": "51161a65cbe8f18389214889f973d4a2bfa0c578c9c1852dc3b402876fe08561",
+      "prompt_sha256": "947646d2e6729adcc14ca22c7bcac24da7b89588eaafca7857686ebe1c3c89ce",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерная работа AUR-0001: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 49,
+        "prompt_tokens": 213,
+        "total_tokens": 262,
+        "prompt_tokens_details": {
+          "cached_tokens": 139
+        }
+      },
+      "elapsed_ms": 2263
+    },
+    {
+      "cue_id": 129,
+      "seed": 303,
+      "arm": "no_next_context",
+      "request_sha256": "e6c598d07eea76d52a5dbd0be77e246d6edfebb90b879dbc534c6da8e55ca9ee",
+      "prompt_sha256": "5fa93094930fcee0bf7d77fd0b76ed29e4540208aa036606928ed79060fb146f",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерная задача AUR-0129: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 50,
+        "prompt_tokens": 213,
+        "total_tokens": 263,
+        "prompt_tokens_details": {
+          "cached_tokens": 149
+        }
+      },
+      "elapsed_ms": 2189
+    },
+    {
+      "cue_id": 129,
+      "seed": 303,
+      "arm": "baseline",
+      "request_sha256": "bec2b30269bb94679111fdd2b5d2843d9aa3490043e007b376038c4e1df495b0",
+      "prompt_sha256": "ad8e6d6c7280bf7c9e6b0439c1528680ea64fc9b1a0fcc96dab9c7ea643ccb43",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженер AUR-0129: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 47,
+        "prompt_tokens": 253,
+        "total_tokens": 300,
+        "prompt_tokens_details": {
+          "cached_tokens": 139
+        }
+      },
+      "elapsed_ms": 2485
+    },
+    {
+      "cue_id": 257,
+      "seed": 303,
+      "arm": "baseline",
+      "request_sha256": "2b1e78162e3839af7624e4b151df19a4c0e7f628ca0f1169aa4d01e891045507",
+      "prompt_sha256": "918caad6fe6823fd19db120e65bff75613b5d8cc8297aaba95099d5c2711203d",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерный проект AUR-0257: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 47,
+        "prompt_tokens": 257,
+        "total_tokens": 304,
+        "prompt_tokens_details": {
+          "cached_tokens": 143
+        }
+      },
+      "elapsed_ms": 2435
+    },
+    {
+      "cue_id": 257,
+      "seed": 303,
+      "arm": "no_next_context",
+      "request_sha256": "83d791540cfa883034d8ff0451ebda0e5ba6021b74463e01fb4f3e2365248ba4",
+      "prompt_sha256": "953e68337a980710835f25ca0db682861e43a862408388637ca05bd53498ba28",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Строительный проект AUR-0257: поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 48,
+        "prompt_tokens": 215,
+        "total_tokens": 263,
+        "prompt_tokens_details": {
+          "cached_tokens": 139
+        }
+      },
+      "elapsed_ms": 2188
+    },
+    {
+      "cue_id": 513,
+      "seed": 303,
+      "arm": "no_next_context",
+      "request_sha256": "d537d4cb137fdf1778153b81da851949cb5d30da9a9e4e1b076d1df3ed60322a",
+      "prompt_sha256": "e9763e17a40583d5bb64ba67bca4561fd88bfcfde0b318c169598728536c29d6",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерная задача AUR-0513: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 50,
+        "prompt_tokens": 215,
+        "total_tokens": 265,
+        "prompt_tokens_details": {
+          "cached_tokens": 149
+        }
+      },
+      "elapsed_ms": 2184
+    },
+    {
+      "cue_id": 513,
+      "seed": 303,
+      "arm": "baseline",
+      "request_sha256": "7d282a78671c0925e2580bc5cae62b732b734141f59c857fb07fd0ec2218a224",
+      "prompt_sha256": "1c744a8a64ad727561932b89fe4c7573616751cc51e3600ecefa421e283e8341",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженер AUR-0513: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 44,
+        "prompt_tokens": 257,
+        "total_tokens": 301,
+        "prompt_tokens_details": {
+          "cached_tokens": 139
+        }
+      },
+      "elapsed_ms": 2385
+    },
+    {
+      "cue_id": 769,
+      "seed": 303,
+      "arm": "baseline",
+      "request_sha256": "50081a08b06ecff0b7db348b8d2500e3c50b16fdd5ccc2f65bdf5f37692d2e38",
+      "prompt_sha256": "4d2b02f5492512a26ef5dd4d992b00933a00bd9e5b2020cb81af95ff51351f0d",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженер AUR-0769: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 44,
+        "prompt_tokens": 257,
+        "total_tokens": 301,
+        "prompt_tokens_details": {
+          "cached_tokens": 143
+        }
+      },
+      "elapsed_ms": 2323
+    },
+    {
+      "cue_id": 769,
+      "seed": 303,
+      "arm": "no_next_context",
+      "request_sha256": "dcbe43924e5aa9a57203a85e716f72ca69d0347514983ecffacc6128745c7cc0",
+      "prompt_sha256": "bb7def1f73b354ec5008c5f3a82eefe6e359a21cc9d57b4ae2da75c896864c61",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерная задача AUR-0769: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "target_time_preserved": true,
+      "next_cue_phrase_copied": false,
+      "usage": {
+        "completion_tokens": 50,
+        "prompt_tokens": 215,
+        "total_tokens": 265,
+        "prompt_tokens_details": {
+          "cached_tokens": 139
+        }
+      },
+      "elapsed_ms": 2260
+    }
+  ],
+  "failures": [],
+  "resources": {
+    "interval_ms": 5000,
+    "samples": [
+      {
+        "created_at": "2026-09-29T11:21:31.932Z",
+        "tracked_pids": [
+          19128
+        ],
+        "processes": [
+          {
+            "Id": 19128,
+            "WorkingSet64": 2098282496,
+            "PrivateMemorySize64": 1053335552,
+            "CPU": 8.765625
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 840, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T11:21:36.936Z",
+        "tracked_pids": [
+          19128
+        ],
+        "processes": [
+          {
+            "Id": 19128,
+            "WorkingSet64": 2101182464,
+            "PrivateMemorySize64": 1057312768,
+            "CPU": 45.828125
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 840, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T11:21:41.942Z",
+        "tracked_pids": [
+          19128
+        ],
+        "processes": [
+          {
+            "Id": 19128,
+            "WorkingSet64": 2101424128,
+            "PrivateMemorySize64": 1059966976,
+            "CPU": 82.765625
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 836, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T11:21:46.946Z",
+        "tracked_pids": [
+          19128
+        ],
+        "processes": [
+          {
+            "Id": 19128,
+            "WorkingSet64": 2099593216,
+            "PrivateMemorySize64": 1055137792,
+            "CPU": 115.59375
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 840, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T11:21:51.970Z",
+        "tracked_pids": [
+          19128
+        ],
+        "processes": [
+          {
+            "Id": 19128,
+            "WorkingSet64": 2101489664,
+            "PrivateMemorySize64": 1059090432,
+            "CPU": 151.3125
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 840, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T11:21:56.973Z",
+        "tracked_pids": [
+          19128
+        ],
+        "processes": [
+          {
+            "Id": 19128,
+            "WorkingSet64": 2113564672,
+            "PrivateMemorySize64": 1068285952,
+            "CPU": 182.40625
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 836, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T11:22:01.978Z",
+        "tracked_pids": [
+          19128
+        ],
+        "processes": [
+          {
+            "Id": 19128,
+            "WorkingSet64": 2099986432,
+            "PrivateMemorySize64": 1057677312,
+            "CPU": 220.203125
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 840, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T11:22:06.983Z",
+        "tracked_pids": [
+          19128
+        ],
+        "processes": [
+          {
+            "Id": 19128,
+            "WorkingSet64": 2101506048,
+            "PrivateMemorySize64": 1059561472,
+            "CPU": 260.34375
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 836, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T11:22:11.981Z",
+        "tracked_pids": [
+          19128
+        ],
+        "processes": [
+          {
+            "Id": 19128,
+            "WorkingSet64": 2103390208,
+            "PrivateMemorySize64": 1067167744,
+            "CPU": 299.421875
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 840, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T11:22:16.994Z",
+        "tracked_pids": [
+          19128
+        ],
+        "processes": [
+          {
+            "Id": 19128,
+            "WorkingSet64": 2101551104,
+            "PrivateMemorySize64": 1058091008,
+            "CPU": 339.796875
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 840, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T11:22:22.008Z",
+        "tracked_pids": [
+          19128
+        ],
+        "processes": [
+          {
+            "Id": 19128,
+            "WorkingSet64": 2100006912,
+            "PrivateMemorySize64": 1058172928,
+            "CPU": 375.15625
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 847, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T11:22:27.003Z",
+        "tracked_pids": [
+          19128
+        ],
+        "processes": [
+          {
+            "Id": 19128,
+            "WorkingSet64": 2100109312,
+            "PrivateMemorySize64": 1056784384,
+            "CPU": 413.8125
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 841, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T11:22:32.012Z",
+        "tracked_pids": [
+          19128
+        ],
+        "processes": [
+          {
+            "Id": 19128,
+            "WorkingSet64": 2099699712,
+            "PrivateMemorySize64": 1054064640,
+            "CPU": 453.5
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 840, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T11:22:37.013Z",
+        "tracked_pids": [
+          19128
+        ],
+        "processes": [
+          {
+            "Id": 19128,
+            "WorkingSet64": 2103709696,
+            "PrivateMemorySize64": 1059684352,
+            "CPU": 491.984375
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 839, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T11:22:42.031Z",
+        "tracked_pids": [
+          19128
+        ],
+        "processes": [
+          {
+            "Id": 19128,
+            "WorkingSet64": 2106273792,
+            "PrivateMemorySize64": 1060818944,
+            "CPU": 526.8125
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 835, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T11:22:47.032Z",
+        "tracked_pids": [
+          19128
+        ],
+        "processes": [
+          {
+            "Id": 19128,
+            "WorkingSet64": 2106175488,
+            "PrivateMemorySize64": 1060818944,
+            "CPU": 566.203125
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 840, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T11:22:52.035Z",
+        "tracked_pids": [
+          19128
+        ],
+        "processes": [
+          {
+            "Id": 19128,
+            "WorkingSet64": 2106273792,
+            "PrivateMemorySize64": 1060818944,
+            "CPU": 605.875
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 839, 8192",
+        "errors": []
+      }
+    ],
+    "limitations": "Sampled working set/private memory of tracked processes; device-wide GPU use includes other applications. Not an isolated peak or release hardware gate."
+  },
+  "finished_at": "2026-09-29T11:22:52.621Z",
+  "wall_elapsed_ms": 85290
+}

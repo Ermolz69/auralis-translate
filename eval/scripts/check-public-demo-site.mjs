@@ -13,6 +13,7 @@ import { loadPronounCrossModel } from './pronoun-cross-model-section.mjs';
 import { loadLongV5Failure } from './long-v5-failure-section.mjs';
 import { loadLongV6Outcomes, loadLongV6ModelScreen, loadLongV6Postlength } from './long-v6-outcomes-section.mjs';
 import { loadIdentifierDiagnostic } from './identifier-diagnostic-section.mjs';
+import { loadNeighborContext } from './neighbor-context-section.mjs';
 import { loadTermsProbe } from './terms-section.mjs';
 import { loadInferenceJournal } from './inference-journal-section.mjs';
 import { loadPreflightJournal } from './preflight-journal-section.mjs';
@@ -64,6 +65,12 @@ assert.deepEqual(data.long_v6_outcomes, longV6);
 const longV6Postlength = await loadLongV6Postlength(root);
 assert.deepEqual(data.long_v6_postlength, longV6Postlength);
 assert.deepEqual(data.identifier_diagnostic, await loadIdentifierDiagnostic(root));
+assert.deepEqual(data.neighbor_context, await loadNeighborContext(root));
+assert(html.includes('id="neighbor-context"'));
+assert(html.includes('Подмена следующей репликой остаётся открытой ошибкой'));
+assert(html.includes('2026-09-29-reg-010-neighbor-context-requests.jsonl.gz'));
+assert(html.includes('исходный сбой не повторился') || html.includes('Исходный сбой не повторился'));
+assert.equal((html.match(/<th scope="row">(?:101|202|303)<\/th>/g) ?? []).length, 3);
 assert(html.includes('id="identifier-diagnostic"'));
 assert(html.includes('identifier_mismatch'));
 assert(html.includes('long-v6-identifier-loss-v1.json'));
@@ -169,4 +176,4 @@ for (const script of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))
 }
 assert(!/(?:E:\\\\|C:\\\\Users\\\\|00ermzahar@|gh[pousr]_[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)/.test(html));
 assert(!/<script[^>]+src="(?!https:\/\/cdn\.jsdelivr\.net\/npm\/@tailwindcss\/browser@4")/.test(html));
-console.log('Public HTML verified: 420 prior requests retained, v5/v6 failed long-scene journals and 16 paired REG-006 requests linked, context and model comparisons, SAPI evidence, report identity and single-file publication boundary.');
+console.log('Public HTML verified: prior measurements retained, REG-010 inconclusive 30-request screen linked, SAPI evidence, report identity and single-file publication boundary.');

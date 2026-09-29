@@ -69,3 +69,43 @@ release audit remain required.
   source/context mutation and no-reference preflight.
 - `task fmt`, `task lint`, `task docs:check`, `task plan:check`: passed after
   applying repository formatting. These checks do not establish model quality.
+
+## Real-model result, retained without selection
+
+The committed candidate `42af7c48677d97372999a5147811f7ea87f01235`
+ran `task eval:reg010:context:probe` on 29 September, 11:21:27–11:22:52 UTC.
+The only dirty path was the owner's unrelated architecture document. The
+screen completed 30/30 HTTP requests in 85,290 ms, with no retries, transport
+failures or structurally invalid responses. All five cue/seed pairs per arm
+used the same source; only the single next-cue `source_context` entry changed.
+The raw requests, responses and samples are frozen in the [summary](../reports/2026-09-29-reg-010-neighbor-context-summary.json),
+[request journal](../reports/2026-09-29-reg-010-neighbor-context-requests.jsonl.gz)
+and [resource samples](../reports/2026-09-29-reg-010-neighbor-context-resources.jsonl.gz).
+
+| Arm | Valid JSON slots | Exact source codes | Source `08:10` | Exact next-cue door phrase | Prompt/completion tokens | Sum of request times |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Archived-prompt baseline with next cue | 15/15 | 15/15 | 15/15 | 0/15 | 3,831 / 692 | 38,136 ms |
+| Same prompt without next cue | 15/15 | 15/15 | 15/15 | 0/15 | 3,213 / 742 | 33,486 ms |
+
+The archived cue-129 substitution did **not** recur in either arm across
+seeds 101, 202 and 303. The paired screen is therefore inconclusive about
+whether the next context caused the original failure. No global no-context
+policy or new model profile is selected. The decoded cue-129 wording varies
+in its first noun; no independent reviewer judged adequacy or the full
+scene. The old failure and 665 identifier losses remain in the baseline.
+
+Seventeen resource samples reported no sampling error. The highest tracked
+server working set was 2,113,564,672 bytes; tracked private memory was
+1,068,285,952 bytes. Peak device-wide RTX 3070 use was 847 MiB and includes
+other processes. These sampled values are lower-bound/process observations,
+not a clean-machine SLA. The run's original and candidate report hashes are
+in the summary. `task eval:reg010:context:capture
+REPORT_DIR=.cache/eval/reg010-neighbor-context/run-GzXjPn` archived the result;
+`task eval:reg010:context:result:check` verifies its immutable raw evidence
+and the inconclusive verdict.
+
+After archiving, `task eval:regression:check`, `task site:build`,
+`task site:check`, `task docs:check` and `task plan:check` passed. The site
+retains earlier measurements and labels this screen as unreviewed and
+inconclusive. Publication and live-page byte comparison are recorded only
+after the Pages deployment completes.
