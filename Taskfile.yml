@@ -51,6 +51,32 @@ tasks:
     desc: Match every real 7B p01 chat body and accepted target to its durable SQLite journal
     cmds:
       - python eval/scripts/check-inference-journal.py .cache/eval/context-7b-p01-screen-v1/latest.txt
+  eval:context:pronouns:1b:probe:
+    desc: Compare isolated and scene v5 on four frozen actor-context cases with the checked 1.8B model
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_SCENE_DATASET: eval/corpora/context-contrasts-v1.json
+      AURALIS_SCENE_CASE_IDS: p01,p02,p03,p04
+      AURALIS_SCENE_EXPERIMENT: pronouns-1b-p01-p04-v1
+    cmds:
+      - task: eval:context:scene:check
+      - task: build:release
+      - node eval/scripts/scene-context-smoke.mjs
+  eval:context:pronouns:7b:probe:
+    desc: Repeat the identical four actor-context cases with the checked 7B model
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+      AURALIS_SCENE_MODEL_VARIANT: 7b
+      AURALIS_SCENE_DATASET: eval/corpora/context-contrasts-v1.json
+      AURALIS_SCENE_CASE_IDS: p01,p02,p03,p04
+      AURALIS_SCENE_EXPERIMENT: pronouns-7b-p01-p04-v1
+    cmds:
+      - task: eval:context:scene:check
+      - task: test:model-profiles
+      - task: build:release
+      - node eval/scripts/scene-context-smoke.mjs
   test:inference-journal:
     desc: Verify durable inference request identity, failure retention and schema upgrade
     cmds:
