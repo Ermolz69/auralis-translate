@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "experiment": "mingfay-natural-matched-2026-09-29-v1",
+  "candidate_source_sha256": "42109fc054cba93b0ef343853628b6a248b31664786d579bdefa415ccaacf9ee",
+  "source_rights": "unknown",
+  "release_denominator": 0,
+  "human_review": "not_performed",
+  "same_source_windows": [
+    {
+      "id": "start",
+      "cue_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "source_sha256": "6e29e641e256f11303780ef9f29933b8db01626f705f1dd751063861ca9100aa"
+    },
+    {
+      "id": "middle",
+      "cue_ids": [
+        114,
+        115,
+        116,
+        117
+      ],
+      "source_sha256": "ac9703b95d80f85c60472880ffbb3e3dd8409210c1ea53717d796f45696613ad"
+    },
+    {
+      "id": "seam",
+      "cue_ids": [
+        209,
+        210,
+        211,
+        212
+      ],
+      "source_sha256": "d08c5ff163bce9fcb2a0e65e525eb89d18e8aea3aca044002e0f7ba807b3de46"
+    },
+    {
+      "id": "end",
+      "cue_ids": [
+        227,
+        228,
+        229,
+        230
+      ],
+      "source_sha256": "955e8002b2405ab3c3ddca50a116645f2248f394b44aee1a5ef4cc8c5d4d857c"
+    }
+  ],
+  "variants": [
+    {
+      "model": "1b",
+      "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+      "profile_sha256": "432a1b064397a96334d777dfa01a2cef58d367b37023f1f9175501969698df4d",
+      "report_sha256": "7f5d5ffa72584e689ce432508efb2044aad24c7e8acf18c67279dd46e9646f0f",
+      "journal_check_sha256": "05c486e8e5bfe1b38cc3e00c6819f1608829a5a2f81f21fab8d5ee673abe4fa5",
+      "cli_sha256": "f20c72f538f28c4be19f77be653e795e6eaa26b78ad58817897418b921cd5666",
+      "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+      "model_revision": "a0c709d9fac510f2c807aa3af52872340dc37a4a",
+      "source_windows": [
+        {
+          "id": "start",
+          "cue_ids": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "source_sha256": "6e29e641e256f11303780ef9f29933b8db01626f705f1dd751063861ca9100aa"
+        },
+        {
+          "id": "middle",
+          "cue_ids": [
+            114,
+            115,
+            116,
+            117
+          ],
+          "source_sha256": "ac9703b95d80f85c60472880ffbb3e3dd8409210c1ea53717d796f45696613ad"
+        },
+        {
+          "id": "seam",
+          "cue_ids": [
+            209,
+            210,
+            211,
+            212
+          ],
+          "source_sha256": "d08c5ff163bce9fcb2a0e65e525eb89d18e8aea3aca044002e0f7ba807b3de46"
+        },
+        {
+          "id": "end",
+          "cue_ids": [
+            227,
+            228,
+            229,
+            230
+          ],
+          "source_sha256": "955e8002b2405ab3c3ddca50a116645f2248f394b44aee1a5ef4cc8c5d4d857c"
+        }
+      ],
+      "result_windows": [
+        {
+          "id": "start",
+          "output_sha256": "258a2be47d51c6baaaf4e970af08edd28567e454ab5a55ee088641d05c587831"
+        },
+        {
+          "id": "middle",
+          "output_sha256": "e77d8abc030ac08dd3b2980db951de658a2f7a65c5a8078a0cd4e977c3615888"
+        },
+        {
+          "id": "seam",
+          "output_sha256": "af36498f9beef97239b689f15f63dca2a16afefa6adb372de6d43c770404ccf3"
+        },
+        {
+          "id": "end",
+          "output_sha256": "798bf551837ed4d0be3191cd4a05ec5e5930fdfd27acd166f63b5816edd9bc7e"
+        }
+      ],
+      "cases": 4,
+      "accepted_cues": 16,
+      "chats": 16,
+      "preflights": 32,
+      "all_http": 60,
+      "side_line_hits_in_chats": 0,
+      "prompt_tokens": 3837,
+      "completion_tokens": 584,
+      "chat_http_ms": 7908.25150000002,
+      "run_wall_ms": 50971,
+      "sampled_working_set_peak_bytes": 1545809920,
+      "sampled_device_gpu_used_peak_mib": 3953,
+      "failure_count": 0,
+      "human_review": "not_performed"
+    },
+    {
+      "model": "7b",
+      "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+      "profile_sha256": "9b34d86d3b0d872720ee729131efef99281e71a0000d202abea169d625a92e73",
+      "report_sha256": "f1662dfc239068f5ecbb56c8c53765e1851c26d43437adee6d368a66bb26284b",
+      "journal_check_sha256": "96831f51edd91de60683706984904267810d443af1613adf846b1daa7208fcf2",
+      "cli_sha256": "f20c72f538f28c4be19f77be653e795e6eaa26b78ad58817897418b921cd5666",
+      "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+      "model_revision": "ab8472660ac61fac25f1af43fac2599d52a8a775",
+      "source_windows": [
+        {
+          "id": "start",
+          "cue_ids": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "source_sha256": "6e29e641e256f11303780ef9f29933b8db01626f705f1dd751063861ca9100aa"
+        },
+        {
+          "id": "middle",
+          "cue_ids": [
+            114,
+            115,
+            116,
+            117
+          ],
+          "source_sha256": "ac9703b95d80f85c60472880ffbb3e3dd8409210c1ea53717d796f45696613ad"
+        },
+        {
+          "id": "seam",
+          "cue_ids": [
+            209,
+            210,
+            211,
+            212
+          ],
+          "source_sha256": "d08c5ff163bce9fcb2a0e65e525eb89d18e8aea3aca044002e0f7ba807b3de46"
+        },
+        {
+          "id": "end",
+          "cue_ids": [
+            227,
+            228,
+            229,
+            230
+          ],
+          "source_sha256": "955e8002b2405ab3c3ddca50a116645f2248f394b44aee1a5ef4cc8c5d4d857c"
+        }
+      ],
+      "result_windows": [
+        {
+          "id": "start",
+          "output_sha256": "b09d699a498057d4b9636a80fac259643af99d1974b081f38fd8050b7a695271"
+        },
+        {
+          "id": "middle",
+          "output_sha256": "3f86a2fe2b0241bf7f01f9384bd7af8e426963f1718013bfb03ace7cffd6704b"
+        },
+        {
+          "id": "seam",
+          "output_sha256": "e005e5b217d8eb033b3d615aa2d20da390364d1c8b06a54a96b5f09a7dec5021"
+        },
+        {
+          "id": "end",
+          "output_sha256": "1f4696e73052afaeebcc7f3ea528cf1fc5e884c7dcd5e3464c12cf79bb990980"
+        }
+      ],
+      "cases": 4,
+      "accepted_cues": 16,
+      "chats": 16,
+      "preflights": 32,
+      "all_http": 60,
+      "side_line_hits_in_chats": 0,
+      "prompt_tokens": 3877,
+      "completion_tokens": 582,
+      "chat_http_ms": 17064.16810000001,
+      "run_wall_ms": 156106,
+      "sampled_working_set_peak_bytes": 5060448256,
+      "sampled_device_gpu_used_peak_mib": 7434,
+      "failure_count": 0,
+      "human_review": "not_performed"
+    }
+  ]
+}

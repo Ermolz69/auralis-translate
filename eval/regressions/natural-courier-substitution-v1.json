@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "id": "REG-018",
+  "status": "open_ai_triage_natural_courier_substitution",
+  "severity": "major",
+  "source_family": "private_creator_mandarin_caption",
+  "source_summary_sha256": "37a604deb8c8a25e478097123e9e844eaa23a47d1eb9f4f76cee9b5182d6efb5",
+  "affected_model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "private_reproducer": {
+    "report_locator": ".cache/eval/mingfay-natural-1b-v1/run-k4OIzL/report.json",
+    "report_sha256": "7f5d5ffa72584e689ce432508efb2044aad24c7e8acf18c67279dd46e9646f0f",
+    "window": "middle",
+    "window_source_sha256": "ac9703b95d80f85c60472880ffbb3e3dd8409210c1ea53717d796f45696613ad",
+    "cue_id": 114,
+    "request_sha256": "8cec46dddd1e272bcaec657343e4239f59bc310467724dd64a000afe706c1e62",
+    "raw_candidate_sha256": "8b33e9410aeb0efc5ba39bc2c56bcec37c723e441ed10a5dc0a580a2d0dff3d7",
+    "accepted_text_sha256": "dfcc32c66e91bb00727825a877a681d1aef2d5d4ff0dd838edcbf192fae8b69f"
+  },
+  "required_meaning": "A delivery courier went upstairs to deliver a parcel; do not substitute a taxi driver or replace the action with a vehicle lock.",
+  "observed_defect": "The accepted 1.8B line substituted a taxi driver and lock claim for the courier's upstairs delivery; the matched 7B line preserved the delivery action.",
+  "expected_invariant": "When a source says that a courier goes upstairs to deliver something, the Russian target must retain the courier and delivery action without introducing a taxi driver.",
+  "related_controls": [
+    { "id": "courier_floor", "source_zh": "一名快递员爬上三楼，把包裹交给住户。", "candidate_ru": "Курьер поднялся на третий этаж и вручил посылку жильцу.", "expected_preserved": true },
+    { "id": "courier_letter", "source_zh": "快递员到楼上送一封信。", "candidate_ru": "Курьер отнёс письмо наверх.", "expected_preserved": true },
+    { "id": "courier_medicine", "source_zh": "快递员阿强下楼给邻居送药。", "candidate_ru": "Курьер Ацян спустился и доставил соседу лекарство.", "expected_preserved": true }
+  ],
+  "negative_controls": [
+    { "id": "real_taxi", "source_zh": "出租车司机上楼拿行李。", "candidate_ru": "Таксист поднялся за багажом.", "expected_preserved": true },
+    { "id": "substituted_taxi", "source_zh": "快递员上楼送包裹。", "candidate_ru": "Таксист поднялся наверх за посылкой.", "expected_preserved": false },
+    { "id": "lost_delivery_action", "source_zh": "快递员上楼送包裹。", "candidate_ru": "Курьер поднялся наверх.", "expected_preserved": false }
+  ],
+  "human_review": "missing",
+  "release_gate": "open"
+}

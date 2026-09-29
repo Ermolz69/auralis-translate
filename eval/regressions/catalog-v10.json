@@ -1,0 +1,38 @@
+{
+  "schema_version": 10,
+  "catalog_id": "zh-ru-development-regressions-v10",
+  "base_catalog_file": "catalog-v9.json",
+  "base_catalog_sha256": "3ba592a8e8445f3525caa27cc9324401164d13a525f8fa96ed273246d75eedd0",
+  "entries": [
+    {
+      "id": "REG-018",
+      "pack_file": "natural-courier-substitution-v1.json",
+      "pack_sha256": "1ba421e97ff7d4853be71afedf4d8b934af152461304bd3f8349afd70577de0a",
+      "source_family": "private_creator_mandarin_caption",
+      "split": "unassigned_private_development_probe",
+      "category": "courier_action_substitution",
+      "profile_scope": "checked 1.8B and 7B v5 scene profiles on identical natural caption windows",
+      "expected_invariant": "When a source says that a courier goes upstairs to deliver something, the Russian target must retain the courier and delivery action without introducing a taxi driver.",
+      "severity": "major",
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-29-mingfay-natural-model-screen-results.md",
+      "last_outcome": "One 1.8B accepted cue substituted a taxi driver and lock for the courier's delivery; the matched 7B cue retained the action. AI triage only; human review missing."
+    },
+    {
+      "id": "REG-019",
+      "pack_file": "natural-farewell-invention-v1.json",
+      "pack_sha256": "45027efbce9357d133bcc2d0d9d833d168d8f18d7fd03e28925ee714fc16e904",
+      "source_family": "private_creator_mandarin_caption",
+      "split": "unassigned_private_development_probe",
+      "category": "farewell_addressee_invention",
+      "profile_scope": "checked 1.8B and 7B v5 scene profiles on identical natural caption windows",
+      "expected_invariant": "A Chinese farewell to viewers must preserve the farewell and must not invent a bookmaker addressee absent from the source.",
+      "severity": "major",
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-29-mingfay-natural-model-screen-results.md",
+      "last_outcome": "One 1.8B accepted farewell invented a bookmaker addressee; the matched 7B farewell did not. AI triage only; human review missing."
+    }
+  ]
+}

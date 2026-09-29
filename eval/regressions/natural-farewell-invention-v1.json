@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "id": "REG-019",
+  "status": "open_ai_triage_natural_farewell_invention",
+  "severity": "major",
+  "source_family": "private_creator_mandarin_caption",
+  "source_summary_sha256": "37a604deb8c8a25e478097123e9e844eaa23a47d1eb9f4f76cee9b5182d6efb5",
+  "affected_model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "private_reproducer": {
+    "report_locator": ".cache/eval/mingfay-natural-1b-v1/run-k4OIzL/report.json",
+    "report_sha256": "7f5d5ffa72584e689ce432508efb2044aad24c7e8acf18c67279dd46e9646f0f",
+    "window": "end",
+    "window_source_sha256": "955e8002b2405ab3c3ddca50a116645f2248f394b44aee1a5ef4cc8c5d4d857c",
+    "cue_id": 230,
+    "request_sha256": "c7b1951be0555d93109189c8f8843257330f32cde67d1938f961837aec089081",
+    "raw_candidate_sha256": "ed9e120bc63cfaa544887ddd932f9197c0ab254f52a41f3e82c0df1594b201ee",
+    "accepted_text_sha256": "5b25093d05686d1caeaf30e558c8b86ce3e86e44939f887f2a1146f91b8c27be"
+  },
+  "required_meaning": "The presenter says goodbye and expects to see viewers in the next episode; no bookmaker or new addressee is present.",
+  "observed_defect": "The accepted 1.8B farewell invented bookmakers as an addressee; the matched 7B line did not.",
+  "expected_invariant": "A Chinese farewell to viewers must preserve the farewell and must not invent a bookmaker addressee absent from the source.",
+  "related_controls": [
+    { "id": "next_week_episode", "source_zh": "下周节目再见，拜拜！", "candidate_ru": "Увидимся в передаче на следующей неделе, пока!", "expected_preserved": true },
+    { "id": "closing_today", "source_zh": "今天就到这里，下次见。", "candidate_ru": "На сегодня всё, до встречи!", "expected_preserved": true },
+    { "id": "subscribe_farewell", "source_zh": "别忘了订阅，我们下期见。", "candidate_ru": "Не забудьте подписаться, увидимся в следующем выпуске.", "expected_preserved": true }
+  ],
+  "negative_controls": [
+    { "id": "real_bookmaker", "source_zh": "博彩公司今天关门了。", "candidate_ru": "Букмекерская контора сегодня закрылась.", "expected_preserved": true },
+    { "id": "invented_bookmaker", "source_zh": "下期见，拜拜！", "candidate_ru": "Увидимся в следующем выпуске, букмекеры.", "expected_preserved": false },
+    { "id": "lost_farewell", "source_zh": "下期见，拜拜！", "candidate_ru": "Следующий выпуск скоро.", "expected_preserved": false }
+  ],
+  "human_review": "missing",
+  "release_gate": "open"
+}
