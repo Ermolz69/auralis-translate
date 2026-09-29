@@ -10,6 +10,7 @@ import { loadV5Envelope, renderV5Envelope } from './v5-envelope-section.mjs';
 import { loadSceneContext, renderSceneContext } from './scene-context-section.mjs';
 import { loadPronounCrossModel, renderPronounCrossModel } from './pronoun-cross-model-section.mjs';
 import { loadLongV5Failure, renderLongV5Failure } from './long-v5-failure-section.mjs';
+import { loadLongV6Outcomes, renderLongV6Outcomes } from './long-v6-outcomes-section.mjs';
 import { loadTermsProbe, renderTermsProbe } from './terms-section.mjs';
 import { loadInferenceJournal, renderInferenceJournal } from './inference-journal-section.mjs';
 import { loadPreflightJournal, renderPreflightJournal } from './preflight-journal-section.mjs';
@@ -26,6 +27,7 @@ const v5Envelope = await loadV5Envelope(root, dataset, currency.benchmark);
 const sceneContext = await loadSceneContext(root);
 const pronounCrossModel = await loadPronounCrossModel(root);
 const longV5Failure = await loadLongV5Failure(root);
+const longV6Outcomes = await loadLongV6Outcomes(root);
 const termsProbe = await loadTermsProbe(root);
 const inferenceJournal = await loadInferenceJournal(root);
 const preflightJournal = await loadPreflightJournal(root);
@@ -85,6 +87,7 @@ payload.v5_envelope = { sha256: v5Envelope.sha256, profile_sha256: v5Envelope.pr
 payload.scene_context = { sha256: sceneContext.sha256, profile_sha256: sceneContext.profileHash, old_profile_sha256: sceneContext.oldProfileHash, smoke_chat_requests: sceneContext.smoke_chat_requests, regression_chat_requests: sceneContext.regression_chat_requests, repair_chat_requests: sceneContext.repair_chat_requests, after_terms_chat_requests: sceneContext.after_terms_chat_requests, large_screen_chat_requests: sceneContext.large_screen_chat_requests, large_screen: sceneContext.largeScreen, regression_id: sceneContext.regression_id, human_review: sceneContext.human_review };
 payload.pronoun_cross_model = pronounCrossModel;
 payload.long_v5_failure = longV5Failure;
+payload.long_v6_outcomes = longV6Outcomes;
 payload.inference_journal = { sha256: inferenceJournal.sha256, chats: inferenceJournal.chats, status: inferenceJournal.check.status };
 payload.preflight_journal = { sha256: preflightJournal.sha256, chats: 6, preflights: 6, status: preflightJournal.check.status };
 payload.sapi_multivoice = sapiMultivoice;
@@ -127,6 +130,7 @@ ${renderV5Envelope(v5Envelope, dataset, currency.benchmark, escape, number)}
 ${renderSceneContext(sceneContext, escape)}
 ${renderPronounCrossModel(pronounCrossModel, escape)}
 ${renderLongV5Failure(longV5Failure, escape)}
+${renderLongV6Outcomes(longV6Outcomes, escape)}
 <section id="slot-schema" class="scroll-mt-8 border-t border-slate-200 py-10"><p class="text-sm font-semibold uppercase tracking-[.12em] text-slate-600">Парное сравнение · реальная 1.8B · 29 сентября 2026</p><h2 class="mt-2 text-2xl font-semibold">Ограничение ID пока не доказало улучшение</h2><p class="mt-3 max-w-5xl text-slate-700">На том же авторском слоте 72 сравнили исходную JSON-схему и вариант с жёстко заданными ID 72 и индексом строки 0. Два одинаковых источника и семени на каждую пару, четыре сырых ответа. Оба варианта оба раза вернули ID 72 и «Это не последний поезд.», по 290/30 входных/выходных токенов. Прежний необработанный ответ с ID 73 остаётся подтверждённым сбоем, но эти два новых baseline-запроса его не повторили. Оснований менять рабочий профиль или считать длинный файл пройденным нет.</p><div class="mt-4 flex flex-wrap gap-4 text-sm font-semibold text-blue-700"><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/reports/2026-09-29-slot-schema-ablation.json">Все четыре запроса и сырых ответа</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-29-slot-schema-ablation-results.md">План, замеры и ограничения (EN)</a></div><p class="mt-3 text-xs text-slate-500">SHA-256 журнала: <code class="hash">7a53c67769e59cee113aea10fc25b4e04f77acc6aadd4d9b1fb918fe6d4473d5</code>. Человеческой оценки русского текста нет.</p></section>
 ${renderTermsProbe(termsProbe, escape)}
 <section id="retry-policy" class="my-8 scroll-mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-5 md:p-7"><p class="text-sm font-semibold text-slate-600">Инженерная регрессия · CTX-02 / EVAL-04</p><h2 class="mt-2 text-2xl font-bold">Повтор только после временного сбоя</h2><p class="mt-3 max-w-4xl text-slate-700">Раньше лимит попыток повторял и повреждённый ответ модели. Теперь HTTP 502–504 и временный сетевой сбой могут быть повторены в пределах профиля; HTTP 400, некорректный JSON, нарушение ID и защищённых фактов останавливают блок без checkpoint. Пауза сохраняет приоритет.</p><p class="mt-3 text-sm text-slate-600">Локальные детерминированные проверки: 7 проверок HTTP и отмены, 5 проверок политики ядра, 1 сквозная проверка CLI с отказом 503 и успешным повтором. Это не испытание отказа настоящей модели или восстановления полного файла.</p><a class="mt-3 inline-block text-sm font-semibold text-blue-700 underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-28-typed-provider-retry.md">Воспроизведение и ограничения (EN)</a></section>
