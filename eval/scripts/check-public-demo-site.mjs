@@ -39,7 +39,7 @@ assert.deepEqual(data.model_comparison, await loadModelComparison(root));
 assert.deepEqual(data.delivery_plan, await loadDeliveryPlan(root));
 assert(html.includes('id="release-readiness"'));
 assert(html.includes('G1–G9 и A1–A6 остаются открытыми'));
-assert(html.includes('2026-09-29-release-readiness-handoff.md'));
+assert(html.includes('2026-09-29-release-readiness-after-reg010.md'));
 const v5 = await loadV5Envelope(root, data.dataset, data.currency.benchmark);
 assert.deepEqual(data.v5_envelope, { sha256: v5.sha256, profile_sha256: v5.profileHash, copied_count: 6 });
 assert(html.includes('id="v5-envelope"'));
