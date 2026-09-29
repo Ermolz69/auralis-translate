@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "experiment": "long-v6-postlength-postflight-1024-v1",
+  "outcome": "failed_identifier_preservation_assertion",
+  "source_commit": "667942e",
+  "output_sha256": "cc2f4b3c88433cf59223bb35cfc95cdfeeed0c079c068106e7ef485369bd2e2b",
+  "error": "AssertionError: assert(rows.every(row => row.code_preserved))",
+  "phase": "after_cli_inspect_and_template_before_offline_export",
+  "read_only_followup_observed_nonmatching_lines": 665,
+  "example": {
+    "segment_id": 2,
+    "source_zh": "工程 AUR-0002：不要打开这扇门。",
+    "candidate_ru": "Не открывайте эту дверь.",
+    "missing_identifier": "AUR-0002"
+  },
+  "result_publication": "none",
+  "human_review": "missing"
+}

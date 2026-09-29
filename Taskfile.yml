@@ -224,6 +224,13 @@ tasks:
       - task: eval:long:postflight:check
       - node --check eval/scripts/verify-long-v6-postlength.mjs
       - node eval/scripts/verify-long-v6-postlength.mjs
+
+  eval:cli:long:v6:verify-postlength-v2:
+    desc: Audit identifier fact loss separately from structural recovery and verify offline export
+    cmds:
+      - task: eval:long:postflight:check
+      - node --check eval/scripts/verify-long-v6-postlength-v2.mjs
+      - node eval/scripts/verify-long-v6-postlength-v2.mjs
   eval:long:v6:length:model-probe:
     desc: Compare checked 1.8B and 7B v6 requests on the frozen REG-006 source facts
     env:
