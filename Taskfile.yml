@@ -748,6 +748,12 @@ tasks:
       - task: eval:data:youtube:mingfay:candidate:materialize
       - node eval/scripts/check-source-inventory.mjs eval/corpora/youtube-mingfay-candidate-v1.json --require-candidate-bytes
 
+  eval:data:youtube:mingfay:sample:
+    desc: Inspect frozen start, middle, repaired-boundary and end Chinese cues privately
+    cmds:
+      - task: eval:data:youtube:mingfay:candidate:check
+      - node eval/scripts/sample-youtube-mingfay-candidate.mjs
+
   eval:data:youtube:mingfay:media:preflight:
     desc: Verify the frozen video format and bounded private media download plan
     env:
@@ -763,6 +769,36 @@ tasks:
     cmds:
       - task: eval:data:youtube:mingfay:media:preflight
       - node eval/scripts/acquire-youtube-mingfay-media.mjs
+
+  eval:natural:mingfay:1b:probe:
+    desc: Screen four exact natural Chinese caption windows with the checked 1.8B v5 scene profile
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_NATURAL_MODEL_VARIANT: 1b
+    cmds:
+      - task: eval:data:youtube:mingfay:candidate:check
+      - task: build:release
+      - node --check eval/scripts/probe-mingfay-natural-model.mjs
+      - node eval/scripts/probe-mingfay-natural-model.mjs
+
+  eval:natural:mingfay:7b:probe:
+    desc: Repeat the identical natural Chinese caption windows with the checked 7B v5 scene profile
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+      AURALIS_NATURAL_MODEL_VARIANT: 7b
+    cmds:
+      - task: eval:data:youtube:mingfay:candidate:check
+      - task: build:release
+      - node --check eval/scripts/probe-mingfay-natural-model.mjs
+      - node eval/scripts/probe-mingfay-natural-model.mjs
+
+  eval:natural:mingfay:journal:check:
+    desc: Match the two natural-source proxy traces against durable model journals
+    cmds:
+      - python eval/scripts/check-inference-journal.py .cache/eval/mingfay-natural-1b-v1/latest.txt
+      - python eval/scripts/check-inference-journal.py .cache/eval/mingfay-natural-7b-v1/latest.txt
   eval:data:candidates:bytes:
     desc: Check all retained Commons candidate bytes against the non-admitted inventory
     cmds:
