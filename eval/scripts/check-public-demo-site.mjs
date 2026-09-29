@@ -15,7 +15,7 @@ import { loadLongV6Outcomes, loadLongV6ModelScreen } from './long-v6-outcomes-se
 import { loadTermsProbe } from './terms-section.mjs';
 import { loadInferenceJournal } from './inference-journal-section.mjs';
 import { loadPreflightJournal } from './preflight-journal-section.mjs';
-import { loadSapiMultivoice } from './sapi-multivoice-section.mjs';
+import { loadSapiMultivoice, loadSapiMultivoiceMedia } from './sapi-multivoice-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const html = await fs.readFile(path.join(root, 'site/index.html'), 'utf8');
@@ -91,10 +91,16 @@ assert(html.includes('2026-09-29-sapi-cancellation.md'));
 assert(html.includes('Проверена одна граница отмены'));
 const sapiMultivoice = await loadSapiMultivoice(root);
 assert.deepEqual(data.sapi_multivoice, sapiMultivoice);
+const sapiMultivoiceMedia = await loadSapiMultivoiceMedia(root);
+assert.deepEqual(data.sapi_multivoice_media, sapiMultivoiceMedia);
+assert(html.includes('2026-09-29-sapi-multivoice-media.md'));
+assert(html.includes('2026-09-29-sapi-multivoice-media-summary.json'));
+assert(html.includes('двухголосый синтетический ролик'));
+assert(html.includes('Человек пока не слушал'));
 assert(html.includes('2026-09-29-sapi-multivoice.md'));
 assert(html.includes('2026-09-29-sapi-multivoice-pwsh-probe.json'));
 assert(html.includes('превышают исходные окна на 1164 и 1269 мс'));
-assert(html.includes('Слуховая оценка и воспроизведение итогового ролика не проводились'));
+assert(html.includes('Слуховая оценка этих WAV не проводилась'));
 assert(html.includes('2026-09-28-typed-provider-retry.md'));
 assert(html.includes('HTTP 502–504'));
 const journal = await loadInferenceJournal(root);
