@@ -68,6 +68,8 @@ assert(html.includes('Производственный TTS-worker ещё не в
 assert(html.includes('A1–A6 остаются открытыми'));
 assert(html.includes('2026-09-29-sapi-synthetic-media.md'));
 assert(html.includes('восьмисекундный синтетический клип'));
+assert(html.includes('2026-09-29-sapi-cancellation.md'));
+assert(html.includes('Проверена одна граница отмены'));
 assert(html.includes('2026-09-28-typed-provider-retry.md'));
 assert(html.includes('HTTP 502–504'));
 const journal = await loadInferenceJournal(root);
@@ -109,4 +111,4 @@ for (const script of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))
 }
 assert(!/(?:E:\\\\|C:\\\\Users\\\\|00ermzahar@|gh[pousr]_[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)/.test(html));
 assert(!/<script[^>]+src="(?!https:\/\/cdn\.jsdelivr\.net\/npm\/@tailwindcss\/browser@4")/.test(html));
-console.log('Public HTML verified: 420 prior requests retained, four-scene 1.8B/7B comparison and 269-request failed long-scene journal linked, v5/terms and voice-handoff evidence preserved, 40 model comparison rows, evidence identity, scripts and single-file publication boundary.');
+console.log('Public HTML verified: 420 prior requests retained, four-scene 1.8B/7B comparison and 269-request failed long-scene journal linked, v5/terms and bounded SAPI cancellation evidence preserved, 40 model comparison rows, evidence identity, scripts and single-file publication boundary.');
