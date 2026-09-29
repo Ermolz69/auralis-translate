@@ -33,3 +33,6 @@ It does not fix the model's translation. A strict rejection or source-slot
 protection experiment needs a new versioned profile, matched-source model
 comparison, bounded attempts and a full-file rerun. Chinese names, amounts,
 negation, cohesion, natural-corpus review and release gates remain open.
+
+The first [matched prompt reminder screen](2026-09-29-reg-009-prompt-screen-results.md)
+found 2/8 exact identifiers in both arms. That instruction is not adopted.

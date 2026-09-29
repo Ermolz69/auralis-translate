@@ -1,0 +1,661 @@
+{
+  "schema_version": 1,
+  "experiment": "reg-009-v6-identifier-reminder-paired-v1",
+  "status": "complete_observations_unreviewed",
+  "started_at": "2026-09-29T10:00:57.852Z",
+  "identity": {
+    "git_head": "c763807a985d84fe920c8d1361486d888743cb51",
+    "git_status": "M docs/architecture/014-result-history-selection.md",
+    "harness_sha256": "99707baa509773c1d707698e79c20796135ef6cff0df48b5ed44848df40bf516",
+    "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+    "server_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+    "profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5",
+    "archive_sha256": "4037c071a17ef38ed7b9bc4989601ef8da0784fb39881b9138abb9d008701a8c"
+  },
+  "budget": {
+    "cue_ids": [
+      1,
+      2,
+      514,
+      1000
+    ],
+    "seeds": [
+      101,
+      202
+    ],
+    "arms": [
+      "baseline",
+      "reminder"
+    ],
+    "chat_requests": 16,
+    "server_starts": 1,
+    "per_request_ms": 120000,
+    "total_wall_ms": 1200000,
+    "no_retries": true
+  },
+  "source_group": "project_authored_synthetic_development",
+  "sealed_holdout": false,
+  "human_review": "missing",
+  "quality_verdict": "unreviewed",
+  "planned_requests": [
+    {
+      "cue_id": 1,
+      "seed": 101,
+      "arm": "baseline",
+      "request_sha256": "e23561d3f6dc7de7df9b6c92c8cb5c0f8d45d5e106128a1cfab68e9917403ad3",
+      "prompt_sha256": "bcdd106c7d84a10f9379774a221c6d0a6146efaf221e0546c396fb077735b20a"
+    },
+    {
+      "cue_id": 1,
+      "seed": 101,
+      "arm": "reminder",
+      "request_sha256": "42b870a64878541ee920d4782d33c6129f35a6efc846abd0aba57406d3e281c1",
+      "prompt_sha256": "1b14abd603c6010ed5b67daefef0788919d1300e98d81aa0e59cee6f6a003bd3"
+    },
+    {
+      "cue_id": 2,
+      "seed": 101,
+      "arm": "reminder",
+      "request_sha256": "f0471e38a6307e3835f4d1793f8af54ea89f57e60b778be00ebdf4b89a50ae3c",
+      "prompt_sha256": "529c957ef7355268c67bcfa6524cf71666878c0dd296422674fa201a9af8239c"
+    },
+    {
+      "cue_id": 2,
+      "seed": 101,
+      "arm": "baseline",
+      "request_sha256": "3c66fbfe44e30546f0d0aff07110976371daa4363d256526deca5c8af979b148",
+      "prompt_sha256": "a694b3728835bbc5ac99880e1a34d2f637f510e858546a9747425e53538e1f45"
+    },
+    {
+      "cue_id": 514,
+      "seed": 101,
+      "arm": "baseline",
+      "request_sha256": "8894446ddeee07624617972c8808c1575eb9e25b1b2a15fb841d042e755d4190",
+      "prompt_sha256": "b932721e8ff92dc72f84e2a742065b1cf65892036e4e2ee6e4f161f150798a9d"
+    },
+    {
+      "cue_id": 514,
+      "seed": 101,
+      "arm": "reminder",
+      "request_sha256": "efedfa12b5162d15dbd55e1f4ef8514a4ec5a392fd12b85fa4cdcd486d882877",
+      "prompt_sha256": "bb7caac21250bcf085b1000f2981149dffa34d9a1222ca67654854a2ee5d693a"
+    },
+    {
+      "cue_id": 1000,
+      "seed": 101,
+      "arm": "reminder",
+      "request_sha256": "a538f66a10995c3605e1b859a1154a217b3aa7e692bebe1268ac3087f3e79401",
+      "prompt_sha256": "e781ec80b77bbf9b5f92afa2ee0ed5fa169091dbe3fa55e6fe86b512b65a0f70"
+    },
+    {
+      "cue_id": 1000,
+      "seed": 101,
+      "arm": "baseline",
+      "request_sha256": "0e56b2df93c7d47158a9c38ff2e1b9787e468391c3a953ad03caf94cc27138ec",
+      "prompt_sha256": "c26e79e59fbda78a13f8056c9af02580fbca4161cfb83ac408880ee12189f8fe"
+    },
+    {
+      "cue_id": 1,
+      "seed": 202,
+      "arm": "baseline",
+      "request_sha256": "19210ce1a2e158d1e46e7c95e0daf54c8cbb381b8daf482003433b43754ba1e7",
+      "prompt_sha256": "bcdd106c7d84a10f9379774a221c6d0a6146efaf221e0546c396fb077735b20a"
+    },
+    {
+      "cue_id": 1,
+      "seed": 202,
+      "arm": "reminder",
+      "request_sha256": "63f5d707652d6ab95ffba0be27b20b46f3e9b35ec1d810fef08086735238f88a",
+      "prompt_sha256": "1b14abd603c6010ed5b67daefef0788919d1300e98d81aa0e59cee6f6a003bd3"
+    },
+    {
+      "cue_id": 2,
+      "seed": 202,
+      "arm": "reminder",
+      "request_sha256": "9392bafe00c2fed5b644d9850ef690048b96f0c49e06a81fb2f3e1ecc36662b7",
+      "prompt_sha256": "529c957ef7355268c67bcfa6524cf71666878c0dd296422674fa201a9af8239c"
+    },
+    {
+      "cue_id": 2,
+      "seed": 202,
+      "arm": "baseline",
+      "request_sha256": "fb152350d783e726a0162d8da8a98959f54e6d017189cd14d8b1b7a3fcd3b7d3",
+      "prompt_sha256": "a694b3728835bbc5ac99880e1a34d2f637f510e858546a9747425e53538e1f45"
+    },
+    {
+      "cue_id": 514,
+      "seed": 202,
+      "arm": "baseline",
+      "request_sha256": "b3958d4597ac7500e0fe45f078993fa7442f785a31d144a60f33eb6100b24ab7",
+      "prompt_sha256": "b932721e8ff92dc72f84e2a742065b1cf65892036e4e2ee6e4f161f150798a9d"
+    },
+    {
+      "cue_id": 514,
+      "seed": 202,
+      "arm": "reminder",
+      "request_sha256": "ce6f6602b0a8bfe1aed6f4e618e48a8a5bbca148a200e0d5fb542e757f20eeb8",
+      "prompt_sha256": "bb7caac21250bcf085b1000f2981149dffa34d9a1222ca67654854a2ee5d693a"
+    },
+    {
+      "cue_id": 1000,
+      "seed": 202,
+      "arm": "reminder",
+      "request_sha256": "bd415e40adc0b62fd91ef6eac325daf10d24bed4b2093b99ba61836784c8f5de",
+      "prompt_sha256": "e781ec80b77bbf9b5f92afa2ee0ed5fa169091dbe3fa55e6fe86b512b65a0f70"
+    },
+    {
+      "cue_id": 1000,
+      "seed": 202,
+      "arm": "baseline",
+      "request_sha256": "203006f23459b701f502383ed479adb78108ef4db714caa1ea15af63c6b67da8",
+      "prompt_sha256": "c26e79e59fbda78a13f8056c9af02580fbca4161cfb83ac408880ee12189f8fe"
+    }
+  ],
+  "requests": [
+    {
+      "cue_id": 1,
+      "seed": 101,
+      "arm": "baseline",
+      "request_sha256": "e23561d3f6dc7de7df9b6c92c8cb5c0f8d45d5e106128a1cfab68e9917403ad3",
+      "prompt_sha256": "bcdd106c7d84a10f9379774a221c6d0a6146efaf221e0546c396fb077735b20a",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерный AUR-0001: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "usage": {
+        "completion_tokens": 47,
+        "prompt_tokens": 253,
+        "total_tokens": 300,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsed_ms": 3577
+    },
+    {
+      "cue_id": 1,
+      "seed": 101,
+      "arm": "reminder",
+      "request_sha256": "42b870a64878541ee920d4782d33c6129f35a6efc846abd0aba57406d3e281c1",
+      "prompt_sha256": "1b14abd603c6010ed5b67daefef0788919d1300e98d81aa0e59cee6f6a003bd3",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерный проект AUR-0001: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "usage": {
+        "completion_tokens": 49,
+        "prompt_tokens": 292,
+        "total_tokens": 341,
+        "prompt_tokens_details": {
+          "cached_tokens": 85
+        }
+      },
+      "elapsed_ms": 3358
+    },
+    {
+      "cue_id": 2,
+      "seed": 101,
+      "arm": "reminder",
+      "request_sha256": "f0471e38a6307e3835f4d1793f8af54ea89f57e60b778be00ebdf4b89a50ae3c",
+      "prompt_sha256": "529c957ef7355268c67bcfa6524cf71666878c0dd296422674fa201a9af8239c",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Не открывай эту дверь.",
+      "identifier_preserved": false,
+      "usage": {
+        "completion_tokens": 34,
+        "prompt_tokens": 331,
+        "total_tokens": 365,
+        "prompt_tokens_details": {
+          "cached_tokens": 182
+        }
+      },
+      "elapsed_ms": 2287
+    },
+    {
+      "cue_id": 2,
+      "seed": 101,
+      "arm": "baseline",
+      "request_sha256": "3c66fbfe44e30546f0d0aff07110976371daa4363d256526deca5c8af979b148",
+      "prompt_sha256": "a694b3728835bbc5ac99880e1a34d2f637f510e858546a9747425e53538e1f45",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Не открывайте эту дверь.",
+      "identifier_preserved": false,
+      "usage": {
+        "completion_tokens": 35,
+        "prompt_tokens": 292,
+        "total_tokens": 327,
+        "prompt_tokens_details": {
+          "cached_tokens": 85
+        }
+      },
+      "elapsed_ms": 2700
+    },
+    {
+      "cue_id": 514,
+      "seed": 101,
+      "arm": "baseline",
+      "request_sha256": "8894446ddeee07624617972c8808c1575eb9e25b1b2a15fb841d042e755d4190",
+      "prompt_sha256": "b932721e8ff92dc72f84e2a742065b1cf65892036e4e2ee6e4f161f150798a9d",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Не открывать эту дверь.",
+      "identifier_preserved": false,
+      "usage": {
+        "completion_tokens": 32,
+        "prompt_tokens": 298,
+        "total_tokens": 330,
+        "prompt_tokens_details": {
+          "cached_tokens": 143
+        }
+      },
+      "elapsed_ms": 2331
+    },
+    {
+      "cue_id": 514,
+      "seed": 101,
+      "arm": "reminder",
+      "request_sha256": "efedfa12b5162d15dbd55e1f4ef8514a4ec5a392fd12b85fa4cdcd486d882877",
+      "prompt_sha256": "bb7caac21250bcf085b1000f2981149dffa34d9a1222ca67654854a2ee5d693a",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Эта дверь не следует открывать.",
+      "identifier_preserved": false,
+      "usage": {
+        "completion_tokens": 35,
+        "prompt_tokens": 337,
+        "total_tokens": 372,
+        "prompt_tokens_details": {
+          "cached_tokens": 85
+        }
+      },
+      "elapsed_ms": 2974
+    },
+    {
+      "cue_id": 1000,
+      "seed": 101,
+      "arm": "reminder",
+      "request_sha256": "a538f66a10995c3605e1b859a1154a217b3aa7e692bebe1268ac3087f3e79401",
+      "prompt_sha256": "e781ec80b77bbf9b5f92afa2ee0ed5fa169091dbe3fa55e6fe86b512b65a0f70",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Это не последний поезд.",
+      "identifier_preserved": false,
+      "usage": {
+        "completion_tokens": 33,
+        "prompt_tokens": 337,
+        "total_tokens": 370,
+        "prompt_tokens_details": {
+          "cached_tokens": 182
+        }
+      },
+      "elapsed_ms": 2363
+    },
+    {
+      "cue_id": 1000,
+      "seed": 101,
+      "arm": "baseline",
+      "request_sha256": "0e56b2df93c7d47158a9c38ff2e1b9787e468391c3a953ad03caf94cc27138ec",
+      "prompt_sha256": "c26e79e59fbda78a13f8056c9af02580fbca4161cfb83ac408880ee12189f8fe",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Это не последний поезд.",
+      "identifier_preserved": false,
+      "usage": {
+        "completion_tokens": 31,
+        "prompt_tokens": 298,
+        "total_tokens": 329,
+        "prompt_tokens_details": {
+          "cached_tokens": 85
+        }
+      },
+      "elapsed_ms": 2622
+    },
+    {
+      "cue_id": 1,
+      "seed": 202,
+      "arm": "baseline",
+      "request_sha256": "19210ce1a2e158d1e46e7c95e0daf54c8cbb381b8daf482003433b43754ba1e7",
+      "prompt_sha256": "bcdd106c7d84a10f9379774a221c6d0a6146efaf221e0546c396fb077735b20a",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерный проект AUR-0001: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "usage": {
+        "completion_tokens": 49,
+        "prompt_tokens": 253,
+        "total_tokens": 302,
+        "prompt_tokens_details": {
+          "cached_tokens": 143
+        }
+      },
+      "elapsed_ms": 2633
+    },
+    {
+      "cue_id": 1,
+      "seed": 202,
+      "arm": "reminder",
+      "request_sha256": "63f5d707652d6ab95ffba0be27b20b46f3e9b35ec1d810fef08086735238f88a",
+      "prompt_sha256": "1b14abd603c6010ed5b67daefef0788919d1300e98d81aa0e59cee6f6a003bd3",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Инженерный проект AUR-0001: Поезд отправится в 08:10.",
+      "identifier_preserved": true,
+      "usage": {
+        "completion_tokens": 49,
+        "prompt_tokens": 292,
+        "total_tokens": 341,
+        "prompt_tokens_details": {
+          "cached_tokens": 85
+        }
+      },
+      "elapsed_ms": 3142
+    },
+    {
+      "cue_id": 2,
+      "seed": 202,
+      "arm": "reminder",
+      "request_sha256": "9392bafe00c2fed5b644d9850ef690048b96f0c49e06a81fb2f3e1ecc36662b7",
+      "prompt_sha256": "529c957ef7355268c67bcfa6524cf71666878c0dd296422674fa201a9af8239c",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Не открывайте эту дверь.",
+      "identifier_preserved": false,
+      "usage": {
+        "completion_tokens": 35,
+        "prompt_tokens": 331,
+        "total_tokens": 366,
+        "prompt_tokens_details": {
+          "cached_tokens": 182
+        }
+      },
+      "elapsed_ms": 2354
+    },
+    {
+      "cue_id": 2,
+      "seed": 202,
+      "arm": "baseline",
+      "request_sha256": "fb152350d783e726a0162d8da8a98959f54e6d017189cd14d8b1b7a3fcd3b7d3",
+      "prompt_sha256": "a694b3728835bbc5ac99880e1a34d2f637f510e858546a9747425e53538e1f45",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Не открывайте эту дверь.",
+      "identifier_preserved": false,
+      "usage": {
+        "completion_tokens": 35,
+        "prompt_tokens": 292,
+        "total_tokens": 327,
+        "prompt_tokens_details": {
+          "cached_tokens": 85
+        }
+      },
+      "elapsed_ms": 2733
+    },
+    {
+      "cue_id": 514,
+      "seed": 202,
+      "arm": "baseline",
+      "request_sha256": "b3958d4597ac7500e0fe45f078993fa7442f785a31d144a60f33eb6100b24ab7",
+      "prompt_sha256": "b932721e8ff92dc72f84e2a742065b1cf65892036e4e2ee6e4f161f150798a9d",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Не открывать эту дверь.",
+      "identifier_preserved": false,
+      "usage": {
+        "completion_tokens": 32,
+        "prompt_tokens": 298,
+        "total_tokens": 330,
+        "prompt_tokens_details": {
+          "cached_tokens": 143
+        }
+      },
+      "elapsed_ms": 2319
+    },
+    {
+      "cue_id": 514,
+      "seed": 202,
+      "arm": "reminder",
+      "request_sha256": "ce6f6602b0a8bfe1aed6f4e618e48a8a5bbca148a200e0d5fb542e757f20eeb8",
+      "prompt_sha256": "bb7caac21250bcf085b1000f2981149dffa34d9a1222ca67654854a2ee5d693a",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Не открывать эту дверь.",
+      "identifier_preserved": false,
+      "usage": {
+        "completion_tokens": 34,
+        "prompt_tokens": 337,
+        "total_tokens": 371,
+        "prompt_tokens_details": {
+          "cached_tokens": 85
+        }
+      },
+      "elapsed_ms": 3010
+    },
+    {
+      "cue_id": 1000,
+      "seed": 202,
+      "arm": "reminder",
+      "request_sha256": "bd415e40adc0b62fd91ef6eac325daf10d24bed4b2093b99ba61836784c8f5de",
+      "prompt_sha256": "e781ec80b77bbf9b5f92afa2ee0ed5fa169091dbe3fa55e6fe86b512b65a0f70",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Это не последний поезд.",
+      "identifier_preserved": false,
+      "usage": {
+        "completion_tokens": 33,
+        "prompt_tokens": 337,
+        "total_tokens": 370,
+        "prompt_tokens_details": {
+          "cached_tokens": 182
+        }
+      },
+      "elapsed_ms": 2313
+    },
+    {
+      "cue_id": 1000,
+      "seed": 202,
+      "arm": "baseline",
+      "request_sha256": "203006f23459b701f502383ed479adb78108ef4db714caa1ea15af63c6b67da8",
+      "prompt_sha256": "c26e79e59fbda78a13f8056c9af02580fbca4161cfb83ac408880ee12189f8fe",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "structural_outcome": "valid_unreviewed",
+      "accepted_candidate": "Это не последний поезд.",
+      "identifier_preserved": false,
+      "usage": {
+        "completion_tokens": 33,
+        "prompt_tokens": 298,
+        "total_tokens": 331,
+        "prompt_tokens_details": {
+          "cached_tokens": 85
+        }
+      },
+      "elapsed_ms": 2704
+    }
+  ],
+  "failures": [],
+  "resources": {
+    "interval_ms": 5000,
+    "samples": [
+      {
+        "created_at": "2026-09-29T10:00:59.790Z",
+        "tracked_pids": [
+          24992
+        ],
+        "processes": [
+          {
+            "Id": 24992,
+            "WorkingSet64": 2098315264,
+            "PrivateMemorySize64": 1052958720,
+            "CPU": 5.734375
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 840, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T10:01:04.792Z",
+        "tracked_pids": [
+          24992
+        ],
+        "processes": [
+          {
+            "Id": 24992,
+            "WorkingSet64": 2099970048,
+            "PrivateMemorySize64": 1057132544,
+            "CPU": 40.953125
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 840, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T10:01:09.801Z",
+        "tracked_pids": [
+          24992
+        ],
+        "processes": [
+          {
+            "Id": 24992,
+            "WorkingSet64": 2101469184,
+            "PrivateMemorySize64": 1058693120,
+            "CPU": 79.484375
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 838, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T10:01:14.809Z",
+        "tracked_pids": [
+          24992
+        ],
+        "processes": [
+          {
+            "Id": 24992,
+            "WorkingSet64": 2101481472,
+            "PrivateMemorySize64": 1057120256,
+            "CPU": 119.9375
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 844, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T10:01:19.813Z",
+        "tracked_pids": [
+          24992
+        ],
+        "processes": [
+          {
+            "Id": 24992,
+            "WorkingSet64": 2100166656,
+            "PrivateMemorySize64": 1057263616,
+            "CPU": 152.921875
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 840, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T10:01:24.828Z",
+        "tracked_pids": [
+          24992
+        ],
+        "processes": [
+          {
+            "Id": 24992,
+            "WorkingSet64": 2101637120,
+            "PrivateMemorySize64": 1057202176,
+            "CPU": 188.640625
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 840, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T10:01:29.843Z",
+        "tracked_pids": [
+          24992
+        ],
+        "processes": [
+          {
+            "Id": 24992,
+            "WorkingSet64": 2101555200,
+            "PrivateMemorySize64": 1056923648,
+            "CPU": 225.0625
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 842, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T10:01:34.845Z",
+        "tracked_pids": [
+          24992
+        ],
+        "processes": [
+          {
+            "Id": 24992,
+            "WorkingSet64": 2100199424,
+            "PrivateMemorySize64": 1056133120,
+            "CPU": 261.4375
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 840, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T10:01:39.857Z",
+        "tracked_pids": [
+          24992
+        ],
+        "processes": [
+          {
+            "Id": 24992,
+            "WorkingSet64": 2101719040,
+            "PrivateMemorySize64": 1057452032,
+            "CPU": 299.4375
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 844, 8192",
+        "errors": []
+      },
+      {
+        "created_at": "2026-09-29T10:01:44.856Z",
+        "tracked_pids": [
+          24992
+        ],
+        "processes": [
+          {
+            "Id": 24992,
+            "WorkingSet64": 2100199424,
+            "PrivateMemorySize64": 1056395264,
+            "CPU": 330.703125
+          }
+        ],
+        "gpu_device": "NVIDIA GeForce RTX 3070, 843, 8192",
+        "errors": []
+      }
+    ],
+    "limitations": "Sampled working set/private memory of tracked processes; device-wide GPU use includes other applications. Not an isolated peak or release hardware gate."
+  },
+  "finished_at": "2026-09-29T10:01:49.843Z",
+  "wall_elapsed_ms": 51991
+}

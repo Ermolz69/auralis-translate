@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "experiment": "reg-009-v6-identifier-reminder-paired-v1",
+  "outcome": "no_identifier_gain_unreviewed",
+  "source_group": "project_authored_synthetic_development",
+  "sealed_holdout": false,
+  "human_review": "missing",
+  "git_head": "c763807a985d84fe920c8d1361486d888743cb51",
+  "git_dirty": "M docs/architecture/014-result-history-selection.md",
+  "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "server_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5",
+  "harness_sha256": "99707baa509773c1d707698e79c20796135ef6cff0df48b5ed44848df40bf516",
+  "archive_sha256": "4037c071a17ef38ed7b9bc4989601ef8da0784fb39881b9138abb9d008701a8c",
+  "budget": {
+    "cue_ids": [
+      1,
+      2,
+      514,
+      1000
+    ],
+    "seeds": [
+      101,
+      202
+    ],
+    "arms": [
+      "baseline",
+      "reminder"
+    ],
+    "chat_requests": 16,
+    "server_starts": 1,
+    "per_request_ms": 120000,
+    "total_wall_ms": 1200000,
+    "no_retries": true
+  },
+  "started_at": "2026-09-29T10:00:57.852Z",
+  "finished_at": "2026-09-29T10:01:49.843Z",
+  "wall_elapsed_ms": 51991,
+  "baseline": {
+    "requests": 8,
+    "structurally_valid": 8,
+    "exact_identifier": 2,
+    "prompt_tokens": 2282,
+    "completion_tokens": 294,
+    "request_elapsed_sum_ms": 21619
+  },
+  "reminder": {
+    "requests": 8,
+    "structurally_valid": 8,
+    "exact_identifier": 2,
+    "prompt_tokens": 2594,
+    "completion_tokens": 302,
+    "request_elapsed_sum_ms": 21801
+  },
+  "paired_code_gain": 0,
+  "resources": {
+    "sample_count": 10,
+    "sampling_errors": 0,
+    "peak_tracked_working_set_bytes": 2101719040,
+    "peak_tracked_private_bytes": 1058693120,
+    "peak_device_gpu_mib": 844,
+    "limitation": "Sampled working set/private memory of tracked processes; device-wide GPU use includes other applications. Not an isolated peak or release hardware gate."
+  },
+  "report_file": "2026-09-29-reg-009-identifier-prompt-report.json",
+  "report_sha256": "f34921b0afd715514bdba0e8e1de1b7baaa60428b8e5f34ec92362761583fb04",
+  "requests_file": "2026-09-29-reg-009-identifier-prompt-requests.jsonl.gz",
+  "requests_gzip_sha256": "66b62250ff589624f5268b97ccc67d0dbe54654c24681b8d847899974f09922e",
+  "requests_uncompressed_sha256": "57d375c0f0f77df9b1a0fef62743bc6a5778fe79d6317b3647a89f96f677d3de",
+  "resources_file": "2026-09-29-reg-009-identifier-prompt-resources.jsonl.gz",
+  "resources_gzip_sha256": "588ef6900ea40fc28cf0cf0268551176516f9de81674508b71b91049b4c1d39f",
+  "server_log_local_sha256": "9e18cde8d7a5d6db6e8138e3e3d4acaabcdf24c0cb950e9ad325a0af51ef1011",
+  "release_gate": "open"
+}

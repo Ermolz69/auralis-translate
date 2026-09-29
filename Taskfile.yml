@@ -245,6 +245,15 @@ tasks:
       - node --check eval/scripts/probe-reg009-identifier-prompt.mjs
       - task: eval:cli:long:v6:postlength:check
       - node eval/scripts/probe-reg009-identifier-prompt.mjs
+  eval:reg009:prompt:capture:
+    desc: Archive the single bounded REG-009 prompt screen with raw requests and resource samples
+    cmds:
+      - node --check eval/scripts/capture-reg009-identifier-prompt.mjs
+      - node eval/scripts/capture-reg009-identifier-prompt.mjs
+  eval:reg009:prompt:check:
+    desc: Verify archived matched requests, unchanged source and exact identifier outcomes
+    cmds:
+      - node eval/scripts/check-reg009-identifier-prompt.mjs
   eval:long:v6:length:model-probe:
     desc: Compare checked 1.8B and 7B v6 requests on the frozen REG-006 source facts
     env:
@@ -305,6 +314,7 @@ tasks:
       - node --test eval/scripts/tests/long-v6-postflight-regression.test.mjs
       - task: eval:cli:long:v6:postlength:check
       - node --test --test-isolation=none eval/scripts/tests/long-v6-identifier-regression.test.mjs
+      - task: eval:reg009:prompt:check
   test:context-v5:
     desc: Verify the experimental v5 request and strict response boundary
     cmds:
