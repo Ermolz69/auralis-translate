@@ -1,6 +1,10 @@
 version: "3"
 
 tasks:
+  test:srt:generated:
+    desc: Check deterministic SRT round-trip, protected bytes and unsupported-markup variants
+    cmds:
+      - cargo test --offline -p auralis-translation-formats --test srt_generated_roundtrip
   eval:journal:preflight:probe:
     desc: Verify real v5 token preflight and chat rows against one frozen authored scene
     env:
@@ -357,6 +361,7 @@ tasks:
   eval:regression:check:
     desc: Validate permanent failure evidence and required related and negative controls
     cmds:
+      - task: test:srt:generated
       - node --test --test-isolation=none eval/scripts/tests/regression-index.test.mjs
       - node eval/scripts/check-regression-index.mjs
       - task: eval:regression:catalog:check
