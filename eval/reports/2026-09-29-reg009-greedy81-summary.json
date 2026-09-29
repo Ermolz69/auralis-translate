@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "experiment": "reg009-greedy81-v1",
+  "archive_sha256": "da0617c86ccf7ef7cbab3dcbeb30a36ae2dce650696623f6f9477a6749bc0b2b",
+  "archive_uncompressed_sha256": "81f2952a4f681bff253901aa72d6cfb3cd78d4221b7be002e8bc3b18d8aeaf02",
+  "git_head": "89dca653c6ec98ae73b8c839d0be26925ec905e6",
+  "runner_sha256": "0ab928c8912e1849729bec14a919ad3db298d94c75421cda3c9e532dd5617c0c",
+  "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "profile_sha256": "e80c80b0cf1db26d62ce5f644091f30e42fea752d27a0ce201fcab33f29ecb69",
+  "baseline_journal_sha256": "59444550a646c73d2b354c4e11ee0abbfead55636b98c76978c633a9219275d3",
+  "ordered_request_hashes_sha256": "230b44cb198e330b96fd2880bc4442ca8ac92e73138a854867b90084b2d42c36",
+  "started_at": "2026-09-29T15:39:54.835Z",
+  "finished_at": "2026-09-29T15:43:47.082Z",
+  "status": "complete_observations_unreviewed",
+  "human_review": "missing",
+  "sealed_holdout": false,
+  "request_count": 81,
+  "retries": 0,
+  "structural_pass": 81,
+  "baseline_raw_exact_code": 36,
+  "greedy_raw_exact_code": 36,
+  "improved_code": 6,
+  "regressed_code": 6,
+  "both_exact_code": 30,
+  "neither_exact_code": 39,
+  "changed_raw_wording": 27,
+  "greedy_exact_numeric": 81,
+  "greedy_mixed_script_code_like": 0,
+  "prompt_tokens": 23859,
+  "completion_tokens": 3390,
+  "request_elapsed_sum_ms": 206967,
+  "wall_elapsed_ms": 232247,
+  "resources": {
+    "sample_count": 46,
+    "sample_errors": 0,
+    "tracked_working_set_peak_bytes": 2107613184,
+    "tracked_private_peak_bytes": 1062535168,
+    "device_wide_gpu_peak_mib": 1037,
+    "limitations": "Sampled working set/private memory of tracked processes; device-wide GPU use includes other applications. Not an isolated peak or release hardware gate."
+  },
+  "code_changes": [
+    {
+      "cue_id": 3,
+      "seed": 101,
+      "old_exact_code": false,
+      "greedy_exact_code": true
+    },
+    {
+      "cue_id": 506,
+      "seed": 101,
+      "old_exact_code": true,
+      "greedy_exact_code": false
+    },
+    {
+      "cue_id": 510,
+      "seed": 101,
+      "old_exact_code": true,
+      "greedy_exact_code": false
+    },
+    {
+      "cue_id": 512,
+      "seed": 101,
+      "old_exact_code": false,
+      "greedy_exact_code": true
+    },
+    {
+      "cue_id": 1021,
+      "seed": 101,
+      "old_exact_code": true,
+      "greedy_exact_code": false
+    },
+    {
+      "cue_id": 3,
+      "seed": 202,
+      "old_exact_code": false,
+      "greedy_exact_code": true
+    },
+    {
+      "cue_id": 512,
+      "seed": 202,
+      "old_exact_code": false,
+      "greedy_exact_code": true
+    },
+    {
+      "cue_id": 1019,
+      "seed": 202,
+      "old_exact_code": false,
+      "greedy_exact_code": true
+    },
+    {
+      "cue_id": 1021,
+      "seed": 202,
+      "old_exact_code": true,
+      "greedy_exact_code": false
+    },
+    {
+      "cue_id": 512,
+      "seed": 303,
+      "old_exact_code": false,
+      "greedy_exact_code": true
+    },
+    {
+      "cue_id": 1020,
+      "seed": 303,
+      "old_exact_code": true,
+      "greedy_exact_code": false
+    },
+    {
+      "cue_id": 1021,
+      "seed": 303,
+      "old_exact_code": true,
+      "greedy_exact_code": false
+    }
+  ],
+  "wording_changes": [
+    {
+      "cue_id": 1,
+      "seed": 101,
+      "source_zh": "工程 AUR-0001：列车将在 08:10 出发。",
+      "old_raw": "Инженерный AUR-0001: Поезд отправится в 08:10.",
+      "greedy_raw": "Инженерный проект AUR-0001: Поезд отправится в 08:10."
+    },
+    {
+      "cue_id": 3,
+      "seed": 101,
+      "source_zh": "工程 AUR-0003：我们还需要 3 个箱子。",
+      "old_raw": "Им также нужно 3 коробки.",
+      "greedy_raw": "Инженер AUR-0003: Нам также нужно 3 коробки."
+    },
+    {
+      "cue_id": 6,
+      "seed": 101,
+      "source_zh": "工程 AUR-0006：设备已经关闭，不需要重新启动。",
+      "old_raw": "Инженер AUR-0006: Устройство уже выключено, не нужно перезапускать.",
+      "greedy_raw": "Инженер AUR-0006: Устройство уже выключено, его не нужно снова запускать."
+    },
+    {
+      "cue_id": 7,
+      "seed": 101,
+      "source_zh": "工程 AUR-0007：阿明说，会议推迟到明天。",
+      "old_raw": "Проект AUR-0007: Амин сказал, что встреча отложена на завтра.",
+      "greedy_raw": "Инженер AUR-0007: Амин сказал, что встреча отложена на завтра."
+    },
+    {
+      "cue_id": 506,
+      "seed": 101,
+      "source_zh": "工程 AUR-0506：不要打开这扇门。",
+      "old_raw": "Инженер AUR-0506: Не открывайте эту дверь.",
+      "greedy_raw": "Не открывайте эту дверь."
+    },
+    {
+      "cue_id": 510,
+      "seed": 101,
+      "source_zh": "工程 AUR-0510：设备已经关闭，不需要重新启动。",
+      "old_raw": "Инженер AUR-0510: Устройство уже выключено, не нужно перезапускать.",
+      "greedy_raw": "Система уже выключена, необходимо перезапускать не нужно."
+    },
+    {
+      "cue_id": 512,
+      "seed": 101,
+      "source_zh": "工程 AUR-0512：这不是最后一班车。",
+      "old_raw": "Это не последний поезд.",
+      "greedy_raw": "Инженер AUR-0512: Это не последний автобус."
+    },
+    {
+      "cue_id": 1018,
+      "seed": 101,
+      "source_zh": "工程 AUR-1018：不要打开这扇门。",
+      "old_raw": "Инженер AUR-1018: Не открывайте эту дверь.",
+      "greedy_raw": "Эксперимент AUR-1018: Не открывайте эту дверь."
+    },
+    {
+      "cue_id": 1021,
+      "seed": 101,
+      "source_zh": "工程 AUR-1021：请在星期五之前完成检查。",
+      "old_raw": "Инженер AUR-1021: Пожалуйста, завершите проверку до пятницы.",
+      "greedy_raw": "Пожалуйста, завершите проверку до пятницы."
+    },
+    {
+      "cue_id": 1022,
+      "seed": 101,
+      "source_zh": "工程 AUR-1022：设备已经关闭，不需要重新启动。",
+      "old_raw": "Система уже выключена, необходимо перезапускать не нужно.",
+      "greedy_raw": "Оборудование уже выключено, не нужно перезапускать."
+    },
+    {
+      "cue_id": 1024,
+      "seed": 101,
+      "source_zh": "工程 AUR-1024：这不是最后一班车。",
+      "old_raw": "Это не последний поезд.",
+      "greedy_raw": "Это не последний автобус."
+    },
+    {
+      "cue_id": 3,
+      "seed": 202,
+      "source_zh": "工程 AUR-0003：我们还需要 3 个箱子。",
+      "old_raw": "Им также нужно 3 коробки.",
+      "greedy_raw": "Инженер AUR-0003: Нам также нужно 3 коробки."
+    },
+    {
+      "cue_id": 6,
+      "seed": 202,
+      "source_zh": "工程 AUR-0006：设备已经关闭，不需要重新启动。",
+      "old_raw": "Инженер AUR-0006: Устройство уже выключено, не нужно перезапускать.",
+      "greedy_raw": "Инженер AUR-0006: Устройство уже выключено, его не нужно снова запускать."
+    },
+    {
+      "cue_id": 7,
+      "seed": 202,
+      "source_zh": "工程 AUR-0007：阿明说，会议推迟到明天。",
+      "old_raw": "Проект AUR-0007: Амин сказал, что встреча отложена на завтра.",
+      "greedy_raw": "Инженер AUR-0007: Амин сказал, что встреча отложена на завтра."
+    },
+    {
+      "cue_id": 510,
+      "seed": 202,
+      "source_zh": "工程 AUR-0510：设备已经关闭，不需要重新启动。",
+      "old_raw": "Оборудование уже выключено, его не нужно снова запускать.",
+      "greedy_raw": "Система уже выключена, необходимо перезапускать не нужно."
+    },
+    {
+      "cue_id": 512,
+      "seed": 202,
+      "source_zh": "工程 AUR-0512：这不是最后一班车。",
+      "old_raw": "Это не последний автобус.",
+      "greedy_raw": "Инженер AUR-0512: Это не последний автобус."
+    },
+    {
+      "cue_id": 1019,
+      "seed": 202,
+      "source_zh": "工程 AUR-1019：我们还需要 3 个箱子。",
+      "old_raw": "Им также нужно 3 коробки.",
+      "greedy_raw": "Инженер AUR-1019: Нам также нужно 3 коробки."
+    },
+    {
+      "cue_id": 1021,
+      "seed": 202,
+      "source_zh": "工程 AUR-1021：请在星期五之前完成检查。",
+      "old_raw": "Инженер AUR-1021: Пожалуйста, завершите проверку до пятницы.",
+      "greedy_raw": "Пожалуйста, завершите проверку до пятницы."
+    },
+    {
+      "cue_id": 1022,
+      "seed": 202,
+      "source_zh": "工程 AUR-1022：设备已经关闭，不需要重新启动。",
+      "old_raw": "Оборудование уже выключено, необходимо перезапускать не нужно.",
+      "greedy_raw": "Оборудование уже выключено, не нужно перезапускать."
+    },
+    {
+      "cue_id": 1023,
+      "seed": 202,
+      "source_zh": "工程 AUR-1023：阿明说，会议推迟到明天。",
+      "old_raw": "Проект AUR-1023: Амин сказал, что встреча отложена на завтра.",
+      "greedy_raw": "Инженер AUR-1023: Амин сказал, что встреча отложена на завтра."
+    },
+    {
+      "cue_id": 130,
+      "seed": 303,
+      "source_zh": "工程 AUR-0130：不要打开这扇门。",
+      "old_raw": "Не открывать эту дверь.",
+      "greedy_raw": "Не открывайте эту дверь."
+    },
+    {
+      "cue_id": 506,
+      "seed": 303,
+      "source_zh": "工程 AUR-0506：不要打开这扇门。",
+      "old_raw": "Не открывать эту дверь.",
+      "greedy_raw": "Не открывайте эту дверь."
+    },
+    {
+      "cue_id": 510,
+      "seed": 303,
+      "source_zh": "工程 AUR-0510：设备已经关闭，不需要重新启动。",
+      "old_raw": "Оборудование уже выключено, его не нужно снова запускать.",
+      "greedy_raw": "Система уже выключена, необходимо перезапускать не нужно."
+    },
+    {
+      "cue_id": 512,
+      "seed": 303,
+      "source_zh": "工程 AUR-0512：这不是最后一班车。",
+      "old_raw": "Это не последний поезд.",
+      "greedy_raw": "Инженер AUR-0512: Это не последний автобус."
+    },
+    {
+      "cue_id": 1020,
+      "seed": 303,
+      "source_zh": "工程 AUR-1020：这个房间的温度是 21 度。",
+      "old_raw": "Инженер AUR-1020: Температура в этой комнате составляет 21 градус.",
+      "greedy_raw": "Эта комната имеет температуру 21 градус."
+    },
+    {
+      "cue_id": 1021,
+      "seed": 303,
+      "source_zh": "工程 AUR-1021：请在星期五之前完成检查。",
+      "old_raw": "Инженер AUR-1021: Пожалуйста, завершите проверку до пятницы.",
+      "greedy_raw": "Пожалуйста, завершите проверку до пятницы."
+    },
+    {
+      "cue_id": 1022,
+      "seed": 303,
+      "source_zh": "工程 AUR-1022：设备已经关闭，不需要重新启动。",
+      "old_raw": "Система уже выключена, повторный запуск не необходим.",
+      "greedy_raw": "Оборудование уже выключено, не нужно перезапускать."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "REG-017",
+  "status": "open_ai_triage_greedy_restart_grammar_regression",
+  "severity": "major",
+  "source_family": "project_authored_synthetic_long_file",
+  "source_summary_sha256": "7f74986de0f8209fdbacaaf2acb3683bbc300b3c618514a3463c9ce90128e0ff",
+  "source_archive_sha256": "da0617c86ccf7ef7cbab3dcbeb30a36ae2dce650696623f6f9477a6749bc0b2b",
+  "affected_model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "source_zh": "工程 AUR-0510：设备已经关闭，不需要重新启动。",
+  "required_meaning": "The device is already off and does not need restarting; express negated necessity in grammatical, unambiguous Russian.",
+  "failure": {
+    "cue_id": 510,
+    "seeds": [101, 202, 303],
+    "greedy_request_sha256": [
+      "16e7615060a7bfccf761151b9305470e445046414886109205a79c387e317ce3",
+      "63222518207843691612fe29c03f4b34c8834c66da85001a26930b8d3f9b529e",
+      "380bb1e0d59d0c8d5ce3b537fe03a7b8e485b5662603299de4229358f7c8cdbe"
+    ],
+    "raw_candidate_ru": "Система уже выключена, необходимо перезапускать не нужно.",
+    "code_omitted": true,
+    "observed": "three identical greedy responses; archived 0.7 matched replies were clearer"
+  },
+  "expected_invariant": "A decoding variant must not be selected from identifier counts when it repeatedly produces awkward or ambiguous negated-restart Russian on the same source.",
+  "related_controls": [
+    { "id": "same_source_beginning", "cue_id": 6, "seeds": [101, 202, 303], "greedy_expected_fluent": true },
+    { "id": "same_source_end", "cue_id": 1022, "seeds": [101, 202, 303], "greedy_expected_fluent": true },
+    { "id": "matched_baseline_cue510", "cue_id": 510, "seeds": [101, 202, 303], "baseline_expected_fluent": true }
+  ],
+  "negative_controls": [
+    { "id": "clear_no_restart", "source_zh": "设备已经关闭，不需要重新启动。", "candidate_ru": "Устройство уже выключено; перезапускать его не нужно.", "expected_fluency_error": false },
+    { "id": "clear_restart_required", "source_zh": "设备已经关闭，需要重新启动。", "candidate_ru": "Устройство уже выключено; его нужно перезапустить.", "expected_fluency_error": false },
+    { "id": "awkward_double_necessity", "source_zh": "设备已经关闭，不需要重新启动。", "candidate_ru": "Система уже выключена, необходимо перезапускать не нужно.", "expected_fluency_error": true }
+  ],
+  "human_review": "missing",
+  "release_gate": "open"
+}

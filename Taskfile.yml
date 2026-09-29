@@ -378,6 +378,7 @@ tasks:
       - node --test --test-isolation=none eval/scripts/tests/long-v6-semantic-after-prefix-regression.test.mjs
       - node --test --test-isolation=none eval/scripts/tests/long-v6-cyrillic-transposition-regression.test.mjs
       - node --test --test-isolation=none eval/scripts/tests/cue89-omission-regression.test.mjs
+      - node --test --test-isolation=none eval/scripts/tests/greedy-restart-regression.test.mjs
       - task: eval:long:v6:code-model:result:check
       - task: eval:reg009:prompt:check
       - task: eval:reg009:prefix-repair:check
@@ -385,7 +386,7 @@ tasks:
       - task: test:identifier-guard
       - task: test:time-diagnostics
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-016 packs and all control counts
+    desc: Verify versioned REG-001 through REG-017 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -394,6 +395,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v6.mjs
       - node eval/scripts/check-regression-catalog-v7.mjs
       - node eval/scripts/check-regression-catalog-v8.mjs
+      - node eval/scripts/check-regression-catalog-v9.mjs
   eval:reg009:prefix-repair:probe:
     desc: Measure conservative exact-code prefix repair on the archived synthetic long-file output
     cmds:
@@ -532,6 +534,21 @@ tasks:
     cmds:
       - task: eval:reg009:greedy81:preflight
       - node eval/scripts/probe-reg009-greedy81.mjs
+  eval:reg009:greedy81:capture:
+    desc: Immutably capture and pair all 81 greedy model responses with the historical baseline
+    cmds:
+      - node --check eval/scripts/capture-reg009-greedy81.mjs
+      - node eval/scripts/capture-reg009-greedy81.mjs --capture
+  eval:reg009:greedy81:check:
+    desc: Verify every paired request, raw response, fact count and archive digest
+    cmds:
+      - node --check eval/scripts/capture-reg009-greedy81.mjs
+      - node eval/scripts/capture-reg009-greedy81.mjs --check
+  eval:reg009:greedy81:inspect:
+    desc: Inspect source-aware risk pairs and repeated greedy outputs from the retained archive
+    cmds:
+      - task: eval:reg009:greedy81:check
+      - node eval/scripts/capture-reg009-greedy81.mjs --inspect
   eval:cli:long:v6:prefix-repair:resources:
     desc: Summarize retained sampled process and device memory without claiming isolated GPU use
     cmds:

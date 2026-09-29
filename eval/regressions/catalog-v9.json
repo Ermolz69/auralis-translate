@@ -1,0 +1,23 @@
+{
+  "schema_version": 9,
+  "catalog_id": "zh-ru-development-regressions-v9",
+  "base_catalog_file": "catalog-v8.json",
+  "base_catalog_sha256": "69c91f77dbdfd1d8e183566e350eb9ce216bc9c7e5eef9466cd021d34027d846",
+  "entries": [
+    {
+      "id": "REG-017",
+      "pack_file": "greedy-restart-grammar-v1.json",
+      "pack_sha256": "280adf0d42d3599f179b8ee57f8332648b02fe9afc5e42228efefe31110b24f4",
+      "source_family": "project_authored_synthetic_long_file",
+      "split": "development",
+      "category": "decoding_regression_negated_restart_grammar",
+      "profile_scope": "paired 1.8B checked v6 source-only requests at temperature 0.7 versus zero",
+      "expected_invariant": "A decoding variant must not be selected from identifier counts when it repeatedly produces awkward or ambiguous negated-restart Russian on the same source.",
+      "severity": "major",
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-29-reg009-greedy-81-results.md",
+      "last_outcome": "Greedy had 36/81 raw exact codes, with six paired gains and six losses; all three cue-510 outputs recur with awkward no-restart Russian. Human review missing; variant unselected."
+    }
+  ]
+}
