@@ -122,6 +122,16 @@ tasks:
     desc: Verify retained long-scene rejection, all request bodies and source identity
     cmds:
       - node eval/scripts/check-long-v5-failure.mjs
+  eval:slot-schema:probe:
+    desc: Compare archived wrong-slot v5 request with a target-constant JSON Schema on the checked local model
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:cli:long:v5:failure-check
+      - node --check eval/scripts/slot-schema-ablation.mjs
+      - task: build:release
+      - node eval/scripts/slot-schema-ablation.mjs
   eval:regression:check:
     desc: Validate permanent failure evidence and required related and negative controls
     cmds:
