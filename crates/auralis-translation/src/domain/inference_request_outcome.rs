@@ -1,6 +1,7 @@
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum InferenceRequestOutcome {
     ValidatedLine,
+    ParsedPreflightJson,
     MalformedCandidate,
     InvalidCandidate,
     TransportFailure,
@@ -14,6 +15,7 @@ impl InferenceRequestOutcome {
     pub fn as_str(self) -> &'static str {
         match self {
             Self::ValidatedLine => "validated_line",
+            Self::ParsedPreflightJson => "parsed_preflight_json",
             Self::MalformedCandidate => "malformed_candidate",
             Self::InvalidCandidate => "invalid_candidate",
             Self::TransportFailure => "transport_failure",
@@ -27,6 +29,7 @@ impl InferenceRequestOutcome {
     pub fn parse(value: &str) -> Option<Self> {
         match value {
             "validated_line" => Some(Self::ValidatedLine),
+            "parsed_preflight_json" => Some(Self::ParsedPreflightJson),
             "malformed_candidate" => Some(Self::MalformedCandidate),
             "invalid_candidate" => Some(Self::InvalidCandidate),
             "transport_failure" => Some(Self::TransportFailure),

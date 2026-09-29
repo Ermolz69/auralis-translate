@@ -1,8 +1,8 @@
 mod support;
 
 use auralis_translation::{
-    InferenceRequestFinish, InferenceRequestId, InferenceRequestOutcome, InferenceRequestStart,
-    SegmentId, SourceHash,
+    InferenceRequestFinish, InferenceRequestId, InferenceRequestKind, InferenceRequestOutcome,
+    InferenceRequestStart, SegmentId, SourceHash,
 };
 use auralis_translation_sqlite::{DbError, RunStop, SegmentSpec, SqliteConfig, TranslateDb};
 use std::error::Error;
@@ -24,6 +24,7 @@ fn source_segment() -> Result<SegmentSpec, Box<dyn Error>> {
 fn start(id: &str) -> Result<InferenceRequestStart, Box<dyn Error>> {
     Ok(InferenceRequestStart {
         request_id: InferenceRequestId::parse(id)?,
+        kind: InferenceRequestKind::ChatCompletion,
         run_id: run_spec()?.run_id,
         batch_fingerprint: SourceHash::digest(b"batch"),
         segment_id: SegmentId::new(1).ok_or("invalid segment ID")?,
@@ -136,6 +137,51 @@ fn request_identity_and_source_position_cannot_be_reassigned() -> Result<(), Box
         db.begin_inference_request(attempt, &another),
         Err(DbError::Conflict(_))
     ));
+    drop(db);
+    std::fs::remove_dir_all(directory)?;
+    Ok(())
+}
+
+#[test]
+fn parsed_preflight_rows_survive_reopen_without_becoming_accepted_lines()
+-> Result<(), Box<dyn Error>> {
+    let directory = test_directory()?;
+    let path = directory.join("preflight.sqlite");
+    let translation = translation_spec()?;
+    let run = run_spec()?;
+    let mut db = TranslateDb::open(&path, SqliteConfig::default())?;
+    db.ensure_translation(&translation)?;
+    db.ensure_segments(translation.translation_id, 20, &[source_segment()?])?;
+    let attempt = db.begin_attempt(&run, None)?;
+    let mut template = start("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa")?;
+    template.kind = InferenceRequestKind::ApplyTemplate;
+    template.rendered_request = br#"{"messages":[{"role":"user","content":"source"}]}"#.to_vec();
+    db.begin_inference_request(attempt, &template)?;
+    let parsed = InferenceRequestFinish {
+        request_id: template.request_id,
+        outcome: InferenceRequestOutcome::ParsedPreflightJson,
+        raw_response: Some(br#"{"prompt":"rendered"}"#.to_vec()),
+        restored_candidate: None,
+        prompt_tokens: None,
+        completion_tokens: None,
+        elapsed_ms: 5,
+        error_detail: None,
+    };
+    db.finish_inference_request(&parsed)?;
+    let mut wrong = parsed.clone();
+    wrong.outcome = InferenceRequestOutcome::ValidatedLine;
+    wrong.restored_candidate = Some("rendered".into());
+    assert!(matches!(
+        db.finish_inference_request(&wrong),
+        Err(DbError::InvalidSpec(_))
+    ));
+    drop(db);
+    let db = TranslateDb::open(&path, SqliteConfig::default())?;
+    let saved = db.inference_requests(run.run_id)?;
+    assert_eq!(saved.len(), 1);
+    assert_eq!(saved[0].start, template);
+    assert_eq!(saved[0].finish, Some(parsed));
+    assert!(db.checkpoints(run.run_id)?.is_empty());
     drop(db);
     std::fs::remove_dir_all(directory)?;
     Ok(())

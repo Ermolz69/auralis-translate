@@ -1,8 +1,9 @@
-use super::{InferenceRequestId, RunId, SegmentId, SourceHash};
+use super::{InferenceRequestId, InferenceRequestKind, RunId, SegmentId, SourceHash};
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct InferenceRequestStart {
     pub request_id: InferenceRequestId,
+    pub kind: InferenceRequestKind,
     pub run_id: RunId,
     pub batch_fingerprint: SourceHash,
     pub segment_id: SegmentId,

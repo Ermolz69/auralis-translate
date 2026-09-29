@@ -1,11 +1,12 @@
 use crate::{AttemptId, DbError, InferenceRequestRecord};
 use auralis_translation::{
-    InferenceRequestFinish, InferenceRequestId, InferenceRequestOutcome, InferenceRequestStart,
-    RunId, SegmentId, SourceHash,
+    InferenceRequestFinish, InferenceRequestId, InferenceRequestKind, InferenceRequestOutcome,
+    InferenceRequestStart, RunId, SegmentId, SourceHash,
 };
 use rusqlite::{Connection, OptionalExtension, Row, TransactionBehavior, params};
 
-const COLUMNS: &str = "sequence, request_id, run_id, attempt_id, batch_fingerprint, segment_id,
+const COLUMNS: &str =
+    "sequence, request_id, run_id, attempt_id, request_kind, batch_fingerprint, segment_id,
     line_index, request_sha256, rendered_request, outcome, raw_response, restored_candidate,
     prompt_tokens, completion_tokens, elapsed_ms, error_detail";
 
@@ -14,6 +15,7 @@ struct StoredRequest {
     request_id: String,
     run_id: String,
     attempt_id: i64,
+    request_kind: String,
     batch_fingerprint: String,
     segment_id: u32,
     line_index: u32,
@@ -35,18 +37,19 @@ impl StoredRequest {
             request_id: row.get(1)?,
             run_id: row.get(2)?,
             attempt_id: row.get(3)?,
-            batch_fingerprint: row.get(4)?,
-            segment_id: row.get(5)?,
-            line_index: row.get(6)?,
-            request_sha256: row.get(7)?,
-            rendered_request: row.get(8)?,
-            outcome: row.get(9)?,
-            raw_response: row.get(10)?,
-            restored_candidate: row.get(11)?,
-            prompt_tokens: row.get(12)?,
-            completion_tokens: row.get(13)?,
-            elapsed_ms: row.get(14)?,
-            error_detail: row.get(15)?,
+            request_kind: row.get(4)?,
+            batch_fingerprint: row.get(5)?,
+            segment_id: row.get(6)?,
+            line_index: row.get(7)?,
+            request_sha256: row.get(8)?,
+            rendered_request: row.get(9)?,
+            outcome: row.get(10)?,
+            raw_response: row.get(11)?,
+            restored_candidate: row.get(12)?,
+            prompt_tokens: row.get(13)?,
+            completion_tokens: row.get(14)?,
+            elapsed_ms: row.get(15)?,
+            error_detail: row.get(16)?,
         })
     }
 
@@ -55,6 +58,8 @@ impl StoredRequest {
             .map_err(|_| DbError::CorruptRecord("invalid inference request ID"))?;
         let run_id = RunId::parse(&self.run_id)
             .map_err(|_| DbError::CorruptRecord("invalid inference run ID"))?;
+        let kind = InferenceRequestKind::parse(&self.request_kind)
+            .ok_or(DbError::CorruptRecord("invalid inference request kind"))?;
         let batch_fingerprint = SourceHash::parse_hex(&self.batch_fingerprint).ok_or(
             DbError::CorruptRecord("invalid inference batch fingerprint"),
         )?;
@@ -71,6 +76,7 @@ impl StoredRequest {
             .ok_or(DbError::CorruptRecord("invalid inference segment ID"))?;
         let start = InferenceRequestStart {
             request_id,
+            kind,
             run_id,
             batch_fingerprint,
             segment_id,
@@ -115,6 +121,15 @@ impl StoredRequest {
                 error_detail: self.error_detail,
             })
         };
+        if let Some(result) = &finish
+            && ((kind == InferenceRequestKind::ChatCompletion
+                && result.outcome == InferenceRequestOutcome::ParsedPreflightJson)
+                || (kind != InferenceRequestKind::ChatCompletion
+                    && (result.outcome == InferenceRequestOutcome::ValidatedLine
+                        || result.restored_candidate.is_some())))
+        {
+            return Err(DbError::CorruptRecord("inference kind and outcome differ"));
+        }
         Ok(InferenceRequestRecord {
             sequence: self.sequence,
             attempt_id: AttemptId(self.attempt_id),
@@ -165,14 +180,15 @@ pub(crate) fn begin(
         ));
     }
     transaction.execute(
-        "INSERT INTO inference_requests (request_id, run_id, attempt_id, batch_fingerprint,
-            segment_id, line_index, request_sha256, rendered_request)
-         VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)
+        "INSERT INTO inference_requests (request_id, run_id, attempt_id, request_kind,
+            batch_fingerprint, segment_id, line_index, request_sha256, rendered_request)
+         VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)
          ON CONFLICT(request_id) DO NOTHING",
         params![
             start.request_id.to_string(),
             start.run_id.to_string(),
             attempt_id.get(),
+            start.kind.as_str(),
             start.batch_fingerprint.to_string(),
             start.segment_id.get(),
             start.line_index,
@@ -207,6 +223,15 @@ pub(crate) fn finish(
                 "validated inference line is incomplete",
             ));
         }
+    } else if finish.outcome == InferenceRequestOutcome::ParsedPreflightJson {
+        if finish.raw_response.is_none()
+            || finish.restored_candidate.is_some()
+            || finish.error_detail.is_some()
+        {
+            return Err(DbError::InvalidSpec(
+                "parsed preflight response is incomplete",
+            ));
+        }
     } else if finish.error_detail.as_deref().is_none_or(str::is_empty) {
         return Err(DbError::InvalidSpec(
             "failed inference request has no error",
@@ -224,6 +249,16 @@ pub(crate) fn finish(
     let elapsed_ms = i64::try_from(finish.elapsed_ms)
         .map_err(|_| DbError::InvalidSpec("inference duration exceeds SQLite range"))?;
     let transaction = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
+    let saved = load_one(&transaction, finish.request_id)?
+        .ok_or(DbError::Conflict("inference request does not exist"))?;
+    if (saved.start.kind == InferenceRequestKind::ChatCompletion
+        && finish.outcome == InferenceRequestOutcome::ParsedPreflightJson)
+        || (saved.start.kind != InferenceRequestKind::ChatCompletion
+            && (finish.outcome == InferenceRequestOutcome::ValidatedLine
+                || finish.restored_candidate.is_some()))
+    {
+        return Err(DbError::InvalidSpec("inference kind and outcome differ"));
+    }
     let changed = transaction.execute(
         "UPDATE inference_requests SET outcome = ?2, raw_response = ?3,
             restored_candidate = ?4, prompt_tokens = ?5, completion_tokens = ?6,

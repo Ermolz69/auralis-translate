@@ -1,6 +1,9 @@
 # Durable v5 inference request journal
 
-Status: incremental `CTX-02` implementation, 29 September 2026.
+Status: incremental `CTX-02` implementation, 29 September 2026. The
+[real preflight probe](../../eval/experiments/2026-09-29-inference-preflight-p01-results.md)
+checks the current schema-8 behavior; older schema-7 chat evidence remains
+separate.
 
 The CLI attaches a SQLite journal to the v5 llama.cpp provider after opening a
 guarded run attempt. Each chat-completion request has a new UUID, the run attempt,
@@ -22,7 +25,18 @@ remain in the existing store. Project deletion follows the existing foreign-key
 cascade. Raw source, context and model text are sensitive project data and stay in
 the local state database, outside the public report.
 
-This slice records v5 chat-completion requests from the CLI. Model verification,
-`/apply-template` and `/tokenize` preflight requests are not yet journaled. The
-Auralis host worker is not yet wired to this sink. The journal's presence does not
-establish translation quality, model resource bounds or whole-file recovery.
+Schema 8 records v5 `/apply-template` and `/tokenize` calls for
+each target line in the same open attempt. A request kind identifies the local
+endpoint while `rendered_request` remains the exact HTTP JSON body. The record
+retains raw bounded replies and a parsed-shape outcome, including rejected
+tokenizer responses and HTTP failures. A journal write failure stops the next
+network request or translation; preflight rows are never accepted subtitle
+lines. Existing chat rows migrate with an explicit chat kind and unchanged
+bytes. Model verification before the run attempt and Auralis host attempts
+remain outside this journal. The journal's presence does not establish
+translation quality, model resource bounds or whole-file recovery.
+
+Schema 8 is forward-only: a schema-7 binary rejects an upgraded database.
+Before any production rollout, preserve a restorable copy of the schema-7
+database. A rollback restores that copy alongside the old executable; do not
+silently drop preflight rows to make an upgraded database readable by old code.
