@@ -20,6 +20,9 @@ const LEGACY_PROFILE: &[u8] = include_bytes!(
 const PREFIX_REPAIR_PROFILE: &[u8] = include_bytes!(
     "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v6_prefix_repair.experimental.json"
 );
+const PREFIX_REPAIR_V2_PROFILE: &[u8] = include_bytes!(
+    "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v6_prefix_repair_v2.experimental.json"
+);
 
 #[derive(Default)]
 struct MemoryStore(Vec<BlockCheckpoint>);
@@ -93,6 +96,32 @@ fn prefix_repair_manifest_requires_checked_strict_v6() -> Result<(), Box<dyn Err
         ("model_file_bytes", Value::Null),
     ] {
         let mut changed: Value = serde_json::from_slice(PREFIX_REPAIR_PROFILE)?;
+        changed[field] = value;
+        assert!(ModelProfile::from_json(&serde_json::to_vec(&changed)?).is_err());
+    }
+    let source = "工程 AUR-0089：列车将在 08:10 出发。";
+    let candidate = "Поезд отправится в 08:10.";
+    let (_, _, _, v1_request) = run_case_with_profile(PREFIX_REPAIR_PROFILE, source, candidate)?;
+    let (_, _, _, v2_request) = run_case_with_profile(PREFIX_REPAIR_V2_PROFILE, source, candidate)?;
+    assert_eq!(v1_request, v2_request);
+    Ok(())
+}
+
+#[test]
+fn prefix_repair_v2_manifest_is_exclusive_and_checked() -> Result<(), Box<dyn Error>> {
+    let profile = ModelProfile::from_json(PREFIX_REPAIR_V2_PROFILE)?;
+    assert!(profile.source_prefix_repair_v2);
+    assert!(!profile.source_prefix_repair);
+    assert!(profile.strict_source_identifiers);
+    let legacy = ModelProfile::from_json(PREFIX_REPAIR_PROFILE)?;
+    assert!(!legacy.source_prefix_repair_v2);
+    for (field, value) in [
+        ("source_prefix_repair", json!(true)),
+        ("strict_source_identifiers", json!(false)),
+        ("prompt_version", json!(5)),
+        ("model_file_bytes", Value::Null),
+    ] {
+        let mut changed: Value = serde_json::from_slice(PREFIX_REPAIR_V2_PROFILE)?;
         changed[field] = value;
         assert!(ModelProfile::from_json(&serde_json::to_vec(&changed)?).is_err());
     }
@@ -260,6 +289,70 @@ fn real_cyrillic_transposition_stays_rejected_with_related_and_negative_controls
     )?;
     assert_eq!(no_code?[0].lines, ["Поезд отправится в 08:10."]);
     assert!(store.0[0].diagnostics.is_empty());
+    Ok(())
+}
+
+#[test]
+fn mixed_script_identifier_v1_reproduction_and_v2_controls() -> Result<(), Box<dyn Error>> {
+    let source = "工程 AUR-0089：列车将在 08:10 出发。";
+    let candidate = "АUR-0089: Поезд отправится в 08:10.";
+    let (legacy, legacy_store, _, _) =
+        run_case_with_profile(PREFIX_REPAIR_PROFILE, source, candidate)?;
+    assert_eq!(legacy?[0].lines, [format!("AUR-0089: {candidate}")]);
+    assert_eq!(
+        legacy_store.0[0].diagnostics[0].code,
+        DiagnosticCode::SourcePrefixInserted
+    );
+    for candidate in [
+        "АUR-0089: Поезд отправится в 08:10.",
+        "AUР-0089: Поезд отправится в 08:10.",
+        "АРУ-0089: Поезд отправится в 08:10.",
+        "АUR-0090: Поезд отправится в 08:10.",
+        "АBC-42: Поезд отправится в 08:10.",
+        "AUR-0089: АUR-0089: Поезд отправится в 08:10.",
+    ] {
+        let (result, store, journal, _) =
+            run_case_with_profile(PREFIX_REPAIR_V2_PROFILE, source, candidate)?;
+        assert!(result.is_err(), "{candidate}");
+        assert!(store.0.is_empty(), "{candidate}");
+        let attempts = journal.0.lock().map_err(|_| "journal poisoned")?;
+        assert_eq!(
+            attempts[0].outcome,
+            InferenceRequestOutcome::InvalidCandidate
+        );
+        assert_eq!(attempts[0].restored_candidate.as_deref(), Some(candidate));
+    }
+    for (source, candidate, expected, flagged) in [
+        (
+            source,
+            "AUR-0089: Поезд отправится в 08:10.",
+            "AUR-0089: Поезд отправится в 08:10.",
+            false,
+        ),
+        (
+            source,
+            "Поезд отправится в 08:10.",
+            "AUR-0089: Поезд отправится в 08:10.",
+            true,
+        ),
+        (
+            "列车将在 08:10 出发。",
+            "Поезд отправится в 08:10.",
+            "Поезд отправится в 08:10.",
+            false,
+        ),
+        (
+            source,
+            "АВТОР: поезд отправится в 08:10.",
+            "AUR-0089: АВТОР: поезд отправится в 08:10.",
+            true,
+        ),
+    ] {
+        let (result, store, _, _) =
+            run_case_with_profile(PREFIX_REPAIR_V2_PROFILE, source, candidate)?;
+        assert_eq!(result?[0].lines, [expected]);
+        assert_eq!(!store.0[0].diagnostics.is_empty(), flagged);
+    }
     Ok(())
 }
 

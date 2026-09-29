@@ -384,13 +384,14 @@ tasks:
       - task: test:identifier-guard
       - task: test:time-diagnostics
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-014 packs and all control counts
+    desc: Verify versioned REG-001 through REG-015 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
       - node eval/scripts/check-regression-catalog-v4.mjs
       - node eval/scripts/check-regression-catalog-v5.mjs
       - node eval/scripts/check-regression-catalog-v6.mjs
+      - node eval/scripts/check-regression-catalog-v7.mjs
   eval:reg009:prefix-repair:probe:
     desc: Measure conservative exact-code prefix repair on the archived synthetic long-file output
     cmds:

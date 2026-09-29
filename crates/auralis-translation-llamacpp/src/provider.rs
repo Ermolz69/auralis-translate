@@ -10,6 +10,7 @@ use auralis_translation::{
     InferenceRequestKind, InferenceRequestOutcome, InferenceRequestStart, LanguageCode,
     ProviderError, ProviderResponse, RunControl, RunId, SegmentId, SourceHash, TargetSegment,
     TranslationBatch, TranslationDiagnostic, TranslationProvider, source_identifier_mismatch,
+    source_identifiers,
 };
 use reqwest::Url;
 use reqwest::header::CONTENT_TYPE;
@@ -240,13 +241,18 @@ impl LlamaCppProvider {
         let restored_candidate = restored.as_ref().ok().cloned();
         let (translated, inserted_prefix) = match restored {
             Ok(candidate) => {
-                let (candidate, inserted) = if self.profile.source_prefix_repair {
+                let (candidate, inserted) = if self.profile.source_prefix_repair_v2 {
+                    crate::source_prefix_repair::apply_v2(source_line, candidate)
+                } else if self.profile.source_prefix_repair {
                     crate::source_prefix_repair::apply(source_line, candidate)
                 } else {
                     (candidate, false)
                 };
                 if self.profile.strict_source_identifiers
-                    && source_identifier_mismatch(source_line, &candidate)
+                    && (source_identifier_mismatch(source_line, &candidate)
+                        || (self.profile.source_prefix_repair_v2
+                            && !source_identifiers(source_line).is_empty()
+                            && crate::source_prefix_repair::has_mixed_script_code_like(&candidate)))
                 {
                     (
                         Err(ProviderError::Permanent(
@@ -719,7 +725,7 @@ fn parse_preflight_json(
 
 impl TranslationProvider for LlamaCppProvider {
     fn translate(&self, batch: &TranslationBatch) -> Result<ProviderResponse, ProviderError> {
-        if self.profile.source_prefix_repair {
+        if self.profile.source_prefix_repair || self.profile.source_prefix_repair_v2 {
             return Err(ProviderError::Permanent(
                 "source prefix repair requires diagnostic-aware run".into(),
             ));
@@ -733,7 +739,7 @@ impl TranslationProvider for LlamaCppProvider {
         batch: &TranslationBatch,
         control: &dyn RunControl,
     ) -> Result<ProviderResponse, ProviderError> {
-        if self.profile.source_prefix_repair {
+        if self.profile.source_prefix_repair || self.profile.source_prefix_repair_v2 {
             return Err(ProviderError::Permanent(
                 "source prefix repair requires diagnostic-aware run".into(),
             ));

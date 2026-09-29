@@ -1,0 +1,23 @@
+{
+  "schema_version": 7,
+  "catalog_id": "zh-ru-development-regressions-v7",
+  "base_catalog_file": "catalog-v6.json",
+  "base_catalog_sha256": "f75fd7af396043cc7adf1995e4761976b6a6f1c5defad7b588420b729a2cacff",
+  "entries": [
+    {
+      "id": "REG-015",
+      "pack_file": "long-v6-mixed-script-code-repair-v1.json",
+      "pack_sha256": "8db2165918d84ec88da180e86501d7767bcc1e1f6a026371d81d71c2b6fec4fc",
+      "source_family": "project_authored_synthetic_long_file",
+      "split": "development",
+      "category": "mixed_script_source_identifier_repair",
+      "profile_scope": "1.8B checked v6 source-prefix repair v1 versus v2 deterministic provider fixture",
+      "expected_invariant": "A source-prefix repair policy must not prepend an exact ASCII identifier to a candidate already containing a mixed Latin/Cyrillic code-like spelling.",
+      "severity": "major",
+      "related_control_count": 5,
+      "negative_control_count": 4,
+      "evidence_record": "eval/experiments/2026-09-29-reg-015-mixed-script-prefix-repair.md",
+      "last_outcome": "V1 accepted a misleading mixed-script line; v2 fixture rejects it before checkpoint commit, retaining the raw candidate. No real-model v2 run or human review."
+    }
+  ]
+}

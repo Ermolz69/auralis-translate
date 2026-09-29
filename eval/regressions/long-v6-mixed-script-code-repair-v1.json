@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "id": "REG-015",
+  "status": "v1_policy_unsafe_v2_fixture_rejected",
+  "severity": "major",
+  "source_family": "project_authored_synthetic_long_file",
+  "affected_profile_sha256": "e80c80b0cf1db26d62ce5f644091f30e42fea752d27a0ce201fcab33f29ecb69",
+  "source_zh": "工程 AUR-0089：列车将在 08:10 出发。",
+  "candidate_ru": "АUR-0089: Поезд отправится в 08:10.",
+  "required_identifier": "AUR-0089",
+  "observed_v1_line": "AUR-0089: АUR-0089: Поезд отправится в 08:10.",
+  "expected_v2_outcome": "reject_without_checkpoint",
+  "expected_invariant": "A source-prefix repair policy must not prepend an exact ASCII identifier to a candidate already containing a mixed Latin/Cyrillic code-like spelling.",
+  "related_controls": [
+    { "id": "cyrillic_final_letter", "candidate_ru": "AUР-0089: Поезд отправится в 08:10.", "expected_outcome": "reject" },
+    { "id": "fully_cyrillic", "candidate_ru": "АРУ-0089: Поезд отправится в 08:10.", "expected_outcome": "reject" },
+    { "id": "changed_digits", "candidate_ru": "АUR-0090: Поезд отправится в 08:10.", "expected_outcome": "reject" },
+    { "id": "different_code", "candidate_ru": "АBC-42: Поезд отправится в 08:10.", "expected_outcome": "reject" },
+    { "id": "exact_plus_mixed", "candidate_ru": "AUR-0089: АUR-0089: Поезд отправится в 08:10.", "expected_outcome": "reject" }
+  ],
+  "negative_controls": [
+    { "id": "exact_ascii", "candidate_ru": "AUR-0089: Поезд отправится в 08:10.", "expected_outcome": "accept_without_repair" },
+    { "id": "omitted_code", "candidate_ru": "Поезд отправится в 08:10.", "expected_outcome": "accept_with_review_flag" },
+    { "id": "source_without_code", "source_zh": "列车将在 08:10 出发。", "candidate_ru": "Поезд отправится в 08:10.", "expected_outcome": "accept_without_repair" },
+    { "id": "ordinary_uppercase_cyrillic", "candidate_ru": "АВТОР: поезд отправится в 08:10.", "expected_outcome": "accept_with_review_flag" }
+  ],
+  "human_review": "missing",
+  "release_gate": "open"
+}
