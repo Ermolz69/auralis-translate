@@ -679,6 +679,9 @@ tasks:
     desc: Validate source inventory examples and cross-source admission controls
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/source-inventory.test.mjs
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/source-inventory-example-v1.json
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-inspected-candidates-v1.json
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-cc-commerce-candidate-v1.json
   eval:data:youtube:mingfay:preflight:
     desc: Check the declared video, pinned extractor and bounded metadata-only command
     env:
@@ -693,9 +696,22 @@ tasks:
     cmds:
       - task: eval:data:youtube:mingfay:preflight
       - node eval/scripts/inventory-youtube-mingfay.mjs
-      - node eval/scripts/check-source-inventory.mjs eval/corpora/source-inventory-example-v1.json
-      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-inspected-candidates-v1.json
-      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-cc-commerce-candidate-v1.json
+
+  eval:data:youtube:mingfay:caption:preflight:
+    desc: Verify the frozen metadata and bounded private Chinese SRT retrieval plan
+    env:
+      NODE_USE_ENV_PROXY: '1'
+    cmds:
+      - node --check eval/scripts/acquire-youtube-mingfay-caption.mjs
+      - node eval/scripts/acquire-youtube-mingfay-caption.mjs --preflight
+
+  eval:data:youtube:mingfay:caption:acquire:
+    desc: Retrieve one pinned Chinese SRT track into private ignored storage
+    env:
+      NODE_USE_ENV_PROXY: '1'
+    cmds:
+      - task: eval:data:youtube:mingfay:caption:preflight
+      - node eval/scripts/acquire-youtube-mingfay-caption.mjs
   eval:data:candidates:bytes:
     desc: Check all retained Commons candidate bytes against the non-admitted inventory
     cmds:
