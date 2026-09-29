@@ -1,0 +1,7 @@
+# Commons Ying private media acquisition plan
+
+Date: 29 September 2026. ID: `commons-ying-media-private-v1`. Partial `DATA-03`/`VOICE-01` inspection only. This is a three-minute 38-second Henan Mandarin candidate, not a 10–20-minute release scene. The source SRT is revision `1238607314`, SHA-256 `505913bd7046b28c873307562a55d567043f8703bc00375c3485853b87c420d9`, with 93 structurally accepted cues and unresolved transcription provenance.
+
+Acquire the exact [Commons original video](https://commons.wikimedia.org/wiki/File:WIKITONGUES-_Ying_speaking_Henan_Chinese.webm) URL `https://upload.wikimedia.org/wikipedia/commons/7/7f/WIKITONGUES-_Ying_speaking_Henan_Chinese.webm` into ignored `.cache/eval/commons-ying-media/attempt-*/`. One GET attempt, no retry, 180-second wall timeout, 50 MiB response cap, required declared length and WebM content type. Retain HTTP status, bytes, hash, elapsed time and failure reason. Do not overwrite the original SRT or publicize video bytes. The source page lists Wikitongues and Ying Li, CC BY-SA 4.0, and a bot license check with further human review caveats. Record attribution and license if a derivative is ever distributed; this plan authorizes private inspection only.
+
+After acquisition, independently decode and inspect media timing, speech/caption alignment, scene continuity and pronunciation before any bounded TTS run. Keep Chinese caption rights and independent review open. No Russian model result is accepted by this plan.

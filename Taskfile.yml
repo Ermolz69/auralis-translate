@@ -1,6 +1,11 @@
 version: "3"
 
 tasks:
+  eval:data:commons:ying:media:acquire:
+    desc: Acquire one bounded private Commons Ying video for source/audio inspection
+    cmds:
+      - node --check eval/scripts/acquire-commons-ying-media.mjs
+      - node eval/scripts/acquire-commons-ying-media.mjs
   test:srt:generated:
     desc: Check deterministic SRT round-trip, protected bytes and unsupported-markup variants
     cmds:
