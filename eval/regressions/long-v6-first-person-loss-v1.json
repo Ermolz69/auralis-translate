@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "REG-012",
+  "status": "open_model_actor_preservation",
+  "severity": "major",
+  "source_family": "project_authored_synthetic_long_file",
+  "source_report_sha256": "98358c7adcf5f513a6a90c563d01fed41b14d433e009dc385221030b544c9bec",
+  "source_journal_sha256": "59444550a646c73d2b354c4e11ee0abbfead55636b98c76978c633a9219275d3",
+  "affected_model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "failure": {
+    "cue_id": 3,
+    "seed": 101,
+    "request_sha256": "baa8a0d5f14a49aea6e98b4322ad956e5d0107fdc88e2db015555b75015c714a",
+    "source_zh": "工程 AUR-0003：我们还需要 3 个箱子。",
+    "accepted_ru": "AUR-0003: Им также нужно 3 коробки.",
+    "required_meaning": "The speaker group still needs three boxes; first-person plural 我们 must not become third-person им."
+  },
+  "expected_invariant": "Preserve first-person plural agency stated in the target source even when the ASCII identifier and number are exact.",
+  "related_controls": [
+    { "cue_id": 3, "seed": 202 },
+    { "cue_id": 3, "seed": 303 },
+    { "cue_id": 507, "seed": 101 },
+    { "cue_id": 507, "seed": 202 },
+    { "cue_id": 507, "seed": 303 },
+    { "cue_id": 1019, "seed": 101 },
+    { "cue_id": 1019, "seed": 202 },
+    { "cue_id": 1019, "seed": 303 }
+  ],
+  "negative_controls": [
+    { "id": "we_to_us", "source_zh": "我们还需要 3 个箱子。", "candidate_ru": "Нам ещё нужны три коробки.", "expected_actor_error": false },
+    { "id": "they_to_them", "source_zh": "他们还需要 3 个箱子。", "candidate_ru": "Им ещё нужны три коробки.", "expected_actor_error": false },
+    { "id": "we_to_them", "source_zh": "我们还需要 3 个箱子。", "candidate_ru": "Им ещё нужны три коробки.", "expected_actor_error": true },
+    { "id": "they_to_us", "source_zh": "他们还需要 3 个箱子。", "candidate_ru": "Нам ещё нужны три коробки.", "expected_actor_error": true }
+  ],
+  "human_review": "missing",
+  "release_gate": "open"
+}

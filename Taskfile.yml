@@ -375,17 +375,20 @@ tasks:
       - node --test --test-isolation=none eval/scripts/tests/long-v6-identifier-regression.test.mjs
       - node --test --test-isolation=none eval/scripts/tests/long-v6-neighbor-content-regression.test.mjs
       - node --test --test-isolation=none eval/scripts/tests/long-v6-singular-door-regression.test.mjs
+      - node --test --test-isolation=none eval/scripts/tests/long-v6-semantic-after-prefix-regression.test.mjs
       - task: eval:long:v6:code-model:result:check
       - task: eval:reg009:prompt:check
       - task: eval:reg009:prefix-repair:check
+      - task: eval:reg009:live-prefix:check
       - task: test:identifier-guard
       - task: test:time-diagnostics
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-011 packs and all control counts
+    desc: Verify versioned REG-001 through REG-013 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
       - node eval/scripts/check-regression-catalog-v4.mjs
+      - node eval/scripts/check-regression-catalog-v5.mjs
   eval:reg009:prefix-repair:probe:
     desc: Measure conservative exact-code prefix repair on the archived synthetic long-file output
     cmds:
@@ -451,6 +454,18 @@ tasks:
     cmds:
       - task: eval:reg009:live-prefix:preflight
       - node eval/scripts/probe-reg009-live-prefix-repair.mjs
+  eval:reg009:live-prefix:capture:
+    desc: Archive verified raw model responses, timing and sampled resources from the bounded screen
+    requires:
+      vars: [REPORT_DIR]
+    cmds:
+      - node --check eval/scripts/capture-reg009-live-prefix-repair.mjs
+      - node eval/scripts/capture-reg009-live-prefix-repair.mjs "{{.REPORT_DIR}}"
+  eval:reg009:live-prefix:check:
+    desc: Verify the immutable 81-response archive and narrow raw/projected fact counts
+    cmds:
+      - node --check eval/scripts/check-reg009-live-prefix-repair.mjs
+      - node eval/scripts/check-reg009-live-prefix-repair.mjs
   eval:v5-terms:check:
     desc: Check the bounded paired real-model terms probe before execution
     cmds:

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "experiment": "reg009-live-prefix-repair-v1",
+  "status": "pre_inference_harness_failure",
+  "attempted_at_utc": null,
+  "attempted_at_utc_reason": "The failed process did not reach report creation and no precise timestamp was retained.",
+  "command": "task eval:reg009:live-prefix:probe",
+  "git_head": "fcaf91128ff82d05cf24b9ad10c075f89e1028a3",
+  "preflight": "passed",
+  "error": "spawnSync git EPERM while reading git rev-parse HEAD inside the sandbox",
+  "model_server_starts": 0,
+  "chat_requests": 0,
+  "retry_or_observation_replacement": false,
+  "resolution": "The same committed task was run with approved local process permissions; its separate 81-request report is preserved."
+}

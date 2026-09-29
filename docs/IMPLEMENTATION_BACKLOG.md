@@ -86,11 +86,14 @@ contract](reference/provider-review-diagnostic-v1.md) and core/SQLite checks.
 The new `source_prefix_inserted` flag is validated before checkpoint commit and
 again on resume. A separate [development policy](reference/source-prefix-repair-v1.md)
 and checked experimental manifest insert only one unambiguous source-prefix
-identifier, retaining the raw response and a review flag. Its [bounded real-model
-screen](../eval/experiments/2026-09-29-reg-009-live-prefix-repair-plan.md) is
-predeclared after [fixture acceptance](../eval/experiments/2026-09-29-reg-009-prefix-repair-fixture.md).
-The policy is not selected for release; REG-009 and meaning review
-remain open.
+identifier, retaining the raw response and a review flag. [Fixture
+acceptance](../eval/experiments/2026-09-29-reg-009-prefix-repair-fixture.md)
+and the [bounded 81-request real-model screen](../eval/experiments/2026-09-29-reg-009-live-prefix-repair-results.md)
+show 36 raw exact codes, 81 after policy projection and 45 required review flags.
+The screen also retained [REG-012](../eval/regressions/long-v6-first-person-loss-v1.json)
+first-person loss and [REG-013](../eval/regressions/long-v6-restart-grammar-v1.json)
+Russian fluency failures with related and negative controls. The policy is
+not selected for release; REG-009 and human meaning review remain open.
 
 The next independently executable tasks are `CTX-02`, `DATA-03`, `DATA-04`,
 `EVAL-04` and the unfinished `VOICE-01` handoff.

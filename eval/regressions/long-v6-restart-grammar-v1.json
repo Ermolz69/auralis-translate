@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "REG-013",
+  "status": "open_model_russian_fluency",
+  "severity": "major",
+  "source_family": "project_authored_synthetic_long_file",
+  "source_report_sha256": "98358c7adcf5f513a6a90c563d01fed41b14d433e009dc385221030b544c9bec",
+  "source_journal_sha256": "59444550a646c73d2b354c4e11ee0abbfead55636b98c76978c633a9219275d3",
+  "affected_model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "failure": {
+    "cue_id": 1022,
+    "seed": 101,
+    "request_sha256": "3f3f987a3c8b4c877bca90b915cfdccbb8e2f8a5d2c8ff44235592df0a6950e6",
+    "source_zh": "工程 AUR-1022：设备已经关闭，不需要重新启动。",
+    "accepted_ru": "AUR-1022: Система уже выключена, необходимо перезапускать не нужно.",
+    "required_meaning": "The device is already off and does not need restarting; express the negated necessity in grammatical Russian."
+  },
+  "expected_invariant": "A structurally valid line with a preserved code must still express the no-restart instruction in grammatical, unambiguous Russian.",
+  "related_controls": [
+    { "cue_id": 6, "seed": 101 },
+    { "cue_id": 6, "seed": 202 },
+    { "cue_id": 6, "seed": 303 },
+    { "cue_id": 510, "seed": 101 },
+    { "cue_id": 510, "seed": 202 },
+    { "cue_id": 510, "seed": 303 },
+    { "cue_id": 1022, "seed": 202 },
+    { "cue_id": 1022, "seed": 303 }
+  ],
+  "negative_controls": [
+    { "id": "clear_no_restart", "source_zh": "设备已经关闭，不需要重新启动。", "candidate_ru": "Устройство уже выключено; перезапускать его не нужно.", "expected_fluency_error": false },
+    { "id": "clear_restart_required", "source_zh": "设备已经关闭，需要重新启动。", "candidate_ru": "Устройство уже выключено; его нужно перезапустить.", "expected_fluency_error": false },
+    { "id": "awkward_double_necessity", "source_zh": "设备已经关闭，不需要重新启动。", "candidate_ru": "Система уже выключена, необходимо перезапускать не нужно.", "expected_fluency_error": true },
+    { "id": "contradictory_restart", "source_zh": "设备已经关闭，不需要重新启动。", "candidate_ru": "Устройство выключено, его необходимо перезапустить.", "expected_fluency_error": true }
+  ],
+  "human_review": "missing",
+  "release_gate": "open"
+}

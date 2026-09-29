@@ -1,0 +1,38 @@
+{
+  "schema_version": 5,
+  "catalog_id": "zh-ru-development-regressions-v5",
+  "base_catalog_file": "catalog-v4.json",
+  "base_catalog_sha256": "7656bf5e9fdec62d1f22387fb15c4a9ae3f187674abb8a7b8a843c67f9cdbe8d",
+  "entries": [
+    {
+      "id": "REG-012",
+      "pack_file": "long-v6-first-person-loss-v1.json",
+      "pack_sha256": "c91000e1ffdd25fb489f9261d90930ef9a056d46326863d46ab8d6e34aef0b69",
+      "source_family": "project_authored_synthetic_long_file",
+      "split": "development",
+      "category": "first_person_actor_loss",
+      "profile_scope": "1.8B v6 prefix-repair same-source screen, seeds 101/202/303",
+      "expected_invariant": "Preserve first-person plural agency stated in the target source even when the ASCII identifier and number are exact.",
+      "severity": "major",
+      "related_control_count": 8,
+      "negative_control_count": 4,
+      "evidence_record": "eval/experiments/2026-09-29-reg-009-live-prefix-repair-results.md",
+      "last_outcome": "First-person source became third-person Russian on cue 3 seeds 101/202 and cue 1019 seed 202; repair changed only the identifier."
+    },
+    {
+      "id": "REG-013",
+      "pack_file": "long-v6-restart-grammar-v1.json",
+      "pack_sha256": "3b73b86008163255ec7d8a1ed69ad0b14050c13674f983291bb1dd7917bd65be",
+      "source_family": "project_authored_synthetic_long_file",
+      "split": "development",
+      "category": "russian_restart_fluency",
+      "profile_scope": "1.8B v6 prefix-repair same-source screen, seeds 101/202/303",
+      "expected_invariant": "A structurally valid line with a preserved code must still express the no-restart instruction in grammatical, unambiguous Russian.",
+      "severity": "major",
+      "related_control_count": 8,
+      "negative_control_count": 4,
+      "evidence_record": "eval/experiments/2026-09-29-reg-009-live-prefix-repair-results.md",
+      "last_outcome": "The archived cue 1022 remains ungrammatical on seeds 101/202, while seed 303 and earlier same-source cues are clearer."
+    }
+  ]
+}
