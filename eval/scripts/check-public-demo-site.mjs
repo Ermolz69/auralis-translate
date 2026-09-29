@@ -63,6 +63,8 @@ assert.deepEqual(data.identifier_diagnostic, await loadIdentifierDiagnostic(root
 assert(html.includes('id="identifier-diagnostic"'));
 assert(html.includes('identifier_mismatch'));
 assert(html.includes('long-v6-identifier-loss-v1.json'));
+assert(html.includes('исходная инструкция сохранила код в 2/8'));
+assert(html.includes('2026-09-29-reg-009-identifier-prompt-summary.json'));
 assert(html.includes('id="long-v6-postlength"'));
 assert(html.includes('665 / 1280'));
 assert(html.includes('2026-09-29-long-v6-postlength-v2-journal.json.gz'));
