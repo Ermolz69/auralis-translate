@@ -27,6 +27,16 @@ a translated text source, so original Chinese speech alignment cannot be
 inferred. Rights, speaker/scene boundaries, reference and human quality review
 remain unapproved in the candidate manifest.
 
+The [Commons revision metadata](https://commons.wikimedia.org/w/api.php?action=query&prop=revisions&titles=TimedText%3ACreative_Commons_and_Commerce.ogv.zh.srt&rvprop=ids%7Ctimestamp%7Cuser%7Ccomment%7Csize&rvlimit=50&format=json)
+returns exactly one revision: `906218083`, created at
+`2024-08-03T16:45:24Z` by `Prototyperspective`, with the comment
+`added machine transcribed subtitles` and size 14,115 bytes. The comment is
+an uploader description, not verified evidence of the Chinese text's generation
+method or accuracy. No caption translator, independent source-language review,
+or text-specific license was established. The source therefore remains excluded
+from Chinese-speech alignment and the real dubbing pilot; it remains an
+unassigned translation-text candidate with zero eligible cues.
+
 ## Observed result
 
 `task eval:data:commons:cc-commerce:acquire` retained 14,115 exact raw bytes

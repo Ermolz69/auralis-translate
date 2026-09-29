@@ -24,6 +24,7 @@ import { loadPreflightJournal } from './preflight-journal-section.mjs';
 import { loadSapiMultivoice, loadSapiMultivoiceMedia } from './sapi-multivoice-section.mjs';
 import { loadSapiOriginalWindow } from './sapi-original-window-section.mjs';
 import { loadAuralisPrivateSpeech } from './auralis-private-speech-section.mjs';
+import { loadSourceCandidates } from './source-candidate-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const html = await fs.readFile(path.join(root, 'site/index.html'), 'utf8');
@@ -42,6 +43,19 @@ assert.equal(data.review.observations.length, 20);
 assert.deepEqual(data.currency, await loadCurrencyReport(root, data.dataset));
 assert.deepEqual(data.model_comparison, await loadModelComparison(root));
 assert.deepEqual(data.delivery_plan, await loadDeliveryPlan(root));
+assert.deepEqual(data.source_candidates, await loadSourceCandidates(root));
+assert.deepEqual(data.source_candidates, {
+  source_count: 4,
+  inspected_cues: 488,
+  eligible_cues: 0,
+  commerce_revision: '906218083',
+  commerce_cues: 123,
+  commerce_sha256: 'df2af6ad32f12b55c3067469228d3b9674b7c35e7d8540acd294dd0f986fe46f',
+});
+assert(html.includes('id="source-candidates"'));
+assert(html.includes('488 проверенных реплик, 0 допущенных'));
+assert(html.includes('added machine transcribed subtitles'));
+assert(html.includes('2026-09-29-commons-cc-commerce-candidate.md'));
 assert(html.includes('id="release-readiness"'));
 assert(html.includes('2026-09-29-release-readiness-after-reg015.md'));
 assert(html.includes('G1–G9 и A1–A6 остаются открытыми'));

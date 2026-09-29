@@ -23,6 +23,7 @@ import { loadPreflightJournal, renderPreflightJournal } from './preflight-journa
 import { loadSapiMultivoice, loadSapiMultivoiceMedia } from './sapi-multivoice-section.mjs';
 import { loadSapiOriginalWindow, renderSapiOriginalWindow } from './sapi-original-window-section.mjs';
 import { loadAuralisPrivateSpeech, renderAuralisPrivateSpeech } from './auralis-private-speech-section.mjs';
+import { loadSourceCandidates, renderSourceCandidates } from './source-candidate-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const dataset = JSON.parse(await fs.readFile(path.join(root, 'eval/corpora/public-demo-v1.json'), 'utf8'));
@@ -51,6 +52,7 @@ const sapiMultivoice = await loadSapiMultivoice(root);
 const sapiMultivoiceMedia = await loadSapiMultivoiceMedia(root);
 const sapiOriginalWindow = await loadSapiOriginalWindow(root);
 const auralisPrivateSpeech = await loadAuralisPrivateSpeech(root);
+const sourceCandidates = await loadSourceCandidates(root);
 const evidencePath = path.join(root, 'eval/reports/public-demo-2026-09-27.json');
 if (process.argv[2] === '--capture') {
   const workspace = (await fs.readFile(path.join(root, '.cache/eval/public-demo/latest.txt'), 'utf8')).trim();
@@ -121,6 +123,7 @@ payload.sapi_multivoice = sapiMultivoice;
 payload.sapi_multivoice_media = sapiMultivoiceMedia;
 payload.sapi_original_window_fit = sapiOriginalWindow;
 payload.auralis_private_speech = auralisPrivateSpeech;
+payload.source_candidates = sourceCandidates;
 payload.terms_probe = { success_sha256: termsProbe.success_sha256, failure_sha256: termsProbe.failure_sha256, profile_sha256: termsProbe.profile_sha256, corpus_sha256: termsProbe.corpus_sha256, chat_requests: termsProbe.chat_requests, loopback_requests: termsProbe.loopback_requests };
 const json = JSON.stringify(payload).replaceAll('<', '\\u003c');
 const runRows = benchmark.runs.map(run => `<tr><th scope="row">${run.repetition}</th><td>${number(run.translation_elapsed_ms)}</td><td>${number(run.request_elapsed_sum_ms)}</td><td>${number(run.translation_elapsed_ms - run.request_elapsed_sum_ms)}</td><td>${number(run.offline_reexport_ms)}</td><td>${run.status.completed_blocks}/${run.status.total_blocks}</td></tr>`).join('');
@@ -152,11 +155,12 @@ const html = `<!doctype html>
 :root{color-scheme:light}body{margin:0;font-family:Segoe UI,Arial,sans-serif;color:#172033;background:#fff;font-size:16px;line-height:1.6}*{box-sizing:border-box}a{color:inherit}button{font:inherit;cursor:pointer}.shell{max-width:1440px;margin:auto;padding:0 28px}.label{font-size:14px;font-weight:600;color:#526074;margin:0 0 10px}.measurement{width:100%;border-collapse:collapse;text-align:left;font-size:14px;min-width:760px}.measurement th,.measurement td{border-bottom:1px solid #e2e8f0;padding:12px 14px;vertical-align:top}.measurement thead{background:#f1f5f9}.measurement th{font-weight:600}.measurement td:not(:nth-child(2)){font-variant-numeric:tabular-nums}details summary{padding:4px 0}code{overflow-wrap:anywhere;font-size:14px}p{overflow-wrap:anywhere}.hash{font-family:Consolas,monospace;font-size:13px;word-break:break-all}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #2563eb;outline-offset:4px}.run-button[aria-pressed=true]{background:#1d4ed8;color:white;border-color:#1d4ed8}@media(max-width:640px){.shell{padding:0 18px}.comparison{grid-template-columns:1fr}.measurement{font-size:14px}}@media print{button,nav{display:none}details{display:block}article{break-inside:avoid}body{font-size:12pt}}
 </style></head>
 <body>
-<header class="border-b border-slate-200"><div class="shell flex flex-wrap items-center justify-between gap-4 py-5"><a class="text-lg font-bold tracking-tight" href="#top">AURALIS <span class="font-normal text-slate-500">/ Translate</span></a><nav class="flex flex-wrap gap-5 text-sm text-slate-600" aria-label="Разделы отчёта"><a href="#model-comparison">1.8B / 7B</a><a href="#delivery-plan">План и прогресс</a><a href="#v5-envelope">v5 JSON</a><a href="#scene-context">Контекст сцен</a><a href="#pronoun-cross-model">Четыре сцены</a><a href="#long-v5-failure">Длинный файл</a><a href="#reg009-long-cli">Отказ CLI</a><a href="#reg009-live-prefix">Коды и смысл</a><a href="#v5-terms">Термины</a><a href="#retry-policy">Повторы</a><a href="#inference-journal">Журнал запросов</a><a href="#preflight-journal">Токены</a><a href="#voice-handoff">Озвучка</a><a href="#examples">История 20 примеров</a><a href="#measurements">Замеры v1</a><a href="#method">Методика</a></nav></div></header>
+<header class="border-b border-slate-200"><div class="shell flex flex-wrap items-center justify-between gap-4 py-5"><a class="text-lg font-bold tracking-tight" href="#top">AURALIS <span class="font-normal text-slate-500">/ Translate</span></a><nav class="flex flex-wrap gap-5 text-sm text-slate-600" aria-label="Разделы отчёта"><a href="#model-comparison">1.8B / 7B</a><a href="#delivery-plan">План и прогресс</a><a href="#source-candidates">Источники</a><a href="#v5-envelope">v5 JSON</a><a href="#scene-context">Контекст сцен</a><a href="#pronoun-cross-model">Четыре сцены</a><a href="#long-v5-failure">Длинный файл</a><a href="#reg009-long-cli">Отказ CLI</a><a href="#reg009-live-prefix">Коды и смысл</a><a href="#v5-terms">Термины</a><a href="#retry-policy">Повторы</a><a href="#inference-journal">Журнал запросов</a><a href="#preflight-journal">Токены</a><a href="#voice-handoff">Озвучка</a><a href="#examples">История 20 примеров</a><a href="#measurements">Замеры v1</a><a href="#method">Методика</a></nav></div></header>
 <main id="top" class="shell pb-16">
 ${renderModelComparison(modelComparison, escape, number)}
 ${renderDeliveryProgress(deliveryPlan, escape)}
 <section id="release-readiness" class="my-8 rounded-2xl border border-amber-300 bg-amber-50 p-5 md:p-7"><p class="text-sm font-semibold text-amber-900">Текущий вывод · выпуск не принят</p><h2 class="mt-2 text-2xl font-bold">G1–G9 и A1–A6 остаются открытыми</h2><p class="mt-3 max-w-4xl text-slate-700">Прежний синтетический длинный файл завершился структурно, но содержит 665 потерь или замен кодов и одну подтверждённую подмену содержания следующей репликой. Узкая вставка кода восстановила 45 пропусков в 81-запросном экране, однако новый реальный запуск через CLI остановился на 89-й реплике из 1 024 после кириллической подмены кода; итоговый SRT не опубликован. Ошибки действующего лица и русского языка остаются. Парный экран 1.8B/7B выявил у 7B замену одной двери несколькими в 12/12 ответах; модель не выбрана. Два настоящих SAPI-голоса уложены в короткие искусственные окна ускорением, однако человек не оценивал речь. Нужны лицензионный естественный источник, независимая китайско-русская проверка, слушатели, чистая Windows-машина и решение по отложенному desktop-этапу. Финальный RELEASE-05 нельзя провести на этом кандидате.</p><div class="mt-3 flex flex-wrap gap-4 text-sm font-semibold text-blue-700"><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-29-reg-009-long-cli-soak-results.md">Последний отказ и ограничения (EN)</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-29-release-readiness-after-reg015.md">Текущий неполный аудит (EN)</a></div></section>
+${renderSourceCandidates(sourceCandidates)}
 ${renderV5Envelope(v5Envelope, dataset, currency.benchmark, escape, number)}
 ${renderSceneContext(sceneContext, escape)}
 ${renderPronounCrossModel(pronounCrossModel, escape)}
