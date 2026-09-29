@@ -48,6 +48,8 @@ assert.equal((html.match(/href="https:\/\/github.com\/Ermolz69\/auralis-translat
 assert(html.includes('id="retry-policy"'));
 assert(html.includes('id="voice-handoff"'));
 assert(html.includes('2026-09-28-voice-handoff-immutability.md'));
+assert(html.includes('2026-09-29-voice-selection-reverify.md'));
+assert(html.includes('Производственный TTS-worker ещё не вызывает guard'));
 assert(html.includes('A1–A6 остаются открытыми'));
 assert(html.includes('2026-09-29-sapi-synthetic-media.md'));
 assert(html.includes('восьмисекундный синтетический клип'));
