@@ -1,0 +1,23 @@
+{
+  "schema_version": 8,
+  "catalog_id": "zh-ru-development-regressions-v8",
+  "base_catalog_file": "catalog-v7.json",
+  "base_catalog_sha256": "6d966e7352a89863bd412aab64e7be628e36e9bf9278080de3eeb41c317b375c",
+  "entries": [
+    {
+      "id": "REG-016",
+      "pack_file": "cue89-omitted-code-and-time-guard-v1.json",
+      "pack_sha256": "cd1992b5371009bb8bb767ef8d0fc163f76823bcaa9eb9bfb2727c4ba4cb82e0",
+      "source_family": "project_authored_synthetic_long_file",
+      "split": "development",
+      "category": "omitted_source_identifier_and_clock_time_policy",
+      "profile_scope": "real 1.8B v1 decoding; deterministic v1/v2 advisory versus opt-in v3 strict time",
+      "expected_invariant": "A source-prefix identifier omission may be projected only with a durable review flag; altered clock times require a separately versioned strict policy and must never be silently changed.",
+      "severity": "major",
+      "related_control_count": 4,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-29-reg014-cue89-decoding-results.md",
+      "last_outcome": "One raw model answer omitted the code and source-prefix meaning. V3 fixture rejects time changes before checkpoint; real long-file and human review remain open."
+    }
+  ]
+}

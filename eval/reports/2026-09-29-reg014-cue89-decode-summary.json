@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "experiment": "reg014-cue89-decode-v1",
+  "archive_sha256": "2ee73d3a3a66bd0fcf4d787bbbf19b7aac39926f90d89b8da2594f5184bb85d3",
+  "archive_uncompressed_sha256": "619397c8c9e06947fa1314e534c2fab489bb82837a3e0256b90ed786100f2749",
+  "source_sha256": "e9b760bdcce97de9f29f5fe671dbb927088f5a15119ebe3200e73e0408391bb3",
+  "git_head": "942cea34da6d8af81764e477e0541d870e1f9018",
+  "runner_sha256": "885159451532afcdee78417df59866d5ff2b7a39adba64a5677fb3cdf6753bc3",
+  "started_at": "2026-09-29T15:15:01.502Z",
+  "finished_at": "2026-09-29T15:15:17.067Z",
+  "status": "complete_observations_unreviewed",
+  "human_review": "missing",
+  "sealed_holdout": false,
+  "wall_elapsed_ms": 15565,
+  "arms": {
+    "temperature_0_7": {
+      "requests": 3,
+      "parsed_slots": 3,
+      "exact_ascii_code": 2,
+      "omitted_code": 1,
+      "mixed_script_code": 0,
+      "time_preserved": 3,
+      "completion_tokens": 124,
+      "elapsed_ms": 6537
+    },
+    "temperature_0": {
+      "requests": 3,
+      "parsed_slots": 3,
+      "exact_ascii_code": 3,
+      "omitted_code": 0,
+      "mixed_script_code": 0,
+      "time_preserved": 3,
+      "completion_tokens": 135,
+      "elapsed_ms": 4943
+    }
+  },
+  "paired": [
+    {
+      "seed": 101,
+      "temperature_0_7_exact_code": false,
+      "temperature_0_exact_code": true
+    },
+    {
+      "seed": 202,
+      "temperature_0_7_exact_code": true,
+      "temperature_0_exact_code": true
+    },
+    {
+      "seed": 303,
+      "temperature_0_7_exact_code": true,
+      "temperature_0_exact_code": true
+    }
+  ],
+  "resources": {
+    "sample_count": 3,
+    "sample_errors": 0,
+    "tracked_working_set_peak_bytes": 2106363904,
+    "tracked_private_peak_bytes": 1058131968,
+    "device_wide_gpu_peak_mib": 1032,
+    "limitation": "Sampled working set/private memory of tracked processes; device-wide GPU use includes other applications. Not an isolated peak or release hardware gate."
+  }
+}

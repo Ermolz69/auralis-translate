@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "REG-016",
+  "status": "open_model_code_and_source_prefix_omission",
+  "severity": "major",
+  "source_family": "project_authored_synthetic_long_file",
+  "source_summary_sha256": "3b26733c643d09f3a7191f3dc174b41c18f74eed447b834254738612ec2b8208",
+  "source_archive_sha256": "2ee73d3a3a66bd0fcf4d787bbbf19b7aac39926f90d89b8da2594f5184bb85d3",
+  "affected_model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "source_zh": "工程 AUR-0089：列车将在 08:10 出发。",
+  "failure": {
+    "cue_id": 89,
+    "seed": 101,
+    "temperature": 0.7,
+    "request_sha256": "dde90b90f5803c6e7d90810beb079d4b02fb5589ed9b8d064cf4c11de37409e2",
+    "raw_candidate_ru": "Поезд отправится в 08:10.",
+    "missing_identifier": "AUR-0089",
+    "missing_prefix_meaning": "工程",
+    "observed_model_outcome": "parsed_target_slot_with_omission",
+    "v1_v2_policy_outcome": "insert_identifier_with_review_flag_but_meaning_unresolved"
+  },
+  "expected_invariant": "A source-prefix identifier omission may be projected only with a durable review flag; altered clock times require a separately versioned strict policy and must never be silently changed.",
+  "related_controls": [
+    { "id": "wrong_clock_time", "candidate_ru": "Поезд отправится в 08:11.", "expected_v3_outcome": "reject_without_checkpoint" },
+    { "id": "missing_clock_time", "candidate_ru": "Поезд отправится.", "expected_v3_outcome": "reject_without_checkpoint" },
+    { "id": "duplicated_clock_time", "candidate_ru": "Поезд отправится в 08:10 и 08:10.", "expected_v3_outcome": "reject_without_checkpoint" },
+    { "id": "unrelated_ascii_code", "candidate_ru": "DOC-42: Поезд отправится в 08:10.", "expected_v3_outcome": "reject_without_checkpoint" }
+  ],
+  "negative_controls": [
+    { "id": "exact_code_and_time", "candidate_ru": "AUR-0089: Поезд отправится в 08:10.", "expected_v3_outcome": "accept_without_repair" },
+    { "id": "equivalent_clock_spelling", "candidate_ru": "Поезд отправится в 8:10.", "expected_v3_outcome": "accept_with_review_flag" },
+    { "id": "source_without_code", "source_zh": "列车将在 08:10 出发。", "candidate_ru": "Поезд отправится в 08:10.", "expected_v3_outcome": "accept_without_repair" }
+  ],
+  "human_review": "missing",
+  "release_gate": "open"
+}
