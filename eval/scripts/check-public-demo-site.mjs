@@ -12,6 +12,7 @@ import { loadSceneContext } from './scene-context-section.mjs';
 import { loadPronounCrossModel } from './pronoun-cross-model-section.mjs';
 import { loadLongV5Failure } from './long-v5-failure-section.mjs';
 import { loadLongV6Outcomes, loadLongV6ModelScreen, loadLongV6Postlength } from './long-v6-outcomes-section.mjs';
+import { loadLongV6CodeModel } from './long-v6-code-model-section.mjs';
 import { loadIdentifierDiagnostic } from './identifier-diagnostic-section.mjs';
 import { loadNeighborContext } from './neighbor-context-section.mjs';
 import { loadTermsProbe } from './terms-section.mjs';
@@ -96,6 +97,12 @@ assert(html.includes('id="long-v6-model-screen"'));
 assert.equal((html.match(/<td>Сегодня, как обычно<\/td>/g) ?? []).length, 4);
 assert(html.includes('Все 16 сырых запросов и ответов'));
 assert(html.includes('long-v6-today-omission-v1.json'));
+const longV6CodeModel = await loadLongV6CodeModel(root);
+assert.deepEqual(data.long_v6_code_model, longV6CodeModel);
+assert(html.includes('id="long-v6-code-model"'));
+assert(html.includes('36/81') && html.includes('73/81'));
+assert(html.includes('Все 162 сырых запроса и ответа'));
+assert(html.includes('long-v6-singular-door-v1.json'));
 assert(html.includes('Восстановление сработало; полный перевод остановлен'));
 assert(html.includes('1 024 китайские реплики'));
 assert.equal((html.match(/href="https:\/\/github.com\/Ermolz69\/auralis-translate\/blob\/main\/eval\/reports\/2026-09-29-long-v5-scene-failure/g) ?? []).length, 2);
@@ -176,4 +183,4 @@ for (const script of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))
 }
 assert(!/(?:E:\\\\|C:\\\\Users\\\\|00ermzahar@|gh[pousr]_[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)/.test(html));
 assert(!/<script[^>]+src="(?!https:\/\/cdn\.jsdelivr\.net\/npm\/@tailwindcss\/browser@4")/.test(html));
-console.log('Public HTML verified: prior measurements retained, REG-010 inconclusive 30-request screen linked, SAPI evidence, report identity and single-file publication boundary.');
+console.log('Public HTML verified: prior measurements retained, REG-011 model screen and REG-010 linked, SAPI evidence, report identity and single-file publication boundary.');
