@@ -11,6 +11,7 @@ import { loadSceneContext, renderSceneContext } from './scene-context-section.mj
 import { loadPronounCrossModel, renderPronounCrossModel } from './pronoun-cross-model-section.mjs';
 import { loadLongV5Failure, renderLongV5Failure } from './long-v5-failure-section.mjs';
 import { loadLongV6Outcomes, loadLongV6ModelScreen, loadLongV6Postlength, renderLongV6Outcomes, renderLongV6ModelScreen, renderLongV6Postlength } from './long-v6-outcomes-section.mjs';
+import { loadIdentifierDiagnostic, renderIdentifierDiagnostic } from './identifier-diagnostic-section.mjs';
 import { loadTermsProbe, renderTermsProbe } from './terms-section.mjs';
 import { loadInferenceJournal, renderInferenceJournal } from './inference-journal-section.mjs';
 import { loadPreflightJournal, renderPreflightJournal } from './preflight-journal-section.mjs';
@@ -29,6 +30,7 @@ const pronounCrossModel = await loadPronounCrossModel(root);
 const longV5Failure = await loadLongV5Failure(root);
 const longV6Outcomes = await loadLongV6Outcomes(root);
 const longV6Postlength = await loadLongV6Postlength(root);
+const identifierDiagnostic = await loadIdentifierDiagnostic(root);
 const longV6ModelScreen = await loadLongV6ModelScreen(root);
 const termsProbe = await loadTermsProbe(root);
 const inferenceJournal = await loadInferenceJournal(root);
@@ -92,6 +94,7 @@ payload.pronoun_cross_model = pronounCrossModel;
 payload.long_v5_failure = longV5Failure;
 payload.long_v6_outcomes = longV6Outcomes;
 payload.long_v6_postlength = longV6Postlength;
+payload.identifier_diagnostic = identifierDiagnostic;
 payload.long_v6_model_screen = longV6ModelScreen;
 payload.inference_journal = { sha256: inferenceJournal.sha256, chats: inferenceJournal.chats, status: inferenceJournal.check.status };
 payload.preflight_journal = { sha256: preflightJournal.sha256, chats: 6, preflights: 6, status: preflightJournal.check.status };
@@ -138,6 +141,7 @@ ${renderPronounCrossModel(pronounCrossModel, escape)}
 ${renderLongV5Failure(longV5Failure, escape)}
 ${renderLongV6Outcomes(longV6Outcomes, escape)}
 ${renderLongV6Postlength(longV6Postlength, escape)}
+${renderIdentifierDiagnostic(identifierDiagnostic)}
 ${renderLongV6ModelScreen(longV6ModelScreen, escape)}
 <section id="slot-schema" class="scroll-mt-8 border-t border-slate-200 py-10"><p class="text-sm font-semibold uppercase tracking-[.12em] text-slate-600">Парное сравнение · реальная 1.8B · 29 сентября 2026</p><h2 class="mt-2 text-2xl font-semibold">Ограничение ID пока не доказало улучшение</h2><p class="mt-3 max-w-5xl text-slate-700">На том же авторском слоте 72 сравнили исходную JSON-схему и вариант с жёстко заданными ID 72 и индексом строки 0. Два одинаковых источника и семени на каждую пару, четыре сырых ответа. Оба варианта оба раза вернули ID 72 и «Это не последний поезд.», по 290/30 входных/выходных токенов. Прежний необработанный ответ с ID 73 остаётся подтверждённым сбоем, но эти два новых baseline-запроса его не повторили. Оснований менять рабочий профиль или считать длинный файл пройденным нет.</p><div class="mt-4 flex flex-wrap gap-4 text-sm font-semibold text-blue-700"><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/reports/2026-09-29-slot-schema-ablation.json">Все четыре запроса и сырых ответа</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-29-slot-schema-ablation-results.md">План, замеры и ограничения (EN)</a></div><p class="mt-3 text-xs text-slate-500">SHA-256 журнала: <code class="hash">7a53c67769e59cee113aea10fc25b4e04f77acc6aadd4d9b1fb918fe6d4473d5</code>. Человеческой оценки русского текста нет.</p></section>
 ${renderTermsProbe(termsProbe, escape)}
