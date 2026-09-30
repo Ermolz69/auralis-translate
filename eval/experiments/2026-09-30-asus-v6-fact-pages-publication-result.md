@@ -37,3 +37,22 @@ post-fix natural full-file run. Source rights/audio alignment, independent
 bilingual and listener review, clean Windows installation and G1–G9/A1–A6
 remain open. The [earlier v6 publication](2026-09-30-asus-v6-pages-publication-result.md)
 remains a separate dated, byte-pinned record.
+
+After this publication, the harness-startup fix changed the canonical
+backlog without regenerating the embedded progress snapshot. The
+[intermediate Pages workflow](https://github.com/Ermolz69/auralis-translate/actions/runs/36724579981)
+for Translate `d501d04326478dcd018b8ca430ff08f8a99921a9` **failed**;
+the local `task site:live:check` first failed in its `site:check`
+dependency because the embedded backlog SHA-256 no longer matched.
+The failure was not treated as a publication success. `task site:build`
+regenerated the HTML, and `task site:check` passed before committing
+`6970a66372d238522917faa9e5ed272286783f93`. Its
+[replacement Pages workflow](https://github.com/Ermolz69/auralis-translate/actions/runs/36725165979)
+succeeded. A fresh `task site:live:check` returned HTTP 200 and exact
+live/local equality at 1,058,139 bytes, SHA-256
+`fec943d1fe611fd4225ed2bdc3dfb80069ad26c84952059c8ed66d5a88c41bc5`.
+The ignored final live-check report is
+`.cache/eval/live-pages-check/attempt-37442ef2-eaff-45ee-83fc-e00c50d64d76/report.json`,
+SHA-256 `57e5a6cf8f0f1feae269e5472a0ca8b8fc7c0cf5117b400f60318a69fe114215`.
+This changed only the embedded backlog identity; the paired experiment
+numbers and redacted evidence above remained the same.
