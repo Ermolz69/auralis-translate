@@ -195,6 +195,16 @@ controls. ASUS's invented JSON tail persisted 2/2; Vivo's tail disappeared
 triage. The 6/8 structural total does not justify a lower-temperature
 profile, language score, training decision or quantization change.
 
+The [same-source ASUS 1.8B full-file comparison](../eval/experiments/2026-09-30-commons-asus-full-1_8b-failure.md)
+adds partial `CTX-02`/`LONG-04`/`EVAL-04`/`DECIDE-01` evidence. The pinned
+1.8B v5 profile saved 19/268 checkpoints before returning following-context
+ID 21 for target cue 20. The guard withheld the result and SRT. This is a
+second natural-source recurrence of the 1.8B neighbor-ID class; [REG-030](../eval/regressions/natural-asus-target-slot-neighbor-v1.json)
+retains a minimal private reproduction and six authored related/negative
+controls. Both model sizes failed to complete the same ASUS source, at
+different cues and for different structural reasons. Neither model or full
+release is selected, and `LONG-04` remains planned.
+
 ## Current handoff
 
 `CTX-02` and `EVAL-04` now have an opt-in [provider review diagnostic

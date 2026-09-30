@@ -261,6 +261,11 @@ tasks:
     cmds:
       - node --check eval/scripts/check-asus-private-failure.mjs
       - node eval/scripts/check-asus-private-failure.mjs
+  eval:regression:asus:1_8b:private:check:
+    desc: Verify the retained 19-cue ASUS 1.8B prefix and rejected next-cue ID
+    cmds:
+      - node --check eval/scripts/check-asus-1_8b-private-failure.mjs
+      - node eval/scripts/check-asus-1_8b-private-failure.mjs
   eval:regression:asus:resume:check:
     desc: Verify exact-prefix copied-state preservation after repeat cue-227 rejection
     cmds:
@@ -707,7 +712,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-029 packs and all control counts
+    desc: Verify versioned REG-001 through REG-030 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -724,6 +729,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v14.mjs
       - node eval/scripts/check-regression-catalog-v15.mjs
       - node eval/scripts/check-regression-catalog-v16.mjs
+      - node eval/scripts/check-regression-catalog-v17.mjs
   eval:reg009:prefix-repair:probe:
     desc: Measure conservative exact-code prefix repair on the archived synthetic long-file output
     cmds:

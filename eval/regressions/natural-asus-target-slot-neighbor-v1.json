@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "id": "REG-030",
+  "status": "guarded_model_failure",
+  "severity": "major",
+  "source_family": "private_commons_geekerwan_asus_rog_ally",
+  "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+  "affected_model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "profile_sha256": "432a1b064397a96334d777dfa01a2cef58d367b37023f1f9175501969698df4d",
+  "private_reproducer": {
+    "report_locator": ".cache/eval/commons-asus-full-1_8b-v1/run-M5lG2W/report.json",
+    "report_sha256": "5f606c5f3e66acf4c20a162101cede8f95381145fc6c55a5da98dd5c912a066e",
+    "run_id": "b1b22de2-f3c6-431f-889d-bf9fa6300552",
+    "cue_start": 19,
+    "cue_end": 21,
+    "focus_cue": 20,
+    "source_window_sha256": "c1a1eb9346f4120673f524dbfe0d89fb3220a18261db6d4aaaefa2154d3fc83a",
+    "request_sha256": "c4fb7132f0ab385aad7d3cef404a9f9fc772169a221d5d492873fffc9378b1c3",
+    "raw_response_sha256": "b72860ab2dd8fb201fd983b47bd3767e240d0656cb561fa442b0eb063d989459",
+    "raw_candidate_sha256": "99741e4535992e660cb14d1132527cf34a7661a6114e9601c98625e48c7c8b31",
+    "expected_target_id": 20,
+    "returned_neighbor_id": 21,
+    "line_index": 0,
+    "saved_checkpoints": 19,
+    "complete_results": 0
+  },
+  "expected_invariant": "The v5 JSON reply must carry the declared target cue ID and line index, even when the immediately following source context has its own cue ID.",
+  "observed_defect": "The pinned 1.8B model returned a syntactically valid one-slot envelope for ASUS cue 20 but labelled it as following context cue 21. The existing identity guard rejected it after 19 durable checkpoints, leaving no result or SRT. This recurs after the distinct Vivo REG-028 neighbor-ID error.",
+  "related_controls": [
+    { "id": "following_context_id", "shape": "Authored cue 20 request with following context 21 receives response ID 21", "expected": "Reject before checkpoint" },
+    { "id": "preceding_context_id", "shape": "Authored cue 20 request with preceding context 19 receives response ID 19", "expected": "Reject before checkpoint" },
+    { "id": "neighbor_line_index", "shape": "Authored cue 20 line 0 receives a response labelled line 1", "expected": "Reject before checkpoint" }
+  ],
+  "negative_controls": [
+    { "id": "exact_target_id", "shape": "Authored cue 20 receives ID 20 and line 0", "expected": "Accept structurally valid text" },
+    { "id": "number_in_content", "shape": "Authored cue 20 receives ID 20 while its Russian text mentions 21", "expected": "Keep content numbers separate from slot identity" },
+    { "id": "next_actual_target", "shape": "A separate request actually targets cue 21 and receives ID 21", "expected": "Accept structurally valid text" }
+  ],
+  "human_review": "not_applicable_to_structural_rejection",
+  "release_gate": "open"
+}

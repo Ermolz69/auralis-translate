@@ -1,0 +1,23 @@
+{
+  "schema_version": 17,
+  "catalog_id": "zh-ru-development-regressions-v17",
+  "base_catalog_file": "catalog-v16.json",
+  "base_catalog_sha256": "ff2f11df2f18d2d75924a259783290b9c8e4b82a9d4daae5a8af13d5a7208b51",
+  "entries": [
+    {
+      "id": "REG-030",
+      "pack_file": "natural-asus-target-slot-neighbor-v1.json",
+      "pack_sha256": "26b5205f1ee143a1ac055e95dd230185f4a02a8c1ccd2f600aeadc4132d05308",
+      "source_family": "private_commons_geekerwan_asus_rog_ally",
+      "split": "unassigned_private_development_probe",
+      "category": "model_returns_following_context_slot_id",
+      "profile_scope": "checked 1.8B v5 scene profile, one full ASUS natural-source first pass",
+      "expected_invariant": "The v5 JSON reply must carry the declared target cue ID and line index, even when the immediately following source context has its own cue ID.",
+      "severity": "major",
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-30-commons-asus-full-1_8b-failure.md",
+      "last_outcome": "The 1.8B model returned next-cue ID 21 for target 20 on the ASUS source. The guard preserved 19 checkpoints and withheld any result or SRT; same-profile continuation was not attempted."
+    }
+  ]
+}
