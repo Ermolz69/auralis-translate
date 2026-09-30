@@ -278,6 +278,52 @@ fn rejects_truncated_response_and_remote_endpoint() -> Result<(), Box<dyn Error>
 }
 
 #[test]
+fn complete_looking_length_responses_never_become_targets() -> Result<(), Box<dyn Error>> {
+    for candidate in [
+        "Привет.",
+        "{\"translations\":[{\"segment_id\":1,\"line_index\":0,\"text\":\"Привет.\"}]}",
+        "{\"translations\":[{\"segment_id\":1,\"line_index\":0,\"text\":\"Привет.\"}]}{}{}{}",
+    ] {
+        let listener = TcpListener::bind("127.0.0.1:0")?;
+        let address = listener.local_addr()?;
+        let candidate = candidate.to_owned();
+        let server =
+            std::thread::spawn(move || serve_candidate(&listener, "length", Some(&candidate)));
+        let provider = LlamaCppProvider::new(
+            &format!("http://{address}/"),
+            ModelProfile::from_json(PROFILE)?,
+        )?;
+        assert!(translate_batch(&provider, &batch()?).is_err_and(|error| {
+            error
+                .to_string()
+                .contains("llama.cpp did not finish the response")
+        }));
+        server.join().map_err(|_| "mock server panicked")??;
+    }
+    Ok(())
+}
+
+#[test]
+fn stopped_response_controls_separate_valid_malformed_and_empty_targets()
+-> Result<(), Box<dyn Error>> {
+    for (candidate, accepted) in [("Привет.", true), ("Две\nстроки", false), ("", false)]
+    {
+        let listener = TcpListener::bind("127.0.0.1:0")?;
+        let address = listener.local_addr()?;
+        let candidate = candidate.to_owned();
+        let server =
+            std::thread::spawn(move || serve_candidate(&listener, "stop", Some(&candidate)));
+        let provider = LlamaCppProvider::new(
+            &format!("http://{address}/"),
+            ModelProfile::from_json(PROFILE)?,
+        )?;
+        assert_eq!(translate_batch(&provider, &batch()?).is_ok(), accepted);
+        server.join().map_err(|_| "mock server panicked")??;
+    }
+    Ok(())
+}
+
+#[test]
 fn context_prompt_contains_neighbor_text_but_returns_only_target() -> Result<(), Box<dyn Error>> {
     let listener = TcpListener::bind("127.0.0.1:0")?;
     let address = listener.local_addr()?;

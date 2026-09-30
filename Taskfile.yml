@@ -1,6 +1,19 @@
 version: "3"
 
 tasks:
+  test:srt:checkpoint:grammar:
+    desc: Reject model text that cannot render as strict SRT before a durable checkpoint
+    cmds:
+      - cargo test --offline -p auralis-translation-formats --test srt_checkpoint_format_guard
+  test:response:length:
+    desc: Reject complete-looking and repeated truncated llama.cpp responses
+    cmds:
+      - cargo test --offline -p auralis-translation-llamacpp --test protocol
+  eval:regression:ying:private:check:
+    desc: Verify retained real 7B length, copied-state and unrenderable-line failures offline
+    cmds:
+      - node --check eval/scripts/check-ying-private-failures.mjs
+      - node eval/scripts/check-ying-private-failures.mjs
   eval:data:commons:ying:media:acquire:
     desc: Acquire one bounded private Commons Ying video for source/audio inspection
     cmds:
@@ -386,6 +399,8 @@ tasks:
   eval:regression:check:
     desc: Validate permanent failure evidence and required related and negative controls
     cmds:
+      - task: test:response:length
+      - task: test:srt:checkpoint:grammar
       - task: test:srt:generated
       - node --test --test-isolation=none eval/scripts/tests/regression-index.test.mjs
       - node eval/scripts/check-regression-index.mjs
@@ -424,7 +439,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-019 packs and all control counts
+    desc: Verify versioned REG-001 through REG-021 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -435,6 +450,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v8.mjs
       - node eval/scripts/check-regression-catalog-v9.mjs
       - node eval/scripts/check-regression-catalog-v10.mjs
+      - node eval/scripts/check-regression-catalog-v11.mjs
   eval:reg009:prefix-repair:probe:
     desc: Measure conservative exact-code prefix repair on the archived synthetic long-file output
     cmds:

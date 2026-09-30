@@ -1,0 +1,38 @@
+{
+  "schema_version": 11,
+  "catalog_id": "zh-ru-development-regressions-v11",
+  "base_catalog_file": "catalog-v10.json",
+  "base_catalog_sha256": "c2ab0f7e2dd8ccbe4a51d6bd4346a9e8dec75fa0493d4686654ef2075677750e",
+  "entries": [
+    {
+      "id": "REG-020",
+      "pack_file": "natural-ying-length-repeat-v1.json",
+      "pack_sha256": "0bde273f4ae4fb2d5d444f64a41c4dcb9b8e3561f87d463a3990041ae597f335",
+      "source_family": "private_commons_henan_mandarin_caption",
+      "split": "unassigned_private_development_probe",
+      "category": "length_limited_json_repetition",
+      "profile_scope": "checked 7B v5 scene profile on the complete unadmitted Commons Ying SRT",
+      "expected_invariant": "A length-limited response must never enter a checkpoint, even if its first bytes resemble a complete target.",
+      "severity": "major",
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-30-commons-ying-full-model-failures.md",
+      "last_outcome": "The provider rejected the 256-token cue-27 length response; 26 checkpoints and zero results were retained. The failure recurred as a malformed stopped response on one bounded resume."
+    },
+    {
+      "id": "REG-021",
+      "pack_file": "natural-ying-srt-checkpoint-v1.json",
+      "pack_sha256": "06fcf2c9aac9e3040c18b8dfa812abca5375c78209ecfcfe24e4eda253be8320",
+      "source_family": "private_commons_henan_mandarin_caption",
+      "split": "unassigned_private_development_probe",
+      "category": "unrenderable_srt_checkpoint",
+      "profile_scope": "checked 7B v5 scene profile on the copied resumed Commons Ying SRT state",
+      "expected_invariant": "A model target that strict SRT cannot render must be rejected before its checkpoint is committed.",
+      "severity": "major",
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-30-commons-ying-full-model-failures.md",
+      "last_outcome": "The old pipeline saved 93 checkpoints but failed final SRT rendering; the new format guard passes authored and private offline checks, pending a fresh real candidate."
+    }
+  ]
+}

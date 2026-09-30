@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "REG-021",
+  "status": "fixed_format_guard_pending_real_candidate",
+  "severity": "major",
+  "source_family": "private_commons_henan_mandarin_caption",
+  "source_sha256": "505913bd7046b28c873307562a55d567043f8703bc00375c3485853b87c420d9",
+  "affected_model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+  "private_reproducer": {
+    "report_locator": ".cache/eval/commons-ying-full-7b-resume-v1/run-Tw8zrq/report.json",
+    "report_sha256": "ceef66dc7fc78d059583b5604f01b6d0843d1d4fb1023327f313d6d27272d295",
+    "cue_id": 27,
+    "request_sha256": "a558c84320c33afe8eb9f7e445cfdb51fc0d2d63652b05c9dc3c20df74caa6b2",
+    "raw_response_sha256": "6b53cd7ace43490bf6b3fb428dfe9bcc721027a721c6c478e9af2f2a74b6e88e",
+    "finish_reason": "stop",
+    "saved_blocks": 93,
+    "published_results": 0
+  },
+  "expected_invariant": "A model target that strict SRT cannot render must be rejected before its checkpoint is committed.",
+  "observed_defect": "The stopped cue-27 response contained target text with JSON braces. The old pipeline saved it, then rejected the 93-cue output as UnsupportedMarkup without publishing a result.",
+  "related_controls": [
+    { "id": "literal_braces", "target_shape": "Russian target with curly braces", "expected_checkpoint": false },
+    { "id": "html_tag", "target_shape": "Russian target with an HTML tag", "expected_checkpoint": false },
+    { "id": "overlong_line", "target_shape": "Russian target over the SRT line-byte limit", "expected_checkpoint": false }
+  ],
+  "negative_controls": [
+    { "id": "plain_sentence", "target_shape": "Russian sentence with ordinary punctuation", "expected_checkpoint": true },
+    { "id": "proper_names", "target_shape": "Russian sentence with place names", "expected_checkpoint": true },
+    { "id": "angle_quotation", "target_shape": "Russian guillemet quotation marks", "expected_checkpoint": true }
+  ],
+  "human_review": "missing",
+  "release_gate": "open"
+}

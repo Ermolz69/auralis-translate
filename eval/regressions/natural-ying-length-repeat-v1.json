@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "id": "REG-020",
+  "status": "contained_model_length_failure",
+  "severity": "major",
+  "source_family": "private_commons_henan_mandarin_caption",
+  "source_sha256": "505913bd7046b28c873307562a55d567043f8703bc00375c3485853b87c420d9",
+  "affected_model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+  "private_reproducer": {
+    "report_locator": ".cache/eval/commons-ying-full-7b-v1/run-z2fnYf/report.json",
+    "report_sha256": "f08a248dac388a8d327e3c2c714c1b61fcba1f70b64b3be65a7150f07ade706c",
+    "cue_id": 27,
+    "request_sha256": "a558c84320c33afe8eb9f7e445cfdb51fc0d2d63652b05c9dc3c20df74caa6b2",
+    "raw_response_sha256": "d00b4873dba06a50233405fab8f72f21dad71c3720c3429af214cb30f3ba0c75",
+    "finish_reason": "length",
+    "completion_tokens": 256,
+    "saved_prefix": 26,
+    "published_results": 0
+  },
+  "expected_invariant": "A length-limited response must never enter a checkpoint, even if its first bytes resemble a complete target.",
+  "observed_defect": "The 7B model repeated empty JSON objects to the 256-token limit on cue 27; the provider rejected the response and retained the 26-cue prefix.",
+  "related_controls": [
+    { "id": "complete_looking_length", "response_shape": "complete-looking single target", "finish_reason": "length", "expected_accept": false },
+    { "id": "repeated_objects_length", "response_shape": "single target followed by repeated empty objects", "finish_reason": "length", "expected_accept": false },
+    { "id": "plain_text_length", "response_shape": "short plain translation", "finish_reason": "length", "expected_accept": false }
+  ],
+  "negative_controls": [
+    { "id": "normal_stop", "response_shape": "valid single target", "finish_reason": "stop", "expected_accept": true },
+    { "id": "multiline_stop", "response_shape": "unsupported multiline target", "finish_reason": "stop", "expected_accept": false },
+    { "id": "empty_stop", "response_shape": "empty content", "finish_reason": "stop", "expected_accept": false }
+  ],
+  "human_review": "missing",
+  "release_gate": "open"
+}

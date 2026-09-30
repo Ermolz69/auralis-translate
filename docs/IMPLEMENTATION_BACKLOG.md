@@ -88,6 +88,19 @@ and [REG-019](../eval/regressions/natural-farewell-invention-v1.json) retain
 private exact reproductions and new authored controls in catalog v10. Human
 review, source admission, full-file context and model selection remain open.
 
+The [Commons Ying complete-file attempt](../eval/experiments/2026-09-30-commons-ying-full-model-failures.md)
+adds partial `DATA-03`, `CTX-02` and `EVAL-04` evidence on a separate 93-cue,
+3:38 matched-media candidate. The original Chinese SRT and VP9/Opus video
+remain private and hash-pinned. One 7B v5 run stopped after 26 checkpoints
+when cue 27 exhausted 256 completion tokens; a copied-state resume reached
+93 checkpoints but strict SRT rendering rejected a malformed target, so no
+Russian result or speech script was published. [REG-020](../eval/regressions/natural-ying-length-repeat-v1.json)
+and [REG-021](../eval/regressions/natural-ying-srt-checkpoint-v1.json)
+retain both failures and controls. The SRT checkpoint guard and Windows
+socket-test repair passed `task check`; a new complete natural run, alignment,
+rights, independent bilingual review and real listening remain open. The
+source does not satisfy the 10–20-minute scene or long-file release tiers.
+
 `VOICE-02` and `VOICE-07` also have a local Auralis
 [SAPI WAV boundary regression](../eval/experiments/2026-09-29-auralis-sapi-wav-boundary.md):
 malformed RIFF and incomplete PCM frames are rejected, and two retained real
