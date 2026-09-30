@@ -35,6 +35,7 @@ import { loadVivoGeneralFact } from './vivo-general-fact-section.mjs';
 import { loadAsusTail } from './asus-tail-section.mjs';
 import { loadAsusModelComparison } from './asus-model-comparison-section.mjs';
 import { loadNaturalAsusSlotSchema } from './natural-asus-slot-schema-section.mjs';
+import { loadAsusV6Long } from './asus-v6-long-section.mjs';
 import { loadNaturalAudio } from './natural-audio-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -72,6 +73,11 @@ assert.deepEqual(data.natural_asus_slot_schema,
 assert(html.includes('id="natural-asus-slot-schema"'));
 assert(html.includes('Фиксированный ID помог в 3 парах, качество текста открыто'));
 assert(html.includes('2026-09-30-natural-asus-slot-schema-screen-result.md'));
+assert.deepEqual(data.asus_v6_long,
+  await loadAsusV6Long(root, data.asus_model_comparison));
+assert(html.includes('id="asus-v6-long"'));
+assert(html.includes('268/268 структурно, перевод не принят'));
+assert(html.includes('2026-09-30-commons-asus-full-v6-slot-result.md'));
 assert.deepEqual(data.natural_audio, await loadNaturalAudio(root));
 assert.deepEqual(data.source_candidates, {
   source_count: 9,
@@ -137,7 +143,8 @@ assert(html.includes('2026-09-29-commons-cc-commerce-candidate.md'));
 assert(html.includes('id="release-readiness"'));
 assert(html.indexOf('id="release-readiness"') < html.indexOf('id="model-comparison"'));
 assert(html.includes('Перевод и озвучка пока не приняты'));
-assert(html.includes('1.8B — на реплике 20 после 19 точек'));
+assert(html.includes('1.8B v5 — на реплике 20 после 19 точек'));
+assert(html.includes('1.8B v6 создала 268/268 структурный SRT'));
 assert(html.includes('2026-09-30-release-readiness-after-vivo.md'));
 assert(html.includes('G1–G9 и A1–A6 остаются открытыми'));
 assert(html.includes('2026-09-30-commons-asus-full-7b-failure.md'));

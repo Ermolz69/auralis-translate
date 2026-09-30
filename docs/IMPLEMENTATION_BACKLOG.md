@@ -212,6 +212,16 @@ target-constant-schema replies carried requested ID 20. AI inspection noted
 unstable technical nouns; no human language score or complete-file result
 exists. The v5 profile is unchanged and schema promotion remains open.
 
+The [one-pass ASUS 1.8B v6 full-file diagnostic](../eval/experiments/2026-09-30-commons-asus-full-v6-slot-result.md)
+saved 268/268 checkpoints and a byte-stable review-needed SRT with the
+target-constant schema; a source-only frozen 44/268-cue AI review then
+found high-confidence physical-unit, product-class, polarity and technical
+referent errors. This adds partial `CTX-02`/`LONG-04`/`EVAL-04` evidence,
+not accepted language, source rights or a model choice. The new private
+raw/accepted review packet and old failed prefixes are retained. Follow-up
+measurement/terminology regression controls and independent review remain
+open; `LONG-04` is still planned.
+
 ## Current handoff
 
 `CTX-02` and `EVAL-04` now have an opt-in [provider review diagnostic
