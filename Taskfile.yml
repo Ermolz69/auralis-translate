@@ -113,6 +113,23 @@ tasks:
       - task: eval:natural:asus:7b:preflight
       - task: build:release
       - node eval/scripts/probe-commons-asus-full.mjs
+  eval:natural:asus:1_8b:preflight:
+    desc: Verify the pinned 1.8B model and the same ASUS source before one full-file comparison
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - node --check eval/scripts/probe-commons-asus-full-1_8b.mjs
+      - node eval/scripts/probe-commons-asus-full-1_8b.mjs --preflight
+  eval:natural:asus:1_8b:probe:
+    desc: Run one bounded 268-cue 1.8B comparison on the ASUS source
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:natural:asus:1_8b:preflight
+      - task: build:release
+      - node eval/scripts/probe-commons-asus-full-1_8b.mjs
   eval:natural:asus:7b:resume:
     desc: Resume one verified copy of the retained 226-checkpoint ASUS failure
     env:
