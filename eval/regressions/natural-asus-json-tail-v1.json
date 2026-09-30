@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "REG-029",
+  "status": "observed_unfixed_recurrence",
+  "severity": "major",
+  "source_family": "private_commons_geekerwan_asus_rog_ally",
+  "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+  "affected_model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+  "private_reproducer": {
+    "report_locator": ".cache/eval/commons-asus-full-7b-v1/run-nCoZTy/report.json",
+    "report_sha256": "d86f4264ae1c65f3508c3c8539cdcee3fd4fcae9de1fbc14ee0d83e02bc216ba",
+    "run_id": "bf1e6130-6674-4538-ba9f-6243bc164760",
+    "cue_start": 226,
+    "cue_end": 228,
+    "focus_cue": 227,
+    "source_window_sha256": "9fef4c9d85cbb607efac39f0e123070ea0b1c27c7d1f2cd4404156a6b09bc14a",
+    "request_sha256": "945dda8849ffbfd948794a01311e94274e4f00b388a214025dfb709c7e226848",
+    "raw_response_sha256": "fe6162424bae4ec19511a173dafb0cdef7f6e3bffd37497609313040176185a6",
+    "raw_candidate_sha256": "268abfbddfb6f202b44a33d5022c43b42d74110ff5faf38d9564bbc113770167",
+    "saved_checkpoints": 226,
+    "complete_results": 0
+  },
+  "expected_invariant": "A target string containing invented JSON-closing syntax is rejected before a durable SRT checkpoint even when the source discusses wattage and CPU cores; earlier checkpoints remain intact and no partial subtitle is published.",
+  "observed_defect": "The same 7B v5 profile that failed on Vivo cue 276 produced a parseable one-slot JSON envelope at ASUS cue 227, but put a closing fragment inside the Russian target text. The existing SRT guard safely rejected it; the 268-cue run remains incomplete.",
+  "related_controls": [
+    { "id": "power_core_tail", "shape": "The 9-W, four-core target ends with an invented JSON closure", "expected": "Reject before checkpoint" },
+    { "id": "plain_closure_without_cjk_quote", "shape": "The target ends with the same closure but no CJK quotation mark", "expected": "Reject before checkpoint" },
+    { "id": "mixed_script_power_unit", "shape": "The power unit stays as 9W before the invented closure", "expected": "Reject before checkpoint" }
+  ],
+  "negative_controls": [
+    { "id": "plain_power_core", "shape": "The same watt and core facts without model markup", "expected": "Permit ordinary SRT text" },
+    { "id": "quoted_core_count", "shape": "Four cores appear in ordinary Russian quotation marks", "expected": "Permit ordinary quotation punctuation" },
+    { "id": "latin_power_unit", "shape": "The 9W unit remains Latin without the invented closure", "expected": "Permit ordinary SRT text" }
+  ],
+  "human_review": "missing",
+  "release_gate": "open"
+}

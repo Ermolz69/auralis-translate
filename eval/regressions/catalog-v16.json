@@ -1,0 +1,23 @@
+{
+  "schema_version": 16,
+  "catalog_id": "zh-ru-development-regressions-v16",
+  "base_catalog_file": "catalog-v15.json",
+  "base_catalog_sha256": "a98a8e132a64cdc7b0cb9873f3c66aa44ecb76b6b62c633a9f79695c327d58fa",
+  "entries": [
+    {
+      "id": "REG-029",
+      "pack_file": "natural-asus-json-tail-v1.json",
+      "pack_sha256": "77fee72dbe405279384ae0782e3f2a75ed0f70d9e32f19e6e8b830b1202d93a5",
+      "source_family": "private_commons_geekerwan_asus_rog_ally",
+      "split": "unassigned_private_development_probe",
+      "category": "model_json_closure_inside_target_text",
+      "profile_scope": "checked 7B v5 scene profile, one full ASUS natural-source run",
+      "expected_invariant": "A target string containing invented JSON-closing syntax is rejected before a durable SRT checkpoint even when the source discusses wattage and CPU cores; earlier checkpoints remain intact and no partial subtitle is published.",
+      "severity": "major",
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-30-commons-asus-full-7b-failure.md",
+      "last_outcome": "The 7B model repeated REG-024 on a different source at cue 227; existing grammar guard saved 226 checkpoints and rejected the output, with no result or partial SRT."
+    }
+  ]
+}

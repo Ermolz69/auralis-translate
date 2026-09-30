@@ -174,6 +174,17 @@ found that the 36-month, team-versus-funds and late-clock errors persisted;
 prompt tokens rose 24.1%. The variant was not promoted. The source-aware
 quality and independent review dependencies remain open.
 
+The [ASUS 268-cue first full-file diagnostic](../eval/experiments/2026-09-30-commons-asus-full-7b-failure.md)
+adds another partial `DATA-03`/`CTX-02`/`LONG-04`/`EVAL-04` result. A first
+process launch failed before inference and was retained. The single permitted
+7B inference run saved 226 checkpoints, then the model repeated the invented
+JSON-tail class at cue 227. The strict SRT guard rejected it, leaving zero
+complete results and no partial output. [REG-029](../eval/regressions/natural-asus-json-tail-v1.json)
+pins the private three-cue reproducer and new watt/core related and negative
+controls on a distinct source. No quality or source admission claim follows;
+`DATA-03`, `CTX-02` and `EVAL-04` remain in progress, and `LONG-04` remains
+planned pending complete source-aware human review and its dependencies.
+
 ## Current handoff
 
 `CTX-02` and `EVAL-04` now have an opt-in [provider review diagnostic

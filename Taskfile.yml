@@ -208,6 +208,11 @@ tasks:
     cmds:
       - node --check eval/scripts/check-vivo-private-failure.mjs
       - node eval/scripts/check-vivo-private-failure.mjs
+  eval:regression:asus:private:check:
+    desc: Verify the retained 226-cue ASUS failure and exact rejected model tail
+    cmds:
+      - node --check eval/scripts/check-asus-private-failure.mjs
+      - node eval/scripts/check-asus-private-failure.mjs
   eval:regression:vivo:ai-review:check:
     desc: Recheck five private source-fact windows in the complete 467-cue candidate
     cmds:
@@ -649,7 +654,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-028 packs and all control counts
+    desc: Verify versioned REG-001 through REG-029 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -665,6 +670,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v13.mjs
       - node eval/scripts/check-regression-catalog-v14.mjs
       - node eval/scripts/check-regression-catalog-v15.mjs
+      - node eval/scripts/check-regression-catalog-v16.mjs
   eval:reg009:prefix-repair:probe:
     desc: Measure conservative exact-code prefix repair on the archived synthetic long-file output
     cmds:
