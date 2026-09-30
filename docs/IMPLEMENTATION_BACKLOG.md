@@ -266,6 +266,16 @@ catalogs are unchanged. This is partial `EVAL-04` fact-warning coverage only;
 Chinese numeral phrases, semantic comparisons and independent review remain
 open.
 
+The [whole-file read-only ASUS audit](../eval/experiments/2026-10-01-asus-whole-file-measurement-v3-result.md)
+checked all 268 archived source/result cue pairs and found six initial
+measurement warnings. Two were false positives from uppercase `G` denoting
+memory or storage capacity. [REG-036](../eval/regressions/catalog-v21.json)
+pins the red cases and related/negative controls; the case-sensitive detector
+now leaves four warning IDs: 12, 127, 145 and 227. The archived candidate is
+unchanged, and cue 83's distinct storage-capacity mistranslation remains an
+AI-identified issue for independent review. This extends partial `EVAL-04`
+coverage without satisfying `LONG-04` or G3–G5.
+
 ## Current handoff
 
 `CTX-02` and `EVAL-04` now have an opt-in [provider review diagnostic

@@ -774,7 +774,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-035 packs and all control counts
+    desc: Verify versioned REG-001 through REG-036 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -795,6 +795,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v18.mjs
       - node eval/scripts/check-regression-catalog-v19.mjs
       - node eval/scripts/check-regression-catalog-v20.mjs
+      - node eval/scripts/check-regression-catalog-v21.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:
@@ -808,6 +809,13 @@ tasks:
     cmds:
       - task: eval:regression:asus:v6:private:check
       - cargo test --offline -p auralis-translation --test measurement_private_asus -- --ignored --nocapture
+  eval:regression:asus:v6:whole:private:
+    desc: Audit the pinned 268-cue ASUS v6 result with the production measurement warning
+    env:
+      AURALIS_PRIVATE_ASUS_SOURCE: '{{.ROOT_DIR}}/.cache/eval/commons-asus-rog-ally-892592485/source.zh.srt'
+      AURALIS_PRIVATE_ASUS_CANDIDATE: '{{.ROOT_DIR}}/.cache/eval/commons-asus-full-v6-slot-v1/run-7XjHrR/candidate.ru.srt'
+    cmds:
+      - cargo test --offline -p auralis-translation --test measurement_private_asus_whole -- --ignored --nocapture
   eval:natural:asus:v6:fact-screen:preflight:
     desc: Verify pinned ASUS v6 requests and 64 paired fact-screen calls without inference
     env:

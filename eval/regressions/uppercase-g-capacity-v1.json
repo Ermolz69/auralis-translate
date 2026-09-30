@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "id": "REG-036",
+  "status": "uppercase_capacity_g_false_positive",
+  "severity": "major",
+  "source_family": "archived_asus_v6_and_authored_capacity_controls",
+  "split": "known_development_regression",
+  "affected_scope": "production review-only measurement diagnostic; no model requests",
+  "expected_invariant": "Do not classify ambiguous uppercase ASCII G in Chinese capacity text as grams; retain warnings for lowercase g and explicit physical units.",
+  "private_reproducer": {
+    "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+    "candidate_sha256": "aa74b20d4255f46c9a23ddfd0865dd2e221e7b08ab3cbceb8665be3b0c7b6e8b",
+    "cue_ids": [81, 83],
+    "before_fix_warning_ids": [12, 81, 83, 127, 145, 227],
+    "after_fix_warning_ids": [12, 127, 145, 227]
+  },
+  "minimal_reproducer": [
+    { "id": "memory_capacity", "source": "内存16G", "candidate": "Память 16 ГБ", "expected_warning": false, "before_fix_warning": true },
+    { "id": "storage_capacity", "source": "硬盘512G", "candidate": "Накопитель 512 ГБ", "expected_warning": false, "before_fix_warning": true }
+  ],
+  "related_controls": [
+    { "id": "lowercase_gram_loss", "source": "重量608g", "candidate": "Вес 608 ГБ", "expected_warning": true },
+    { "id": "fullwidth_lowercase_gram_loss", "source": "重量６０８g", "candidate": "Вес 608 ГБ", "expected_warning": true },
+    { "id": "uppercase_target_not_gram", "source": "重量16g", "candidate": "Вес 16 G", "expected_warning": true },
+    { "id": "explicit_chinese_gram_loss", "source": "重量16克", "candidate": "Вес 16 ГБ", "expected_warning": true },
+    { "id": "watt_control", "source": "功耗15W", "candidate": "Мощность 15 В", "expected_warning": true }
+  ],
+  "negative_controls": [
+    { "id": "memory_context", "source": "内存16G的LPDDR5 6400", "candidate": "Память 16 ГБ LPDDR5 6400", "expected_warning": false },
+    { "id": "storage_error_outside_scope", "source": "出厂512G", "candidate": "Накопитель 2230 ГБ", "expected_warning": false },
+    { "id": "lowercase_gram_equivalent", "source": "重量16g", "candidate": "Вес 16 граммов", "expected_warning": false },
+    { "id": "chinese_gram_equivalent", "source": "重量16克", "candidate": "Вес 16 г", "expected_warning": false },
+    { "id": "watt_equivalent", "source": "功耗15W", "candidate": "Мощность 15 Вт", "expected_warning": false }
+  ],
+  "control_model_runs": 0,
+  "human_review": "missing",
+  "release_gate": "open"
+}

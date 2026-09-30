@@ -86,6 +86,47 @@ fn equivalent_signed_values_and_product_codes_do_not_warn() {
     }
 }
 
+#[test]
+fn uppercase_g_capacity_does_not_raise_a_gram_warning() {
+    for (source, candidate) in [
+        ("内存16G", "Память 16 ГБ"),
+        ("硬盘512G", "Накопитель 512 ГБ"),
+    ] {
+        assert!(
+            !source_measurement_mismatch(source, candidate),
+            "{source} / {candidate}"
+        );
+    }
+}
+
+#[test]
+fn lowercase_gram_and_unambiguous_units_keep_their_warning_boundaries() {
+    for (source, candidate) in [
+        ("重量608g", "Вес 608 ГБ"),
+        ("重量６０８g", "Вес 608 ГБ"),
+        ("重量16g", "Вес 16 G"),
+        ("重量16克", "Вес 16 ГБ"),
+        ("功耗15W", "Мощность 15 В"),
+    ] {
+        assert!(
+            source_measurement_mismatch(source, candidate),
+            "{source} / {candidate}"
+        );
+    }
+    for (source, candidate) in [
+        ("内存16G的LPDDR5 6400", "Память 16 ГБ LPDDR5 6400"),
+        ("出厂512G", "Накопитель 2230 ГБ"),
+        ("重量16g", "Вес 16 граммов"),
+        ("重量16克", "Вес 16 г"),
+        ("功耗15W", "Мощность 15 Вт"),
+    ] {
+        assert!(
+            !source_measurement_mismatch(source, candidate),
+            "{source} / {candidate}"
+        );
+    }
+}
+
 struct FixedProvider(&'static str);
 
 impl TranslationProvider for FixedProvider {

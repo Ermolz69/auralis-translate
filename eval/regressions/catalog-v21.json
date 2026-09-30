@@ -1,0 +1,24 @@
+{
+  "schema_version": 21,
+  "catalog_id": "zh-ru-development-regressions-v21",
+  "base_catalog_file": "catalog-v20.json",
+  "base_catalog_sha256": "7030f05ed7d425b5fdd3975a5cccec2f4ab9bd8bf47c83af0d985faea3dfd1f3",
+  "entries": [
+    {
+      "id": "REG-036",
+      "pack_file": "uppercase-g-capacity-v1.json",
+      "pack_sha256": "69262f857d8901528faa09094cbcff9663eaceeff07c2842270a8cee220dae0e",
+      "source_family": "archived_asus_v6_and_authored_capacity_controls",
+      "split": "known_development_regression",
+      "category": "uppercase_capacity_g_false_positive",
+      "profile_scope": "production review-only diagnostic independent of model profile",
+      "expected_invariant": "Do not classify ambiguous uppercase ASCII G in Chinese capacity text as grams; retain warnings for lowercase g and explicit physical units.",
+      "severity": "major",
+      "minimal_reproducer_count": 2,
+      "related_control_count": 5,
+      "negative_control_count": 5,
+      "evidence_record": "eval/experiments/2026-10-01-asus-whole-file-measurement-v3-result.md",
+      "last_outcome": "The first pinned 268-cue audit flagged six IDs, including two uppercase-G false positives. After the red reproductions and detector fix, four IDs remain; storage-capacity semantics still need human review."
+    }
+  ]
+}

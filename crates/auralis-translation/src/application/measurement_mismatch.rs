@@ -19,15 +19,14 @@ pub fn source_measurement_mismatch(source: &str, candidate: &str) -> bool {
 }
 
 fn measurements(text: &str) -> Vec<(String, Unit)> {
-    let lower = text.to_lowercase();
     let mut found = Vec::new();
     let mut cursor = 0;
-    while cursor < lower.len() {
-        let Some(character) = lower[cursor..].chars().next() else {
+    while cursor < text.len() {
+        let Some(character) = text[cursor..].chars().next() else {
             break;
         };
         if decimal_digit(character).is_none()
-            || lower[..cursor].chars().next_back().is_some_and(|previous| {
+            || text[..cursor].chars().next_back().is_some_and(|previous| {
                 decimal_digit(previous).is_some()
                     || previous.is_ascii_alphanumeric()
                     || previous == '_'
@@ -38,7 +37,7 @@ fn measurements(text: &str) -> Vec<(String, Unit)> {
         }
         let mut end = cursor;
         let mut quantity = String::new();
-        while let Some((digit, length)) = lower[end..]
+        while let Some((digit, length)) = text[end..]
             .chars()
             .next()
             .and_then(|value| decimal_digit(value).map(|digit| (digit, value.len_utf8())))
@@ -46,9 +45,9 @@ fn measurements(text: &str) -> Vec<(String, Unit)> {
             quantity.push(digit);
             end += length;
         }
-        if let Some(separator) = lower[end..].chars().next()
+        if let Some(separator) = text[end..].chars().next()
             && matches!(separator, '.' | ',' | '．' | '，')
-            && lower[end + separator.len_utf8()..]
+            && text[end + separator.len_utf8()..]
                 .chars()
                 .next()
                 .and_then(decimal_digit)
@@ -56,7 +55,7 @@ fn measurements(text: &str) -> Vec<(String, Unit)> {
         {
             quantity.push('.');
             end += separator.len_utf8();
-            while let Some((digit, length)) = lower[end..]
+            while let Some((digit, length)) = text[end..]
                 .chars()
                 .next()
                 .and_then(|value| decimal_digit(value).map(|digit| (digit, value.len_utf8())))
@@ -65,14 +64,14 @@ fn measurements(text: &str) -> Vec<(String, Unit)> {
                 end += length;
             }
         }
-        let Some(negative) = negative_prefix(&lower[..cursor]) else {
+        let Some(negative) = negative_prefix(&text[..cursor].to_lowercase()) else {
             cursor = end;
             continue;
         };
-        while lower[end..].chars().next().is_some_and(char::is_whitespace) {
-            end += lower[end..].chars().next().map_or(0, char::len_utf8);
+        while text[end..].chars().next().is_some_and(char::is_whitespace) {
+            end += text[end..].chars().next().map_or(0, char::len_utf8);
         }
-        if let Some((unit, length)) = unit(&lower[end..]) {
+        if let Some((unit, length)) = unit(&text[end..]) {
             found.push((
                 format!("{}{quantity}", if negative { "-" } else { "" }),
                 unit,
@@ -124,6 +123,7 @@ fn negative_prefix(prefix: &str) -> Option<bool> {
 }
 
 fn unit(tail: &str) -> Option<(Unit, usize)> {
+    let lower = tail.to_lowercase();
     for (spelling, unit) in [
         ("ватт-час", Unit::WattHour),
         ("ватт·час", Unit::WattHour),
@@ -132,7 +132,7 @@ fn unit(tail: &str) -> Option<(Unit, usize)> {
         ("ватт", Unit::Watt),
         ("вольт", Unit::Volt),
     ] {
-        if let Some(length) = inflected_word(tail, spelling) {
+        if let Some(length) = inflected_word(&lower, spelling) {
             return Some((unit, length));
         }
     }
@@ -155,7 +155,10 @@ fn unit(tail: &str) -> Option<(Unit, usize)> {
         ("v", Unit::Volt),
         ("в", Unit::Volt),
     ] {
-        if let Some(rest) = tail.strip_prefix(spelling)
+        if spelling == "g" && tail.starts_with('G') {
+            continue;
+        }
+        if let Some(rest) = lower.strip_prefix(spelling)
             && !rest.chars().next().is_some_and(|next| {
                 next.is_ascii_alphanumeric()
                     || ('\u{0400}'..='\u{052f}').contains(&next)
