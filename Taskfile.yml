@@ -113,6 +113,16 @@ tasks:
       - task: eval:natural:asus:7b:preflight
       - task: build:release
       - node eval/scripts/probe-commons-asus-full.mjs
+  eval:natural:asus:7b:resume:
+    desc: Resume one verified copy of the retained 226-checkpoint ASUS failure
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:regression:asus:private:check
+      - task: build:release
+      - node --check eval/scripts/resume-commons-asus-full.mjs
+      - node eval/scripts/resume-commons-asus-full.mjs
   eval:natural:vivo:7b:resume:
     desc: Resume one verified copy of the retained 275-checkpoint Vivo failure
     env:
