@@ -139,6 +139,17 @@ This diagnostic does not close `VOICE-01`–`VOICE-04` or A1–A6. The complete
 Russian candidate has REG-022/023 meaning errors; only three unapproved cues
 were spoken, and no media was published.
 
+The [complete ASUS technical audio diagnostic](../eval/experiments/2026-09-30-asus-full-audio-technical-result.md)
+adds local Auralis `VOICE-02`/`VOICE-03` evidence at `12b109d`: one real SAPI
+attempt generated 268/268 decodable WAVs for the 14:42 source, but 264 cues
+overran their windows and 259 starts overlapped earlier speech. Two retained
+mux failures led to full decoded-audio and packet-timeline regressions. The
+third private VP9/Opus result decoded fully and completed a full FFplay
+process on the same media hash, with no clipped output samples. This remains
+an **unreviewed technical draft**: no human heard or rated it, the source
+rights/alignment are unadmitted, and no selected-script production publication
+or full recovery matrix ran. `VOICE-01`–`VOICE-07` and A1–A6 remain open.
+
 The [Vivo 467-cue copied-state run](../eval/experiments/2026-09-30-commons-vivo-full-7b-resume-result.md)
 adds partial `DATA-03`/`CTX-02`/`LONG-04`/`EVAL-04` evidence: a first real 7B
 pass stopped at cue 276 with malformed model JSON, kept 275 durable checkpoints
