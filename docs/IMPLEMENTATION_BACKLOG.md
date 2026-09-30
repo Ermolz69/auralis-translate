@@ -167,6 +167,13 @@ but no human score, model selection, fine-tuning decision or quantization
 precision change follows from this sample. `LONG-04` and release gates remain
 open.
 
+The [bounded general fact reminder screen](../eval/experiments/2026-09-30-vivo-general-fact-reminder-result.md)
+adds one-factor `CTX-02`/`EVAL-04`/`DECIDE-01` evidence on those same 28 7B
+requests. All target slots were structurally valid, but AI source-aware triage
+found that the 36-month, team-versus-funds and late-clock errors persisted;
+prompt tokens rose 24.1%. The variant was not promoted. The source-aware
+quality and independent review dependencies remain open.
+
 ## Current handoff
 
 `CTX-02` and `EVAL-04` now have an opt-in [provider review diagnostic

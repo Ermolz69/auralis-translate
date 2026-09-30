@@ -146,6 +146,11 @@ tasks:
     cmds:
       - task: eval:natural:vivo:general-fact:preflight
       - node eval/scripts/probe-vivo-general-fact-reminder.mjs
+  eval:natural:vivo:general-fact:check:
+    desc: Verify every archived prompt-only 7B variant and exact private measurements
+    cmds:
+      - node --check eval/scripts/check-vivo-general-fact-reminder.mjs
+      - node eval/scripts/check-vivo-general-fact-reminder.mjs
   eval:natural:vivo:fact-screen:probe:
     desc: Run 56 paired natural and authored fact requests within one frozen budget
     env:
