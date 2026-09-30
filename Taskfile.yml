@@ -860,6 +860,25 @@ tasks:
     cmds:
       - node --check eval/scripts/check-asus-v6-fact-model-screen.mjs
       - node eval/scripts/check-asus-v6-fact-model-screen.mjs
+  eval:context:asus:width:preflight:
+    desc: Freeze 88 ASUS 1.8B/7B narrow/wide Chinese source-context requests without inference
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:regression:asus:v6:private:check
+      - node --check eval/scripts/probe-asus-context-width.mjs
+      - node eval/scripts/probe-asus-context-width.mjs --preflight
+  eval:context:asus:width:probe:
+    desc: Run one bounded matched 1.8B/7B ASUS source-context width screen
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:context:asus:width:preflight
+      - node eval/scripts/probe-asus-context-width.mjs
   eval:natural:asus:v6:fact-screen:startup:check:
     desc: Preserve a simulated pre-server metadata failure in the private experiment journal
     env:
