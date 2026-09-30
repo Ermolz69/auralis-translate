@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "id": "REG-033",
+  "status": "accepted_model_error_needs_review",
+  "severity": "major",
+  "source_family": "private_commons_geekerwan_asus_rog_ally",
+  "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+  "affected_model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5",
+  "private_reproducer": {
+    "report_sha256": "1d8addf0860cb88f0161ac6eeed3fc45351ab9912aaf0eff2b39a76772a26413",
+    "review_packet_sha256": "da15e4cf479513ba1a41fc5e86f7802e6531e7c51c5a855e30f675d533485a6a",
+    "cases": [
+      { "focus_cue": 20, "source_text_sha256": "9831724de8588fe81ed519acfda694f40200351ebdaa39f2ca3f9ee8e8b26954", "accepted_text_sha256": "ec7e5c38d94c9e7b1ce3eaaddcebfb0a3d1b00e9067e80a74fa7ad83dc0e5f6b", "expected_fact": "Crisp shoulder-button feedback and long Hall-trigger travel.", "observed_error": "Technical controls became an unexplained rail and malformed button terms." },
+      { "focus_cue": 133, "source_text_sha256": "8e9af4e5459379b49ae462c3d79d31cf1f7b22e4ee65f12d4eaa76fcd7b0eaf3", "accepted_text_sha256": "d7fa54afa94a02e3627c043c8720dce0e5408dd7e92492287719a7b2fb4bb9d5", "expected_fact": "Battery life remains the area most needing improvement.", "observed_error": "The output says an idle range is the least problematic area." },
+      { "focus_cue": 142, "source_text_sha256": "8f4f965cbd7a12d61c72178da073c9c20fc8dbab46c49686c75059a25255ce5d", "accepted_text_sha256": "d4463513d10e20cc5297b8f2e99a9fc8d56ab786120de27dfaa92e630ae42c8d", "expected_fact": "AMD single-core performance is slightly behind Intel.", "observed_error": "The output calls AMD a single-chip processor." },
+      { "focus_cue": 226, "source_text_sha256": "20fbebd34125b09e3b82b837e6a673b54083300e11f4e257745fc8cab0ad12e2", "accepted_text_sha256": "1a90ea845d98b1198c6ca937b4a850ca3dbb282c5b44798c890bb644a05e8875", "expected_fact": "The BIOS has no option to disable cores or hyperthreading.", "observed_error": "Hyperthreading became excess counting." },
+      { "focus_cue": 242, "source_text_sha256": "97771d1fd263f92bd0ab67265b28038e5895a21314a14537bebe87ff6d17ec2a", "accepted_text_sha256": "f9d35016668cc5b1b74527a652dbf3ed69d3032c92f40642532912551e98ae7f", "expected_fact": "The port connects an XG Mobile expansion dock.", "observed_error": "The dock became an expansion fitting." }
+    ]
+  },
+  "expected_invariant": "Preserve the technical referent and polarity of source claims across control, performance, BIOS and dock scenes; grammatical Russian alone is not enough.",
+  "related_controls": [
+    { "id": "shoulder_vs_trigger", "source": "肩键反馈干脆，扳机行程很长。", "expected_fact": "Shoulder buttons respond crisply; trigger travel is long." },
+    { "id": "battery_needs_improvement", "source": "续航仍然最需要改善。", "expected_fact": "Battery life still needs the most improvement." },
+    { "id": "single_core_performance", "source": "AMD的单核性能稍差。", "expected_fact": "AMD single-core performance is slightly worse." },
+    { "id": "disable_hyperthreading", "source": "BIOS没有关闭超线程的选项。", "expected_fact": "The BIOS lacks an option to turn off hyperthreading." },
+    { "id": "dock_connection", "source": "这个接口连接拓展坞。", "expected_fact": "The port connects an expansion dock." }
+  ],
+  "negative_controls": [
+    { "id": "battery_already_good", "source": "续航已经很好，不需要改善。", "expected_fact": "Battery life is already good and needs no improvement." },
+    { "id": "whole_chip", "source": "AMD的整颗芯片性能稍差。", "expected_fact": "The AMD chip as a whole performs slightly worse." },
+    { "id": "actual_rail", "source": "这个接口连接滑轨。", "expected_fact": "The port connects a rail, not a dock." }
+  ],
+  "control_model_runs": 0,
+  "ai_review": "source-aware high confidence; independent adjudication missing",
+  "human_review": "missing",
+  "release_gate": "open"
+}

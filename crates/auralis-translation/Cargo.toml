@@ -9,5 +9,8 @@ license.workspace = true
 sha2 = "0.10.9"
 uuid = "1.26.1"
 
+[dev-dependencies]
+serde_json = "1.0.149"
+
 [lints]
 workspace = true

@@ -222,6 +222,16 @@ raw/accepted review packet and old failed prefixes are retained. Follow-up
 measurement/terminology regression controls and independent review remain
 open; `LONG-04` is still planned.
 
+[REG-031–033](../eval/regressions/catalog-v18.json) pin 11 ASUS v6
+source/accepted error windows and authored related/negative controls.
+The [measurement warning contract](reference/measurement-warning-v1.md)
+is implemented as a conservative, persisted review diagnostic with core
+and SQLite tests; a read-only private audit flagged exactly ASUS cue IDs
+12 and 227 within the frozen 44-cue packet. It does not repair the
+archived candidate or close
+`EVAL-04`, `CTX-02`, `LONG-04` or any release gate; semantic controls have
+not been model-run and human review remains absent.
+
 ## Current handoff
 
 `CTX-02` and `EVAL-04` now have an opt-in [provider review diagnostic

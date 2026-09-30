@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "id": "REG-031",
+  "status": "accepted_model_error_needs_review",
+  "severity": "critical",
+  "source_family": "private_commons_geekerwan_asus_rog_ally",
+  "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+  "affected_model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5",
+  "private_reproducer": {
+    "report_sha256": "1d8addf0860cb88f0161ac6eeed3fc45351ab9912aaf0eff2b39a76772a26413",
+    "review_packet_sha256": "da15e4cf479513ba1a41fc5e86f7802e6531e7c51c5a855e30f675d533485a6a",
+    "cases": [
+      {
+        "focus_cue": 12,
+        "source_text_sha256": "f5d21e516e61894d4dee98392d1053ba5e6217c9647f9fc59607d405c881fcaf",
+        "accepted_text_sha256": "7abff25bb7c812bf1ef71e83cc7346e86f8e2a2ac124b65132b0327784ae97d4",
+        "expected_fact": "The device weighs 608 grams and is 60 grams lighter than Steam Deck.",
+        "observed_error": "Both gram quantities were rendered as gigabytes."
+      },
+      {
+        "focus_cue": 227,
+        "source_text_sha256": "81cd8e4abb33010d9d14416813af28a99130fec5ac4b551b0dd76fcf9d456101",
+        "accepted_text_sha256": "50ceb60ba7d648182aba3a288612112c6aa1e26d60dd905c84d55fe96d85039d",
+        "expected_fact": "The wished-for four-core mode applies at 9 watts of low power.",
+        "observed_error": "The 9-watt power value was rendered as 9 volts."
+      }
+    ]
+  },
+  "expected_invariant": "Preserve each Arabic-number physical quantity and unit on the target cue; grams must not become data size and watts must not become volts.",
+  "related_controls": [
+    { "id": "gram_to_data", "source": "机身重240g。", "bad_candidate": "Устройство весит 240 гигабайт.", "expected": "measurement_mismatch warning" },
+    { "id": "watt_to_volt", "source": "功耗是15W。", "bad_candidate": "Потребление составляет 15 В.", "expected": "measurement_mismatch warning" },
+    { "id": "dropped_second_weight", "source": "重240g，比以前轻60g。", "bad_candidate": "Весит 240 граммов, стало легче.", "expected": "measurement_mismatch warning" }
+  ],
+  "negative_controls": [
+    { "id": "gram_inflection", "source": "机身重240g。", "candidate": "Устройство весит 240 граммов.", "expected": "no measurement warning" },
+    { "id": "watt_abbreviation", "source": "功耗是15W。", "candidate": "Потребление составляет 15 Вт.", "expected": "no measurement warning" },
+    { "id": "watt_hour", "source": "电池是40Wh。", "candidate": "Аккумулятор на 40 Вт·ч.", "expected": "no measurement warning" }
+  ],
+  "control_model_runs": 0,
+  "ai_review": "source-aware high confidence; independent adjudication missing",
+  "human_review": "missing",
+  "release_gate": "open"
+}

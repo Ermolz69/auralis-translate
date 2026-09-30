@@ -75,3 +75,19 @@ v5 1.8B 19-checkpoint failure and 7B 226-checkpoint failure stay intact.
 Rights, actual source-audio alignment, independent bilingual review,
 three-source quality comparison and G1–G9/A1–A6 remain open. No tuning,
 precision or desktop decision follows from this single run.
+
+Follow-up [REG-031–033](../regressions/catalog-v18.json) retain exact
+private source/accepted hashes for 11 focus cues plus 12 authored related
+and nine negative controls. The controls have **zero model runs** so far.
+The [conservative measurement warning](../../docs/reference/measurement-warning-v1.md)
+now marks changed Arabic-number physical units for review on future runs;
+it neither edits nor retroactively reclassifies this retained SRT.
+`task test:measurement-diagnostics` passed three core tests and one reopened
+SQLite warning test with authored gram/watt/watt-hour controls. A separate
+read-only `task eval:regression:asus:v6:units:private` ran the production
+Rust detector on the pinned 44-cue private packet and flagged exactly
+cue IDs 12 and 227. This did not edit or republish the earlier result.
+`task eval:regression:catalog:check` verified 33 pinned packs, and
+`task eval:regression:asus:v6:private:check` pinned all 11 real focus
+windows. The device-class, polarity and technical-term errors still require
+model comparisons and independent human adjudication.

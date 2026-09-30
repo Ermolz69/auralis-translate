@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "REG-032",
+  "status": "accepted_model_error_needs_review",
+  "severity": "major",
+  "source_family": "private_commons_geekerwan_asus_rog_ally",
+  "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+  "affected_model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5",
+  "private_reproducer": {
+    "report_sha256": "1d8addf0860cb88f0161ac6eeed3fc45351ab9912aaf0eff2b39a76772a26413",
+    "review_packet_sha256": "da15e4cf479513ba1a41fc5e86f7802e6531e7c51c5a855e30f675d533485a6a",
+    "cases": [
+      { "focus_cue": 2, "source_text_sha256": "b1117324d65e9843b8c76c8469eb50c1a8c0a62860ac92295c312dbf7de63627", "accepted_text_sha256": "71a12af106fef0a8ebba685f46438436b2fb4a6fd725b76efc8d8e1aa5a8dd87", "expected_fact": "ROG handheld gaming device.", "observed_error": "The handheld became a tablet." },
+      { "focus_cue": 3, "source_text_sha256": "b3a332edf15688bca9ebd9940ff772e3fc8e8d41302dab7ec373445e58017257", "accepted_text_sha256": "5bc969f7a302fd023a2b21dbb5205b19c2b5a208d76958646836ab7240ba105d", "expected_fact": "ROG enters the handheld gaming device category.", "observed_error": "The category again became tablets, losing scene continuity." },
+      { "focus_cue": 91, "source_text_sha256": "6b2f248fcc17d6e88d7aba5307ea5fe9e961f73fe99ee895657fa55181fa8180", "accepted_text_sha256": "39495da5de2f37184a7c96e4a11fe76391d8bd9c32734cefe1cbc86a9c4ed870", "expected_fact": "The Z1 Extreme is a handheld-specific 7840U variant.", "observed_error": "It became a smartphone-specific variant." },
+      { "focus_cue": 267, "source_text_sha256": "c2a8ba581c82c02c2b737d0fa7fd8aaba920037cfd689b6c576909b887077d2f", "accepted_text_sha256": "84fb8c9d690839c4516308ce15eb6e4e043eba4b8e25f534b692207b5115d1a1", "expected_fact": "Mouse pads are among the accessories.", "observed_error": "Mouse pads became mice." }
+    ]
+  },
+  "expected_invariant": "Preserve source product category and accessory identity across adjacent cues; a handheld is not a tablet or smartphone, and a mouse pad is not a mouse.",
+  "related_controls": [
+    { "id": "handheld_category", "source": "这是一台新的掌机。", "expected_fact": "This is a new handheld gaming device, not a tablet." },
+    { "id": "adjacent_handheld", "source": "我们继续看这台掌机的按键。", "expected_fact": "The device remains the same handheld across cues." },
+    { "id": "handheld_variant", "source": "这个芯片是掌机专用版本。", "expected_fact": "The chip is a handheld-specific variant, not a phone variant." },
+    { "id": "mouse_pad", "source": "盒子里还有鼠标垫。", "expected_fact": "The box also has a mouse pad, not a mouse." }
+  ],
+  "negative_controls": [
+    { "id": "actual_tablet", "source": "这是一台平板电脑。", "expected_fact": "This is a tablet." },
+    { "id": "actual_phone_variant", "source": "这个芯片是手机专用版本。", "expected_fact": "The chip is phone-specific." },
+    { "id": "actual_mouse", "source": "盒子里还有鼠标。", "expected_fact": "The box also has a mouse." }
+  ],
+  "control_model_runs": 0,
+  "ai_review": "source-aware high confidence; independent adjudication missing",
+  "human_review": "missing",
+  "release_gate": "open"
+}

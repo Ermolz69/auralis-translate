@@ -1,5 +1,6 @@
 mod diagnose_batch;
 mod identifier_mismatch;
+mod measurement_mismatch;
 mod planned_batches;
 mod time_mismatch;
 mod translate_batch;
@@ -11,6 +12,7 @@ mod translate_run_error;
 mod validate_batch_response;
 
 pub use identifier_mismatch::{source_identifier_mismatch, source_identifiers};
+pub use measurement_mismatch::source_measurement_mismatch;
 pub use planned_batches::PlannedBatches;
 pub use time_mismatch::source_time_mismatch;
 pub use translate_batch::translate_batch;

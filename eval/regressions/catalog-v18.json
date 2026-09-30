@@ -1,0 +1,53 @@
+{
+  "schema_version": 18,
+  "catalog_id": "zh-ru-development-regressions-v18",
+  "base_catalog_file": "catalog-v17.json",
+  "base_catalog_sha256": "8e6988b75f2121da63a1b3f744b534641ecca1f955f549c57e212d061c64214a",
+  "entries": [
+    {
+      "id": "REG-031",
+      "pack_file": "natural-asus-v6-measurement-units-v1.json",
+      "pack_sha256": "84f3c16a8ecab4ff7bdb8dc6ecf61b5812e537317669d18ac9e5e687082fd016",
+      "source_family": "private_commons_geekerwan_asus_rog_ally",
+      "split": "source_selected_private_development_review",
+      "category": "physical_unit_substitution",
+      "profile_scope": "checked 1.8B v6 slot profile, one complete ASUS natural-source pass",
+      "expected_invariant": "Preserve each Arabic-number physical quantity and unit on the target cue; grams must not become data size and watts must not become volts.",
+      "severity": "critical",
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-30-commons-asus-full-v6-slot-result.md",
+      "last_outcome": "AI review found grams rendered as gigabytes at cue 12 and watts as volts at cue 227. Both were accepted structurally; the conservative diagnostic passed authored controls and flagged both exact cues in a read-only private packet audit, without a model rerun."
+    },
+    {
+      "id": "REG-032",
+      "pack_file": "natural-asus-v6-product-terms-v1.json",
+      "pack_sha256": "389ffdc160105853fc1409efba4f80b04cf6f7260df9379d033eb12bd28f50ba",
+      "source_family": "private_commons_geekerwan_asus_rog_ally",
+      "split": "source_selected_private_development_review",
+      "category": "product_class_and_accessory_substitution",
+      "profile_scope": "checked 1.8B v6 slot profile, one complete ASUS natural-source pass",
+      "expected_invariant": "Preserve source product category and accessory identity across adjacent cues; a handheld is not a tablet or smartphone, and a mouse pad is not a mouse.",
+      "severity": "major",
+      "related_control_count": 4,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-30-commons-asus-full-v6-slot-result.md",
+      "last_outcome": "AI review found handheld/tablet or smartphone substitutions and mouse-pad/mouse loss. Authored related and negative controls are archived; no control model run or human adjudication."
+    },
+    {
+      "id": "REG-033",
+      "pack_file": "natural-asus-v6-technical-facts-v1.json",
+      "pack_sha256": "35f1ec754c66c179f7e545a66b81ebba805efd6e3c74371f0b1c2abe0161f7d0",
+      "source_family": "private_commons_geekerwan_asus_rog_ally",
+      "split": "source_selected_private_development_review",
+      "category": "technical_referent_and_polarity_loss",
+      "profile_scope": "checked 1.8B v6 slot profile, one complete ASUS natural-source pass",
+      "expected_invariant": "Preserve the technical referent and polarity of source claims across control, performance, BIOS and dock scenes; grammatical Russian alone is not enough.",
+      "severity": "major",
+      "related_control_count": 5,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-30-commons-asus-full-v6-slot-result.md",
+      "last_outcome": "AI review found a reversed battery-life claim and wrong control, CPU, BIOS and dock terms. Controls are authored but not model-run; human adjudication missing."
+    }
+  ]
+}

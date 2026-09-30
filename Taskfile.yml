@@ -765,6 +765,7 @@ tasks:
       - task: eval:reg009:live-prefix:check
       - task: test:identifier-guard
       - task: test:time-diagnostics
+      - task: test:measurement-diagnostics
 
   eval:regression:mingfay:private:check:
     desc: Recheck exact private natural-source failures and authored related controls
@@ -773,7 +774,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-030 packs and all control counts
+    desc: Verify versioned REG-001 through REG-033 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -791,6 +792,20 @@ tasks:
       - node eval/scripts/check-regression-catalog-v15.mjs
       - node eval/scripts/check-regression-catalog-v16.mjs
       - node eval/scripts/check-regression-catalog-v17.mjs
+      - node eval/scripts/check-regression-catalog-v18.mjs
+  eval:regression:asus:v6:private:check:
+    desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
+    cmds:
+      - task: eval:natural:asus:v6:review:check
+      - node --check eval/scripts/check-asus-v6-regression-private.mjs
+      - node eval/scripts/check-asus-v6-regression-private.mjs
+  eval:regression:asus:v6:units:private:
+    desc: Apply the production Rust measurement warning to the pinned private ASUS v6 review packet
+    env:
+      AURALIS_PRIVATE_ASUS_V6_PACKET: '{{.ROOT_DIR}}/.cache/eval/commons-asus-full-v6-slot-v1/run-7XjHrR/review-packet.json'
+    cmds:
+      - task: eval:regression:asus:v6:private:check
+      - cargo test --offline -p auralis-translation --test measurement_private_asus -- --ignored --nocapture
   eval:reg009:prefix-repair:probe:
     desc: Measure conservative exact-code prefix repair on the archived synthetic long-file output
     cmds:
@@ -831,6 +846,11 @@ tasks:
     cmds:
       - cargo test --offline -p auralis-translation --test time_diagnostics
       - cargo test --offline -p auralis-translation-sqlite --test time_diagnostic_persistence
+  test:measurement-diagnostics:
+    desc: Check conservative source physical-unit warnings and related/negative controls
+    cmds:
+      - cargo test --offline -p auralis-translation --test measurement_diagnostics
+      - cargo test --offline -p auralis-translation-sqlite --test measurement_diagnostic_persistence
   test:identifier-guard:
     desc: Check opt-in strict v6 identifier rejection, journal evidence and legacy advisory behavior
     cmds:
