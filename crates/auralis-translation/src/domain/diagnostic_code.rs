@@ -7,6 +7,7 @@ pub enum DiagnosticCode {
     SourcePrefixInserted,
     TimeMismatch,
     MeasurementMismatch,
+    CapacityMismatch,
 }
 
 impl DiagnosticCode {
@@ -19,6 +20,7 @@ impl DiagnosticCode {
             Self::SourcePrefixInserted => "source_prefix_inserted",
             Self::TimeMismatch => "time_mismatch",
             Self::MeasurementMismatch => "measurement_mismatch",
+            Self::CapacityMismatch => "capacity_mismatch",
         }
     }
 
@@ -31,6 +33,7 @@ impl DiagnosticCode {
             "source_prefix_inserted" => Some(Self::SourcePrefixInserted),
             "time_mismatch" => Some(Self::TimeMismatch),
             "measurement_mismatch" => Some(Self::MeasurementMismatch),
+            "capacity_mismatch" => Some(Self::CapacityMismatch),
             _ => None,
         }
     }

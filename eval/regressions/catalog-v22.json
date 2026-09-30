@@ -1,0 +1,24 @@
+{
+  "schema_version": 22,
+  "catalog_id": "zh-ru-development-regressions-v22",
+  "base_catalog_file": "catalog-v21.json",
+  "base_catalog_sha256": "c2077ba437f0e7f0beee9c109b519b52c6e34fc3ba275f98ef88ad658a78f311",
+  "entries": [
+    {
+      "id": "REG-037",
+      "pack_file": "contextual-capacity-v1.json",
+      "pack_sha256": "02d11f629f879c5ccf6364d1874f51e6ca69dc075e522d75bdffbce13759f2ca",
+      "source_family": "archived_asus_v6_and_authored_chinese_capacity_controls",
+      "split": "known_development_regression",
+      "category": "storage_capacity_number_mismatch_unwarned",
+      "profile_scope": "production review-only diagnostic independent of model profile",
+      "expected_invariant": "Warn when an admitted source memory/storage capacity loses, changes or duplicates its number in Russian, while ambiguous G forms and product codes remain unclassified.",
+      "severity": "major",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 8,
+      "negative_control_count": 14,
+      "evidence_record": "eval/experiments/2026-10-01-asus-capacity-warning-result.md",
+      "last_outcome": "A new typed capacity warning passed authored controls and a reopened SQLite checkpoint; the one-attempt archived 268-cue audit flagged only cue 83. No translation or human review claim follows."
+    }
+  ]
+}

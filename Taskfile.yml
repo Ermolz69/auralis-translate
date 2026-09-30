@@ -766,6 +766,7 @@ tasks:
       - task: test:identifier-guard
       - task: test:time-diagnostics
       - task: test:measurement-diagnostics
+      - task: test:capacity-diagnostics
 
   eval:regression:mingfay:private:check:
     desc: Recheck exact private natural-source failures and authored related controls
@@ -774,7 +775,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-036 packs and all control counts
+    desc: Verify versioned REG-001 through REG-037 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -796,6 +797,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v19.mjs
       - node eval/scripts/check-regression-catalog-v20.mjs
       - node eval/scripts/check-regression-catalog-v21.mjs
+      - node eval/scripts/check-regression-catalog-v22.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:
@@ -816,6 +818,13 @@ tasks:
       AURALIS_PRIVATE_ASUS_CANDIDATE: '{{.ROOT_DIR}}/.cache/eval/commons-asus-full-v6-slot-v1/run-7XjHrR/candidate.ru.srt'
     cmds:
       - cargo test --offline -p auralis-translation --test measurement_private_asus_whole -- --ignored --nocapture
+  eval:regression:asus:v6:capacity:private:
+    desc: Audit all pinned ASUS v6 cues with the contextual storage-capacity warning
+    env:
+      AURALIS_PRIVATE_ASUS_SOURCE: '{{.ROOT_DIR}}/.cache/eval/commons-asus-rog-ally-892592485/source.zh.srt'
+      AURALIS_PRIVATE_ASUS_CANDIDATE: '{{.ROOT_DIR}}/.cache/eval/commons-asus-full-v6-slot-v1/run-7XjHrR/candidate.ru.srt'
+    cmds:
+      - cargo test --offline -p auralis-translation --test capacity_private_asus_whole -- --ignored --nocapture
   eval:natural:asus:v6:fact-screen:preflight:
     desc: Verify pinned ASUS v6 requests and 64 paired fact-screen calls without inference
     env:
@@ -896,6 +905,11 @@ tasks:
     cmds:
       - cargo test --offline -p auralis-translation --test measurement_diagnostics
       - cargo test --offline -p auralis-translation-sqlite --test measurement_diagnostic_persistence
+  test:capacity-diagnostics:
+    desc: Check contextual storage-capacity warnings and related/negative controls
+    cmds:
+      - cargo test --offline -p auralis-translation --test capacity_diagnostics
+      - cargo test --offline -p auralis-translation-sqlite --test capacity_diagnostic_persistence
   test:identifier-guard:
     desc: Check opt-in strict v6 identifier rejection, journal evidence and legacy advisory behavior
     cmds:

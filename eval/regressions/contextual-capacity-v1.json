@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "id": "REG-037",
+  "status": "storage_capacity_number_mismatch_unwarned",
+  "severity": "major",
+  "source_family": "archived_asus_v6_and_authored_chinese_capacity_controls",
+  "split": "known_development_regression",
+  "affected_scope": "new production review-only capacity diagnostic; no model requests",
+  "expected_invariant": "Warn when an admitted source memory/storage capacity loses, changes or duplicates its number in Russian, while ambiguous G forms and product codes remain unclassified.",
+  "private_reproducer": {
+    "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+    "candidate_sha256": "aa74b20d4255f46c9a23ddfd0865dd2e221e7b08ab3cbceb8665be3b0c7b6e8b",
+    "cue_id": 83,
+    "whole_file_audit_cues": 268,
+    "capacity_warning_ids": [83],
+    "physical_warning_ids": [12, 127, 145, 227]
+  },
+  "minimal_reproducer": [
+    { "id": "changed_storage_capacity", "source": "容量512G", "candidate": "Объём 2230 ГБ", "expected_warning": true, "before_fix_warning": false }
+  ],
+  "related_controls": [
+    { "id": "natural_cue_shape", "source": "出厂只提供512G可选 想要更大容量你只能自己换了", "candidate": "Накопитель 2230 ГБ", "expected_warning": true },
+    { "id": "memory_capacity_changed", "source": "内存16G", "candidate": "Память 8 ГБ", "expected_warning": true },
+    { "id": "capacity_before_marker", "source": "16G内存", "candidate": "8 ГБ памяти", "expected_warning": true },
+    { "id": "fullwidth_capacity_changed", "source": "显存８G", "candidate": "Видеопамять 6 ГБ", "expected_warning": true },
+    { "id": "disk_capacity_changed", "source": "硬盘512G", "candidate": "Накопитель 256 ГБ", "expected_warning": true },
+    { "id": "explicit_decimal_capacity_changed", "source": "容量1.5GB", "candidate": "Объём 1,4 ГБ", "expected_warning": true },
+    { "id": "explicit_capacity_missing", "source": "容量512GB", "candidate": "Объём неизвестен", "expected_warning": true },
+    { "id": "explicit_capacity_duplicated", "source": "容量512GB", "candidate": "Объём 512 ГБ и ещё 512 ГБ", "expected_warning": true }
+  ],
+  "negative_controls": [
+    { "id": "memory_equivalent", "source": "内存16G", "candidate": "Память 16 ГБ", "expected_warning": false },
+    { "id": "capacity_before_marker_equivalent", "source": "16G内存", "candidate": "16 гигабайт памяти", "expected_warning": false },
+    { "id": "fullwidth_decimal_equivalent", "source": "容量１．５G", "candidate": "Объём 1,5 ГБ", "expected_warning": false },
+    { "id": "explicit_ascii_equivalent", "source": "容量512GB", "candidate": "Объём 512 GB", "expected_warning": false },
+    { "id": "model_code", "source": "型号A512G", "candidate": "Модель другая", "expected_warning": false },
+    { "id": "hyphenated_model_code", "source": "SSD A-512G", "candidate": "Модель другая", "expected_warning": false },
+    { "id": "attached_model_code", "source": "SSD A512GB", "candidate": "Модель другая", "expected_warning": false },
+    { "id": "gigabit_not_gigabyte", "source": "容量16Gb", "candidate": "Объём 16 ГБ", "expected_warning": false },
+    { "id": "throughput_not_capacity", "source": "容量16GB/s", "candidate": "Пропускная способность 16 ГБ/с", "expected_warning": false },
+    { "id": "two_ambiguous_bare_g", "source": "内存16G 容量32G", "candidate": "Память 8 ГБ и накопитель 64 ГБ", "expected_warning": false },
+    { "id": "unmarked_uppercase_g", "source": "重量60G", "candidate": "Вес 30 граммов", "expected_warning": false },
+    { "id": "mixed_weight_and_memory", "source": "内存16G 重量600G", "candidate": "Память 16 ГБ, вес 600 граммов", "expected_warning": false },
+    { "id": "lowercase_g_weight", "source": "重量16g", "candidate": "Вес 16 граммов", "expected_warning": false },
+    { "id": "unsupported_terabyte", "source": "容量512TB", "candidate": "Объём 512 ТБ", "expected_warning": false }
+  ],
+  "control_model_runs": 0,
+  "human_review": "missing",
+  "release_gate": "open"
+}

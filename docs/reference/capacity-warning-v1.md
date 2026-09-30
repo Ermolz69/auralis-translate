@@ -12,7 +12,8 @@ present, a memory/storage marker is present in that line, and no weight marker
 is present. Initial Chinese markers are `内存`, `显存`, `存储`, `储存`, `容量`,
 `硬盘`, `固态`, `LPDDR`, `DDR` and `SSD`; weight markers are `重量`, `质量`,
 `机重` and `重达`. This conservative line scope leaves mixed memory/weight lines for
-human review. An ASCII letter or underscore immediately before the number
+human review. `Gb` gigabits and `GB/s` throughput are not capacity claims.
+An ASCII letter or underscore immediately before the number
 makes it part of a product code, not a capacity claim.
 
 Compare admitted source values with Russian `ГБ`, inflected `гигабайт`, or

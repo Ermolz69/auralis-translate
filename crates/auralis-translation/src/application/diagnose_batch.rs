@@ -1,3 +1,4 @@
+use super::capacity_mismatch::source_capacity_mismatch;
 use super::identifier_mismatch::source_identifier_mismatch;
 use super::measurement_mismatch::source_measurement_mismatch;
 use super::time_mismatch::source_time_mismatch;
@@ -55,6 +56,13 @@ pub(crate) fn diagnose_batch(
             if source_measurement_mismatch(source_line, translated_line) {
                 diagnostics.push(TranslationDiagnostic {
                     code: DiagnosticCode::MeasurementMismatch,
+                    segment_id: source.id(),
+                    line_index,
+                });
+            }
+            if source_capacity_mismatch(source_line, translated_line) {
+                diagnostics.push(TranslationDiagnostic {
+                    code: DiagnosticCode::CapacityMismatch,
                     segment_id: source.id(),
                     line_index,
                 });

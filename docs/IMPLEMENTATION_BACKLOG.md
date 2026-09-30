@@ -276,6 +276,16 @@ unchanged, and cue 83's distinct storage-capacity mistranslation remains an
 AI-identified issue for independent review. This extends partial `EVAL-04`
 coverage without satisfying `LONG-04` or G3–G5.
 
+The [REG-037 capacity diagnostic](../eval/experiments/2026-10-01-asus-capacity-warning-result.md)
+adds a separately typed, review-only warning for changed numeric memory or
+storage capacity. One red minimal case and a Chinese-suffix boundary failure
+preceded the fix; eight related and fourteen negative controls now pass, as
+does reopened SQLite warning persistence. The one-attempt read-only audit of
+all 268 archived ASUS pairs flagged only cue 83. The prior four physical-unit
+warning IDs remain separate, the model candidate was not edited, and the
+single AI-identified capacity issue is not independent quality adjudication.
+`EVAL-04` remains in progress and `LONG-04`/G3–G5 remain open.
+
 ## Current handoff
 
 `CTX-02` and `EVAL-04` now have an opt-in [provider review diagnostic
