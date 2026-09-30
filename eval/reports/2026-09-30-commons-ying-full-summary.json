@@ -1,0 +1,47 @@
+{
+  "source": "Commons WIKITONGUES Ying Henan Chinese candidate",
+  "source_srt_sha256": "505913bd7046b28c873307562a55d567043f8703bc00375c3485853b87c420d9",
+  "media_sha256": "bc19430cf2a64e37ac1b0883599041989e3444697738f234a23484d620eb4ac7",
+  "media_duration_ms": 217921,
+  "source_cues": 93,
+  "scene_ends": [15, 32, 42, 54, 66, 79, 93],
+  "model": "Hy-MT2 7B Q4_K_M",
+  "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+  "profile_sha256": "9b34d86d3b0d872720ee729131efef99281e71a0000d202abea169d625a92e73",
+  "runs": [
+    {
+      "phase": "initial",
+      "report_sha256": "f08a248dac388a8d327e3c2c714c1b61fcba1f70b64b3be65a7150f07ade706c",
+      "checkpoints": 26,
+      "chats": 27,
+      "http_requests": 84,
+      "prompt_tokens": 6872,
+      "completion_tokens": 1184,
+      "chat_http_ms": 39381,
+      "full_elapsed_ms": 96247,
+      "working_set_peak_bytes": 5100867584,
+      "device_gpu_used_peak_mib": 7371,
+      "failure": "cue 27 reached length limit (256 completion tokens)"
+    },
+    {
+      "phase": "copied-state resume",
+      "report_sha256": "ceef66dc7fc78d059583b5604f01b6d0843d1d4fb1023327f313d6d27272d295",
+      "checkpoints": 93,
+      "chats": 67,
+      "http_requests": 204,
+      "prompt_tokens": 17755,
+      "completion_tokens": 2488,
+      "chat_http_ms": 51994,
+      "full_elapsed_ms": 117927,
+      "working_set_peak_bytes": 5072760832,
+      "device_gpu_used_peak_mib": 7412,
+      "failure": "strict SRT rejected unrenderable cue-27 target"
+    }
+  ],
+  "preflight_failure_report_sha256": "ae3b841d33104ac5ee88ddd20bb91a76edf5e936f5203dda8539f3afe011c0c2",
+  "results": 0,
+  "published_russian_srt": false,
+  "human_bilingual_review": 0,
+  "audio_listener_review": 0,
+  "release_admitted": false
+}
