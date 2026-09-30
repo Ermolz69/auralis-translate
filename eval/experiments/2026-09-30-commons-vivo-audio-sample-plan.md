@@ -1,0 +1,5 @@
+# Commons Vivo interview: source-audio samples
+
+Date: 30 September 2026. Task: `DATA-03`. The original Chinese SRT revision `979826861` has 467 strict cues (SHA-256 `8c41e66f52000a5b67ab27bfc319accd11d89290b60e50fc5c60f4ee8230a000`). Its matching private 240p WebM copy is 49,681,853 bytes (SHA-256 `7ad0484b31a6788c31632616649c51e6aaf6cdcdd7d90083d88e1d5ee66e1507`). FFprobe reports one 18:35 VP9/Opus stream pair; no human speech check has occurred.
+
+Run `task eval:data:commons:vivo:media:audio-samples` once. Rehash source, media, acquisition and pinned FFmpeg. Decode only 12 seconds at 0, 563 and 1,102 seconds into private mono 16 kHz PCM WAV files, bounded to 30 seconds per FFmpeg process and 1 MiB console output. Preserve exact output hashes, durations and failures. These positions cover opening, around source cue 234 and closing cue 462. A machine can check decode and nonzero PCM but cannot certify that audible words match the Chinese text; a person must listen and record alignment, speakers, gaps and corrections. Do not publish the clips or count them as human-reviewed before that happens.

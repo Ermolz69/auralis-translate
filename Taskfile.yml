@@ -33,6 +33,26 @@ tasks:
       - node --check eval/scripts/stage-commons-vivo-caption.mjs
       - node eval/scripts/stage-commons-vivo-caption.mjs
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-vivo-candidate-v1.json --require-candidate-bytes
+  eval:data:commons:vivo:media:inventory:
+    desc: Inventory one bounded Commons Vivo interview derivative metadata response
+    cmds:
+      - node --check eval/scripts/inventory-commons-vivo-media.mjs
+      - node eval/scripts/inventory-commons-vivo-media.mjs
+  eval:data:commons:vivo:media:acquire:
+    desc: Acquire one bounded private 240p interview copy for audio alignment review
+    cmds:
+      - node --check eval/scripts/acquire-commons-vivo-240p.mjs
+      - node eval/scripts/acquire-commons-vivo-240p.mjs
+  eval:data:commons:vivo:media:streams:
+    desc: Rehash and inspect the private 18-minute interview audio/video streams
+    cmds:
+      - node --check eval/scripts/check-commons-vivo-240p-streams.mjs
+      - node eval/scripts/check-commons-vivo-240p-streams.mjs
+  eval:data:commons:vivo:media:audio-samples:
+    desc: Decode private start, middle and end source-audio clips for human alignment review
+    cmds:
+      - node --check eval/scripts/sample-commons-vivo-audio.mjs
+      - node eval/scripts/sample-commons-vivo-audio.mjs
   test:local-process:timeout:
     desc: Ensure a timed-out probe child is stopped and successful output remains available
     cmds:
