@@ -152,6 +152,23 @@ tasks:
     cmds:
       - node --check eval/scripts/check-natural-asus-slot-schema-screen.mjs
       - node eval/scripts/check-natural-asus-slot-schema-screen.mjs
+  eval:natural:asus:v6:preflight:
+    desc: Verify the pinned 1.8B v6 slot profile against the same natural ASUS source and v5 scene policy
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:natural:asus:slot-schema:check
+      - node --check eval/scripts/probe-commons-asus-full-v6-slot.mjs
+      - node eval/scripts/probe-commons-asus-full-v6-slot.mjs --preflight
+  eval:natural:asus:v6:probe:
+    desc: Run one bounded full-file ASUS v6 target-slot diagnostic in a fresh SQLite state
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:natural:asus:v6:preflight
+      - node eval/scripts/probe-commons-asus-full-v6-slot.mjs
   eval:natural:asus:7b:resume:
     desc: Resume one verified copy of the retained 226-checkpoint ASUS failure
     env:
