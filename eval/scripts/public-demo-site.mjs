@@ -27,6 +27,7 @@ import { loadManagedSpeech, renderManagedSpeech } from './managed-speech-section
 import { loadSourceCandidates, renderSourceCandidates } from './source-candidate-section.mjs';
 import { loadNaturalScreen, renderNaturalScreen } from './natural-screen-section.mjs';
 import { loadYingFullFailure, renderYingFullFailure } from './ying-full-failure-section.mjs';
+import { loadYingGuarded, renderYingGuarded } from './ying-guarded-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const dataset = JSON.parse(await fs.readFile(path.join(root, 'eval/corpora/public-demo-v1.json'), 'utf8'));
@@ -59,6 +60,7 @@ const managedSpeech = await loadManagedSpeech(root);
 const sourceCandidates = await loadSourceCandidates(root);
 const naturalScreen = await loadNaturalScreen(root);
 const yingFullFailure = await loadYingFullFailure(root);
+const yingGuarded = await loadYingGuarded(root);
 const evidencePath = path.join(root, 'eval/reports/public-demo-2026-09-27.json');
 if (process.argv[2] === '--capture') {
   const workspace = (await fs.readFile(path.join(root, '.cache/eval/public-demo/latest.txt'), 'utf8')).trim();
@@ -133,6 +135,7 @@ payload.managed_speech = managedSpeech;
 payload.source_candidates = sourceCandidates;
 payload.natural_screen = naturalScreen;
 payload.ying_full_failure = yingFullFailure;
+payload.ying_guarded = yingGuarded;
 payload.terms_probe = { success_sha256: termsProbe.success_sha256, failure_sha256: termsProbe.failure_sha256, profile_sha256: termsProbe.profile_sha256, corpus_sha256: termsProbe.corpus_sha256, chat_requests: termsProbe.chat_requests, loopback_requests: termsProbe.loopback_requests };
 const json = JSON.stringify(payload).replaceAll('<', '\\u003c');
 const runRows = benchmark.runs.map(run => `<tr><th scope="row">${run.repetition}</th><td>${number(run.translation_elapsed_ms)}</td><td>${number(run.request_elapsed_sum_ms)}</td><td>${number(run.translation_elapsed_ms - run.request_elapsed_sum_ms)}</td><td>${number(run.offline_reexport_ms)}</td><td>${run.status.completed_blocks}/${run.status.total_blocks}</td></tr>`).join('');
@@ -172,6 +175,7 @@ ${renderDeliveryProgress(deliveryPlan, escape)}
 ${renderSourceCandidates(sourceCandidates)}
 ${renderNaturalScreen(naturalScreen)}
 ${renderYingFullFailure(yingFullFailure)}
+${renderYingGuarded(yingGuarded)}
 ${renderV5Envelope(v5Envelope, dataset, currency.benchmark, escape, number)}
 ${renderSceneContext(sceneContext, escape)}
 ${renderPronounCrossModel(pronounCrossModel, escape)}
