@@ -1,3 +1,4 @@
+mod checked_provider;
 mod document;
 mod error;
 mod error_code;

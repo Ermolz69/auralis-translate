@@ -1,5 +1,6 @@
 use super::{
     SegmentTranslation, SrtBlockPolicy, SrtDocument, SrtPlanError, SrtRunError, SrtSegment,
+    checked_provider::SrtCheckedProvider,
 };
 use crate::inspect;
 use auralis_translation::{
@@ -221,9 +222,13 @@ impl SrtRunPlan {
         provider: &impl TranslationProvider,
         store: &mut S,
     ) -> Result<Vec<u8>, SrtRunError<S::Error>> {
-        let accepted =
-            translate_planned_run(provider, store, self.planned.ids(), self.planned.batches())
-                .map_err(SrtRunError::Translate)?;
+        let accepted = translate_planned_run(
+            &SrtCheckedProvider::new(provider),
+            store,
+            self.planned.ids(),
+            self.planned.batches(),
+        )
+        .map_err(SrtRunError::Translate)?;
         self.render_selected(&accepted).map_err(SrtRunError::Render)
     }
 
@@ -234,7 +239,7 @@ impl SrtRunPlan {
         progress: &mut impl ProgressSink,
     ) -> Result<Vec<u8>, SrtRunError<S::Error>> {
         let accepted = translate_planned_run_with_progress(
-            provider,
+            &SrtCheckedProvider::new(provider),
             store,
             self.planned.ids(),
             self.planned.batches(),
@@ -252,7 +257,7 @@ impl SrtRunPlan {
         control: &impl RunControl,
     ) -> Result<Vec<u8>, SrtRunError<S::Error>> {
         let accepted = translate_planned_run_with_control(
-            provider,
+            &SrtCheckedProvider::new(provider),
             store,
             self.planned.ids(),
             self.planned.batches(),
@@ -272,7 +277,7 @@ impl SrtRunPlan {
         retry: RetryPolicy,
     ) -> Result<Vec<u8>, SrtRunError<S::Error>> {
         let accepted = translate_planned_run_with_policy(
-            provider,
+            &SrtCheckedProvider::new(provider),
             store,
             self.planned.ids(),
             self.planned.batches(),
