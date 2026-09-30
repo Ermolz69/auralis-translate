@@ -54,18 +54,21 @@ assert.deepEqual(data.ying_full_failure, await loadYingFullFailure(root));
 assert.deepEqual(data.ying_guarded, await loadYingGuarded(root));
 assert.deepEqual(data.natural_audio, await loadNaturalAudio(root));
 assert.deepEqual(data.source_candidates, {
-  source_count: 5,
-  inspected_cues: 718,
+  source_count: 6,
+  inspected_cues: 811,
   eligible_cues: 0,
   commerce_revision: '906218083',
   commerce_cues: 123,
   commerce_sha256: 'df2af6ad32f12b55c3067469228d3b9674b7c35e7d8540acd294dd0f986fe46f',
   mingfay_cues: 230,
   mingfay_sha256: '42109fc054cba93b0ef343853628b6a248b31664786d579bdefa415ccaacf9ee',
+  ying_cues: 93,
+  ying_sha256: '505913bd7046b28c873307562a55d567043f8703bc00375c3485853b87c420d9',
 });
 assert(html.includes('id="source-candidates"'));
-assert(html.includes('718 проверенных реплик, 0 допущенных'));
-assert(html.includes('Ранее были проверены 4 источника Commons и 488 реплик'));
+assert(html.includes('811 проверенных реплик, 0 допущенных'));
+assert(html.includes('Первые 4 источника Commons дали 488 реплик'));
+assert(html.includes('2026-09-30-commons-train-media-inventory-result.md'));
 assert(html.includes('2026-09-29-youtube-mingfay-caption-candidate.md'));
 assert(html.includes('id="natural-screen"'));
 assert(html.includes('Одинаковые 16 реплик: 1.8B и 7B'));

@@ -6,6 +6,7 @@ const inventoryPaths = [
   'eval/corpora/commons-inspected-candidates-v1.json',
   'eval/corpora/commons-cc-commerce-candidate-v1.json',
   'eval/corpora/youtube-mingfay-candidate-v1.json',
+  'eval/corpora/commons-ying-candidate-v1.json',
 ];
 
 export async function loadSourceCandidates(root) {
@@ -15,6 +16,7 @@ export async function loadSourceCandidates(root) {
   }));
   const commerce = inventories[1].inventory.sources[0];
   const mingfay = inventories[2].inventory.sources[0];
+  const ying = inventories[3].inventory.sources[0];
   if (inventories[1].inventory.sources.length !== 1
       || commerce.id !== 'commons-cc-commerce-906218083'
       || commerce.state !== 'inspected_candidate'
@@ -28,6 +30,13 @@ export async function loadSourceCandidates(root) {
       || mingfay.cue_count !== 230) {
     throw new Error('Mingfay candidate identity or admission state changed');
   }
+  if (inventories[3].inventory.sources.length !== 1
+      || ying.id !== 'commons-ying-henan-1238607314'
+      || ying.state !== 'inspected_candidate'
+      || ying.split !== 'unassigned'
+      || ying.cue_count !== 93) {
+    throw new Error('Ying candidate identity or admission state changed');
+  }
   return {
     source_count: inventories.reduce((total, entry) => total + entry.counts.source_count, 0),
     inspected_cues: inventories.reduce((total, entry) => total + entry.counts.inspected_candidate_cues, 0),
@@ -37,9 +46,11 @@ export async function loadSourceCandidates(root) {
     commerce_sha256: commerce.sha256,
     mingfay_cues: mingfay.cue_count,
     mingfay_sha256: mingfay.sha256,
+    ying_cues: ying.cue_count,
+    ying_sha256: ying.sha256,
   };
 }
 
 export function renderSourceCandidates(summary) {
-  return `<section id="source-candidates" class="my-8 scroll-mt-8 rounded-2xl border border-amber-200 bg-amber-50/60 p-5 md:p-7"><p class="text-sm font-semibold text-amber-900">DATA-03 · проверка источников, без оценки перевода</p><h2 class="mt-2 text-2xl font-bold">${summary.source_count} источников, ${summary.inspected_cues} проверенных реплик, ${summary.eligible_cues} допущенных</h2><p class="mt-3 max-w-4xl text-slate-700">Ранее были проверены 4 источника Commons и 488 реплик, ни одна не допущена. Новый ролик Mingfay Chinese длится 13:47. Его обычный китайский трек содержал пиньинь, китайский и английский в каждой из 230 реплик; последняя реплика стояла после более позднего таймкода. Для частного теста создан отдельный китайский SRT с полной картой перестановки: ${summary.mingfay_cues} реплик прошли строгий разбор. Это технический кандидат. Права, совпадение речи и субтитров, русский эталон и независимая оценка не установлены; ни одна реплика из пяти источников не входит в допущенный корпус или закрытый holdout.</p><p class="mt-3 text-xs text-slate-600">Китайская производная копия: SHA-256 <code class="hash">${summary.mingfay_sha256}</code>. Ранее проверенный Commons SRT: ревизия ${summary.commerce_revision}, ${summary.commerce_cues} реплики, SHA-256 <code class="hash">${summary.commerce_sha256}</code>. Исходные строки и медиа в отчёт не встроены.</p><div class="mt-3 flex flex-wrap gap-4 text-sm font-semibold text-blue-700"><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-29-youtube-mingfay-caption-candidate.md">Новый источник и ограничения (EN)</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/corpora/youtube-mingfay-candidate-v1.json">Новый недопущенный инвентарь</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-29-commons-cc-commerce-candidate.md">Прежний источник Commons (EN)</a><a class="underline" href="https://www.youtube.com/watch?v=0hoTgJKET7Q">Страница ролика</a></div></section>`;
+  return `<section id="source-candidates" class="my-8 scroll-mt-8 rounded-2xl border border-amber-200 bg-amber-50/60 p-5 md:p-7"><p class="text-sm font-semibold text-amber-900">DATA-03 · проверка источников, без оценки перевода</p><h2 class="mt-2 text-2xl font-bold">${summary.source_count} источников, ${summary.inspected_cues} проверенных реплик, ${summary.eligible_cues} допущенных</h2><p class="mt-3 max-w-4xl text-slate-700">Первые 4 источника Commons дали 488 реплик. Ролик Mingfay Chinese длится 13:47: его трек смешивал пиньинь, китайский и английский, а одна реплика нарушала порядок времени. Для частного теста получен отдельный китайский SRT с полной картой перестановки: ${summary.mingfay_cues} реплик строго разобраны. Совпадающие субтитры и видео Ying добавили ещё ${summary.ying_cues} реплики, но в пробном русском переводе есть серьёзные ошибки смысла. 20:30 видео о поезде имеет 206 китайских реплик; метаданные показали доступную 240p VP9/Opus-копию, однако произнесённая речь не сверена, права импорта не подтверждены. Права, точность речи и субтитров, русский эталон и независимая оценка не установлены; ни одна реплика из шести источников не входит в допущенный корпус или закрытый holdout.</p><p class="mt-3 text-xs text-slate-600">Китайская производная копия Mingfay: SHA-256 <code class="hash">${summary.mingfay_sha256}</code>. Ying SRT: SHA-256 <code class="hash">${summary.ying_sha256}</code>. Ранее проверенный Commons SRT: ревизия ${summary.commerce_revision}, ${summary.commerce_cues} реплики, SHA-256 <code class="hash">${summary.commerce_sha256}</code>. Исходные строки и медиа в отчёт не встроены.</p><div class="mt-3 flex flex-wrap gap-4 text-sm font-semibold text-blue-700"><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-30-commons-train-media-inventory-result.md">Метаданные длинного видео (EN)</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/corpora/commons-ying-candidate-v1.json">Недопущенный инвентарь Ying</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-29-youtube-mingfay-caption-candidate.md">Источник Mingfay и ограничения (EN)</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-29-commons-cc-commerce-candidate.md">Прежний источник Commons (EN)</a><a class="underline" href="https://www.youtube.com/watch?v=0hoTgJKET7Q">Страница Mingfay</a></div></section>`;
 }

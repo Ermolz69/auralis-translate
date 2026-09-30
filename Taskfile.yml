@@ -1,6 +1,16 @@
 version: "3"
 
 tasks:
+  eval:data:commons:train:media:inventory:
+    desc: Inventory one bounded Commons train-video derivative metadata response
+    cmds:
+      - node --check eval/scripts/inventory-commons-train-media.mjs
+      - node eval/scripts/inventory-commons-train-media.mjs
+  eval:data:commons:train:media:inventory:check:
+    desc: Recheck the retained Commons train metadata and exact source identity offline
+    cmds:
+      - node --check eval/scripts/check-commons-train-media-inventory.mjs
+      - node eval/scripts/check-commons-train-media-inventory.mjs
   test:local-process:timeout:
     desc: Ensure a timed-out probe child is stopped and successful output remains available
     cmds:
