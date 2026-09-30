@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "experiment": "commons-asus-v6-fact-model-screen-v1",
+  "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+  "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "zero_chat_launch_failure_sha256": "f77a71e8a0e913511238c8924457880080e03835247ae54d94badc49c97a38f1",
+  "private_report_sha256": "23a12aa953b0e1cb43e0dfaec7061672c979d0f24e3a7fa04639b921ab25fdf9",
+  "private_journal_sha256": "8bb9e021adea11cf09394b470c00afa556959be4d9a0baf47c37d8557163ea2f",
+  "natural_focus_cues": 11,
+  "authored_related_and_negative_controls": 21,
+  "paired_cases": 32,
+  "chat_requests": 64,
+  "retries_after_first_model_request": 0,
+  "outer_json_and_target_id_valid": 64,
+  "leaked_tail_case_ids": ["asus-227", "REG-032-negative-actual_phone_variant"],
+  "wall_elapsed_ms": 45367,
+  "models": [
+    {
+      "key": "1.8B Q4_K_M",
+      "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+      "profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5",
+      "chat_requests": 32,
+      "prompt_tokens": 7168,
+      "completion_tokens": 1409,
+      "summed_chat_http_ms": 10893,
+      "resource_samples": 3,
+      "sampled_server_working_set_peak_bytes": 1547878400,
+      "sampled_whole_device_gpu_memory_peak_mib": 2004
+    },
+    {
+      "key": "7B Q4_K_M",
+      "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+      "profile_sha256": "e7e2d7745cb283a88984da202eb511f0144b2bc51bc6eb01727515a51e7aa06f",
+      "chat_requests": 32,
+      "prompt_tokens": 7219,
+      "completion_tokens": 1470,
+      "summed_chat_http_ms": 24188,
+      "resource_samples": 6,
+      "sampled_server_working_set_peak_bytes": 5062770688,
+      "sampled_whole_device_gpu_memory_peak_mib": 5522
+    }
+  ],
+  "ai_review": "known_development_cases_source_aware_not_independent",
+  "human_bilingual_reviewed_cases": 0,
+  "source_rights_admitted": false,
+  "source_audio_alignment_reviewed": false,
+  "profile_selected": false,
+  "approved_spoken_script": false,
+  "raw_source_or_candidate_published": false
+}

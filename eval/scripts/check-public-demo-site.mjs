@@ -36,6 +36,7 @@ import { loadAsusTail } from './asus-tail-section.mjs';
 import { loadAsusModelComparison } from './asus-model-comparison-section.mjs';
 import { loadNaturalAsusSlotSchema } from './natural-asus-slot-schema-section.mjs';
 import { loadAsusV6Long } from './asus-v6-long-section.mjs';
+import { loadAsusV6FactScreen } from './asus-v6-fact-screen-section.mjs';
 import { loadNaturalAudio } from './natural-audio-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -81,6 +82,13 @@ assert(html.includes('2026-09-30-commons-asus-full-v6-slot-result.md'));
 assert(html.includes('REG-031–033 и контроли'));
 assert(html.includes('docs/reference/measurement-warning-v1.md'));
 assert(html.includes('архивной выборки отметила реплики 12 и 227'));
+assert.deepEqual(data.asus_v6_fact_screen,
+  await loadAsusV6FactScreen(root, data.asus_v6_long));
+assert(html.includes('id="asus-v6-fact-screen"'));
+assert(html.includes('64 парных ответа, ошибки текста остались'));
+assert(html.includes('2026-09-30-asus-v6-fact-model-screen-result.md'));
+assert(html.includes('catalog-v19.json'));
+assert(html.includes('нового полного прогона после исправления ещё нет'));
 assert.deepEqual(data.natural_audio, await loadNaturalAudio(root));
 assert.deepEqual(data.source_candidates, {
   source_count: 9,
