@@ -48,6 +48,44 @@ fn equivalent_units_and_unrelated_numbers_do_not_warn() {
     }
 }
 
+#[test]
+fn signed_and_fullwidth_measurement_losses_warn() {
+    for (source, candidate) in [
+        ("减重-60g", "Масса изменилась на 60 г"),
+        ("减重−60g", "Масса изменилась на 60 г"),
+        ("减重－60g", "Масса изменилась на 60 г"),
+        ("变化负60克", "Изменение на 60 г"),
+        ("重量60g", "Вес минус 60 г"),
+        ("重量６０８g", "Вес 608 гигабайт"),
+        ("重量６０８g", "Вес 60 г"),
+        ("质量１．５kg", "Масса 1,5 гигабайта"),
+    ] {
+        assert!(
+            source_measurement_mismatch(source, candidate),
+            "{source} / {candidate}"
+        );
+    }
+}
+
+#[test]
+fn equivalent_signed_values_and_product_codes_do_not_warn() {
+    for (source, candidate) in [
+        ("减重-60g", "Изменение минус 60 г"),
+        ("减重−６０g", "Изменение -60 граммов"),
+        ("变化负60克", "Изменение −60 г"),
+        ("重量６０８g", "Вес 608 граммов"),
+        ("质量１．５kg", "Масса 1,5 килограмма"),
+        ("质量１，５kg", "Масса 1.5 кг"),
+        ("型号A-60g", "Модель другая"),
+        ("型号A－60g", "Модель другая"),
+    ] {
+        assert!(
+            !source_measurement_mismatch(source, candidate),
+            "{source} / {candidate}"
+        );
+    }
+}
+
 struct FixedProvider(&'static str);
 
 impl TranslationProvider for FixedProvider {

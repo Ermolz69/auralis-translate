@@ -1,0 +1,24 @@
+{
+  "schema_version": 20,
+  "catalog_id": "zh-ru-development-regressions-v20",
+  "base_catalog_file": "catalog-v19.json",
+  "base_catalog_sha256": "a95230a7638df8659e2e88236c032e730f66b75bd064aed9cfe054f02b6df3db",
+  "entries": [
+    {
+      "id": "REG-035",
+      "pack_file": "signed-fullwidth-measurement-v1.json",
+      "pack_sha256": "dcf3945cfd6fea01b41be5889475bde8eae77315538773d03b6964ee937e5e88",
+      "source_family": "authored_chinese_measurement_controls",
+      "split": "known_development_regression",
+      "category": "signed_and_fullwidth_measurement_warning_boundary",
+      "profile_scope": "production review-only diagnostic independent of model profile",
+      "expected_invariant": "Warn when a recognized physical quantity loses its literal negative sign, decimal value or unit; normalize full-width decimal digits and avoid product-code false positives.",
+      "severity": "major",
+      "minimal_reproducer_count": 2,
+      "related_control_count": 6,
+      "negative_control_count": 7,
+      "evidence_record": "eval/experiments/2026-10-01-signed-fullwidth-measurement-regression.md",
+      "last_outcome": "The pre-fix detector missed a lost negative sign and warned on an ASCII product code. Both red tests now pass with related width/sign and negative controls; no model or human quality result is claimed."
+    }
+  ]
+}

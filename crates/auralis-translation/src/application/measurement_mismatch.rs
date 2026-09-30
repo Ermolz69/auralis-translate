@@ -26,40 +26,101 @@ fn measurements(text: &str) -> Vec<(String, Unit)> {
         let Some(character) = lower[cursor..].chars().next() else {
             break;
         };
-        if !character.is_ascii_digit()
-            || lower[..cursor]
-                .chars()
-                .next_back()
-                .is_some_and(|previous| previous.is_ascii_alphanumeric() || previous == '_')
+        if decimal_digit(character).is_none()
+            || lower[..cursor].chars().next_back().is_some_and(|previous| {
+                decimal_digit(previous).is_some()
+                    || previous.is_ascii_alphanumeric()
+                    || previous == '_'
+            })
         {
             cursor += character.len_utf8();
             continue;
         }
-        let bytes = lower.as_bytes();
         let mut end = cursor;
-        while bytes.get(end).is_some_and(u8::is_ascii_digit) {
-            end += 1;
-        }
-        if matches!(bytes.get(end), Some(b'.' | b','))
-            && bytes.get(end + 1).is_some_and(u8::is_ascii_digit)
+        let mut quantity = String::new();
+        while let Some((digit, length)) = lower[end..]
+            .chars()
+            .next()
+            .and_then(|value| decimal_digit(value).map(|digit| (digit, value.len_utf8())))
         {
-            end += 1;
-            while bytes.get(end).is_some_and(u8::is_ascii_digit) {
-                end += 1;
+            quantity.push(digit);
+            end += length;
+        }
+        if let Some(separator) = lower[end..].chars().next()
+            && matches!(separator, '.' | ',' | '．' | '，')
+            && lower[end + separator.len_utf8()..]
+                .chars()
+                .next()
+                .and_then(decimal_digit)
+                .is_some()
+        {
+            quantity.push('.');
+            end += separator.len_utf8();
+            while let Some((digit, length)) = lower[end..]
+                .chars()
+                .next()
+                .and_then(|value| decimal_digit(value).map(|digit| (digit, value.len_utf8())))
+            {
+                quantity.push(digit);
+                end += length;
             }
         }
-        let quantity = lower[cursor..end].replace(',', ".");
+        let Some(negative) = negative_prefix(&lower[..cursor]) else {
+            cursor = end;
+            continue;
+        };
         while lower[end..].chars().next().is_some_and(char::is_whitespace) {
             end += lower[end..].chars().next().map_or(0, char::len_utf8);
         }
         if let Some((unit, length)) = unit(&lower[end..]) {
-            found.push((quantity, unit));
+            found.push((
+                format!("{}{quantity}", if negative { "-" } else { "" }),
+                unit,
+            ));
             cursor = end + length;
         } else {
             cursor = end;
         }
     }
     found
+}
+
+fn decimal_digit(character: char) -> Option<char> {
+    if character.is_ascii_digit() {
+        return Some(character);
+    }
+    if ('０'..='９').contains(&character) {
+        let offset = u8::try_from(character as u32 - '０' as u32).ok()?;
+        return Some(char::from(b'0' + offset));
+    }
+    None
+}
+
+fn negative_prefix(prefix: &str) -> Option<bool> {
+    let prefix = prefix.trim_end();
+    if let Some(sign @ ('-' | '−' | '－')) = prefix.chars().next_back() {
+        let before = &prefix[..prefix.len() - sign.len_utf8()];
+        if before.chars().next_back().is_some_and(|character| {
+            character.is_ascii_alphanumeric()
+                || decimal_digit(character).is_some()
+                || character == '_'
+        }) {
+            return None;
+        }
+        return Some(true);
+    }
+    if prefix.ends_with(['负', '負']) {
+        return Some(true);
+    }
+    if let Some(before) = prefix.strip_suffix("минус")
+        && before
+            .chars()
+            .next_back()
+            .is_none_or(|character| !character.is_alphabetic())
+    {
+        return Some(true);
+    }
+    Some(false)
 }
 
 fn unit(tail: &str) -> Option<(Unit, usize)> {

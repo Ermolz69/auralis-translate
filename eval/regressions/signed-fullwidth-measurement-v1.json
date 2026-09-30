@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "id": "REG-035",
+  "status": "detector_false_negative_and_product_false_positive",
+  "severity": "major",
+  "source_family": "authored_chinese_measurement_controls",
+  "split": "known_development_regression",
+  "affected_scope": "production review-only measurement diagnostic; no model requests",
+  "expected_invariant": "Warn when a recognized physical quantity loses its literal negative sign, decimal value or unit; normalize full-width decimal digits and avoid product-code false positives.",
+  "minimal_reproducer": [
+    {
+      "id": "lost_negative_sign",
+      "source": "减重-60g",
+      "candidate": "Масса изменилась на 60 г",
+      "expected_warning": true,
+      "before_fix_warning": false
+    },
+    {
+      "id": "product_code_false_positive",
+      "source": "型号A-60g",
+      "candidate": "Модель другая",
+      "expected_warning": false,
+      "before_fix_warning": true
+    }
+  ],
+  "related_controls": [
+    { "id": "unicode_minus_loss", "source": "减重−60g", "candidate": "Масса изменилась на 60 г", "expected_warning": true },
+    { "id": "fullwidth_minus_loss", "source": "减重－60g", "candidate": "Масса изменилась на 60 г", "expected_warning": true },
+    { "id": "chinese_negative_loss", "source": "变化负60克", "candidate": "Изменение на 60 г", "expected_warning": true },
+    { "id": "fullwidth_digit_unit_loss", "source": "重量６０８g", "candidate": "Вес 608 гигабайт", "expected_warning": true },
+    { "id": "fullwidth_decimal_unit_loss", "source": "质量１．５kg", "candidate": "Масса 1,5 гигабайта", "expected_warning": true },
+    { "id": "added_negative_sign", "source": "重量60g", "candidate": "Вес минус 60 г", "expected_warning": true }
+  ],
+  "negative_controls": [
+    { "id": "russian_minus_word", "source": "减重-60g", "candidate": "Изменение минус 60 г", "expected_warning": false },
+    { "id": "fullwidth_negative_equivalent", "source": "减重−６０g", "candidate": "Изменение -60 граммов", "expected_warning": false },
+    { "id": "chinese_negative_equivalent", "source": "变化负60克", "candidate": "Изменение −60 г", "expected_warning": false },
+    { "id": "fullwidth_weight_equivalent", "source": "重量６０８g", "candidate": "Вес 608 граммов", "expected_warning": false },
+    { "id": "fullwidth_decimal_equivalent", "source": "质量１，５kg", "candidate": "Масса 1.5 кг", "expected_warning": false },
+    { "id": "ascii_product_code", "source": "型号A-60g", "candidate": "Модель другая", "expected_warning": false },
+    { "id": "fullwidth_product_code", "source": "型号A－60g", "candidate": "Модель другая", "expected_warning": false }
+  ],
+  "control_model_runs": 0,
+  "human_review": "missing",
+  "release_gate": "open"
+}

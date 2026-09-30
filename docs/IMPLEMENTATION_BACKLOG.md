@@ -257,6 +257,15 @@ related/negative fixture controls. No post-fix natural full-file run,
 human language score or model selection follows; `CTX-02`, `EVAL-04`,
 `LONG-04` and release gates remain open.
 
+[REG-035](../eval/regressions/catalog-v20.json) extends the same production
+measurement diagnostic with signed and full-width decimal controls after
+[two reproduced detector failures](../eval/experiments/2026-10-01-signed-fullwidth-measurement-regression.md).
+It catches lost negative signs and previously ignored full-width quantities
+while excluding `A-60g` product codes. The archived ASUS output and previous
+catalogs are unchanged. This is partial `EVAL-04` fact-warning coverage only;
+Chinese numeral phrases, semantic comparisons and independent review remain
+open.
+
 ## Current handoff
 
 `CTX-02` and `EVAL-04` now have an opt-in [provider review diagnostic
