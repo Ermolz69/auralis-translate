@@ -593,6 +593,67 @@ fn v5_neighbor_id_failure_retains_raw_candidate_without_accepting_target_text()
 }
 
 #[test]
+fn v5_vivo_neighbor_slot_controls_keep_target_identity() -> Result<(), Box<dyn Error>> {
+    let mut profile: Value = serde_json::from_slice(PROFILE)?;
+    profile["context_before_segments"] = 1.into();
+    profile["context_after_segments"] = 1.into();
+    profile["max_context_bytes"] = 4096.into();
+    profile["token_safety_margin_tokens"] = 64.into();
+    for (target_id, returned_id, line_index, text, accepted) in [
+        (280, 281, 0, "Совместно вложили команду.", false),
+        (280, 279, 0, "Совместно вложили команду.", false),
+        (280, 280, 1, "Совместно вложили команду.", false),
+        (280, 280, 0, "Совместно вложили команду.", true),
+        (280, 280, 0, "В команде 281 специалист.", true),
+        (281, 281, 0, "В команде 281 специалист.", true),
+    ] {
+        let target = SourceSegment::new(
+            SegmentId::new(target_id).ok_or("invalid target ID")?,
+            u64::from(target_id) * 1000,
+            u64::from(target_id) * 1000 + 900,
+            vec!["双方共同投入了团队。".into()],
+        )?;
+        let context = [target_id - 1, target_id + 1]
+            .into_iter()
+            .map(|id| {
+                Ok(SourceSegment::new(
+                    SegmentId::new(id).ok_or("invalid context ID")?,
+                    u64::from(id) * 1000,
+                    u64::from(id) * 1000 + 900,
+                    vec!["这一段是上下文。".into()],
+                )?)
+            })
+            .collect::<Result<Vec<_>, Box<dyn Error>>>()?;
+        let batch = TranslationBatch::new(
+            TranslationId::parse("11111111-1111-4111-8111-111111111111")?,
+            RunId::parse("22222222-2222-4222-8222-222222222222")?,
+            SourceHash::digest(b"vivo-slot-control-fixture"),
+            LanguagePair::new(LanguageCode::Chinese, LanguageCode::Russian)?,
+            vec![target],
+            context,
+        )?;
+        let candidate = format!(
+            "{{\"translations\":[{{\"line_index\":{line_index},\"segment_id\":{returned_id},\"text\":\"{text}\"}}]}}"
+        );
+        let listener = TcpListener::bind("127.0.0.1:0")?;
+        let address = listener.local_addr()?;
+        let server = std::thread::spawn(move || serve(&listener, &candidate));
+        let provider = LlamaCppProvider::new(
+            &format!("http://{address}/"),
+            ModelProfile::from_json(&serde_json::to_vec(&profile)?)?,
+        )?;
+        let result = translate_batch(&provider, &batch);
+        server.join().map_err(|_| "server panicked")??;
+        if accepted {
+            assert_eq!(result?[0].lines, [text]);
+        } else {
+            assert!(result.is_err());
+        }
+    }
+    Ok(())
+}
+
+#[test]
 fn v5_rejects_duplicate_fields_prose_empty_text_and_token_changes() -> Result<(), Box<dyn Error>> {
     for candidate in [
         r#"{"translations":[],"translations":[{"segment_id":2,"line_index":0,"text":"Текст"}]}"#,

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "REG-028",
+  "status": "guarded_model_failure",
+  "severity": "major",
+  "source_family": "private_commons_geekerwan_vivo_interview",
+  "source_sha256": "8c41e66f52000a5b67ab27bfc319accd11d89290b60e50fc5c60f4ee8230a000",
+  "affected_model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "profile_sha256": "432a1b064397a96334d777dfa01a2cef58d367b37023f1f9175501969698df4d",
+  "private_reproducer": {
+    "paired_report_sha256": "1334cd24bd471f0c7ce9e9ac0d29459706b2da943939fbc1f4ddb830c3c3a7cd",
+    "paired_raw_journal_sha256": "3b680456c4166ae54e2ce4cc7f374e85f68639c88a4f1b0a9d5730f30c58062d",
+    "cue_id": 280,
+    "seed": 101,
+    "request_sha256": "992c2ff2cea18a81ebe4e14d539f745e52949d0bfc63248f45f9923bdf920d76",
+    "raw_response_sha256": "ce9a1b853e40c10d3bcba257d1b37912e0d3c9fac0aecd6b931a036026b1eec2",
+    "raw_candidate_sha256": "b858492372a10d365099d9d39ddf79123c5f4e4d06b378fd3239430b7fe57729",
+    "expected_target_id": 280,
+    "returned_neighbor_id": 281,
+    "line_index": 0
+  },
+  "expected_invariant": "A one-slot v5 response uses the requested target ID and line index even when adjacent source-context cues have their own IDs.",
+  "observed_defect": "The 1.8B model sampled a valid JSON envelope for cue 280 but returned segment_id 281; the existing v5 identity guard rejected it. The paired 7B responses and another 1.8B seed used the correct slot ID.",
+  "related_controls": [
+    { "id": "next_context_id", "shape": "Target 280 with following context cue 281", "expected": "Reject a response labelled 281" },
+    { "id": "previous_context_id", "shape": "Target 280 with preceding context cue 279", "expected": "Reject a response labelled 279" },
+    { "id": "line_index_shift", "shape": "Target 280 line 0 with a nearby line 1", "expected": "Reject a response labelled line 1" }
+  ],
+  "negative_controls": [
+    { "id": "exact_target_id", "shape": "Target 280 returns segment_id 280 and line 0", "expected": "Accept a valid one-slot response" },
+    { "id": "numeric_text_not_slot", "shape": "Target 280 returns its own ID but mentions 281 as content", "expected": "Keep slot identity separate from semantic review" },
+    { "id": "different_target_id", "shape": "A separate request actually targets cue 281 and returns 281", "expected": "Accept a valid response for that request" }
+  ],
+  "human_review": "not_applicable_to_structural_rejection",
+  "release_gate": "open"
+}

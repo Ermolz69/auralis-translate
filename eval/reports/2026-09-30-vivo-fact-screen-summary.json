@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "id": "vivo-fact-paired-model-screen-redacted-v1",
+  "source_srt_sha256": "8c41e66f52000a5b67ab27bfc319accd11d89290b60e50fc5c60f4ee8230a000",
+  "authored_control_corpus_sha256": "3119d4d1c0b6489618d214808662195f0c1d6d0d47946a4726fcd5d7409a67ef",
+  "private_report_sha256": "1334cd24bd471f0c7ce9e9ac0d29459706b2da943939fbc1f4ddb830c3c3a7cd",
+  "private_raw_journal_sha256": "3b680456c4166ae54e2ce4cc7f374e85f68639c88a4f1b0a9d5730f30c58062d",
+  "predeclared_plan_commit": "c187a83fefa5b76c146d422e75d2015f2ee3e0f3",
+  "natural_focus_cue_ids": [60, 276, 280, 328, 466],
+  "authored_related_controls": 9,
+  "authored_negative_controls": 9,
+  "natural_seeds": [101, 202],
+  "control_seeds": [101],
+  "chat_requests": 56,
+  "server_starts": 2,
+  "retries": 0,
+  "active_wall_ms": 51548,
+  "models": [
+    {
+      "key": "1b",
+      "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+      "profile_sha256": "432a1b064397a96334d777dfa01a2cef58d367b37023f1f9175501969698df4d",
+      "structural_valid": 27,
+      "requests": 28,
+      "prompt_tokens": 6441,
+      "completion_tokens": 1337,
+      "sum_chat_http_ms": 11135,
+      "sampled_working_set_peak_bytes": 1543995392,
+      "sampled_whole_device_gpu_used_peak_mib": 2231
+    },
+    {
+      "key": "7b",
+      "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+      "profile_sha256": "9b34d86d3b0d872720ee729131efef99281e71a0000d202abea169d625a92e73",
+      "structural_valid": 28,
+      "requests": 28,
+      "prompt_tokens": 6512,
+      "completion_tokens": 1412,
+      "sum_chat_http_ms": 24492,
+      "sampled_working_set_peak_bytes": 5060325376,
+      "sampled_whole_device_gpu_used_peak_mib": 5749
+    }
+  ],
+  "safely_rejected_neighbor_slot": { "regression_id": "REG-028", "model": "1b", "focus_cue_id": 280, "seed": 101, "returned_id": 281 },
+  "ai_source_aware_triage": "major_facts_still_open",
+  "human_bilingual_reviewed_cases": 0,
+  "release_model_selected": false,
+  "approved_spoken_script": false
+}

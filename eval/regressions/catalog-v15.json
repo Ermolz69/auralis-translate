@@ -1,0 +1,23 @@
+{
+  "schema_version": 15,
+  "catalog_id": "zh-ru-development-regressions-v15",
+  "base_catalog_file": "catalog-v14.json",
+  "base_catalog_sha256": "af98ba709b667e6175c9dbed36bd358e47b055171688a9bb228b74eb2fcba046",
+  "entries": [
+    {
+      "id": "REG-028",
+      "pack_file": "natural-vivo-target-slot-neighbor-v1.json",
+      "pack_sha256": "f8cfdb17f2d8d985245473053deb192fa35b0f8dd76ff685831b9a5c326e4f64",
+      "source_family": "private_commons_geekerwan_vivo_interview",
+      "split": "unassigned_private_development_probe",
+      "category": "target_slot_neighbor_identity_failure",
+      "profile_scope": "checked 1.8B v5 scene profile, bounded paired Vivo fact screen",
+      "expected_invariant": "A one-slot v5 response uses the requested target ID and line index even when adjacent source-context cues have their own IDs.",
+      "severity": "major",
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-30-vivo-fact-model-screen-result.md",
+      "last_outcome": "One 1.8B seed returned neighbor ID 281 for target 280; existing v5 guard rejected it. One other 1.8B seed and both paired 7B seeds returned valid slot IDs; no language gate passed."
+    }
+  ]
+}
