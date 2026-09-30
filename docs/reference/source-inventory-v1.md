@@ -67,6 +67,18 @@ passed 93 + 66 + 206 cues. The Mingfay derivative has its own
 `task eval:data:youtube:mingfay:candidate:check` for strict parsing and exact
 private bytes. None of these tasks clears rights, speech alignment or
 references.
+
+The separate [Commons Ying candidate inventory](../../eval/corpora/commons-ying-candidate-v1.json)
+adds 93 strict Chinese cues from the pinned subtitle revision and a privately
+retained matching 3:38 WebM. `task eval:data:commons:ying:candidate:check`
+verifies the exact original bytes on this machine. Across the previous five
+candidates and Ying, six sources now account for 811 inspected cues and still
+zero eligible development cues. Media and caption rights, exact speech
+alignment and independent bilingual review remain unapproved. The
+[guarded complete-file result](../../eval/experiments/2026-09-30-commons-ying-guarded-full-result.md)
+is structurally valid but has AI-triaged fact and negation errors, so it cannot
+serve as an approved spoken script.
+
 Production licensed text and media stay in controlled storage outside the code
 repository; published manifests contain only permitted metadata and excerpts.
 The verifier does not download a third-party source, normalize raw bytes, infer

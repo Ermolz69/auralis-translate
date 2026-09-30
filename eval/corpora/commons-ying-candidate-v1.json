@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "inventory_id": "commons-ying-candidate-v1",
+  "fixture_only": false,
+  "sources": [
+    {
+      "id": "commons-ying-henan-1238607314",
+      "group_id": "wikitongues-ying-henan-video",
+      "split": "unassigned",
+      "state": "inspected_candidate",
+      "source_url": "https://commons.wikimedia.org/w/index.php?title=TimedText:WIKITONGUES-_Ying_speaking_Henan_Chinese.webm.zh-cn.srt&oldid=1238607314&action=raw",
+      "revision": "1238607314",
+      "retrieved_at": "2026-09-29T04:24:08Z",
+      "sha256": "505913bd7046b28c873307562a55d567043f8703bc00375c3485853b87c420d9",
+      "language": "zh",
+      "script": "Hans",
+      "format": "strict_srt_v1",
+      "cue_count": 93,
+      "local_candidate_path": ".cache/eval/commons-ying-1238607314/source.zh.srt",
+      "media_url": "https://commons.wikimedia.org/wiki/File:WIKITONGUES-_Ying_speaking_Henan_Chinese.webm",
+      "rights": {
+        "subtitle": { "decision": "unknown" },
+        "reference": { "decision": "unknown" },
+        "audio": { "decision": "unknown" }
+      },
+      "scenes": []
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "REG-022",
+  "status": "observed_unfixed",
+  "severity": "major",
+  "source_family": "private_commons_henan_mandarin_caption",
+  "source_sha256": "505913bd7046b28c873307562a55d567043f8703bc00375c3485853b87c420d9",
+  "output_sha256": "a5aa5054ba63f816959552580600c0d5ec40c991a0deaf3a656e879fc68cf18b",
+  "affected_model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+  "private_reproducer": {
+    "report_locator": ".cache/eval/commons-ying-full-7b-srt-guard-v1/run-Vod8D2/report.json",
+    "report_sha256": "97d6a0269bd0890e2221a24c8852add2e60b8b065daca3df9913a7a4e68480cc",
+    "windows": [
+      { "cue_start": 5, "cue_end": 6, "source_window_sha256": "75cad6958e647efe523a8cc09b2ac6e5913dc68ab9b633d2bd5834fd50aef68a", "target_window_sha256": "8529bcce08ec43c8ac780e4f9ce5f474952c76dabb6f7dc952af73ee9acc04cf", "focus_cue": 6, "request_sha256": "d67310ca092effa7c120a15c61c8b506026e91cf2c307e67a18106d37ff7e117", "raw_response_sha256": "8f2769d5fe3a8c2e58655cd5b45d513ae26837499107a818367316e77a011ecd", "source_fact": "Nanyang city in Henan, not a generic southern part plus a different city spelling" },
+      { "cue_start": 30, "cue_end": 31, "source_window_sha256": "7291c18271785b7ebc1a117a716da08675ab2249d4a6d5131d6b14ecdb9f5ea0", "target_window_sha256": "184c750cbd9b0a76303d8559b3e4958f11ac75ab99341de1b643d1b167b5bc96", "focus_cue": 31, "request_sha256": "4c81535f6821dc31a82acf720698b82954979566807bc130c9f349d97c37f3ab", "raw_response_sha256": "94158f70cb974f54fe9e29088dd924d6b19c3992df1d5cbd90ce0cc9766bb2ea", "source_fact": "Nanyang city and Tanghe county remain one place hierarchy across the split" },
+      { "cue_start": 33, "cue_end": 34, "source_window_sha256": "33008b938bcfcad5843032f611000a86aa36926976a910e2d62cdf6dd574e9f4", "target_window_sha256": "6d84e33fca724cd11a060dbbcc91f6bfdb36c25f6cf441f181b2cf89efef4837", "focus_cue": 33, "request_sha256": "18d3745bf63362afe21ecbdad7b90908df3a2d9ae237042434370988e1c25427", "raw_response_sha256": "48041ea533311345b7b9ab3163f5368c7e17402165ff7c0b0405b94d89db6390", "source_fact": "The split word means dialect, not an invented district or unrelated written statement" },
+      { "cue_start": 88, "cue_end": 89, "source_window_sha256": "e38a75be2f42265bca25f6c4edfd8f133e2fa4944191c7fe787e44886ee8bcf0", "target_window_sha256": "08082fe5b3f5daf4544c03a316f1c0fc924a1854f96e63dec37129267d5f61c5", "focus_cue": 88, "request_sha256": "e8e54467f464dc33e15282465123fe85ca671ca7181ff728105db5b1d8deb013", "raw_response_sha256": "2709c7bacc07e626fe9bd04ebeae8c68a55c5970182e563e077cc5c3df2ee55e", "source_fact": "Henan province across a cue boundary, not a river plus a generic southern province" }
+    ],
+    "same_source_intact_name_control": { "cue_start": 21, "cue_end": 21, "source_window_sha256": "8c0f9ae33801ae0ae6e4a03ea12619f537a02d0aaca2f62693e18b38f9ccebed", "target_window_sha256": "6b3094e46f9f8b97a1abe0491439eed8f1a4884c51723879ec167edaa1bacf0c" }
+  },
+  "expected_invariant": "A place name or term split across neighboring source cues retains its whole-source identity in the Russian scene; the model must not reinterpret fragments as unrelated facts.",
+  "observed_defect": "Two split Nanyang mentions, one split Henan mention and a split dialect term lost their whole-source identity despite scene context; the intact Nanyang control in the same source was correct.",
+  "related_controls": [
+    { "id": "city_split_twice", "shape": "One city name divided at two different cue boundaries", "expected": "Same city in both windows" },
+    { "id": "province_split_near_end", "shape": "One province name divided near the end of a file", "expected": "Province preserved, no invented river" },
+    { "id": "common_term_split_at_scene_start", "shape": "A dialect term divided at the start of a scene", "expected": "Term preserved without invented district" }
+  ],
+  "negative_controls": [
+    { "id": "intact_city", "shape": "Same city name within one cue", "expected": "Ordinary city rendering remains valid" },
+    { "id": "literal_river", "shape": "A source that actually names a river", "expected": "Do not suppress a real river" },
+    { "id": "literal_south", "shape": "A source that actually describes a southern region", "expected": "Do not force a province name" }
+  ],
+  "human_review": "missing",
+  "release_gate": "open"
+}

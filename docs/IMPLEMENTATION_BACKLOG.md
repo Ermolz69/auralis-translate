@@ -97,9 +97,21 @@ when cue 27 exhausted 256 completion tokens; a copied-state resume reached
 Russian result or speech script was published. [REG-020](../eval/regressions/natural-ying-length-repeat-v1.json)
 and [REG-021](../eval/regressions/natural-ying-srt-checkpoint-v1.json)
 retain both failures and controls. The SRT checkpoint guard and Windows
-socket-test repair passed `task check`; a new complete natural run, alignment,
-rights, independent bilingual review and real listening remain open. The
+socket-test repair passed `task check`; alignment, rights, independent
+bilingual review and real listening remain open. The
 source does not satisfy the 10–20-minute scene or long-file release tiers.
+
+The [fresh guarded complete-file run](../eval/experiments/2026-09-30-commons-ying-guarded-full-result.md)
+then reached 93/93 protected, durable cues and a byte-identical offline result
+with the same 7B model, but source-aware **AI triage** found split place/term
+facts and a reversed negative contrast. [REG-022](../eval/regressions/natural-ying-boundary-facts-v1.json)
+and [REG-023](../eval/regressions/natural-ying-negation-v1.json) retain exact
+private reproductions and new controls in catalog v12. The separately
+[inventoried Ying candidate](../eval/corpora/commons-ying-candidate-v1.json)
+makes six sources and 811 inspected cues, still **zero eligible**. This is
+partial `DATA-03`/`CTX-02`/`EVAL-04` structural and failure evidence, not
+quality acceptance or a spoken script. Independent bilingual review, source
+and audio alignment, rights and longer natural tiers remain open.
 
 `VOICE-02` and `VOICE-07` also have a local Auralis
 [SAPI WAV boundary regression](../eval/experiments/2026-09-29-auralis-sapi-wav-boundary.md):

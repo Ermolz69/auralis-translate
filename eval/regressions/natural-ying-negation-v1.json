@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "REG-023",
+  "status": "observed_unfixed",
+  "severity": "major",
+  "source_family": "private_commons_henan_mandarin_caption",
+  "source_sha256": "505913bd7046b28c873307562a55d567043f8703bc00375c3485853b87c420d9",
+  "output_sha256": "a5aa5054ba63f816959552580600c0d5ec40c991a0deaf3a656e879fc68cf18b",
+  "affected_model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+  "private_reproducer": {
+    "report_locator": ".cache/eval/commons-ying-full-7b-srt-guard-v1/run-Vod8D2/report.json",
+    "report_sha256": "97d6a0269bd0890e2221a24c8852add2e60b8b065daca3df9913a7a4e68480cc",
+    "cue_start": 64,
+    "cue_end": 66,
+    "source_window_sha256": "2f8000341fae7b94741be27f76a25c3e5452165cbbcc70cb2462b4294d390e36",
+    "target_window_sha256": "b48b3f41a3eaf125216dd61f9575eaacb27aed75c8e1190b0c1fee7173a22196",
+    "focus_cue": 66,
+    "request_sha256": "93f1150731e74c990dc17c747812fc6ebcb701e01097bebb9863991987a71064",
+    "raw_response_sha256": "916dccbde053002dd6362e468c50a1231c01138d1fb303734c087de82b113da6"
+  },
+  "expected_invariant": "When the whole Chinese source says that two usages are completely different, the Russian scene must retain that negative contrast across all cue boundaries.",
+  "observed_defect": "The accepted three-cue Russian window contradicts itself and ends by asserting sameness, reversing the source contrast.",
+  "related_controls": [
+    { "id": "negative_split_last_char", "shape": "Not-equal phrase divided before its final character", "expected": "Difference remains explicit" },
+    { "id": "negative_with_same_subject", "shape": "A later cue repeats the subject but not the negative marker", "expected": "No polarity reversal" },
+    { "id": "negative_near_scene_end", "shape": "Negative contrast at a scene boundary", "expected": "Neighboring target lines agree on polarity" }
+  ],
+  "negative_controls": [
+    { "id": "positive_same", "shape": "A source explicitly says two usages are the same", "expected": "Sameness is allowed" },
+    { "id": "different_without_split", "shape": "A complete different phrase within one cue", "expected": "Normal negative rendering remains allowed" },
+    { "id": "quoted_opposite", "shape": "A speaker quotes someone claiming the opposite", "expected": "Do not flatten attributed speech" }
+  ],
+  "human_review": "missing",
+  "release_gate": "open"
+}

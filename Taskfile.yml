@@ -18,6 +18,11 @@ tasks:
     cmds:
       - node --check eval/scripts/check-ying-private-failures.mjs
       - node eval/scripts/check-ying-private-failures.mjs
+  eval:regression:ying:guarded:private:check:
+    desc: Verify private guarded-run identity and exact source/target boundary-fact failures
+    cmds:
+      - node --check eval/scripts/check-ying-guarded-private.mjs
+      - node eval/scripts/check-ying-guarded-private.mjs
   eval:data:commons:ying:media:acquire:
     desc: Acquire one bounded private Commons Ying video for source/audio inspection
     cmds:
@@ -453,7 +458,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-021 packs and all control counts
+    desc: Verify versioned REG-001 through REG-023 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -465,6 +470,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v9.mjs
       - node eval/scripts/check-regression-catalog-v10.mjs
       - node eval/scripts/check-regression-catalog-v11.mjs
+      - node eval/scripts/check-regression-catalog-v12.mjs
   eval:reg009:prefix-repair:probe:
     desc: Measure conservative exact-code prefix repair on the archived synthetic long-file output
     cmds:
@@ -747,6 +753,11 @@ tasks:
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-inspected-candidates-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-cc-commerce-candidate-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/youtube-mingfay-candidate-v1.json
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-ying-candidate-v1.json
+  eval:data:commons:ying:candidate:check:
+    desc: Validate the non-admitted Commons Ying inventory and exact retained Chinese SRT bytes
+    cmds:
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-ying-candidate-v1.json --require-candidate-bytes
   eval:data:youtube:mingfay:preflight:
     desc: Check the declared video, pinned extractor and bounded metadata-only command
     env:

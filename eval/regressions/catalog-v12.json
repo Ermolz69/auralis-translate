@@ -1,0 +1,38 @@
+{
+  "schema_version": 12,
+  "catalog_id": "zh-ru-development-regressions-v12",
+  "base_catalog_file": "catalog-v11.json",
+  "base_catalog_sha256": "6e3e07da67acff4da108eff7e887a447c588c2e066ed9e2d80b1c066a72053ec",
+  "entries": [
+    {
+      "id": "REG-022",
+      "pack_file": "natural-ying-boundary-facts-v1.json",
+      "pack_sha256": "8e154aa819d8c4ddad1d4c003b742dd5d31529aa0d31f44f7b6f3317e8727b2e",
+      "source_family": "private_commons_henan_mandarin_caption",
+      "split": "unassigned_private_development_probe",
+      "category": "cross_cue_place_and_term_fragmentation",
+      "profile_scope": "checked 7B v5 scene profile, guarded full Commons Ying run",
+      "expected_invariant": "A place name or term split across neighboring source cues retains its whole-source identity in the Russian scene; the model must not reinterpret fragments as unrelated facts.",
+      "severity": "major",
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-30-commons-ying-guarded-full-result.md",
+      "last_outcome": "Same-source intact Nanyang was correct, but two split Nanyang windows, a split Henan window and a split dialect term lost their source identity. AI triage only; human review missing."
+    },
+    {
+      "id": "REG-023",
+      "pack_file": "natural-ying-negation-v1.json",
+      "pack_sha256": "53226b912213d93445cb530d7051f1cce6782336575605ee536cd47f632172b0",
+      "source_family": "private_commons_henan_mandarin_caption",
+      "split": "unassigned_private_development_probe",
+      "category": "cross_cue_negative_contrast_reversal",
+      "profile_scope": "checked 7B v5 scene profile, guarded full Commons Ying run",
+      "expected_invariant": "When the whole Chinese source says that two usages are completely different, the Russian scene must retain that negative contrast across all cue boundaries.",
+      "severity": "major",
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-30-commons-ying-guarded-full-result.md",
+      "last_outcome": "The accepted three-cue window contradicts itself and ends by asserting sameness. AI triage only; human review missing."
+    }
+  ]
+}
