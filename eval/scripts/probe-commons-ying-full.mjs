@@ -11,8 +11,10 @@ import { relocateCopiedSource } from './relocate-copied-source.mjs';
 
 const root = path.resolve('.');
 const resumeMode = process.argv[2] === '--resume';
-assert(process.argv.length === (resumeMode ? 3 : 2), 'Only --resume is supported');
-const experiment = resumeMode ? 'commons-ying-full-7b-resume-v1' : 'commons-ying-full-7b-v1';
+const guardedMode = process.argv[2] === '--guarded';
+assert(process.argv.length === (resumeMode || guardedMode ? 3 : 2), 'Only --resume or --guarded is supported');
+const experiment = resumeMode ? 'commons-ying-full-7b-resume-v1'
+  : guardedMode ? 'commons-ying-full-7b-srt-guard-v1' : 'commons-ying-full-7b-v1';
 const failedWorkspace = path.join(root, '.cache/eval/commons-ying-full-7b-v1/run-z2fnYf');
 const failedReportSha256 = 'f08a248dac388a8d327e3c2c714c1b61fcba1f70b64b3be65a7150f07ade706c';
 const sourcePath = path.join(root, '.cache/eval/commons-ying-1238607314/source.zh.srt');

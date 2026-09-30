@@ -29,6 +29,16 @@ tasks:
       - task: build:release
       - node --check eval/scripts/probe-commons-ying-full.mjs
       - node eval/scripts/probe-commons-ying-full.mjs
+  eval:natural:ying:7b:guard:probe:
+    desc: Run one fresh complete Ying candidate with pre-checkpoint SRT grammar validation
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:data:candidates:bytes
+      - task: build:release
+      - node --check eval/scripts/probe-commons-ying-full.mjs
+      - node eval/scripts/probe-commons-ying-full.mjs --guarded
   eval:natural:ying:7b:resume:
     desc: Resume one verified copy of the retained 26-block natural-model failure
     env:
