@@ -26,6 +26,7 @@
   "sampled_whole_device_gpu_memory_peak_mib": 2306,
   "source_selected_ai_review_cues": 44,
   "ai_flagged_focus_windows": ["2-3", "12", "19-21", "91", "133", "142", "225-227", "267"],
+  "read_only_measurement_warning_ids": [12, 227],
   "human_bilingual_reviewed_cues": 0,
   "source_rights_admitted": false,
   "source_audio_alignment_reviewed": false,

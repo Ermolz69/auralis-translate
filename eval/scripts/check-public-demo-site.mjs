@@ -78,6 +78,9 @@ assert.deepEqual(data.asus_v6_long,
 assert(html.includes('id="asus-v6-long"'));
 assert(html.includes('268/268 структурно, перевод не принят'));
 assert(html.includes('2026-09-30-commons-asus-full-v6-slot-result.md'));
+assert(html.includes('REG-031–033 и контроли'));
+assert(html.includes('docs/reference/measurement-warning-v1.md'));
+assert(html.includes('архивной выборки отметила реплики 12 и 227'));
 assert.deepEqual(data.natural_audio, await loadNaturalAudio(root));
 assert.deepEqual(data.source_candidates, {
   source_count: 9,
