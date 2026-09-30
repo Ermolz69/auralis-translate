@@ -30,6 +30,7 @@ import { loadYingFullFailure, renderYingFullFailure } from './ying-full-failure-
 import { loadYingGuarded, renderYingGuarded } from './ying-guarded-section.mjs';
 import { loadVivoFull, renderVivoFull } from './vivo-full-section.mjs';
 import { loadVivoFactScreen, renderVivoFactScreen } from './vivo-fact-screen-section.mjs';
+import { loadVivoGeneralFact, renderVivoGeneralFact } from './vivo-general-fact-section.mjs';
 import { loadNaturalAudio, renderNaturalAudio } from './natural-audio-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -66,6 +67,7 @@ const yingFullFailure = await loadYingFullFailure(root);
 const yingGuarded = await loadYingGuarded(root);
 const vivoFull = await loadVivoFull(root);
 const vivoFactScreen = await loadVivoFactScreen(root);
+const vivoGeneralFact = await loadVivoGeneralFact(root);
 const naturalAudio = await loadNaturalAudio(root);
 const evidencePath = path.join(root, 'eval/reports/public-demo-2026-09-27.json');
 if (process.argv[2] === '--capture') {
@@ -144,6 +146,7 @@ payload.ying_full_failure = yingFullFailure;
 payload.ying_guarded = yingGuarded;
 payload.vivo_full = vivoFull;
 payload.vivo_fact_screen = vivoFactScreen;
+payload.vivo_general_fact = vivoGeneralFact;
 payload.natural_audio = naturalAudio;
 payload.terms_probe = { success_sha256: termsProbe.success_sha256, failure_sha256: termsProbe.failure_sha256, profile_sha256: termsProbe.profile_sha256, corpus_sha256: termsProbe.corpus_sha256, chat_requests: termsProbe.chat_requests, loopback_requests: termsProbe.loopback_requests };
 const json = JSON.stringify(payload).replaceAll('<', '\\u003c');
@@ -187,6 +190,7 @@ ${renderYingFullFailure(yingFullFailure)}
 ${renderYingGuarded(yingGuarded)}
 ${renderVivoFull(vivoFull)}
 ${renderVivoFactScreen(vivoFactScreen)}
+${renderVivoGeneralFact(vivoGeneralFact, vivoFactScreen.summary.models.find(model => model.key === '7b'))}
 ${renderV5Envelope(v5Envelope, dataset, currency.benchmark, escape, number)}
 ${renderSceneContext(sceneContext, escape)}
 ${renderPronounCrossModel(pronounCrossModel, escape)}

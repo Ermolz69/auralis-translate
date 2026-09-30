@@ -31,6 +31,7 @@ import { loadYingFullFailure } from './ying-full-failure-section.mjs';
 import { loadYingGuarded } from './ying-guarded-section.mjs';
 import { loadVivoFull } from './vivo-full-section.mjs';
 import { loadVivoFactScreen } from './vivo-fact-screen-section.mjs';
+import { loadVivoGeneralFact } from './vivo-general-fact-section.mjs';
 import { loadNaturalAudio } from './natural-audio-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -56,6 +57,7 @@ assert.deepEqual(data.ying_full_failure, await loadYingFullFailure(root));
 assert.deepEqual(data.ying_guarded, await loadYingGuarded(root));
 assert.deepEqual(data.vivo_full, await loadVivoFull(root));
 assert.deepEqual(data.vivo_fact_screen, await loadVivoFactScreen(root));
+assert.deepEqual(data.vivo_general_fact, await loadVivoGeneralFact(root));
 assert.deepEqual(data.natural_audio, await loadNaturalAudio(root));
 assert.deepEqual(data.source_candidates, {
   source_count: 9,
@@ -81,6 +83,9 @@ assert(html.includes('Первые 4 источника Commons дали 488 р�
 assert(html.includes('2026-09-30-commons-train-240p-stream-result.md'));
 assert(html.includes('2026-09-30-commons-vivo-media-samples-result.md'));
 assert(html.includes('2026-09-30-geekerwan-two-scene-media-result.md'));
+assert(html.includes('id="vivo-general-fact"'));
+assert(html.includes('2026-09-30-vivo-general-fact-reminder-result.md'));
+assert(html.includes('Экспериментальный текст не включён в релизный профиль'));
 assert(html.includes('речь и совпадение реплик человеком пока не проверены'));
 assert(html.includes('2026-09-29-youtube-mingfay-caption-candidate.md'));
 assert(html.includes('id="natural-screen"'));
