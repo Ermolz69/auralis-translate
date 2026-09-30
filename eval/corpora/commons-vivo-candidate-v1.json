@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "inventory_id": "commons-vivo-candidate-v1",
+  "fixture_only": false,
+  "sources": [
+    {
+      "id": "commons-geekerwan-vivo-979826861",
+      "group_id": "geekerwan-vivo-mediatek-interview",
+      "split": "unassigned",
+      "state": "inspected_candidate",
+      "source_url": "https://commons.wikimedia.org/w/index.php?title=TimedText%3A%E9%87%87%E8%AE%BFvivo_%26_MediaTek%E7%A0%94%E5%8F%91%E5%A4%A7%E4%BD%AC%EF%BC%9A%E8%93%9D%E5%8E%82%E4%B8%8E%E5%A4%A9%E7%8E%91%E5%90%88%E4%BD%9C%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B.webm.zh.srt&oldid=979826861&action=raw",
+      "revision": "979826861",
+      "retrieved_at": "2026-09-30T05:17:38.330Z",
+      "sha256": "8c41e66f52000a5b67ab27bfc319accd11d89290b60e50fc5c60f4ee8230a000",
+      "language": "zh",
+      "script": "Hans",
+      "format": "strict_srt_v1",
+      "cue_count": 467,
+      "local_candidate_path": ".cache/eval/commons-vivo-979826861/source.zh.srt",
+      "media_url": "https://commons.wikimedia.org/wiki/File:%E9%87%87%E8%AE%BFvivo_%26_MediaTek%E7%A0%94%E5%8F%91%E5%A4%A7%E4%BD%AC%EF%BC%9A%E8%93%9D%E5%8E%82%E4%B8%8E%E5%A4%A9%E7%8E%91%E5%90%88%E4%BD%9C%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B.webm",
+      "rights": {
+        "subtitle": { "decision": "unknown" },
+        "reference": { "decision": "unknown" },
+        "audio": { "decision": "unknown" }
+      },
+      "scenes": []
+    }
+  ]
+}

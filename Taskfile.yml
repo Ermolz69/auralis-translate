@@ -11,6 +11,28 @@ tasks:
     cmds:
       - node --check eval/scripts/check-commons-train-media-inventory.mjs
       - node eval/scripts/check-commons-train-media-inventory.mjs
+  eval:data:commons:train:media:acquire:
+    desc: Acquire one private, size-bounded 240p Commons train-video copy
+    cmds:
+      - task: eval:data:commons:train:media:inventory:check
+      - node --check eval/scripts/acquire-commons-train-240p.mjs
+      - node eval/scripts/acquire-commons-train-240p.mjs
+  eval:data:commons:train:media:streams:
+    desc: Rehash the private train-video copy and inspect its exact audio/video streams
+    cmds:
+      - node --check eval/scripts/check-commons-train-240p-streams.mjs
+      - node eval/scripts/check-commons-train-240p-streams.mjs
+  eval:data:commons:vivo:caption:acquire:
+    desc: Acquire one pinned Chinese SRT revision for the 18-minute Geekerwan interview
+    cmds:
+      - node --check eval/scripts/acquire-commons-vivo-caption.mjs
+      - node eval/scripts/acquire-commons-vivo-caption.mjs
+  eval:data:commons:vivo:candidate:check:
+    desc: Verify the exact non-admitted 467-cue interview source and inventory
+    cmds:
+      - node --check eval/scripts/stage-commons-vivo-caption.mjs
+      - node eval/scripts/stage-commons-vivo-caption.mjs
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-vivo-candidate-v1.json --require-candidate-bytes
   test:local-process:timeout:
     desc: Ensure a timed-out probe child is stopped and successful output remains available
     cmds:
@@ -764,6 +786,7 @@ tasks:
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-cc-commerce-candidate-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/youtube-mingfay-candidate-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-ying-candidate-v1.json
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-vivo-candidate-v1.json
   eval:data:commons:ying:candidate:check:
     desc: Validate the non-admitted Commons Ying inventory and exact retained Chinese SRT bytes
     cmds:

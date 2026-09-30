@@ -1,0 +1,5 @@
+# Commons train private stream check
+
+Date: 30 September 2026. Task: `DATA-03`. One bounded media GET under [the acquisition plan](2026-09-30-commons-train-240p-acquisition-plan.md) returned 72,838,299 bytes, SHA-256 `df7f7c8116a746b690a6c7d8120ed22b738aaf7cd63e6e9b3d55b33411784365`, in 183,238 ms. Its acquisition record SHA-256 is `0e1ca05d236359908e708f7220468954826fed304b8204c6f6dc4e882eac6fda`. The 206-cue Chinese SRT remains SHA-256 `ccc47105cdc2c782d82421d9790e5babf5801a8196d1b6b744d6b8df71bf9b4c`.
+
+Run `task eval:data:commons:train:media:streams` once on that private file. Recheck all three hashes and invoke the installed FFprobe SHA-256 `9df3b0b5275e830961df6d94e1f7a71121a7abd5ff708e9fec8a0b6084a55015` with a 30-second process limit and 1 MiB output cap. Record full stream JSON and summarize duration, codecs, resolution and audio presence. Do not claim speech from an Opus stream or cue alignment from duration. No model, TTS, audio export or public media upload is part of this step. Preserve an error report if probing fails.
