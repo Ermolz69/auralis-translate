@@ -139,6 +139,11 @@ tasks:
     cmds:
       - task: eval:natural:json-tail:temperature:preflight
       - node eval/scripts/probe-json-tail-temperature.mjs
+  eval:natural:json-tail:temperature:check:
+    desc: Verify the exact eight raw temperature-only requests and redacted outcome
+    cmds:
+      - node --check eval/scripts/check-json-tail-temperature.mjs
+      - node eval/scripts/check-json-tail-temperature.mjs
   eval:natural:vivo:7b:resume:
     desc: Resume one verified copy of the retained 275-checkpoint Vivo failure
     env:

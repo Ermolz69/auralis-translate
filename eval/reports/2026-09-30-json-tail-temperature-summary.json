@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "experiment": "natural-json-tail-temperature-zero-v1",
+  "private_report_sha256": "b33c8ba858bba4c5b9957884b7b312ea90997993afee3e32e1394b73c7e19664",
+  "private_requests_jsonl_sha256": "1d2e9a1fab3d0419ebe074a655b2bc93e19c07114cd944527c73a7eae2f82355",
+  "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+  "profile_sha256": "9b34d86d3b0d872720ee729131efef99281e71a0000d202abea169d625a92e73",
+  "changed_field": "temperature",
+  "baseline_temperature": 0.7,
+  "variant_temperature": 0,
+  "sources": [
+    { "id": "asus", "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b", "baseline_failed_cue": 227, "variant_valid": 0, "variant_total": 2, "neighbor_valid": 2, "neighbor_total": 2 },
+    { "id": "vivo", "source_sha256": "8c41e66f52000a5b67ab27bfc319accd11d89290b60e50fc5c60f4ee8230a000", "baseline_failed_cue": 276, "variant_valid": 2, "variant_total": 2, "neighbor_valid": 2, "neighbor_total": 2 }
+  ],
+  "variant_structural_valid": 6,
+  "variant_requests": 8,
+  "prompt_tokens": 2350,
+  "completion_tokens": 428,
+  "summed_chat_http_ms": 8088,
+  "wall_elapsed_ms": 13960,
+  "resource_sample_count": 2,
+  "sampled_server_working_set_peak_bytes": 5061525504,
+  "sampled_whole_device_gpu_memory_peak_mib": 5744,
+  "human_reviewed_cues": 0,
+  "profile_promoted": false,
+  "raw_source_or_candidate_published": false
+}

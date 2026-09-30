@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "source": "private_commons_geekerwan_asus_rog_ally",
+  "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+  "source_cues": 268,
+  "media_sha256": "9e4271f8112de2fa65ad67c4cec3390529e916d70363bc5f4c421f4479b97cc1",
+  "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+  "profile_sha256": "9b34d86d3b0d872720ee729131efef99281e71a0000d202abea169d625a92e73",
+  "initial": {
+    "private_report_sha256": "d86f4264ae1c65f3508c3c8539cdcee3fd4fcae9de1fbc14ee0d83e02bc216ba",
+    "saved_checkpoints": 226,
+    "rejected_cue": 227,
+    "chat_requests": 227,
+    "http_requests": 684,
+    "prompt_tokens": 65874,
+    "completion_tokens": 11214,
+    "translation_command_ms": 271459,
+    "sampled_server_working_set_peak_bytes": 5068865536,
+    "sampled_whole_device_gpu_memory_peak_mib": 5745,
+    "complete_results": 0,
+    "partial_srt_published": false
+  },
+  "resume": {
+    "private_report_sha256": "646d7e6ff5d83c5afa097766db52c267e34d7800c355ff192f7364f01bcb8d7d",
+    "saved_checkpoints": 226,
+    "chat_requests": 1,
+    "same_request_sha256": "945dda8849ffbfd948794a01311e94274e4f00b388a214025dfb709c7e226848",
+    "same_defect_recurred": true,
+    "complete_results": 0,
+    "partial_srt_published": false
+  },
+  "human_bilingual_reviewed_cues": 0,
+  "source_rights_admitted": false,
+  "profile_selected": false
+}

@@ -188,6 +188,13 @@ or source admission claim follows;
 `DATA-03`, `CTX-02` and `EVAL-04` remain in progress, and `LONG-04` remains
 planned pending complete source-aware human review and its dependencies.
 
+The [one-factor temperature-zero screen](../eval/experiments/2026-09-30-json-tail-temperature-screen-result.md)
+adds eight same-source 7B calls on the two failed windows and adjacent
+controls. ASUS's invented JSON tail persisted 2/2; Vivo's tail disappeared
+2/2, but the 36-month planning fact error remained under AI source-aware
+triage. The 6/8 structural total does not justify a lower-temperature
+profile, language score, training decision or quantization change.
+
 ## Current handoff
 
 `CTX-02` and `EVAL-04` now have an opt-in [provider review diagnostic
