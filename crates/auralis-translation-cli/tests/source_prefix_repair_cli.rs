@@ -183,6 +183,9 @@ fn serve(
             }
         };
         stream
+            .set_nonblocking(false)
+            .map_err(|error| error.to_string())?;
+        stream
             .set_read_timeout(Some(Duration::from_secs(5)))
             .map_err(|error| error.to_string())?;
         let request = read_request(&mut stream)?;
@@ -260,4 +263,58 @@ fn command(args: &[&str]) -> Result<std::process::Output, Box<dyn Error>> {
 
 fn path(path: &Path) -> Result<&str, Box<dyn Error>> {
     Ok(path.to_str().ok_or("test path must be Unicode")?)
+}
+
+#[test]
+fn accepted_nonblocking_listener_stream_reads_fragmented_request() -> Result<(), Box<dyn Error>> {
+    let cases: [&[&[u8]]; 3] = [
+        &[
+            b"POST /v1/chat/completions HTTP/1.1\r\nContent-Length: 4\r\n\r\nab",
+            b"cd",
+        ],
+        &[
+            b"POST /v1/chat/completions HTTP/1.1\r\nContent-",
+            b"Length: 4\r\n\r\nabcd",
+        ],
+        &[b"POST /v1/chat/completions HTTP/1.1\r\nContent-Length: 4\r\n\r\nabcd"],
+    ];
+    for parts in cases {
+        let listener = TcpListener::bind("127.0.0.1:0")?;
+        listener.set_nonblocking(true)?;
+        let address = listener.local_addr()?;
+        let server = std::thread::spawn(move || -> Result<String, String> {
+            let deadline = Instant::now() + Duration::from_secs(2);
+            let mut stream = loop {
+                match listener.accept() {
+                    Ok((stream, _)) => break stream,
+                    Err(error) if error.kind() == std::io::ErrorKind::WouldBlock => {
+                        if Instant::now() >= deadline {
+                            return Err("accept timed out".into());
+                        }
+                        std::thread::sleep(Duration::from_millis(1));
+                    }
+                    Err(error) => return Err(error.to_string()),
+                }
+            };
+            stream
+                .set_nonblocking(false)
+                .map_err(|error| error.to_string())?;
+            stream
+                .set_read_timeout(Some(Duration::from_secs(2)))
+                .map_err(|error| error.to_string())?;
+            read_request(&mut stream)
+        });
+        let mut client = std::net::TcpStream::connect(address)?;
+        for (index, part) in parts.iter().enumerate() {
+            if index != 0 {
+                std::thread::sleep(Duration::from_millis(30));
+            }
+            client.write_all(part)?;
+        }
+        assert_eq!(
+            server.join().map_err(|_| "server panicked")??,
+            "POST /v1/chat/completions"
+        );
+    }
+    Ok(())
 }

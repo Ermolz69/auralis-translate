@@ -1,0 +1,5 @@
+# Windows CLI mock socket race
+
+Date: 30 September 2026. A broad `task check` after the SRT checkpoint guard passed formatting and Clippy, then failed at the existing `source_prefix_repair_cli` integration test with Windows socket error 10035 (`WouldBlock`). This was a test-harness failure, not a model observation or production source-prefix failure. The mock listener was nonblocking for its accept loop; the accepted stream could also be nonblocking, so its immediate request read raced the CLI writer.
+
+The minimal regression keeps the listener nonblocking, explicitly makes each accepted stream blocking with a two-second read timeout, and sends the same HTTP request in three forms: fragmented body, fragmented header and immediate complete request. All must be read as the same request target. The full existing two-stage CLI integration still checks a failed second cue, preserved first checkpoint, resumed result and byte-identical offline export. `task test:source-prefix-repair` passed after the repair; repeat `task check` is required before considering the workspace green. No original evaluation artifact or model result was changed.
