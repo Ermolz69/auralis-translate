@@ -806,6 +806,25 @@ tasks:
     cmds:
       - task: eval:regression:asus:v6:private:check
       - cargo test --offline -p auralis-translation --test measurement_private_asus -- --ignored --nocapture
+  eval:natural:asus:v6:fact-screen:preflight:
+    desc: Verify pinned ASUS v6 requests and 64 paired fact-screen calls without inference
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:regression:asus:v6:private:check
+      - node --check eval/scripts/probe-asus-v6-fact-model-screen.mjs
+      - node eval/scripts/probe-asus-v6-fact-model-screen.mjs --preflight
+  eval:natural:asus:v6:fact-screen:probe:
+    desc: Run one bounded 1.8B/7B ASUS v6 fact and terminology screen
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:natural:asus:v6:fact-screen:preflight
+      - node eval/scripts/probe-asus-v6-fact-model-screen.mjs
   eval:reg009:prefix-repair:probe:
     desc: Measure conservative exact-code prefix repair on the archived synthetic long-file output
     cmds:
