@@ -36,6 +36,7 @@ import { loadAsusTail } from './asus-tail-section.mjs';
 import { loadAsusModelComparison } from './asus-model-comparison-section.mjs';
 import { loadNaturalAsusSlotSchema } from './natural-asus-slot-schema-section.mjs';
 import { loadAsusV6Long } from './asus-v6-long-section.mjs';
+import { loadMeasurementV2 } from './measurement-v2-section.mjs';
 import { loadAsusV6FactScreen } from './asus-v6-fact-screen-section.mjs';
 import { loadNaturalAudio } from './natural-audio-section.mjs';
 import { loadAsusFullAudio } from './asus-full-audio-section.mjs';
@@ -83,6 +84,10 @@ assert(html.includes('2026-09-30-commons-asus-full-v6-slot-result.md'));
 assert(html.includes('REG-031–033 и контроли'));
 assert(html.includes('docs/reference/measurement-warning-v1.md'));
 assert(html.includes('архивной выборки отметила реплики 12 и 227'));
+assert.deepEqual(data.measurement_v2, await loadMeasurementV2(root));
+assert(html.includes('id="measurement-v2"'));
+assert(html.includes('REG-035 и контроли'));
+assert(html.includes('запросов к модели для этих контролей 0, человеческих оценок 0'));
 assert.deepEqual(data.asus_v6_fact_screen,
   await loadAsusV6FactScreen(root, data.asus_v6_long));
 assert(html.includes('id="asus-v6-fact-screen"'));
