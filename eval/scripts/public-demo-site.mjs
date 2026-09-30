@@ -29,6 +29,7 @@ import { loadNaturalScreen, renderNaturalScreen } from './natural-screen-section
 import { loadYingFullFailure, renderYingFullFailure } from './ying-full-failure-section.mjs';
 import { loadYingGuarded, renderYingGuarded } from './ying-guarded-section.mjs';
 import { loadVivoFull, renderVivoFull } from './vivo-full-section.mjs';
+import { loadVivoFactScreen, renderVivoFactScreen } from './vivo-fact-screen-section.mjs';
 import { loadNaturalAudio, renderNaturalAudio } from './natural-audio-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -64,6 +65,7 @@ const naturalScreen = await loadNaturalScreen(root);
 const yingFullFailure = await loadYingFullFailure(root);
 const yingGuarded = await loadYingGuarded(root);
 const vivoFull = await loadVivoFull(root);
+const vivoFactScreen = await loadVivoFactScreen(root);
 const naturalAudio = await loadNaturalAudio(root);
 const evidencePath = path.join(root, 'eval/reports/public-demo-2026-09-27.json');
 if (process.argv[2] === '--capture') {
@@ -141,6 +143,7 @@ payload.natural_screen = naturalScreen;
 payload.ying_full_failure = yingFullFailure;
 payload.ying_guarded = yingGuarded;
 payload.vivo_full = vivoFull;
+payload.vivo_fact_screen = vivoFactScreen;
 payload.natural_audio = naturalAudio;
 payload.terms_probe = { success_sha256: termsProbe.success_sha256, failure_sha256: termsProbe.failure_sha256, profile_sha256: termsProbe.profile_sha256, corpus_sha256: termsProbe.corpus_sha256, chat_requests: termsProbe.chat_requests, loopback_requests: termsProbe.loopback_requests };
 const json = JSON.stringify(payload).replaceAll('<', '\\u003c');
@@ -183,6 +186,7 @@ ${renderNaturalScreen(naturalScreen)}
 ${renderYingFullFailure(yingFullFailure)}
 ${renderYingGuarded(yingGuarded)}
 ${renderVivoFull(vivoFull)}
+${renderVivoFactScreen(vivoFactScreen)}
 ${renderV5Envelope(v5Envelope, dataset, currency.benchmark, escape, number)}
 ${renderSceneContext(sceneContext, escape)}
 ${renderPronounCrossModel(pronounCrossModel, escape)}

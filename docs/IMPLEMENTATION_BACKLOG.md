@@ -154,6 +154,19 @@ subtitle alignment, rights and speaker boundaries await human verification;
 `LONG-04` remains planned because its prerequisites and three-source review
 have not passed.
 
+The [predeclared Vivo 1.8B/7B fact screen](../eval/experiments/2026-09-30-vivo-fact-model-screen-result.md)
+adds matched `DATA-03`/`CTX-02`/`EVAL-04`/`DECIDE-01` evidence: five exact
+natural windows at two seeds, 18 authored related/negative controls at one
+seed, and 56 source-only chat requests. Structural results were 27/28 for
+1.8B and 28/28 for 7B. [REG-028](../eval/regressions/natural-vivo-target-slot-neighbor-v1.json)
+pins the 1.8B reply that used neighboring cue ID 281 for target 280; the
+existing v5 guard rejected it and its provider/CLI tests still pass. AI
+triage found repeated 7B source-fact errors on the real windows despite
+better authored controls. The new control cases and raw answers are retained,
+but no human score, model selection, fine-tuning decision or quantization
+precision change follows from this sample. `LONG-04` and release gates remain
+open.
+
 ## Current handoff
 
 `CTX-02` and `EVAL-04` now have an opt-in [provider review diagnostic

@@ -30,6 +30,7 @@ import { loadNaturalScreen } from './natural-screen-section.mjs';
 import { loadYingFullFailure } from './ying-full-failure-section.mjs';
 import { loadYingGuarded } from './ying-guarded-section.mjs';
 import { loadVivoFull } from './vivo-full-section.mjs';
+import { loadVivoFactScreen } from './vivo-fact-screen-section.mjs';
 import { loadNaturalAudio } from './natural-audio-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -54,6 +55,7 @@ assert.deepEqual(data.natural_screen, await loadNaturalScreen(root));
 assert.deepEqual(data.ying_full_failure, await loadYingFullFailure(root));
 assert.deepEqual(data.ying_guarded, await loadYingGuarded(root));
 assert.deepEqual(data.vivo_full, await loadVivoFull(root));
+assert.deepEqual(data.vivo_fact_screen, await loadVivoFactScreen(root));
 assert.deepEqual(data.natural_audio, await loadNaturalAudio(root));
 assert.deepEqual(data.source_candidates, {
   source_count: 7,
@@ -94,6 +96,10 @@ assert(html.includes('467/467 после восстановления, каче�
 assert(html.includes('REG-024–027'));
 assert(html.includes('2026-09-30-commons-vivo-source-aware-ai-triage.md'));
 assert(html.includes('2026-09-30-commons-vivo-full-7b-resume-result.md'));
+assert(html.includes('id="vivo-fact-screen"'));
+assert(html.includes('56 парных ответов, решение о модели открыто'));
+assert(html.includes('REG-028 и контроли'));
+assert(html.includes('2026-09-30-vivo-fact-model-screen-result.md'));
 assert(html.includes('id="natural-audio"'));
 assert(html.includes('Три реальные реплики озвучены и воспроизведены, укладка не прошла'));
 assert(html.includes('2026-09-30-ying-natural-audio-technical-result.md'));
