@@ -93,6 +93,23 @@ tasks:
       - task: test:source-negation:candidate
       - node --check eval/scripts/make-vivo-review-sample-v2.mjs
       - node eval/scripts/make-vivo-review-sample-v2.mjs
+  eval:natural:vivo:fact-screen:preflight:
+    desc: Verify one bounded same-source 1.8B/7B fact screen before inference
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - node --check eval/scripts/probe-vivo-fact-model-screen.mjs
+      - node eval/scripts/probe-vivo-fact-model-screen.mjs --preflight
+  eval:natural:vivo:fact-screen:probe:
+    desc: Run 56 paired natural and authored fact requests within one frozen budget
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - node eval/scripts/probe-vivo-fact-model-screen.mjs
   test:local-process:timeout:
     desc: Ensure a timed-out probe child is stopped and successful output remains available
     cmds:

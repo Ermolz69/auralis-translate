@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "vivo-fact-authored-development-controls-v1",
+  "split": "authored_development_not_holdout",
+  "cases": [
+    { "id": "new_model_this_generation", "regression_id": "REG-025", "kind": "related", "source_zh": "今年我们推出了9400系列，上一代是9300系列。", "context_before_zh": [], "expected_meaning_en": "9400 is this year's generation and follows 9300; no first-generation claim" },
+    { "id": "early_planning_boundary", "regression_id": "REG-025", "kind": "related", "source_zh": "我们在产品上市前18到24个月就开始共同规划，之后才进入开发阶段。", "context_before_zh": [], "expected_meaning_en": "Joint planning starts 18 to 24 months before launch, then development begins" },
+    { "id": "late_night_two_three", "regression_id": "REG-025", "kind": "related", "source_zh": "一直忙到凌晨两三点。", "context_before_zh": ["团队经常在半夜继续解决难题。"], "expected_meaning_en": "The team works until two or three in the morning" },
+    { "id": "explicit_first_generation", "regression_id": "REG-025", "kind": "negative", "source_zh": "这是我们推出的第一代9400系列产品。", "context_before_zh": [], "expected_meaning_en": "The source explicitly says first generation" },
+    { "id": "explicit_earliest_phase", "regression_id": "REG-025", "kind": "negative", "source_zh": "在最早的设计阶段开始之前，我们就完成了相关研究。", "context_before_zh": [], "expected_meaning_en": "The research finished before the earliest design stage" },
+    { "id": "explicit_eleven_twelve", "regression_id": "REG-025", "kind": "negative", "source_zh": "团队工作到晚上十一二点才离开。", "context_before_zh": [], "expected_meaning_en": "The team left at eleven or twelve at night" },
+    { "id": "one_hundred_engineers", "regression_id": "REG-026", "kind": "related", "source_zh": "两家公司共同投入了一百名工程师。", "context_before_zh": [], "expected_meaning_en": "The contribution is 100 engineers from both companies, not money" },
+    { "id": "team_headcount_split", "regression_id": "REG-026", "kind": "related", "source_zh": "这个团队有一千二百人。", "context_before_zh": ["两家公司共同投入了研发团队。"], "expected_meaning_en": "The jointly supplied development team has 1,200 people" },
+    { "id": "two_actor_team", "regression_id": "REG-026", "kind": "related", "source_zh": "甲公司和乙公司共同派出了研发团队。", "context_before_zh": [], "expected_meaning_en": "Both named companies jointly assigned a development team" },
+    { "id": "actual_cash_investment", "regression_id": "REG-026", "kind": "negative", "source_zh": "两家公司共同投入了一千万元研发经费。", "context_before_zh": [], "expected_meaning_en": "Both companies invested ten million yuan of development funds" },
+    { "id": "unrelated_team", "regression_id": "REG-026", "kind": "negative", "source_zh": "乙公司的团队有一千二百人。", "context_before_zh": ["甲公司投入了一笔研发经费。"], "expected_meaning_en": "Company B's 1,200-person team is separate from Company A's funds" },
+    { "id": "no_resource_specified", "regression_id": "REG-026", "kind": "negative", "source_zh": "两家公司都进行了投入，但没有说明投入的是什么。", "context_before_zh": [], "expected_meaning_en": "Both companies invested, but the source leaves the resource unspecified" },
+    { "id": "future_guest_collaboration", "regression_id": "REG-027", "kind": "related", "source_zh": "希望两位以后继续合作。", "context_before_zh": ["主持人看向两位嘉宾。"], "expected_meaning_en": "The host hopes the two guests will continue cooperating in the future" },
+    { "id": "future_benefit_to_public", "regression_id": "REG-027", "kind": "related", "source_zh": "希望你们今后合作，为大家带来更好的产品。", "context_before_zh": [], "expected_meaning_en": "The speaker hopes the guests' future cooperation benefits everyone" },
+    { "id": "attributed_future_wish", "regression_id": "REG-027", "kind": "related", "source_zh": "她说，负责人希望双方未来合作推出更好的产品。", "context_before_zh": [], "expected_meaning_en": "She reports a manager's hope for both sides' future products" },
+    { "id": "present_stock", "regression_id": "REG-027", "kind": "negative", "source_zh": "我们现在已经有更好的产品，可以提供给你们。", "context_before_zh": [], "expected_meaning_en": "The speaker claims better products are available now" },
+    { "id": "speaker_future_offer", "regression_id": "REG-027", "kind": "negative", "source_zh": "我们明年会亲自给你们提供新产品。", "context_before_zh": [], "expected_meaning_en": "The speaker personally promises a new product next year" },
+    { "id": "quoted_present_claim", "regression_id": "REG-027", "kind": "negative", "source_zh": "他引用同事的话说：“我们现在有更好的产品。”", "context_before_zh": [], "expected_meaning_en": "He quotes a colleague's claim about products available now" }
+  ]
+}
