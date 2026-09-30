@@ -1,0 +1,53 @@
+{
+  "schema_version": 14,
+  "catalog_id": "zh-ru-development-regressions-v14",
+  "base_catalog_file": "catalog-v13.json",
+  "base_catalog_sha256": "36920255f40cfcd886fb2765e8cb0d209108fa3d2143b5b6049bcb371fe12877",
+  "entries": [
+    {
+      "id": "REG-025",
+      "pack_file": "natural-vivo-numeric-time-v1.json",
+      "pack_sha256": "9fab89d1063c6503c9af4071e67d7ac79c33eaeaf5b6192ff60d22ac7dc33d52",
+      "source_family": "private_commons_geekerwan_vivo_interview",
+      "split": "unassigned_private_development_probe",
+      "category": "numeric_and_temporal_fact_drift",
+      "profile_scope": "checked 7B v5 scene profile, copied-state complete Commons Vivo candidate",
+      "expected_invariant": "Generation ordinals, lead-time anchors and clock hours in a joined source scene must survive Russian translation without adding a first generation or shifting the time.",
+      "severity": "major",
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-30-commons-vivo-source-aware-ai-triage.md",
+      "last_outcome": "AI triage of 62 source-selected cues found three numerical/temporal fact shifts; no human adjudication or corrective model comparison."
+    },
+    {
+      "id": "REG-026",
+      "pack_file": "natural-vivo-workforce-v1.json",
+      "pack_sha256": "a70cf123b10a621256445453f81eb7066305b39c0ebb310c2a5b434e72e568e1",
+      "source_family": "private_commons_geekerwan_vivo_interview",
+      "split": "unassigned_private_development_probe",
+      "category": "cross_cue_resource_substitution",
+      "profile_scope": "checked 7B v5 scene profile, copied-state complete Commons Vivo candidate",
+      "expected_invariant": "When the source says two companies committed a 1,000-plus-person engineering team, the Russian scene preserves people as the invested resource and keeps the headcount connected to the actor/action.",
+      "severity": "major",
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-30-commons-vivo-source-aware-ai-triage.md",
+      "last_outcome": "AI triage found an invented funds investment and a disconnected 1,000-person team; no human adjudication or corrective model comparison."
+    },
+    {
+      "id": "REG-027",
+      "pack_file": "natural-vivo-future-products-v1.json",
+      "pack_sha256": "368f4206054ae5f4c9dceda871e817d60974802513f8c6bd34abc499dc2f47bb",
+      "source_family": "private_commons_geekerwan_vivo_interview",
+      "split": "unassigned_private_development_probe",
+      "category": "cross_cue_modality_and_agency_shift",
+      "profile_scope": "checked 7B v5 scene profile, copied-state complete Commons Vivo candidate",
+      "expected_invariant": "A closing hope that the guests' future cooperation will bring better products to everyone remains a future hope with the same agents and beneficiaries in Russian.",
+      "severity": "major",
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-30-commons-vivo-source-aware-ai-triage.md",
+      "last_outcome": "AI triage found a present product claim and changed agency in the closing window; no human adjudication or corrective model comparison."
+    }
+  ]
+}

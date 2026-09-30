@@ -1,0 +1,23 @@
+{
+  "schema_version": 13,
+  "catalog_id": "zh-ru-development-regressions-v13",
+  "base_catalog_file": "catalog-v12.json",
+  "base_catalog_sha256": "f7a127cc0ff7d0736b5343138be7e3db42b6616e1152b39a1ddf99b6e14f3cf1",
+  "entries": [
+    {
+      "id": "REG-024",
+      "pack_file": "natural-vivo-json-tail-v1.json",
+      "pack_sha256": "3c1d04cabe5e2a388da64a003d2673c2dbae1c0d2737c2a3a180825d19c7aa3a",
+      "source_family": "private_commons_geekerwan_vivo_interview",
+      "split": "unassigned_private_development_probe",
+      "category": "json_closing_fragment_in_srt_target",
+      "profile_scope": "checked 7B v5 scene profile, first full Commons Vivo diagnostic",
+      "expected_invariant": "A target string containing an invented JSON-closing fragment is rejected before a durable SRT checkpoint; the failed long run retains its accepted prefix and publishes no partial subtitle.",
+      "severity": "major",
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-30-commons-vivo-full-7b-failure.md",
+      "last_outcome": "The SRT guard preserved 275 checkpoints and published no result; one sampled 7B response at cue 276 contained an invented closing fragment. A copied-state resume and semantic review remain open."
+    }
+  ]
+}

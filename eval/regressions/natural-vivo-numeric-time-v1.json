@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "id": "REG-025",
+  "status": "ai_triaged_unfixed",
+  "severity": "major",
+  "source_family": "private_commons_geekerwan_vivo_interview",
+  "source_sha256": "8c41e66f52000a5b67ab27bfc319accd11d89290b60e50fc5c60f4ee8230a000",
+  "output_sha256": "96f9c31d6feb22a4619ecc528f8c17313caea356103e65707f86904a783c31af",
+  "affected_model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+  "private_reproducer": {
+    "review_sample_sha256": "d2bb2e0c5be10f98d740c6519720a1492ed6767e2bcb18a2c68989af1352bb92",
+    "windows": [
+      { "cue_start": 57, "cue_end": 61, "focus_cue": 60, "source_window_sha256": "3c954158802dbf435f1c9d0e7a2903154f03efbf760701077ff59538bc2e388e", "target_window_sha256": "1a6e9fc6afc6778c60b660855f304bf4b0360b0a552b9940410d95b0d27f41f2", "request_sha256": "3432a3119fe7424e906b699548d53e556077c4fb9b4fbdf4ba8e7fbddf5c8c63", "raw_response_sha256": "a055f190eb08f71b764f80f60df3fb79747b0c3b8e25f60836aa64707dafa71a", "expected_fact": "9400 is this year's generation, not asserted to be first" },
+      { "cue_start": 275, "cue_end": 279, "focus_cue": 276, "source_window_sha256": "7e30a5e0e0f99c9fbdbe491b21b2651b19be24779fba89ff3e401cf54e9b08f1", "target_window_sha256": "534f724bf6258add39f674b1bc9042afb834c91d9f8ee20f1410c36aab36e30a", "request_sha256": "24b553c5217f75f55232adeb2b646acb3c865cfb834f972731dfba3b3960081d", "raw_response_sha256": "bbfcd9a342190c0a22704ce5d7b907039f5a339f201be743fb51a2002c96fb3a", "expected_fact": "joint planning starts up to 36 months ahead, not before an earliest stage" },
+      { "cue_start": 326, "cue_end": 328, "focus_cue": 328, "source_window_sha256": "a5c8da97986513062045800f4c94c8f34bb19bd7a1ad74241538c1ec87638c68", "target_window_sha256": "b30b4397df3bdbf48ca9d7bd2c14265d0a78c528d02f66b217e2d5705500e3e5", "request_sha256": "f66225dce8581aa2b692d5a2fc6c3cd8c5e5fed42aaeccca1d5a9ce3291b9455", "raw_response_sha256": "3a26c4c03e7db108889c2def4f0f29f7d0d2719a83ffc9e8a0e58657d204865e", "expected_fact": "work continues until one or two in the morning, not eleven or twelve at night" }
+    ]
+  },
+  "expected_invariant": "Generation ordinals, lead-time anchors and clock hours in a joined source scene must survive Russian translation without adding a first generation or shifting the time.",
+  "observed_defect": "AI source-aware triage found three numerical/temporal fact shifts in a complete structurally valid 7B candidate.",
+  "related_controls": [
+    { "id": "new_model_this_generation", "shape": "A new product number follows an older generation without a first-generation claim", "expected": "No invented first generation" },
+    { "id": "early_planning_boundary", "shape": "An 18–24-month planning lead is split from its later development phase", "expected": "Keep the lead before launch, not before a nonexistent earlier phase" },
+    { "id": "late_night_two_three", "shape": "A team works until two or three in the morning across a cue boundary", "expected": "Keep the correct 02:00–03:00 range" }
+  ],
+  "negative_controls": [
+    { "id": "explicit_first_generation", "shape": "The source explicitly calls a product the first generation", "expected": "First generation may be translated" },
+    { "id": "explicit_earliest_phase", "shape": "The source explicitly says before the earliest phase", "expected": "Earlier-than-phase relation may be translated" },
+    { "id": "explicit_eleven_twelve", "shape": "The source explicitly names eleven or twelve at night", "expected": "Keep 23:00–00:00 rather than forcing 01:00–02:00" }
+  ],
+  "human_review": "missing",
+  "release_gate": "open"
+}

@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "id": "REG-027",
+  "status": "ai_triaged_unfixed",
+  "severity": "major",
+  "source_family": "private_commons_geekerwan_vivo_interview",
+  "source_sha256": "8c41e66f52000a5b67ab27bfc319accd11d89290b60e50fc5c60f4ee8230a000",
+  "output_sha256": "96f9c31d6feb22a4619ecc528f8c17313caea356103e65707f86904a783c31af",
+  "affected_model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+  "private_reproducer": {
+    "review_sample_sha256": "d2bb2e0c5be10f98d740c6519720a1492ed6767e2bcb18a2c68989af1352bb92",
+    "cue_start": 465,
+    "cue_end": 466,
+    "focus_cue": 466,
+    "source_window_sha256": "25f56d869eb3a0388b8a21e760d9cb271d6dceb838d8c06579c42187e0e8b0c6",
+    "target_window_sha256": "7e3bc926ae20d0ab10dc70ebcb406e7ad71f64376dc2f16d31d909cecae89f8f",
+    "request_sha256": "f7db980bb58a408f262b7b1812311aeba49cea3fec31eeb0dd4c8bdcd3aa464c",
+    "raw_response_sha256": "e9e7bc54e249f68f1bb1e317bfac0a70ff8751c15cef7a1bec972ab6c71ece3e"
+  },
+  "expected_invariant": "A closing hope that the guests' future cooperation will bring better products to everyone remains a future hope with the same agents and beneficiaries in Russian.",
+  "observed_defect": "AI source-aware triage found a present product-availability claim and changed speaker/beneficiary where the source expressed hope for future cooperation.",
+  "related_controls": [
+    { "id": "future_guest_collaboration", "shape": "A host hopes guests will cooperate further across a cue boundary", "expected": "Keep hope, future time and guest agency" },
+    { "id": "future_benefit_to_public", "shape": "The hoped-for result benefits the public rather than the interviewer", "expected": "Keep the public beneficiary" },
+    { "id": "attributed_future_wish", "shape": "A speaker reports someone else's wish for future products", "expected": "Preserve attribution and modal force" }
+  ],
+  "negative_controls": [
+    { "id": "present_stock", "shape": "The source explicitly says products are available now", "expected": "A present availability claim is allowed" },
+    { "id": "speaker_future_offer", "shape": "The speaker promises their own future offer", "expected": "Keep the speaker as agent" },
+    { "id": "quoted_present_claim", "shape": "The speaker quotes another person's present product claim", "expected": "Preserve the quote and attribution" }
+  ],
+  "human_review": "missing",
+  "release_gate": "open"
+}

@@ -1,6 +1,12 @@
 version: "3"
 
 tasks:
+  site:live:check:
+    desc: Compare the live GitHub Pages HTML byte-for-byte with the committed local report
+    cmds:
+      - task: site:check
+      - node --check eval/scripts/check-live-pages.mjs
+      - node eval/scripts/check-live-pages.mjs
   eval:data:commons:train:media:inventory:
     desc: Inventory one bounded Commons train-video derivative metadata response
     cmds:
@@ -53,6 +59,40 @@ tasks:
     cmds:
       - node --check eval/scripts/sample-commons-vivo-audio.mjs
       - node eval/scripts/sample-commons-vivo-audio.mjs
+  eval:natural:vivo:7b:probe:
+    desc: Run one bounded complete 467-cue private interview translation diagnostic
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: build:release
+      - node --check eval/scripts/probe-commons-vivo-full.mjs
+      - node eval/scripts/probe-commons-vivo-full.mjs
+  eval:natural:vivo:7b:resume:
+    desc: Resume one verified copy of the retained 275-checkpoint Vivo failure
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:regression:vivo:private:check
+      - task: build:release
+      - node --check eval/scripts/resume-commons-vivo-full.mjs
+      - node eval/scripts/resume-commons-vivo-full.mjs
+  eval:natural:vivo:review:sample:
+    desc: Freeze source-selected private beginning/middle/end and fact review windows
+    cmds:
+      - node --check eval/scripts/make-vivo-review-sample.mjs
+      - node eval/scripts/make-vivo-review-sample.mjs
+  test:source-negation:candidate:
+    desc: Keep source-only negation sampling from treating very as polarity
+    cmds:
+      - node --test --test-isolation=none eval/scripts/tests/source-negation-candidate.test.mjs
+  eval:natural:vivo:review:sample:v2:
+    desc: Freeze a corrected source-selected Vivo fact review sample
+    cmds:
+      - task: test:source-negation:candidate
+      - node --check eval/scripts/make-vivo-review-sample-v2.mjs
+      - node eval/scripts/make-vivo-review-sample-v2.mjs
   test:local-process:timeout:
     desc: Ensure a timed-out probe child is stopped and successful output remains available
     cmds:
@@ -75,6 +115,17 @@ tasks:
     cmds:
       - node --check eval/scripts/check-ying-guarded-private.mjs
       - node eval/scripts/check-ying-guarded-private.mjs
+  eval:regression:vivo:private:check:
+    desc: Verify the retained 275-cue Vivo failure and exact rejected model tail
+    cmds:
+      - node --check eval/scripts/check-vivo-private-failure.mjs
+      - node eval/scripts/check-vivo-private-failure.mjs
+  eval:regression:vivo:ai-review:check:
+    desc: Recheck five private source-fact windows in the complete 467-cue candidate
+    cmds:
+      - task: test:source-negation:candidate
+      - node --check eval/scripts/check-vivo-ai-review.mjs
+      - node eval/scripts/check-vivo-ai-review.mjs
   eval:data:commons:ying:media:acquire:
     desc: Acquire one bounded private Commons Ying video for source/audio inspection
     cmds:
@@ -510,7 +561,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-023 packs and all control counts
+    desc: Verify versioned REG-001 through REG-027 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -523,6 +574,8 @@ tasks:
       - node eval/scripts/check-regression-catalog-v10.mjs
       - node eval/scripts/check-regression-catalog-v11.mjs
       - node eval/scripts/check-regression-catalog-v12.mjs
+      - node eval/scripts/check-regression-catalog-v13.mjs
+      - node eval/scripts/check-regression-catalog-v14.mjs
   eval:reg009:prefix-repair:probe:
     desc: Measure conservative exact-code prefix repair on the archived synthetic long-file output
     cmds:

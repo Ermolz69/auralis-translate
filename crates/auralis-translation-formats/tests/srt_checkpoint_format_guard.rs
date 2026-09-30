@@ -80,6 +80,8 @@ fn raw_ying_failure_family_cannot_enter_second_checkpoint() -> Result<(), Box<dy
         "У каждого городка тоже свой акцент」}]}{}   Wait, the JSON structure should be {"
             .to_owned(),
         "У каждого городка тоже свой {акцент}".to_owned(),
+        "Планирование началось за 36 месяцев до запуска」}]}".to_owned(),
+        "Планирование началось за 36 месяцев до запуска}]}".to_owned(),
         "У каждого городка тоже свой <b>акцент</b>".to_owned(),
         "У каждого городка тоже свой акцент >".to_owned(),
         "а".repeat(16 * 1024 + 1),
@@ -123,6 +125,8 @@ fn related_safe_punctuation_and_names_keep_full_coverage() -> Result<(), Box<dyn
         "Танхэ и Тунбай — разные уезды.",
         "«Акцент» — слово в кавычках.",
         "Код REG-020 сохранён.",
+        "Совместное планирование vivo и MediaTek началось за 36 месяцев.",
+        "«36 месяцев» — срок раннего планирования.",
     ] {
         let provider = TwoCueProvider {
             second: second.into(),

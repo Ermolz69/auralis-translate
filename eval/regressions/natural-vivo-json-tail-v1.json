@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "REG-024",
+  "status": "observed_unfixed",
+  "severity": "major",
+  "source_family": "private_commons_geekerwan_vivo_interview",
+  "source_sha256": "8c41e66f52000a5b67ab27bfc319accd11d89290b60e50fc5c60f4ee8230a000",
+  "affected_model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+  "private_reproducer": {
+    "report_locator": ".cache/eval/commons-vivo-full-7b-v1/run-zxrN7F/report.json",
+    "report_sha256": "acce4016734648c500a4abeb5ae7619e138d1af46955c50232a39cb450ec59b2",
+    "run_id": "58d6ae3d-ade0-4bcf-b375-640a2c27db0c",
+    "cue_start": 275,
+    "cue_end": 277,
+    "focus_cue": 276,
+    "source_window_sha256": "a15528dfcc697a537c9d1adaeebcedf7552a8a0df40e28cfcd3b75bcb44cd03a",
+    "request_sha256": "24b553c5217f75f55232adeb2b646acb3c865cfb834f972731dfba3b3960081d",
+    "raw_response_sha256": "f0ed9595e8ce1a870411cd6ae895e8ca39d2cfcc0a3e725e88e8fdf6b52c3704",
+    "raw_candidate_sha256": "7d9a8a36abfccde5c99186327d9af4e3748c78b711690ea713a25833d7cdc884",
+    "saved_checkpoints": 275,
+    "complete_results": 0
+  },
+  "expected_invariant": "A target string containing an invented JSON-closing fragment is rejected before a durable SRT checkpoint; the failed long run retains its accepted prefix and publishes no partial subtitle.",
+  "observed_defect": "The 7B model produced a parseable one-slot JSON response but appended an invented closing fragment inside target text at cue 276. The SRT grammar guard safely rejected it, leaving the 467-cue run incomplete.",
+  "related_controls": [
+    { "id": "closure_after_number", "shape": "A translated duration ends with a JSON-closing fragment", "expected": "Reject before checkpoint" },
+    { "id": "closure_after_name", "shape": "A translated person or organization name ends with a JSON-closing fragment", "expected": "Reject before checkpoint" },
+    { "id": "closure_near_file_end", "shape": "The closing fragment occurs after a late-file cue", "expected": "Preserve the completed checkpoint prefix and no result" }
+  ],
+  "negative_controls": [
+    { "id": "plain_duration", "shape": "The same 36-month fact without model markup", "expected": "Permit ordinary SRT text" },
+    { "id": "valid_quoted_duration", "shape": "A 36-month phrase in ordinary Russian quotation marks", "expected": "Permit ordinary quotation punctuation" },
+    { "id": "latin_organization_names", "shape": "vivo and MediaTek appear without a closing fragment", "expected": "Preserve names and permit the line" }
+  ],
+  "human_review": "missing",
+  "release_gate": "open"
+}
