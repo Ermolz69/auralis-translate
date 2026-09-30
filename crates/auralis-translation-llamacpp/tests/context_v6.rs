@@ -15,7 +15,16 @@ const PROFILE: &[u8] = include_bytes!(
 #[test]
 fn v6_binds_the_target_in_schema_and_still_validates_untrusted_output() -> Result<(), Box<dyn Error>>
 {
-    for (candidate_id, line_index, accepted) in [(72, 0, true), (73, 0, false), (72, 1, false)] {
+    for (candidate_id, line_index, text, accepted) in [
+        (72, 0, "Это не последний поезд.", true),
+        (73, 0, "Это не последний поезд.", false),
+        (72, 1, "Это не последний поезд.", false),
+        (72, 0, "Потребление 9 Вт」}]}", false),
+        (72, 0, "Телефон」 } ] } ] }", false),
+        (72, 0, "Он сказал: 「да」, и поезд ушёл.", true),
+        (72, 0, "Покажите литерал }]}", true),
+        (72, 0, "Цитата 「да」 — ответ.", true),
+    ] {
         let listener = TcpListener::bind("127.0.0.1:0")?;
         let address = listener.local_addr()?;
         let server = std::thread::spawn(move || -> Result<Value, String> {
@@ -57,7 +66,7 @@ fn v6_binds_the_target_in_schema_and_still_validates_untrusted_output() -> Resul
             }
             let request: Value = serde_json::from_slice(&bytes[header_end..header_end + length])
                 .map_err(|error| error.to_string())?;
-            let candidate = json!({"translations":[{"segment_id":candidate_id,"line_index":line_index,"text":"Это не последний поезд."}]}).to_string();
+            let candidate = json!({"translations":[{"segment_id":candidate_id,"line_index":line_index,"text":text}]}).to_string();
             let body =
                 json!({"choices":[{"message":{"content":candidate},"finish_reason":"stop"}]})
                     .to_string();
@@ -93,6 +102,14 @@ fn v6_binds_the_target_in_schema_and_still_validates_untrusted_output() -> Resul
         )?;
         let result = provider.translate(&batch);
         assert_eq!(result.is_ok(), accepted);
+        if text.contains('」') && !accepted {
+            assert!(
+                result
+                    .as_ref()
+                    .err()
+                    .is_some_and(|error| error.to_string().contains("leaked JSON wrapper tail"))
+            );
+        }
         let request = server.join().map_err(|_| "server panicked")??;
         let properties = &request["response_format"]["schema"]["properties"]["translations"]["items"]
             ["properties"];

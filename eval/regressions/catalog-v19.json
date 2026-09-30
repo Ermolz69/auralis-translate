@@ -1,0 +1,23 @@
+{
+  "schema_version": 19,
+  "catalog_id": "zh-ru-development-regressions-v19",
+  "base_catalog_file": "catalog-v18.json",
+  "base_catalog_sha256": "b2e220b699ed04ad06b9cd0d679f02f00ec93893e22cb5710961d9780b3a7bbc",
+  "entries": [
+    {
+      "id": "REG-034",
+      "pack_file": "natural-asus-v6-json-tail-v1.json",
+      "pack_sha256": "27596864353ad78816f772930e8f3f6d419184ac8488ee421f99332d6155424b",
+      "source_family": "private_commons_geekerwan_asus_rog_ally_and_authored_control",
+      "split": "known_private_development_screen",
+      "category": "valid_outer_json_with_leaked_wrapper_in_text",
+      "profile_scope": "7B v6 target-constant slot profile, paired 64-request ASUS fact screen",
+      "expected_invariant": "Reject wrapper-like JSON closing characters embedded after a Chinese closing quote in translated text before checkpoint persistence; retain the raw response.",
+      "severity": "major",
+      "related_control_count": 2,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-09-30-asus-v6-fact-model-screen-result.md",
+      "last_outcome": "Two real 7B responses had valid outer JSON and target IDs but leaked wrapper-like suffixes into text; deterministic provider rejection and related/negative controls pass, while long-file post-fix recovery and human review remain open."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "id": "REG-034",
+  "status": "outer_json_valid_but_text_tail_invalid",
+  "severity": "major",
+  "source_family": "private_commons_geekerwan_asus_rog_ally_and_authored_control",
+  "affected_model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+  "profile_sha256": "e7e2d7745cb283a88984da202eb511f0144b2bc51bc6eb01727515a51e7aa06f",
+  "private_reproducer": {
+    "report_sha256": "23a12aa953b0e1cb43e0dfaec7061672c979d0f24e3a7fa04639b921ab25fdf9",
+    "journal_sha256": "8bb9e021adea11cf09394b470c00afa556959be4d9a0baf47c37d8557163ea2f",
+    "cases": [
+      {
+        "case_id": "asus-227",
+        "source_text_sha256": "81cd8e4abb33010d9d14416813af28a99130fec5ac4b551b0dd76fcf9d456101",
+        "request_sha256": "dc56cb5ad01c5356be732f9d0cb2a1357f43cb280a706270cebb8116b61a1961",
+        "raw_response_sha256": "48ee04d8e52f4d11219d84f2134558544f035fcf27b725af8e3f5ada5a0d0e49",
+        "raw_candidate_sha256": "7a27323484d09dafc481ae353da333dd1140a442f29473bdce9f413c9b5fb865",
+        "observed_text_suffix": "」}]}]}"
+      },
+      {
+        "case_id": "REG-032-negative-actual_phone_variant",
+        "source_text_sha256": "368fedc4a56a0ae4d13ba983e4e5c30fb81355210c50c510240787059018755c",
+        "request_sha256": "63e81f4e21a896a4fe241ff0b147e4c1bfa3d8c8bbbe498ecd477d7c198bea64",
+        "raw_response_sha256": "12268ec6a3e51b4ccf97f8a8bc63c8c73afa60f2c598d4bc5910bbda83766558",
+        "raw_candidate_sha256": "76a564ddffff55881ed09a7fd7f02892dfe51dc6f09a12773ebcda24ec76b38a",
+        "observed_text_suffix": "」}]}"
+      }
+    ]
+  },
+  "expected_invariant": "Reject wrapper-like JSON closing characters embedded after a Chinese closing quote in translated text before checkpoint persistence; retain the raw response.",
+  "related_controls": [
+    { "id": "short_tail", "candidate_text": "Потребление 9 Вт」}]}" },
+    { "id": "long_spaced_tail", "candidate_text": "Телефон」 } ] } ] }" }
+  ],
+  "negative_controls": [
+    { "id": "quoted_phrase", "candidate_text": "Он сказал: 「да」, и поезд ушёл." },
+    { "id": "literal_closers", "candidate_text": "Покажите литерал }]}" },
+    { "id": "quote_with_prose", "candidate_text": "Цитата 「да」 — ответ." }
+  ],
+  "control_model_runs": 0,
+  "human_review": "missing",
+  "release_gate": "open"
+}

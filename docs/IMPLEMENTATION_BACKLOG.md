@@ -229,8 +229,20 @@ is implemented as a conservative, persisted review diagnostic with core
 and SQLite tests; a read-only private audit flagged exactly ASUS cue IDs
 12 and 227 within the frozen 44-cue packet. It does not repair the
 archived candidate or close
-`EVAL-04`, `CTX-02`, `LONG-04` or any release gate; semantic controls have
-not been model-run and human review remains absent.
+`EVAL-04`, `CTX-02`, `LONG-04` or any release gate. At that point semantic
+controls had not been model-run, and human review was absent.
+
+The [paired ASUS v6 fact screen](../eval/experiments/2026-09-30-asus-v6-fact-model-screen-result.md)
+adds 64 real requests on the same 11 natural source/context windows and 21
+authored controls, with 1.8B and 7B differing only by model alias.
+All 64 outer JSON/slot shapes were valid, but two 7B `text` fields contained
+leaked JSON-wrapper suffixes, while both sizes retained several product and
+technical-term mistakes. The first zero-chat sandbox launch failure is
+archived separately. [REG-034](../eval/regressions/catalog-v19.json) now
+pins those exact responses and a narrow v5/v6 text rejection guard with
+related/negative fixture controls. No post-fix natural full-file run,
+human language score or model selection follows; `CTX-02`, `EVAL-04`,
+`LONG-04` and release gates remain open.
 
 ## Current handoff
 

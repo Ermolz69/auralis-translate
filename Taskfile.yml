@@ -793,6 +793,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v16.mjs
       - node eval/scripts/check-regression-catalog-v17.mjs
       - node eval/scripts/check-regression-catalog-v18.mjs
+      - node eval/scripts/check-regression-catalog-v19.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:
@@ -825,6 +826,11 @@ tasks:
     cmds:
       - task: eval:natural:asus:v6:fact-screen:preflight
       - node eval/scripts/probe-asus-v6-fact-model-screen.mjs
+  eval:natural:asus:v6:fact-screen:check:
+    desc: Verify 64 private raw paired ASUS fact replies and retained launch failure
+    cmds:
+      - node --check eval/scripts/check-asus-v6-fact-model-screen.mjs
+      - node eval/scripts/check-asus-v6-fact-model-screen.mjs
   eval:reg009:prefix-repair:probe:
     desc: Measure conservative exact-code prefix repair on the archived synthetic long-file output
     cmds:
