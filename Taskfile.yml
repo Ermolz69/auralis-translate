@@ -33,6 +33,11 @@ tasks:
     cmds:
       - node --check eval/scripts/acquire-commons-vivo-caption.mjs
       - node eval/scripts/acquire-commons-vivo-caption.mjs
+  eval:data:commons:geekerwan:captions:acquire:
+    desc: Acquire two pinned private Geekerwan Chinese SRT candidates once each
+    cmds:
+      - node --check eval/scripts/acquire-commons-geekerwan-two-captions.mjs
+      - node eval/scripts/acquire-commons-geekerwan-two-captions.mjs
   eval:data:commons:vivo:candidate:check:
     desc: Verify the exact non-admitted 467-cue interview source and inventory
     cmds:
