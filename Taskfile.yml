@@ -96,6 +96,23 @@ tasks:
       - task: build:release
       - node --check eval/scripts/probe-commons-vivo-full.mjs
       - node eval/scripts/probe-commons-vivo-full.mjs
+  eval:natural:asus:7b:preflight:
+    desc: Verify the frozen 268-cue ASUS private source, media and model paths before inference
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - node --check eval/scripts/probe-commons-asus-full.mjs
+      - node eval/scripts/probe-commons-asus-full.mjs --preflight
+  eval:natural:asus:7b:probe:
+    desc: Run one bounded 268-cue private ASUS translation diagnostic
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:natural:asus:7b:preflight
+      - task: build:release
+      - node eval/scripts/probe-commons-asus-full.mjs
   eval:natural:vivo:7b:resume:
     desc: Resume one verified copy of the retained 275-checkpoint Vivo failure
     env:
