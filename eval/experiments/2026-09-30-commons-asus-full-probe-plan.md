@@ -50,3 +50,15 @@ denominators and failures. A separate Chinese–Russian human review, source
 audio alignment and rights decision are required before the text can be
 approved or voiced. Keep any failure immutable; a resume needs a separately
 frozen identity, checkpoint prefix and budget.
+
+## Process-permission amendment before inference
+
+The first Taskfile launch built the unchanged release CLI and passed source/media
+preflight, then failed at the initial `git rev-parse` child-process spawn with
+`EPERM` before `doctor`, model-server startup or any HTTP/model request. Its
+private report is `.cache/eval/commons-asus-full-7b-v1/run-Z7JuyH/report.json`,
+SHA-256 `c05c04282b664e49ded7cd6d2d9da662729102292adcea1773ec2f46da754b30`;
+it records zero requests and zero commands. Retain this failure. Permit exactly
+one same-byte Taskfile rerun with child-process launch permission. This remains
+the sole inference repetition; source, model, prompt, decoding and numeric
+budgets do not change. Stop after that rerun whether it succeeds or fails.
