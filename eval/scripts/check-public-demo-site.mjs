@@ -123,10 +123,12 @@ assert(html.includes('человеческое прослушивание и о�
 assert(html.includes('2026-09-29-mingfay-media-download-failure.md'));
 assert(html.includes('2026-09-29-commons-cc-commerce-candidate.md'));
 assert(html.includes('id="release-readiness"'));
+assert(html.indexOf('id="release-readiness"') < html.indexOf('id="model-comparison"'));
+assert(html.includes('Перевод и озвучка пока не приняты'));
+assert(html.includes('сохранены 226 контрольных точек'));
 assert(html.includes('2026-09-30-release-readiness-after-vivo.md'));
-assert(html.includes('2026-09-30-release-readiness-after-natural-audio.md'));
 assert(html.includes('G1–G9 и A1–A6 остаются открытыми'));
-assert(html.includes('2026-09-29-reg-009-long-cli-soak-results.md'));
+assert(html.includes('2026-09-30-commons-asus-full-7b-failure.md'));
 const v5 = await loadV5Envelope(root, data.dataset, data.currency.benchmark);
 assert.deepEqual(data.v5_envelope, { sha256: v5.sha256, profile_sha256: v5.profileHash, copied_count: 6 });
 assert(html.includes('id="v5-envelope"'));
