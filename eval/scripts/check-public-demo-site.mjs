@@ -33,6 +33,7 @@ import { loadVivoFull } from './vivo-full-section.mjs';
 import { loadVivoFactScreen } from './vivo-fact-screen-section.mjs';
 import { loadVivoGeneralFact } from './vivo-general-fact-section.mjs';
 import { loadAsusTail } from './asus-tail-section.mjs';
+import { loadAsusModelComparison } from './asus-model-comparison-section.mjs';
 import { loadNaturalAudio } from './natural-audio-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -60,6 +61,11 @@ assert.deepEqual(data.vivo_full, await loadVivoFull(root));
 assert.deepEqual(data.vivo_fact_screen, await loadVivoFactScreen(root));
 assert.deepEqual(data.vivo_general_fact, await loadVivoGeneralFact(root));
 assert.deepEqual(data.asus_tail, await loadAsusTail(root));
+assert.deepEqual(data.asus_model_comparison,
+  await loadAsusModelComparison(root, data.asus_tail));
+assert(html.includes('id="asus-model-comparison"'));
+assert(html.includes('1.8B тоже остановилась: 19 из 268 реплик'));
+assert(html.includes('2026-09-30-commons-asus-full-1_8b-failure.md'));
 assert.deepEqual(data.natural_audio, await loadNaturalAudio(root));
 assert.deepEqual(data.source_candidates, {
   source_count: 9,
@@ -125,7 +131,7 @@ assert(html.includes('2026-09-29-commons-cc-commerce-candidate.md'));
 assert(html.includes('id="release-readiness"'));
 assert(html.indexOf('id="release-readiness"') < html.indexOf('id="model-comparison"'));
 assert(html.includes('Перевод и озвучка пока не приняты'));
-assert(html.includes('сохранены 226 контрольных точек'));
+assert(html.includes('1.8B — на реплике 20 после 19 точек'));
 assert(html.includes('2026-09-30-release-readiness-after-vivo.md'));
 assert(html.includes('G1–G9 и A1–A6 остаются открытыми'));
 assert(html.includes('2026-09-30-commons-asus-full-7b-failure.md'));

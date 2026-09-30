@@ -32,6 +32,7 @@ import { loadVivoFull, renderVivoFull } from './vivo-full-section.mjs';
 import { loadVivoFactScreen, renderVivoFactScreen } from './vivo-fact-screen-section.mjs';
 import { loadVivoGeneralFact, renderVivoGeneralFact } from './vivo-general-fact-section.mjs';
 import { loadAsusTail, renderAsusTail } from './asus-tail-section.mjs';
+import { loadAsusModelComparison, renderAsusModelComparison } from './asus-model-comparison-section.mjs';
 import { loadNaturalAudio, renderNaturalAudio } from './natural-audio-section.mjs';
 import { renderReleaseReadiness } from './release-readiness-section.mjs';
 
@@ -71,6 +72,7 @@ const vivoFull = await loadVivoFull(root);
 const vivoFactScreen = await loadVivoFactScreen(root);
 const vivoGeneralFact = await loadVivoGeneralFact(root);
 const asusTail = await loadAsusTail(root);
+const asusModelComparison = await loadAsusModelComparison(root, asusTail);
 const naturalAudio = await loadNaturalAudio(root);
 const evidencePath = path.join(root, 'eval/reports/public-demo-2026-09-27.json');
 if (process.argv[2] === '--capture') {
@@ -151,6 +153,7 @@ payload.vivo_full = vivoFull;
 payload.vivo_fact_screen = vivoFactScreen;
 payload.vivo_general_fact = vivoGeneralFact;
 payload.asus_tail = asusTail;
+payload.asus_model_comparison = asusModelComparison;
 payload.natural_audio = naturalAudio;
 payload.terms_probe = { success_sha256: termsProbe.success_sha256, failure_sha256: termsProbe.failure_sha256, profile_sha256: termsProbe.profile_sha256, corpus_sha256: termsProbe.corpus_sha256, chat_requests: termsProbe.chat_requests, loopback_requests: termsProbe.loopback_requests };
 const json = JSON.stringify(payload).replaceAll('<', '\\u003c');
@@ -196,6 +199,7 @@ ${renderVivoFull(vivoFull)}
 ${renderVivoFactScreen(vivoFactScreen)}
 ${renderVivoGeneralFact(vivoGeneralFact, vivoFactScreen.summary.models.find(model => model.key === '7b'))}
 ${renderAsusTail(asusTail)}
+${renderAsusModelComparison(asusModelComparison, asusTail)}
 ${renderV5Envelope(v5Envelope, dataset, currency.benchmark, escape, number)}
 ${renderSceneContext(sceneContext, escape)}
 ${renderPronounCrossModel(pronounCrossModel, escape)}
