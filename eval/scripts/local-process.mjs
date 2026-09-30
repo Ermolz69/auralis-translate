@@ -25,15 +25,26 @@ export function startProcess(command, args, cwd, env = process.env, { maxCapture
 
 export async function waitForExit(process, timeoutMs) {
   let timer;
+  let timedOut = false;
   try {
     const result = await Promise.race([
       process.ended,
-      new Promise((_, reject) => { timer = setTimeout(() => reject(new Error('Process timeout')), timeoutMs); }),
+      new Promise((_, reject) => { timer = setTimeout(() => {
+        timedOut = true;
+        reject(new Error('Process timeout'));
+      }, timeoutMs); }),
     ]);
     if (result.error || result.code !== 0) {
       throw new Error(`Process failed: ${result.error?.message ?? result.code}\n${process.stderr}`);
     }
     return process;
+  } catch (error) {
+    if (timedOut) {
+      if (process.child.exitCode === null && process.child.signalCode === null) process.child.kill();
+      const stopped = await Promise.race([process.ended.then(() => true), delay(5_000).then(() => false)]);
+      if (!stopped) throw new Error('Process timeout; child did not stop');
+    }
+    throw error;
   } finally {
     clearTimeout(timer);
   }

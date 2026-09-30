@@ -25,7 +25,7 @@ const serverPath = process.env.AURALIS_TEST_LLAMA_SERVER;
 const cliPath = path.join(root, 'target/release/auralis-translation-cli.exe');
 const limits = { chat_requests: resumeMode ? 80 : 105, all_http_requests: resumeMode ? 310 : 400,
   model_wall_ms: resumeMode ? 600_000 : 900_000,
-  readiness_ms: 180_000, repetitions: 1 };
+  readiness_ms: 180_000, doctor_ms: guardedMode ? 600_000 : 180_000, repetitions: 1 };
 assert.equal(process.platform, 'win32');
 assert(modelPath && path.isAbsolute(modelPath) && serverPath && path.isAbsolute(serverPath));
 const source = await fs.readFile(sourcePath);
@@ -116,7 +116,7 @@ try {
       activeCommand = null;
     }
   };
-  report.doctor = await command(['doctor', profilePath, modelPath]);
+  report.doctor = await command(['doctor', profilePath, modelPath], limits.doctor_ms);
   const runtimePort = await freeLoopbackPort();
   const runtimeUrl = `http://127.0.0.1:${runtimePort}/`;
   proxy = http.createServer(async (request, response) => {

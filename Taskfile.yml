@@ -1,6 +1,10 @@
 version: "3"
 
 tasks:
+  test:local-process:timeout:
+    desc: Ensure a timed-out probe child is stopped and successful output remains available
+    cmds:
+      - node --test --test-isolation=none eval/scripts/tests/local-process-timeout.test.mjs
   test:srt:checkpoint:grammar:
     desc: Reject model text that cannot render as strict SRT before a durable checkpoint
     cmds:
