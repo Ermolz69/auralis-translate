@@ -41,3 +41,11 @@ Retain raw API JSON, original derivative bytes, SHA-256, times and failed report
 privately. Only after media checks may three 12-second source-audio samples per
 source be decoded for human speech/alignment review. Decoding alone is not
 listening or proof of alignment.
+
+After exact media and WAV hashes are checked, an ignored, source-only review
+packet may collect the three Geekerwan candidates' nine sampled audio windows
+and strictly parsed Chinese cues overlapping each window. It makes no network or
+model calls and contains no Russian reference. The packet is for a named human
+listener to record speech language, cue alignment and speaker observations; a
+blank or unreturned review remains zero human coverage. Do not publish the raw
+packet because it contains source text and private local file paths.

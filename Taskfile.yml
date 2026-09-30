@@ -51,6 +51,16 @@ tasks:
       - task: eval:data:commons:geekerwan:captions:check
       - node --check eval/scripts/acquire-commons-geekerwan-two-media.mjs
       - node eval/scripts/acquire-commons-geekerwan-two-media.mjs
+  eval:data:commons:geekerwan:media:streams-and-samples:
+    desc: Verify two matched private streams and decode six unlistened source-audio clips
+    cmds:
+      - node --check eval/scripts/check-commons-geekerwan-two-media.mjs
+      - node eval/scripts/check-commons-geekerwan-two-media.mjs
+  eval:data:commons:geekerwan:review-packet:
+    desc: Build a private Chinese-source and nine-clip packet for human alignment review
+    cmds:
+      - node --check eval/scripts/build-geekerwan-source-review-packet.mjs
+      - node eval/scripts/build-geekerwan-source-review-packet.mjs
   eval:data:commons:vivo:candidate:check:
     desc: Verify the exact non-admitted 467-cue interview source and inventory
     cmds:
