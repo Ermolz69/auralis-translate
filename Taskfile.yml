@@ -38,6 +38,19 @@ tasks:
     cmds:
       - node --check eval/scripts/acquire-commons-geekerwan-two-captions.mjs
       - node eval/scripts/acquire-commons-geekerwan-two-captions.mjs
+  eval:data:commons:geekerwan:captions:check:
+    desc: Verify both retained original Geekerwan subtitles with the strict CLI
+    cmds:
+      - node --check eval/scripts/stage-commons-geekerwan-two-captions.mjs
+      - node eval/scripts/stage-commons-geekerwan-two-captions.mjs
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-geekerwan-two-scenes-candidate-v1.json --require-candidate-bytes
+      - node eval/scripts/check-source-candidate-inspection.mjs eval/corpora/commons-geekerwan-two-scenes-candidate-v1.json
+  eval:data:commons:geekerwan:media:acquire:
+    desc: Fetch two bounded private 240p videos for source-audio alignment review
+    cmds:
+      - task: eval:data:commons:geekerwan:captions:check
+      - node --check eval/scripts/acquire-commons-geekerwan-two-media.mjs
+      - node eval/scripts/acquire-commons-geekerwan-two-media.mjs
   eval:data:commons:vivo:candidate:check:
     desc: Verify the exact non-admitted 467-cue interview source and inventory
     cmds:
@@ -888,6 +901,7 @@ tasks:
       - node eval/scripts/check-source-inventory.mjs eval/corpora/youtube-mingfay-candidate-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-ying-candidate-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-vivo-candidate-v1.json
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-geekerwan-two-scenes-candidate-v1.json
   eval:data:commons:ying:candidate:check:
     desc: Validate the non-admitted Commons Ying inventory and exact retained Chinese SRT bytes
     cmds:

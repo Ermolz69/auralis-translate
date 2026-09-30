@@ -5,7 +5,9 @@ import { fileURLToPath } from 'node:url';
 import { validateSourceInventory } from './source-inventory.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const inventory = JSON.parse(await readFile(path.join(root, 'eval/corpora/commons-inspected-candidates-v1.json'), 'utf8'));
+const manifest = process.argv[2] ?? 'eval/corpora/commons-inspected-candidates-v1.json';
+if (process.argv.length > 3) throw new Error('usage: node check-source-candidate-inspection.mjs [MANIFEST_JSON]');
+const inventory = JSON.parse(await readFile(path.join(root, manifest), 'utf8'));
 const counts = validateSourceInventory(inventory);
 const executable = path.join(root, 'target/debug', process.platform === 'win32' ? 'auralis-translation-cli.exe' : 'auralis-translation-cli');
 

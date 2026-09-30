@@ -28,3 +28,16 @@ alignment, speakers, sound quality, scene boundaries and independent reviewers
 remain unknown. Do not publish the source/media, approve a spoken script or count
 these cues as eligible until those checks are recorded. Do not run model inference
 or TTS under this acquisition budget.
+
+## Matched-media continuation
+
+After the exact caption hashes and strict cue counts are checked, one bounded
+media pass may make at most two Commons `videoinfo` API GETs and two matching 240p
+VP9/Opus derivative GETs (one of each per source). The derivative must be HTTPS
+under `upload.wikimedia.org/wikipedia/commons/transcoded/`, 426×240, and have a
+declared size of at most 100 MiB per source. Limit each metadata response to 1 MiB
+and 90 seconds; limit each media response to 100 MiB and 10 minutes. No retries.
+Retain raw API JSON, original derivative bytes, SHA-256, times and failed reports
+privately. Only after media checks may three 12-second source-audio samples per
+source be decoded for human speech/alignment review. Decoding alone is not
+listening or proof of alignment.

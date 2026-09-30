@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "inventory_id": "commons-geekerwan-two-scenes-candidate-v1",
+  "fixture_only": false,
+  "sources": [
+    {
+      "id": "commons-geekerwan-asus-892592485",
+      "group_id": "geekerwan-asus-rog-ally-review",
+      "split": "unassigned",
+      "state": "inspected_candidate",
+      "source_url": "https://commons.wikimedia.org/w/index.php?title=TimedText%3AASUS_ROG-Handheld-Leistungsanalyse_%28%E6%9E%81%E5%AE%A2%E6%B9%BEGeekerwan%29_01.webm.zh.srt&oldid=892592485&action=raw",
+      "revision": "892592485",
+      "retrieved_at": "2026-09-30T08:12:47.007Z",
+      "sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+      "language": "zh",
+      "script": "Hans",
+      "format": "strict_srt_v1",
+      "cue_count": 268,
+      "local_candidate_path": ".cache/eval/commons-asus-rog-ally-892592485/source.zh.srt",
+      "media_url": "https://commons.wikimedia.org/wiki/File:ASUS_ROG-Handheld-Leistungsanalyse_(%E6%9E%81%E5%AE%A2%E6%B9%BEGeekerwan)_01.webm",
+      "rights": {
+        "subtitle": { "decision": "unknown" },
+        "reference": { "decision": "unknown" },
+        "audio": { "decision": "unknown" }
+      },
+      "scenes": []
+    },
+    {
+      "id": "commons-geekerwan-kirin-880535591",
+      "group_id": "geekerwan-huawei-kirin-9010-analysis",
+      "split": "unassigned",
+      "state": "inspected_candidate",
+      "source_url": "https://commons.wikimedia.org/w/index.php?title=TimedText%3AHuawei_Kirin_9010_in-depth_analysis_compared_to_9000s_%28%E6%9E%81%E5%AE%A2%E6%B9%BEGeekerwan%29_19.webm.zh.srt&oldid=880535591&action=raw",
+      "revision": "880535591",
+      "retrieved_at": "2026-09-30T08:12:47.301Z",
+      "sha256": "57dfd9feb3bfe6381421c4142820b780af341e195e52ee81d58e8f9f12858feb",
+      "language": "zh",
+      "script": "Hans",
+      "format": "strict_srt_v1",
+      "cue_count": 304,
+      "local_candidate_path": ".cache/eval/commons-huawei-kirin-9010-880535591/source.zh.srt",
+      "media_url": "https://commons.wikimedia.org/wiki/File:Huawei_Kirin_9010_in-depth_analysis_compared_to_9000s_(%E6%9E%81%E5%AE%A2%E6%B9%BEGeekerwan)_19.webm",
+      "rights": {
+        "subtitle": { "decision": "unknown" },
+        "reference": { "decision": "unknown" },
+        "audio": { "decision": "unknown" }
+      },
+      "scenes": []
+    }
+  ]
+}
