@@ -38,6 +38,7 @@ import { loadNaturalAsusSlotSchema } from './natural-asus-slot-schema-section.mj
 import { loadAsusV6Long } from './asus-v6-long-section.mjs';
 import { loadAsusV6FactScreen } from './asus-v6-fact-screen-section.mjs';
 import { loadNaturalAudio } from './natural-audio-section.mjs';
+import { loadAsusFullAudio } from './asus-full-audio-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const html = await fs.readFile(path.join(root, 'site/index.html'), 'utf8');
@@ -90,6 +91,7 @@ assert(html.includes('2026-09-30-asus-v6-fact-model-screen-result.md'));
 assert(html.includes('catalog-v19.json'));
 assert(html.includes('нового полного прогона после исправления ещё нет'));
 assert.deepEqual(data.natural_audio, await loadNaturalAudio(root));
+assert.deepEqual(data.asus_full_audio, await loadAsusFullAudio(root));
 assert.deepEqual(data.source_candidates, {
   source_count: 9,
   inspected_cues: 1850,
@@ -146,6 +148,9 @@ assert(html.includes('56 парных ответов, решение о моде
 assert(html.includes('REG-028 и контроли'));
 assert(html.includes('2026-09-30-vivo-fact-model-screen-result.md'));
 assert(html.includes('id="natural-audio"'));
+assert(html.includes('id="asus-full-audio"'));
+assert(html.includes('268 WAV и полный ролик; укладка речи не прошла'));
+assert(html.includes('2026-09-30-asus-full-audio-technical-result.md'));
 assert(html.includes('Три реальные реплики озвучены и воспроизведены, укладка не прошла'));
 assert(html.includes('2026-09-30-ying-natural-audio-technical-result.md'));
 assert(html.includes('человеческое прослушивание и оценка разборчивости отсутствуют'));
