@@ -29,6 +29,7 @@ import { loadSourceCandidates } from './source-candidate-section.mjs';
 import { loadNaturalScreen } from './natural-screen-section.mjs';
 import { loadYingFullFailure } from './ying-full-failure-section.mjs';
 import { loadYingGuarded } from './ying-guarded-section.mjs';
+import { loadVivoFull } from './vivo-full-section.mjs';
 import { loadNaturalAudio } from './natural-audio-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -52,6 +53,7 @@ assert.deepEqual(data.source_candidates, await loadSourceCandidates(root));
 assert.deepEqual(data.natural_screen, await loadNaturalScreen(root));
 assert.deepEqual(data.ying_full_failure, await loadYingFullFailure(root));
 assert.deepEqual(data.ying_guarded, await loadYingGuarded(root));
+assert.deepEqual(data.vivo_full, await loadVivoFull(root));
 assert.deepEqual(data.natural_audio, await loadNaturalAudio(root));
 assert.deepEqual(data.source_candidates, {
   source_count: 7,
@@ -87,6 +89,11 @@ assert(html.includes('93/93 структурно, ошибки смысла ос
 assert(html.includes('6 источников / 811 реплик, допущено 0'));
 assert(html.includes('REG-022') && html.includes('REG-023'));
 assert(html.includes('2026-09-30-commons-ying-guarded-full-result.md'));
+assert(html.includes('id="vivo-full"'));
+assert(html.includes('467/467 после восстановления, качество перевода не принято'));
+assert(html.includes('REG-024–027'));
+assert(html.includes('2026-09-30-commons-vivo-source-aware-ai-triage.md'));
+assert(html.includes('2026-09-30-commons-vivo-full-7b-resume-result.md'));
 assert(html.includes('id="natural-audio"'));
 assert(html.includes('Три реальные реплики озвучены и воспроизведены, укладка не прошла'));
 assert(html.includes('2026-09-30-ying-natural-audio-technical-result.md'));
@@ -94,8 +101,8 @@ assert(html.includes('человеческое прослушивание и о�
 assert(html.includes('2026-09-29-mingfay-media-download-failure.md'));
 assert(html.includes('2026-09-29-commons-cc-commerce-candidate.md'));
 assert(html.includes('id="release-readiness"'));
+assert(html.includes('2026-09-30-release-readiness-after-vivo.md'));
 assert(html.includes('2026-09-30-release-readiness-after-natural-audio.md'));
-assert(html.includes('2026-09-29-release-readiness-after-reg015.md'));
 assert(html.includes('G1–G9 и A1–A6 остаются открытыми'));
 assert(html.includes('2026-09-29-reg-009-long-cli-soak-results.md'));
 const v5 = await loadV5Envelope(root, data.dataset, data.currency.benchmark);
