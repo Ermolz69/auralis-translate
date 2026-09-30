@@ -37,6 +37,7 @@ import { loadNaturalAsusSlotSchema, renderNaturalAsusSlotSchema } from './natura
 import { loadAsusV6Long, renderAsusV6Long } from './asus-v6-long-section.mjs';
 import { loadMeasurementV2, renderMeasurementV2 } from './measurement-v2-section.mjs';
 import { loadMeasurementV3, renderMeasurementV3 } from './measurement-v3-section.mjs';
+import { loadCapacityWarning, renderCapacityWarning } from './capacity-warning-section.mjs';
 import { loadAsusV6FactScreen, renderAsusV6FactScreen } from './asus-v6-fact-screen-section.mjs';
 import { loadNaturalAudio, renderNaturalAudio } from './natural-audio-section.mjs';
 import { loadAsusFullAudio, renderAsusFullAudio } from './asus-full-audio-section.mjs';
@@ -83,6 +84,7 @@ const naturalAsusSlotSchema = await loadNaturalAsusSlotSchema(root, asusModelCom
 const asusV6Long = await loadAsusV6Long(root, asusModelComparison);
 const measurementV2 = await loadMeasurementV2(root);
 const measurementV3 = await loadMeasurementV3(root);
+const capacityWarning = await loadCapacityWarning(root);
 const asusV6FactScreen = await loadAsusV6FactScreen(root, asusV6Long);
 const naturalAudio = await loadNaturalAudio(root);
 const asusFullAudio = await loadAsusFullAudio(root);
@@ -170,6 +172,7 @@ payload.natural_asus_slot_schema = naturalAsusSlotSchema;
 payload.asus_v6_long = asusV6Long;
 payload.measurement_v2 = measurementV2;
 payload.measurement_v3 = measurementV3;
+payload.capacity_warning = capacityWarning;
 payload.asus_v6_fact_screen = asusV6FactScreen;
 payload.natural_audio = naturalAudio;
 payload.asus_full_audio = asusFullAudio;
@@ -222,6 +225,7 @@ ${renderNaturalAsusSlotSchema(naturalAsusSlotSchema)}
 ${renderAsusV6Long(asusV6Long)}
 ${renderMeasurementV2(measurementV2)}
 ${renderMeasurementV3(measurementV3)}
+${renderCapacityWarning(capacityWarning)}
 ${renderAsusV6FactScreen(asusV6FactScreen)}
 ${renderV5Envelope(v5Envelope, dataset, currency.benchmark, escape, number)}
 ${renderSceneContext(sceneContext, escape)}

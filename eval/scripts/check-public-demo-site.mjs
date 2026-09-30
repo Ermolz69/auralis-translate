@@ -38,6 +38,7 @@ import { loadNaturalAsusSlotSchema } from './natural-asus-slot-schema-section.mj
 import { loadAsusV6Long } from './asus-v6-long-section.mjs';
 import { loadMeasurementV2 } from './measurement-v2-section.mjs';
 import { loadMeasurementV3 } from './measurement-v3-section.mjs';
+import { loadCapacityWarning } from './capacity-warning-section.mjs';
 import { loadAsusV6FactScreen } from './asus-v6-fact-screen-section.mjs';
 import { loadNaturalAudio } from './natural-audio-section.mjs';
 import { loadAsusFullAudio } from './asus-full-audio-section.mjs';
@@ -94,6 +95,11 @@ assert(html.includes('id="measurement-v3"'));
 assert(html.includes('Проверка 268 реплик: ложные предупреждения о граммах убраны'));
 assert(html.includes('REG-036 и контроли'));
 assert(html.includes('G3–G5 и озвучка не приняты'));
+assert.deepEqual(data.capacity_warning, await loadCapacityWarning(root));
+assert(html.includes('id="capacity-warning"'));
+assert(html.includes('Ёмкость накопителя: новое предупреждение для реплики 83'));
+assert(html.includes('REG-037 и контроли'));
+assert(html.includes('человеческих оценок 0'));
 assert.deepEqual(data.asus_v6_fact_screen,
   await loadAsusV6FactScreen(root, data.asus_v6_long));
 assert(html.includes('id="asus-v6-fact-screen"'));
