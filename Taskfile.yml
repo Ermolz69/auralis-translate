@@ -169,6 +169,17 @@ tasks:
     cmds:
       - task: eval:natural:asus:v6:preflight
       - node eval/scripts/probe-commons-asus-full-v6-slot.mjs
+  eval:natural:asus:v6:private:check:
+    desc: Reverify all 268 retained v6 replies, durable checkpoints and exact offline ASUS export
+    cmds:
+      - node --check eval/scripts/check-commons-asus-full-v6-slot.mjs
+      - node eval/scripts/check-commons-asus-full-v6-slot.mjs
+  eval:natural:asus:v6:review-sample:
+    desc: Freeze a source-only ASUS v6 review sample before inspecting Russian candidates
+    cmds:
+      - task: eval:natural:asus:v6:private:check
+      - node --check eval/scripts/select-commons-asus-v6-review-sample.mjs
+      - node eval/scripts/select-commons-asus-v6-review-sample.mjs
   eval:natural:asus:7b:resume:
     desc: Resume one verified copy of the retained 226-checkpoint ASUS failure
     env:
