@@ -130,6 +130,22 @@ tasks:
     cmds:
       - node --check eval/scripts/probe-vivo-fact-model-screen.mjs
       - node eval/scripts/probe-vivo-fact-model-screen.mjs --preflight
+  eval:natural:vivo:general-fact:preflight:
+    desc: Verify exact 7B baseline requests and one general fact sentence without inference
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - node --check eval/scripts/probe-vivo-general-fact-reminder.mjs
+      - node eval/scripts/probe-vivo-general-fact-reminder.mjs --preflight
+  eval:natural:vivo:general-fact:probe:
+    desc: Compare one bounded 28-request 7B fact reminder against frozen source-only baseline
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:natural:vivo:general-fact:preflight
+      - node eval/scripts/probe-vivo-general-fact-reminder.mjs
   eval:natural:vivo:fact-screen:probe:
     desc: Run 56 paired natural and authored fact requests within one frozen budget
     env:
