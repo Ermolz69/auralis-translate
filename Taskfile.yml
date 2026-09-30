@@ -831,6 +831,17 @@ tasks:
     cmds:
       - node --check eval/scripts/check-asus-v6-fact-model-screen.mjs
       - node eval/scripts/check-asus-v6-fact-model-screen.mjs
+  eval:natural:asus:v6:fact-screen:startup:check:
+    desc: Preserve a simulated pre-server metadata failure in the private experiment journal
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - node --check eval/scripts/probe-asus-v6-fact-model-screen.mjs
+      - node eval/scripts/probe-asus-v6-fact-model-screen.mjs --simulate-startup-failure
+      - node --check eval/scripts/check-asus-v6-fact-startup-failure.mjs
+      - node eval/scripts/check-asus-v6-fact-startup-failure.mjs
   eval:reg009:prefix-repair:probe:
     desc: Measure conservative exact-code prefix repair on the archived synthetic long-file output
     cmds:

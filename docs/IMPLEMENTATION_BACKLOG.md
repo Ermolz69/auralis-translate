@@ -238,7 +238,9 @@ authored controls, with 1.8B and 7B differing only by model alias.
 All 64 outer JSON/slot shapes were valid, but two 7B `text` fields contained
 leaked JSON-wrapper suffixes, while both sizes retained several product and
 technical-term mistakes. The first zero-chat sandbox launch failure is
-archived separately. [REG-034](../eval/regressions/catalog-v19.json) now
+archived separately; a deterministic startup check now verifies that future
+pre-server metadata failures create a durable zero-chat report.
+[REG-034](../eval/regressions/catalog-v19.json) now
 pins those exact responses and a narrow v5/v6 text rejection guard with
 related/negative fixture controls. No post-fix natural full-file run,
 human language score or model selection follows; `CTX-02`, `EVAL-04`,

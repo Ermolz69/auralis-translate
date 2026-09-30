@@ -8,6 +8,13 @@ model request or server start**. The ignored private failure report is
 SHA-256 `f77a71e8a0e913511238c8924457880080e03835247ae54d94badc49c97a38f1`.
 The one allowed zero-chat infrastructure retry then completed in
 `.cache/eval/commons-asus-v6-fact-model-screen-v1/run-bWDBNw`.
+The harness previously read Git metadata before creating its durable
+report. The follow-up `task eval:natural:asus:v6:fact-screen:startup:check`
+now injects a pre-server metadata failure through the same report path
+and verifies zero server starts and zero chats. Its ignored private report
+is `.cache/eval/commons-asus-v6-fact-model-screen-startup-check-v1/run-mrBoDF/report.json`,
+SHA-256 `84291d2d2271b45d13eaf000b697e15b17211aa75306aaca31df1ad4ee578858`.
+This is a harness regression test, not a second model experiment.
 
 The retained report SHA-256 is
 `23a12aa953b0e1cb43e0dfaec7061672c979d0f24e3a7fa04639b921ab25fdf9`;

@@ -11,7 +11,10 @@ import { freeLoopbackPort, startProcess, stopProcess, waitForHealthyServer } fro
 import { runtimeSampler } from './runtime-sampler.mjs';
 
 const preflight = process.argv.length === 3 && process.argv[2] === '--preflight';
-assert(process.argv.length === 2 || preflight, 'Only --preflight is supported');
+const startupCheck = process.argv.length === 3
+  && process.argv[2] === '--simulate-startup-failure';
+assert(process.argv.length === 2 || preflight || startupCheck,
+  'Only --preflight or --simulate-startup-failure is supported');
 assert.equal(process.platform, 'win32');
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const archivedPath = path.join(root,
@@ -158,17 +161,16 @@ if (preflight) {
   process.exit(0);
 }
 
-const parent = path.join(root, '.cache/eval/commons-asus-v6-fact-model-screen-v1');
+const parent = path.join(root, startupCheck
+  ? '.cache/eval/commons-asus-v6-fact-model-screen-startup-check-v1'
+  : '.cache/eval/commons-asus-v6-fact-model-screen-v1');
 await fs.mkdir(parent, { recursive: true });
 const workspace = await fs.mkdtemp(path.join(parent, 'run-'));
 console.log(`Private ASUS fact screen: ${workspace}`);
 const started = performance.now();
 const report = { schema_version: 1, id: 'commons-asus-v6-fact-model-screen-v1',
   status: 'running', started_at: new Date().toISOString(),
-  git_head: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root,
-    encoding: 'utf8' }).trim(),
-  git_status: execFileSync('git', ['status', '--short'], { cwd: root,
-    encoding: 'utf8' }).trim(),
+  git_head: null, git_status: null, startup_check: startupCheck,
   harness_sha256: await hashFile(fileURLToPath(import.meta.url)),
   identity: { ...identities, os: `${os.type()} ${os.release()} ${os.arch()}`,
     cpu: os.cpus()[0].model, total_ram_bytes: os.totalmem(),
@@ -190,6 +192,12 @@ const remaining = () => {
 };
 let server;
 try {
+  await save();
+  if (startupCheck) throw new Error('simulated metadata failure before server start');
+  report.git_head = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root,
+    encoding: 'utf8' }).trim();
+  report.git_status = execFileSync('git', ['status', '--short'], { cwd: root,
+    encoding: 'utf8' }).trim();
   await save();
   for (const model of models) {
     const port = await freeLoopbackPort();
@@ -273,7 +281,7 @@ try {
 } catch (error) {
   report.status = 'failed';
   report.failures.push({ at: new Date().toISOString(), message: String(error) });
-  process.exitCode = 1;
+  process.exitCode = startupCheck ? 0 : 1;
 } finally {
   if (server) await stopProcess(server);
   report.finished_at = new Date().toISOString();
