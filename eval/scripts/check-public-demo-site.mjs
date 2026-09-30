@@ -58,8 +58,8 @@ assert.deepEqual(data.vivo_full, await loadVivoFull(root));
 assert.deepEqual(data.vivo_fact_screen, await loadVivoFactScreen(root));
 assert.deepEqual(data.natural_audio, await loadNaturalAudio(root));
 assert.deepEqual(data.source_candidates, {
-  source_count: 7,
-  inspected_cues: 1278,
+  source_count: 9,
+  inspected_cues: 1850,
   eligible_cues: 0,
   commerce_revision: '906218083',
   commerce_cues: 123,
@@ -70,12 +70,17 @@ assert.deepEqual(data.source_candidates, {
   ying_sha256: '505913bd7046b28c873307562a55d567043f8703bc00375c3485853b87c420d9',
   vivo_cues: 467,
   vivo_sha256: '8c41e66f52000a5b67ab27bfc319accd11d89290b60e50fc5c60f4ee8230a000',
+  asus_cues: 268,
+  asus_sha256: '923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b',
+  kirin_cues: 304,
+  kirin_sha256: '57dfd9feb3bfe6381421c4142820b780af341e195e52ee81d58e8f9f12858feb',
 });
 assert(html.includes('id="source-candidates"'));
-assert(html.includes('1278 проверенных реплик, 0 допущенных'));
+assert(html.includes('1850 проверенных реплик, 0 допущенных'));
 assert(html.includes('Первые 4 источника Commons дали 488 реплик'));
 assert(html.includes('2026-09-30-commons-train-240p-stream-result.md'));
 assert(html.includes('2026-09-30-commons-vivo-media-samples-result.md'));
+assert(html.includes('2026-09-30-geekerwan-two-scene-media-result.md'));
 assert(html.includes('речь и совпадение реплик человеком пока не проверены'));
 assert(html.includes('2026-09-29-youtube-mingfay-caption-candidate.md'));
 assert(html.includes('id="natural-screen"'));
