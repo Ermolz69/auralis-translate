@@ -180,6 +180,11 @@ tasks:
       - task: eval:natural:asus:v6:private:check
       - node --check eval/scripts/audit-asus-v6-token-budget.mjs
       - node eval/scripts/audit-asus-v6-token-budget.mjs
+  eval:long:asus:v6:tokens:capture:
+    desc: Copy only the verified source-free ASUS token summary into public evidence
+    cmds:
+      - node --check eval/scripts/capture-asus-v6-token-budget.mjs
+      - node eval/scripts/capture-asus-v6-token-budget.mjs
   eval:natural:asus:v6:review-sample:
     desc: Freeze a source-only ASUS v6 review sample before inspecting Russian candidates
     cmds:

@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "id": "asus-v6-rendered-token-audit-v1",
+  "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+  "input_report_sha256": "1d8addf0860cb88f0161ac6eeed3fc45351ab9912aaf0eff2b39a76772a26413",
+  "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5",
+  "scene_map_sha256": "189da2212f42cfe16373db7d54d1985bcae1d56e7601fb918a47c05a4d8851e7",
+  "cue_count": 268,
+  "context_tokens": 2048,
+  "response_reserve_tokens": 256,
+  "safety_margin_tokens": 64,
+  "prompt_ceiling_tokens": 1728,
+  "prompt_min_tokens": 227,
+  "prompt_median_tokens": 276,
+  "prompt_p95_tokens": 288,
+  "prompt_max_tokens": 300,
+  "prompt_max_cue_ids": [
+    81
+  ],
+  "minimum_headroom_tokens": 1428,
+  "prompt_total_tokens": 73766,
+  "completion_total_tokens": 12155,
+  "context_trimmed_cues": 0,
+  "boundary_rows": [
+    {
+      "cue_id": 1,
+      "prompt_tokens": 227,
+      "completion_tokens": 35,
+      "context_cues": 1,
+      "context_trimmed": 0
+    },
+    {
+      "cue_id": 2,
+      "prompt_tokens": 267,
+      "completion_tokens": 29,
+      "context_cues": 2,
+      "context_trimmed": 0
+    },
+    {
+      "cue_id": 133,
+      "prompt_tokens": 273,
+      "completion_tokens": 48,
+      "context_cues": 2,
+      "context_trimmed": 0
+    },
+    {
+      "cue_id": 134,
+      "prompt_tokens": 276,
+      "completion_tokens": 50,
+      "context_cues": 2,
+      "context_trimmed": 0
+    },
+    {
+      "cue_id": 267,
+      "prompt_tokens": 268,
+      "completion_tokens": 36,
+      "context_cues": 2,
+      "context_trimmed": 0
+    },
+    {
+      "cue_id": 268,
+      "prompt_tokens": 231,
+      "completion_tokens": 42,
+      "context_cues": 1,
+      "context_trimmed": 0
+    }
+  ],
+  "model_requests": 0
+}
