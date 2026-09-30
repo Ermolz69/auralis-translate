@@ -34,6 +34,7 @@ import { loadVivoFactScreen } from './vivo-fact-screen-section.mjs';
 import { loadVivoGeneralFact } from './vivo-general-fact-section.mjs';
 import { loadAsusTail } from './asus-tail-section.mjs';
 import { loadAsusModelComparison } from './asus-model-comparison-section.mjs';
+import { loadNaturalAsusSlotSchema } from './natural-asus-slot-schema-section.mjs';
 import { loadNaturalAudio } from './natural-audio-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -66,6 +67,11 @@ assert.deepEqual(data.asus_model_comparison,
 assert(html.includes('id="asus-model-comparison"'));
 assert(html.includes('1.8B тоже остановилась: 19 из 268 реплик'));
 assert(html.includes('2026-09-30-commons-asus-full-1_8b-failure.md'));
+assert.deepEqual(data.natural_asus_slot_schema,
+  await loadNaturalAsusSlotSchema(root, data.asus_model_comparison));
+assert(html.includes('id="natural-asus-slot-schema"'));
+assert(html.includes('Фиксированный ID помог в 3 парах, качество текста открыто'));
+assert(html.includes('2026-09-30-natural-asus-slot-schema-screen-result.md'));
 assert.deepEqual(data.natural_audio, await loadNaturalAudio(root));
 assert.deepEqual(data.source_candidates, {
   source_count: 9,

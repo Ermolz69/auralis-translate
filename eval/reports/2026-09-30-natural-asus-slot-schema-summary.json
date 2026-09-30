@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "experiment": "natural-asus-slot-schema-screen-v1",
+  "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+  "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "profile_sha256": "432a1b064397a96334d777dfa01a2cef58d367b37023f1f9175501969698df4d",
+  "private_report_sha256": "0fc64a935e3f2bccdcd3b54e1dd6adda05982acdd63e87dde3b133e6f7b4645b",
+  "target_cue": 20,
+  "following_context_cue": 21,
+  "paired_seeds": 3,
+  "chat_requests": 6,
+  "baseline_neighbor_ids": 3,
+  "constrained_target_ids": 3,
+  "prompt_tokens": 1674,
+  "completion_tokens": 320,
+  "harness_wall_ms": 12868,
+  "sampled_server_working_set_bytes": 1540976640,
+  "sampled_whole_device_gpu_memory_mib": 2235,
+  "human_bilingual_reviewed_cues": 0,
+  "full_file_completed": false,
+  "profile_promoted": false,
+  "raw_source_or_candidate_published": false
+}

@@ -205,6 +205,13 @@ controls. Both model sizes failed to complete the same ASUS source, at
 different cues and for different structural reasons. Neither model or full
 release is selected, and `LONG-04` remains planned.
 
+The [bounded natural ASUS slot-schema screen](../eval/experiments/2026-09-30-natural-asus-slot-schema-screen-result.md)
+adds partial `CTX-02`/`EVAL-04` evidence on the exact REG-030 request: three
+seeded baseline replies repeated neighboring ID 21, while three paired
+target-constant-schema replies carried requested ID 20. AI inspection noted
+unstable technical nouns; no human language score or complete-file result
+exists. The v5 profile is unchanged and schema promotion remains open.
+
 ## Current handoff
 
 `CTX-02` and `EVAL-04` now have an opt-in [provider review diagnostic
