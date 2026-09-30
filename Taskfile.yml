@@ -123,6 +123,22 @@ tasks:
       - task: build:release
       - node --check eval/scripts/resume-commons-asus-full.mjs
       - node eval/scripts/resume-commons-asus-full.mjs
+  eval:natural:json-tail:temperature:preflight:
+    desc: Verify two exact failed long-source requests and two neighbor controls before inference
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - node --check eval/scripts/probe-json-tail-temperature.mjs
+      - node eval/scripts/probe-json-tail-temperature.mjs --preflight
+  eval:natural:json-tail:temperature:probe:
+    desc: Screen eight exact 7B requests with temperature as the only changed field
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:natural:json-tail:temperature:preflight
+      - node eval/scripts/probe-json-tail-temperature.mjs
   eval:natural:vivo:7b:resume:
     desc: Resume one verified copy of the retained 275-checkpoint Vivo failure
     env:
@@ -223,6 +239,11 @@ tasks:
     cmds:
       - node --check eval/scripts/check-asus-private-failure.mjs
       - node eval/scripts/check-asus-private-failure.mjs
+  eval:regression:asus:resume:check:
+    desc: Verify exact-prefix copied-state preservation after repeat cue-227 rejection
+    cmds:
+      - node --check eval/scripts/check-asus-private-resume-failure.mjs
+      - node eval/scripts/check-asus-private-resume-failure.mjs
   eval:regression:vivo:ai-review:check:
     desc: Recheck five private source-fact windows in the complete 467-cue candidate
     cmds:

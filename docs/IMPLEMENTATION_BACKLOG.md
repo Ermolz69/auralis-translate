@@ -181,7 +181,10 @@ process launch failed before inference and was retained. The single permitted
 JSON-tail class at cue 227. The strict SRT guard rejected it, leaving zero
 complete results and no partial output. [REG-029](../eval/regressions/natural-asus-json-tail-v1.json)
 pins the private three-cue reproducer and new watt/core related and negative
-controls on a distinct source. No quality or source admission claim follows;
+controls on a distinct source. A [copied-state continuation](../eval/experiments/2026-09-30-commons-asus-resume-failure.md)
+preserved all 226 blocks and then repeated the same defect on the identical
+request with changed Russian wording; it again saved no result. No quality
+or source admission claim follows;
 `DATA-03`, `CTX-02` and `EVAL-04` remain in progress, and `LONG-04` remains
 planned pending complete source-aware human review and its dependencies.
 
