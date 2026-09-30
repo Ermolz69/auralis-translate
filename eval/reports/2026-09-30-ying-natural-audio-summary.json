@@ -1,0 +1,29 @@
+{
+  "probe_id": "VOICE-YING-TECH-2026-09-30-v1",
+  "auralis_local_commit": "b6991e6",
+  "source_srt_sha256": "505913bd7046b28c873307562a55d567043f8703bc00375c3485853b87c420d9",
+  "candidate_ru_srt_sha256": "a5aa5054ba63f816959552580600c0d5ec40c991a0deaf3a656e879fc68cf18b",
+  "source_media_sha256": "bc19430cf2a64e37ac1b0883599041989e3444697738f234a23484d620eb4ac7",
+  "voice": "Microsoft Irina Desktop",
+  "runtime_sha256": "362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139",
+  "cues": [
+    { "id": 1, "window_ms": 1540, "wav_duration_ms": 3374, "overrun_ms": 1834, "wav_sha256": "e4e70725c9507b7b6f921038fa3a31dd770043e5c442d710c265f02d6262885c", "clipped_samples": 0 },
+    { "id": 41, "window_ms": 2260, "wav_duration_ms": 5899, "overrun_ms": 3639, "wav_sha256": "4a89cc553565c12660999420a30259f80c0e5b71fbc6427013ebe46554310fcb", "clipped_samples": 0 },
+    { "id": 93, "window_ms": 2200, "wav_duration_ms": 4239, "overrun_ms": 2039, "wav_sha256": "036b9853b617cf0bde090d0e0e21b18ac37b68eb5d1c24f31ffcc0d1fedabada", "clipped_samples": 0 }
+  ],
+  "media_report_sha256": "90cf37e2f51c2a5ad52dae554911cdfdef35c246f085f3bd7d6cdd4c1b7f23b4",
+  "media_sha256": "247212e66dbef986cf8bfe291e9c1f0c1b870393fd2a781c680bcea8d6774576",
+  "media_bytes": 46534108,
+  "media_duration_ms": 217904,
+  "video_codec": "vp9",
+  "audio_codec": "opus",
+  "decoded_audio_clipped_samples": 0,
+  "cue_fit": "failed",
+  "playback_report_sha256": "c95d7eb0c8eaa3441335f037515f650ec99667fa8bee7bd42280f650b167a4b4",
+  "full_playback_ms": 218245,
+  "player_process": "completed",
+  "human_bilingual_review": "missing",
+  "human_listening_review": "missing",
+  "approved_spoken_script": false,
+  "release_admitted": false
+}

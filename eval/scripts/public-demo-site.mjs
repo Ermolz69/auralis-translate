@@ -28,6 +28,7 @@ import { loadSourceCandidates, renderSourceCandidates } from './source-candidate
 import { loadNaturalScreen, renderNaturalScreen } from './natural-screen-section.mjs';
 import { loadYingFullFailure, renderYingFullFailure } from './ying-full-failure-section.mjs';
 import { loadYingGuarded, renderYingGuarded } from './ying-guarded-section.mjs';
+import { loadNaturalAudio, renderNaturalAudio } from './natural-audio-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const dataset = JSON.parse(await fs.readFile(path.join(root, 'eval/corpora/public-demo-v1.json'), 'utf8'));
@@ -61,6 +62,7 @@ const sourceCandidates = await loadSourceCandidates(root);
 const naturalScreen = await loadNaturalScreen(root);
 const yingFullFailure = await loadYingFullFailure(root);
 const yingGuarded = await loadYingGuarded(root);
+const naturalAudio = await loadNaturalAudio(root);
 const evidencePath = path.join(root, 'eval/reports/public-demo-2026-09-27.json');
 if (process.argv[2] === '--capture') {
   const workspace = (await fs.readFile(path.join(root, '.cache/eval/public-demo/latest.txt'), 'utf8')).trim();
@@ -136,6 +138,7 @@ payload.source_candidates = sourceCandidates;
 payload.natural_screen = naturalScreen;
 payload.ying_full_failure = yingFullFailure;
 payload.ying_guarded = yingGuarded;
+payload.natural_audio = naturalAudio;
 payload.terms_probe = { success_sha256: termsProbe.success_sha256, failure_sha256: termsProbe.failure_sha256, profile_sha256: termsProbe.profile_sha256, corpus_sha256: termsProbe.corpus_sha256, chat_requests: termsProbe.chat_requests, loopback_requests: termsProbe.loopback_requests };
 const json = JSON.stringify(payload).replaceAll('<', '\\u003c');
 const runRows = benchmark.runs.map(run => `<tr><th scope="row">${run.repetition}</th><td>${number(run.translation_elapsed_ms)}</td><td>${number(run.request_elapsed_sum_ms)}</td><td>${number(run.translation_elapsed_ms - run.request_elapsed_sum_ms)}</td><td>${number(run.offline_reexport_ms)}</td><td>${run.status.completed_blocks}/${run.status.total_blocks}</td></tr>`).join('');
@@ -193,6 +196,7 @@ ${renderReg009Greedy81(reg009Greedy81)}
 <section id="host-staged-gap" class="my-8 scroll-mt-8 rounded-2xl border border-cyan-200 bg-cyan-50/60 p-5 md:p-7"><p class="text-sm font-semibold text-cyan-900">HOST-01 · реальный процесс · 29 сентября 2026</p><h2 class="mt-2 text-2xl font-bold">Историческая ветка пережила прерывание публикации</h2><p class="mt-3 max-w-4xl text-slate-700">На авторском SRT из двух реплик Auralis остановили после записи ожидающей публикации и outbox, до ответа сохранения. Перед завершением файла проверили обе базы, 165 байт во временном файле и прежний выбор результата. После убийства и перезапуска настоящий outbox завершил ровно этот файл: SHA-256 совпал с результатом Translate, временный файл исчез, новый запрос к модели не выполнялся. Интерфейс сохранил выбранную исходную редакцию и показал историческую ветку без автоматического прикрепления.</p><p class="mt-3 max-w-4xl text-slate-700">Первый запуск выявил ошибку области действия тестового крючка; одна заранее ограниченная повторная попытка после исправления прошла. Отдельный инспектор прошёл после исправления своего UUID-шаблона на том же сохранённом состоянии. Это проверка одного сбоя на искусственном коротком файле; остальные сценарии восстановления, длинный естественный перевод и полный выпуск остаются открытыми.</p><div class="mt-3 flex flex-wrap gap-4 text-sm font-semibold text-blue-700"><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-29-host-historical-staged-gap.md">Условия, обе ошибки и хеши (EN)</a></div></section>
 ${renderAuralisPrivateSpeech(auralisPrivateSpeech)}
 ${renderManagedSpeech(managedSpeech)}
+${renderNaturalAudio(naturalAudio)}
 <section id="sapi-wav-boundary" class="my-8 scroll-mt-8 rounded-2xl border border-cyan-200 bg-cyan-50/60 p-5 md:p-7"><p class="text-sm font-semibold text-cyan-900">Auralis · регрессия VOICE-02/07</p><h2 class="mt-2 text-2xl font-bold">Повреждённый RIFF больше не считается готовым звуком</h2><p class="mt-3 max-w-4xl text-slate-700">Проверка WAV раньше принимала аудиоданные за пределами длины RIFF и неполный PCM-кадр. Минимальные тесты сначала воспроизвели обе ошибки, затем прошли после исправления. Новый разбор сохранил SHA-256 и длительность двух ранее созданных настоящим SAPI WAV: 2469 и 2664 мс. Повторной генерации не было. Это защита технической границы; окна обеих реплик по 1000 мс всё ещё не выдержаны, человек звук не слушал и A1–A6 остаются открытыми.</p><a class="mt-3 inline-block text-sm font-semibold text-blue-700 underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-29-auralis-sapi-wav-boundary.md">Воспроизведение, хеши и ограничения (EN)</a></section>
 <section id="slot-schema" class="scroll-mt-8 border-t border-slate-200 py-10"><p class="text-sm font-semibold uppercase tracking-[.12em] text-slate-600">Парное сравнение · реальная 1.8B · 29 сентября 2026</p><h2 class="mt-2 text-2xl font-semibold">Ограничение ID пока не доказало улучшение</h2><p class="mt-3 max-w-5xl text-slate-700">На том же авторском слоте 72 сравнили исходную JSON-схему и вариант с жёстко заданными ID 72 и индексом строки 0. Два одинаковых источника и семени на каждую пару, четыре сырых ответа. Оба варианта оба раза вернули ID 72 и «Это не последний поезд.», по 290/30 входных/выходных токенов. Прежний необработанный ответ с ID 73 остаётся подтверждённым сбоем, но эти два новых baseline-запроса его не повторили. Оснований менять рабочий профиль или считать длинный файл пройденным нет.</p><div class="mt-4 flex flex-wrap gap-4 text-sm font-semibold text-blue-700"><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/reports/2026-09-29-slot-schema-ablation.json">Все четыре запроса и сырых ответа</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-29-slot-schema-ablation-results.md">План, замеры и ограничения (EN)</a></div><p class="mt-3 text-xs text-slate-500">SHA-256 журнала: <code class="hash">7a53c67769e59cee113aea10fc25b4e04f77acc6aadd4d9b1fb918fe6d4473d5</code>. Человеческой оценки русского текста нет.</p></section>
 ${renderTermsProbe(termsProbe, escape)}

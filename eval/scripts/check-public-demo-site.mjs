@@ -29,6 +29,7 @@ import { loadSourceCandidates } from './source-candidate-section.mjs';
 import { loadNaturalScreen } from './natural-screen-section.mjs';
 import { loadYingFullFailure } from './ying-full-failure-section.mjs';
 import { loadYingGuarded } from './ying-guarded-section.mjs';
+import { loadNaturalAudio } from './natural-audio-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const html = await fs.readFile(path.join(root, 'site/index.html'), 'utf8');
@@ -51,6 +52,7 @@ assert.deepEqual(data.source_candidates, await loadSourceCandidates(root));
 assert.deepEqual(data.natural_screen, await loadNaturalScreen(root));
 assert.deepEqual(data.ying_full_failure, await loadYingFullFailure(root));
 assert.deepEqual(data.ying_guarded, await loadYingGuarded(root));
+assert.deepEqual(data.natural_audio, await loadNaturalAudio(root));
 assert.deepEqual(data.source_candidates, {
   source_count: 5,
   inspected_cues: 718,
@@ -78,6 +80,10 @@ assert(html.includes('93/93 структурно, ошибки смысла ос
 assert(html.includes('6 источников / 811 реплик, допущено 0'));
 assert(html.includes('REG-022') && html.includes('REG-023'));
 assert(html.includes('2026-09-30-commons-ying-guarded-full-result.md'));
+assert(html.includes('id="natural-audio"'));
+assert(html.includes('Три реальные реплики озвучены и воспроизведены, укладка не прошла'));
+assert(html.includes('2026-09-30-ying-natural-audio-technical-result.md'));
+assert(html.includes('человеческое прослушивание и оценка разборчивости отсутствуют'));
 assert(html.includes('2026-09-29-mingfay-media-download-failure.md'));
 assert(html.includes('2026-09-29-commons-cc-commerce-candidate.md'));
 assert(html.includes('id="release-readiness"'));

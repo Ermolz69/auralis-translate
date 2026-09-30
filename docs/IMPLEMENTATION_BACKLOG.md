@@ -129,6 +129,16 @@ retained; one same-input permitted repair succeeded. This synthetic
 two-cue fixture still fails duration fit and has no real reviewer/listener,
 production worker, natural source or final-media playback. A1–A6 remain open.
 
+The [natural Ying technical audio result](../eval/experiments/2026-09-30-ying-natural-audio-technical-result.md)
+adds partial `VOICE-02`/`VOICE-03` evidence on local Auralis commits
+`f91010d`/`6bd5bc5`/`b6991e6`: real SAPI produced three private
+beginning/middle/end WAVs from the matched source and a full 3:38 Matroska
+decoded and completed an FFplay pass. All three speech durations exceed their
+original subtitle windows, and no person has listened or reviewed the script.
+This diagnostic does not close `VOICE-01`–`VOICE-04` or A1–A6. The complete
+Russian candidate has REG-022/023 meaning errors; only three unapproved cues
+were spoken, and no media was published.
+
 ## Current handoff
 
 `CTX-02` and `EVAL-04` now have an opt-in [provider review diagnostic
