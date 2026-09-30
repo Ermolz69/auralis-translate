@@ -130,6 +130,23 @@ tasks:
       - task: eval:natural:asus:1_8b:preflight
       - task: build:release
       - node eval/scripts/probe-commons-asus-full-1_8b.mjs
+  eval:natural:asus:slot-schema:preflight:
+    desc: Verify the retained natural cue-20 request and pinned 1.8B identities before schema comparison
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:regression:asus:1_8b:private:check
+      - node --check eval/scripts/natural-asus-slot-schema-screen.mjs
+      - node eval/scripts/natural-asus-slot-schema-screen.mjs --preflight
+  eval:natural:asus:slot-schema:probe:
+    desc: Run six paired natural ASUS 1.8B chats with only target-slot schema changed
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:natural:asus:slot-schema:preflight
+      - node eval/scripts/natural-asus-slot-schema-screen.mjs
   eval:natural:asus:7b:resume:
     desc: Resume one verified copy of the retained 226-checkpoint ASUS failure
     env:
