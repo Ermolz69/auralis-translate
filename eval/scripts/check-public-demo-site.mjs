@@ -32,6 +32,7 @@ import { loadYingGuarded } from './ying-guarded-section.mjs';
 import { loadVivoFull } from './vivo-full-section.mjs';
 import { loadVivoFactScreen } from './vivo-fact-screen-section.mjs';
 import { loadVivoGeneralFact } from './vivo-general-fact-section.mjs';
+import { loadAsusTail } from './asus-tail-section.mjs';
 import { loadNaturalAudio } from './natural-audio-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -58,6 +59,7 @@ assert.deepEqual(data.ying_guarded, await loadYingGuarded(root));
 assert.deepEqual(data.vivo_full, await loadVivoFull(root));
 assert.deepEqual(data.vivo_fact_screen, await loadVivoFactScreen(root));
 assert.deepEqual(data.vivo_general_fact, await loadVivoGeneralFact(root));
+assert.deepEqual(data.asus_tail, await loadAsusTail(root));
 assert.deepEqual(data.natural_audio, await loadNaturalAudio(root));
 assert.deepEqual(data.source_candidates, {
   source_count: 9,
@@ -86,6 +88,10 @@ assert(html.includes('2026-09-30-geekerwan-two-scene-media-result.md'));
 assert(html.includes('id="vivo-general-fact"'));
 assert(html.includes('2026-09-30-vivo-general-fact-reminder-result.md'));
 assert(html.includes('Экспериментальный текст не включён в релизный профиль'));
+assert(html.includes('id="asus-tail"'));
+assert(html.includes('ASUS: 226 из 268 сохранены, дефект модели повторился'));
+assert(html.includes('При температуре 0 хвост остался в ASUS 2/2 раза'));
+assert(html.includes('2026-09-30-json-tail-temperature-screen-result.md'));
 assert(html.includes('речь и совпадение реплик человеком пока не проверены'));
 assert(html.includes('2026-09-29-youtube-mingfay-caption-candidate.md'));
 assert(html.includes('id="natural-screen"'));
