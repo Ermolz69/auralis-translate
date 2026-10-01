@@ -44,7 +44,7 @@ import { loadAsusV6FactScreen, renderAsusV6FactScreen } from './asus-v6-fact-scr
 import { loadNaturalAudio, renderNaturalAudio } from './natural-audio-section.mjs';
 import { loadAsusFullAudio, renderAsusFullAudio } from './asus-full-audio-section.mjs';
 import { renderReleaseReadiness } from './release-readiness-section.mjs';
-import { loadSethluiFullV6, renderSethluiFullV6 } from './sethlui-full-v6-section.mjs';
+import { loadSethluiFullV6, loadSethluiResume, renderSethluiFullV6 } from './sethlui-full-v6-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const dataset = JSON.parse(await fs.readFile(path.join(root, 'eval/corpora/public-demo-v1.json'), 'utf8'));
@@ -76,6 +76,7 @@ const auralisPrivateSpeech = await loadAuralisPrivateSpeech(root);
 const managedSpeech = await loadManagedSpeech(root);
 const sourceCandidates = await loadSourceCandidates(root);
 const sethluiFullV6 = await loadSethluiFullV6(root);
+const sethluiResume = await loadSethluiResume(root);
 const naturalScreen = await loadNaturalScreen(root);
 const yingFullFailure = await loadYingFullFailure(root);
 const yingGuarded = await loadYingGuarded(root);
@@ -167,6 +168,7 @@ payload.auralis_private_speech = auralisPrivateSpeech;
 payload.managed_speech = managedSpeech;
 payload.source_candidates = sourceCandidates;
 payload.sethlui_full_v6 = sethluiFullV6;
+payload.sethlui_resume = sethluiResume;
 payload.natural_screen = naturalScreen;
 payload.ying_full_failure = yingFullFailure;
 payload.ying_guarded = yingGuarded;
@@ -224,7 +226,7 @@ ${renderDeliveryProgress(deliveryPlan, escape)}
 ${renderSourceCandidates(sourceCandidates)}
 ${renderXiaolinMetadataScreen()}
 ${renderSethluiTimingScreen(sourceCandidates)}
-${renderSethluiFullV6(sethluiFullV6)}
+${renderSethluiFullV6(sethluiFullV6, sethluiResume)}
 ${renderNaturalScreen(naturalScreen)}
 ${renderYingFullFailure(yingFullFailure)}
 ${renderYingGuarded(yingGuarded)}
