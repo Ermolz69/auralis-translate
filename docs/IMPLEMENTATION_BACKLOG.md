@@ -546,3 +546,9 @@ pins the source, runtime, media and playback hashes. `VOICE-01`–`VOICE-07` and
 A1–A6 remain open. The [latest interim failed readiness audit](../eval/experiments/2026-10-01-release-readiness-after-sethlui-audio.md)
 keeps `RELEASE-05` open after the prior
 [translation-only self-audit](../eval/experiments/2026-10-01-release-readiness-after-sethlui-retry.md).
+The [private source/dub audition packet](../eval/experiments/2026-10-01-sethlui-private-audition-packet-result.md)
+adds partial `VOICE-04` preparation at local Auralis `10427b8`: six
+predeclared windows, 49 distinct cues, 12 decoded paired Opus clips and a
+blank reviewer form. No person listened or scored the audio, and no source
+speech alignment or rights decision was made. It cannot complete A4/A6 or
+the [latest failed RELEASE-05 audit](../eval/experiments/2026-10-01-release-05-audit-attempt-v2.md).
