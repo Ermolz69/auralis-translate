@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { spawn } from 'node:child_process';
 import { createReadStream } from 'node:fs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { captureBoundedProcess } from './bounded-process-capture.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const executable = process.env.AURALIS_TEST_YTDLP;
@@ -33,34 +33,10 @@ const workspace = await fs.mkdtemp(path.join(parent, 'inventory-'));
 const startedAt = new Date().toISOString();
 const args = ['--dump-single-json', '--skip-download', '--no-playlist',
   '--no-warnings', '--retries', '0', url];
-const stdout = [];
-const stderr = [];
-let stdoutBytes = 0;
-let stderrBytes = 0;
-let exceeded = false;
-let timedOut = false;
-const child = spawn(executable, args, { cwd: root, windowsHide: true,
-  env: process.env, stdio: ['ignore', 'pipe', 'pipe'] });
-const timer = setTimeout(() => { timedOut = true; child.kill(); }, timeoutMs);
-const collect = (chunks, isStdout) => chunk => {
-  if (isStdout) stdoutBytes += chunk.length;
-  else stderrBytes += chunk.length;
-  if (stdoutBytes + stderrBytes > maxOutputBytes) {
-    exceeded = true;
-    child.kill();
-    return;
-  }
-  chunks.push(chunk);
-};
-child.stdout.on('data', collect(stdout, true));
-child.stderr.on('data', collect(stderr, false));
-const outcome = await new Promise(resolve => {
-  child.once('error', error => resolve({ error: String(error), exit_code: null, signal: null }));
-  child.once('close', (exitCode, signal) => resolve({ exit_code: exitCode, signal }));
+const { outcome, timedOut, outputLimitExceeded: exceeded,
+  stdout: output, stderr: errorOutput } = await captureBoundedProcess({
+  command: executable, args, cwd: root, env: process.env, timeoutMs, maxOutputBytes,
 });
-clearTimeout(timer);
-const output = Buffer.concat(stdout);
-const errorOutput = Buffer.concat(stderr);
 await fs.writeFile(path.join(workspace, 'extractor-stdout.json'), output);
 await fs.writeFile(path.join(workspace, 'extractor-stderr.txt'), errorOutput);
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
