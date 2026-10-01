@@ -515,3 +515,23 @@ The source-inventory validator now permits source rights to be checked before
 scene admission while preserving the zero-eligible invariant. No Paywall
 source bytes or WAVs are published. The [new interim release audit](../eval/experiments/2026-10-01-release-readiness-after-paywall-source.md)
 retains all release and audio gates as open.
+
+The [bounded 7B retry screens](../eval/experiments/2026-10-01-sethlui-json-tail-length-retry-result.md)
+add partial `CTX-02`, `CTX-05`, `LONG-04` and `EVAL-04` evidence on the
+same 263-cue restaurant source. The first new run still stopped at cue 62
+after 61 durable blocks: `finish_reason=length` and 256 repeated wrapper
+closers were outside the initial completed-response retry rule. `REG-043`
+pins that exact raw failure, three related and four negative contract cases.
+The separately versioned v2 policy passed provider/core tests and one real
+full-file screen: 264 chats, one rejected cue-62 answer followed by a clean
+identical-request answer, 263 checkpoints, one structurally valid SRT and a
+byte-identical offline export. This run exercised the completed-response
+retry rule; the new length-specific branch has no real-model retry outcome.
+The retained first failed run and original/copy states were not changed.
+AI source-aware triage found better name/quantity retention than the 1.8B
+draft at selected cues, but a dim sum role is still mislabeled and the same
+venue name has three Russian renderings (`REG-044`). With zero eligible corpus
+cues, no independent bilingual ratings, source-rights clearance or listening,
+this is not a selected model, approved spoken script or G1–G9/A1–A6 pass.
+The [latest interim audit](../eval/experiments/2026-10-01-release-readiness-after-sethlui-retry.md)
+keeps `RELEASE-05` open.

@@ -1,0 +1,24 @@
+{
+  "schema_version": 28,
+  "catalog_id": "zh-ru-development-regressions-v28",
+  "base_catalog_file": "catalog-v27.json",
+  "base_catalog_sha256": "747a8c9aaa7e3256d697a1a191f4b0eb4169f6ed57ecce4b34f93cdf5c27e7be",
+  "entries": [
+    {
+      "id": "REG-044",
+      "pack_file": "sethlui-venue-name-consistency-v1.json",
+      "pack_sha256": "ad90da8fdf1d2347ddec2d43a27f647c7fb560c67d5fca764b571710d9794339",
+      "source_family": "private_commons_sethlui_restaurant_derivative_and_authored_controls",
+      "split": "known_development_regression",
+      "category": "repeated_venue_name_translation_inconsistency",
+      "profile_scope": "7B v6 full-file structural candidate with no approved venue term",
+      "expected_invariant": "A repeated exact Chinese venue name in one source scene needs one reviewed Russian rendering across the whole file; unapproved automatic correction is not allowed.",
+      "severity": "major",
+      "minimal_reproducer_count": 3,
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-10-01-sethlui-json-tail-length-retry-result.md",
+      "last_outcome": "Three different Russian venue names occurred at cues 130, 219 and 262 for the same exact Chinese source name; AI triage only, no approved canonical term or human review."
+    }
+  ]
+}

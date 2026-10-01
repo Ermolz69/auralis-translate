@@ -1111,6 +1111,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v25.mjs
       - node eval/scripts/check-regression-catalog-v26.mjs
       - node eval/scripts/check-regression-catalog-v27.mjs
+      - node eval/scripts/check-regression-catalog-v28.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:

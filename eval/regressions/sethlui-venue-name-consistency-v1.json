@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "REG-044",
+  "status": "ai_observed_unreviewed_venue_name_inconsistency",
+  "severity": "major",
+  "source_family": "private_commons_sethlui_restaurant_derivative_and_authored_controls",
+  "split": "known_development_regression",
+  "affected_model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+  "profile_sha256": "268c4d00eee8994936d7019d4cad47a5193a01e459ad9ed4214ea30facd102f9",
+  "expected_invariant": "A repeated exact Chinese venue name in one source scene needs one reviewed Russian rendering across the whole file; unapproved automatic correction is not allowed.",
+  "private_reproducer": {
+    "source_sha256": "4777e11caa115e893f2328c2a33c25a76c7391ace8ecf0ac4b9436635fc27964",
+    "candidate_sha256": "45f140e201f5a6228a0754e48d1e2b4153a392a7869dc279768339882fa53511",
+    "report_sha256": "5bbe00880f6e22a3d9831eddf1404f7c4a51503ed29809325294dd56cd82ddd0",
+    "source_name_sha256": "9d8cc86ef8e4604d18e71af74bc5f6a7cd212d16ec86cc63c31ece593da076bf",
+    "cases": [
+      { "cue_id": 130, "source_text_sha256": "6a9614223b7aa31dff6008e32c0355bf1f25a6810a1e35cb607a2c396e446eb9", "accepted_text_sha256": "7b0546145c876b2cf80df43da0275ca3cbd31daddc776554b089e2305729cd40" },
+      { "cue_id": 219, "source_text_sha256": "d60924b8b42f0477b0659c6bc577503b08168ef81ab66f8b8c934aae64de7a08", "accepted_text_sha256": "917a026dfb82077fcdd0f5d2dbe05d559bca6511712e4972a9df7332f78450a2" },
+      { "cue_id": 262, "source_text_sha256": "25dc91dd3f2ebac7c5152b52892afac6ef35ec4421aaa7169ee7caf593e2eb32", "accepted_text_sha256": "eb48b271636e343af884105f6c154a33de022dadf296aceb8f3099328076fbeb" }
+    ]
+  },
+  "related_controls": [
+    { "id": "adjacent_venue_repeat", "source_pattern": "same exact venue in neighboring cues with different punctuation" },
+    { "id": "distant_scene_repeat", "source_pattern": "same exact venue near beginning and end of one scene" },
+    { "id": "quoted_unquoted_repeat", "source_pattern": "same exact venue quoted once and unquoted later" }
+  ],
+  "negative_controls": [
+    { "id": "one_character_distinct", "source_pattern": "two different venue names separated by one Chinese character" },
+    { "id": "generic_location", "source_pattern": "generic bay reference that is not the venue name" },
+    { "id": "source_name_absent", "source_pattern": "cue with no occurrence of the named venue" }
+  ],
+  "control_model_runs": 0,
+  "human_review": "missing",
+  "release_gate": "open"
+}
