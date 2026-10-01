@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "experiment": "commons-sethlui-full-v6-paired-v1",
+  "source_sha256": "4777e11caa115e893f2328c2a33c25a76c7391ace8ecf0ac4b9436635fc27964",
+  "source_cues": 263,
+  "source_duration_ms": 738056,
+  "matched_request_prefix": 61,
+  "review": { "ai_source_aware_examples": 4, "independent_human_cues": 0, "human_listeners": 0 },
+  "arms": [
+    {
+      "model": "1.8B Q4_K_M",
+      "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+      "profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5",
+      "private_report_sha256": "f0f70079038380a4de9e39bd0408d422c62c1236ed85352cf121dbfb6ca9258e",
+      "candidate_sha256": "042c0ffffd67a4ea6f562645655ffe9db823866d7505b4ed64708e0ff829df4d",
+      "status": "complete_unreviewed",
+      "chat_requests": 263,
+      "prompt_tokens": 67934,
+      "completion_tokens": 9794,
+      "translation_command_ms": 165453,
+      "summed_chat_http_ms": 91304,
+      "peak_sampled_working_set_bytes": 1559789568,
+      "peak_sampled_device_gpu_used_mib": 2392,
+      "checkpoints": 263,
+      "result_rows": 1
+    },
+    {
+      "model": "7B Q4_K_M",
+      "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+      "profile_sha256": "e7e2d7745cb283a88984da202eb511f0144b2bc51bc6eb01727515a51e7aa06f",
+      "private_report_sha256": "81f5ece3871a6ce8b141a2022cee8218cb804274ab97c142f90e58d943bcb1dc",
+      "status": "failed_format_at_62",
+      "chat_requests": 62,
+      "prompt_tokens": 16248,
+      "completion_tokens": 2281,
+      "translation_command_ms": 79408,
+      "summed_chat_http_ms": 38787,
+      "peak_sampled_working_set_bytes": 5071233024,
+      "peak_sampled_device_gpu_used_mib": 5895,
+      "checkpoints": 61,
+      "result_rows": 0
+    }
+  ],
+  "ai_triage": [
+    { "cue_id": 11, "expected_meaning": "Speaker introduces himself by name.", "one_b": "Name missing; next-cue role imported.", "seven_b": "Name retained in the saved prefix." },
+    { "cue_id": 35, "expected_meaning": "Thirty dim sum dishes, eight desserts.", "one_b": "Counts assigned to the wrong food categories.", "seven_b": "Counts and categories associated more faithfully." },
+    { "cue_id": 62, "expected_meaning": "Cantonese cuisine compared with others.", "one_b": "Target line structurally accepted.", "seven_b": "JSON-like suffix inside text rejected before checkpoint." },
+    { "cue_id": 122, "expected_meaning": "One reservation for lunch today.", "one_b": "Previous chef-skill statement substituted.", "seven_b": "No result past cue 61." }
+  ],
+  "release_decision": "no_candidate_selected",
+  "rights_review": "missing",
+  "speech_alignment_review": "missing",
+  "regressions": ["REG-040", "REG-041"]
+}

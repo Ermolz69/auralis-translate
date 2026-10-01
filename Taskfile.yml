@@ -103,6 +103,26 @@ tasks:
     cmds:
       - task: eval:natural:sethlui:v6:preflight
       - node eval/scripts/probe-commons-sethlui-full-v6.mjs 7b
+  eval:natural:sethlui:v6:result:check:
+    desc: Reconcile both immutable restaurant runs with raw replies, token preflights and durable state
+    cmds:
+      - node --check eval/scripts/check-commons-sethlui-full-v6-result.mjs
+      - node eval/scripts/check-commons-sethlui-full-v6-result.mjs
+  eval:natural:sethlui:v6:harness:check:
+    desc: Verify failed CLI run IDs and elapsed time remain journaled in future probes
+    cmds:
+      - node --check eval/scripts/probe-commons-sethlui-full-v6.mjs
+      - node --test --test-isolation=none eval/scripts/tests/cli-run-id.test.mjs
+  eval:regression:sethlui:private:check:
+    desc: Recheck pinned restaurant source-fact and JSON-tail reproductions
+    cmds:
+      - task: eval:natural:sethlui:v6:result:check
+      - node --check eval/scripts/check-regression-catalog-v25.mjs
+      - node eval/scripts/check-regression-catalog-v25.mjs
+  test:srt-checkpoint-guard:
+    desc: Check rejected model markup and allowed ordinary punctuation in SRT checkpoints
+    cmds:
+      - cargo test --offline -p auralis-translation-formats --test srt_checkpoint_format_guard
   eval:data:youtube:xiaolin:preflight:
     desc: Verify a pinned one-call metadata-only Mandarin video inventory
     env:
@@ -909,7 +929,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-039 packs and all control counts
+    desc: Verify versioned REG-001 through REG-041 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -934,6 +954,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v22.mjs
       - node eval/scripts/check-regression-catalog-v23.mjs
       - node eval/scripts/check-regression-catalog-v24.mjs
+      - node eval/scripts/check-regression-catalog-v25.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:

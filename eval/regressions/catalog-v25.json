@@ -1,0 +1,40 @@
+{
+  "schema_version": 25,
+  "catalog_id": "zh-ru-development-regressions-v25",
+  "base_catalog_file": "catalog-v24.json",
+  "base_catalog_sha256": "e40b1ff5415fa3bee46655a28e4429e925180381c456467837761b2714967733",
+  "entries": [
+    {
+      "id": "REG-040",
+      "pack_file": "sethlui-source-facts-v1.json",
+      "pack_sha256": "d46eb7e8020f5ddcf30b99f21bd16fd01ca8e96daf2302057db55e6776890918",
+      "source_family": "private_commons_sethlui_restaurant_derivative_and_authored_controls",
+      "split": "known_development_regression",
+      "category": "accepted_name_category_and_neighbor_meaning_errors",
+      "profile_scope": "1.8B v6 source-aware restaurant screen",
+      "expected_invariant": "Keep the named speaker, associate each quantity with its own food category, and translate the target reservation rather than a neighboring chef-skill cue.",
+      "severity": "major",
+      "minimal_reproducer_count": 3,
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-10-01-sethlui-full-v6-model-comparison-result.md",
+      "last_outcome": "Three accepted 1.8B lines fail source-aware AI triage; no independent bilingual review or automatic generic semantic repair."
+    },
+    {
+      "id": "REG-041",
+      "pack_file": "sethlui-json-tail-recurrence-v1.json",
+      "pack_sha256": "379c4a408eeabb923d8bd0d15cacf8a6072fae70dd385da28a55cbcff26d0dfe",
+      "source_family": "private_commons_sethlui_restaurant_derivative_and_authored_controls",
+      "split": "known_development_regression",
+      "category": "parseable_envelope_invalid_text_suffix_recurrence",
+      "profile_scope": "7B v6 source-aware restaurant screen and existing SRT grammar guard",
+      "expected_invariant": "Reject a parseable JSON envelope whose target text ends in an invented closing fragment; retain the exact raw attempt and the saved prefix without publishing partial subtitles.",
+      "severity": "major",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-10-01-sethlui-full-v6-model-comparison-result.md",
+      "last_outcome": "7B cue 62 repeated the REG-024/029/034 family; the existing SRT guard rejected it after 61 durable checkpoints and no result."
+    }
+  ]
+}

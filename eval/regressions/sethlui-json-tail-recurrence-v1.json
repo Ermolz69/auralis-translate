@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "id": "REG-041",
+  "status": "known_7b_format_recurrence_rejected",
+  "severity": "major",
+  "source_family": "private_commons_sethlui_restaurant_derivative_and_authored_controls",
+  "split": "known_development_regression",
+  "affected_model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+  "profile_sha256": "e7e2d7745cb283a88984da202eb511f0144b2bc51bc6eb01727515a51e7aa06f",
+  "expected_invariant": "Reject a parseable JSON envelope whose target text ends in an invented closing fragment; retain the exact raw attempt and the saved prefix without publishing partial subtitles.",
+  "private_reproducer": {
+    "source_sha256": "4777e11caa115e893f2328c2a33c25a76c7391ace8ecf0ac4b9436635fc27964",
+    "report_sha256": "81f5ece3871a6ce8b141a2022cee8218cb804274ab97c142f90e58d943bcb1dc",
+    "state_sha256": "fdffbaf9f85ac971731f9b5785b4130a4130d54edbd3e00b02864b2df11262be",
+    "run_id": "ef5f83be-05ab-4410-90ff-ddeb0c4a9c89",
+    "focus_cue": 62,
+    "source_text_sha256": "7cea085e0182328ecc0816e23425646f60bc066c274be7018105cddd2c7bf128",
+    "request_sha256": "3d0abf06162144d4b64da48633340020c2670b7b08904747b3252d434a9a1e7c",
+    "candidate_text_sha256": "9d954a3dfcf8052f90105877dcc23eadb164bb2e3e4b8ba194ed5d0ba61ac8a0",
+    "observed_suffix": "」}]}",
+    "saved_checkpoints": 61,
+    "complete_results": 0
+  },
+  "related_controls": [
+    { "id": "name_tail", "candidate_text": "Ли Хуайбо」}]}" },
+    { "id": "food_tail", "candidate_text": "Кантонская кухня」}]}" },
+    { "id": "spaced_tail", "candidate_text": "Восемь десертов」 } ] }" }
+  ],
+  "negative_controls": [
+    { "id": "plain_food", "candidate_text": "Кантонская кухня отличается вкусом." },
+    { "id": "russian_quotes", "candidate_text": "«Кантонская кухня» — название традиции." },
+    { "id": "ordinary_dash", "candidate_text": "Кантонская кухня — это традиция." }
+  ],
+  "control_model_runs": 0,
+  "existing_guard": "crates/auralis-translation-formats/tests/srt_checkpoint_format_guard.rs",
+  "human_review": "missing",
+  "release_gate": "open"
+}

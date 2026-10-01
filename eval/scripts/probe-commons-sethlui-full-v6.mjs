@@ -7,6 +7,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { performance } from 'node:perf_hooks';
 import { digest, verifyProtectedBytes } from './flores-file-fixture.mjs';
+import { extractCliRunId } from './cli-run-id.mjs';
 import { freeLoopbackPort, startProcess, stopProcess, waitForExit, waitForHealthyServer } from './local-process.mjs';
 
 const preflight = process.argv[2] === '--preflight';
@@ -134,6 +135,10 @@ try {
     } finally {
       report.commands.push({ args: args.map(value => value === modelPath ? '<verified-model>' : value),
         stdout: child.stdout, stderr: child.stderr, elapsed_ms: performance.now() - started });
+      if (args[0] === 'translate-v5-scene') {
+        report.translation_elapsed_ms = Math.round(performance.now() - started);
+        report.run_id = extractCliRunId(child.stdout, child.stderr);
+      }
       activeCommand = null;
     }
   };
@@ -204,11 +209,9 @@ try {
     message: 'Declared model run wall budget elapsed' });
     activeCommand?.child.kill(); server?.child.kill(); }, limits.model_wall_ms);
   const originalInspection = await command(['inspect', sourcePath]);
-  const translateStarted = performance.now();
   const stdout = await command(['translate-v5-scene', sourcePath, statePath,
     profilePath, mapPath, proxyUrl, outputPath], limits.model_wall_ms);
-  report.translation_elapsed_ms = Math.round(performance.now() - translateStarted);
-  const runId = stdout.match(/run_id=([0-9a-f-]{36})/u)?.[1];
+  const runId = extractCliRunId(stdout, '');
   assert(runId, 'Missing durable run ID');
   report.run_id = runId;
   report.run_status = JSON.parse(await command(['status', statePath, runId]));

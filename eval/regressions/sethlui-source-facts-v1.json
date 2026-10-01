@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "REG-040",
+  "status": "accepted_candidate_semantic_defects_ai_triage_only",
+  "severity": "major",
+  "source_family": "private_commons_sethlui_restaurant_derivative_and_authored_controls",
+  "split": "known_development_regression",
+  "affected_model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5",
+  "expected_invariant": "Keep the named speaker, associate each quantity with its own food category, and translate the target reservation rather than a neighboring chef-skill cue.",
+  "private_reproducer": {
+    "source_sha256": "4777e11caa115e893f2328c2a33c25a76c7391ace8ecf0ac4b9436635fc27964",
+    "report_sha256": "f0f70079038380a4de9e39bd0408d422c62c1236ed85352cf121dbfb6ca9258e",
+    "candidate_sha256": "042c0ffffd67a4ea6f562645655ffe9db823866d7505b4ed64708e0ff829df4d",
+    "cases": [
+      { "cue_id": 11, "source_text_sha256": "c9fdaaefc866ca06549398b6c1981612e1fb30c3600c5179acad8602390e0570", "accepted_text_sha256": "3ddd9b7ef5f135aace7012ba34d60a7b099be3b027eb4f6e7a44455e10df2e65", "expected_fact": "The speaker says his name is Li Huaibo; the chef role belongs to the next cue.", "observed_error": "Name omitted and next-cue chef role inserted." },
+      { "cue_id": 35, "source_text_sha256": "81a7d3b493d7fe02201c586d26faf2e6564f8a7f6101a6ccde4199913c77045d", "accepted_text_sha256": "6e0a34c22acab16f292205b009644f1806697ab16f6c0dd95dbff257bffa541d", "expected_fact": "Thirty dim sum dishes and eight desserts.", "observed_error": "Thirty desserts and eight appetizers: the categories are swapped." },
+      { "cue_id": 122, "source_text_sha256": "81d34122815238f2363409d22f4fa420895767c29b9e4c55cb812442051bd521", "accepted_text_sha256": "2e95d2e4fafbf504d5a9e4ba02b28efbb8abe787d981b927bbd9bdcfab3939d6", "expected_fact": "There is one lunch reservation for today.", "observed_error": "The target became the preceding chef-skill statement." }
+    ]
+  },
+  "related_controls": [
+    { "id": "name_at_scene_start", "source": "我是陈明。", "expected_fact": "The speaker identifies as Chen Ming, without importing the next occupation." },
+    { "id": "category_and_count", "source": "我们有三十道点心，八道甜品。", "expected_fact": "Thirty dim sum dishes and eight desserts remain paired." },
+    { "id": "reservation_after_skill", "source": "厨师需要经验。今天中午有一张预订单。", "expected_fact": "The second sentence is a lunch reservation, not a repeated skill requirement." }
+  ],
+  "negative_controls": [
+    { "id": "chef_self_identification", "source": "我是行政总厨。", "expected_fact": "A chef role is present without a personal name." },
+    { "id": "reversed_category_order", "source": "我们有三十道甜品，八道点心。", "expected_fact": "Thirty desserts and eight dim sum dishes are correct for this different source." },
+    { "id": "skill_without_reservation", "source": "厨师的技能要求很高。", "expected_fact": "The target concerns chef skill and contains no reservation." }
+  ],
+  "control_model_runs": 0,
+  "ai_review": "Source-aware preliminary interpretation; independent Chinese-Russian adjudication absent",
+  "human_review": "missing",
+  "release_gate": "open"
+}
