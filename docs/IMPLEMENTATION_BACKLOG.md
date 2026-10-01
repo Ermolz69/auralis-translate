@@ -533,5 +533,13 @@ draft at selected cues, but a dim sum role is still mislabeled and the same
 venue name has three Russian renderings (`REG-044`). With zero eligible corpus
 cues, no independent bilingual ratings, source-rights clearance or listening,
 this is not a selected model, approved spoken script or G1–G9/A1–A6 pass.
-The [latest interim audit](../eval/experiments/2026-10-01-release-readiness-after-sethlui-retry.md)
-keeps `RELEASE-05` open.
+The [restaurant real-SAPI and full-media result](../eval/experiments/2026-10-01-sethlui-real-audio-technical-result.md)
+adds partial `VOICE-02`/`VOICE-03`/`VOICE-06` evidence at local Auralis
+`f4e1c1d`: 263/263 independently decoded real WAVs, one 738,056-ms private
+audio track with complete video coverage, and one full FFplay process. The
+frozen check measured 256 cue overruns and 236 overlapping starts; no human
+listened or approved the draft. The [redacted public summary](../eval/reports/2026-10-01-sethlui-real-audio-summary.json)
+pins the source, runtime, media and playback hashes. `VOICE-01`–`VOICE-07` and
+A1–A6 remain open. The [latest interim failed readiness audit](../eval/experiments/2026-10-01-release-readiness-after-sethlui-audio.md)
+keeps `RELEASE-05` open after the prior
+[translation-only self-audit](../eval/experiments/2026-10-01-release-readiness-after-sethlui-retry.md).
