@@ -69,6 +69,8 @@ pub struct ModelProfile {
     pub max_approved_terms_entries: usize,
     #[serde(default = "default_block_attempts")]
     pub max_block_attempts: u32,
+    #[serde(default)]
+    pub retry_json_tail_once: bool,
     pub temperature: f64,
     pub top_p: f64,
     pub top_k: i32,
@@ -152,6 +154,15 @@ impl ModelProfile {
                 "strict source times require checked source prefix repair v2",
             ));
         }
+        if self.retry_json_tail_once
+            && (self.prompt_version != 6
+                || self.model_file_bytes.is_none()
+                || self.max_block_attempts != 2)
+        {
+            return Err(ProfileError::Invalid(
+                "JSON-tail retry requires a checked v6 profile with two attempts",
+            ));
+        }
         let expected_template = match self.prompt_version {
             5 => Some(crate::contextual_prompt_v5::template_sha256()),
             6 => Some(crate::target_schema_v6::template_sha256()),
@@ -199,7 +210,7 @@ impl ModelProfile {
                     && (self.max_context_bytes == 0
                         || self.token_safety_margin_tokens.is_none()
                         || self.min_context_tokens.is_none()))
-                    || self.max_block_attempts != 1))
+                    || (self.max_block_attempts != 1 && !self.retry_json_tail_once)))
             || self.token_safety_margin_tokens.is_some_and(|margin| {
                 !matches!(self.prompt_version, 5 | 6)
                     || !(1..=MAX_TOKEN_SAFETY_MARGIN).contains(&margin)

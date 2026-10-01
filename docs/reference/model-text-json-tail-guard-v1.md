@@ -24,3 +24,7 @@ not a semantic-quality judgement. The already archived 268-cue ASUS
 candidate and 64-request screen remain unchanged. A later full-file run
 must demonstrate durable rejection/recovery under the final profile;
 contract tests alone cannot satisfy the long-file or release gates.
+
+An [opt-in experimental retry contract](model-text-json-tail-retry-v1.md)
+may classify only this guarded suffix as retryable for one additional model
+call. It does not change this default rejection rule or repair model text.

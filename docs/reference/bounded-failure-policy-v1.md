@@ -67,6 +67,11 @@ attempts, explicit run-stage wall budgets and resource-failure disposition remai
 open under `CTX-02`. No unbounded regenerate-until-reference-match behavior is
 permitted.
 
+The later [v6 JSON-tail retry experiment](model-text-json-tail-retry-v1.md)
+adds one explicit exception for an exact, valid-outer-JSON but invalid-target
+suffix. A separate checked profile allows two attempts, stores the failed raw
+candidate and never edits it. Other invalid candidates remain permanent.
+
 ## Required regression controls
 
 The minimal reproduction is a provider that returns a response with a missing

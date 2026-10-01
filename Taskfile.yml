@@ -192,6 +192,29 @@ tasks:
     cmds:
       - node --check eval/scripts/check-commons-sethlui-7b-resume-result.mjs
       - node eval/scripts/check-commons-sethlui-7b-resume-result.mjs
+  eval:natural:sethlui:v6:7b:tail-retry:preflight:
+    desc: Verify pinned restaurant, opt-in 7B retry manifest and current CLI build receipt
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:cli:build:receipt:check
+      - task: test:json-tail:retry
+      - node --check eval/scripts/probe-commons-sethlui-json-tail-retry.mjs
+      - node eval/scripts/probe-commons-sethlui-json-tail-retry.mjs --preflight
+  eval:natural:sethlui:v6:7b:tail-retry:probe:
+    desc: Run one bounded real 7B full-file retry experiment and retain failures
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:natural:sethlui:v6:7b:tail-retry:preflight
+      - node eval/scripts/probe-commons-sethlui-json-tail-retry.mjs
+  eval:natural:sethlui:v6:7b:tail-retry:result:check:
+    desc: Reconcile the private retry report with raw requests, state and original source
+    cmds:
+      - node --check eval/scripts/check-commons-sethlui-json-tail-retry-result.mjs
+      - node eval/scripts/check-commons-sethlui-json-tail-retry-result.mjs
   eval:regression:sethlui:private:check:
     desc: Recheck pinned restaurant source-fact and JSON-tail reproductions
     cmds:
@@ -1168,6 +1191,12 @@ tasks:
     cmds:
       - cargo test --offline -p auralis-translation-llamacpp --test context_v6 --test profile_contract
       - cargo test --offline -p auralis-translation-cli --test context_v5_admission
+  test:json-tail:retry:
+    desc: Verify opt-in one-attempt JSON-tail retry and unchanged invalid-output controls
+    cmds:
+      - cargo test --offline -p auralis-translation-llamacpp --test context_v6 --test profile_contract
+      - cargo test --offline -p auralis-translation-llamacpp --test json_tail_retry
+      - cargo test --offline -p auralis-translation --test retry_policy
   test:v5-terms:
     desc: Verify source-scoped v5 terms, bounded prompt admission and durable ledger identity
     cmds:

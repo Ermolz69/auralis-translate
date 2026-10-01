@@ -1,6 +1,6 @@
 use auralis_translation::{
-    LanguageCode, LanguagePair, RunId, SegmentId, SourceHash, SourceSegment, TranslationBatch,
-    TranslationId, TranslationProvider,
+    LanguageCode, LanguagePair, ProviderError, RunId, SegmentId, SourceHash, SourceSegment,
+    TranslationBatch, TranslationId, TranslationProvider,
 };
 use auralis_translation_llamacpp::{LlamaCppProvider, ModelProfile};
 use serde_json::{Value, json};
@@ -15,19 +15,35 @@ const PROFILE: &[u8] = include_bytes!(
 #[test]
 fn v6_binds_the_target_in_schema_and_still_validates_untrusted_output() -> Result<(), Box<dyn Error>>
 {
-    for (candidate_id, line_index, text, accepted) in [
-        (72, 0, "Это не последний поезд.", true),
-        (73, 0, "Это не последний поезд.", false),
-        (72, 1, "Это не последний поезд.", false),
-        (72, 0, "Потребление 9 Вт」}]}", false),
-        (72, 0, "Телефон」 } ] } ] }", false),
-        (72, 0, "По сравнению с другими кухнями, кантонская кухня」}]}", false),
-        (72, 0, "В основном это блюдо невозможно найти снаружи」}]}", false),
-        (72, 0, "Кантонская кухня отличается вкусом.", true),
-        (72, 0, "Это блюдо — местная особенность.", true),
-        (72, 0, "Он сказал: 「да」, и поезд ушёл.", true),
-        (72, 0, "Покажите литерал }]}", true),
-        (72, 0, "Цитата 「да」 — ответ.", true),
+    for (candidate_id, line_index, text, accepted, retry_tail) in [
+        (72, 0, "Это не последний поезд.", true, false),
+        (73, 0, "Это не последний поезд.", false, false),
+        (72, 1, "Это не последний поезд.", false, false),
+        (72, 0, "Потребление 9 Вт」}]}", false, false),
+        (72, 0, "Потребление 9 Вт」}]}", false, true),
+        (72, 0, "Телефон」 } ] } ] }", false, false),
+        (72, 0, "Телефон」 } ] } ] }", false, true),
+        (
+            72,
+            0,
+            "По сравнению с другими кухнями, кантонская кухня」}]}",
+            false,
+            true,
+        ),
+        (
+            72,
+            0,
+            "В основном это блюдо невозможно найти снаружи」}]}",
+            false,
+            true,
+        ),
+        (73, 0, "Неверный идентификатор.", false, true),
+        (72, 1, "Неверная строка.", false, true),
+        (72, 0, "Кантонская кухня отличается вкусом.", true, true),
+        (72, 0, "Это блюдо — местная особенность.", true, false),
+        (72, 0, "Он сказал: 「да」, и поезд ушёл.", true, true),
+        (72, 0, "Покажите литерал }]}", true, true),
+        (72, 0, "Цитата 「да」 — ответ.", true, true),
     ] {
         let listener = TcpListener::bind("127.0.0.1:0")?;
         let address = listener.local_addr()?;
@@ -87,6 +103,10 @@ fn v6_binds_the_target_in_schema_and_still_validates_untrusted_output() -> Resul
         profile["context_after_segments"] = 0.into();
         profile["max_context_bytes"] = 0.into();
         profile["token_safety_margin_tokens"] = Value::Null;
+        if retry_tail {
+            profile["max_block_attempts"] = 2.into();
+            profile["retry_json_tail_once"] = true.into();
+        }
         let provider = LlamaCppProvider::new(
             &format!("http://{address}/"),
             ModelProfile::from_json(&serde_json::to_vec(&profile)?)?,
@@ -113,6 +133,12 @@ fn v6_binds_the_target_in_schema_and_still_validates_untrusted_output() -> Resul
                     .err()
                     .is_some_and(|error| error.to_string().contains("leaked JSON wrapper tail"))
             );
+            assert_eq!(
+                matches!(result, Err(ProviderError::Transient(_))),
+                retry_tail
+            );
+        } else if !accepted {
+            assert!(matches!(result, Err(ProviderError::Permanent(_))));
         }
         let request = server.join().map_err(|_| "server panicked")??;
         let properties = &request["response_format"]["schema"]["properties"]["translations"]["items"]

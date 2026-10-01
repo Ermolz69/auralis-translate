@@ -237,7 +237,12 @@ impl LlamaCppProvider {
             .and_then(|candidate| {
                 crate::contextual_prompt_v5::decode(&candidate, segment, line_index)
             })
-            .and_then(crate::target_text_json_tail::reject_leaked_json_tail)
+            .and_then(|decoded| {
+                crate::target_text_json_tail::reject_leaked_json_tail(
+                    decoded,
+                    self.profile.retry_json_tail_once,
+                )
+            })
             .and_then(|decoded| prepared.restore(&decoded));
         let restored_candidate = restored.as_ref().ok().cloned();
         let (translated, inserted_prefix) = match restored {

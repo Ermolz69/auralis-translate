@@ -1,6 +1,9 @@
 use auralis_translation::ProviderError;
 
-pub(crate) fn reject_leaked_json_tail(text: String) -> Result<String, ProviderError> {
+pub(crate) fn reject_leaked_json_tail(
+    text: String,
+    retry_json_tail_once: bool,
+) -> Result<String, ProviderError> {
     let Some((_, suffix)) = text.trim_end().rsplit_once('」') else {
         return Ok(text);
     };
@@ -15,9 +18,12 @@ pub(crate) fn reject_leaked_json_tail(text: String) -> Result<String, ProviderEr
             .chars()
             .all(|character| matches!(character, '}' | ']'))
     {
-        Err(ProviderError::Permanent(
-            "model text contains leaked JSON wrapper tail".into(),
-        ))
+        let message = "model text contains leaked JSON wrapper tail".into();
+        if retry_json_tail_once {
+            Err(ProviderError::Transient(message))
+        } else {
+            Err(ProviderError::Permanent(message))
+        }
     } else {
         Ok(text)
     }
