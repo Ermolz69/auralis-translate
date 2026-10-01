@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "inventory_id": "paywall-chinese-candidate-v1",
+  "fixture_only": false,
+  "sources": [
+    {
+      "id": "paywall-chinese-4b4ffc0c",
+      "group_id": "paywall-scholarship-documentary-2018",
+      "split": "unassigned",
+      "state": "inspected_candidate",
+      "source_url": "https://raw.githubusercontent.com/SCgeeker/Paywall_CH_Subtitles/4b4ffc0cbafd1d08bc4e0974dbd5454967a4acf9/Paywall%20The%20Business%20of%20Scholarship%20CC%20BY%2040.zh-tw.srt",
+      "revision": "4b4ffc0cbafd1d08bc4e0974dbd5454967a4acf9",
+      "retrieved_at": "2026-10-01T12:08:26.856Z",
+      "sha256": "3406fcd365446d727f31c4ecf576de6c3b5e168658c3f5d276fea8142ddb5a4b",
+      "language": "zh",
+      "script": "Hant",
+      "format": "strict_srt_v1",
+      "cue_count": 880,
+      "local_candidate_path": ".cache/eval/paywall-chinese-caption/source.zh.srt",
+      "media_url": "https://archive.org/details/PaywallTheBusinessOfScholarshipFinalMovieMastered",
+      "media_duration_ms": 3888085,
+      "media_duration_evidence_url": "https://archive.org/details/PaywallTheBusinessOfScholarshipFinalMovieMastered",
+      "rights": {
+        "subtitle": {
+          "decision": "approved",
+          "license": "CC BY 4.0",
+          "evidence_url": "https://github.com/paywallthemovie/subtitles",
+          "attribution": "Traditional Chinese subtitles: Sau-Chin Chen; film: Jason Schmitt; CC BY 4.0; modified Russian derivative must be identified",
+          "internal_use": true,
+          "public_redistribution": true
+        },
+        "reference": { "decision": "unknown" },
+        "audio": {
+          "decision": "approved",
+          "license": "CC BY 4.0",
+          "evidence_url": "https://archive.org/details/PaywallTheBusinessOfScholarshipFinalMovieMastered",
+          "attribution": "Film and original audio: Jason Schmitt; CC BY 4.0; modified dubbed derivative must be identified",
+          "internal_use": true,
+          "public_redistribution": true
+        }
+      },
+      "scenes": []
+    }
+  ]
+}

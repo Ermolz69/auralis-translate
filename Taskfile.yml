@@ -1,6 +1,64 @@
 version: "3"
 
 tasks:
+  eval:data:paywall:caption:preflight:
+    desc: Verify the pinned CC BY 4.0 Chinese subtitle request and budget
+    cmds:
+      - node --check eval/scripts/acquire-paywall-chinese-caption.mjs
+      - node eval/scripts/acquire-paywall-chinese-caption.mjs --preflight
+  eval:data:paywall:caption:acquire:
+    desc: Retain one private original Traditional Chinese subtitle file
+    cmds:
+      - task: eval:data:paywall:caption:preflight
+      - node eval/scripts/acquire-paywall-chinese-caption.mjs
+  eval:data:paywall:caption:inspect:
+    desc: Verify the retained Chinese source hash and inspect with the strict CLI
+    cmds:
+      - cargo build --offline -p auralis-translation-cli
+      - node --check eval/scripts/inspect-paywall-chinese-caption.mjs
+      - node eval/scripts/inspect-paywall-chinese-caption.mjs
+  eval:data:paywall:media:inventory:preflight:
+    desc: Verify one bounded Internet Archive metadata request for matching video
+    cmds:
+      - node --check eval/scripts/inventory-paywall-media.mjs
+      - node eval/scripts/inventory-paywall-media.mjs --preflight
+  eval:data:paywall:media:inventory:
+    desc: Retain one private metadata response identifying the 280 MiB video derivative
+    cmds:
+      - task: eval:data:paywall:media:inventory:preflight
+      - node eval/scripts/inventory-paywall-media.mjs
+  eval:data:paywall:media:acquire:preflight:
+    desc: Verify one bounded OGV acquisition against pinned Archive metadata
+    cmds:
+      - node --check eval/scripts/acquire-paywall-media.mjs
+      - node eval/scripts/acquire-paywall-media.mjs --preflight
+  eval:data:paywall:media:acquire:
+    desc: Retain the CC BY 4.0 OGV derivative for source alignment review
+    cmds:
+      - task: eval:data:paywall:media:acquire:preflight
+      - node eval/scripts/acquire-paywall-media.mjs
+  eval:data:paywall:media:check:
+    desc: Verify exact OGV bytes, decoded stream metadata and subtitle time coverage
+    cmds:
+      - node --check eval/scripts/check-paywall-media.mjs
+      - node eval/scripts/check-paywall-media.mjs
+  eval:data:paywall:audio:sample:
+    desc: Decode beginning, middle and end source-audio windows linked to Chinese cues
+    cmds:
+      - node --check eval/scripts/sample-paywall-audio.mjs
+      - node eval/scripts/sample-paywall-audio.mjs
+  eval:data:paywall:candidate:stage:
+    desc: Stage a hash-checked private copy of the original Chinese SRT
+    cmds:
+      - node --check eval/scripts/stage-paywall-candidate.mjs
+      - node eval/scripts/stage-paywall-candidate.mjs
+  eval:data:paywall:candidate:check:
+    desc: Verify the Paywall candidate inventory and exact retained source bytes
+    cmds:
+      - task: eval:data:paywall:candidate:stage
+      - cargo build --offline -p auralis-translation-cli
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/paywall-chinese-candidate-v1.json --require-candidate-bytes
+      - node eval/scripts/check-source-candidate-inspection.mjs eval/corpora/paywall-chinese-candidate-v1.json
   eval:data:commons:sethlui:revision:preflight:
     desc: Verify one metadata-only Mandarin-caption revision query
     cmds:
@@ -1389,6 +1447,7 @@ tasks:
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-vivo-candidate-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-geekerwan-two-scenes-candidate-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-sethlui-candidate-v1.json
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/paywall-chinese-candidate-v1.json
   eval:data:commons:ying:candidate:check:
     desc: Validate the non-admitted Commons Ying inventory and exact retained Chinese SRT bytes
     cmds:

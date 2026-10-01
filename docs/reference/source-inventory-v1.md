@@ -15,9 +15,11 @@ raw-byte SHA-256 after acquisition, `language: zh`, `script: Hans|Hant`,
 subtitle/reference/audio rights, and ordered scenes. A source may be metadata
 only while `discovered`, `rights_checked` or `rejected`; it may not invent a
 hash, parsed cue count or scene. `inspected_candidate` records exact downloaded
-bytes and a strict parser cue count while subtitle rights remain unresolved. It
-requires an unassigned split, no admitted scenes or reference, and contributes
-zero eligible cues. This is a technical observation, not source admission.
+bytes and a strict parser cue count. Rights can be checked independently while
+source alignment and references remain unresolved. It requires an unassigned
+split, no admitted scenes or reference, and contributes zero eligible cues even
+when source-media and subtitle rights are approved. This is a technical
+observation, not source admission.
 Rejection includes an explicit reason.
 
 When a matched media duration is known, store `media_duration_ms` with an HTTPS
@@ -101,6 +103,15 @@ the current technical-candidate total to ten sources and 2,113 cues, with
 zero eligible cues. `task eval:data:commons:sethlui:candidate:check` verifies
 the private bytes and strict CLI timing on the acquisition machine.
 
+The [licensed Paywall documentary candidate](../../eval/corpora/paywall-chinese-candidate-v1.json)
+adds 880 Traditional Chinese strict-SRT cues with a verified 64:48 OGV
+derivative. The film and subtitle repositories provide separate CC BY 4.0
+creator/attribution evidence; its independent reference and speech alignment
+are still missing. The current total is 11 technical candidates and 2,993
+inspected cues, with zero eligible. `task eval:data:paywall:candidate:check`
+verifies the retained source hash, strict cue count and measured video-duration
+envelope. Source rights alone do not admit a candidate.
+
 `DATA-05` later audits near-duplicates, source/reference alignment evidence,
 license decisions, reviewer coverage, category balance and split leakage beyond
 the exact group-ID check. The source inventory is versioned before any model
@@ -109,7 +120,7 @@ with a new inventory version; old records and failures remain available.
 
 ## DATA-01 acceptance
 
-`task eval:data:check` passes seven semantic tests: example and exclusions,
+`task eval:data:check` passes eight semantic tests: example and exclusions,
 cross-split group rejection, separate subtitle/reference rights, named human
 review, complete ordered cue mapping, candidate non-admission, and fixture holdout rejection. It checks
 the authored fixture's raw SHA-256. These tests certify the schema mechanics;
