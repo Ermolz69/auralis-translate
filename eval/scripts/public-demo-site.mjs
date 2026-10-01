@@ -48,7 +48,7 @@ import { loadAsusFit, renderAsusFit } from './asus-fit-section.mjs';
 import { renderReleaseReadiness } from './release-readiness-section.mjs';
 import { loadSethluiFullV6, loadSethluiResume, renderSethluiFullV6 } from './sethlui-full-v6-section.mjs';
 import { loadSethluiRetry, renderSethluiRetry } from './sethlui-retry-section.mjs';
-import { loadSethluiAudio, renderSethluiAudio } from './sethlui-audio-section.mjs';
+import { loadSethluiAudio, renderSethluiAudio, renderSethluiAudition } from './sethlui-audio-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const dataset = JSON.parse(await fs.readFile(path.join(root, 'eval/corpora/public-demo-v1.json'), 'utf8'));
@@ -243,6 +243,7 @@ ${renderSethluiOriginalTrack(sethluiOriginalTrack)}
 ${renderSethluiFullV6(sethluiFullV6, sethluiResume)}
 ${renderSethluiRetry(sethluiRetry)}
 ${renderSethluiAudio(sethluiAudio)}
+${renderSethluiAudition(sethluiAudio)}
 ${renderNaturalScreen(naturalScreen)}
 ${renderYingFullFailure(yingFullFailure)}
 ${renderYingGuarded(yingGuarded)}
