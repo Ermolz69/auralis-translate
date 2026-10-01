@@ -47,6 +47,7 @@ import { loadAsusFullAudio, renderAsusFullAudio } from './asus-full-audio-sectio
 import { loadAsusFit, renderAsusFit } from './asus-fit-section.mjs';
 import { renderReleaseReadiness } from './release-readiness-section.mjs';
 import { loadSethluiFullV6, loadSethluiResume, renderSethluiFullV6 } from './sethlui-full-v6-section.mjs';
+import { loadSethluiRetry, renderSethluiRetry } from './sethlui-retry-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const dataset = JSON.parse(await fs.readFile(path.join(root, 'eval/corpora/public-demo-v1.json'), 'utf8'));
@@ -80,6 +81,7 @@ const sourceCandidates = await loadSourceCandidates(root);
 const sethluiOriginalTrack = await loadSethluiOriginalTrack(root);
 const sethluiFullV6 = await loadSethluiFullV6(root);
 const sethluiResume = await loadSethluiResume(root);
+const sethluiRetry = await loadSethluiRetry(root);
 const naturalScreen = await loadNaturalScreen(root);
 const yingFullFailure = await loadYingFullFailure(root);
 const yingGuarded = await loadYingGuarded(root);
@@ -174,6 +176,7 @@ payload.source_candidates = sourceCandidates;
 payload.sethlui_original_track = sethluiOriginalTrack;
 payload.sethlui_full_v6 = sethluiFullV6;
 payload.sethlui_resume = sethluiResume;
+payload.sethlui_retry = sethluiRetry;
 payload.natural_screen = naturalScreen;
 payload.ying_full_failure = yingFullFailure;
 payload.ying_guarded = yingGuarded;
@@ -235,6 +238,7 @@ ${renderXiaolinMetadataScreen()}
 ${renderSethluiTimingScreen(sourceCandidates)}
 ${renderSethluiOriginalTrack(sethluiOriginalTrack)}
 ${renderSethluiFullV6(sethluiFullV6, sethluiResume)}
+${renderSethluiRetry(sethluiRetry)}
 ${renderNaturalScreen(naturalScreen)}
 ${renderYingFullFailure(yingFullFailure)}
 ${renderYingGuarded(yingGuarded)}
