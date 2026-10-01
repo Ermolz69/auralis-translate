@@ -24,7 +24,7 @@ import { loadSapiMultivoice, loadSapiMultivoiceMedia } from './sapi-multivoice-s
 import { loadSapiOriginalWindow, renderSapiOriginalWindow } from './sapi-original-window-section.mjs';
 import { loadAuralisPrivateSpeech, renderAuralisPrivateSpeech } from './auralis-private-speech-section.mjs';
 import { loadManagedSpeech, renderManagedSpeech } from './managed-speech-section.mjs';
-import { loadSourceCandidates, renderSourceCandidates, renderXiaolinMetadataScreen, renderSethluiTimingScreen } from './source-candidate-section.mjs';
+import { loadSourceCandidates, renderSourceCandidates, renderXiaolinMetadataScreen, renderSethluiTimingScreen, renderPaywallSource } from './source-candidate-section.mjs';
 import { loadSethluiOriginalTrack, renderSethluiOriginalTrack } from './sethlui-original-track-section.mjs';
 import { loadNaturalScreen, renderNaturalScreen } from './natural-screen-section.mjs';
 import { loadYingFullFailure, renderYingFullFailure } from './ying-full-failure-section.mjs';
@@ -230,6 +230,7 @@ ${renderReleaseReadiness()}
 ${renderModelComparison(modelComparison, escape, number)}
 ${renderDeliveryProgress(deliveryPlan, escape)}
 ${renderSourceCandidates(sourceCandidates)}
+${renderPaywallSource(sourceCandidates)}
 ${renderXiaolinMetadataScreen()}
 ${renderSethluiTimingScreen(sourceCandidates)}
 ${renderSethluiOriginalTrack(sethluiOriginalTrack)}

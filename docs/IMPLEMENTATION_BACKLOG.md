@@ -502,3 +502,16 @@ separates historical SRT-grammar rejections from the newer provider guard.
 Exact failed suffixes are now covered by current-source tests; the rebuilt
 CLI has not been run on the natural file. The [latest interim audit](../eval/experiments/2026-10-01-release-readiness-after-original-track.md)
 retains G1–G9/A1–A6 as open.
+
+The [CC BY 4.0 Paywall long-source acquisition](../eval/experiments/2026-10-01-paywall-licensed-long-source-result.md)
+adds a distinct 880-cue Traditional Chinese strict-SRT technical candidate,
+an exact 294,354,909-byte matching documentary OGV and three cue-linked
+beginning/middle/end source-audio windows. Subtitle and film/audio license
+claims have creator and attribution evidence, but the English-spoken source
+still needs scene exclusions, speech/cue alignment and independent Chinese–
+Russian references/review. The inventory now holds **11 candidates, 2,993
+inspected cues and zero eligible cues**; `DATA-03` and `DATA-05` remain open.
+The source-inventory validator now permits source rights to be checked before
+scene admission while preserving the zero-eligible invariant. No Paywall
+source bytes or WAVs are published. The [new interim release audit](../eval/experiments/2026-10-01-release-readiness-after-paywall-source.md)
+retains all release and audio gates as open.

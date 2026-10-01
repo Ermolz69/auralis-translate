@@ -135,8 +135,8 @@ assert.deepEqual(data.natural_audio, await loadNaturalAudio(root));
 assert.deepEqual(data.asus_full_audio, await loadAsusFullAudio(root));
 assert.deepEqual(data.asus_fit, await loadAsusFit(root));
 assert.deepEqual(data.source_candidates, {
-  source_count: 10,
-  inspected_cues: 2113,
+  source_count: 11,
+  inspected_cues: 2993,
   eligible_cues: 0,
   commerce_revision: '906218083',
   commerce_cues: 123,
@@ -154,6 +154,9 @@ assert.deepEqual(data.source_candidates, {
   sethlui_cues: 263,
   sethlui_sha256: '4777e11caa115e893f2328c2a33c25a76c7391ace8ecf0ac4b9436635fc27964',
   sethlui_media_duration_ms: 738056,
+  paywall_cues: 880,
+  paywall_sha256: '3406fcd365446d727f31c4ecf576de6c3b5e168658c3f5d276fea8142ddb5a4b',
+  paywall_media_duration_ms: 3888085,
 });
 assert(html.includes('id="source-candidates"'));
 assert(html.includes('id="xiaolin-source-screen"'));
@@ -169,7 +172,10 @@ assert(html.includes('2026-10-01-sethlui-stream-derivative-result.md'));
 assert(html.includes('2026-10-01-sethlui-audio-windows-result.md'));
 assert(html.includes('их никто не прослушал'));
 assert(html.includes('Реплики 264–271 исходного китайского SRT идут после конца видео'));
-assert(html.includes('10 источников, 2113 проверенных реплик и 0 допущенных'));
+assert(html.includes('11 источников, 2993 проверенных реплик и 0 допущенных'));
+assert(html.includes('id="paywall-source-screen"'));
+assert(html.includes('2026-10-01-paywall-licensed-long-source-result.md'));
+assert(html.includes('294 354 909 байт'));
 assert(html.includes('2026-10-01-release-readiness-after-restaurant-stream.md'));
 assert(html.includes('Первые 4 источника Commons дали 488 реплик'));
 assert(html.includes('2026-09-30-commons-train-240p-stream-result.md'));
