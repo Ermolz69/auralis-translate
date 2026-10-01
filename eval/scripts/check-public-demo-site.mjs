@@ -76,6 +76,8 @@ assert.deepEqual(data.sethlui_audio, await loadSethluiAudio(root));
 assert(html.includes('id="sethlui-real-audio"'));
 assert(html.includes('263 WAV и полный ролик; укладка и оценка звука открыты'));
 assert(html.includes('2026-10-01-sethlui-real-audio-technical-result.md'));
+assert(html.includes('2026-10-01-sethlui-audio-fit-feasibility-result.md'));
+assert(html.includes('гипотетические 2× уместили бы лишь 158/263 реплик'));
 assert(html.includes('2026-10-01-release-readiness-after-sethlui-audio.md'));
 assert(html.includes('Это проверка воспроизведения процессом, а не прослушивание человеком'));
 assert(html.includes('id="sethlui-retry"'));
