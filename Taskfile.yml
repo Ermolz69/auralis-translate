@@ -152,6 +152,20 @@ tasks:
       - node --test-isolation=none --test eval/scripts/tests/bounded-process-capture.test.mjs
       - node --check eval/scripts/inventory-youtube-xiaolin.mjs
       - node eval/scripts/inventory-youtube-xiaolin.mjs --preflight
+  eval:data:youtube:sethlui:license:preflight:
+    desc: Verify one bounded YouTube metadata-only license query for the restaurant source
+    env:
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - node --check eval/scripts/inventory-youtube-sethlui-license.mjs
+      - node eval/scripts/inventory-youtube-sethlui-license.mjs --preflight
+  eval:data:youtube:sethlui:license:inventory:
+    desc: Retain one raw metadata-only response for the named original video
+    env:
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - task: eval:data:youtube:sethlui:license:preflight
+      - node eval/scripts/inventory-youtube-sethlui-license.mjs
   eval:data:youtube:xiaolin:inventory:
     desc: Retain one bounded YouTube subtitle-track inventory without media download
     env:
