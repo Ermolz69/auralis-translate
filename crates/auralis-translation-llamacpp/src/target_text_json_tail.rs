@@ -1,5 +1,24 @@
 use auralis_translation::ProviderError;
 
+pub(crate) fn is_length_limited_wrapper_tail(content: &str) -> bool {
+    let Some((_, suffix)) = content.rsplit_once('」') else {
+        return false;
+    };
+    let closers = suffix
+        .chars()
+        .filter(|character| !character.is_whitespace())
+        .collect::<String>();
+    let closers = closers.strip_prefix('"').unwrap_or(&closers);
+    content.contains("\"translations\"")
+        && content.contains("\"text\"")
+        && closers.len() >= 3
+        && closers.starts_with('}')
+        && closers.contains(']')
+        && closers
+            .chars()
+            .all(|character| matches!(character, '}' | ']'))
+}
+
 pub(crate) fn reject_leaked_json_tail(
     text: String,
     retry_json_tail_once: bool,

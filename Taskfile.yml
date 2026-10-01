@@ -215,6 +215,29 @@ tasks:
     cmds:
       - node --check eval/scripts/check-commons-sethlui-json-tail-retry-result.mjs
       - node eval/scripts/check-commons-sethlui-json-tail-retry-result.mjs
+  eval:natural:sethlui:v6:7b:length-tail:preflight:
+    desc: Verify the new checked length-tail retry and pinned release CLI before one full-file run
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:cli:build:receipt:check
+      - task: test:json-tail:retry
+      - node --check eval/scripts/probe-commons-sethlui-json-tail-length-retry.mjs
+      - node eval/scripts/probe-commons-sethlui-json-tail-length-retry.mjs --preflight
+  eval:natural:sethlui:v6:7b:length-tail:probe:
+    desc: Run one bounded 7B full-file attempt with opt-in length-tail retry
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:natural:sethlui:v6:7b:length-tail:preflight
+      - node eval/scripts/probe-commons-sethlui-json-tail-length-retry.mjs
+  eval:natural:sethlui:v6:7b:length-tail:result:check:
+    desc: Reconcile every private v2 length-tail request with SQLite and source bytes
+    cmds:
+      - node --check eval/scripts/check-commons-sethlui-json-tail-length-retry-result.mjs
+      - node eval/scripts/check-commons-sethlui-json-tail-length-retry-result.mjs
   eval:regression:sethlui:private:check:
     desc: Recheck pinned restaurant source-fact and JSON-tail reproductions
     cmds:
@@ -1087,6 +1110,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v24.mjs
       - node eval/scripts/check-regression-catalog-v25.mjs
       - node eval/scripts/check-regression-catalog-v26.mjs
+      - node eval/scripts/check-regression-catalog-v27.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:
@@ -1197,6 +1221,7 @@ tasks:
       - cargo test --offline -p auralis-translation-llamacpp --test context_v6 --test profile_contract
       - cargo test --offline -p auralis-translation-llamacpp --test json_tail_retry
       - cargo test --offline -p auralis-translation --test retry_policy
+      - task: test:response:length
   test:v5-terms:
     desc: Verify source-scoped v5 terms, bounded prompt admission and durable ledger identity
     cmds:

@@ -2,7 +2,8 @@ use crate::profile::ModelProfile;
 use crate::prompt;
 use crate::server_report::ServerReport;
 use crate::{
-    PreparationControl, RequestControlPolicy, decode_chat_response::decode_chat_response,
+    PreparationControl, RequestControlPolicy,
+    decode_chat_response::{decode_chat_response, decode_chat_response_with_tail_retry},
     local_http::LocalHttp,
 };
 use auralis_translation::{
@@ -233,7 +234,9 @@ impl LlamaCppProvider {
             .as_ref()
             .map_err(|error| ProviderError::Permanent(error.to_string()))
             .and_then(|http| http.body_result())
-            .and_then(decode_chat_response)
+            .and_then(|body| {
+                decode_chat_response_with_tail_retry(body, self.profile.retry_length_json_tail_once)
+            })
             .and_then(|candidate| {
                 crate::contextual_prompt_v5::decode(&candidate, segment, line_index)
             })

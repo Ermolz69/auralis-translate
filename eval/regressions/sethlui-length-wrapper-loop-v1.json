@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "id": "REG-043",
+  "status": "known_7b_length_limited_wrapper_loop_rejected",
+  "severity": "major",
+  "source_family": "private_commons_sethlui_restaurant_derivative_and_authored_controls",
+  "split": "known_development_regression",
+  "affected_model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+  "v1_profile_sha256": "af9296ac5bbd089d82a44eaeb4afa2e144f013ce727bd4bf1c2de76ca615cbae",
+  "v2_profile_sha256": "268c4d00eee8994936d7019d4cad47a5193a01e459ad9ed4214ea30facd102f9",
+  "expected_invariant": "A length-limited wrapper closer loop never becomes a target or checkpoint; an opt-in second identical request is bounded and must pass the normal validator before committing.",
+  "private_reproducer": {
+    "source_sha256": "4777e11caa115e893f2328c2a33c25a76c7391ace8ecf0ac4b9436635fc27964",
+    "report_sha256": "2f98318d0480bf9af354250175d74a85b51604a4c97f36bdeb25587fcba580b7",
+    "state_sha256": "1bf69fd8f20b6842a80b06fcc95e09e0e8583cd9b8956461c4f367220ca85d89",
+    "run_id": "778a29df-1721-41bd-bbf9-4fe338dd41b7",
+    "focus_cue": 62,
+    "source_text_sha256": "7cea085e0182328ecc0816e23425646f60bc066c274be7018105cddd2c7bf128",
+    "request_sha256": "3d0abf06162144d4b64da48633340020c2670b7b08904747b3252d434a9a1e7c",
+    "raw_candidate_sha256": "31ebfdf60d78aaf815435d185d8c69c055f07c96cc3827bb1e3316b2b07439ae",
+    "finish_reason": "length",
+    "completion_tokens": 256,
+    "saved_checkpoints": 61,
+    "complete_results": 0
+  },
+  "related_controls": [
+    { "id": "long_food_closer_loop", "kind": "length_wrapper", "fixture": "runaway_candidate" },
+    { "id": "spaced_name_closers", "kind": "length_wrapper", "fixture": "spaced_name" },
+    { "id": "short_food_closers", "kind": "length_wrapper", "fixture": "short_food" }
+  ],
+  "negative_controls": [
+    { "id": "literal_brackets", "kind": "ordinary_length", "fixture": "literal_brackets" },
+    { "id": "quoted_cjk_prose", "kind": "ordinary_length", "fixture": "quoted_cjk_prose" },
+    { "id": "missing_list_closer", "kind": "ordinary_length", "fixture": "missing_list_closer" },
+    { "id": "old_profile_unchanged", "kind": "ordinary_length", "fixture": "v1_profile" }
+  ],
+  "control_model_runs": 0,
+  "contract_test": "crates/auralis-translation-llamacpp/tests/json_tail_retry.rs",
+  "human_review": "missing",
+  "release_gate": "open"
+}

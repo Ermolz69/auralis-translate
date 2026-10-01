@@ -1,0 +1,24 @@
+{
+  "schema_version": 27,
+  "catalog_id": "zh-ru-development-regressions-v27",
+  "base_catalog_file": "catalog-v26.json",
+  "base_catalog_sha256": "f614ffbc6e3896d2b24aec9e421fb7d95bd28022d2cb1cbc4bd6bb043e6f55a9",
+  "entries": [
+    {
+      "id": "REG-043",
+      "pack_file": "sethlui-length-wrapper-loop-v1.json",
+      "pack_sha256": "3d6f9143e453c202e1f84a6f7677fae87ce4f64236e4a0614f6aa286625fb832",
+      "source_family": "private_commons_sethlui_restaurant_derivative_and_authored_controls",
+      "split": "known_development_regression",
+      "category": "length_limited_wrapper_closer_loop",
+      "profile_scope": "7B v6 checked opt-in JSON-tail retry v2 and legacy length guard",
+      "expected_invariant": "A length-limited wrapper closer loop never becomes a target or checkpoint; an opt-in second identical request is bounded and must pass the normal validator before committing.",
+      "severity": "major",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 3,
+      "negative_control_count": 4,
+      "evidence_record": "eval/experiments/2026-10-01-sethlui-json-tail-retry-result.md",
+      "last_outcome": "The real v1 7B response at cue 62 filled all 256 tokens with wrapper closers; the new v2 contract is structurally tested but its real-model outcome remains pending."
+    }
+  ]
+}

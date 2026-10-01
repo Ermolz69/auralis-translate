@@ -30,6 +30,41 @@ const LARGE_V6_SLOT_PROFILE: &[u8] =
 const LARGE_V6_TAIL_RETRY_PROFILE: &[u8] = include_bytes!(
     "../../../models/manifests/hy_mt2_7b_q4_k_m.context_v6_slot_retry_tail.experimental.json"
 );
+const LARGE_V6_LENGTH_TAIL_RETRY_PROFILE: &[u8] = include_bytes!(
+    "../../../models/manifests/hy_mt2_7b_q4_k_m.context_v6_slot_retry_tail_length.experimental.json"
+);
+
+#[test]
+fn length_tail_retry_adds_only_its_explicit_checked_v6_flag() -> Result<(), Box<dyn Error>> {
+    let baseline = ModelProfile::from_json(LARGE_V6_TAIL_RETRY_PROFILE)?;
+    assert!(!baseline.retry_length_json_tail_once);
+    let variant = ModelProfile::from_json(LARGE_V6_LENGTH_TAIL_RETRY_PROFILE)?;
+    assert!(variant.retry_length_json_tail_once);
+    let mut value: serde_json::Value = serde_json::from_slice(LARGE_V6_LENGTH_TAIL_RETRY_PROFILE)?;
+    value
+        .as_object_mut()
+        .ok_or("variant must be an object")?
+        .remove("retry_length_json_tail_once");
+    assert_eq!(
+        value,
+        serde_json::from_slice::<serde_json::Value>(LARGE_V6_TAIL_RETRY_PROFILE)?
+    );
+    for (key, bad) in [
+        ("retry_json_tail_once", serde_json::json!(false)),
+        ("max_block_attempts", serde_json::json!(1)),
+        ("prompt_version", serde_json::json!(5)),
+        ("model_file_bytes", serde_json::Value::Null),
+    ] {
+        let mut value: serde_json::Value =
+            serde_json::from_slice(LARGE_V6_LENGTH_TAIL_RETRY_PROFILE)?;
+        value[key] = bad;
+        assert!(
+            ModelProfile::from_json(&serde_json::to_vec(&value)?).is_err(),
+            "{key}"
+        );
+    }
+    Ok(())
+}
 
 #[test]
 fn json_tail_retry_is_explicit_bounded_and_keeps_the_v6_prompt() -> Result<(), Box<dyn Error>> {

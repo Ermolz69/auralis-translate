@@ -71,6 +71,8 @@ pub struct ModelProfile {
     pub max_block_attempts: u32,
     #[serde(default)]
     pub retry_json_tail_once: bool,
+    #[serde(default)]
+    pub retry_length_json_tail_once: bool,
     pub temperature: f64,
     pub top_p: f64,
     pub top_k: i32,
@@ -161,6 +163,11 @@ impl ModelProfile {
         {
             return Err(ProfileError::Invalid(
                 "JSON-tail retry requires a checked v6 profile with two attempts",
+            ));
+        }
+        if self.retry_length_json_tail_once && !self.retry_json_tail_once {
+            return Err(ProfileError::Invalid(
+                "length-limited JSON-tail retry requires the checked v6 tail-retry policy",
             ));
         }
         let expected_template = match self.prompt_version {

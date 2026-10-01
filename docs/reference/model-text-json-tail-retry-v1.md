@@ -5,6 +5,11 @@ Status: experimental `CTX-05`/`EVAL-04` contract, 1 October 2026. The
 the leaked wrapper suffix before checkpointing. Archived profiles and results
 retain their bytes and behavior.
 
+The first real 7B full-file [screen](../../eval/experiments/2026-10-01-sethlui-json-tail-retry-result.md)
+stopped on a separate length-limited wrapper loop. A [v2 rule](model-text-json-tail-retry-v2.md)
+is versioned independently; this manifest still treats that unfinished answer
+as permanent.
+
 Two separate real 7B restaurant requests at cues 62 and 100, and ASUS/Vivo
 development requests, emitted a valid outer target-bound JSON object whose
 `text` value ended in a wrapper-like `」}]}` tail. Strict SRT validation
