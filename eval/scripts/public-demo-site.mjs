@@ -220,7 +220,7 @@ ${renderModelComparison(modelComparison, escape, number)}
 ${renderDeliveryProgress(deliveryPlan, escape)}
 ${renderSourceCandidates(sourceCandidates)}
 ${renderXiaolinMetadataScreen()}
-${renderSethluiTimingScreen()}
+${renderSethluiTimingScreen(sourceCandidates)}
 ${renderNaturalScreen(naturalScreen)}
 ${renderYingFullFailure(yingFullFailure)}
 ${renderYingGuarded(yingGuarded)}
