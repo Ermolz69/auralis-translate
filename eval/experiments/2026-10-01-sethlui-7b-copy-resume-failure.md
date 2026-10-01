@@ -62,3 +62,8 @@ artifact. A distinct versioned reliability change would need a new frozen
 experiment and related controls; repeated sampling until success would
 obscure this failure rate. Translation adequacy, human review, rights,
 speech alignment, selected candidate and Auralis approved audio remain open.
+
+The later [CLI provenance audit](2026-10-01-sethlui-cli-provenance-audit.md)
+clarifies that this historical executable predates the newer provider-level
+JSON-tail guard. Only the recorded SRT grammar rejection is attributed to
+this run; current-source guard tests are separate evidence.

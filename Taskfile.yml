@@ -1702,6 +1702,29 @@ tasks:
     desc: Build the optimized standalone CLI without downloading dependencies or models
     cmds:
       - cargo build --release --offline -p auralis-translation-cli
+  eval:cli:build:receipt:
+    desc: Test, build and retain an immutable source and CLI identity for future experiments
+    cmds:
+      - task: eval:cli:build:receipt:test
+      - task: test:context-v6
+      - git diff --exit-code HEAD -- Cargo.toml Cargo.lock Taskfile.yml crates models
+      - task: build:release
+      - node --check eval/scripts/release-cli-build-receipt.mjs
+      - node eval/scripts/release-cli-build-receipt.mjs record
+      - node eval/scripts/release-cli-build-receipt.mjs check
+  eval:cli:build:receipt:check:
+    desc: Reject a changed source tree or release CLI after the latest build receipt
+    cmds:
+      - node --check eval/scripts/release-cli-build-receipt.mjs
+      - git diff --exit-code HEAD -- Cargo.toml Cargo.lock Taskfile.yml crates models
+      - node eval/scripts/release-cli-build-receipt.mjs check
+  eval:cli:build:receipt:test:
+    desc: Check that build receipts reject changed source, binary and guard identities
+    cmds:
+      - node --check eval/scripts/release-cli-build-receipt.mjs
+      - node --check eval/scripts/release-cli-receipt-contract.mjs
+      - node --check eval/scripts/test-release-cli-build-receipt.mjs
+      - node eval/scripts/test-release-cli-build-receipt.mjs
   test:
     cmds:
       - cargo test --workspace --offline

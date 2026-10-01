@@ -90,6 +90,11 @@ No candidate is selected for publication, dubbing or training. The known
 development defects are kept outside a sealed holdout and will not be used as
 prompts or as tuning labels for an undisclosed holdout.
 
+The later [CLI provenance audit](2026-10-01-sethlui-cli-provenance-audit.md)
+found that this pinned executable predates the provider-level JSON-tail guard
+in current source. The observed SRT grammar rejection is real; this run does
+not verify the newer provider check.
+
 Run `task eval:natural:sethlui:v6:result:check` to reconcile every raw
 request/response, source slot, prompt-token preflight, state prefix and output
 hash. Run `task eval:regression:sethlui:private:check`,
