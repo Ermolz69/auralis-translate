@@ -166,6 +166,16 @@ tasks:
     cmds:
       - task: eval:data:youtube:sethlui:license:preflight
       - node eval/scripts/inventory-youtube-sethlui-license.mjs
+  eval:data:youtube:sethlui:caption:preflight:
+    desc: Verify the one expiring YouTube zh-Hans SRT URL and bounded acquisition inputs
+    cmds:
+      - node --check eval/scripts/acquire-youtube-sethlui-caption.mjs
+      - node eval/scripts/acquire-youtube-sethlui-caption.mjs --preflight
+  eval:data:youtube:sethlui:caption:acquire:
+    desc: Fetch one private original Chinese SRT track without downloading video
+    cmds:
+      - task: eval:data:youtube:sethlui:caption:preflight
+      - node eval/scripts/acquire-youtube-sethlui-caption.mjs
   eval:data:youtube:xiaolin:inventory:
     desc: Retain one bounded YouTube subtitle-track inventory without media download
     env:
