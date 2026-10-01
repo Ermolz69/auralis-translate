@@ -35,3 +35,11 @@ negative controls. It does not approve a canonical rendering for `REG-044`,
 re-score old checkpoints, or establish cross-file name consistency. A final
 whole-file bilingual review remains required before release. No G1–G9 or
 A1–A6 gate changes status.
+
+The source-free public section was deployed from `3afe4e7` by
+[Pages run 36920007704](https://github.com/Ermolz69/auralis-translate/actions/runs/36920007704).
+`task site:live:check` fetched the
+[published page](https://ermolz69.github.io/auralis-translate/?revision=3afe4e76b3f016c90e49321fb6275d2462ad6f10)
+and found it byte-identical to the committed 1,121,595-byte HTML,
+SHA-256 `80f2d4dd6be23476471c1a15769d0e8b9c883c018fe556c355976f6ccaeaecbb`.
+The private live-fetch record remains under ignored `.cache/eval/live-pages-check/`.
