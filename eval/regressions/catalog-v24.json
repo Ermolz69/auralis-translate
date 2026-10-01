@@ -1,0 +1,24 @@
+{
+  "schema_version": 24,
+  "catalog_id": "zh-ru-development-regressions-v24",
+  "base_catalog_file": "catalog-v23.json",
+  "base_catalog_sha256": "b0e5240feb8a4a2deb6e41ab4986e13919cd0e7f78850d2f2c3b0ee421444f4c",
+  "entries": [
+    {
+      "id": "REG-039",
+      "pack_file": "sethlui-caption-media-duration-v1.json",
+      "pack_sha256": "7c966f241896b40fc069e5574b74c1933d8948455d78dd661d05cdf397bde864",
+      "source_family": "private_commons_sethlui_restaurant_caption",
+      "split": "known_development_regression",
+      "category": "caption_media_duration_mismatch",
+      "profile_scope": "DATA-03 strict Chinese SRT matched-media admission",
+      "expected_invariant": "Every cue in a claimed matched-media scene must end within a verified duration of that same media item; strict SRT syntax alone does not establish alignment.",
+      "severity": "major",
+      "minimal_reproducer_count": 2,
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-10-01-sethlui-caption-media-mismatch.md",
+      "last_outcome": "Pinned 271-cue strict SRT exceeds the Commons-listed 12:18 video by eight cues under a conservative 12:19 upper bound. The original is excluded from matched-media use; a mapped derivative and actual stream check remain unperformed."
+    }
+  ]
+}

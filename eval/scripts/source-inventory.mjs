@@ -100,7 +100,7 @@ export function validateSourceInventory(inventory) {
   let inspectedCandidateCues = 0;
   for (const [index, source] of inventory.sources.entries()) {
     const at = `inventory.sources[${index}]`;
-    exactKeys(source, ['id', 'group_id', 'split', 'state', 'source_url', 'revision', 'retrieved_at', 'sha256', 'language', 'script', 'format', 'cue_count', 'rights', 'scenes'], ['media_url', 'rejection_reason', 'local_fixture_path', 'local_candidate_path'], at);
+    exactKeys(source, ['id', 'group_id', 'split', 'state', 'source_url', 'revision', 'retrieved_at', 'sha256', 'language', 'script', 'format', 'cue_count', 'rights', 'scenes'], ['media_url', 'media_duration_ms', 'media_duration_evidence_url', 'rejection_reason', 'local_fixture_path', 'local_candidate_path'], at);
     if (!Array.isArray(source.scenes)) fail(`${at}.scenes`, 'must be an array');
     id(source.id, `${at}.id`);
     id(source.group_id, `${at}.group_id`);
@@ -113,6 +113,12 @@ export function validateSourceInventory(inventory) {
     url(source.source_url, `${at}.source_url`);
     text(source.revision, `${at}.revision`);
     if (source.media_url !== undefined && source.media_url !== null) url(source.media_url, `${at}.media_url`);
+    if (source.media_duration_ms !== undefined) {
+      positive(source.media_duration_ms, `${at}.media_duration_ms`);
+      url(source.media_duration_evidence_url, `${at}.media_duration_evidence_url`);
+    } else if (source.media_duration_evidence_url !== undefined) {
+      fail(`${at}.media_duration_evidence_url`, 'requires media_duration_ms');
+    }
     if (source.local_fixture_path !== undefined && (!inventory.fixture_only || typeof source.local_fixture_path !== 'string'
         || !/^eval\/corpora\/fixtures\/[a-z0-9._-]+\.srt$/u.test(source.local_fixture_path))) {
       fail(`${at}.local_fixture_path`, 'must name an owned SRT fixture only in a fixture inventory');

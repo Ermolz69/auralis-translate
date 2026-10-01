@@ -35,6 +35,19 @@ test('inspected Commons bytes remain separate from eligible development or holdo
   assert.throws(() => validateSourceInventory(missingPath), /inspected candidates require unassigned split/u);
 });
 
+test('media duration requires a positive value and its source evidence', () => {
+  const missingEvidence = structuredClone(candidates);
+  missingEvidence.sources[0].media_duration_ms = 738000;
+  assert.throws(() => validateSourceInventory(missingEvidence), /media_duration_evidence_url/u);
+  const evidenceWithoutDuration = structuredClone(candidates);
+  evidenceWithoutDuration.sources[0].media_duration_evidence_url = evidenceWithoutDuration.sources[0].source_url;
+  assert.throws(() => validateSourceInventory(evidenceWithoutDuration), /requires media_duration_ms/u);
+  const checked = structuredClone(candidates);
+  checked.sources[0].media_duration_ms = 738000;
+  checked.sources[0].media_duration_evidence_url = checked.sources[0].source_url;
+  assert.equal(validateSourceInventory(checked).inspected_candidate_cues, 365);
+});
+
 test('a related source cannot cross the development and holdout split', () => {
   const inventory = copy();
   const source = structuredClone(inventory.sources[0]);

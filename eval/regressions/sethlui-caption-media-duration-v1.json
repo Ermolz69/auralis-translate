@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "REG-039",
+  "status": "strict_caption_outlasts_listed_media",
+  "severity": "major",
+  "source_family": "private_commons_sethlui_restaurant_caption",
+  "split": "known_development_regression",
+  "expected_invariant": "Every cue in a claimed matched-media scene must end within a verified duration of that same media item; strict SRT syntax alone does not establish alignment.",
+  "private_reproducer": {
+    "source_sha256": "077aef6a49aa7128f5ddd349f38ffc84dd669f5e4bbfae6d692efa2d78304967",
+    "acquisition_record_sha256": "41ee99dfd604b4333203dd022cf36f83f493914ca25cb6ef7ff78dc4d73c4c07",
+    "timedtext_revision": "1200692574",
+    "catalog_media_upper_bound_ms": 739000,
+    "cue_count": 271,
+    "minimal_cases": [
+      { "cue_id": 263, "start_ms": 731300, "end_ms": 732900, "expected": "within_catalog_bound" },
+      { "cue_id": 264, "start_ms": 840100, "end_ms": 843666, "expected": "outlasts_catalog_bound" }
+    ],
+    "last_cue_end_ms": 858333,
+    "observed_overrun_count": 8
+  },
+  "related_controls": [
+    { "id": "early_overrun", "media_duration_ms": 5000, "segments": [{ "id": 1, "start_ms": 4900, "end_ms": 5001 }], "expected_coverage": false },
+    { "id": "middle_overrun", "media_duration_ms": 5000, "segments": [{ "id": 1, "start_ms": 100, "end_ms": 200 }, { "id": 2, "start_ms": 4900, "end_ms": 5100 }, { "id": 3, "start_ms": 1000, "end_ms": 2000 }], "expected_coverage": false },
+    { "id": "late_gap_overrun", "media_duration_ms": 739000, "segments": [{ "id": 263, "start_ms": 731300, "end_ms": 732900 }, { "id": 264, "start_ms": 840100, "end_ms": 843666 }], "expected_coverage": false }
+  ],
+  "negative_controls": [
+    { "id": "exact_end", "media_duration_ms": 5000, "segments": [{ "id": 1, "start_ms": 4900, "end_ms": 5000 }], "expected_coverage": true },
+    { "id": "within_duration", "media_duration_ms": 739000, "segments": [{ "id": 263, "start_ms": 731300, "end_ms": 732900 }], "expected_coverage": true },
+    { "id": "long_caption_with_matching_media", "media_duration_ms": 859000, "segments": [{ "id": 271, "start_ms": 855500, "end_ms": 858333 }], "expected_coverage": true }
+  ],
+  "control_model_runs": 0,
+  "human_review": "missing",
+  "release_gate": "open"
+}

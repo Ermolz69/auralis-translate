@@ -21,6 +21,12 @@ tasks:
     cmds:
       - task: eval:data:commons:sethlui:caption:preflight
       - node eval/scripts/acquire-commons-sethlui-caption.mjs
+  eval:data:commons:sethlui:caption:check:
+    desc: Verify exact restaurant SRT bytes and reject captions beyond the video duration
+    cmds:
+      - node --test-isolation=none --test eval/scripts/tests/cue-media-coverage.test.mjs
+      - node --check eval/scripts/check-commons-sethlui-caption.mjs
+      - node eval/scripts/check-commons-sethlui-caption.mjs
   eval:data:youtube:xiaolin:preflight:
     desc: Verify a pinned one-call metadata-only Mandarin video inventory
     env:
@@ -827,7 +833,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-038 packs and all control counts
+    desc: Verify versioned REG-001 through REG-039 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -851,6 +857,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v21.mjs
       - node eval/scripts/check-regression-catalog-v22.mjs
       - node eval/scripts/check-regression-catalog-v23.mjs
+      - node eval/scripts/check-regression-catalog-v24.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:
@@ -1225,6 +1232,7 @@ tasks:
     desc: Validate source inventory examples and cross-source admission controls
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/source-inventory.test.mjs
+      - node --test --test-isolation=none eval/scripts/tests/cue-media-coverage.test.mjs
       - node eval/scripts/check-source-inventory.mjs eval/corpora/source-inventory-example-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-inspected-candidates-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-cc-commerce-candidate-v1.json

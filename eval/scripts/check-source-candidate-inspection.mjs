@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validateSourceInventory } from './source-inventory.mjs';
+import { checkCueMediaCoverage } from './cue-media-coverage.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const manifest = process.argv[2] ?? 'eval/corpora/commons-inspected-candidates-v1.json';
@@ -27,6 +28,12 @@ for (const source of inventory.sources) {
       || report.source_sha256 !== source.sha256 || report.segments?.length !== source.cue_count
       || report.segments.some((segment, index) => segment.id !== index + 1)) {
     throw new Error(`${source.id}: CLI source hash or ordered cue count differs from the non-admitted inventory`);
+  }
+  if (source.media_duration_ms !== undefined) {
+    const coverage = checkCueMediaCoverage(report.segments, source.media_duration_ms);
+    if (!coverage.covers_media) {
+      throw new Error(`${source.id}: ${coverage.overrun_count} cue(s) outlast media; first cue ${coverage.first_overrun.cue_id} ends at ${coverage.first_overrun.end_ms} ms after ${coverage.media_duration_ms} ms media`);
+    }
   }
   inspected += report.segments.length;
   console.log(`${source.id}: ${report.segments.length} strict SRT cues; source hash matched; rights unresolved`);

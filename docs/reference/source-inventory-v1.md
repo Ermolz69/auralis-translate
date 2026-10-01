@@ -20,6 +20,15 @@ requires an unassigned split, no admitted scenes or reference, and contributes
 zero eligible cues. This is a technical observation, not source admission.
 Rejection includes an explicit reason.
 
+When a matched media duration is known, store `media_duration_ms` with an HTTPS
+`media_duration_evidence_url`. Both fields are optional for discovery but must
+appear together. The candidate inspector checks every parsed cue's end against
+that duration and rejects any overrun. This was added after a 271-cue Commons
+caption ended at 14:18.333 while its associated video was listed as only
+12:18; strict SRT syntax alone did not reveal the media mismatch. Record media
+duration from a verified stream before using this as an admission check;
+rounded catalog durations can serve only as an obvious-mismatch screen.
+
 Every right has `decision: unknown|approved|rejected`. An approved right needs
 its license or grant, evidence URL, attribution, explicit internal-use approval
 and a boolean public-redistribution decision. Unknown/rejected rights cannot
