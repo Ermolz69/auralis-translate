@@ -113,6 +113,22 @@ tasks:
     cmds:
       - node --check eval/scripts/probe-commons-sethlui-full-v6.mjs
       - node --test --test-isolation=none eval/scripts/tests/cli-run-id.test.mjs
+  eval:natural:sethlui:v6:7b:resume:preflight:
+    desc: Verify the immutable failed 7B state, model and one copied continuation budget
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - node --check eval/scripts/resume-commons-sethlui-full-v6-7b.mjs
+      - node eval/scripts/resume-commons-sethlui-full-v6-7b.mjs --preflight
+  eval:natural:sethlui:v6:7b:resume:
+    desc: Run exactly one frozen bounded 7B continuation from a copied 61-block state
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:natural:sethlui:v6:7b:resume:preflight
+      - node eval/scripts/resume-commons-sethlui-full-v6-7b.mjs
   eval:regression:sethlui:private:check:
     desc: Recheck pinned restaurant source-fact and JSON-tail reproductions
     cmds:
