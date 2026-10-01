@@ -150,6 +150,8 @@ assert(html.includes('на момент проверки оставались 9 
 assert(html.includes('id="sethlui-source-screen"'));
 assert(html.includes('2026-10-01-sethlui-caption-media-mismatch.md'));
 assert(html.includes('2026-10-01-sethlui-stream-derivative-result.md'));
+assert(html.includes('2026-10-01-sethlui-audio-windows-result.md'));
+assert(html.includes('их никто не прослушал'));
 assert(html.includes('Реплики 264–271 исходного китайского SRT идут после конца видео'));
 assert(html.includes('10 источников, 2113 проверенных реплик и 0 допущенных'));
 assert(html.includes('2026-10-01-release-readiness-after-restaurant-stream.md'));
