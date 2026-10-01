@@ -1224,9 +1224,10 @@ tasks:
       - cargo test --offline -p auralis-translation --test retry_policy
       - task: test:response:length
   test:v5-terms:
-    desc: Verify source-scoped v5 terms, bounded prompt admission and durable ledger identity
+    desc: Verify source-scoped v5 terms, missing-form diagnostics, bounded prompt admission and durable ledger identity
     cmds:
-      - cargo test --offline -p auralis-translation --test approved_terms
+      - cargo test --offline -p auralis-translation --test approved_terms --test approved_term_diagnostics
+      - cargo test --offline -p auralis-translation-sqlite --test approved_term_diagnostic_persistence
       - cargo test --offline -p auralis-translation-formats --test srt_approved_terms
       - cargo test --offline -p auralis-translation-llamacpp --test v5_terms
       - cargo test --offline -p auralis-translation-cli --test v5_terms_admission

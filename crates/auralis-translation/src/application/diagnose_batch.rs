@@ -39,6 +39,13 @@ pub(crate) fn diagnose_batch(
                     line_index,
                 });
             }
+            if approved_term_missing(batch, source.id(), source_line, translated_line) {
+                diagnostics.push(TranslationDiagnostic {
+                    code: DiagnosticCode::ApprovedTermMissing,
+                    segment_id: source.id(),
+                    line_index,
+                });
+            }
             if source_identifier_mismatch(source_line, translated_line) {
                 diagnostics.push(TranslationDiagnostic {
                     code: DiagnosticCode::IdentifierMismatch,
@@ -84,12 +91,29 @@ fn glossary_term_missing(
             .segment_ids()
             .is_none_or(|scope| scope.contains(&segment_id))
             && source_line.contains(entry.source())
-            && !translated.contains(&entry.target().to_lowercase())
-            && !entry
-                .allowed_forms()
-                .iter()
-                .any(|form| translated.contains(&form.to_lowercase()))
+            && missing_form(&translated, entry.target(), entry.allowed_forms())
     })
+}
+
+fn approved_term_missing(
+    batch: &TranslationBatch,
+    segment_id: crate::SegmentId,
+    source_line: &str,
+    translated_line: &str,
+) -> bool {
+    let translated = translated_line.to_lowercase();
+    batch.approved_terms().iter().any(|entry| {
+        entry.segment_ids().contains(&segment_id)
+            && source_line.contains(entry.source())
+            && missing_form(&translated, entry.target(), entry.allowed_forms())
+    })
+}
+
+fn missing_form(translated: &str, target: &str, allowed_forms: &[String]) -> bool {
+    !translated.contains(&target.to_lowercase())
+        && !allowed_forms
+            .iter()
+            .any(|form| translated.contains(&form.to_lowercase()))
 }
 
 fn is_cyrillic(character: char) -> bool {

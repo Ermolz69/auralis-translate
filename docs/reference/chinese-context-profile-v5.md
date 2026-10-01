@@ -62,6 +62,16 @@ and evidence fields are provenance claims in the input; an external human
 review record must still be verified before these are treated as approved
 terms for release evidence.
 
+For a newly accepted v5 checkpoint, each scoped source-line occurrence of an
+approved term is checked against its reviewed Russian target and allowed forms.
+If none occurs in the matching output line, record an
+`approved_term_missing` advisory with the segment ID and line index. Keep the
+raw answer, accepted text and checkpoint unchanged; do not substitute a term
+or retry a structurally valid answer on this signal. Case-insensitive substring
+matching is a screening rule, not proof of correct meaning, inflection or
+whole-file consistency. Older checkpoints retain their original diagnostics;
+release review must inspect the final file across all resumed blocks.
+
 ## Request and response boundary
 
 One fully rendered v5 user message contains a versioned JSON data envelope.
