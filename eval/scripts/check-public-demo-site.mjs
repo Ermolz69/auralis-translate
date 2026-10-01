@@ -48,6 +48,7 @@ import { loadAsusFullAudio } from './asus-full-audio-section.mjs';
 import { loadAsusFit } from './asus-fit-section.mjs';
 import { loadSethluiFullV6, loadSethluiResume } from './sethlui-full-v6-section.mjs';
 import { loadSethluiRetry } from './sethlui-retry-section.mjs';
+import { loadSethluiAudio } from './sethlui-audio-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const html = await fs.readFile(path.join(root, 'site/index.html'), 'utf8');
@@ -71,6 +72,12 @@ assert.deepEqual(data.sethlui_original_track, await loadSethluiOriginalTrack(roo
 assert.deepEqual(data.sethlui_full_v6, await loadSethluiFullV6(root));
 assert.deepEqual(data.sethlui_resume, await loadSethluiResume(root));
 assert.deepEqual(data.sethlui_retry, await loadSethluiRetry(root));
+assert.deepEqual(data.sethlui_audio, await loadSethluiAudio(root));
+assert(html.includes('id="sethlui-real-audio"'));
+assert(html.includes('263 WAV и полный ролик; укладка и оценка звука открыты'));
+assert(html.includes('2026-10-01-sethlui-real-audio-technical-result.md'));
+assert(html.includes('2026-10-01-release-readiness-after-sethlui-audio.md'));
+assert(html.includes('Это проверка воспроизведения процессом, а не прослушивание человеком'));
 assert(html.includes('id="sethlui-retry"'));
 assert(html.includes('7B завершила 263 китайские реплики после одного ограниченного повтора'));
 assert(html.includes('2026-10-01-sethlui-json-tail-length-retry-result.md'));
