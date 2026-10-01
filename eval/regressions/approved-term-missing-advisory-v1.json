@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "id": "REG-045",
+  "status": "fixed_in_new_checkpoints_contract_only",
+  "severity": "major",
+  "source_family": "authored_chinese_venue_term_controls",
+  "split": "known_development_regression",
+  "affected_profile": "v5 source-scoped approved terms; no natural-source ledger approved",
+  "expected_invariant": "A scoped reviewed source term missing every approved Russian form in its matching output line produces an advisory without rewriting accepted text or inferring language quality.",
+  "minimal_reproducer": {
+    "source": "海湾餐厅开门了。",
+    "approved_source": "海湾餐厅",
+    "approved_target": "Хайвань",
+    "accepted_target": "Заведение открыто.",
+    "expected_diagnostic": "approved_term_missing"
+  },
+  "related_controls": [
+    { "id": "distant_repeat", "condition": "The same approved source name is omitted in an ending block." },
+    { "id": "reviewed_form", "condition": "An approved inflected Russian form satisfies the term in a middle block." },
+    { "id": "multiline_scope", "condition": "Only the matching source line in a two-line cue can trigger the advisory." }
+  ],
+  "negative_controls": [
+    { "id": "one_character_distinct", "condition": "A different Chinese venue name in the next source line does not inherit the approved term." },
+    { "id": "context_only", "condition": "A name appearing only in source context does not authorize a target warning." },
+    { "id": "case_insensitive_form", "condition": "An uppercase Russian form still satisfies the reviewed spelling." }
+  ],
+  "contract_test": "crates/auralis-translation/tests/approved_term_diagnostics.rs",
+  "durability_test": "crates/auralis-translation-sqlite/tests/approved_term_diagnostic_persistence.rs",
+  "control_model_runs": 0,
+  "human_review": "missing",
+  "release_gate": "open"
+}

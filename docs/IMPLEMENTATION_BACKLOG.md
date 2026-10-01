@@ -552,3 +552,11 @@ predeclared windows, 49 distinct cues, 12 decoded paired Opus clips and a
 blank reviewer form. No person listened or scored the audio, and no source
 speech alignment or rights decision was made. It cannot complete A4/A6 or
 the [latest failed RELEASE-05 audit](../eval/experiments/2026-10-01-release-05-audit-attempt-v2.md).
+
+The [v5 approved-term diagnostic](../eval/experiments/2026-10-01-v5-approved-term-diagnostic.md)
+adds partial `CTX-02`/`EVAL-04` implementation evidence at `c13c260`.
+`REG-045` pins the previously silent missing-form case with related and
+negative authored controls. Newly accepted checkpoints retain an advisory
+without rewriting model output; old diagnostics and the natural `REG-044`
+restaurant result remain unchanged. No reviewer-approved venue spelling,
+real-model comparison or release gate follows from these fixture checks.

@@ -1,0 +1,24 @@
+{
+  "schema_version": 29,
+  "catalog_id": "zh-ru-development-regressions-v29",
+  "base_catalog_file": "catalog-v28.json",
+  "base_catalog_sha256": "f60c6f057efa8a2e010ee7d4168b6be2ddfd230e5f5701892121266e820f2a2e",
+  "entries": [
+    {
+      "id": "REG-045",
+      "pack_file": "approved-term-missing-advisory-v1.json",
+      "pack_sha256": "575b11438dd925d8bfe56856cdb2b2d14bf57b54b571747ca3884c347b732e96",
+      "source_family": "authored_chinese_venue_term_controls",
+      "split": "known_development_regression",
+      "category": "approved_term_missing_checkpoint_advisory",
+      "profile_scope": "v5 source-scoped approved terms; no natural-source ledger approved",
+      "expected_invariant": "A scoped reviewed source term missing every approved Russian form in its matching output line produces an advisory without rewriting accepted text or inferring language quality.",
+      "severity": "major",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-10-01-v5-approved-term-diagnostic.md",
+      "last_outcome": "The authored first/end omissions now produce durable warnings; similar names, context-only mentions and approved forms do not. No real-model or human quality claim."
+    }
+  ]
+}

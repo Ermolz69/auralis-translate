@@ -1083,7 +1083,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-042 packs and all control counts
+    desc: Verify versioned REG-001 through REG-045 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -1112,6 +1112,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v26.mjs
       - node eval/scripts/check-regression-catalog-v27.mjs
       - node eval/scripts/check-regression-catalog-v28.mjs
+      - node eval/scripts/check-regression-catalog-v29.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:
