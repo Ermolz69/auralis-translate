@@ -1,4 +1,5 @@
 mod asset_download_command;
+mod audit_terms_command;
 mod diagnostics_command;
 mod doctor_command;
 mod document_render_error;
@@ -86,6 +87,7 @@ fn main() -> ExitCode {
                     | "doctor"
                     | "status"
                     | "diagnostics"
+                    | "audit-terms"
                     | "pause"
                     | "translate"
                     | "translate-vtt"

@@ -72,6 +72,14 @@ matching is a screening rule, not proof of correct meaning, inflection or
 whole-file consistency. Older checkpoints retain their original diagnostics;
 release review must inspect the final file across all resumed blocks.
 
+The read-only `audit-terms SOURCE RESULT SCENE_MAP TERMS_LEDGER` command
+performs that file-wide screening on an exported SRT. It checks exact source
+and result structure/protected bytes, source/scene/term hashes and term scopes
+before reporting every missing approved form across all target lines. It
+does not change checkpoints, the original, the result or reviewer claims.
+An empty warning list means only that the declared spellings were present;
+it does not establish correct meaning, pronunciation or human approval.
+
 ## Request and response boundary
 
 One fully rendered v5 user message contains a versioned JSON data envelope.

@@ -1232,6 +1232,12 @@ tasks:
       - cargo test --offline -p auralis-translation-formats --test srt_approved_terms
       - cargo test --offline -p auralis-translation-llamacpp --test v5_terms
       - cargo test --offline -p auralis-translation-cli --test v5_terms_admission
+      - task: test:approved-terms:audit
+  test:approved-terms:audit:
+    desc: Verify read-only full-result approved-term screening, structural rejection and machine output
+    cmds:
+      - cargo test --offline -p auralis-translation --test approved_term_full_audit
+      - cargo test --offline -p auralis-translation-cli --test approved_term_audit_cli
   test:identifier-diagnostics:
     desc: Check exact source identifier warnings and durable SQLite checkpoint persistence
     cmds:

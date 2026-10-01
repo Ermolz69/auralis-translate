@@ -49,6 +49,12 @@ pub(crate) enum MachineRequest {
         state_dir: PathBuf,
         run_id: String,
     },
+    AuditTerms {
+        source: PathBuf,
+        result: PathBuf,
+        scene_map: PathBuf,
+        terms_ledger: PathBuf,
+    },
     Pause {
         state_dir: PathBuf,
         run_id: String,

@@ -66,6 +66,18 @@ impl MachineRequest {
             Self::Diagnostics { state_dir, run_id } => {
                 vec!["diagnostics".into(), state_dir.into(), run_id.into()]
             }
+            Self::AuditTerms {
+                source,
+                result,
+                scene_map,
+                terms_ledger,
+            } => vec![
+                "audit-terms".into(),
+                source.into(),
+                result.into(),
+                scene_map.into(),
+                terms_ledger.into(),
+            ],
             Self::Pause { state_dir, run_id } => {
                 vec!["pause".into(), state_dir.into(), run_id.into()]
             }

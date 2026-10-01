@@ -12,6 +12,7 @@ Durable translation retains the current fixed Chinese-to-Russian pair.
 ## Commands and input
 
 Machine mode supports `inspect`, `inspect-vtt`, `doctor`, `status`, `diagnostics`,
+`audit-terms`,
 `pause`, `translate`, `translate-vtt`, `translate-glossary`, `resume`, `edit`,
 `fetch-release`, `fetch-asset`, `install-offline` and `install-online`.
 Other development commands return a usage error in machine mode instead of
@@ -42,6 +43,7 @@ request file's parent. Machine arguments must be Unicode.
 
 `inspect`/`inspect-vtt`: `source`; `doctor`: `profile`, `model`;
 `status`/`diagnostics`/`pause`: `state_dir`, `run_id`;
+`audit-terms`: `source`, `result`, `scene_map`, `terms_ledger`;
 `resume`: `state_dir`, `run_id`, `profile`, `endpoint`, `output`;
 `edit`: `state_dir`, `base_result_id`, `profile`, `edit`, `output`.
 `translate-vtt` has the same fields as `translate`; `translate-glossary` also has
@@ -116,6 +118,13 @@ available. A complete review-required output ends with `completed`, exit code 3.
 payload schema version 3; diagnostics and doctor retain theirs. Inspect reports
 cue IDs, timing, source text slots/byte ranges and protected ranges. Inspection
 intentionally includes source text; ordinary lifecycle events do not.
+`audit-terms` reports source/result and input-ledger hashes, checked line counts,
+and missing-form segment/line warnings across the complete exported SRT. The
+command reads files without modifying them or a translation database. It
+rejects changed cue structure or protected bytes and mismatched source/scene/
+term identities before emitting a report. Its successful exit is 0 even when
+warnings are present: `assessment=form_screen_only` and
+`human_review=not_performed` do not claim translation adequacy or approval.
 
 `--json` writes one final object instead of intermediate stdout events. Its
 `schema_version`, `command`, `run`, `model`, `progress`, `result`, `report` and

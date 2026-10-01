@@ -2,7 +2,9 @@ use super::capacity_mismatch::source_capacity_mismatch;
 use super::identifier_mismatch::source_identifier_mismatch;
 use super::measurement_mismatch::source_measurement_mismatch;
 use super::time_mismatch::source_time_mismatch;
-use crate::{DiagnosticCode, TargetSegment, TranslationBatch, TranslationDiagnostic};
+use crate::{
+    ApprovedTerm, DiagnosticCode, SegmentId, TargetSegment, TranslationBatch, TranslationDiagnostic,
+};
 
 pub(crate) fn diagnose_batch(
     batch: &TranslationBatch,
@@ -39,7 +41,12 @@ pub(crate) fn diagnose_batch(
                     line_index,
                 });
             }
-            if approved_term_missing(batch, source.id(), source_line, translated_line) {
+            if approved_term_missing(
+                batch.approved_terms(),
+                source.id(),
+                source_line,
+                translated_line,
+            ) {
                 diagnostics.push(TranslationDiagnostic {
                     code: DiagnosticCode::ApprovedTermMissing,
                     segment_id: source.id(),
@@ -95,14 +102,14 @@ fn glossary_term_missing(
     })
 }
 
-fn approved_term_missing(
-    batch: &TranslationBatch,
-    segment_id: crate::SegmentId,
+pub(crate) fn approved_term_missing(
+    terms: &[ApprovedTerm],
+    segment_id: SegmentId,
     source_line: &str,
     translated_line: &str,
 ) -> bool {
     let translated = translated_line.to_lowercase();
-    batch.approved_terms().iter().any(|entry| {
+    terms.iter().any(|entry| {
         entry.segment_ids().contains(&segment_id)
             && source_line.contains(entry.source())
             && missing_form(&translated, entry.target(), entry.allowed_forms())
