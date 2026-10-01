@@ -191,7 +191,7 @@ assert(html.indexOf('id="release-readiness"') < html.indexOf('id="model-comparis
 assert(html.includes('Перевод и озвучка пока не приняты'));
 assert(html.includes('1.8B v5 — на реплике 20 после 19 точек'));
 assert(html.includes('1.8B v6 создала 268/268 структурный SRT'));
-assert(html.includes('2026-09-30-release-readiness-after-vivo.md'));
+assert(html.includes('2026-10-01-release-readiness-after-context-width.md'));
 assert(html.includes('G1–G9 и A1–A6 остаются открытыми'));
 assert(html.includes('2026-09-30-commons-asus-full-7b-failure.md'));
 const v5 = await loadV5Envelope(root, data.dataset, data.currency.benchmark);
