@@ -429,3 +429,11 @@ translation CLI milestone does not close the desktop release or audio milestone.
 Reclassify a deferred task only when its stated condition or owner scheduling
 decision is satisfied. Record a blocked task's prerequisite and proposed next
 action here or in its linked task record; waiting for a listed dependency is `planned`.
+
+The [12:56 Mandarin finance source screen](../eval/experiments/2026-10-01-xiaolin-source-inventory-result.md)
+adds bounded `DATA-03` evidence without changing its status: the pinned
+YouTube extractor advertised no Chinese or automatic caption track. The
+Commons video license is unreviewed, and no subtitle rights or cue bytes were
+admitted. Its initial sandbox spawn failure is retained and has a process
+capture regression check. The nine registered sources remain at 1,850
+inspected and zero eligible cues.

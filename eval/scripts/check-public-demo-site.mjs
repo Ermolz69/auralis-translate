@@ -141,6 +141,9 @@ assert.deepEqual(data.source_candidates, {
   kirin_sha256: '57dfd9feb3bfe6381421c4142820b780af341e195e52ee81d58e8f9f12858feb',
 });
 assert(html.includes('id="source-candidates"'));
+assert(html.includes('id="xiaolin-source-screen"'));
+assert(html.includes('2026-10-01-xiaolin-source-inventory-result.md'));
+assert(html.includes('остаются 9 источников, 1850 проверенных реплик и 0 допущенных'));
 assert(html.includes('1850 проверенных реплик, 0 допущенных'));
 assert(html.includes('Первые 4 источника Commons дали 488 реплик'));
 assert(html.includes('2026-09-30-commons-train-240p-stream-result.md'));
