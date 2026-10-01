@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "id": "REG-038",
+  "status": "source_context_width_can_degrade_target_semantics",
+  "severity": "major",
+  "source_family": "private_commons_geekerwan_asus_rog_ally_and_authored_controls",
+  "split": "known_development_regression",
+  "affected_model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5",
+  "expected_invariant": "A target cue must retain its device class and battery-life referent and improvement polarity when source-only context width changes; outer JSON validity does not prove semantic completeness.",
+  "private_reproducer": {
+    "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+    "report_sha256": "2774488568d7eebc993616bb107a6aa76cf8f9ca6ea99f7438b915fa6968c7c9",
+    "journal_sha256": "18926c366346ebb4805abb23bf2e8108c2bf5378021f58e4b793d2b14a8336d6",
+    "cases": [
+      {"cue_id": 3, "model": "1b", "seed": 101, "width": 1, "source_text_sha256": "b3a332edf15688bca9ebd9940ff772e3fc8e8d41302dab7ec373445e58017257", "request_sha256": "85e81b267ce073df4082050dcc3821d611eb42d00d09c86473baab00ce701aa1", "raw_candidate_sha256": "08c9a81de5f6d312a2fa00e740a7d6b3a4349195f71d948e7f1a76151bcfe2fd", "observed_error": "Outer JSON is valid but the Russian field ends after an incomplete introductory clause, omitting ROG and handheld-device competition."},
+      {"cue_id": 133, "model": "1b", "seed": 101, "width": 3, "source_text_sha256": "8e9af4e5459379b49ae462c3d79d31cf1f7b22e4ee65f12d4eaa76fcd7b0eaf3", "request_sha256": "48f790278d2a1a834ac1fb4d1eae68693a87f975dc7e7d60744a18f644e256a5", "raw_candidate_sha256": "798780695fb49ca4da6b0c8b71207396a2ec3973a7d57f98df3a91ec3f6e8139", "observed_error": "Wider context changes battery life to survivability and says the area is least improvable instead of most needing improvement."}
+    ]
+  },
+  "related_controls": [
+    {"id": "rog_handheld_followup", "source": "ROG也推出了掌机。", "expected_fact": "ROG also introduced a handheld gaming device."},
+    {"id": "rog_market_entry", "source": "现在ROG也来竞争掌机市场了。", "expected_fact": "ROG also entered the handheld-gaming-device market."},
+    {"id": "battery_most_needs_work", "source": "续航仍然是最需要改善的一环。", "expected_fact": "Battery life remains the area most needing improvement."},
+    {"id": "battery_short_in_context", "source": "这台掌机性能不错，但续航仍待改善。", "expected_fact": "The handheld performs well, but its battery life still needs improvement."},
+    {"id": "context_mentions_survival", "source": "游戏里角色的生存能力很好。续航仍然需要改善。", "expected_fact": "Game-character survivability is good; battery life still needs improvement."},
+    {"id": "context_mentions_tablet", "source": "平板放在旁边。ROG掌机开始销售了。", "expected_fact": "A tablet is nearby; the ROG handheld has gone on sale."}
+  ],
+  "negative_controls": [
+    {"id": "actual_rog_tablet", "source": "ROG平板电脑也开始销售了。", "expected_fact": "A ROG tablet has gone on sale."},
+    {"id": "actual_smartphone", "source": "ROG手机也开始销售了。", "expected_fact": "A ROG smartphone has gone on sale."},
+    {"id": "actual_survival", "source": "角色的生存能力仍然最需要改善。", "expected_fact": "Character survivability most needs improvement."},
+    {"id": "battery_does_not_need_work", "source": "续航已经很好，不需要改善。", "expected_fact": "Battery life is good and needs no improvement."},
+    {"id": "battery_least_needs_work", "source": "续航是最不需要改善的一环。", "expected_fact": "Battery life is the area least needing improvement."}
+  ],
+  "control_model_runs": 0,
+  "ai_review": "source-aware development triage; not independent adjudication",
+  "human_review": "missing",
+  "release_gate": "open"
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "id": "asus-context-width-paired-v1",
+  "status": "development_screen_unreviewed",
+  "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+  "private_report_sha256": "2774488568d7eebc993616bb107a6aa76cf8f9ca6ea99f7438b915fa6968c7c9",
+  "private_journal_sha256": "18926c366346ebb4805abb23bf2e8108c2bf5378021f58e4b793d2b14a8336d6",
+  "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "models": {
+    "1b": {
+      "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+      "profile_sha256": "b30546f228ba230364ba79edae55456d62e7d7c5010e56fef38464c3531089c5",
+      "sampled_server_working_set_peak_bytes": 1545027584,
+      "sampled_device_gpu_memory_peak_mib": 1976
+    },
+    "7b": {
+      "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+      "profile_sha256": "e7e2d7745cb283a88984da202eb511f0144b2bc51bc6eb01727515a51e7aa06f",
+      "sampled_server_working_set_peak_bytes": 5063069696,
+      "sampled_device_gpu_memory_peak_mib": 5545
+    }
+  },
+  "focus_cue_ids": [2, 3, 12, 20, 91, 133, 142, 226, 227, 242, 267],
+  "seeds": [101, 202],
+  "context_widths": [1, 3],
+  "preflight_requests": 176,
+  "chat_requests": 88,
+  "measured_http_requests": 264,
+  "wall_elapsed_ms": 82257,
+  "max_prompt_tokens": 491,
+  "prompt_ceiling_tokens": 1728,
+  "token_preflight_chat_mismatches": 0,
+  "inference_retries": 0,
+  "arms": [
+    {"model": "1b", "width": 1, "cases": 22, "outer_json_valid": 22, "prompt_tokens": 6166, "completion_tokens": 1059, "chat_http_ms": 8941, "max_prompt_tokens": 294},
+    {"model": "1b", "width": 3, "cases": 22, "outer_json_valid": 22, "prompt_tokens": 9060, "completion_tokens": 1077, "chat_http_ms": 9169, "max_prompt_tokens": 440},
+    {"model": "7b", "width": 1, "cases": 22, "outer_json_valid": 21, "prompt_tokens": 6430, "completion_tokens": 1361, "chat_http_ms": 23379, "max_prompt_tokens": 308},
+    {"model": "7b", "width": 3, "cases": 22, "outer_json_valid": 22, "prompt_tokens": 9812, "completion_tokens": 1160, "chat_http_ms": 20654, "max_prompt_tokens": 491}
+  ],
+  "structural_failures": [{"model": "7b", "seed": 101, "cue_id": 227, "width": 1, "finish_reason": "length", "completion_tokens": 256}],
+  "ai_source_aware_observations": [
+    {"cue_id": 2, "finding": "handheld rendered as tablet in seven arms and smartphone in one wide 1b arm"},
+    {"cue_id": 3, "finding": "one valid 1b narrow JSON contains only an incomplete clause; 1b wide remains semantically wrong; 7b keeps the handheld-device class"},
+    {"cue_id": 12, "finding": "all eight answers retain 608 g and 60 g; no gram-to-gigabyte recurrence"},
+    {"cue_id": 20, "finding": "shoulder-button and Hall-trigger terms remain unstable"},
+    {"cue_id": 91, "finding": "1b wide preserves generic portable-device class in both seeds where 1b narrow invents phone or tablet; 7b keeps generic portable-device class"},
+    {"cue_id": 133, "finding": "1b wide changes battery-life referent to survivability in both seeds; seed 101 also reverses improvement sense; 7b preserves battery-life referent"},
+    {"cue_id": 142, "finding": "single-core performance becomes single-chip or malformed technical wording in both models"},
+    {"cue_id": 226, "finding": "neither model has approved hyperthreading wording; 1b wide remains wrong"},
+    {"cue_id": 227, "finding": "one narrow 7b length failure and one separate narrow 7b wrapper-like text tail; both wide 7b answers are clean in this screen"},
+    {"cue_id": 242, "finding": "7b keeps XG Mobile dock in all four answers; 1b changes the dock referent"},
+    {"cue_id": 267, "finding": "only one narrow 7b answer says mouse pad; both wide 7b answers say mouse stand"}
+  ],
+  "ai_review_scope": "known development examples; provisional source-aware triage only",
+  "human_bilingual_review_count": 0,
+  "source_rights_admitted": false,
+  "audio_alignment_reviewed": false,
+  "profile_selected": false,
+  "wider_context_selected": false,
+  "release_gate": "open"
+}

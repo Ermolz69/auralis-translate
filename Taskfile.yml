@@ -786,7 +786,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-037 packs and all control counts
+    desc: Verify versioned REG-001 through REG-038 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -809,6 +809,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v20.mjs
       - node eval/scripts/check-regression-catalog-v21.mjs
       - node eval/scripts/check-regression-catalog-v22.mjs
+      - node eval/scripts/check-regression-catalog-v23.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:
@@ -879,6 +880,11 @@ tasks:
     cmds:
       - task: eval:context:asus:width:preflight
       - node eval/scripts/probe-asus-context-width.mjs
+  eval:context:asus:width:check:
+    desc: Reverify all 88 raw ASUS context-width replies, tokenizer counts and retained failure
+    cmds:
+      - node --check eval/scripts/check-asus-context-width.mjs
+      - node eval/scripts/check-asus-context-width.mjs
   eval:natural:asus:v6:fact-screen:startup:check:
     desc: Preserve a simulated pre-server metadata failure in the private experiment journal
     env:

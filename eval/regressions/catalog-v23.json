@@ -1,0 +1,24 @@
+{
+  "schema_version": 23,
+  "catalog_id": "zh-ru-development-regressions-v23",
+  "base_catalog_file": "catalog-v22.json",
+  "base_catalog_sha256": "3f13a9c303c5dba20f0bbda08340bd6ac7943eb009bea833a1190ce96eaed342",
+  "entries": [
+    {
+      "id": "REG-038",
+      "pack_file": "asus-context-width-drift-v1.json",
+      "pack_sha256": "a64cecf7a571805d2cb8a03fb8d569295ff4126e5d8c93be4c6ae0574bb0fad8",
+      "source_family": "private_commons_geekerwan_asus_rog_ally_and_authored_controls",
+      "split": "known_development_regression",
+      "category": "context_width_semantic_drift_and_incomplete_target",
+      "profile_scope": "Hy-MT2 1.8B Q4_K_M v6 source-only context width 1 versus 3",
+      "expected_invariant": "A target cue must retain its device class and battery-life referent and improvement polarity when source-only context width changes; outer JSON validity does not prove semantic completeness.",
+      "severity": "major",
+      "minimal_reproducer_count": 2,
+      "related_control_count": 6,
+      "negative_control_count": 5,
+      "evidence_record": "eval/experiments/2026-10-01-asus-context-width-paired-result.md",
+      "last_outcome": "The retained 88-chat paired screen reproduces one structurally valid incomplete 1.8B target and a wider-context battery-life referent/polarity regression. Authored controls are frozen but have zero model runs; a semantic fix and independent review remain open."
+    }
+  ]
+}

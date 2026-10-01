@@ -286,6 +286,17 @@ warning IDs remain separate, the model candidate was not edited, and the
 single AI-identified capacity issue is not independent quality adjudication.
 `EVAL-04` remains in progress and `LONG-04`/G3–G5 remain open.
 
+The [paired ASUS source-context width screen](../eval/experiments/2026-10-01-asus-context-width-paired-result.md)
+adds partial `CTX-02`/`EVAL-04`/`DECIDE-01` evidence on the same eleven
+natural development cues: 88 real chats, 176 rendered-token preflights, two
+models, two seeds and widths one versus three. Wider context helps one 1.8B
+portable-device referent but worsens the battery-life referent/polarity at cue
+133; a valid narrow JSON contains an incomplete target at cue 3 and one 7B
+narrow response hits its 256-token cap. [REG-038](../eval/regressions/catalog-v23.json)
+pins the two new semantic reproductions plus eleven authored related/negative
+controls with zero model runs. The wider window is unselected; human review,
+source admission, a quality-safe context policy and release gates remain open.
+
 ## Current handoff
 
 `CTX-02` and `EVAL-04` now have an opt-in [provider review diagnostic
