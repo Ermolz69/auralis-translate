@@ -21,8 +21,13 @@ The selected derivative must be Commons-hosted 426x240 VP9/Opus. Stop if the
 metadata is absent, selection ambiguous, size over budget, network fails or
 bytes differ from declared length. The original SRT is never edited.
 
-On successful download, a separate hash-pinned local stream probe may record
-actual audio/video codecs and duration before any SRT derivative is generated.
+On successful download, `task eval:data:commons:sethlui:media:derive` checks
+the media, acquisition record, caption and FFprobe executable hashes, then
+runs one local FFprobe process (30 seconds, 1 MiB output). It retains the raw
+probe output and failure. If and only if cue 263 fits the measured stream and
+cue 264 starts beyond it, it writes a private first-263-cue derivative with
+an exact original-to-derived mapping and eight recorded exclusions. A strict
+CLI syntax check is then required; stream containment does not verify speech.
 Actual Chinese speech, timing alignment, caption rights, speaker turns and
 independent Chinese-to-Russian reference remain unverified. The raw 271-cue
 caption cannot be admitted as a matched complete scene.

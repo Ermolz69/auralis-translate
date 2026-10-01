@@ -37,6 +37,16 @@ tasks:
     cmds:
       - task: eval:data:commons:sethlui:media:preflight
       - node eval/scripts/acquire-commons-sethlui-media.mjs
+  eval:data:commons:sethlui:media:derive:preflight:
+    desc: Verify pinned restaurant media stream and SRT derivative inputs
+    cmds:
+      - node --check eval/scripts/derive-commons-sethlui-in-duration.mjs
+      - node eval/scripts/derive-commons-sethlui-in-duration.mjs --preflight
+  eval:data:commons:sethlui:media:derive:
+    desc: Verify pinned media streams and preserve a mapped in-duration SRT derivative
+    cmds:
+      - task: eval:data:commons:sethlui:media:derive:preflight
+      - node eval/scripts/derive-commons-sethlui-in-duration.mjs
   eval:data:youtube:xiaolin:preflight:
     desc: Verify a pinned one-call metadata-only Mandarin video inventory
     env:
