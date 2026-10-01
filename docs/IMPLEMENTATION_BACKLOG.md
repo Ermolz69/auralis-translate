@@ -538,7 +538,10 @@ adds partial `VOICE-02`/`VOICE-03`/`VOICE-06` evidence at local Auralis
 `f4e1c1d`: 263/263 independently decoded real WAVs, one 738,056-ms private
 audio track with complete video coverage, and one full FFplay process. The
 frozen check measured 256 cue overruns and 236 overlapping starts; no human
-listened or approved the draft. The [redacted public summary](../eval/reports/2026-10-01-sethlui-real-audio-summary.json)
+listened or approved the draft. A bounded [read-only fit screen](../eval/experiments/2026-10-01-sethlui-audio-fit-feasibility-result.md)
+at local Auralis `2ce8be5` found that only 158/263 cues could mathematically
+fit with a 75-ms margin even at a hypothetical 2× speech tempo. The
+[redacted public summary](../eval/reports/2026-10-01-sethlui-real-audio-summary.json)
 pins the source, runtime, media and playback hashes. `VOICE-01`–`VOICE-07` and
 A1–A6 remain open. The [latest interim failed readiness audit](../eval/experiments/2026-10-01-release-readiness-after-sethlui-audio.md)
 keeps `RELEASE-05` open after the prior

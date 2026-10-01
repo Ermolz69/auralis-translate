@@ -15,6 +15,16 @@
   "overlap_start_count": 236,
   "max_overrun_ms": 5913,
   "wav_clipped_samples": 0,
+  "fit_screen_auralis_commit": "2ce8be5",
+  "fit_report_sha256": "74f79ec23737ae8768e592a353f256aa314f28ce3016b6c6510f07abe437064d",
+  "fit_end_margin_ms": 75,
+  "fit_at_most_1x": 7,
+  "fit_at_most_1_25x": 30,
+  "fit_at_most_1_5x": 67,
+  "fit_at_most_2x": 158,
+  "fit_median_required_tempo": 1.883183568677792,
+  "fit_p95_required_tempo": 3.4914324880054832,
+  "fit_max_required_tempo": 6.268235294117647,
   "media_report_sha256": "d8ae63b40e8f333105d0cfef3136d741a933158395521580c7ad90846a084799",
   "speech_track_sha256": "3f2025964e5c9ef8e61c16509cbde839f8820758e799d2441af4ebcf7d6cebec",
   "media_sha256": "e08037ee4cfd35f0c38014cfc30b04fefbc1546827845fb1cb8086c3d851a30b",
@@ -34,5 +44,6 @@
   "source_speech_alignment_admitted": false,
   "rights_admitted": false,
   "cue_fit_admitted": false,
+  "tempo_policy_approved": false,
   "release_admitted": false
 }
