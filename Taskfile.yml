@@ -176,6 +176,11 @@ tasks:
     cmds:
       - task: eval:data:youtube:sethlui:caption:preflight
       - node eval/scripts/acquire-youtube-sethlui-caption.mjs
+  eval:data:youtube:sethlui:caption:check:
+    desc: Verify original YouTube SRT bytes against Commons import and measured media duration
+    cmds:
+      - node --check eval/scripts/check-youtube-sethlui-caption.mjs
+      - node eval/scripts/check-youtube-sethlui-caption.mjs
   eval:data:youtube:xiaolin:inventory:
     desc: Retain one bounded YouTube subtitle-track inventory without media download
     env:
