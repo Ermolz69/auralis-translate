@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "id": "REG-042",
+  "status": "copied_resume_repeated_format_failure",
+  "severity": "major",
+  "source_family": "private_commons_sethlui_restaurant_derivative_and_authored_controls",
+  "split": "known_development_regression",
+  "affected_model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+  "profile_sha256": "e7e2d7745cb283a88984da202eb511f0144b2bc51bc6eb01727515a51e7aa06f",
+  "expected_invariant": "A copied failed run may advance only by validated durable checkpoints; a repeated wrapper suffix at a later target must stop without a result or partial SRT, while the original 61-checkpoint state remains unchanged.",
+  "private_reproducer": {
+    "original_report_sha256": "81f5ece3871a6ce8b141a2022cee8218cb804274ab97c142f90e58d943bcb1dc",
+    "continuation_report_sha256": "16b1e806d52ce9bdd0d7a088e1b4e289802dc4b745bb149a429ccdea595e8c81",
+    "original_state_sha256": "fdffbaf9f85ac971731f9b5785b4130a4130d54edbd3e00b02864b2df11262be",
+    "copied_state_sha256": "e470d7ba6c01f34d93c490dde8b0c0ed7110da21bb9b3a02e99683a4ee2b57c8",
+    "run_id": "ef5f83be-05ab-4410-90ff-ddeb0c4a9c89",
+    "focus_cue": 100,
+    "source_text_sha256": "bdc93a18b6d02e1cfb9addfdfa5eb946977471c625d715a9613a8faea109e389",
+    "request_sha256": "764f2599a7d30b0ff3c1f7dbcbdbdfc2f4319e6975a3f7a33cbe072015624d74",
+    "candidate_text_sha256": "dd857bafdd3b2f5154755d969174698fdd1b3ba8aba8faee485706d79bfbdb9d",
+    "observed_suffix": "」}]}",
+    "original_checkpoints": 61,
+    "copied_checkpoints": 99,
+    "complete_results": 0
+  },
+  "related_controls": [
+    { "id": "later_food_tail", "candidate_text": "Это блюдо нельзя найти вне ресторана」}]}" },
+    { "id": "after_saved_prefix", "candidate_text": "Продолжение речи повара」}]}" },
+    { "id": "spaced_later_tail", "candidate_text": "Оно доступно только здесь」 } ] }" }
+  ],
+  "negative_controls": [
+    { "id": "plain_food", "candidate_text": "Это блюдо нельзя найти вне ресторана." },
+    { "id": "quoted_food", "candidate_text": "«Это блюдо» подают только здесь." },
+    { "id": "dash_food", "candidate_text": "Это блюдо — местная особенность." }
+  ],
+  "control_model_runs": 0,
+  "human_review": "missing",
+  "release_gate": "open"
+}

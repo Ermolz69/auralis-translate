@@ -1,0 +1,54 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import fs from 'node:fs';
+import path from 'node:path';
+import { readRunSnapshot } from './cli-run-state.mjs';
+
+const root = path.resolve('.');
+const directory = path.join(root, 'eval/regressions');
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+const catalog = JSON.parse(fs.readFileSync(path.join(directory, 'catalog-v26.json')));
+assert.equal(catalog.schema_version, 26);
+assert.equal(catalog.catalog_id, 'zh-ru-development-regressions-v26');
+assert.equal(sha(fs.readFileSync(path.join(directory, catalog.base_catalog_file))),
+  catalog.base_catalog_sha256);
+assert.deepEqual(catalog.entries.map(row => row.id), ['REG-042']);
+const entry = catalog.entries[0];
+const packBytes = fs.readFileSync(path.join(directory, entry.pack_file));
+assert.equal(sha(packBytes), entry.pack_sha256);
+const pack = JSON.parse(packBytes);
+for (const field of ['id', 'severity', 'source_family', 'split', 'expected_invariant'])
+  assert.equal(pack[field], entry[field]);
+assert.equal(pack.related_controls.length, entry.related_control_count);
+assert.equal(pack.negative_controls.length, entry.negative_control_count);
+assert.equal(new Set([...pack.related_controls, ...pack.negative_controls].map(row => row.id)).size, 6);
+assert.equal(pack.control_model_runs, 0);
+assert.equal(pack.human_review, 'missing');
+assert.equal(pack.release_gate, 'open');
+assert(fs.existsSync(path.join(root, entry.evidence_record)));
+const original = path.join(root, '.cache/eval/commons-sethlui-full-v6-7b-v1/run-6Pa9oA');
+const copied = path.join(root, '.cache/eval/commons-sethlui-full-v6-7b-resume-v1/run-oWMFtv');
+const item = pack.private_reproducer;
+assert.equal(sha(fs.readFileSync(path.join(original, 'report.json'))), item.original_report_sha256);
+assert.equal(sha(fs.readFileSync(path.join(copied, 'report.json'))), item.continuation_report_sha256);
+const originalDb = path.join(original, 'state/auralis-translate.sqlite');
+const copiedDb = path.join(copied, 'state/auralis-translate.sqlite');
+assert.equal(sha(fs.readFileSync(originalDb)), item.original_state_sha256);
+assert.equal(sha(fs.readFileSync(copiedDb)), item.copied_state_sha256);
+const before = readRunSnapshot(originalDb, item.run_id);
+const after = readRunSnapshot(copiedDb, item.run_id);
+assert.equal(before.checkpoints.length, item.original_checkpoints);
+assert.equal(after.checkpoints.length, item.copied_checkpoints);
+assert.equal(after.results.length, item.complete_results);
+assert(!fs.existsSync(path.join(copied, 'candidate.ru.srt')));
+const source = fs.readFileSync(path.join(root, '.cache/eval/commons-sethlui-derived-v1/source.zh.srt'))
+  .toString('utf8').trimEnd().split(/\r?\n\r?\n+/u);
+const sourceLine = source[item.focus_cue - 1].split(/\r?\n/u)[2];
+assert.equal(sha(Buffer.from(sourceLine)), item.source_text_sha256);
+const report = JSON.parse(fs.readFileSync(path.join(copied, 'report.json')));
+const chat = report.requests.filter(row => row.path === '/v1/chat/completions').at(-1);
+assert.equal(chat.request_sha256, item.request_sha256);
+const candidate = JSON.parse(chat.raw_candidate).translations[0].text;
+assert.equal(sha(Buffer.from(candidate)), item.candidate_text_sha256);
+assert(candidate.endsWith(item.observed_suffix));
+console.log('REG-042 pinned: second real 7B JSON-tail failure at cue 100; 61 original and 99 copied checkpoints, no partial result, six authored controls unrun on model.');

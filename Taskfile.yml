@@ -129,6 +129,11 @@ tasks:
     cmds:
       - task: eval:natural:sethlui:v6:7b:resume:preflight
       - node eval/scripts/resume-commons-sethlui-full-v6-7b.mjs
+  eval:natural:sethlui:v6:7b:resume:result:check:
+    desc: Reconcile the failed copied 7B continuation against raw replies and untouched original state
+    cmds:
+      - node --check eval/scripts/check-commons-sethlui-7b-resume-result.mjs
+      - node eval/scripts/check-commons-sethlui-7b-resume-result.mjs
   eval:regression:sethlui:private:check:
     desc: Recheck pinned restaurant source-fact and JSON-tail reproductions
     cmds:
@@ -945,7 +950,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-041 packs and all control counts
+    desc: Verify versioned REG-001 through REG-042 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -971,6 +976,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v23.mjs
       - node eval/scripts/check-regression-catalog-v24.mjs
       - node eval/scripts/check-regression-catalog-v25.mjs
+      - node eval/scripts/check-regression-catalog-v26.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:

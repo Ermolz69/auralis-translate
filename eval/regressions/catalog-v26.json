@@ -1,0 +1,24 @@
+{
+  "schema_version": 26,
+  "catalog_id": "zh-ru-development-regressions-v26",
+  "base_catalog_file": "catalog-v25.json",
+  "base_catalog_sha256": "340eeca293140d71362332cf645e44a966ca395cf7a231847f72cb09defa4967",
+  "entries": [
+    {
+      "id": "REG-042",
+      "pack_file": "sethlui-resume-json-tail-v1.json",
+      "pack_sha256": "7bd67872d4717b342cdcb637b0c19b44807f8e3f2868959706d9afd3dc2fbe55",
+      "source_family": "private_commons_sethlui_restaurant_derivative_and_authored_controls",
+      "split": "known_development_regression",
+      "category": "copied_resume_later_json_tail_recurrence",
+      "profile_scope": "7B v6 copied-state restaurant continuation",
+      "expected_invariant": "A copied failed run may advance only by validated durable checkpoints; a repeated wrapper suffix at a later target must stop without a result or partial SRT, while the original 61-checkpoint state remains unchanged.",
+      "severity": "major",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-10-01-sethlui-7b-copy-resume-failure.md",
+      "last_outcome": "One copied 7B continuation passed original cue 62 but stopped on the same JSON-tail family at cue 100; 99 checkpoints, zero results, untouched original state."
+    }
+  ]
+}
