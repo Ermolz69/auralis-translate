@@ -59,6 +59,16 @@ tasks:
       - node eval/scripts/stage-commons-sethlui-candidate.mjs --check
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-sethlui-candidate-v1.json --require-candidate-bytes
       - node eval/scripts/check-source-candidate-inspection.mjs eval/corpora/commons-sethlui-candidate-v1.json
+  eval:data:commons:sethlui:audio:preflight:
+    desc: Verify bounded source-audio windows and fixed cue overlap IDs
+    cmds:
+      - node --check eval/scripts/sample-commons-sethlui-audio.mjs
+      - node eval/scripts/sample-commons-sethlui-audio.mjs --preflight
+  eval:data:commons:sethlui:audio:sample:
+    desc: Decode three private source-audio windows for human Chinese speech review
+    cmds:
+      - task: eval:data:commons:sethlui:audio:preflight
+      - node eval/scripts/sample-commons-sethlui-audio.mjs
   eval:data:youtube:xiaolin:preflight:
     desc: Verify a pinned one-call metadata-only Mandarin video inventory
     env:
