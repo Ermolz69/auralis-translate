@@ -37,3 +37,8 @@ results are recorded at execution, not inferred from this plan. Final
 `RELEASE-05` remains open. Independent bilingual review, human source/audio
 listening, subtitle and derived-audio rights evidence, and an unseeded Windows
 installation target remain external prerequisites; desktop stays owner-deferred.
+
+The later [ASUS fit feasibility screen](2026-10-01-asus-audio-fit-feasibility-result.md)
+measured 47/268 mathematical cue fits at 1.5× and 155/268 at 2× using the
+already retained real WAVs. This strengthens the A3 failure diagnosis; no
+tempo policy, revised reviewed script or human listening was supplied.

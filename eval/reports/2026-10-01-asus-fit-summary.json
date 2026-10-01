@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "experiment_id": "VOICE-ASUS-FIT-SCREEN-2026-10-01-v1",
+  "source_analysis_sha256": "9c1975d171bdf9f5057343d96e7078bba0b9e4e226f6f1d188918413ffe9af0b",
+  "private_report_sha256": "9e6dee74985646c3ece0cfd4a06b55b909141d01cdbad92255a479e8074ff014",
+  "cue_count": 268,
+  "end_margin_ms": 75,
+  "at_most_tempo": {
+    "1": 4,
+    "1.25": 16,
+    "1.5": 47,
+    "2": 155
+  },
+  "median_required_tempo": 1.9055161114145276,
+  "p95_required_tempo": 2.7452142206016408,
+  "max_required_tempo": 4.667490729295427,
+  "at_most_1_5_by_third": [28, 12, 7],
+  "human_listening_review": "not_performed",
+  "reviewed_spoken_script": false,
+  "approved_fit_policy": false
+}

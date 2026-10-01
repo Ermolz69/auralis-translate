@@ -45,6 +45,7 @@ import { loadAsusContextWidth } from './asus-context-width-section.mjs';
 import { loadAsusV6FactScreen } from './asus-v6-fact-screen-section.mjs';
 import { loadNaturalAudio } from './natural-audio-section.mjs';
 import { loadAsusFullAudio } from './asus-full-audio-section.mjs';
+import { loadAsusFit } from './asus-fit-section.mjs';
 import { loadSethluiFullV6, loadSethluiResume } from './sethlui-full-v6-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -132,6 +133,7 @@ assert(html.includes('catalog-v19.json'));
 assert(html.includes('нового полного прогона после исправления ещё нет'));
 assert.deepEqual(data.natural_audio, await loadNaturalAudio(root));
 assert.deepEqual(data.asus_full_audio, await loadAsusFullAudio(root));
+assert.deepEqual(data.asus_fit, await loadAsusFit(root));
 assert.deepEqual(data.source_candidates, {
   source_count: 10,
   inspected_cues: 2113,
@@ -206,6 +208,9 @@ assert(html.includes('REG-028 и контроли'));
 assert(html.includes('2026-09-30-vivo-fact-model-screen-result.md'));
 assert(html.includes('id="natural-audio"'));
 assert(html.includes('id="asus-full-audio"'));
+assert(html.includes('id="asus-fit-screen"'));
+assert(html.includes('Даже при 2× за пределами окон остаются 113 реплик'));
+assert(html.includes('2026-10-01-asus-audio-fit-feasibility-result.md'));
 assert(html.includes('268 WAV и полный ролик; укладка речи не прошла'));
 assert(html.includes('2026-09-30-asus-full-audio-technical-result.md'));
 assert(html.includes('Три реальные реплики озвучены и воспроизведены, укладка не прошла'));
