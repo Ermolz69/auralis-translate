@@ -17,6 +17,9 @@ holdout cues. No independent Chinese-to-Russian reference, speech-alignment
 review or rights approval exists for the new source. The source-copy check,
 strict CLI parse, measured stream containment and `REG-039` pass; these
 observations say nothing about Russian adequacy or audio quality.
+The [beginning/middle/end source-audio packet](2026-10-01-sethlui-audio-windows-result.md)
+contains three decoded WAVs linked to cue IDs by timestamps, with zero human
+listeners. Decoding does not verify spoken language or alignment.
 
 | Gate | Current observation and missing acceptance |
 | --- | --- |
@@ -33,6 +36,9 @@ observations say nothing about Russian adequacy or audio quality.
 `task inspect -- .cache/eval/commons-sethlui-media/derived-1e655c9c-f93e-4b03-938c-f2510640fa2b/source.zh.srt`,
 `task eval:data:commons:sethlui:candidate:stage`,
 `task eval:data:commons:sethlui:candidate:check`, `task eval:data:check`,
+`task eval:data:commons:sethlui:audio:preflight`,
+`task eval:data:commons:sethlui:audio:sample`,
+`task eval:data:commons:sethlui:audio:check`,
 `task eval:regression:catalog:check`, `task docs:check`, `task plan:check`,
 `task site:build` and `task site:check` completed for this slice. Both
 FFprobe and the strict CLI checker first got sandbox child-process `EPERM`;

@@ -69,6 +69,11 @@ tasks:
     cmds:
       - task: eval:data:commons:sethlui:audio:preflight
       - node eval/scripts/sample-commons-sethlui-audio.mjs
+  eval:data:commons:sethlui:audio:check:
+    desc: Recheck the pinned private source-audio packet without claiming listening
+    cmds:
+      - node --check eval/scripts/check-commons-sethlui-audio.mjs
+      - node eval/scripts/check-commons-sethlui-audio.mjs
   eval:data:youtube:xiaolin:preflight:
     desc: Verify a pinned one-call metadata-only Mandarin video inventory
     env:
