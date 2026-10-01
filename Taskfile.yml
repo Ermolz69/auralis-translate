@@ -27,6 +27,16 @@ tasks:
       - node --test-isolation=none --test eval/scripts/tests/cue-media-coverage.test.mjs
       - node --check eval/scripts/check-commons-sethlui-caption.mjs
       - node eval/scripts/check-commons-sethlui-caption.mjs
+  eval:data:commons:sethlui:media:preflight:
+    desc: Verify bounded Commons restaurant media acquisition
+    cmds:
+      - node --check eval/scripts/acquire-commons-sethlui-media.mjs
+      - node eval/scripts/acquire-commons-sethlui-media.mjs --preflight
+  eval:data:commons:sethlui:media:acquire:
+    desc: Retain one private restaurant 240p video for duration and speech review
+    cmds:
+      - task: eval:data:commons:sethlui:media:preflight
+      - node eval/scripts/acquire-commons-sethlui-media.mjs
   eval:data:youtube:xiaolin:preflight:
     desc: Verify a pinned one-call metadata-only Mandarin video inventory
     env:
