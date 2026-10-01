@@ -1,6 +1,20 @@
 version: "3"
 
 tasks:
+  eval:data:youtube:xiaolin:preflight:
+    desc: Verify a pinned one-call metadata-only Mandarin video inventory
+    env:
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - node --check eval/scripts/inventory-youtube-xiaolin.mjs
+      - node eval/scripts/inventory-youtube-xiaolin.mjs --preflight
+  eval:data:youtube:xiaolin:inventory:
+    desc: Retain one bounded YouTube subtitle-track inventory without media download
+    env:
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - task: eval:data:youtube:xiaolin:preflight
+      - node eval/scripts/inventory-youtube-xiaolin.mjs
   site:live:check:
     desc: Compare the live GitHub Pages HTML byte-for-byte with the committed local report
     cmds:
