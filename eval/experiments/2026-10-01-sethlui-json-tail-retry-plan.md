@@ -29,10 +29,16 @@ The opt-in manifest SHA-256 is
 its only differences from the baseline 7B v6 manifest are
 `retry_json_tail_once: true` and `max_block_attempts: 2`. The source, scene
 map, prompt, schema, model, runtime sampling settings and tokenizer preflight
-stay the same. The exact release CLI and source-tree hashes will be recorded
-by `task eval:cli:build:receipt` after the code is committed, and frozen in the
-retained receipt before model requests. The runner verifies its CLI against
-that receipt. Sampling seed remains unknown because the CLI does not set one.
+stay the same. `task eval:cli:build:receipt` passed before inference and
+retained receipt SHA-256
+`7d07a44d26f54940c033048f4e4320bec6bf2e033ee8c0a36c863ebc0902724a`.
+It binds source commit `9abf5222f2653b129e8558b60ac71d25aded9697`,
+365 source files, tree SHA-256
+`4c2faed216e600f9d7641cb507e3fade4e05d78e492ec7e51bb1f34ea2b4dad8`
+and release CLI SHA-256
+`69d9a90508dca50a639148ca69cc62b08614691a82ac8a982641f3d2425578d0`.
+The runner verifies its CLI against that receipt. Sampling seed remains unknown
+because the CLI does not set one.
 
 One new SQLite state and one server start are allowed. The budget is 526
 chat requests, 1,600 total proxied HTTP requests, 20 minutes model-stage wall
