@@ -567,3 +567,10 @@ against the immutable source, scene map and term ledger, including a 1,024-cue
 authored boundary ladder. It can inspect old result bytes without rewriting
 their checkpoints. The natural restaurant draft still lacks an independently
 approved term ledger and bilingual review, so `REG-044` and G3–G5 remain open.
+
+The [third committed-candidate RELEASE-05 self-audit](../eval/experiments/2026-10-02-release-05-audit-attempt-v3.md)
+examined the published `82b824f` Translate tree after the whole-result
+diagnostic. Pages and affected engineering checks passed. No independent
+translation or listening review, admitted source, fitted audio or clean
+installation was added. `RELEASE-05` remains planned and the Goal remains
+incomplete.
