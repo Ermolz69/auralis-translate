@@ -74,6 +74,35 @@ tasks:
     cmds:
       - node --check eval/scripts/check-commons-sethlui-audio.mjs
       - node eval/scripts/check-commons-sethlui-audio.mjs
+  eval:natural:sethlui:v6:preflight:
+    desc: Verify pinned restaurant source and matched 1.8B/7B v6 full-file identities
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:data:commons:sethlui:candidate:check
+      - node --check eval/scripts/probe-commons-sethlui-full-v6.mjs
+      - node eval/scripts/probe-commons-sethlui-full-v6.mjs --preflight 1b
+      - node eval/scripts/probe-commons-sethlui-full-v6.mjs --preflight 7b
+  eval:natural:sethlui:v6:1b:probe:
+    desc: Run one bounded full 263-cue restaurant translation with pinned 1.8B v6
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:natural:sethlui:v6:preflight
+      - node eval/scripts/probe-commons-sethlui-full-v6.mjs 1b
+  eval:natural:sethlui:v6:7b:probe:
+    desc: Run one bounded full 263-cue restaurant translation with pinned 7B v6
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_1B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_7B: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: eval:natural:sethlui:v6:preflight
+      - node eval/scripts/probe-commons-sethlui-full-v6.mjs 7b
   eval:data:youtube:xiaolin:preflight:
     desc: Verify a pinned one-call metadata-only Mandarin video inventory
     env:
