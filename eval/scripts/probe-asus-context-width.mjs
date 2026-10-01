@@ -108,8 +108,9 @@ const sourceContext = (id, width) => {
     if (neighbor !== id) ids.push(neighbor);
   return ids.map(neighbor => {
     const slot = envelopes[neighbor - 1].target_slots[0];
-    return { segment_id: neighbor, start_ms: slot.start_ms, end_ms: slot.end_ms,
-      lines: [slot.source_original], relative_position: neighbor < id ? 'before' : 'after' };
+    return { end_ms: slot.end_ms, lines: [slot.source_original],
+      relative_position: neighbor < id ? 'before' : 'after',
+      segment_id: neighbor, start_ms: slot.start_ms };
   });
 };
 const cases = focusIds.flatMap(id => {
