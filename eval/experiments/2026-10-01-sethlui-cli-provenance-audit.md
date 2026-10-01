@@ -39,3 +39,13 @@ receipt documents the sequential local build procedure, not a
 reproducible-build proof. Run it
 before predeclaring new inference. Retain the failed old experiments rather than
 rewriting their identity or spending their exhausted continuation budget.
+
+The corrected `task eval:cli:build:receipt` then passed on source commit
+`8db5d35b295c0c2408caef65660110135d2d5805`: 363 source files, source-tree
+SHA-256 `770989ed82311b20364ad0a878f243b5bcc3502f72482fd551d8820d8bcef179`,
+binary SHA-256 `09dcb3cd9697529ad583b0aeac68dc6c2a8c06ae17e4bd5596c5eab70e4f7f62`.
+The private receipt at
+`.cache/eval/release-cli-build-receipts/receipt-a963c3b3-1787-4b5a-ac13-5a83958ee461.json`
+has SHA-256 `13ee4d4fbbbda07ea0a9ce243453c113ad2cf883b16395b4a85c6429ec7d054d`;
+the same task's immediate receipt check passed. No model inference was part of
+this task.

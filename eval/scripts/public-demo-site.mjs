@@ -25,6 +25,7 @@ import { loadSapiOriginalWindow, renderSapiOriginalWindow } from './sapi-origina
 import { loadAuralisPrivateSpeech, renderAuralisPrivateSpeech } from './auralis-private-speech-section.mjs';
 import { loadManagedSpeech, renderManagedSpeech } from './managed-speech-section.mjs';
 import { loadSourceCandidates, renderSourceCandidates, renderXiaolinMetadataScreen, renderSethluiTimingScreen } from './source-candidate-section.mjs';
+import { loadSethluiOriginalTrack, renderSethluiOriginalTrack } from './sethlui-original-track-section.mjs';
 import { loadNaturalScreen, renderNaturalScreen } from './natural-screen-section.mjs';
 import { loadYingFullFailure, renderYingFullFailure } from './ying-full-failure-section.mjs';
 import { loadYingGuarded, renderYingGuarded } from './ying-guarded-section.mjs';
@@ -75,6 +76,7 @@ const sapiOriginalWindow = await loadSapiOriginalWindow(root);
 const auralisPrivateSpeech = await loadAuralisPrivateSpeech(root);
 const managedSpeech = await loadManagedSpeech(root);
 const sourceCandidates = await loadSourceCandidates(root);
+const sethluiOriginalTrack = await loadSethluiOriginalTrack(root);
 const sethluiFullV6 = await loadSethluiFullV6(root);
 const sethluiResume = await loadSethluiResume(root);
 const naturalScreen = await loadNaturalScreen(root);
@@ -167,6 +169,7 @@ payload.sapi_original_window_fit = sapiOriginalWindow;
 payload.auralis_private_speech = auralisPrivateSpeech;
 payload.managed_speech = managedSpeech;
 payload.source_candidates = sourceCandidates;
+payload.sethlui_original_track = sethluiOriginalTrack;
 payload.sethlui_full_v6 = sethluiFullV6;
 payload.sethlui_resume = sethluiResume;
 payload.natural_screen = naturalScreen;
@@ -226,6 +229,7 @@ ${renderDeliveryProgress(deliveryPlan, escape)}
 ${renderSourceCandidates(sourceCandidates)}
 ${renderXiaolinMetadataScreen()}
 ${renderSethluiTimingScreen(sourceCandidates)}
+${renderSethluiOriginalTrack(sethluiOriginalTrack)}
 ${renderSethluiFullV6(sethluiFullV6, sethluiResume)}
 ${renderNaturalScreen(naturalScreen)}
 ${renderYingFullFailure(yingFullFailure)}

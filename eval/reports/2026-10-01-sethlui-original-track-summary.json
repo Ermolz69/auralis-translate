@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "video_id": "yvCR-EqMhng",
+  "observed_video_license": "Creative Commons Attribution license (reuse allowed)",
+  "youtube_srt_sha256": "4e5e55ec5f50dad128391d1b907e9d0ba51e9fda1c40b13a828ae1d806d380d4",
+  "commons_srt_sha256": "077aef6a49aa7128f5ddd349f38ffc84dd669f5e4bbfae6d692efa2d78304967",
+  "youtube_bytes": 17620,
+  "commons_prefix_bytes": 17618,
+  "youtube_extra_final_lf_bytes": 2,
+  "original_cues": 271,
+  "mapped_derivative_cues": 263,
+  "out_of_media_cues": 8,
+  "first_out_of_media_cue": 264,
+  "media_duration_ms": 738056,
+  "independent_speech_reviews": 0,
+  "caption_rights_decision": "unknown",
+  "source_admitted": false
+}
