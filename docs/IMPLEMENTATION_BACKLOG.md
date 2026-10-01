@@ -437,3 +437,11 @@ Commons video license is unreviewed, and no subtitle rights or cue bytes were
 admitted. Its initial sandbox spawn failure is retained and has a process
 capture regression check. The nine registered sources remain at 1,850
 inspected and zero eligible cues.
+
+The [12:18 restaurant-video source screen](../eval/experiments/2026-10-01-sethlui-caption-media-mismatch.md)
+adds a failed `DATA-03`/`DATA-05` timing admission case: 271 strict Chinese
+SRT cues were acquired at a pinned Commons revision, but eight end beyond a
+conservative upper bound for the listed media duration. `REG-039` and a
+reusable cue/media-duration check retain the exact mismatch and boundary
+controls. The original SRT is preserved privately, no matched scene is
+admitted, and the existing nine-candidate, 1,850-cue denominator is unchanged.
