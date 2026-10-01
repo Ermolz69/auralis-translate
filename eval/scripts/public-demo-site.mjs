@@ -44,6 +44,7 @@ import { loadAsusV6FactScreen, renderAsusV6FactScreen } from './asus-v6-fact-scr
 import { loadNaturalAudio, renderNaturalAudio } from './natural-audio-section.mjs';
 import { loadAsusFullAudio, renderAsusFullAudio } from './asus-full-audio-section.mjs';
 import { renderReleaseReadiness } from './release-readiness-section.mjs';
+import { loadSethluiFullV6, renderSethluiFullV6 } from './sethlui-full-v6-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const dataset = JSON.parse(await fs.readFile(path.join(root, 'eval/corpora/public-demo-v1.json'), 'utf8'));
@@ -74,6 +75,7 @@ const sapiOriginalWindow = await loadSapiOriginalWindow(root);
 const auralisPrivateSpeech = await loadAuralisPrivateSpeech(root);
 const managedSpeech = await loadManagedSpeech(root);
 const sourceCandidates = await loadSourceCandidates(root);
+const sethluiFullV6 = await loadSethluiFullV6(root);
 const naturalScreen = await loadNaturalScreen(root);
 const yingFullFailure = await loadYingFullFailure(root);
 const yingGuarded = await loadYingGuarded(root);
@@ -164,6 +166,7 @@ payload.sapi_original_window_fit = sapiOriginalWindow;
 payload.auralis_private_speech = auralisPrivateSpeech;
 payload.managed_speech = managedSpeech;
 payload.source_candidates = sourceCandidates;
+payload.sethlui_full_v6 = sethluiFullV6;
 payload.natural_screen = naturalScreen;
 payload.ying_full_failure = yingFullFailure;
 payload.ying_guarded = yingGuarded;
@@ -213,7 +216,7 @@ const html = `<!doctype html>
 :root{color-scheme:light}body{margin:0;font-family:Segoe UI,Arial,sans-serif;color:#172033;background:#fff;font-size:16px;line-height:1.6}*{box-sizing:border-box}a{color:inherit}button{font:inherit;cursor:pointer}.shell{max-width:1440px;margin:auto;padding:0 28px}.label{font-size:14px;font-weight:600;color:#526074;margin:0 0 10px}.measurement{width:100%;border-collapse:collapse;text-align:left;font-size:14px;min-width:760px}.measurement th,.measurement td{border-bottom:1px solid #e2e8f0;padding:12px 14px;vertical-align:top}.measurement thead{background:#f1f5f9}.measurement th{font-weight:600}.measurement td:not(:nth-child(2)){font-variant-numeric:tabular-nums}details summary{padding:4px 0}code{overflow-wrap:anywhere;font-size:14px}p{overflow-wrap:anywhere}.hash{font-family:Consolas,monospace;font-size:13px;word-break:break-all}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #2563eb;outline-offset:4px}.run-button[aria-pressed=true]{background:#1d4ed8;color:white;border-color:#1d4ed8}@media(max-width:640px){.shell{padding:0 18px}.comparison{grid-template-columns:1fr}.measurement{font-size:14px}}@media print{button,nav{display:none}details{display:block}article{break-inside:avoid}body{font-size:12pt}}
 </style></head>
 <body>
-<header class="border-b border-slate-200"><div class="shell flex flex-wrap items-center justify-between gap-4 py-5"><a class="text-lg font-bold tracking-tight" href="#top">AURALIS <span class="font-normal text-slate-500">/ Translate</span></a><nav class="flex flex-wrap gap-5 text-sm text-slate-600" aria-label="Разделы отчёта"><a href="#model-comparison">1.8B / 7B</a><a href="#delivery-plan">План и прогресс</a><a href="#source-candidates">Источники</a><a href="#vivo-full">Vivo: 467 реплик</a><a href="#v5-envelope">v5 JSON</a><a href="#scene-context">Контекст сцен</a><a href="#pronoun-cross-model">Четыре сцены</a><a href="#long-v5-failure">Длинный файл</a><a href="#reg009-long-cli">Отказ CLI</a><a href="#reg009-live-prefix">Коды и смысл</a><a href="#v5-terms">Термины</a><a href="#retry-policy">Повторы</a><a href="#inference-journal">Журнал запросов</a><a href="#preflight-journal">Токены</a><a href="#host-staged-gap">Восстановление</a><a href="#voice-handoff">Озвучка</a><a href="#managed-speech">Аудио Auralis</a><a href="#examples">История 20 примеров</a><a href="#measurements">Замеры v1</a><a href="#method">Методика</a></nav></div></header>
+<header class="border-b border-slate-200"><div class="shell flex flex-wrap items-center justify-between gap-4 py-5"><a class="text-lg font-bold tracking-tight" href="#top">AURALIS <span class="font-normal text-slate-500">/ Translate</span></a><nav class="flex flex-wrap gap-5 text-sm text-slate-600" aria-label="Разделы отчёта"><a href="#model-comparison">1.8B / 7B</a><a href="#delivery-plan">План и прогресс</a><a href="#source-candidates">Источники</a><a href="#sethlui-full-v6">Ресторан: перевод</a><a href="#vivo-full">Vivo: 467 реплик</a><a href="#v5-envelope">v5 JSON</a><a href="#scene-context">Контекст сцен</a><a href="#pronoun-cross-model">Четыре сцены</a><a href="#long-v5-failure">Длинный файл</a><a href="#reg009-long-cli">Отказ CLI</a><a href="#reg009-live-prefix">Коды и смысл</a><a href="#v5-terms">Термины</a><a href="#retry-policy">Повторы</a><a href="#inference-journal">Журнал запросов</a><a href="#preflight-journal">Токены</a><a href="#host-staged-gap">Восстановление</a><a href="#voice-handoff">Озвучка</a><a href="#managed-speech">Аудио Auralis</a><a href="#examples">История 20 примеров</a><a href="#measurements">Замеры v1</a><a href="#method">Методика</a></nav></div></header>
 <main id="top" class="shell pb-16">
 ${renderReleaseReadiness()}
 ${renderModelComparison(modelComparison, escape, number)}
@@ -221,6 +224,7 @@ ${renderDeliveryProgress(deliveryPlan, escape)}
 ${renderSourceCandidates(sourceCandidates)}
 ${renderXiaolinMetadataScreen()}
 ${renderSethluiTimingScreen(sourceCandidates)}
+${renderSethluiFullV6(sethluiFullV6)}
 ${renderNaturalScreen(naturalScreen)}
 ${renderYingFullFailure(yingFullFailure)}
 ${renderYingGuarded(yingGuarded)}

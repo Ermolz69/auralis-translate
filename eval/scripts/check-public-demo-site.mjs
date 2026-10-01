@@ -44,6 +44,7 @@ import { loadAsusContextWidth } from './asus-context-width-section.mjs';
 import { loadAsusV6FactScreen } from './asus-v6-fact-screen-section.mjs';
 import { loadNaturalAudio } from './natural-audio-section.mjs';
 import { loadAsusFullAudio } from './asus-full-audio-section.mjs';
+import { loadSethluiFullV6 } from './sethlui-full-v6-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const html = await fs.readFile(path.join(root, 'site/index.html'), 'utf8');
@@ -63,6 +64,10 @@ assert.deepEqual(data.currency, await loadCurrencyReport(root, data.dataset));
 assert.deepEqual(data.model_comparison, await loadModelComparison(root));
 assert.deepEqual(data.delivery_plan, await loadDeliveryPlan(root));
 assert.deepEqual(data.source_candidates, await loadSourceCandidates(root));
+assert.deepEqual(data.sethlui_full_v6, await loadSethluiFullV6(root));
+assert(html.includes('id="sethlui-full-v6"'));
+assert(html.includes('7B остановилась на 62-й'));
+assert(html.includes('REG-040 закрепляет три ошибки'));
 assert.deepEqual(data.natural_screen, await loadNaturalScreen(root));
 assert.deepEqual(data.ying_full_failure, await loadYingFullFailure(root));
 assert.deepEqual(data.ying_guarded, await loadYingGuarded(root));
