@@ -49,6 +49,7 @@ import { renderReleaseReadiness } from './release-readiness-section.mjs';
 import { loadSethluiFullV6, loadSethluiResume, renderSethluiFullV6 } from './sethlui-full-v6-section.mjs';
 import { loadSethluiRetry, renderSethluiRetry } from './sethlui-retry-section.mjs';
 import { loadSethluiAudio, renderSethluiAudio, renderSethluiAudition } from './sethlui-audio-section.mjs';
+import { loadApprovedTermDiagnostic, renderApprovedTermDiagnostic } from './term-diagnostic-section.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const dataset = JSON.parse(await fs.readFile(path.join(root, 'eval/corpora/public-demo-v1.json'), 'utf8'));
@@ -71,6 +72,7 @@ const reg009LivePrefix = await loadReg009LivePrefix(root);
 const reg009Greedy81 = await loadReg009Greedy81(root);
 const reg009LongCli = await loadReg009LongCli(root);
 const termsProbe = await loadTermsProbe(root);
+const approvedTermDiagnostic = await loadApprovedTermDiagnostic(root);
 const inferenceJournal = await loadInferenceJournal(root);
 const preflightJournal = await loadPreflightJournal(root);
 const sapiMultivoice = await loadSapiMultivoice(root);
@@ -180,6 +182,7 @@ payload.sethlui_full_v6 = sethluiFullV6;
 payload.sethlui_resume = sethluiResume;
 payload.sethlui_retry = sethluiRetry;
 payload.sethlui_audio = sethluiAudio;
+payload.approved_term_diagnostic = approvedTermDiagnostic;
 payload.natural_screen = naturalScreen;
 payload.ying_full_failure = yingFullFailure;
 payload.ying_guarded = yingGuarded;
@@ -242,6 +245,7 @@ ${renderSethluiTimingScreen(sourceCandidates)}
 ${renderSethluiOriginalTrack(sethluiOriginalTrack)}
 ${renderSethluiFullV6(sethluiFullV6, sethluiResume)}
 ${renderSethluiRetry(sethluiRetry)}
+${renderApprovedTermDiagnostic(approvedTermDiagnostic)}
 ${renderSethluiAudio(sethluiAudio)}
 ${renderSethluiAudition(sethluiAudio)}
 ${renderNaturalScreen(naturalScreen)}
