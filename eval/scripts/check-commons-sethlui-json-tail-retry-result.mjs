@@ -76,11 +76,19 @@ for (let index = 0; index < chats.length; index++) {
   assert(prior < 2, `More than two chats for cue ${target}`);
   assert.equal(target, seen.size + (prior === 0 ? 1 : 0));
   seen.set(target, prior + 1);
-  const answer = JSON.parse(chat.raw_candidate).translations;
-  assert.equal(answer.length, 1);
-  assert.equal(answer[0].segment_id, target);
-  assert.equal(answer[0].line_index, 0);
-  assert.equal(typeof answer[0].text, 'string');
+  let answer;
+  try {
+    answer = JSON.parse(chat.raw_candidate).translations;
+  } catch {
+    assert.equal(index, chats.length - 1, 'Only the terminal candidate may be malformed');
+    assert.equal(JSON.parse(chat.raw_response).choices[0].finish_reason, 'length');
+  }
+  if (answer) {
+    assert.equal(answer.length, 1);
+    assert.equal(answer[0].segment_id, target);
+    assert.equal(answer[0].line_index, 0);
+    assert.equal(typeof answer[0].text, 'string');
+  }
   promptTokens += chat.usage.prompt_tokens;
   completionTokens += chat.usage.completion_tokens;
 }
@@ -97,7 +105,7 @@ assert.equal(snapshot.results.length, summary.result_rows);
 const db = new DatabaseSync(dbPath, { readOnly: true });
 const journal = db.prepare('SELECT segment_id, line_index, request_sha256, rendered_request, '
   + 'outcome, raw_response, prompt_tokens, completion_tokens FROM inference_requests '
-  + 'WHERE run_id = ? ORDER BY sequence').all(report.run_id);
+  + "WHERE run_id = ? AND request_kind = 'chat_completion' ORDER BY sequence").all(report.run_id);
 db.close();
 assert.equal(journal.length, chats.length);
 for (const [index, row] of journal.entries()) {
@@ -137,6 +145,10 @@ if (report.status === 'passed_structural_probe') {
   assert.equal(snapshot.results.length, 0);
   assert(!fs.existsSync(outputPath));
   assert.equal(summary.output_sha256, null);
+  assert.equal(summary.failure_cue, snapshot.checkpoints.length + 1);
+  assert.equal(summary.failure_finish_reason,
+    JSON.parse(chats.at(-1).raw_response).choices[0].finish_reason);
+  assert.equal(summary.failure_candidate_sha256, sha(Buffer.from(chats.at(-1).raw_candidate)));
 }
 console.log(JSON.stringify({ private_report_sha256: sha(reportBytes),
   source_sha256: sourceHash, chat_requests: chats.length,
