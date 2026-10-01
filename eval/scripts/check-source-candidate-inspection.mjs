@@ -36,7 +36,7 @@ for (const source of inventory.sources) {
     }
   }
   inspected += report.segments.length;
-  console.log(`${source.id}: ${report.segments.length} strict SRT cues; source hash matched; rights unresolved`);
+  console.log(`${source.id}: ${report.segments.length} strict SRT cues; source hash matched; rights subtitle=${source.rights.subtitle.decision}, reference=${source.rights.reference.decision}, audio=${source.rights.audio.decision}; scene/review unadmitted`);
 }
 if (inspected !== counts.inspected_candidate_cues || counts.eligible_cues !== 0) {
   throw new Error('candidate counts changed or unapproved cues became eligible');

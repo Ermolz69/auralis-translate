@@ -23,7 +23,12 @@ test('inspected Commons bytes remain separate from eligible development or holdo
   assert.throws(() => validateSourceInventory(split), /inspected candidates require unassigned split/u);
   const rights = structuredClone(candidates);
   rights.sources[0].rights.subtitle = structuredClone(original.sources[0].rights.subtitle);
-  assert.throws(() => validateSourceInventory(rights), /inspected candidates require unassigned split/u);
+  rights.sources[0].rights.audio = structuredClone(original.sources[0].rights.subtitle);
+  assert.equal(validateSourceInventory(rights).eligible_cues, 0,
+    'approved source rights alone cannot admit unreviewed cues');
+  const falseApproval = structuredClone(candidates);
+  falseApproval.sources[0].rights.subtitle = { decision: 'unknown', internal_use: true };
+  assert.throws(() => validateSourceInventory(falseApproval), /cannot authorize use/u);
   const scenes = structuredClone(candidates);
   scenes.sources[0].scenes = structuredClone(original.sources[0].scenes);
   assert.throws(() => validateSourceInventory(scenes), /inspected candidates require unassigned split/u);

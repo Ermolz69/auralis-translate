@@ -144,10 +144,10 @@ export function validateSourceInventory(inventory) {
       continue;
     }
     if (source.state === 'inspected_candidate') {
-      if (source.split !== 'unassigned' || ['subtitle', 'reference', 'audio'].some(kind => source.rights[kind].decision !== 'unknown')
-          || source.sha256 === null || source.cue_count === null || source.scenes.length !== 0
+      if (source.split !== 'unassigned' || source.sha256 === null
+          || source.cue_count === null || source.scenes.length !== 0
           || source.local_candidate_path === undefined) {
-        fail(at, 'inspected candidates require unassigned split, unresolved subtitle rights, parsed bytes and no admitted scenes');
+        fail(at, 'inspected candidates require unassigned split, parsed bytes and no admitted scenes');
       }
       if (typeof source.retrieved_at !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?Z$/u.test(source.retrieved_at)
           || Number.isNaN(Date.parse(source.retrieved_at))) fail(`${at}.retrieved_at`, 'must be a UTC retrieval timestamp');
