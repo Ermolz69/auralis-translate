@@ -11,6 +11,16 @@ tasks:
     cmds:
       - task: eval:data:commons:sethlui:revision:preflight
       - node eval/scripts/inventory-commons-sethlui-revision.mjs
+  eval:data:commons:sethlui:caption:preflight:
+    desc: Verify exact Commons Chinese caption revision and bounded GET
+    cmds:
+      - node --check eval/scripts/acquire-commons-sethlui-caption.mjs
+      - node eval/scripts/acquire-commons-sethlui-caption.mjs --preflight
+  eval:data:commons:sethlui:caption:acquire:
+    desc: Retain one private pinned 12-minute Chinese caption candidate
+    cmds:
+      - task: eval:data:commons:sethlui:caption:preflight
+      - node eval/scripts/acquire-commons-sethlui-caption.mjs
   eval:data:youtube:xiaolin:preflight:
     desc: Verify a pinned one-call metadata-only Mandarin video inventory
     env:
