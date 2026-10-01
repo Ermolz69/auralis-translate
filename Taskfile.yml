@@ -47,6 +47,18 @@ tasks:
     cmds:
       - task: eval:data:commons:sethlui:media:derive:preflight
       - node eval/scripts/derive-commons-sethlui-in-duration.mjs
+  eval:data:commons:sethlui:candidate:stage:
+    desc: Preserve the mapped restaurant derivative as a private candidate copy
+    cmds:
+      - node --check eval/scripts/stage-commons-sethlui-candidate.mjs
+      - node eval/scripts/stage-commons-sethlui-candidate.mjs
+  eval:data:commons:sethlui:candidate:check:
+    desc: Verify mapped restaurant derivative, stream duration and strict inventory
+    cmds:
+      - node --check eval/scripts/stage-commons-sethlui-candidate.mjs
+      - node eval/scripts/stage-commons-sethlui-candidate.mjs --check
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-sethlui-candidate-v1.json --require-candidate-bytes
+      - node eval/scripts/check-source-candidate-inspection.mjs eval/corpora/commons-sethlui-candidate-v1.json
   eval:data:youtube:xiaolin:preflight:
     desc: Verify a pinned one-call metadata-only Mandarin video inventory
     env:
@@ -1260,6 +1272,7 @@ tasks:
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-ying-candidate-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-vivo-candidate-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-geekerwan-two-scenes-candidate-v1.json
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-sethlui-candidate-v1.json
   eval:data:commons:ying:candidate:check:
     desc: Validate the non-admitted Commons Ying inventory and exact retained Chinese SRT bytes
     cmds:

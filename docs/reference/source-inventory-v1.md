@@ -93,6 +93,14 @@ repository; published manifests contain only permitted metadata and excerpts.
 The verifier does not download a third-party source, normalize raw bytes, infer
 speaker identity or create a Russian reference.
 
+The [restaurant derivative inventory](../../eval/corpora/commons-sethlui-candidate-v1.json)
+adds 263 cues only after a measured 738,056 ms media stream and an immutable
+271-cue original were checked. Its [derivation record](../../eval/experiments/2026-10-01-sethlui-stream-derivative-result.md)
+maps every source cue and retains eight out-of-media exclusions. This raises
+the current technical-candidate total to ten sources and 2,113 cues, with
+zero eligible cues. `task eval:data:commons:sethlui:candidate:check` verifies
+the private bytes and strict CLI timing on the acquisition machine.
+
 `DATA-05` later audits near-duplicates, source/reference alignment evidence,
 license decisions, reviewer coverage, category balance and split leakage beyond
 the exact group-ID check. The source inventory is versioned before any model

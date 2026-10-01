@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "inventory_id": "commons-sethlui-candidate-v1",
+  "fixture_only": false,
+  "sources": [
+    {
+      "id": "commons-sethlui-restaurant-in-duration-v1",
+      "group_id": "sethlui-cantonese-kitchen-behind-the-plate",
+      "split": "unassigned",
+      "state": "inspected_candidate",
+      "source_url": "https://commons.wikimedia.org/w/index.php?title=TimedText%3AInside+One+Of+Singapore%E2%80%99s+Most+Refined+Cantonese+Kitchen+-+Behind+The+Plate+%28Turn+on+CC%29.webm.zh-hans.srt&oldid=1200692574&action=raw",
+      "revision": "1200692574+in-duration-v1",
+      "retrieved_at": "2026-10-01T07:16:27.668Z",
+      "sha256": "4777e11caa115e893f2328c2a33c25a76c7391ace8ecf0ac4b9436635fc27964",
+      "language": "zh",
+      "script": "Hans",
+      "format": "strict_srt_v1",
+      "cue_count": 263,
+      "local_candidate_path": ".cache/eval/commons-sethlui-derived-v1/source.zh.srt",
+      "media_url": "https://commons.wikimedia.org/wiki/File:Inside_One_Of_Singapore%E2%80%99s_Most_Refined_Cantonese_Kitchen_-_Behind_The_Plate_(Turn_on_CC).webm",
+      "media_duration_ms": 738056,
+      "media_duration_evidence_url": "https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-10-01-sethlui-stream-derivative-result.md",
+      "rights": {
+        "subtitle": { "decision": "unknown" },
+        "reference": { "decision": "unknown" },
+        "audio": { "decision": "unknown" }
+      },
+      "scenes": []
+    }
+  ]
+}
