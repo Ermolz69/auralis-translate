@@ -560,3 +560,10 @@ negative authored controls. Newly accepted checkpoints retain an advisory
 without rewriting model output; old diagnostics and the natural `REG-044`
 restaurant result remain unchanged. No reviewer-approved venue spelling,
 real-model comparison or release gate follows from these fixture checks.
+
+The [read-only whole-result term audit](../eval/experiments/2026-10-02-v5-whole-result-term-audit.md)
+adds another partial `CTX-02`/`EVAL-04` control. It checks an exported SRT
+against the immutable source, scene map and term ledger, including a 1,024-cue
+authored boundary ladder. It can inspect old result bytes without rewriting
+their checkpoints. The natural restaurant draft still lacks an independently
+approved term ledger and bilingual review, so `REG-044` and G3–G5 remain open.

@@ -78,6 +78,8 @@ assert.deepEqual(data.approved_term_diagnostic, await loadApprovedTermDiagnostic
 assert(html.includes('id="approved-term-diagnostic"'));
 assert(html.includes('REG-045'));
 assert(html.includes('2026-10-01-v5-approved-term-diagnostic.md'));
+assert(html.includes('2026-10-02-v5-whole-result-term-audit.md'));
+assert(html.includes('1024 реплик'));
 assert(html.includes('Уже сохранённый ресторанный черновик с тремя вариантами названия (REG-044) не исправлен'));
 assert(html.includes('id="sethlui-real-audio"'));
 assert(html.includes('id="sethlui-audition"'));
