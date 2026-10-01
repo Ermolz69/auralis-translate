@@ -29,8 +29,14 @@ It differs from v1 only by `retry_length_json_tail_once: true`; both have at
 most two block attempts. The model, prompt, schema, one-before/one-after
 context, provisional scene map, generation settings and source-only request
 remain the same. There is no explicit sampling seed, so stochastic variation
-is unknown. The exact newly built CLI and source-tree receipt will be inserted
-here before any model request, after the implementation is committed.
+is unknown. `task eval:cli:build:receipt` passed before inference and retained
+receipt SHA-256
+`de1b8d7696727ff02e71fc59a069bd1586913653815413ba30251f8888cd17ca`.
+It binds source commit `bf68147c0a366a7ce4683841d12058fe5ae13fb4`,
+366 source files, source-tree SHA-256
+`6d45750b42b2797f43494c6bf2568195ee603fad55ed09d5d1cb2d4e753418ec`
+and release CLI SHA-256
+`4bbe8ec9878498d8c6ea085c33801b52dbcd7732caa532cffba3e939e5be7eb7`.
 
 One new server and one full-file CLI run are permitted. Bounds: 526 chats,
 1,600 total proxied HTTP calls, 20 minutes of model-stage wall time, 130
