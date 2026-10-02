@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "id": "REG-049",
+  "status": "fixed_in_future_preflight_budget_only",
+  "severity": "major",
+  "source_family": "paywall_review_seed_experiment_budget",
+  "split": "known_development_regression",
+  "affected_profile": "12-cue, three-window Paywall 1.8B/7B model screen",
+  "expected_invariant": "A chat-call budget counts SRT text slots, including every line of a multiline cue, before a model run.",
+  "minimal_reproducer": {
+    "cue_count": 4,
+    "text_slot_count": 5,
+    "observed_wrong_assumption": "Four cues were treated as four chat calls, leaving a fictional retry slot.",
+    "observed_paywall_total_cues": 12,
+    "observed_paywall_total_text_slots": 16,
+    "model_runs": 2
+  },
+  "related_controls": [
+    { "id": "middle_multiline", "condition": "A multiline cue in a middle window contributes each target slot." },
+    { "id": "final_multiline", "condition": "A multiline cue in a final window contributes each target slot." }
+  ],
+  "negative_controls": [
+    { "id": "blank_text", "condition": "An empty text slot is rejected instead of reducing the count." },
+    { "id": "malformed_header", "condition": "A malformed SRT cue is not counted as a valid budget input." }
+  ],
+  "contract_test": "eval/scripts/tests/source-slot-budget.test.mjs",
+  "human_review": "not_applicable",
+  "release_gate": "open"
+}

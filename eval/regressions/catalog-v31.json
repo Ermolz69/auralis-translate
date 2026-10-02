@@ -1,0 +1,56 @@
+{
+  "schema_version": 31,
+  "catalog_id": "zh-ru-development-regressions-v31",
+  "base_catalog_file": "catalog-v30.json",
+  "base_catalog_sha256": "3960bad3688687e6ab4a9ee273a93b2fb4c7531f6e0b56c50ed185f3176f82c8",
+  "entries": [
+    {
+      "id": "REG-047",
+      "pack_file": "paywall-source-name-omission-v1.json",
+      "pack_sha256": "9a6404b4873e17b0e5f6ba3b0324896d315aa85c84fa2c152c5af61889b9740f",
+      "source_family": "paywall_licensed_traditional_chinese_development",
+      "split": "known_development_regression",
+      "category": "source_name_and_following_cue_substitution",
+      "profile_scope": "1.8B Q4_K_M v5 scene; 7B same-request negative control",
+      "expected_invariant": "A target cue naming Elsevier and its talented people must not be replaced by the following cue's business-content claim.",
+      "severity": "major",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 2,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-10-02-paywall-bilingual-review-seed-results.md",
+      "last_outcome": "The 1.8B accepted cue 861 omits Elsevier and repeats next-cue content; 7B retains the name. Human adequacy unscored."
+    },
+    {
+      "id": "REG-048",
+      "pack_file": "paywall-russian-number-grouping-v1.json",
+      "pack_sha256": "a14a74c143ed0f14df80200d2a49b614ac1000ac3e0c0f622259834a2dfcffa4",
+      "source_family": "paywall_licensed_traditional_chinese_development",
+      "split": "known_development_regression",
+      "category": "russian_numeric_grouping_risk",
+      "profile_scope": "1.8B and 7B Q4_K_M v5 scene, cue 17",
+      "expected_invariant": "A four-or-more-digit USD amount in a Russian sentence must be reviewed for grouping ambiguity before publication.",
+      "severity": "minor",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 1,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-10-02-paywall-bilingual-review-seed-results.md",
+      "last_outcome": "Both model outputs keep 10,702 with a comma in Russian. This is a surface reading risk pending human judgment."
+    },
+    {
+      "id": "REG-049",
+      "pack_file": "paywall-multiline-slot-budget-v1.json",
+      "pack_sha256": "6bd08283e4cef962b12fa7ee21ef26c269cf678995c460c47709b8d2f716ee68",
+      "source_family": "paywall_review_seed_experiment_budget",
+      "split": "known_development_regression",
+      "category": "multiline_cue_request_budget",
+      "profile_scope": "12-cue Paywall paired development screen and future SRT experiment preflights",
+      "expected_invariant": "A chat-call budget counts SRT text slots, including every line of a multiline cue, before a model run.",
+      "severity": "major",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 2,
+      "negative_control_count": 2,
+      "evidence_record": "eval/experiments/2026-10-02-paywall-bilingual-review-seed-results.md",
+      "last_outcome": "The frozen plan described 12 calls plus four retries, but 12 cues contained 16 text slots; both runs used 16 calls with no retries. Future preflight counts slots."
+    }
+  ]
+}

@@ -1191,7 +1191,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-046 packs and all control counts
+    desc: Verify versioned REG-001 through REG-049 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -1222,6 +1222,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v28.mjs
       - node eval/scripts/check-regression-catalog-v29.mjs
       - node eval/scripts/check-regression-catalog-v30.mjs
+      - node eval/scripts/check-regression-catalog-v31.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:
@@ -1792,6 +1793,36 @@ tasks:
     cmds:
       - task: eval:natural:paywall:review-seed:7b:preflight
       - node eval/scripts/probe-paywall-review-seed.mjs
+
+  eval:natural:paywall:review-seed:1b:journal:check:
+    desc: Match every retained 1.8B Paywall request and raw response to durable SQLite
+    cmds:
+      - python eval/scripts/check-inference-journal.py .cache/eval/paywall-review-seed-1b-v1/latest.txt
+
+  eval:natural:paywall:review-seed:7b:journal:check:
+    desc: Match every retained 7B Paywall request and raw response to durable SQLite
+    cmds:
+      - python eval/scripts/check-inference-journal.py .cache/eval/paywall-review-seed-7b-v1/latest.txt
+
+  eval:natural:paywall:review-seed:check:
+    desc: Verify matched prompts, journals, source slots, resources and semantic triage
+    cmds:
+      - task: eval:natural:paywall:review-seed:1b:journal:check
+      - task: eval:natural:paywall:review-seed:7b:journal:check
+      - node --test --test-isolation=none eval/scripts/tests/source-slot-budget.test.mjs
+      - node --test --test-isolation=none eval/scripts/tests/source-surface-triage.test.mjs
+      - node --check eval/scripts/check-paywall-review-seed.mjs
+      - node eval/scripts/check-paywall-review-seed.mjs
+
+  eval:natural:paywall:review-seed:capture:
+    desc: Capture only redacted metrics from the pinned Paywall model pair
+    cmds:
+      - task: eval:natural:paywall:review-seed:1b:journal:check
+      - task: eval:natural:paywall:review-seed:7b:journal:check
+      - node --test --test-isolation=none eval/scripts/tests/source-slot-budget.test.mjs
+      - node --test --test-isolation=none eval/scripts/tests/source-surface-triage.test.mjs
+      - node --check eval/scripts/check-paywall-review-seed.mjs
+      - node eval/scripts/check-paywall-review-seed.mjs --capture
 
   eval:natural:mingfay:capture:
     desc: Archive only the redacted verified same-source model metrics for public reporting

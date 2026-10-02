@@ -607,3 +607,16 @@ separates bilingual source-meaning review from Russian TTS listening, records
 free language-exchange channels and a small rights-safe development packet,
 then retains the existing sealed 300-cue and audio gates. No person has agreed
 to participate; no human score or release threshold changes.
+
+The [licensed Paywall Chinese-text paired screen](../eval/experiments/2026-10-02-paywall-bilingual-review-seed-results.md)
+adds partial `CTX-02`/`EVAL-04` development evidence without changing DATA-03
+admission: identical v5 source-only prompts for 1.8B and 7B on 12 original
+beginning/middle/end cues, 16 text slots per arm, 16 raw chats and 32 durable
+preflights each, with byte-identical offline exports. The 1.8B cue 861 omits
+Elsevier and repeats following-cue content; both cue-17 outputs use an
+ambiguous Russian comma-grouped amount. [REG-047–049](../eval/regressions/catalog-v31.json)
+retain those reproductions and the corrected multiline request-budget check.
+The original 12-call-plus-four-retry assumption was wrong: all 16 allowed
+chats covered source lines with zero retries. This source's film speech is
+English, reference rights and human ratings are absent, and no model or
+spoken script is selected. G3–G5, A1–A6 and RELEASE-05 remain open.

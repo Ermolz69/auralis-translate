@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "experiment": "DATA-03-paywall-bilingual-review-seed-v1",
+  "source_id": "paywall-chinese-4b4ffc0c",
+  "source_sha256": "3406fcd365446d727f31c4ecf576de6c3b5e168658c3f5d276fea8142ddb5a4b",
+  "source_windows": [
+    {
+      "id": "amount",
+      "cue_ids": [
+        15,
+        16,
+        17,
+        18
+      ],
+      "text_slots": 5
+    },
+    {
+      "id": "peer-review",
+      "cue_ids": [
+        465,
+        466,
+        467,
+        468
+      ],
+      "text_slots": 5
+    },
+    {
+      "id": "closing",
+      "cue_ids": [
+        861,
+        862,
+        863,
+        864
+      ],
+      "text_slots": 6
+    }
+  ],
+  "source_cues": 12,
+  "source_text_slots": 16,
+  "model_request_projection_identical": true,
+  "subtitle_rights": "approved_CC_BY_4_0",
+  "film_speech_language": "English_per_archive_catalog",
+  "source_admission": "unassigned_unreviewed",
+  "reference_rights": "unknown",
+  "expected_meaning_not_sent_to_model": true,
+  "predeclared_call_budget_correction": "16 text slots consumed all 16 chat calls; the plan had incorrectly described 12 calls plus four possible retries",
+  "variants": [
+    {
+      "model": "1b",
+      "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+      "model_revision": "a0c709d9fac510f2c807aa3af52872340dc37a4a",
+      "profile_sha256": "432a1b064397a96334d777dfa01a2cef58d367b37023f1f9175501969698df4d",
+      "prompt_template_sha256": "af6ebaa8af4ff777aeb313c0e4496998c898701df07809c7691d4fe2717b959c",
+      "cli_sha256": "730c4ea0a63c402cdb231d22aa5a2a04a7bfff74fbe7ba28c33c4e151153cab3",
+      "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+      "report_sha256": "4be2d6f641338e5690ad4a3c8cf9ab2e3f908ec61ecfbbde2a90def3981af3eb",
+      "journal_sha256": "53d96fc875e8fd807c42060a2b7bad702feeae683b43767930ca0f9683bd5288",
+      "windows": [
+        {
+          "id": "amount",
+          "output_sha256": "ad24b86887f9b21721522918c51b5b0506fb50c80c92ede1a946de460fdc08b7"
+        },
+        {
+          "id": "peer-review",
+          "output_sha256": "fb1dbf02a9f860c6647f181c0e499bd47f586514e24c34f3b8229504e375fa07"
+        },
+        {
+          "id": "closing",
+          "output_sha256": "06b84b823d4e7e5f233c410cb0265b6a15278a2378702e46751846ac2c80c6d0"
+        }
+      ],
+      "accepted_cues": 12,
+      "text_slots": 16,
+      "chat_requests": 16,
+      "preflight_requests": 32,
+      "all_http_requests": 57,
+      "prompt_tokens": 4441,
+      "completion_tokens": 763,
+      "chat_http_ms": 7662,
+      "translation_command_ms": 31083,
+      "total_run_ms": 46643,
+      "sampled_process_rss_peak_bytes": 1554915328,
+      "sampled_device_gpu_used_peak_mib": 3422,
+      "source_alias_missing_at_861": true,
+      "ambiguous_number_grouping_at_17": true,
+      "human_reviewed_cues": 0
+    },
+    {
+      "model": "7b",
+      "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+      "model_revision": "ab8472660ac61fac25f1af43fac2599d52a8a775",
+      "profile_sha256": "9b34d86d3b0d872720ee729131efef99281e71a0000d202abea169d625a92e73",
+      "prompt_template_sha256": "af6ebaa8af4ff777aeb313c0e4496998c898701df07809c7691d4fe2717b959c",
+      "cli_sha256": "730c4ea0a63c402cdb231d22aa5a2a04a7bfff74fbe7ba28c33c4e151153cab3",
+      "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+      "report_sha256": "bf68b06e7c69eb68e677f2c6ba447e01cde04e4dd1527155a4a366131e68b0fa",
+      "journal_sha256": "6de9902c4e1d5ccbe49147e385f292a5d6e323c3f9bbd57c83a56aacaade0292",
+      "windows": [
+        {
+          "id": "amount",
+          "output_sha256": "eab837d15462e04bdfc97992cf8c8c040682c3927c0640ab5316b29964b91d84"
+        },
+        {
+          "id": "peer-review",
+          "output_sha256": "882b04a87f8ef7a4df8d9fad0fb9fc2675fefe13b5bf2cd8b32532a177bf0b80"
+        },
+        {
+          "id": "closing",
+          "output_sha256": "6d41669b942da2f4d5c5e21ce45aa5da19c048b5c09f4c157f9baedc0eee7848"
+        }
+      ],
+      "accepted_cues": 12,
+      "text_slots": 16,
+      "chat_requests": 16,
+      "preflight_requests": 32,
+      "all_http_requests": 57,
+      "prompt_tokens": 4434,
+      "completion_tokens": 764,
+      "chat_http_ms": 14560,
+      "translation_command_ms": 89742,
+      "total_run_ms": 120929,
+      "sampled_process_rss_peak_bytes": 5070094336,
+      "sampled_device_gpu_used_peak_mib": 6939,
+      "source_alias_missing_at_861": false,
+      "ambiguous_number_grouping_at_17": true,
+      "human_reviewed_cues": 0
+    }
+  ],
+  "ai_surface_triage": {
+    "reg_047": "1.8B cue 861 omits the source company name and repeats following-cue business content; 7B retains the name. Human adequacy unscored.",
+    "reg_048": "Both cue 17 outputs use 10,702 with a comma in Russian; this is a numeric reading risk, not a scored meaning error."
+  },
+  "selected_model": null,
+  "independent_human_reviewed_cues": 0,
+  "listened_cues": 0,
+  "release_gate": "open"
+}

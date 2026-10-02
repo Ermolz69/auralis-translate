@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "REG-048",
+  "status": "open_editorial_risk_with_surface_triage",
+  "severity": "minor",
+  "source_family": "paywall_licensed_traditional_chinese_development",
+  "split": "known_development_regression",
+  "affected_profile": "Hy-MT2 1.8B and 7B Q4_K_M source-only v5 scene, cue 17",
+  "expected_invariant": "A four-or-more-digit USD amount in a Russian sentence must be reviewed for grouping ambiguity before publication.",
+  "minimal_reproducer": {
+    "source_cue_id": 17,
+    "source": "學術機構每年要花10,702美元訂閱數位版",
+    "accepted_target_surface": "10,702 доллара",
+    "expected_surface_flag": true,
+    "model_variants": ["1b", "7b"]
+  },
+  "related_controls": [
+    { "id": "larger_grouped_amount", "condition": "A six-digit amount with comma groups is also flagged in Russian." }
+  ],
+  "negative_controls": [
+    { "id": "space_grouping", "condition": "A Russian output with 10 702 is not flagged." },
+    { "id": "decimal_fraction", "condition": "A Russian decimal 2,52 is not mistaken for a grouped integer." },
+    { "id": "year", "condition": "An ungrouped year does not trigger the amount check." }
+  ],
+  "contract_test": "eval/scripts/tests/source-surface-triage.test.mjs",
+  "human_review": "missing",
+  "release_gate": "open"
+}

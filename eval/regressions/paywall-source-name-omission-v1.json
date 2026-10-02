@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "id": "REG-047",
+  "status": "open_model_failure_with_surface_triage",
+  "severity": "major",
+  "source_family": "paywall_licensed_traditional_chinese_development",
+  "split": "known_development_regression",
+  "affected_profile": "Hy-MT2 1.8B Q4_K_M source-only v5 scene, cue 861",
+  "expected_invariant": "A target cue naming Elsevier and its talented people must not be replaced by the following cue's business-content claim.",
+  "minimal_reproducer": {
+    "source_cue_id": 861,
+    "source": "我相信愛思唯爾這家公司人才濟濟\n一定有人知道新發現能造福大眾",
+    "accepted_target": "Но по поводу того, как компании можно заработать больше, не было хороших идей\nНо нет хороших идей о том, как новые открытия сделают компанию прибыльнее",
+    "source_name": "愛思唯爾",
+    "source_supported_alias": "Elsevier",
+    "expected_surface_flag": true,
+    "private_report_sha256": "4be2d6f641338e5690ad4a3c8cf9ab2e3f908ec61ecfbbde2a90def3981af3eb"
+  },
+  "related_controls": [
+    { "id": "later_scene_name", "condition": "The same source name is flagged when omitted in a different scene." },
+    { "id": "following_cue_repeat", "condition": "A repeated claim from the next cue is retained in the evidence and inspected separately." }
+  ],
+  "negative_controls": [
+    { "id": "seven_b_retained_name", "condition": "The 7B output preserving Elsevier is not flagged for this surface omission." },
+    { "id": "unrelated_neighbor", "condition": "A cue without this Chinese name is not flagged because a neighboring cue mentions it." },
+    { "id": "russian_transliteration", "condition": "An explicit Russian rendering of the name does not trigger a missing-alias flag." }
+  ],
+  "contract_test": "eval/scripts/tests/source-surface-triage.test.mjs",
+  "human_review": "missing",
+  "release_gate": "open"
+}

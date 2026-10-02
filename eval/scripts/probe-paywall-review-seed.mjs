@@ -7,6 +7,7 @@ import { performance } from 'node:perf_hooks';
 import { fileURLToPath } from 'node:url';
 import { digest, verifyProtectedBytes } from './flores-file-fixture.mjs';
 import { freeLoopbackPort, startProcess, stopProcess, waitForExit, waitForHealthyServer } from './local-process.mjs';
+import { countSourceTextSlots } from './source-slot-budget.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const variant = process.env.AURALIS_PAYWALL_REVIEW_VARIANT;
@@ -66,10 +67,16 @@ const limits = { files: 3, source_cues: 12, chat_requests: 16,
   response_bytes: 1024 * 1024, run_wall_ms: 900_000,
   server_startup_ms: 180_000, upstream_timeout_ms: 130_000,
   repetitions: 1, whole_run_retries: 0 };
+const slotBudget = countSourceTextSlots(windows.flatMap(([, first, last]) =>
+  blocks.slice(first - 1, last)));
+assert.deepEqual(slotBudget, { cues: limits.source_cues, text_slots: 16 });
+assert(limits.chat_requests >= slotBudget.text_slots,
+  'The chat budget cannot cover every source text slot');
 if (preflight) {
   console.log(JSON.stringify({ experiment: `DATA-03-paywall-bilingual-review-seed-${variant}-v1`,
     source_sha256: expectedSourceSha256, profile_sha256: digest(profileBytes),
-    model_bytes: profile.model_file_bytes, windows, limits,
+    model_bytes: profile.model_file_bytes, windows, limits, slot_budget: slotBudget,
+    available_retry_calls: limits.chat_requests - slotBudget.text_slots,
     review: 'unassigned_unreviewed', existing_attempts: 0 }, null, 2));
   process.exit(0);
 }

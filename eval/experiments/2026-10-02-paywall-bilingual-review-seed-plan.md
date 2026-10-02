@@ -56,3 +56,13 @@ hashes, wall/resource/token measurements and failures. AI editorial triage
 may identify suspected errors and select new regression controls but is
 never placed in a human-review field. Human adequacy and audio listening
 coverage remain zero until actual people review.
+
+## Post-run correction (retained without changing the declared limits)
+
+The actual SRT windows contain 16 text lines across 12 cues. The frozen
+description of "12 target chat calls plus four structural retries" was
+incorrect: the 16-call cap covered exactly the 16 source slots, so there was
+no retry capacity. Both completed runs stayed within the cap and did not
+retry. [REG-049](../regressions/paywall-multiline-slot-budget-v1.json) retains
+this planning error and the future preflight control. Do not retroactively
+interpret the unused four calls as a successful retry reserve.
