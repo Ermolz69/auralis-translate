@@ -1,6 +1,55 @@
 version: "3"
 
 tasks:
+  eval:data:commons:wikipedia-lesson:caption:preflight:
+    desc: Verify bounded Commons Chinese Wikipedia lesson caption request
+    cmds:
+      - node --check eval/scripts/acquire-commons-wikipedia-lesson-caption.mjs
+      - node eval/scripts/acquire-commons-wikipedia-lesson-caption.mjs --preflight
+  eval:data:commons:wikipedia-lesson:caption:acquire:
+    desc: Retain one private source Chinese caption and pinned Commons revision
+    cmds:
+      - task: eval:data:commons:wikipedia-lesson:caption:preflight
+      - node eval/scripts/acquire-commons-wikipedia-lesson-caption.mjs
+  eval:data:commons:wikipedia-lesson:caption:derive:
+    desc: Preserve a byte-mapped strict SRT derivative of the original 37-cue track
+    cmds:
+      - node --test --test-isolation=none eval/scripts/tests/normalize-srt-millisecond-fields.test.mjs
+      - node --check eval/scripts/derive-commons-wikipedia-lesson-caption.mjs
+      - node eval/scripts/derive-commons-wikipedia-lesson-caption.mjs --preflight
+      - node eval/scripts/derive-commons-wikipedia-lesson-caption.mjs
+  eval:data:commons:wikipedia-lesson:candidate:check:
+    desc: Reject original short millisecond fields and inspect the mapped strict derivative
+    cmds:
+      - node --check eval/scripts/stage-commons-wikipedia-lesson-candidate.mjs
+      - node eval/scripts/stage-commons-wikipedia-lesson-candidate.mjs
+      - cargo build --offline -p auralis-translation-cli
+      - node --check eval/scripts/check-commons-wikipedia-lesson-candidate.mjs
+      - node eval/scripts/check-commons-wikipedia-lesson-candidate.mjs
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-wikipedia-lesson-candidate-v1.json --require-candidate-bytes
+      - node eval/scripts/check-source-candidate-inspection.mjs eval/corpora/commons-wikipedia-lesson-candidate-v1.json
+  eval:data:commons:wikipedia-lesson:media:preflight:
+    desc: Verify bounded Commons original video acquisition budget
+    cmds:
+      - node --check eval/scripts/acquire-commons-wikipedia-lesson-media.mjs
+      - node eval/scripts/acquire-commons-wikipedia-lesson-media.mjs --preflight
+  eval:data:commons:wikipedia-lesson:media:acquire:
+    desc: Retain one matching private Chinese Wikipedia lesson video
+    cmds:
+      - task: eval:data:commons:wikipedia-lesson:media:preflight
+      - node eval/scripts/acquire-commons-wikipedia-lesson-media.mjs
+  eval:data:commons:wikipedia-lesson:media:check:
+    desc: Measure pinned lesson streams and verify strict cue timing containment
+    cmds:
+      - cargo build --offline -p auralis-translation-cli
+      - node --check eval/scripts/check-commons-wikipedia-lesson-media.mjs
+      - node eval/scripts/check-commons-wikipedia-lesson-media.mjs --preflight
+      - node eval/scripts/check-commons-wikipedia-lesson-media.mjs
+  eval:data:commons:wikipedia-lesson:report:check:
+    desc: Reconcile the source-free lesson report with private caption and media bytes
+    cmds:
+      - node --check eval/scripts/check-commons-wikipedia-lesson-report.mjs
+      - node eval/scripts/check-commons-wikipedia-lesson-report.mjs
   eval:data:paywall:caption:preflight:
     desc: Verify the pinned CC BY 4.0 Chinese subtitle request and budget
     cmds:
@@ -1673,7 +1722,8 @@ tasks:
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-sethlui-candidate-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/paywall-chinese-candidate-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/youtube-geekerwan-kirin-original-candidate-v1.json
-      - node eval/scripts/check-cross-inventory-source-groups.mjs eval/corpora/commons-inspected-candidates-v2.json eval/corpora/commons-cc-commerce-candidate-v1.json eval/corpora/youtube-mingfay-candidate-v1.json eval/corpora/commons-ying-candidate-v1.json eval/corpora/commons-vivo-candidate-v1.json eval/corpora/commons-geekerwan-two-scenes-candidate-v2.json eval/corpora/commons-sethlui-candidate-v1.json eval/corpora/paywall-chinese-candidate-v1.json eval/corpora/youtube-geekerwan-kirin-original-candidate-v1.json
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-wikipedia-lesson-candidate-v1.json
+      - node eval/scripts/check-cross-inventory-source-groups.mjs eval/corpora/commons-inspected-candidates-v2.json eval/corpora/commons-cc-commerce-candidate-v1.json eval/corpora/youtube-mingfay-candidate-v1.json eval/corpora/commons-ying-candidate-v1.json eval/corpora/commons-vivo-candidate-v1.json eval/corpora/commons-geekerwan-two-scenes-candidate-v2.json eval/corpora/commons-sethlui-candidate-v1.json eval/corpora/paywall-chinese-candidate-v1.json eval/corpora/youtube-geekerwan-kirin-original-candidate-v1.json eval/corpora/commons-wikipedia-lesson-candidate-v1.json
   eval:data:commons:ying:candidate:check:
     desc: Validate the non-admitted Commons Ying inventory and exact retained Chinese SRT bytes
     cmds:
@@ -1690,8 +1740,11 @@ tasks:
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-sethlui-candidate-v1.json --require-candidate-bytes
       - node eval/scripts/check-source-inventory.mjs eval/corpora/paywall-chinese-candidate-v1.json --require-candidate-bytes
       - node eval/scripts/check-source-inventory.mjs eval/corpora/youtube-geekerwan-kirin-original-candidate-v1.json --require-candidate-bytes
-      - node eval/scripts/check-cross-inventory-source-groups.mjs eval/corpora/commons-inspected-candidates-v2.json eval/corpora/commons-cc-commerce-candidate-v1.json eval/corpora/youtube-mingfay-candidate-v1.json eval/corpora/commons-ying-candidate-v1.json eval/corpora/commons-vivo-candidate-v1.json eval/corpora/commons-geekerwan-two-scenes-candidate-v2.json eval/corpora/commons-sethlui-candidate-v1.json eval/corpora/paywall-chinese-candidate-v1.json eval/corpora/youtube-geekerwan-kirin-original-candidate-v1.json
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-wikipedia-lesson-candidate-v1.json --require-candidate-bytes
+      - node eval/scripts/check-cross-inventory-source-groups.mjs eval/corpora/commons-inspected-candidates-v2.json eval/corpora/commons-cc-commerce-candidate-v1.json eval/corpora/youtube-mingfay-candidate-v1.json eval/corpora/commons-ying-candidate-v1.json eval/corpora/commons-vivo-candidate-v1.json eval/corpora/commons-geekerwan-two-scenes-candidate-v2.json eval/corpora/commons-sethlui-candidate-v1.json eval/corpora/paywall-chinese-candidate-v1.json eval/corpora/youtube-geekerwan-kirin-original-candidate-v1.json eval/corpora/commons-wikipedia-lesson-candidate-v1.json
+      - task: eval:data:commons:wikipedia-lesson:report:check
       - task: eval:data:caption-overlap:check
+      - task: eval:data:caption-overlap:v2:check
 
   eval:data:caption-overlap:build:
     desc: Build the pinned cross-group caption overlap report from retained private SRTs
@@ -1704,6 +1757,16 @@ tasks:
     cmds:
       - node --check eval/scripts/audit-source-caption-overlap.mjs
       - node eval/scripts/audit-source-caption-overlap.mjs --check
+  eval:data:caption-overlap:v2:build:
+    desc: Build a new overlap report including the 37-cue Wikipedia lesson candidate
+    cmds:
+      - node --check eval/scripts/audit-source-caption-overlap.mjs
+      - node eval/scripts/audit-source-caption-overlap.mjs --build-v2
+  eval:data:caption-overlap:v2:check:
+    desc: Recheck current cross-group text overlap without changing historical v1
+    cmds:
+      - node --check eval/scripts/audit-source-caption-overlap.mjs
+      - node eval/scripts/audit-source-caption-overlap.mjs --check-v2
   eval:data:youtube:mingfay:preflight:
     desc: Check the declared video, pinned extractor and bounded metadata-only command
     env:

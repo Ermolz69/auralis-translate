@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "method": {
+    "normalization": "NFC lowercase Unicode letters and numbers; concatenate cue text",
+    "window_codepoints": 32,
+    "min_shared_windows": 64,
+    "min_smaller_share": 0.02
+  },
+  "manifests": [
+    {
+      "path": "eval/corpora/commons-inspected-candidates-v2.json",
+      "sha256": "34de9c20ce08cb850cab9dce7ca5e414e44d5d8f39bab25223f3259c540d2286"
+    },
+    {
+      "path": "eval/corpora/commons-cc-commerce-candidate-v1.json",
+      "sha256": "1765385984c2a860ead75572690ba3c2f36bb4f63a3a7f18a9c30fdce350bab7"
+    },
+    {
+      "path": "eval/corpora/youtube-mingfay-candidate-v1.json",
+      "sha256": "634009e39a10a2858aebe11dea4b42166cc2995a7cca911c8606a85df520a37f"
+    },
+    {
+      "path": "eval/corpora/commons-ying-candidate-v1.json",
+      "sha256": "01f2d15748d96ba3bc56b5fc18e0294571a12acfdc9b3ef1ad82034674708d43"
+    },
+    {
+      "path": "eval/corpora/commons-vivo-candidate-v1.json",
+      "sha256": "c6e178f726d4824ce9692b20ddac5a1ecb5b4d5e12a00ad3aef75390a079fa1d"
+    },
+    {
+      "path": "eval/corpora/commons-geekerwan-two-scenes-candidate-v2.json",
+      "sha256": "970a345a7326b1ec5b51c9fa75ace36a4a0aad11588ebbc754d028195697b27d"
+    },
+    {
+      "path": "eval/corpora/commons-sethlui-candidate-v1.json",
+      "sha256": "9c62f2e172932203bfdb72c26b0ddb527a870011957b7e989cea530f04e3252e"
+    },
+    {
+      "path": "eval/corpora/paywall-chinese-candidate-v1.json",
+      "sha256": "6367d342a31c8309b9982a785ebb9cc6794c0c1b5b8462bc19d769f5aebab72e"
+    },
+    {
+      "path": "eval/corpora/youtube-geekerwan-kirin-original-candidate-v1.json",
+      "sha256": "5e6e749917501b196257aa7dca78d05493b6a1706b68b31459ee142c20909dcf"
+    },
+    {
+      "path": "eval/corpora/commons-wikipedia-lesson-candidate-v1.json",
+      "sha256": "7bff3a0dca38fe0c56b2a1123955a4c3e0fddbb944cf74fccee640fb08814735"
+    }
+  ],
+  "source_count": 12,
+  "media_group_count": 11,
+  "compared_pairs": 65,
+  "sources": [
+    {
+      "id": "commons-guiyangese-516184835",
+      "group_id": "wikitongues-changjiu-chaofen-guiyangese",
+      "normalized_codepoints": 930,
+      "unique_windows": 899,
+      "sha256": "084389c003799447f5e8c3e02ee92aa6d0d76df55b7ccf01c1bcf186dd7212c4",
+      "cue_count": 66
+    },
+    {
+      "id": "commons-train-1144114810",
+      "group_id": "sleeper-train-shenzhen-beijing-crh2e",
+      "normalized_codepoints": 1448,
+      "unique_windows": 1417,
+      "sha256": "ccc47105cdc2c782d82421d9790e5babf5801a8196d1b6b744d6b8df71bf9b4c",
+      "cue_count": 206
+    },
+    {
+      "id": "commons-cc-commerce-906218083",
+      "group_id": "cc-commerce-video-2007",
+      "normalized_codepoints": 3099,
+      "unique_windows": 3068,
+      "sha256": "df2af6ad32f12b55c3067469228d3b9674b7c35e7d8540acd294dd0f986fe46f",
+      "cue_count": 123
+    },
+    {
+      "id": "mingfay-walk-chinese-derivative-v1",
+      "group_id": "mingfay-neighborhood-walk-0hotgjket7q",
+      "normalized_codepoints": 2036,
+      "unique_windows": 2005,
+      "sha256": "42109fc054cba93b0ef343853628b6a248b31664786d579bdefa415ccaacf9ee",
+      "cue_count": 230
+    },
+    {
+      "id": "commons-ying-henan-1238607314",
+      "group_id": "wikitongues-ying-henan-video",
+      "normalized_codepoints": 815,
+      "unique_windows": 784,
+      "sha256": "505913bd7046b28c873307562a55d567043f8703bc00375c3485853b87c420d9",
+      "cue_count": 93
+    },
+    {
+      "id": "commons-geekerwan-vivo-979826861",
+      "group_id": "geekerwan-vivo-mediatek-interview",
+      "normalized_codepoints": 5957,
+      "unique_windows": 5926,
+      "sha256": "8c41e66f52000a5b67ab27bfc319accd11d89290b60e50fc5c60f4ee8230a000",
+      "cue_count": 467
+    },
+    {
+      "id": "commons-geekerwan-asus-892592485",
+      "group_id": "geekerwan-asus-rog-ally-review",
+      "normalized_codepoints": 4565,
+      "unique_windows": 4534,
+      "sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+      "cue_count": 268
+    },
+    {
+      "id": "commons-geekerwan-kirin-880535591",
+      "group_id": "geekerwan-huawei-kirin-9010-analysis",
+      "normalized_codepoints": 4207,
+      "unique_windows": 4176,
+      "sha256": "57dfd9feb3bfe6381421c4142820b780af341e195e52ee81d58e8f9f12858feb",
+      "cue_count": 304
+    },
+    {
+      "id": "commons-sethlui-restaurant-in-duration-v1",
+      "group_id": "sethlui-cantonese-kitchen-behind-the-plate",
+      "normalized_codepoints": 2530,
+      "unique_windows": 2499,
+      "sha256": "4777e11caa115e893f2328c2a33c25a76c7391ace8ecf0ac4b9436635fc27964",
+      "cue_count": 263
+    },
+    {
+      "id": "paywall-chinese-4b4ffc0c",
+      "group_id": "paywall-scholarship-documentary-2018",
+      "normalized_codepoints": 14976,
+      "unique_windows": 14945,
+      "sha256": "3406fcd365446d727f31c4ecf576de6c3b5e168658c3f5d276fea8142ddb5a4b",
+      "cue_count": 880
+    },
+    {
+      "id": "youtube-geekerwan-kirin-original-2026-10-02",
+      "group_id": "geekerwan-huawei-kirin-9010-analysis",
+      "normalized_codepoints": 4773,
+      "unique_windows": 4742,
+      "sha256": "c2a5fa3ae5139fe90b2be0b4b48b10ddd20d9b42103f4dd8401e1426d1b3eae5",
+      "cue_count": 343
+    },
+    {
+      "id": "commons-wikipedia-lesson-2-100755166-derivative-v1",
+      "group_id": "chinese-wikipedia-lesson-series-2012",
+      "normalized_codepoints": 519,
+      "unique_windows": 488,
+      "sha256": "3d4569cdc6d9be7fa58c8d5e7e2c5d0ff70e354c80543c276ef98d63ff6c82b5",
+      "cue_count": 37
+    }
+  ],
+  "flagged_pairs": [],
+  "same_group_pairs": [
+    {
+      "left_id": "commons-geekerwan-kirin-880535591",
+      "right_id": "youtube-geekerwan-kirin-original-2026-10-02",
+      "shared_windows": 4010,
+      "smaller_windows": 4176
+    }
+  ]
+}

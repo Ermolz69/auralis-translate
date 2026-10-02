@@ -183,3 +183,12 @@ smaller track within their one media group. This is textual lineage evidence,
 not source-speech alignment or a complete near-duplicate audit. `task
 eval:data:current:bytes:check` now also checks the pinned machine-readable
 report; altered source bytes or inventory versions require a new report.
+
+The later [Chinese Wikipedia lesson screen](../../eval/experiments/2026-10-02-commons-wikipedia-lesson-source-result.md)
+adds one separately mapped strict-SRT derivative and measured matching 3:59
+OGV. The original noncanonical SRT is unchanged. The current inventory has
+12 track records, 11 media groups and 3,280 inspected cue slots, still zero
+eligible cues; a new [v2 overlap report](../../eval/reports/source-caption-overlap-v2.json)
+checks 65 cross-group pairs without changing the retained v1 report. The
+lesson series is one source group, and this short clip cannot satisfy a
+10–20-minute audio scene gate.

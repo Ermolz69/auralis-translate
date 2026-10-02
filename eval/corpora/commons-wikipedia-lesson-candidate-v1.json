@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "inventory_id": "commons-wikipedia-lesson-candidate-v1",
+  "fixture_only": false,
+  "sources": [
+    {
+      "id": "commons-wikipedia-lesson-2-100755166-derivative-v1",
+      "group_id": "chinese-wikipedia-lesson-series-2012",
+      "split": "unassigned",
+      "state": "inspected_candidate",
+      "source_url": "https://commons.wikimedia.org/w/index.php?title=TimedText:%E4%B8%AD%E6%96%87%E7%B6%AD%E5%9F%BA%E7%99%BE%E7%A7%91%E6%95%99%E5%AD%B8%E9%A0%BB%E9%81%93%E7%AC%AC%E5%85%A9%E7%AB%A0.ogv.zh-cn.srt&oldid=100755166&action=raw",
+      "revision": "100755166",
+      "retrieved_at": "2026-10-02T19:48:56.315Z",
+      "sha256": "3d4569cdc6d9be7fa58c8d5e7e2c5d0ff70e354c80543c276ef98d63ff6c82b5",
+      "language": "zh",
+      "script": "Hans",
+      "format": "strict_srt_v1",
+      "cue_count": 37,
+      "local_candidate_path": ".cache/eval/commons-wikipedia-lesson-derivative-v1/source.zh.srt",
+      "media_url": "https://commons.wikimedia.org/wiki/File:%E4%B8%AD%E6%96%87%E7%B6%AD%E5%9F%BA%E7%99%BE%E7%A7%91%E6%95%99%E5%AD%B8%E9%A0%BB%E9%81%93%E7%AC%AC%E5%85%A9%E7%AB%A0.ogv",
+      "media_duration_ms": 239000,
+      "media_duration_evidence_url": "https://commons.wikimedia.org/wiki/File:%E4%B8%AD%E6%96%87%E7%B6%AD%E5%9F%BA%E7%99%BE%E7%A7%91%E6%95%99%E5%AD%B8%E9%A0%BB%E9%81%93%E7%AC%AC%E5%85%A9%E7%AB%A0.ogv",
+      "rights": {
+        "subtitle": { "decision": "unknown" },
+        "reference": { "decision": "unknown" },
+        "audio": { "decision": "unknown" }
+      },
+      "scenes": []
+    }
+  ]
+}
