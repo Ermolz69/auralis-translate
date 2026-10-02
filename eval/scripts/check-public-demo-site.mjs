@@ -75,6 +75,8 @@ assert.equal(currentData.translation.large.checkpoints, 263);
 assert.equal(currentData.translation.human_reviewed_cues, 0);
 assert.equal(currentData.audio.overrun_count, 256);
 assert.equal(currentData.audio.human_listeners, 0);
+assert(current.includes(`${currentData.backlog.counts.done} из ${currentData.backlog.total_tasks} задач завершено`));
+assert(current.includes('Это счётчик задач, не процент качества перевода'));
 assert(current.includes('G9 — финальная проверка офлайн-перевода'));
 assert(current.includes('2026-10-02-translation-depth-plan-v1.md'));
 for (const script of current.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)) {
