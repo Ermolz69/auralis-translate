@@ -85,6 +85,10 @@ const voaSourceScreen = JSON.parse(await fs.readFile(path.join(root,
   'eval/reports/voa-mandarin-caption-inventory-2026-10-02.json'), 'utf8'));
 assert.equal(voaSourceScreen.source_admission, 'rejected_no_chinese_subtitle_track');
 assert.equal(voaSourceScreen.permitted_attempt.candidates.length, 2);
+const v7Batch = JSON.parse(await fs.readFile(path.join(root,
+  'eval/reports/2026-10-02-v7-authored-batch-screen.json'), 'utf8'));
+assert.equal(v7Batch.paired_batch_1_vs_4_completed, false);
+assert.equal(v7Batch.attempts[2].saved_blocks, 0);
 const sethluiOriginalTrack = await loadSethluiOriginalTrack(root);
 const sethluiFullV6 = await loadSethluiFullV6(root);
 const sethluiResume = await loadSethluiResume(root);
@@ -247,6 +251,7 @@ ${renderPaywallSource(sourceCandidates)}
 ${renderXiaolinMetadataScreen()}
 ${renderSethluiTimingScreen(sourceCandidates)}
 <section id="voa-caption-screen" class="my-8 scroll-mt-8 rounded-2xl border border-slate-300 bg-slate-50 p-5 md:p-7"><p class="text-sm font-semibold text-slate-600">DATA-03 · неудачный поиск источника · 2 октября 2026</p><h2 class="mt-2 text-2xl font-bold">Два мандаринских ролика VOA без китайских дорожек</h2><p class="mt-3 max-w-4xl text-slate-700">Оригинальные видео длительностью ${voaSourceScreen.permitted_attempt.candidates.map(candidate => Math.round(candidate.original_duration_seconds / 60)).join(' и ')} минут вернули пустой список ручных и автоматических субтитров. Данные пришли от двух ограниченных запросов yt-dlp; видео и субтитры не скачивались. Первую попытку заблокировала песочница до отправки запросов, и она сохранена. Оба источника отклонены для текущего корпуса: 0 новых допущенных реплик.</p><a class="mt-3 inline-block text-sm font-semibold text-blue-700 underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-10-02-voa-mandarin-caption-inventory-result.md">Исходные страницы, хеши и предел проверки (EN)</a></section>
+<section id="v7-batch-screen" class="my-8 scroll-mt-8 rounded-2xl border border-rose-200 bg-rose-50 p-5 md:p-7"><p class="text-sm font-semibold text-rose-800">LONG-01 / REG-051 · экспериментальная партия v7 · 2 октября 2026</p><h2 class="mt-2 text-2xl font-bold">Соседняя реплика загрязнила перевод</h2><p class="mt-3 max-w-4xl text-slate-700">На четырёх авторских китайских репликах реальная 1.8B-модель перевела цену билета вместо фразы о Ване, но сохранила ID целевой строки. Первый валидатор принял неверную строку как 1/4 контрольных точек; вторая строка потеряла защищённые суммы, после чего запуск остановился без итогового файла. Новый узкий контроль валюты отклонил тот же первый ответ до сохранения: 0 контрольных точек и 0 результатов. Проверены 240 входных и 49 выходных токенов в обеих первых попытках; полный парный опыт 1 против 4 не состоялся. Оценка смысла — ИИ-разбор, людей 0.</p><p class="mt-3 text-sm text-slate-600">Три попытки сохранены, включая отказ песочницы до запроса; хеши приватных журналов и исходника опубликованы без раскрытия сырых внутренних запросов.</p><a class="mt-3 inline-block text-sm font-semibold text-blue-700 underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-10-02-v7-authored-batch-result.md">Результат, хеши и пределы (EN)</a></section>
 ${renderSethluiOriginalTrack(sethluiOriginalTrack)}
 ${renderSethluiFullV6(sethluiFullV6, sethluiResume)}
 ${renderSethluiRetry(sethluiRetry)}

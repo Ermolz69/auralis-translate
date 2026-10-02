@@ -12,7 +12,7 @@ import { loadApprovedTermDiagnostic } from './term-diagnostic-section.mjs';
 export async function loadCurrentReport(root) {
   const [plan, sources, comparison, retry, audio, terms, kirin,
     kirinCaption, kirinMedia, paywall, captionOverlapRaw, packetRaw,
-    activityRaw, voaRaw] = await Promise.all([
+    activityRaw, voaRaw, batchRaw] = await Promise.all([
     loadDeliveryPlan(root), loadSourceCandidates(root), loadSethluiFullV6(root),
     loadSethluiRetry(root), loadSethluiAudio(root), loadApprovedTermDiagnostic(root),
     fs.readFile(path.join(root, 'eval/reports/youtube-geekerwan-kirin-license-v1.json'),
@@ -30,6 +30,8 @@ export async function loadCurrentReport(root) {
       'eval/reports/2026-10-02-sethlui-source-activity-summary.json'), 'utf8'),
     fs.readFile(path.join(root,
       'eval/reports/voa-mandarin-caption-inventory-2026-10-02.json'), 'utf8'),
+    fs.readFile(path.join(root,
+      'eval/reports/2026-10-02-v7-authored-batch-screen.json'), 'utf8'),
   ]);
   const captionOverlap = JSON.parse(captionOverlapRaw);
   const captionOverlapSha256 = createHash('sha256').update(captionOverlapRaw).digest('hex');
@@ -62,6 +64,14 @@ export async function loadCurrentReport(root) {
     candidate.original_chinese_subtitle_languages.length === 0
     && candidate.automatic_chinese_caption_languages.length === 0
     && candidate.eligible_cues_added === 0));
+  const batch = JSON.parse(batchRaw);
+  assert.equal(batch.attempts.length, 3);
+  assert.equal(batch.attempts[1].first_cue_outcome,
+    'validated_batch_but_wrong_context_money_meaning');
+  assert.equal(batch.attempts[2].first_cue_outcome,
+    'invalid_candidate_currency_absent_from_target');
+  assert.equal(batch.attempts[2].saved_blocks, 0);
+  assert.equal(batch.paired_batch_1_vs_4_completed, false);
   const small = comparison.arms[0];
   const large = retry.second;
   assert.equal(small.model, '1.8B Q4_K_M');
@@ -189,6 +199,14 @@ export async function loadCurrentReport(root) {
       chinese_subtitle_tracks: 0, eligible_cues_added: 0,
       sandbox_failure_retained: true,
       report_sha256: createHash('sha256').update(voaRaw).digest('hex') },
+    batch_v7: { source_sha256: batch.source_sha256,
+      attempt_count: batch.attempts.length,
+      first_model_cue_wrong_accepted: true,
+      corrected_guard_saved_blocks: batch.attempts[2].saved_blocks,
+      corrected_guard_published_results: batch.attempts[2].published_results,
+      paired_batch_1_vs_4_completed: batch.paired_batch_1_vs_4_completed,
+      human_review_count: batch.human_review_count,
+      report_sha256: createHash('sha256').update(batchRaw).digest('hex') },
     backlog: { total_tasks: plan.total_tasks, counts: plan.counts },
   };
 }

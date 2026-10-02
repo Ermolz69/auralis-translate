@@ -59,6 +59,7 @@ assert.deepEqual(await fs.readdir(path.join(root, 'site')), ['history.html', 'in
   'Only the current and historical reports are public');
 assert(html.includes('href="./index.html"'), 'History must link back to current state');
 assert(html.includes('id="voa-caption-screen"'));
+assert(html.includes('id="v7-batch-screen"'));
 assert(html.includes('2026-10-02-voa-mandarin-caption-inventory-result.md'));
 assert(current.includes('href="./history.html"'), 'Current state must link to history');
 assert(current.includes('https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'));
@@ -81,6 +82,10 @@ assert.equal(currentData.source_activity.review_priority_count, 0);
 assert.equal(currentData.source_activity.source_speech_alignment_verified, false);
 assert.equal(currentData.source_activity.eligible_cues_added, 0);
 assert(current.includes('2026-10-02-voa-mandarin-caption-inventory-result.md'));
+assert(current.includes('2026-10-02-v7-authored-batch-result.md'));
+assert.equal(currentData.batch_v7.corrected_guard_saved_blocks, 0);
+assert.equal(currentData.batch_v7.corrected_guard_published_results, 0);
+assert.equal(currentData.batch_v7.paired_batch_1_vs_4_completed, false);
 assert.equal(currentData.voa_source_screen.tested_sources, 2);
 assert.equal(currentData.voa_source_screen.chinese_subtitle_tracks, 0);
 assert.equal(currentData.voa_source_screen.eligible_cues_added, 0);
