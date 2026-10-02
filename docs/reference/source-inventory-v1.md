@@ -112,6 +112,20 @@ inspected cues, with zero eligible. `task eval:data:paywall:candidate:check`
 verifies the retained source hash, strict cue count and measured video-duration
 envelope. Source rights alone do not admit a candidate.
 
+The [current original-platform Kirin candidate](../../eval/corpora/youtube-geekerwan-kirin-original-candidate-v1.json)
+adds a separate 343-cue strict SRT, grouped with the older Commons 304-cue
+version to prevent split leakage. [Its bounded acquisition and failed media
+attempts](../../eval/experiments/2026-10-02-kirin-original-caption-and-media-result.md)
+show 39 current cues after the archived video's end; the matching original
+media was not acquired. The technical inventory now has 12 candidates and
+3,336 inspected cues, still zero eligible. `task
+eval:data:youtube:kirin:candidate:check` rehashes and strictly parses the
+private source on the acquisition machine. All three rights decisions remain
+unknown and no human alignment or reference is claimed. The public candidate
+loader also checks `group_id`/split consistency and unique source IDs across
+inventory files; four controls in `task eval:data:check` prevent an alternate
+track from being allocated to a separate development or holdout group.
+
 `DATA-05` later audits near-duplicates, source/reference alignment evidence,
 license decisions, reviewer coverage, category balance and split leakage beyond
 the exact group-ID check. The source inventory is versioned before any model

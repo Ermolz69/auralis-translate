@@ -290,6 +290,87 @@ tasks:
       - node --test --test-isolation=none eval/scripts/tests/source-duration-compatibility.test.mjs
       - node --check eval/scripts/check-youtube-geekerwan-kirin-license.mjs
       - node eval/scripts/check-youtube-geekerwan-kirin-license.mjs
+  eval:data:youtube:kirin:caption:preflight:
+    desc: Verify one bounded original-platform Chinese SRT request from pinned metadata
+    cmds:
+      - task: eval:data:youtube:kirin:license:check
+      - node --check eval/scripts/acquire-youtube-geekerwan-kirin-caption.mjs
+      - node eval/scripts/acquire-youtube-geekerwan-kirin-caption.mjs --preflight
+  eval:data:youtube:kirin:caption:acquire:
+    desc: Retain one private Chinese SRT response without downloading media
+    cmds:
+      - task: eval:data:youtube:kirin:caption:preflight
+      - node eval/scripts/acquire-youtube-geekerwan-kirin-caption.mjs
+  eval:data:youtube:kirin:caption:inspect:
+    desc: Strictly inspect the retained original-platform Chinese SRT without publishing text
+    cmds:
+      - cargo build --offline -p auralis-translation-cli
+      - node --check eval/scripts/inspect-youtube-geekerwan-kirin-caption.mjs
+      - node eval/scripts/inspect-youtube-geekerwan-kirin-caption.mjs
+  eval:data:youtube:kirin:caption:inspect:retry:
+    desc: Retain one offline retry after the recorded EPERM process-creation failure
+    cmds:
+      - node --check eval/scripts/inspect-youtube-geekerwan-kirin-caption.mjs
+      - node eval/scripts/inspect-youtube-geekerwan-kirin-caption.mjs --retry-after-eperm
+  eval:data:youtube:kirin:caption:capture:
+    desc: Verify the retained caption and inspections, then capture a redacted result
+    cmds:
+      - node --test --test-isolation=none eval/scripts/tests/cue-media-coverage.test.mjs
+      - node --check eval/scripts/check-youtube-geekerwan-kirin-caption.mjs
+      - node eval/scripts/check-youtube-geekerwan-kirin-caption.mjs --capture
+  eval:data:youtube:kirin:caption:check:
+    desc: Recheck one original-platform caption and archived-media overrun offline
+    cmds:
+      - node --test --test-isolation=none eval/scripts/tests/cue-media-coverage.test.mjs
+      - node --check eval/scripts/check-youtube-geekerwan-kirin-caption.mjs
+      - node eval/scripts/check-youtube-geekerwan-kirin-caption.mjs
+  eval:data:youtube:kirin:media:preflight:
+    desc: Verify two bounded original-platform 240p media stream requests
+    cmds:
+      - task: eval:data:youtube:kirin:caption:check
+      - node --check eval/scripts/acquire-youtube-geekerwan-kirin-media.mjs
+      - node eval/scripts/acquire-youtube-geekerwan-kirin-media.mjs --preflight
+  eval:data:youtube:kirin:media:acquire:
+    desc: Retain one private 240p video and low-bandwidth audio stream pair
+    cmds:
+      - task: eval:data:youtube:kirin:media:preflight
+      - node eval/scripts/acquire-youtube-geekerwan-kirin-media.mjs
+  eval:data:youtube:kirin:media:redirect:preflight:
+    desc: Verify one constrained CDN relocation after the retained HTTP 302 failure
+    cmds:
+      - task: eval:data:youtube:kirin:caption:check
+      - node --check eval/scripts/acquire-youtube-geekerwan-kirin-media.mjs
+      - node eval/scripts/acquire-youtube-geekerwan-kirin-media.mjs --preflight-redirect
+  eval:data:youtube:kirin:media:redirect:acquire:
+    desc: Retain one original 240p media pair with at most one trusted redirect each
+    cmds:
+      - task: eval:data:youtube:kirin:media:redirect:preflight
+      - node eval/scripts/acquire-youtube-geekerwan-kirin-media.mjs --allow-one-redirect
+  eval:data:youtube:kirin:candidate:stage:
+    desc: Stage only the hash-pinned original-platform SRT into ignored candidate storage
+    cmds:
+      - task: eval:data:youtube:kirin:caption:check
+      - node --check eval/scripts/stage-youtube-geekerwan-kirin-original-candidate.mjs
+      - node eval/scripts/stage-youtube-geekerwan-kirin-original-candidate.mjs
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/youtube-geekerwan-kirin-original-candidate-v1.json --require-candidate-bytes
+  eval:data:youtube:kirin:candidate:check:
+    desc: Rehash and strictly parse the non-admitted 343-cue original-platform candidate
+    cmds:
+      - node --check eval/scripts/stage-youtube-geekerwan-kirin-original-candidate.mjs
+      - node eval/scripts/stage-youtube-geekerwan-kirin-original-candidate.mjs --check
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/youtube-geekerwan-kirin-original-candidate-v1.json --require-candidate-bytes
+      - cargo build --offline -p auralis-translation-cli
+      - node eval/scripts/check-source-candidate-inspection.mjs eval/corpora/youtube-geekerwan-kirin-original-candidate-v1.json
+  eval:data:youtube:kirin:media:failure:capture:
+    desc: Capture redacted evidence for both retained bounded media failures
+    cmds:
+      - node --check eval/scripts/check-youtube-geekerwan-kirin-media.mjs
+      - node eval/scripts/check-youtube-geekerwan-kirin-media.mjs --capture
+  eval:data:youtube:kirin:media:failure:check:
+    desc: Recheck both retained media failures without new network requests
+    cmds:
+      - node --check eval/scripts/check-youtube-geekerwan-kirin-media.mjs
+      - node eval/scripts/check-youtube-geekerwan-kirin-media.mjs
   eval:data:youtube:sethlui:license:inventory:
     desc: Retain one raw metadata-only response for the named original video
     env:
@@ -1529,6 +1610,7 @@ tasks:
     desc: Validate source inventory examples and cross-source admission controls
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/source-inventory.test.mjs
+      - node --test --test-isolation=none eval/scripts/tests/cross-inventory-source-groups.test.mjs
       - node --test --test-isolation=none eval/scripts/tests/cue-media-coverage.test.mjs
       - node eval/scripts/check-source-inventory.mjs eval/corpora/source-inventory-example-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-inspected-candidates-v1.json
@@ -1539,6 +1621,7 @@ tasks:
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-geekerwan-two-scenes-candidate-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-sethlui-candidate-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/paywall-chinese-candidate-v1.json
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/youtube-geekerwan-kirin-original-candidate-v1.json
   eval:data:commons:ying:candidate:check:
     desc: Validate the non-admitted Commons Ying inventory and exact retained Chinese SRT bytes
     cmds:
