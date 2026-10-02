@@ -715,3 +715,15 @@ unrun. The fixed neighbors form an adversarial authored stress rather than
 a natural scene. V8 therefore remains experimental; model comparison,
 source-scoped approved names, natural seams and independent meaning review
 are still required before an approved script or G3–G9/A1–A6 claim.
+
+The [same-prompt 1.8B/7B REG-052 screen](../eval/experiments/2026-10-02-reg-052-cross-model-result.md)
+adds twelve real paired context-on responses on the same six known authored
+controls and two seeds. The 7B output did not repeat the payment-verb
+intrusion and kept Xiao Li in the cases where 1.8B varied or shortened the
+name, but Wang's spelling and one Russian case still vary. This is an AI
+assessment on known development sources, with zero human ratings. The
+7B used 3,240/452 prompt/completion tokens against the 1.8B's
+3,284/473, in separate server runs; it is neither a speed benchmark nor
+evidence for natural-file quality. A checked 7B v8 manifest, bounded CLI
+source comparison, source-scoped approved names and natural seam study are
+next, while the release gate remains open.

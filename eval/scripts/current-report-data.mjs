@@ -12,7 +12,8 @@ import { loadApprovedTermDiagnostic } from './term-diagnostic-section.mjs';
 export async function loadCurrentReport(root) {
   const [plan, sources, comparison, retry, audio, terms, kirin,
     kirinCaption, kirinMedia, paywall, captionOverlapRaw, packetRaw,
-    activityRaw, voaRaw, batchRaw, salienceRaw, orderRaw, v8Raw, nameRaw] = await Promise.all([
+    activityRaw, voaRaw, batchRaw, salienceRaw, orderRaw, v8Raw, nameRaw,
+    crossRaw] = await Promise.all([
     loadDeliveryPlan(root), loadSourceCandidates(root), loadSethluiFullV6(root),
     loadSethluiRetry(root), loadSethluiAudio(root), loadApprovedTermDiagnostic(root),
     fs.readFile(path.join(root, 'eval/reports/youtube-geekerwan-kirin-license-v1.json'),
@@ -40,12 +41,15 @@ export async function loadCurrentReport(root) {
       'eval/reports/2026-10-02-v8-authored-cli.json'), 'utf8'),
     fs.readFile(path.join(root,
       'eval/reports/2026-10-02-reg-052-v8-controls.json'), 'utf8'),
+    fs.readFile(path.join(root,
+      'eval/reports/2026-10-02-reg-052-cross-model.json'), 'utf8'),
   ]);
   const captionOverlap = JSON.parse(captionOverlapRaw);
   const salience = JSON.parse(salienceRaw);
   const order = JSON.parse(orderRaw);
   const v8 = JSON.parse(v8Raw);
   const names = JSON.parse(nameRaw);
+  const cross = JSON.parse(crossRaw);
   const captionOverlapSha256 = createHash('sha256').update(captionOverlapRaw).digest('hex');
   const packet = JSON.parse(packetRaw);
   assert.equal(createHash('sha256').update(packetRaw).digest('hex'),
@@ -252,6 +256,16 @@ export async function loadCurrentReport(root) {
         && row.context === 'on' && row.raw_candidate.startsWith('Заплатил ли')).length,
       human_review_count: names.human_bilingual_review_count,
       report_sha256: createHash('sha256').update(nameRaw).digest('hex') },
+    cross_model: { paired_chats: cross.paired_chats,
+      small_prompt_tokens: cross.small_totals.prompt_tokens,
+      large_prompt_tokens: cross.large_totals.prompt_tokens,
+      small_completion_tokens: cross.small_totals.completion_tokens,
+      large_completion_tokens: cross.large_totals.completion_tokens,
+      small_chat_http_ms: cross.small_totals.chat_http_ms,
+      large_chat_http_ms: cross.large_totals.chat_http_ms,
+      large_gpu_device_max_observed_mib: cross.large_resource_observation.gpu_device_max_observed_mib,
+      human_review_count: cross.human_bilingual_review_count,
+      report_sha256: createHash('sha256').update(crossRaw).digest('hex') },
     backlog: { total_tasks: plan.total_tasks, counts: plan.counts },
   };
 }
