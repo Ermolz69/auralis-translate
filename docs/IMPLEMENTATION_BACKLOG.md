@@ -50,7 +50,7 @@ does not activate implementation by being stored here.
 | EVAL-03 | Context and long-file HTML presentation | planned | EVAL-02, CTX-04 | Same evidence identities; scene/target/seam views, review labels, counts, public rights and raw downloads |
 | EVAL-04 | Implement maintained regression and adversarial tiers | in_progress | CTX-01, EVAL-02 | [Initial index](../eval/experiments/2026-09-28-regression-index-v1.md), [REG-002 scene actor evidence](../eval/experiments/2026-09-28-scene-context-results.md), [failed instruction repair](../eval/experiments/2026-09-28-scene-number-repair-results.md), [current-template recurrence](../eval/experiments/2026-09-28-scene-pronoun-after-terms-results.md), [7B recurrence](../eval/experiments/2026-09-29-context-7b-p01-screen-results.md), [four-scene 1.8B/7B controls](../eval/experiments/2026-09-29-pronoun-cross-model-results.md), [typed retry regression](../eval/experiments/2026-09-28-typed-provider-retry.md), [REG-009 durable identifier diagnostic](../eval/experiments/2026-09-29-reg-009-identifier-diagnostic.md), [negative matched prompt screen](../eval/experiments/2026-09-29-reg-009-prompt-screen-results.md), [REG-010 neighbor-content reproduction and time warning](../eval/experiments/2026-09-29-reg-010-neighbor-content.md), [REG-011 1.8B/7B exact-fact and singular-door comparison](../eval/experiments/2026-09-29-long-v6-code-model-screen-results.md), [REG-015 mixed-script repair fixture](../eval/experiments/2026-09-29-reg-015-mixed-script-prefix-repair.md) and [64-seed SRT generated checks](../eval/experiments/2026-09-29-srt-generated-roundtrip-results.md) retain raw failures and structural controls; [REG-051 real v7 context-money leak](../eval/experiments/2026-10-02-v7-authored-batch-result.md) now has a retained wrong accepted response, a narrow reject-before-checkpoint guard and related controls; model fact preservation, broader generative/metamorphic and language coverage remain open under [policy](evaluation/008-regression-and-adversarial-checks.md) |
 | LONG-01 | Token-budgeted scene and batch planner | planned | CTX-02, CTX-03 | [Partial real 2,048-token preflight](../eval/experiments/2026-09-28-scene-context-results.md), [owned 1,024/4,096/10,000-target planner checks](../eval/experiments/2026-09-28-long-scene-planner.md) and [archived 268-cue rendered-token audit](../eval/experiments/2026-10-01-asus-v6-token-budget-audit-result.md): every tokenizer count matched server usage, maximum 300/1,728 prompt tokens and no context trim in that one-slot run; multi-target sizing, longer natural distributions and quality remain open. The [opt-in v7 batch implementation and failed real authored screen](../eval/experiments/2026-10-02-v7-authored-batch-result.md) add rendered-token splitting, exact multi-slot mapping and journal v9, but 1.8B copied a money fact from context; REG-051 now rejects that cue before checkpoint. The frozen 1-vs-4 run stopped on batch 1, so no batch gain is claimed |
-| LONG-02 | Batch and seam-shift ablation | planned | LONG-01, CTX-04, EVAL-02 | Batches 1/4/8, shifts 0/1/3 on retained scenes; paired seam/interior review. First remove the [observed v7 context contamination](../eval/experiments/2026-10-02-v7-context-salience-result.md) under a new bounded prompt identity; the original 1-vs-4 screen stopped before a paired batch result |
+| LONG-02 | Batch and seam-shift ablation | planned | LONG-01, CTX-04, EVAL-02 | Batches 1/4/8, shifts 0/1/3 on retained scenes; paired seam/interior review. The [opt-in v8 authored 1/4 screen](../eval/experiments/2026-10-02-v8-authored-cli-result.md) completed both sizes after a [12-response target-first order comparison](../eval/experiments/2026-10-02-v7-target-first-order-result.md), but one non-repeated four-cue run is not a timing or long-file quality ablation. REG-052 name/question issue remains; natural seams and human review open |
 | LONG-03 | Engineering soak ladder | planned | LONG-01, EVAL-02 | 1024/4096/10000-cue owned fixtures; [v5 model rejection](../eval/experiments/2026-09-29-long-v5-scene-failure.md) and [v6 runner timeout](../eval/experiments/2026-09-29-long-v6-scene-timeout.md) remain failures; [copied-state recovery](../eval/experiments/2026-09-29-long-v6-postlength-results.md) yielded one structurally complete 1,024-cue synthetic SRT after a separately retained harness failure, but 665/1,280 lines lost or changed source identifiers; the [opt-in repair run](../eval/experiments/2026-09-29-reg-009-long-cli-soak-results.md) recovered 16 saved blocks then safely stopped at cue 89 after a Cyrillic code transposition, with 88 checkpoints and no result; longer tiers, natural quality and full stage acceptance remain open |
 | LONG-04 | Complete natural-file quality pilot | planned | DATA-03, LONG-02, EVAL-01 | Three distinct sources, duration-tier gaps explicit; stratified and risk/boundary review |
 | LONG-05 | Extended interruption and rejection matrix | planned | LONG-03 | Runtime/CLI/pause/disk/OOM/mismatch probes; durable prefix, edits, no partial result |
@@ -680,3 +680,26 @@ other semantic substitutions remain possible. Next, freeze and compare a
 target-first prompt with context retained; only then resume batch/seam trials
 on natural eligible sources. No human rating, long-file pass, G3–G5 or
 A1–A6 acceptance is added.
+
+The [12-response target-first order screen](../eval/experiments/2026-10-02-v7-target-first-order-result.md)
+adds partial `LONG-01`/`EVAL-04` evidence on three authored Chinese pairs,
+two seeds and counterbalanced request order. With identical source-only
+context and decoding, the baseline copied ticket money under Wang's ID in
+both seeds; target-first JSON order retained the Wang/Friday meaning in both.
+Two unseen development pairs retained target sense in both orders, with a
+rain-tense variation. This justifies only the distinct opt-in v8 prompt
+identity, not general semantic reliability.
+
+The [real v8 CLI one/four-target screen](../eval/experiments/2026-10-02-v8-authored-cli-result.md)
+adds partial `LONG-01`/`EVAL-04` and initial `LONG-02` development evidence:
+both batches produced full four-cue SRT files, kept the source hash and
+journaled 4/1 validated requests with 4/1 checkpoints. The one-target arm
+used 1,104/178 input/output tokens in 9,938 ms CLI time; the four-target arm
+used 467/158 in 7,880 ms. This is a single ordered run with shared prompt
+cache, not a repeatable speed estimate. Both results need review. Cue 3's
+name varies and the four-target Russian question is ungrammatical by AI
+triage; [REG-052](../eval/regressions/catalog-v34.json) retains exact raw
+evidence and six authored controls with zero model runs. No human review,
+natural long-file pass, approved spoken script or G3–G9/A1–A6 acceptance is
+added. The next independent work is to run these controls and a bounded
+nonmonetary context/scene-seam comparison before treating v8 as a candidate.

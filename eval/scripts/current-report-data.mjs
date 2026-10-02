@@ -12,7 +12,7 @@ import { loadApprovedTermDiagnostic } from './term-diagnostic-section.mjs';
 export async function loadCurrentReport(root) {
   const [plan, sources, comparison, retry, audio, terms, kirin,
     kirinCaption, kirinMedia, paywall, captionOverlapRaw, packetRaw,
-    activityRaw, voaRaw, batchRaw, salienceRaw] = await Promise.all([
+    activityRaw, voaRaw, batchRaw, salienceRaw, orderRaw, v8Raw] = await Promise.all([
     loadDeliveryPlan(root), loadSourceCandidates(root), loadSethluiFullV6(root),
     loadSethluiRetry(root), loadSethluiAudio(root), loadApprovedTermDiagnostic(root),
     fs.readFile(path.join(root, 'eval/reports/youtube-geekerwan-kirin-license-v1.json'),
@@ -34,9 +34,15 @@ export async function loadCurrentReport(root) {
       'eval/reports/2026-10-02-v7-authored-batch-screen.json'), 'utf8'),
     fs.readFile(path.join(root,
       'eval/reports/2026-10-02-v7-context-salience.json'), 'utf8'),
+    fs.readFile(path.join(root,
+      'eval/reports/2026-10-02-v7-target-first-order.json'), 'utf8'),
+    fs.readFile(path.join(root,
+      'eval/reports/2026-10-02-v8-authored-cli.json'), 'utf8'),
   ]);
   const captionOverlap = JSON.parse(captionOverlapRaw);
   const salience = JSON.parse(salienceRaw);
+  const order = JSON.parse(orderRaw);
+  const v8 = JSON.parse(v8Raw);
   const captionOverlapSha256 = createHash('sha256').update(captionOverlapRaw).digest('hex');
   const packet = JSON.parse(packetRaw);
   assert.equal(createHash('sha256').update(packetRaw).digest('hex'),
@@ -218,6 +224,23 @@ export async function loadCurrentReport(root) {
       human_review_count: salience.attempts[1].human_review_count,
       source_split: salience.source_split,
       report_sha256: createHash('sha256').update(salienceRaw).digest('hex') },
+    target_first: { cases: 3, paired_seeds: 2,
+      chats: order.chat_requests,
+      known_leak_baseline_wrong: order.rows.filter(row => row.case_id === 'known_money_leak'
+        && row.order === 'baseline'
+        && row.source_aware_ai_classification === 'wrong_neighbor_money_content').length,
+      known_leak_target_first_sense: order.rows.filter(row => row.case_id === 'known_money_leak'
+        && row.order === 'target_first'
+        && row.source_aware_ai_classification === 'target_sense_rough_russian').length,
+      human_review_count: order.human_review_count,
+      report_sha256: createHash('sha256').update(orderRaw).digest('hex') },
+    batch_v8: { arms: v8.arms.map(arm => ({ size: arm.size,
+      chat_requests: arm.chat_requests, prompt_tokens: arm.prompt_tokens,
+      completion_tokens: arm.completion_tokens, cli_elapsed_ms_rounded: arm.cli_elapsed_ms_rounded,
+      checkpoints: arm.checkpoints, result_review_state: arm.review_state })),
+      source_sha256: v8.source_sha256, human_review_count: v8.human_bilingual_review_count,
+      accepted_language_quality: v8.accepted_language_quality,
+      report_sha256: createHash('sha256').update(v8Raw).digest('hex') },
     backlog: { total_tasks: plan.total_tasks, counts: plan.counts },
   };
 }
