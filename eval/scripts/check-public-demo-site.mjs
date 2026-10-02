@@ -102,6 +102,11 @@ assert.deepEqual(currentData.batch_v8.arms.map(arm => arm.chat_requests), [4, 1]
 assert.deepEqual(currentData.batch_v8.arms.map(arm => arm.checkpoints), [4, 1]);
 assert.equal(currentData.batch_v8.accepted_language_quality, false);
 assert.equal(currentData.batch_v8.human_review_count, 0);
+assert(current.includes('2026-10-02-reg-052-v8-controls-result.md'));
+assert.equal(currentData.name_controls.chats, 24);
+assert.equal(currentData.name_controls.preflights, 48);
+assert.equal(currentData.name_controls.payment_intrusions, 1);
+assert.equal(currentData.name_controls.human_review_count, 0);
 assert.equal(currentData.voa_source_screen.tested_sources, 2);
 assert.equal(currentData.voa_source_screen.chinese_subtitle_tracks, 0);
 assert.equal(currentData.voa_source_screen.eligible_cues_added, 0);

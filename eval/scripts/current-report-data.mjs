@@ -12,7 +12,7 @@ import { loadApprovedTermDiagnostic } from './term-diagnostic-section.mjs';
 export async function loadCurrentReport(root) {
   const [plan, sources, comparison, retry, audio, terms, kirin,
     kirinCaption, kirinMedia, paywall, captionOverlapRaw, packetRaw,
-    activityRaw, voaRaw, batchRaw, salienceRaw, orderRaw, v8Raw] = await Promise.all([
+    activityRaw, voaRaw, batchRaw, salienceRaw, orderRaw, v8Raw, nameRaw] = await Promise.all([
     loadDeliveryPlan(root), loadSourceCandidates(root), loadSethluiFullV6(root),
     loadSethluiRetry(root), loadSethluiAudio(root), loadApprovedTermDiagnostic(root),
     fs.readFile(path.join(root, 'eval/reports/youtube-geekerwan-kirin-license-v1.json'),
@@ -38,11 +38,14 @@ export async function loadCurrentReport(root) {
       'eval/reports/2026-10-02-v7-target-first-order.json'), 'utf8'),
     fs.readFile(path.join(root,
       'eval/reports/2026-10-02-v8-authored-cli.json'), 'utf8'),
+    fs.readFile(path.join(root,
+      'eval/reports/2026-10-02-reg-052-v8-controls.json'), 'utf8'),
   ]);
   const captionOverlap = JSON.parse(captionOverlapRaw);
   const salience = JSON.parse(salienceRaw);
   const order = JSON.parse(orderRaw);
   const v8 = JSON.parse(v8Raw);
+  const names = JSON.parse(nameRaw);
   const captionOverlapSha256 = createHash('sha256').update(captionOverlapRaw).digest('hex');
   const packet = JSON.parse(packetRaw);
   assert.equal(createHash('sha256').update(packetRaw).digest('hex'),
@@ -241,6 +244,14 @@ export async function loadCurrentReport(root) {
       source_sha256: v8.source_sha256, human_review_count: v8.human_bilingual_review_count,
       accepted_language_quality: v8.accepted_language_quality,
       report_sha256: createHash('sha256').update(v8Raw).digest('hex') },
+    name_controls: { chats: names.chat_requests,
+      preflights: names.template_token_preflight_calls,
+      context_on_prompt_tokens: names.context_on_totals.prompt_tokens,
+      context_off_prompt_tokens: names.context_off_totals.prompt_tokens,
+      payment_intrusions: names.rows.filter(row => row.case_id === 'other_xiao_name_question'
+        && row.context === 'on' && row.raw_candidate.startsWith('Заплатил ли')).length,
+      human_review_count: names.human_bilingual_review_count,
+      report_sha256: createHash('sha256').update(nameRaw).digest('hex') },
     backlog: { total_tasks: plan.total_tasks, counts: plan.counts },
   };
 }

@@ -699,7 +699,19 @@ used 467/158 in 7,880 ms. This is a single ordered run with shared prompt
 cache, not a repeatable speed estimate. Both results need review. Cue 3's
 name varies and the four-target Russian question is ungrammatical by AI
 triage; [REG-052](../eval/regressions/catalog-v34.json) retains exact raw
-evidence and six authored controls with zero model runs. No human review,
+evidence and six authored controls. No human review,
 natural long-file pass, approved spoken script or G3–G9/A1–A6 acceptance is
-added. The next independent work is to run these controls and a bounded
-nonmonetary context/scene-seam comparison before treating v8 as a candidate.
+added. A subsequent bounded model screen and its newly exposed error are
+recorded below.
+
+The [REG-052 v8 control screen](../eval/experiments/2026-10-02-reg-052-v8-controls-result.md)
+ran all six frozen name/question cases with and without the original
+source-only neighbors at seeds 101 and 202: 24/24 structurally valid real
+responses and 48/48 template/tokenizer preflights. AI review found unstable
+renderings of 小李, shortened names, and one clear context-induced payment
+verb for a document hand-over target. [REG-053](../eval/regressions/catalog-v35.json)
+retains that exact raw pair and six new related/negative controls, presently
+unrun. The fixed neighbors form an adversarial authored stress rather than
+a natural scene. V8 therefore remains experimental; model comparison,
+source-scoped approved names, natural seams and independent meaning review
+are still required before an approved script or G3–G9/A1–A6 claim.
