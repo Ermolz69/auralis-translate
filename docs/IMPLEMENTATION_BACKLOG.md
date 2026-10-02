@@ -791,9 +791,16 @@ added six unseen related controls and completed 18 matched baseline/instruction
 pairs after retaining a zero-request sandbox launch failure. Both variants
 left the measured multi-core and mouse-pad positives wrong. The generic
 instruction is rejected without changing v8 or spending a full-file run;
-the raw failed and successful attempts remain pinned. Next: freeze and
-measure a source-scoped provisional terminology correction, then decide
-whether another full natural run is justified. Real scene seams,
+the raw failed and successful attempts remain pinned. The
+[manufacturer-sourced provisional term screen](../eval/experiments/2026-10-02-reg-058-provisional-terms-v1-result.md)
+then ran ten paired 7B controls (20 real answers, 40 tokenizer preflights).
+Both positive terms improved, but the term arm changed two correct known
+negatives into wrong processor-count and mouse-accessory claims. Its frozen
+advancement rule failed, v8 remains unchanged, and
+[REG-061](../eval/regressions/catalog-v40.json) pins two minimal reproductions
+plus five unrun related/negative cases. Next: design target-scoped term
+isolation and test the unrun cases before considering another long-file run;
+no prompt search or production admission has occurred. Real scene seams,
 independent bilingual review, an approved spoken script and Auralis
 listening remain separate work. `LONG-04`, G3–G9 and A1–A6 remain open.
 
@@ -819,5 +826,9 @@ The [RELEASE-05 v9 self-audit](../eval/experiments/2026-10-02-release-05-audit-a
 checks committed candidate `b8985d4`, the rejected one-factor REG-058 prompt
 screen, current source eligibility, the full regression task and the deployed
 current/history pages. All required G3–G9 and A1–A6 gates remain open;
+the [v10 self-audit](../eval/experiments/2026-10-03-release-05-audit-attempt-v10.md)
+adds the rejected manufacturer term screen and REG-061 without changing those
+gate decisions.
+
 G1–G2 retain partial development evidence only. The 7B v8 product profile
 and Auralis checkout were not modified by the rejected experiment.

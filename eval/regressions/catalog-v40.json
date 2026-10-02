@@ -1,0 +1,24 @@
+{
+  "schema_version": 40,
+  "catalog_id": "zh-ru-development-regressions-v40",
+  "base_catalog_file": "catalog-v39.json",
+  "base_catalog_sha256": "e73f4afa60bbbc6ac63452f9af2356fb1224aba865b53d532a77824943559207",
+  "entries": [
+    {
+      "id": "REG-061",
+      "pack_file": "reg-061-term-hint-contamination-v1.json",
+      "pack_sha256": "24a4acafd6e7035fbc2fa58da39ead78aad069588b4a58344af5fd19e70e0499",
+      "source_family": "authored_ASUS_development_controls",
+      "split": "known_development_not_holdout",
+      "category": "provisional_term_hint_out_of_target_scope",
+      "profile_scope": "Hy-MT2 7B Q4_K_M v8 plus rejected provisional ASUS terminology instruction",
+      "expected_invariant": "A terminology hint must not change a target's processor count, mouse accessory referent, amount or negation when the hinted term is absent or negated.",
+      "severity": "major",
+      "minimal_reproducer_count": 2,
+      "related_control_count": 3,
+      "negative_control_count": 2,
+      "evidence_record": "eval/experiments/2026-10-02-reg-058-provisional-terms-v1-result.md",
+      "last_outcome": "The provisional term arm repaired both target terms but changed correct processor-count and mouse-stand negatives into wrong core-count and mouse-pad claims; product v8 remained unchanged."
+    }
+  ]
+}

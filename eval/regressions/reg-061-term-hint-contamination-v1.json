@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "id": "REG-061",
+  "source_family": "authored_ASUS_development_controls",
+  "split": "known_development_not_holdout",
+  "category": "provisional_term_hint_out_of_target_scope",
+  "profile_scope": "Hy-MT2 7B Q4_K_M v8 plus rejected provisional ASUS terminology instruction",
+  "expected_invariant": "A terminology hint must not change a target's processor count, mouse accessory referent, amount or negation when the hinted term is absent or negated.",
+  "severity": "major",
+  "minimal_reproducers": [
+    {
+      "id": "processor_count_replaced",
+      "control_id": "multiprocessor_negative",
+      "source": "这是一套多处理器系统。",
+      "expected_fact": "A system with multiple processors, without a claim that each processor has multiple cores.",
+      "baseline_candidate": "Это система с несколькими процессорами.",
+      "terms_candidate": "Это система с многоядерным процессором.",
+      "terms_request_sha256": "173168ff8053f3d380c45e3e75654263eff783cca02f6f5b6596b9d8fb172479",
+      "terms_raw_response_sha256": "8a8e1119e79b5f9151acf0388b31e0b3949b5d9f21220a8d7948323a4b3c2eec"
+    },
+    {
+      "id": "mouse_stand_replaced",
+      "control_id": "mouse_stand_negative",
+      "source": "我们也卖鼠标支架。",
+      "expected_fact": "A mouse stand is sold, without a mouse pad claim.",
+      "baseline_candidate": "Мы также продаём подставки для мышей.",
+      "terms_candidate": "Мы также продаём коврик для мыши.",
+      "terms_request_sha256": "b15338ef55e48530ee70b09694c6633281da873628b46a60ca2fa5a557355cf3",
+      "terms_raw_response_sha256": "135ad7171ee9a19ee57bb2c8e3b65c028059390fa563622c61418ba5d60fe567"
+    }
+  ],
+  "related_controls": [
+    {"id":"dual_cpu_each_eight_cores","source":"这台工作站装了两颗处理器，每颗各有八个核心。","expected_meaning":"The workstation has two processors, each with eight cores.","model_runs":0},
+    {"id":"stand_not_pad_in_box","source":"包装里只有鼠标支架，没有鼠标垫。","expected_meaning":"The box has only a mouse stand and no mouse pad.","model_runs":0},
+    {"id":"pad_out_stand_available","source":"鼠标垫缺货，鼠标支架仍有现货。","expected_meaning":"The mouse pad is out of stock while the mouse stand is available.","model_runs":0}
+  ],
+  "negative_controls": [
+    {"id":"multicore_term_positive","source":"这项多核测试得分一万分。","expected_meaning":"The multi-core test scored ten thousand points.","model_runs":0},
+    {"id":"mouse_pad_term_positive","source":"我们也卖鼠标垫。","expected_meaning":"We also sell mouse pads.","model_runs":0}
+  ],
+  "private_model_report_sha256": "dbd76bfe2214add54ab75ac34251ddb7aba8a343284d067630a7eb194778b283",
+  "public_report_sha256": "300bc148566f8e7d7cd813863feb7c4b7de2a62311d72b8851aeb43ae0c72ba6",
+  "evidence_check": "task eval:regression:reg058:terms:check",
+  "human_bilingual_review_count": 0,
+  "release_gate": "open"
+}
