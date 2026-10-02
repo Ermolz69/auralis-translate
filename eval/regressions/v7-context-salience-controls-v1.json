@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "REG-051-paired-diagnostic",
+  "extends": "REG-051",
+  "split": "known_development_regression",
+  "result": "eval/experiments/2026-10-02-v7-context-salience-result.md",
+  "evidence_check": "task eval:context:v7:salience:check",
+  "minimal_reproducer": {
+    "target_id": 1,
+    "target_source": "王经理说，明天不是星期五。",
+    "neighbor_id": 2,
+    "neighbor_source": "这张票要十元，不要付一百元。",
+    "seeded_context_on_outcome": "Two responses substitute the ticket meaning under target ID 1."
+  },
+  "related_controls": [
+    { "id": "seed_101_context_on", "condition": "Reproduce the wrong neighbor content in the original order." },
+    { "id": "seed_202_context_on", "condition": "Reproduce the same wrong neighbor content after a context-free request." }
+  ],
+  "negative_controls": [
+    { "id": "seed_101_context_off", "condition": "With only source_context removed, retain Wang and not-Friday meaning." },
+    { "id": "seed_202_context_off", "condition": "Retain target meaning in the reversed order under a second seed." }
+  ],
+  "human_review_count": 0,
+  "release_gate": "open"
+}

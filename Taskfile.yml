@@ -2032,6 +2032,25 @@ tasks:
     desc: Verify all frozen v7 authored model attempts and the open meaning regression
     cmds:
       - node eval/scripts/check-v7-authored-batch.mjs
+  eval:context:v7:salience:preflight:
+    desc: Verify frozen v7 cue and model identities before the context salience diagnostic
+    env:
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - node eval/scripts/probe-v7-context-salience.mjs --preflight
+  eval:context:v7:salience:probe:
+    desc: Compare one target with and without source context on two pinned real-model seeds
+    env:
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - task: eval:context:v7:salience:preflight
+      - node eval/scripts/probe-v7-context-salience.mjs
+  eval:context:v7:salience:check:
+    desc: Verify retained paired v7 model requests, raw responses and published diagnostic
+    cmds:
+      - node eval/scripts/check-v7-context-salience.mjs
   site:preview:
     desc: Preview current and historical reports on loopback without exposing repository files
     cmds:

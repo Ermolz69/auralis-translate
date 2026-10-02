@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "experiment": "v7-context-salience-v1",
+  "source_split": "authored_development_not_holdout",
+  "source_sha256": "ad88b2d2f96b153d5d8880175b321167263d7abaae48ca693d89b925459bc8a7",
+  "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "baseline_request_sha256": "457fa9c51d43fd1c848c9b2e2c135e65890d8ab245499bde79497ee193307e33",
+  "attempts": [
+    {
+      "private_report": ".cache/eval/v7-context-salience-v1/attempt-vjHhCY/report.json",
+      "private_report_sha256": "73106be4e14aaeaf8668fdb01a37b82d651cc5d6ee838505eb1bbddb1218bb0a",
+      "status": "failed_before_inference",
+      "failure": "spawnSync git EPERM",
+      "chat_requests": 0
+    },
+    {
+      "private_report": ".cache/eval/v7-context-salience-v1/attempt-g1DELR/report.json",
+      "private_report_sha256": "fddef1df88456fb3585eddd8258fa1918bdda022cafe7b023b640563ebab647f",
+      "status": "complete_outer_json_unreviewed",
+      "wall_ms": 4400,
+      "chat_requests": 4,
+      "preflight_calls": 8,
+      "human_review_count": 0
+    }
+  ],
+  "pairs": [
+    {
+      "seed": 101,
+      "context_on": {
+        "prompt_tokens": 240,
+        "completion_tokens": 49,
+        "chat_ms": 528,
+        "source_aware_ai_classification": "wrong_neighbor_ticket_content"
+      },
+      "context_off": {
+        "prompt_tokens": 202,
+        "completion_tokens": 45,
+        "chat_ms": 478,
+        "source_aware_ai_classification": "target_sense_present_russian_grammar_rough"
+      }
+    },
+    {
+      "seed": 202,
+      "context_on": {
+        "prompt_tokens": 240,
+        "completion_tokens": 49,
+        "chat_ms": 509,
+        "source_aware_ai_classification": "wrong_neighbor_ticket_content"
+      },
+      "context_off": {
+        "prompt_tokens": 202,
+        "completion_tokens": 45,
+        "chat_ms": 446,
+        "source_aware_ai_classification": "target_sense_present_russian_grammar_rough"
+      }
+    }
+  ],
+  "resource_observation": {
+    "samples": 1,
+    "server_working_set_bytes": 1542529024,
+    "gpu_device_used_mib": 3729,
+    "limitation": "Sparse process sample and device-wide GPU reading are not isolated peaks."
+  },
+  "inference": "This one cue under two seeds supports a local context-contamination cause. It does not measure long-file quality or guarantee a general semantic guard.",
+  "release_gate": "open"
+}
