@@ -1229,7 +1229,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-052 packs and all control counts
+    desc: Verify versioned REG-001 through REG-053 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -1264,6 +1264,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v32.mjs
       - node eval/scripts/check-regression-catalog-v33.mjs
       - node eval/scripts/check-regression-catalog-v34.mjs
+      - node eval/scripts/check-regression-catalog-v35.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:
@@ -2058,6 +2059,29 @@ tasks:
     desc: Verify retained v8 real CLI one/four-target requests, checkpoints, exports and source
     cmds:
       - node eval/scripts/check-v8-authored-batch.mjs
+  eval:regression:v8:name:preflight:
+    desc: Verify frozen REG-052 source, v8 request, model and runtime before name controls
+    env:
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - node eval/scripts/probe-reg-052-v8-controls.mjs --preflight
+  eval:regression:v8:name:probe:
+    desc: Run bounded real v8 name/question controls with and without source context
+    env:
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - task: eval:regression:v8:name:preflight
+      - node eval/scripts/probe-reg-052-v8-controls.mjs
+  eval:regression:v8:name:report:
+    desc: Extract the pinned private REG-052 raw screen into a rights-safe public report
+    cmds:
+      - node eval/scripts/check-reg-052-v8-controls.mjs --write
+  eval:regression:v8:name:check:
+    desc: Verify all REG-052 raw requests, 48 preflights and public report identity
+    cmds:
+      - node eval/scripts/check-reg-052-v8-controls.mjs
   eval:context:v7:salience:preflight:
     desc: Verify frozen v7 cue and model identities before the context salience diagnostic
     env:

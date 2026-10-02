@@ -1,0 +1,24 @@
+{
+  "schema_version": 35,
+  "catalog_id": "zh-ru-development-regressions-v35",
+  "base_catalog_file": "catalog-v34.json",
+  "base_catalog_sha256": "433417df9ad3a7e0e2551ed98049d438110c584d66d737bcfd49999287cd8c5b",
+  "entries": [
+    {
+      "id": "REG-053",
+      "pack_file": "v8-neighbor-verb-intrusion-v1.json",
+      "pack_sha256": "32ac249a27eae8c0fda7b566e361e184764ec0055e6211850f6464345baebe05",
+      "source_family": "authored_reg_052_context_stress",
+      "split": "known_development_regression",
+      "category": "neighbor_money_verb_intrusion",
+      "profile_scope": "Hy-MT2 1.8B Q4_K_M experimental v8, one target with source-only context",
+      "expected_invariant": "A target about handing a document to Doctor Chen must not borrow the payment action from a neighboring ticket-price cue.",
+      "severity": "major",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-10-02-reg-052-v8-controls-result.md",
+      "last_outcome": "The 24-request v8 REG-052 screen exposed payment-verb intrusion on one authored target with source-only context; six new related and negative cases are frozen but unrun."
+    }
+  ]
+}

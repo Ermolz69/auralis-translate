@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "REG-053",
+  "status": "real_model_wrong_neighbor_verb_retained_ai_identified",
+  "severity": "major",
+  "source_family": "authored_reg_052_context_stress",
+  "split": "known_development_regression",
+  "category": "neighbor_money_verb_intrusion",
+  "profile_scope": "Hy-MT2 1.8B Q4_K_M experimental v8, one target with source-only context",
+  "expected_invariant": "A target about handing a document to Doctor Chen must not borrow the payment action from a neighboring ticket-price cue.",
+  "minimal_reproducer": {
+    "target_id": 3,
+    "source": "小张把文件交给陈医生了吗？",
+    "neighbor_before": "这张票要十元，不要付一百元。",
+    "neighbor_after": "没有，他把钥匙留在桌上。",
+    "seed": 202,
+    "context_on_request_sha256": "9b5be3d642396e115a2dc9166709fb87609a5b2f86d9bf0c0b1ce1dd87019f24",
+    "context_on_raw_candidate": "Заплатил ли Чжан Сяо документ доктору Чен?",
+    "context_off_request_sha256": "9e3f97c3dea2619c42197bd3d008c53dff4cb77aa386fadf75193d0265cb895e",
+    "context_off_raw_candidate": "Раздал ли Чжаньсяо документ врачу Чен?",
+    "private_report_sha256": "96ac8d1b1b6c126b3e66052702560ff9b1aca30d0809ac1b59ce0f5a2b161ebf"
+  },
+  "related_controls": [
+    {"id":"same_action_new_object","source":"小张把报告交给陈医生了吗？","expected_meaning":"Did Xiao Zhang hand the report to Doctor Chen?","model_runs":0},
+    {"id":"same_action_new_recipient","source":"小张把文件交给李老师了吗？","expected_meaning":"Did Xiao Zhang hand the document to Teacher Li?","model_runs":0},
+    {"id":"same_action_paraphrase","source":"陈医生收到小张交来的文件了吗？","expected_meaning":"Did Doctor Chen receive the document handed over by Xiao Zhang?","model_runs":0}
+  ],
+  "negative_controls": [
+    {"id":"actual_payment_target","source":"小张付了十元给陈医生吗？","expected_meaning":"Did Xiao Zhang pay ten yuan to Doctor Chen? Payment is present in the target.","model_runs":0},
+    {"id":"no_handover_negative","source":"小张没有把文件交给陈医生。","expected_meaning":"Xiao Zhang did not hand the document to Doctor Chen; preserve the negation.","model_runs":0},
+    {"id":"different_action_table","source":"小张把文件放在桌上了吗？","expected_meaning":"Did Xiao Zhang put the document on the table? No doctor or payment is in the target.","model_runs":0}
+  ],
+  "evidence_check": "task eval:regression:v8:name:check",
+  "human_bilingual_review_count": 0,
+  "release_gate": "open"
+}
