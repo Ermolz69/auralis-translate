@@ -83,6 +83,8 @@ assert(current.includes('2026-10-02-kirin-original-caption-and-media-result.md')
 assert(current.includes('допущенных реплик по-прежнему 0'));
 assert(current.includes('2026-10-02-sunflower-source-inventory-result.md'));
 assert(current.includes('китайские пункты — автоматический перевод'));
+assert(current.includes('2026-10-02-reg-050-source-eligibility-count.md'));
+assert(current.includes('Теперь он даёт 0'));
 assert.equal(currentData.development_screen.source_cues, 12);
 assert.equal(currentData.development_screen.source_text_slots, 16);
 assert.equal(currentData.development_screen.identical_requests, true);
