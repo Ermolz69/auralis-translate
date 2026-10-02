@@ -8,10 +8,47 @@ const candidates = JSON.parse(await readFile(new URL('../../corpora/commons-insp
 const copy = () => structuredClone(original);
 
 test('authored example accounts for every source cue and explicit exclusion', () => {
-  assert.deepEqual(validateSourceInventory(copy()), { source_count: 1, group_count: 1, inspected_candidate_cues: 0, eligible_cues: 1 });
+  assert.deepEqual(validateSourceInventory(copy()), { source_count: 1, group_count: 1, inspected_candidate_cues: 0, eligible_cues: 0 });
   const precise = copy();
   precise.sources[0].retrieved_at = '2026-09-28T15:30:00.123Z';
-  assert.equal(validateSourceInventory(precise).eligible_cues, 1);
+  assert.equal(validateSourceInventory(precise).eligible_cues, 0);
+});
+
+test('source mapping alone never counts as reviewed eligible language material', () => {
+  const mapped = copy();
+  assert.equal(mapped.sources[0].state, 'source_checked');
+  assert.equal(mapped.sources[0].scenes[0].alignment.state, 'none');
+  assert.equal(mapped.sources[0].scenes[0].reference.state, 'none');
+  assert.equal(validateSourceInventory(mapped).eligible_cues, 0);
+
+  const rightsOnly = copy();
+  rightsOnly.sources[0].rights.reference = structuredClone(original.sources[0].rights.subtitle);
+  assert.equal(validateSourceInventory(rightsOnly).eligible_cues, 0);
+
+  const alignmentOnly = copy();
+  alignmentOnly.sources[0].scenes[0].alignment = {
+    state: 'human_reviewed', reviewer_id: 'reviewer-1', evidence_id: 'alignment-1',
+  };
+  assert.equal(validateSourceInventory(alignmentOnly).eligible_cues, 0);
+
+  const reviewed = copy();
+  reviewed.sources[0].state = 'reference_reviewed';
+  reviewed.sources[0].rights.reference = structuredClone(original.sources[0].rights.subtitle);
+  reviewed.sources[0].scenes[0].alignment = {
+    state: 'human_reviewed', reviewer_id: 'reviewer-1', evidence_id: 'alignment-1',
+  };
+  reviewed.sources[0].scenes[0].reference = {
+    state: 'human_reviewed', reviewer_id: 'reviewer-2', evidence_id: 'reference-1',
+  };
+  assert.equal(validateSourceInventory(reviewed).eligible_cues, 1);
+
+  const notPromoted = structuredClone(reviewed);
+  notPromoted.sources[0].state = 'source_checked';
+  assert.equal(validateSourceInventory(notPromoted).eligible_cues, 0);
+
+  const development = structuredClone(reviewed);
+  development.sources[0].state = 'development_only';
+  assert.equal(validateSourceInventory(development).eligible_cues, 1);
 });
 
 test('inspected Commons bytes remain separate from eligible development or holdout cues', () => {

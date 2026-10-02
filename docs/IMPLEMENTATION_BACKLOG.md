@@ -454,6 +454,15 @@ retained; no subtitle/media download or model call was made. `DATA-03` remains
 in progress with 12 previously counted candidates, 3,336 inspected cues and
 zero eligible cues.
 
+[REG-050](../eval/experiments/2026-10-02-reg-050-source-eligibility-count.md)
+corrects the `DATA-01`/`EVAL-04` eligible-cue counter: a mapped
+`source_checked` fixture with no human alignment or reference was wrongly
+reported as one eligible cue. A failing minimal check and six related/positive
+controls now keep unreviewed mapping at zero while counting fully reviewed
+states. The twelve real source candidates were already at zero; no release
+quality score or existing accepted result changed. `DATA-03` and the human
+review gates remain open.
+
 The [12:18 restaurant-video source screen](../eval/experiments/2026-10-01-sethlui-caption-media-mismatch.md)
 adds a failed `DATA-03`/`DATA-05` timing admission case: 271 strict Chinese
 SRT cues were acquired at a pinned Commons revision, but eight end beyond a

@@ -55,6 +55,13 @@ records before a release audit. `reference_reviewed`, `development_only` and
 `holdout_frozen` require human-reviewed source alignment and reference for each
 scene plus approved reference rights. `development_only` requires the development
 split. A sealed holdout requires the holdout split and a non-fixture inventory.
+The `eligible_cues` count includes only these three reviewed states, minus
+explicitly excluded cues. `source_checked` records a parsed, mapped source but
+contributes zero eligible cues until both reviews and reference rights exist;
+approval of subtitle rights or a scene map alone cannot increase a language
+denominator. This clarification corrects the earlier fixture count, which
+reported one eligible cue even though its alignment and reference states were
+`none`. Historical reports retain their original observations.
 The validator does not attest that a named reviewer exists or that a license is
 legally sufficient; those are human and item-level admission checks.
 
@@ -143,3 +150,8 @@ they do not certify any real source, rights decision or bilingual review.
 `task docs:check` passes 102 local Markdown files. `task site:build` and
 `task site:check` pass while retaining 180 historical and 240 model-comparison
 requests in the generated Pages report. No new language result is claimed.
+
+The later [REG-050 counter correction](../../eval/experiments/2026-10-02-reg-050-source-eligibility-count.md)
+narrows `eligible_cues` to reviewed source states. The original fixture and
+historical acceptance wording remain visible above as dated evidence, while
+current `task eval:data:check` reports zero eligible fixture cues.

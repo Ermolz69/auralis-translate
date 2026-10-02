@@ -166,7 +166,9 @@ export function validateSourceInventory(inventory) {
     if (typeof source.sha256 !== 'string' || !SHA256.test(source.sha256)) fail(`${at}.sha256`, 'must be a lowercase SHA-256');
     positive(source.cue_count, `${at}.cue_count`);
     scenes(source, at);
-    eligibleCues += source.scenes.reduce((sum, scene) => sum + scene.cue_ids.length - scene.exclusions.length, 0);
+    if (['reference_reviewed', 'development_only', 'holdout_frozen'].includes(source.state)) {
+      eligibleCues += source.scenes.reduce((sum, scene) => sum + scene.cue_ids.length - scene.exclusions.length, 0);
+    }
     if (['reference_reviewed', 'development_only', 'holdout_frozen'].includes(source.state)
         && source.rights.reference.decision !== 'approved') fail(`${at}.rights.reference`, 'must approve reference rights');
     if (source.state === 'development_only' && source.split !== 'development') fail(`${at}.split`, 'development-only source must be in development');

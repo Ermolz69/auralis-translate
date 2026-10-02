@@ -1,0 +1,24 @@
+{
+  "schema_version": 32,
+  "catalog_id": "zh-ru-development-regressions-v32",
+  "base_catalog_file": "catalog-v31.json",
+  "base_catalog_sha256": "6c7930e52fd73bc364cd96ac81a4df82e24575abf523d1f7296ac501100e9c61",
+  "entries": [
+    {
+      "id": "REG-050",
+      "pack_file": "source-eligibility-before-review-v1.json",
+      "pack_sha256": "12bace98c7e06b996321d927d6890ad682ab68333d1edde46780724e02905a2f",
+      "source_family": "authored_source_inventory_fixture",
+      "split": "known_development_regression",
+      "category": "unreviewed_source_eligible_cue_count",
+      "profile_scope": "DATA-01 source inventory validator; no model inference",
+      "expected_invariant": "A mapped source contributes zero eligible language cues until human-reviewed alignment and reference, approved reference rights, and a reviewed source state are present.",
+      "severity": "major",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 4,
+      "negative_control_count": 2,
+      "evidence_record": "eval/experiments/2026-10-02-reg-050-source-eligibility-count.md",
+      "last_outcome": "The old source_checked fixture reported one eligible cue with no reviews; the corrected counter reports zero and retains fully reviewed positive controls."
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "REG-050",
+  "status": "fixed_in_source_inventory_v1_counter",
+  "severity": "major",
+  "source_family": "authored_source_inventory_fixture",
+  "split": "known_development_regression",
+  "affected_profile": "DATA-01 source inventory eligibility counter; no model profile",
+  "expected_invariant": "A mapped source contributes zero eligible language cues until human-reviewed alignment and reference, approved reference rights, and a reviewed source state are present.",
+  "minimal_reproducer": {
+    "inventory_id": "authored-fixture-inventory-v1",
+    "state": "source_checked",
+    "cue_count": 2,
+    "excluded_cues": 1,
+    "alignment_state": "none",
+    "reference_state": "none",
+    "observed_before_fix_eligible_cues": 1,
+    "expected_eligible_cues": 0
+  },
+  "related_controls": [
+    { "id": "reference_rights_only", "condition": "Approved reference rights without human source and reference review count zero." },
+    { "id": "alignment_only", "condition": "Human alignment without reviewed reference and reference rights counts zero." },
+    { "id": "reviewed_but_unpromoted", "condition": "Review fields and rights cannot increase the count while source state remains source_checked." },
+    { "id": "inspected_candidate", "condition": "An inspected candidate with approved subtitle and audio rights counts zero." }
+  ],
+  "negative_controls": [
+    { "id": "reference_reviewed", "condition": "A reference_reviewed fixture with both human reviews and approved rights counts its sole non-excluded cue." },
+    { "id": "development_only", "condition": "A fully reviewed development source retains the same one-cue denominator." }
+  ],
+  "contract_test": "eval/scripts/tests/source-inventory.test.mjs",
+  "human_review": "not_applicable_to_counter_regression",
+  "release_gate": "open"
+}
