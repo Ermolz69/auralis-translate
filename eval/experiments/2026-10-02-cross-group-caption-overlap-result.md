@@ -52,3 +52,18 @@ The future audit still needs edited near-duplicate review beyond this exact
 window method, simplified/traditional conversion, source rights, speech and
 scene alignment, independent references, sealed split assignment and reviewer
 coverage. A zero-flag result is **not** a clean DATA-05 or release decision.
+
+## Publication verification
+
+At 14:19 UTC, committed Translate `2f0915f64c16d2aef775e65f7b01b0a888a09108`
+matched `origin/main`. The [Pages workflow](https://github.com/Ermolz69/auralis-translate/actions/runs/37018932942)
+passed report verification and deployment for that SHA. Direct GETs of the
+[current](https://ermolz69.github.io/auralis-translate/index.html?revision=2f0915f64c16d2aef775e65f7b01b0a888a09108)
+and [historical](https://ermolz69.github.io/auralis-translate/history.html?revision=2f0915f64c16d2aef775e65f7b01b0a888a09108)
+pages returned HTTP 200. Their downloaded UTF-8 SHA-256 values matched the
+local generated files exactly: `site/index.html`
+`476469f042b9153b8c7cc64d1c92be67e19a02983be000f02c821f0e0e2c4c84`,
+`site/history.html`
+`4357c9c1da9d34fa133aba85562dba277a79b821e7d9049e67e5b513e646a9f6`.
+The historical report retains previous measurements; successful publication
+does not make the unreviewed source or translation eligible.
