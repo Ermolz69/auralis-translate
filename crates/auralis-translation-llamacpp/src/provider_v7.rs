@@ -141,7 +141,11 @@ impl LlamaCppProvider {
             .map(|slot| slot.segment.id().get())
             .unwrap_or(first_id);
         loop {
-            let prompt = contextual_prompt_v7::render(slots, &context, batch.approved_terms());
+            let prompt = if self.profile.prompt_version == 8 {
+                crate::contextual_prompt_v8::render(slots, &context, batch.approved_terms())?
+            } else {
+                contextual_prompt_v7::render(slots, &context, batch.approved_terms())
+            };
             if self.rendered_chat_tokens_with_format(
                 &prompt,
                 contextual_prompt_v7::response_format(slots.len()),

@@ -17,6 +17,9 @@ use std::time::Duration;
 const PROFILE: &[u8] = include_bytes!(
     "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v7_batch4.experimental.json"
 );
+const TARGET_FIRST_PROFILE: &[u8] = include_bytes!(
+    "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v8_target_first_batch4.experimental.json"
+);
 
 #[derive(Default)]
 struct Journal {
@@ -218,6 +221,12 @@ fn profile(targets: usize) -> Result<ModelProfile, Box<dyn Error>> {
     Ok(ModelProfile::from_json(&serde_json::to_vec(&value)?)?)
 }
 
+fn target_first_profile(targets: usize) -> Result<ModelProfile, Box<dyn Error>> {
+    let mut value: Value = serde_json::from_slice(TARGET_FIRST_PROFILE)?;
+    value["target_segments_per_block"] = targets.into();
+    Ok(ModelProfile::from_json(&serde_json::to_vec(&value)?)?)
+}
+
 fn batch(
     target_count: u32,
     context_count: u32,
@@ -286,6 +295,42 @@ fn finish_server(
 ) -> Result<Vec<(String, Value)>, Box<dyn Error>> {
     stop.store(true, Ordering::SeqCst);
     Ok(handle.join().map_err(|_| "server panicked")??)
+}
+
+#[test]
+fn v8_provider_reorders_only_the_target_and_context_json_fields() -> Result<(), Box<dyn Error>> {
+    let mut prompts = Vec::new();
+    for checked_profile in [profile(1)?, target_first_profile(1)?] {
+        let (url, stop, server) = mock_server(Reply::Exact, TokenCost::Small)?;
+        let provider = LlamaCppProvider::new(&url, checked_profile)?;
+        let translated = translate_batch(&provider, &context_money_batch()?)?;
+        assert_eq!(translated[0].lines, ["Строка 1-0."]);
+        let requests = finish_server(stop, server)?;
+        assert_eq!(requests.len(), 3);
+        let chat = requests
+            .iter()
+            .find(|(path, _)| path == "/v1/chat/completions")
+            .ok_or("no chat")?;
+        prompts.push(
+            chat.1["messages"][0]["content"]
+                .as_str()
+                .ok_or("no prompt")?
+                .to_owned(),
+        );
+    }
+    let [baseline, variant] = <[String; 2]>::try_from(prompts).map_err(|_| "prompt count")?;
+    let (legacy_instruction, legacy_json) =
+        baseline.split_once("Input JSON:\n").ok_or("no JSON")?;
+    let (new_instruction, new_json) = variant.split_once("Input JSON:\n").ok_or("no JSON")?;
+    assert_eq!(legacy_instruction, new_instruction);
+    assert_eq!(
+        serde_json::from_str::<Value>(legacy_json)?,
+        serde_json::from_str::<Value>(new_json)?
+    );
+    assert!(legacy_json.starts_with("{\"schema_version\":7,\"source_context\":"));
+    assert!(new_json.starts_with("{\"schema_version\":7,\"target_slots\":"));
+    assert!(new_json.find("\"target_slots\"") < new_json.find("\"source_context\""));
+    Ok(())
 }
 
 #[test]

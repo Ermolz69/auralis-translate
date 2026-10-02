@@ -4,6 +4,7 @@ mod chinese_money_terms;
 mod chinese_number;
 mod contextual_prompt_v5;
 mod contextual_prompt_v7;
+mod contextual_prompt_v8;
 mod decode_chat_response;
 mod local_http;
 mod offline_install;

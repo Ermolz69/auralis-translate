@@ -63,7 +63,7 @@ pub(crate) fn run(
         })
         .transpose()?;
     if scene_snapshot.is_some()
-        && (!matches!(profile.prompt_version, 5..=7) || format != DocumentRunPlan::SRT_FORMAT)
+        && (!matches!(profile.prompt_version, 5..=8) || format != DocumentRunPlan::SRT_FORMAT)
     {
         return Err(crate::reporting::CliFailure::boxed(
             crate::reporting::ErrorCode::InvalidInput,
@@ -77,7 +77,7 @@ pub(crate) fn run(
         ));
     }
     if terms_snapshot.is_some()
-        && (!matches!(profile.prompt_version, 5..=7)
+        && (!matches!(profile.prompt_version, 5..=8)
             || profile.max_approved_terms_bytes == 0
             || profile.max_approved_terms_entries == 0)
     {

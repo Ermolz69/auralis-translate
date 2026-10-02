@@ -563,7 +563,7 @@ impl LlamaCppProvider {
         batch: &TranslationBatch,
         control: Option<(&dyn RunControl, RunId)>,
     ) -> Result<(ProviderResponse, Vec<TranslationDiagnostic>), ProviderError> {
-        if matches!(self.profile.prompt_version, 4..=7)
+        if matches!(self.profile.prompt_version, 4..=8)
             && batch.language_pair().source() != LanguageCode::Chinese
         {
             return Err(ProviderError::Permanent(
@@ -592,7 +592,7 @@ impl LlamaCppProvider {
                 "glossary exceeds profile byte limit".into(),
             ));
         }
-        if !matches!(self.profile.prompt_version, 5..=7) && !batch.approved_terms().is_empty() {
+        if !matches!(self.profile.prompt_version, 5..=8) && !batch.approved_terms().is_empty() {
             return Err(ProviderError::Permanent(
                 "profile does not support approved terms".into(),
             ));
@@ -623,7 +623,7 @@ impl LlamaCppProvider {
                 "context exceeds profile byte limit".into(),
             ));
         }
-        if self.profile.prompt_version == 7 {
+        if matches!(self.profile.prompt_version, 7 | 8) {
             return self.translate_v7_batch(batch, control);
         }
         let mut translations = Vec::with_capacity(batch.targets().len());

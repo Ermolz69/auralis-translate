@@ -13,6 +13,74 @@ const V6_PROFILE: &[u8] = include_bytes!(
 const V7_PROFILE: &[u8] = include_bytes!(
     "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v7_batch4.experimental.json"
 );
+const V8_PROFILE: &[u8] = include_bytes!(
+    "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v8_target_first_batch4.experimental.json"
+);
+
+#[test]
+fn v8_scene_run_preserves_source_and_rejects_v7_resume() -> Result<(), Box<dyn Error>> {
+    let workspace = machine_workspace::MachineWorkspace::new()?;
+    let source = workspace.0.join("source.srt");
+    let profile = workspace.0.join("v8-profile.json");
+    let old_profile = workspace.0.join("v7-profile.json");
+    let scene = workspace.0.join("scene.json");
+    let state = workspace.0.join("state");
+    let output = workspace.0.join("result.srt");
+    let original = "1\n00:00:01,000 --> 00:00:02,000\n王经理说，明天不是星期五。\n";
+    std::fs::write(&source, original)?;
+    std::fs::write(&profile, V8_PROFILE)?;
+    std::fs::write(&old_profile, V7_PROFILE)?;
+    std::fs::write(
+        &scene,
+        serde_json::to_vec(&serde_json::json!({
+            "schema_version": 1,
+            "source_sha256": SourceHash::digest(original.as_bytes()).to_string(),
+            "evidence_id": "authored-v8-target-first-scene",
+            "scene_end_ids": [1]
+        }))?,
+    )?;
+    let started = Command::new(env!("CARGO_BIN_EXE_auralis-translation-cli"))
+        .args([
+            "translate-v5-scene",
+            source.to_str().ok_or("source path")?,
+            state.to_str().ok_or("state path")?,
+            profile.to_str().ok_or("profile path")?,
+            scene.to_str().ok_or("scene path")?,
+            "http://127.0.0.1:1/",
+            output.to_str().ok_or("output path")?,
+        ])
+        .output()?;
+    assert!(!started.status.success());
+    let stdout = String::from_utf8(started.stdout)?;
+    let run_id = stdout
+        .split_whitespace()
+        .find_map(|item| item.strip_prefix("run_id="))
+        .ok_or("missing v8 run ID")?;
+    assert_eq!(std::fs::read(&source)?, original.as_bytes());
+    assert!(!output.exists());
+    let db = auralis_translation_sqlite::TranslateDb::open(
+        &state.join("auralis-translate.sqlite"),
+        auralis_translation_sqlite::SqliteConfig::default(),
+    )?;
+    let run = db.run(auralis_translation::RunId::parse(run_id)?)?;
+    assert_eq!(run.blocks.len(), 1);
+    assert_eq!(run.blocks[0].len(), 1);
+    drop(db);
+    let rejected = Command::new(env!("CARGO_BIN_EXE_auralis-translation-cli"))
+        .args([
+            "resume",
+            state.to_str().ok_or("state path")?,
+            run_id,
+            old_profile.to_str().ok_or("v7 profile path")?,
+            "http://127.0.0.1:1/",
+            output.to_str().ok_or("output path")?,
+        ])
+        .output()?;
+    assert!(!rejected.status.success());
+    assert!(String::from_utf8_lossy(&rejected.stderr).contains("profile differs"));
+    assert!(!output.exists());
+    Ok(())
+}
 
 #[test]
 fn v7_scene_run_freezes_four_target_plan_and_rejects_v6_resume() -> Result<(), Box<dyn Error>> {

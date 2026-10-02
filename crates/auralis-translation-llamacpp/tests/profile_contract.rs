@@ -28,6 +28,33 @@ const V6_SLOT_PROFILE: &[u8] = include_bytes!(
 const V7_BATCH_PROFILE: &[u8] = include_bytes!(
     "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v7_batch4.experimental.json"
 );
+const V8_BATCH_PROFILE: &[u8] = include_bytes!(
+    "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v8_target_first_batch4.experimental.json"
+);
+
+#[test]
+fn v8_target_first_profile_has_distinct_checked_identity() -> Result<(), Box<dyn Error>> {
+    let legacy = ModelProfile::from_json(V7_BATCH_PROFILE)?;
+    let variant = ModelProfile::from_json(V8_BATCH_PROFILE)?;
+    assert_eq!(legacy.prompt_version, 7);
+    assert_eq!(variant.prompt_version, 8);
+    assert_eq!(legacy.model_file_sha256, variant.model_file_sha256);
+    assert_eq!(
+        legacy.target_segments_per_block,
+        variant.target_segments_per_block
+    );
+    assert_ne!(
+        legacy.prompt_template_sha256,
+        variant.prompt_template_sha256
+    );
+    let mut mismatched: serde_json::Value = serde_json::from_slice(V8_BATCH_PROFILE)?;
+    mismatched["prompt_version"] = serde_json::json!(7);
+    assert!(ModelProfile::from_json(&serde_json::to_vec(&mismatched)?).is_err());
+    mismatched["prompt_version"] = serde_json::json!(8);
+    mismatched["prompt_template_sha256"] = serde_json::json!("0".repeat(64));
+    assert!(ModelProfile::from_json(&serde_json::to_vec(&mismatched)?).is_err());
+    Ok(())
+}
 
 #[test]
 fn v7_batch_profile_is_checked_and_cannot_resume_legacy_identity() -> Result<(), Box<dyn Error>> {
