@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "id": "REG-058-provisional-terms-v1",
+  "split": "authored_development_not_holdout",
+  "scope": "ASUS hardware and accessory source family",
+  "manufacturer_sources": [
+    {
+      "concept": "mouse_pad",
+      "chinese_url": "https://rog.asus.com.cn/mice-mouse-pads/mouse-pads/rog-gm50-mouse-pad-model/",
+      "russian_url": "https://rog.asus.com/ru/mice-mouse-pads/mouse-pads/rog-gm50-mouse-pad-model/",
+      "same_product": "ROG GM50 Mouse Pad",
+      "source_form": "鼠标垫",
+      "provisional_russian_form": "коврик для мыши"
+    },
+    {
+      "concept": "multiple_cores",
+      "chinese_url": "https://rog.asus.com.cn/motherboards/rog-dominus/rog-dominus-extreme-model/",
+      "russian_url": "https://rog.asus.com/ru/laptops/rog-zephyrus/2021-rog-zephyrus-m16-series/",
+      "same_product": null,
+      "source_form": "多核",
+      "provisional_russian_form": "многоядерный",
+      "note": "ASUS usage evidence from separate products; distinguish core count from threading."
+    }
+  ],
+  "controls": [
+    {"id":"multicore_positive","parent_id":"multicore_not_multiprocessor","source":"多核测试得分达到一万分。","expected_meaning":"The multi-core test score reached ten thousand.","role":"known_positive"},
+    {"id":"multiprocessor_negative","parent_id":"multicore_not_multiprocessor","source":"这是一套多处理器系统。","expected_meaning":"This is a multi-processor system.","role":"known_negative"},
+    {"id":"multicore_extra","parent_id":"multicore_not_multiprocessor","source":"这颗芯片有八个核心，但设备只有一个处理器。","expected_meaning":"The chip has eight cores, but the device has only one processor.","role":"known_related_no_exact_term"},
+    {"id":"multicore_thread_contrast","parent_id":"multicore_not_multiprocessor","source":"多核测试和多线程测试不是同一项，前者高了两分。","expected_meaning":"Multi-core and multi-thread tests are distinct; the former was two points higher.","role":"new_positive_contrast"},
+    {"id":"multithread_negative","parent_id":"multicore_not_multiprocessor","source":"这里只报告多线程成绩，没有多核成绩。","expected_meaning":"Only the multi-thread score is reported here, not the multi-core score.","role":"new_negation_contrast"},
+    {"id":"mouse_pad_positive","parent_id":"mouse_pad_not_stand","source":"我们也卖鼠标垫。","expected_meaning":"We also sell mouse pads.","role":"known_positive"},
+    {"id":"mouse_stand_negative","parent_id":"mouse_pad_not_stand","source":"我们也卖鼠标支架。","expected_meaning":"We also sell mouse stands.","role":"known_negative"},
+    {"id":"mouse_pad_extra","parent_id":"mouse_pad_not_stand","source":"盒子里有鼠标垫，没有鼠标支架。","expected_meaning":"The box contains a mouse pad, not a mouse stand.","role":"known_related_negation"},
+    {"id":"mouse_pad_price_contrast","parent_id":"mouse_pad_not_stand","source":"鼠标垫比鼠标支架便宜二十元。","expected_meaning":"The mouse pad is twenty yuan cheaper than the mouse stand.","role":"new_price_contrast"},
+    {"id":"stand_only_new","parent_id":"mouse_pad_not_stand","source":"鼠标支架缺货了，但别把它叫作鼠标垫。","expected_meaning":"The mouse stand is out of stock; do not call it a mouse pad.","role":"new_negative_contrast"}
+  ],
+  "human_bilingual_review_count": 0,
+  "release_gate": "open"
+}

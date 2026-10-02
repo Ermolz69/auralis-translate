@@ -1243,6 +1243,7 @@ tasks:
       - node eval/scripts/check-regression-index.mjs
       - task: eval:regression:catalog:check
       - task: eval:regression:reg058:instruction:check
+      - task: eval:regression:reg058:terms:check
       - node eval/scripts/check-scene-pronoun-regression.mjs
       - task: eval:cli:long:v5:failure-check
       - task: eval:cli:long:v6:timeout-check
@@ -2315,6 +2316,31 @@ tasks:
     desc: Verify paired request lineage, raw responses and tokenizer evidence
     cmds:
       - node eval/scripts/check-reg-058-semantic-instruction-v1.mjs
+  eval:regression:reg058:terms:preflight:
+    desc: Verify frozen manufacturer term controls, request identities and 7B runtime
+    env:
+      AURALIS_TEST_GGUF_LARGE: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - node --check eval/scripts/probe-reg-058-provisional-terms-v1.mjs
+      - node --check eval/scripts/check-reg-058-provisional-terms-v1.mjs
+      - node eval/scripts/probe-reg-058-provisional-terms-v1.mjs --preflight
+  eval:regression:reg058:terms:probe:
+    desc: Run one counterbalanced baseline versus provisional term screen on 7B
+    env:
+      AURALIS_TEST_GGUF_LARGE: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - task: eval:regression:reg058:terms:preflight
+      - node eval/scripts/probe-reg-058-provisional-terms-v1.mjs
+  eval:regression:reg058:terms:report:
+    desc: Extract source-free evidence from the provisional term screen
+    cmds:
+      - node eval/scripts/check-reg-058-provisional-terms-v1.mjs --write
+  eval:regression:reg058:terms:check:
+    desc: Verify manufacturer term experiment lineage, raw responses and tokenizer evidence
+    cmds:
+      - node eval/scripts/check-reg-058-provisional-terms-v1.mjs
   eval:regression:reg060:check:
     desc: Verify the invalid REG-058 harness and four target-field regression controls
     cmds:
