@@ -786,10 +786,16 @@ error and four controls. The corrected v2 screen used 24 exact authored
 targets with real 1.8B/7B responses and token preflights. AI reading found
 further multi-core, mouse-pad and platform-action failures in 7B;
 one response leaked a JSON tail. These are development observations, not
-an independent adequacy score. Next: freeze and measure a source-scoped
-terminology/meaning correction, then another full natural run,
-real scene seams, independent bilingual review, approved spoken script
-and Auralis listening. `LONG-04`, G3–G9 and A1–A6 remain open.
+an independent adequacy score. The [frozen 7B prompt comparison](../eval/experiments/2026-10-02-reg-058-semantic-instruction-v1-result.md)
+added six unseen related controls and completed 18 matched baseline/instruction
+pairs after retaining a zero-request sandbox launch failure. Both variants
+left the measured multi-core and mouse-pad positives wrong. The generic
+instruction is rejected without changing v8 or spending a full-file run;
+the raw failed and successful attempts remain pinned. Next: freeze and
+measure a source-scoped provisional terminology correction, then decide
+whether another full natural run is justified. Real scene seams,
+independent bilingual review, an approved spoken script and Auralis
+listening remain separate work. `LONG-04`, G3–G9 and A1–A6 remain open.
 
 The [RELEASE-05 v6 self-audit](../eval/experiments/2026-10-02-release-05-audit-attempt-v6.md)
 checks committed candidate `bb4b908` and the byte-identical published

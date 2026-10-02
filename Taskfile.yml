@@ -1242,6 +1242,7 @@ tasks:
       - node --test --test-isolation=none eval/scripts/tests/regression-index.test.mjs
       - node eval/scripts/check-regression-index.mjs
       - task: eval:regression:catalog:check
+      - task: eval:regression:reg058:instruction:check
       - node eval/scripts/check-scene-pronoun-regression.mjs
       - task: eval:cli:long:v5:failure-check
       - task: eval:cli:long:v6:timeout-check
