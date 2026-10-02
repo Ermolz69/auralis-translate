@@ -71,6 +71,7 @@ assert.deepEqual(currentData, await loadCurrentReport(root));
 assert.equal(currentData.audio.packet_count, 36_904);
 assert.equal(currentData.audio.packet_timeline_continuous, true);
 assert(current.includes('2026-10-02-sethlui-packet-boundary-result.md'));
+assert(current.includes('2026-10-02-free-reviewer-lead-screen.md'));
 assert.equal(currentData.release_decision, 'not_accepted');
 assert.equal(currentData.sources.eligible_cues, 0);
 assert.equal(currentData.sources.candidates, 11);

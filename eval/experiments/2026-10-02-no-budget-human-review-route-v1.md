@@ -42,6 +42,13 @@ That is not a verified credential, offer to work on this project or permission
 to contact them. No messages, public recruitment posts or private source
 uploads have been sent.
 
+A more directly relevant [volunteer localization lead and first invitation
+screen](2026-10-02-free-reviewer-lead-screen.md) identifies one public indie
+project volunteer profile with Russian and Chinese background. Its main stated
+translation pair is English/Russian, so Chinese→Russian review skill and
+commercial-project consent are still unknown. The invitation draft remains
+unsent; this is zero recruited or qualified reviewers.
+
 ## Bounded first attempt after source admission
 
 1. Clear the source/subtitle/media rights and speech alignment before sharing
