@@ -779,8 +779,15 @@ retain the six private paired reproductions, the 1.8B repeated-line
 failure and eighteen authored controls, all with zero human ratings.
 The deterministic warning scan also produced false positives for
 locale-formatted or spelled numbers and translated units; it is not a
-quality score. Next: bounded same-request tests of REG-058 controls,
-source-scoped terminology/meaning fixes, another full natural run,
+quality score. The [REG-058 paired real-model controls](../eval/experiments/2026-10-02-reg-058-paired-controls-result.md)
+ran after retaining an invalid first harness: it changed only one of two
+target fields. [REG-060](../eval/regressions/catalog-v39.json) pins that
+error and four controls. The corrected v2 screen used 24 exact authored
+targets with real 1.8B/7B responses and token preflights. AI reading found
+further multi-core, mouse-pad and platform-action failures in 7B;
+one response leaked a JSON tail. These are development observations, not
+an independent adequacy score. Next: freeze and measure a source-scoped
+terminology/meaning correction, then another full natural run,
 real scene seams, independent bilingual review, approved spoken script
 and Auralis listening. `LONG-04`, G3–G9 and A1–A6 remain open.
 

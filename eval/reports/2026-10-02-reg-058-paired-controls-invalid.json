@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "experiment": "reg-058-paired-controls-v1",
+  "status": "invalid_harness_target_fields_disagree",
+  "split": "authored_development_not_holdout",
+  "private_report": ".cache/eval/reg-058-paired-controls-v1/attempt-QdwzSQ/report.json",
+  "private_report_sha256": "d9a9229940e9474ab6cc75a25819300ac5bd7a76bde4fcbe8114196faf4eade2",
+  "harness_sha256": "a23303ec4a2ca5cbee59286e92a24546cb83e5cf0556b6e8ebf9466fe056d9db",
+  "pack_sha256": "fcba9d337e8bdf3dd0d431cf886917bcefa999a44d9eb30fcc5450a6147ebe09",
+  "prior_natural_report_sha256": "9ae192177dd51611f49adf7699ca4fe9677a230dc74cbdedded2618040cc193c",
+  "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "code_commit": "57c5d6f27b9e37231aa9c321fde416530b71c32f",
+  "wall_elapsed_ms": 33266,
+  "model_quality_comparison_valid": false,
+  "human_bilingual_review_count": 0,
+  "arms": [
+    {
+      "id": "1_8b",
+      "chats": 12,
+      "preflights": 24,
+      "target_field_mismatches": 12,
+      "prompt_tokens": 3297,
+      "completion_tokens": 853,
+      "structural_invalid_responses": 1,
+      "chat_request_sha256": [
+        "805d9992eff437e8019fe9a5b20b8d2f151750b5ec69b6349060ca5fc564da35",
+        "b5a8912bb393428dbf7ce31447ddbdbed8771295e8d666ca6b769d2628e1d40a",
+        "c4e9f7a9ee90a404b7c2631ebaf462e9107551be27d34cce838f98dcc80dcbbb",
+        "b0464e1206a1c9cc14d5b50a4c486bec5befe71e5b8b8b3087fe5c61e4056b9d",
+        "81509915c71fbce217736f79c32b34675c36b26c0eb5c6b27277eb51eebbbd9f",
+        "cee91869ef293bc92e1d3f14ec69f2f877e5411cc7eac6242efd58255bceb40f",
+        "8ece509e4458babbcee0a7db84ae9d28adb64f4fd169e226cd14dd30fff35411",
+        "4f27d07e4634d6b4e395cd84b8085648ac40d7d88ef960763e952b23b0484484",
+        "0d5b34f385195260f620beec25ec668ae9bfd8c216a7c1a124bb57dae07b33c0",
+        "e3ee2440b87fe2ff2b9807b26394a041201db063e4c2c76d7d4649f7ffdb385b",
+        "6462028e60666639a371f23778f71cbfdd640e50b4c07338f2077cfddd6e820b",
+        "352822343599439ede48c2c86a7dfbf77f3bfc773850233d828e13637d260eef"
+      ],
+      "raw_response_sha256": [
+        "f548dd762f342534569c4c4c75503c2425212ccb4d0d159d10ff0a7a1a181da5",
+        "15b55d1ee76c0d59703e3b4934cf1867b4c2aee7808ec2d9c8ce7a53b48e6166",
+        "e04e98234fefeb9707437f4e0192d3d4a73abb5181a69926ff12346389b28324",
+        "992f61173606d28a222dbc4208c0d0c6814ed89bb48496b6f958c9bf3d54a968",
+        "8511de25039f68cd1654f8f691351bb978d028c80d454c1230a067a913e05730",
+        "a70af496cc579e28d48636636571ac6016141ef76c96a6a23bfd739e7a343732",
+        "a22fb7f3bcb3938a8b41e93707adfa418874dc070942a7f47602d332ac832cb8",
+        "f8cd6926f6fe5ceee771799139fb1b7ed52f537cdca7c59309a922b85e1a2524",
+        "7408a5663d52ba02d718b053d0a226f756ff11cdb856e91584261353cba99061",
+        "d1ee3ad5b7857a6e0a528b86a8fd1ee8f68907a26209853208f4a8c652cc507e",
+        "504227028626b9f46e22ee830233f0af204affba59848a8629a32076c448594e",
+        "ba07f86fbedb76b5692a29a3652f660c7cd0f587880da6b80716a6a8cad9cc9a"
+      ]
+    },
+    {
+      "id": "7b",
+      "chats": 12,
+      "preflights": 24,
+      "target_field_mismatches": 12,
+      "prompt_tokens": 3454,
+      "completion_tokens": 560,
+      "structural_invalid_responses": 0,
+      "chat_request_sha256": [
+        "4202b2f3b85e05a4566e2683cae0a44a69cda11115bfb866d8369b2784055fe5",
+        "701ba213111c5a5bac06d05be0ab386cd54da05176a5598847ece9e668ffeb1b",
+        "2d550ff6e20ae57d4dacda245dedad769d8d3aae52150d9449177d4e679bdaf2",
+        "95ad5f170ac2850911eaf0138d52832da59f18d19f345b66fec7386391aaa709",
+        "3b2857351c9b8c32daa88a9aa28204d7339086ad12b97d7e7a474df3d40ea291",
+        "4cab3e360f596c6536365e76f99bd05a6fb94c7e4bd328cdf0c1112562a5af62",
+        "323b055fc78a4823ad82c935c083a02e64a83007912e7ba2412aa9a9a8bca2c7",
+        "ba636de694f176c99da6b2dd86f2ff54aecf839a2d39672ce6f5f1d7bcc869bc",
+        "dbb78eedcf6632fc1dfa67d448da8538a4c1b395e74b98f243d18987edfc040b",
+        "4873ea44f80b8da48a0ac7c2c7d99be46dbee0d0b6be0461a837aedd9555f769",
+        "9de19c0b320eda50fae3a21e84501ee925a8cfed3f4c1a60c8742f57cc72c91e",
+        "69e630b28bac3096f7c33502fb4d322c2b77a5d1a2907e7c25074dd9b2c46e3c"
+      ],
+      "raw_response_sha256": [
+        "129bcc7440831ee75c64174cf8dbd9d646a38040bc942baad43e36066b43c094",
+        "2e41ef1929854a393a73b4291e74444cbf35346a977388090b64bb8535e5a6eb",
+        "9357456d15730e3e5ed8e0a790ab57256409d3ee0165d4eb0400449ebd17fdfd",
+        "7bff39940d424a0fd0b8a077a51a5246a41854d8ed29ad6bbef362c873213bd6",
+        "19fb9e2fb6d9d7119f3eb41aa2a4b39124829c47f3241407983e96a16812c1fd",
+        "654636bf1d4fa5b8d11fb3660e3be1967e15da7c5e82a0e7505e25062cc2e7eb",
+        "431bd60ce8cde6dfb44f0ada18f840f6ca48ffb6a7db66a76d2c4674d6896245",
+        "50249f036ff2ae217b60d9b8347040227b2c90a15f72e328510df4011dfd82b7",
+        "f06d13d3dd1d14054a974fc2a21c16a20bba53ae1866bfafbcb2c46f9c16e938",
+        "6560497e5de541f5c0379c67c78911a7827c91924d9055e52ae1e41292e1f42d",
+        "c72cc0ee636853a63a2ed806f70a2d00d46ab78e0bc2cfc0a2c456ec8a260dfe",
+        "9794a27070a3a8cf8d33cef5493b4fe3f29c4a60c93e606ac38c29604c32d0eb"
+      ]
+    }
+  ],
+  "release_gate": "open"
+}

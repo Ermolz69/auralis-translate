@@ -551,6 +551,7 @@ fn v7_and_v8_reject_embedded_json_structure_before_journal_acceptance() -> Resul
             "Результат GPU\\\"},{\\\"line_index\\\":0",
             "Результат GPU\"},{\"line_index\":0",
             "Результат GPU\"}]}",
+            "Одним кликом поддержите нас.\"}]}",
         ] {
             let (url, stop, server) = mock_server(Reply::ContextMoney(text), TokenCost::Small)?;
             let journal = Arc::new(Journal::default());

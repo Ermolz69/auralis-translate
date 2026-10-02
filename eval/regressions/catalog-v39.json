@@ -1,0 +1,24 @@
+{
+  "schema_version": 39,
+  "catalog_id": "zh-ru-development-regressions-v39",
+  "base_catalog_file": "catalog-v38.json",
+  "base_catalog_sha256": "6fb63275a2f939c4eb26f88523791fb317c5676922a43e8333315be5be6c0b1f",
+  "entries": [
+    {
+      "id": "REG-060",
+      "pack_file": "reg-060-target-field-mismatch-v1.json",
+      "pack_sha256": "3578c5672e06151f950913231c01491750f4f946240967e62ea6914ed9bb3244",
+      "source_family": "authored_control_harness",
+      "split": "development_not_holdout",
+      "category": "paired_control_target_field_mismatch",
+      "profile_scope": "REG-058 v1/v2 paired control request construction for both model sizes",
+      "expected_invariant": "Every authored target must replace both source_original and source_for_translation with the same text before any inference request.",
+      "severity": "major",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 2,
+      "negative_control_count": 2,
+      "evidence_record": "eval/experiments/2026-10-02-reg-058-paired-controls-result.md",
+      "last_outcome": "All 24 v1 requests were invalid because only one of two target fields changed. A fresh v2 attempt replaced both fields in all 24 requests and retained the invalid attempt for audit."
+    }
+  ]
+}
