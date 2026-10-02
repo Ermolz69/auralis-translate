@@ -13,7 +13,7 @@ export async function loadCurrentReport(root) {
   const [plan, sources, comparison, retry, audio, terms, kirin,
     kirinCaption, kirinMedia, paywall, captionOverlapRaw, packetRaw,
     activityRaw, voaRaw, batchRaw, salienceRaw, orderRaw, v8Raw, nameRaw,
-    crossRaw] = await Promise.all([
+    crossRaw, largeV8Raw] = await Promise.all([
     loadDeliveryPlan(root), loadSourceCandidates(root), loadSethluiFullV6(root),
     loadSethluiRetry(root), loadSethluiAudio(root), loadApprovedTermDiagnostic(root),
     fs.readFile(path.join(root, 'eval/reports/youtube-geekerwan-kirin-license-v1.json'),
@@ -43,6 +43,8 @@ export async function loadCurrentReport(root) {
       'eval/reports/2026-10-02-reg-052-v8-controls.json'), 'utf8'),
     fs.readFile(path.join(root,
       'eval/reports/2026-10-02-reg-052-cross-model.json'), 'utf8'),
+    fs.readFile(path.join(root,
+      'eval/reports/2026-10-02-v8-7b-authored-cli.json'), 'utf8'),
   ]);
   const captionOverlap = JSON.parse(captionOverlapRaw);
   const salience = JSON.parse(salienceRaw);
@@ -50,6 +52,7 @@ export async function loadCurrentReport(root) {
   const v8 = JSON.parse(v8Raw);
   const names = JSON.parse(nameRaw);
   const cross = JSON.parse(crossRaw);
+  const largeV8 = JSON.parse(largeV8Raw);
   const captionOverlapSha256 = createHash('sha256').update(captionOverlapRaw).digest('hex');
   const packet = JSON.parse(packetRaw);
   assert.equal(createHash('sha256').update(packetRaw).digest('hex'),
@@ -266,6 +269,17 @@ export async function loadCurrentReport(root) {
       large_gpu_device_max_observed_mib: cross.large_resource_observation.gpu_device_max_observed_mib,
       human_review_count: cross.human_bilingual_review_count,
       report_sha256: createHash('sha256').update(crossRaw).digest('hex') },
+    large_v8_cli: { chats: largeV8.chat_requests,
+      checkpoints: largeV8.checkpoints,
+      results: largeV8.results,
+      review_state: largeV8.review_state,
+      prompt_tokens: largeV8.prompt_tokens,
+      completion_tokens: largeV8.completion_tokens,
+      cli_elapsed_ms_rounded: largeV8.cli_elapsed_ms_rounded,
+      output_sha256: largeV8.output_sha256,
+      human_review_count: largeV8.human_bilingual_review_count,
+      accepted_language_quality: largeV8.accepted_language_quality,
+      report_sha256: createHash('sha256').update(largeV8Raw).digest('hex') },
     backlog: { total_tasks: plan.total_tasks, counts: plan.counts },
   };
 }

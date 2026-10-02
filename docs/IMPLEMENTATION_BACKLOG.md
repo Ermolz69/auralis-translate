@@ -727,3 +727,14 @@ assessment on known development sources, with zero human ratings. The
 evidence for natural-file quality. A checked 7B v8 manifest, bounded CLI
 source comparison, source-scoped approved names and natural seam study are
 next, while the release gate remains open.
+
+The [real 7B v8 four-cue CLI screen](../eval/experiments/2026-10-02-v8-7b-authored-cli-result.md)
+adds an opt-in checked 7B manifest and a fresh durable result on the same
+authored Chinese SRT as the prior 1.8B v8 batch-four arm. One real chat,
+two token preflights, one validated checkpoint and one full `needs_review`
+SRT preserved source bytes and the protected amounts. AI review found a
+grammatical Xiao Li question where 1.8B failed; both model outputs remain
+unreviewed by a Chinese–Russian person. The 7B CLI took 29,900 ms in this
+one run and reached 7,212 MiB device-wide GPU use on an 8 GiB card; no
+portable speed or headroom claim follows. Natural long-file translation,
+scene seams, human meaning review and spoken-script approval remain open.
