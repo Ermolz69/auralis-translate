@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "experiment": "DATA-03-youtube-geekerwan-kirin-original-caption-2026-10-02-v1",
+  "acquired_at": "2026-10-02T11:40:43.454Z",
+  "video_id": "73XUeYRFsZU",
+  "subtitle_language_label": "zh-CN",
+  "source_srt_sha256": "c2a5fa3ae5139fe90b2be0b4b48b10ddd20d9b42103f4dd8401e1426d1b3eae5",
+  "source_bytes": 25112,
+  "previous_archived_srt_sha256": "57dfd9feb3bfe6381421c4142820b780af341e195e52ee81d58e8f9f12858feb",
+  "matches_archived_bytes": false,
+  "strict_cli_sha256": "48195b25dda70d08bb23c2e31a75fb665aae84f12e6726c8f72e0c0ea77bbbb8",
+  "strict_cues": 343,
+  "first_cue": {
+    "id": 1,
+    "start_ms": 280,
+    "end_ms": 2800
+  },
+  "last_cue": {
+    "id": 343,
+    "start_ms": 846960,
+    "end_ms": 849160
+  },
+  "overlap_pairs": 0,
+  "archived_media_duration_ms": 761818,
+  "cues_beyond_archived_media_end": 39,
+  "first_cue_beyond_archived_media_end": 305,
+  "original_platform_metadata_duration_ms": 852000,
+  "cues_beyond_original_metadata_end": 0,
+  "first_inspection_attempt": "spawn_eperm_retained",
+  "offline_retry_attempt": "strict_inspected",
+  "caption_rights_verified": false,
+  "human_speech_alignment_verified": false,
+  "source_admission": "unassigned_unreviewed"
+}
