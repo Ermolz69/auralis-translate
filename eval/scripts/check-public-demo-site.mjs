@@ -62,6 +62,7 @@ assert(html.includes('id="voa-caption-screen"'));
 assert(html.includes('id="v7-batch-screen"'));
 assert(html.includes('2026-10-02-voa-mandarin-caption-inventory-result.md'));
 assert(current.includes('href="./history.html"'), 'Current state must link to history');
+assert(current.includes('2026-10-02-release-05-audit-attempt-v6.md'));
 assert(current.includes('https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'));
 assert(current.includes('<title>Auralis Translate — текущее состояние</title>'));
 assert(!current.includes('id="report-data"'), 'Historical benchmark data belongs only in history');
