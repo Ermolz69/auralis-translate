@@ -111,3 +111,22 @@ predeclared screen passes. Source rights and spoken alignment, independent
 Chinese–Russian review, approved dubbing script and real listening, a clean
 Windows target and the owner's desktop decision remain required. No online
 volunteer contact will be attempted.
+
+## Publication addendum
+
+The audit link and refreshed backlog were published in site commit
+`cbe3e812472aae97e258f1cd41af63c74edc773a`, which changed no model,
+runtime or product behavior. Its
+[Pages workflow](https://github.com/Ermolz69/auralis-translate/actions/runs/37062634969)
+completed successfully. A second `task site:live:check` confirmed both
+HTTP-200 pages byte-for-byte against the committed HTML: [current](https://ermolz69.github.io/auralis-translate/?revision=cbe3e812472aae97e258f1cd41af63c74edc773a)
+54,426 bytes, SHA-256
+`673ee6c64a7a7072e569607ce17e3609f6982e0f4cf85d81c8ec852f4c022740`;
+[history](https://ermolz69.github.io/auralis-translate/history.html?revision=cbe3e812472aae97e258f1cd41af63c74edc773a)
+1,132,560 bytes, SHA-256
+`62f3004c545a096dab4b2347c010e93503995803aa6537322be10e99c81c9326`.
+The private second live-check report SHA-256 is
+`bfbcb08ca2ec491fcb7731a9801691cadf5b79df34c20c0011762a251416621d`.
+The public current page now links this v9 self-audit, and the historical
+measurement objects remain unchanged. This addendum does not alter the
+failed/open RELEASE-05 decision.
