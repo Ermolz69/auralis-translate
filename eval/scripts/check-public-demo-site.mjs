@@ -81,6 +81,19 @@ assert.equal(currentData.source_probe.original_media_acquired, false);
 assert.deepEqual(currentData.source_probe.media_http_statuses, [302, 403]);
 assert(current.includes('2026-10-02-kirin-original-caption-and-media-result.md'));
 assert(current.includes('допущенных реплик по-прежнему 0'));
+assert.equal(currentData.development_screen.source_cues, 12);
+assert.equal(currentData.development_screen.source_text_slots, 16);
+assert.equal(currentData.development_screen.identical_requests, true);
+assert.equal(currentData.development_screen.human_reviewed_cues, 0);
+assert.equal(currentData.development_screen.selected_model, null);
+assert.equal(currentData.development_screen.source_admission,
+  'unassigned_unreviewed');
+assert.deepEqual(currentData.development_screen.variants.map(arm =>
+  [arm.model, arm.accepted_cues, arm.source_alias_missing_at_861,
+    arm.ambiguous_number_grouping_at_17]),
+[['1b', 12, true, true], ['7b', 12, false, true]]);
+assert(current.includes('2026-10-02-paywall-bilingual-review-seed-results.md'));
+assert(current.includes('REG-047–049'));
 assert.equal(currentData.translation.small.checkpoints, 263);
 assert.equal(currentData.translation.large.checkpoints, 263);
 assert.equal(currentData.translation.human_reviewed_cues, 0);

@@ -10,7 +10,7 @@ import { loadApprovedTermDiagnostic } from './term-diagnostic-section.mjs';
 
 export async function loadCurrentReport(root) {
   const [plan, sources, comparison, retry, audio, terms, kirin,
-    kirinCaption, kirinMedia] = await Promise.all([
+    kirinCaption, kirinMedia, paywall] = await Promise.all([
     loadDeliveryPlan(root), loadSourceCandidates(root), loadSethluiFullV6(root),
     loadSethluiRetry(root), loadSethluiAudio(root), loadApprovedTermDiagnostic(root),
     fs.readFile(path.join(root, 'eval/reports/youtube-geekerwan-kirin-license-v1.json'),
@@ -18,6 +18,8 @@ export async function loadCurrentReport(root) {
     fs.readFile(path.join(root, 'eval/reports/youtube-geekerwan-kirin-caption-v1.json'),
       'utf8').then(JSON.parse),
     fs.readFile(path.join(root, 'eval/reports/youtube-geekerwan-kirin-media-failure-v1.json'),
+      'utf8').then(JSON.parse),
+    fs.readFile(path.join(root, 'eval/reports/paywall-review-seed-v1.json'),
       'utf8').then(JSON.parse),
   ]);
   const small = comparison.arms[0];
@@ -44,6 +46,14 @@ export async function loadCurrentReport(root) {
   assert.equal(kirinCaption.source_admission, 'unassigned_unreviewed');
   assert.equal(kirinMedia.media_acquired, false);
   assert.deepEqual(kirinMedia.attempts.map(item => item.http_status), [302, 403]);
+  assert.equal(paywall.source_id, 'paywall-chinese-4b4ffc0c');
+  assert.equal(paywall.source_cues, 12);
+  assert.equal(paywall.source_text_slots, 16);
+  assert.equal(paywall.model_request_projection_identical, true);
+  assert.equal(paywall.source_admission, 'unassigned_unreviewed');
+  assert.equal(paywall.independent_human_reviewed_cues, 0);
+  assert.equal(paywall.selected_model, null);
+  assert.deepEqual(paywall.variants.map(arm => arm.model), ['1b', '7b']);
   return {
     schema_version: 1,
     as_of: '2026-10-02',
@@ -79,6 +89,26 @@ export async function loadCurrentReport(root) {
       checked_pairs_in_reproducer: terms.pair_audit.checked_pairs,
       missing_pairs_in_reproducer: terms.pair_audit.missing_pairs,
       human_review: terms.pair_audit.human_review },
+    development_screen: {
+      source_id: paywall.source_id,
+      source_cues: paywall.source_cues,
+      source_text_slots: paywall.source_text_slots,
+      identical_requests: paywall.model_request_projection_identical,
+      film_speech_language: paywall.film_speech_language,
+      source_admission: paywall.source_admission,
+      human_reviewed_cues: paywall.independent_human_reviewed_cues,
+      selected_model: paywall.selected_model,
+      variants: paywall.variants.map(arm => ({ model: arm.model,
+        accepted_cues: arm.accepted_cues,
+        text_slots: arm.text_slots,
+        translation_command_ms: arm.translation_command_ms,
+        prompt_tokens: arm.prompt_tokens,
+        completion_tokens: arm.completion_tokens,
+        sampled_process_rss_peak_bytes: arm.sampled_process_rss_peak_bytes,
+        source_alias_missing_at_861: arm.source_alias_missing_at_861,
+        ambiguous_number_grouping_at_17:
+          arm.ambiguous_number_grouping_at_17 })),
+    },
     audio: { cue_count: audio.summary.cue_count,
       overrun_count: audio.summary.overrun_count,
       overlap_start_count: audio.summary.overlap_start_count,
