@@ -125,8 +125,11 @@ impl StoredRequest {
             && ((kind == InferenceRequestKind::ChatCompletion
                 && result.outcome == InferenceRequestOutcome::ParsedPreflightJson)
                 || (kind != InferenceRequestKind::ChatCompletion
-                    && (result.outcome == InferenceRequestOutcome::ValidatedLine
-                        || result.restored_candidate.is_some())))
+                    && (matches!(
+                        result.outcome,
+                        InferenceRequestOutcome::ValidatedLine
+                            | InferenceRequestOutcome::ValidatedBatch
+                    ) || result.restored_candidate.is_some())))
         {
             return Err(DbError::CorruptRecord("inference kind and outcome differ"));
         }
@@ -211,7 +214,10 @@ pub(crate) fn finish(
     connection: &mut Connection,
     finish: &InferenceRequestFinish,
 ) -> Result<(), DbError> {
-    if finish.outcome == InferenceRequestOutcome::ValidatedLine {
+    if matches!(
+        finish.outcome,
+        InferenceRequestOutcome::ValidatedLine | InferenceRequestOutcome::ValidatedBatch
+    ) {
         if finish.raw_response.is_none()
             || finish
                 .restored_candidate
@@ -220,7 +226,7 @@ pub(crate) fn finish(
             || finish.error_detail.is_some()
         {
             return Err(DbError::InvalidSpec(
-                "validated inference line is incomplete",
+                "validated inference response is incomplete",
             ));
         }
     } else if finish.outcome == InferenceRequestOutcome::ParsedPreflightJson {
@@ -254,8 +260,10 @@ pub(crate) fn finish(
     if (saved.start.kind == InferenceRequestKind::ChatCompletion
         && finish.outcome == InferenceRequestOutcome::ParsedPreflightJson)
         || (saved.start.kind != InferenceRequestKind::ChatCompletion
-            && (finish.outcome == InferenceRequestOutcome::ValidatedLine
-                || finish.restored_candidate.is_some()))
+            && (matches!(
+                finish.outcome,
+                InferenceRequestOutcome::ValidatedLine | InferenceRequestOutcome::ValidatedBatch
+            ) || finish.restored_candidate.is_some()))
     {
         return Err(DbError::InvalidSpec("inference kind and outcome differ"));
     }

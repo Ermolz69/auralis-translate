@@ -99,6 +99,43 @@ fn rejected_raw_candidate_survives_reopen_and_later_success() -> Result<(), Box<
 }
 
 #[test]
+fn validated_batch_keeps_one_raw_request_and_all_restored_slots() -> Result<(), Box<dyn Error>> {
+    let directory = test_directory()?;
+    let path = directory.join("batch-journal.sqlite");
+    let translation = translation_spec()?;
+    let run = run_spec()?;
+    let mut db = TranslateDb::open(&path, SqliteConfig::default())?;
+    db.ensure_translation(&translation)?;
+    db.ensure_segments(translation.translation_id, 20, &[source_segment()?])?;
+    let attempt = db.begin_attempt(&run, None)?;
+    let request = start("cccccccc-cccc-4ccc-8ccc-cccccccccccc")?;
+    db.begin_inference_request(attempt, &request)?;
+    let raw = br#"{"choices":[{"message":{"content":"batch"}}]}"#.to_vec();
+    let restored = r#"["первая","вторая"]"#.to_owned();
+    let finish = InferenceRequestFinish {
+        request_id: request.request_id,
+        outcome: InferenceRequestOutcome::ValidatedBatch,
+        raw_response: Some(raw),
+        restored_candidate: Some(restored),
+        prompt_tokens: Some(91),
+        completion_tokens: Some(22),
+        elapsed_ms: 31,
+        error_detail: None,
+    };
+    db.finish_inference_request(&finish)?;
+    drop(db);
+    let db = TranslateDb::open(&path, SqliteConfig::default())?;
+    let rows = db.inference_requests(run.run_id)?;
+    assert_eq!(rows.len(), 1);
+    assert_eq!(rows[0].start, request);
+    assert_eq!(rows[0].finish, Some(finish));
+    assert!(db.checkpoints(run.run_id)?.is_empty());
+    drop(db);
+    std::fs::remove_dir_all(directory)?;
+    Ok(())
+}
+
+#[test]
 fn request_identity_and_source_position_cannot_be_reassigned() -> Result<(), Box<dyn Error>> {
     let directory = test_directory()?;
     let path = directory.join("identity.sqlite");

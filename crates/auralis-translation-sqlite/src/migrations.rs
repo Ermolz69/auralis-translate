@@ -1,7 +1,8 @@
 use crate::DbError;
 use rusqlite::Connection;
 
-pub const SCHEMA_VERSION: u32 = 8;
+pub const SCHEMA_VERSION: u32 = 9;
+const INFERENCE_BATCH_SCHEMA: &str = include_str!("../migrations/0009_inference_batches.sql");
 const INFERENCE_PREFLIGHT_SCHEMA: &str = include_str!("../migrations/0008_inference_preflight.sql");
 const INFERENCE_REQUESTS_SCHEMA: &str = include_str!("../migrations/0007_inference_requests.sql");
 const RESULT_EDIT_PROVENANCE_SCHEMA: &str =
@@ -46,6 +47,9 @@ pub(crate) fn apply(connection: &mut Connection) -> Result<(), DbError> {
     }
     if current < 8 {
         transaction.execute_batch(INFERENCE_PREFLIGHT_SCHEMA)?;
+    }
+    if current < 9 {
+        transaction.execute_batch(INFERENCE_BATCH_SCHEMA)?;
     }
     transaction.pragma_update(None, "user_version", SCHEMA_VERSION)?;
     transaction.commit()?;

@@ -183,7 +183,7 @@ fn v5_upgrade_retains_old_results_without_inventing_ancestry() -> Result<(), Box
     connection.execute_batch("DROP TABLE inference_requests; DROP TABLE result_edit_provenance; PRAGMA user_version = 5;")?;
     drop(connection);
     f.db = TranslateDb::open(&f.path, SqliteConfig::default())?;
-    assert_eq!(f.db.schema_version()?, 8);
+    assert_eq!(f.db.schema_version()?, 9);
     assert_eq!(f.db.result(second.result_id)?, second);
     assert_eq!(f.db.result_edit_provenance(second.result_id)?, None);
     assert_eq!(f.db.result_edits(second.result_id)?.len(), 1);
