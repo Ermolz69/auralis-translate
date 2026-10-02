@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "experiment": "v8-7b-authored-v1",
+  "task_ids": [
+    "LONG-01",
+    "EVAL-04"
+  ],
+  "source_split": "authored_development_not_holdout",
+  "code_commit": "04398697e9c8a118443b33802f99bfbab747abc7",
+  "source_sha256": "ad88b2d2f96b153d5d8880175b321167263d7abaae48ca693d89b925459bc8a7",
+  "manifest_sha256": "c287c53efbb4ce78471b64648ea3dd2f521363df0e168b7a61df1fdd6ae0479a",
+  "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+  "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "release_cli_sha256": "854da57df8dff73e5349a3bb6eb7a50352ca5ff7d2ef74e89ec4aaecc1a7ad3e",
+  "prior_1_8b_private_report_sha256": "ecdf4d7e02190a5b81e8fd06c0477c7bb5219076ad2138a91dbd9d15f912ee52",
+  "private_report": ".cache/eval/v8-7b-authored-v1/attempt-RgNA32/report.json",
+  "private_report_sha256": "faeac62597857b05ffa8783dd5fcf2d8e292ceddbb41645baa8c351bc1fadba5",
+  "status": "completed_structural_needs_review",
+  "chat_requests": 1,
+  "preflight_requests": 2,
+  "checkpoints": 1,
+  "results": 1,
+  "review_state": "needs_review",
+  "source_after_sha256": "ad88b2d2f96b153d5d8880175b321167263d7abaae48ca693d89b925459bc8a7",
+  "output_sha256": "d6afd24869bd78fb402a57544b842fa24685f2593d2dd10e6f7269a8da1f77f2",
+  "prompt_tokens": 451,
+  "completion_tokens": 145,
+  "chat_http_ms": 3986,
+  "cli_elapsed_ms_rounded": 29900,
+  "wall_ms_rounded": 35915,
+  "raw_response_sha256": "5abdad70e66114037c497a5e75e387278ceee10a505a39f6c99c6d1f60ce4716",
+  "raw_candidate": [
+    "Менеджер Ван сказал, что завтра не пятница.",
+    "За этот билет нужно заплатить __AURALIS_MONEY_0__, а не __AURALIS_MONEY_1__.",
+    "Отдал ли Сяо Ли ключи менеджеру Вану?",
+    "Нет, он оставил ключи на столе."
+  ],
+  "accepted_cues": [
+    "Менеджер Ван сказал, что завтра не пятница.",
+    "За этот билет нужно заплатить 10 юаней, а не 100 юаней.",
+    "Отдал ли Сяо Ли ключи менеджеру Вану?",
+    "Нет, он оставил ключи на столе."
+  ],
+  "prior_1_8b_cues": [
+    "Менеджер Ванг сказал, что завтра не пятница.",
+    "Этот билет стоит 10 юаней, не нужно платить 100 юаней.",
+    "Был ли Ли Сяо передал ключи менеджеру Вангу?",
+    "Нет, он оставил ключи на столе."
+  ],
+  "resource_observation": {
+    "samples": 6,
+    "server_working_set_max_observed_bytes": 5034844160,
+    "gpu_device_max_observed_mib": 7212,
+    "limitation": "Sampled working set/private memory of tracked processes; device-wide GPU use includes other applications. Not an isolated peak or release hardware gate."
+  },
+  "human_bilingual_review_count": 0,
+  "accepted_language_quality": false,
+  "release_gate": "open"
+}

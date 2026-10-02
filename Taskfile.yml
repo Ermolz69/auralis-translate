@@ -2059,6 +2059,30 @@ tasks:
     desc: Verify retained v8 real CLI one/four-target requests, checkpoints, exports and source
     cmds:
       - node eval/scripts/check-v8-authored-batch.mjs
+  eval:long:v8:7b:authored:preflight:
+    desc: Verify pinned 7B v8 profile, same four-cue source, runtime and release CLI
+    env:
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - node eval/scripts/probe-v8-7b-authored.mjs --preflight
+  eval:long:v8:7b:authored:probe:
+    desc: Run one real 7B v8 batch-four CLI result on the same authored Chinese source
+    env:
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - task: build:release
+      - task: eval:long:v8:7b:authored:preflight
+      - node eval/scripts/probe-v8-7b-authored.mjs
+  eval:long:v8:7b:authored:report:
+    desc: Extract the pinned 7B v8 authored CLI run into a public comparison report
+    cmds:
+      - node eval/scripts/check-v8-7b-authored.mjs --write
+  eval:long:v8:7b:authored:check:
+    desc: Verify the 7B v8 prompt, raw model response, checkpoint, full SRT and original source
+    cmds:
+      - node eval/scripts/check-v8-7b-authored.mjs
   eval:regression:v8:name:preflight:
     desc: Verify frozen REG-052 source, v8 request, model and runtime before name controls
     env:
