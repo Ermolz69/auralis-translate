@@ -600,3 +600,10 @@ at `site/index.html`, while the prior detailed evidence and failures remain at
 `site/history.html`. The [split verification record](../eval/experiments/2026-10-02-public-report-split-result.md)
 tracks the generated boundary and publication check. It does not complete
 `EVAL-03` or any release gate.
+
+The owner has no available bilingual reviewer or listener and requested a
+zero-budget route. The [opt-in acquisition plan](../eval/experiments/2026-10-02-no-budget-human-review-route-v1.md)
+separates bilingual source-meaning review from Russian TTS listening, records
+free language-exchange channels and a small rights-safe development packet,
+then retains the existing sealed 300-cue and audio gates. No person has agreed
+to participate; no human score or release threshold changes.
