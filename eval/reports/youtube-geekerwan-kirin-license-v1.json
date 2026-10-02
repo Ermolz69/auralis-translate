@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "experiment": "DATA-03-youtube-geekerwan-kirin-license-2026-10-02-v1",
+  "observed_at": "2026-10-02T11:15:09.307Z",
+  "original_video_id": "73XUeYRFsZU",
+  "original_upload_date": "20240428",
+  "original_duration_ms": 852000,
+  "local_media_duration_ms": 761818,
+  "duration_comparison": {
+    "status": "duration_discrepancy",
+    "difference_ms": 90182,
+    "alignment_verified": false
+  },
+  "original_platform_license_field": "Creative Commons Attribution license (reuse allowed)",
+  "original_caption_languages": [
+    "en",
+    "zh-CN"
+  ],
+  "chinese_srt_track_advertised": true,
+  "original_srt_sha256": "57dfd9feb3bfe6381421c4142820b780af341e195e52ee81d58e8f9f12858feb",
+  "local_media_sha256": "2911c8a14b6da9fa62d46235aa09a1b240ee1409ec8e28336edc7ed90c9af586",
+  "metadata_stdout_sha256": "26e81c23f653efc066b3d9a7ef83da4e76b36252e9508a0eb35a980de682f15b",
+  "source_admission": "unassigned_unreviewed",
+  "caption_authorship_verified": false,
+  "commons_license_review_complete": false,
+  "human_speech_alignment_verified": false
+}

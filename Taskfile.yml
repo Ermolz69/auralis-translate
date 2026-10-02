@@ -263,6 +263,33 @@ tasks:
     cmds:
       - node --check eval/scripts/inventory-youtube-sethlui-license.mjs
       - node eval/scripts/inventory-youtube-sethlui-license.mjs --preflight
+  eval:data:youtube:kirin:license:preflight:
+    desc: Verify the pinned one-attempt Kirin source metadata-only query
+    env:
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - node --test-isolation=none --test eval/scripts/tests/bounded-process-capture.test.mjs
+      - node --check eval/scripts/inventory-youtube-geekerwan-kirin-license.mjs
+      - node eval/scripts/inventory-youtube-geekerwan-kirin-license.mjs --preflight
+  eval:data:youtube:kirin:license:inventory:
+    desc: Retain one bounded YouTube metadata response without downloading captions or media
+    env:
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - task: eval:data:youtube:kirin:license:preflight
+      - node eval/scripts/inventory-youtube-geekerwan-kirin-license.mjs
+  eval:data:youtube:kirin:license:capture:
+    desc: Verify the retained Kirin metadata and capture a redacted public result
+    cmds:
+      - node --test --test-isolation=none eval/scripts/tests/source-duration-compatibility.test.mjs
+      - node --check eval/scripts/check-youtube-geekerwan-kirin-license.mjs
+      - node eval/scripts/check-youtube-geekerwan-kirin-license.mjs --capture
+  eval:data:youtube:kirin:license:check:
+    desc: Recheck retained Kirin metadata and the redacted public result offline
+    cmds:
+      - node --test --test-isolation=none eval/scripts/tests/source-duration-compatibility.test.mjs
+      - node --check eval/scripts/check-youtube-geekerwan-kirin-license.mjs
+      - node eval/scripts/check-youtube-geekerwan-kirin-license.mjs
   eval:data:youtube:sethlui:license:inventory:
     desc: Retain one raw metadata-only response for the named original video
     env:
