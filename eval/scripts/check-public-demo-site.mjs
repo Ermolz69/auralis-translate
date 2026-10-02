@@ -68,6 +68,9 @@ const currentMatch = current.match(/<script id="current-data" type="application\
 assert(currentMatch);
 const currentData = JSON.parse(currentMatch[1]);
 assert.deepEqual(currentData, await loadCurrentReport(root));
+assert.equal(currentData.audio.packet_count, 36_904);
+assert.equal(currentData.audio.packet_timeline_continuous, true);
+assert(current.includes('2026-10-02-sethlui-packet-boundary-result.md'));
 assert.equal(currentData.release_decision, 'not_accepted');
 assert.equal(currentData.sources.eligible_cues, 0);
 assert.equal(currentData.sources.candidates, 11);

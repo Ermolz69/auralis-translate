@@ -11,7 +11,7 @@ import { loadApprovedTermDiagnostic } from './term-diagnostic-section.mjs';
 
 export async function loadCurrentReport(root) {
   const [plan, sources, comparison, retry, audio, terms, kirin,
-    kirinCaption, kirinMedia, paywall, captionOverlapRaw] = await Promise.all([
+    kirinCaption, kirinMedia, paywall, captionOverlapRaw, packetRaw] = await Promise.all([
     loadDeliveryPlan(root), loadSourceCandidates(root), loadSethluiFullV6(root),
     loadSethluiRetry(root), loadSethluiAudio(root), loadApprovedTermDiagnostic(root),
     fs.readFile(path.join(root, 'eval/reports/youtube-geekerwan-kirin-license-v1.json'),
@@ -23,9 +23,20 @@ export async function loadCurrentReport(root) {
     fs.readFile(path.join(root, 'eval/reports/paywall-review-seed-v1.json'),
       'utf8').then(JSON.parse),
     fs.readFile(path.join(root, 'eval/reports/source-caption-overlap-v1.json'), 'utf8'),
+    fs.readFile(path.join(root,
+      'eval/reports/2026-10-02-sethlui-packet-boundary-summary.json'), 'utf8'),
   ]);
   const captionOverlap = JSON.parse(captionOverlapRaw);
   const captionOverlapSha256 = createHash('sha256').update(captionOverlapRaw).digest('hex');
+  const packet = JSON.parse(packetRaw);
+  assert.equal(createHash('sha256').update(packetRaw).digest('hex'),
+    'c5cf09d0f341c591bf960c1a377d78596b728455869445537058880227b69e86');
+  assert.equal(packet.media_sha256, audio.summary.media_sha256);
+  assert.equal(packet.packet_count, audio.summary.audio_packet_count);
+  assert.equal(packet.maximum_internal_gap_ms, audio.summary.maximum_packet_gap_ms);
+  assert.equal(packet.packet_timeline_continuous, true);
+  assert.equal(packet.human_listeners, 0);
+  assert.equal(packet.cue_fit_admitted, false);
   const small = comparison.arms[0];
   const large = retry.second;
   assert.equal(small.model, '1.8B Q4_K_M');
@@ -133,6 +144,11 @@ export async function loadCurrentReport(root) {
       fit_at_most_2x: audio.summary.fit_at_most_2x,
       full_playback_ms: audio.summary.full_playback_ms,
       paired_clips: audio.summary.audition_paired_clips,
+      packet_count: packet.packet_count,
+      packet_gap_ms: packet.maximum_internal_gap_ms,
+      packet_preroll_ms: packet.preroll_ms,
+      packet_overshoot_ms: packet.overshoot_ms,
+      packet_timeline_continuous: packet.packet_timeline_continuous,
       human_listeners: 0, approved_script: audio.summary.approved_spoken_script },
     backlog: { total_tasks: plan.total_tasks, counts: plan.counts },
   };
