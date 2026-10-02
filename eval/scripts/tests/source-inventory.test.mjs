@@ -90,6 +90,15 @@ test('media duration requires a positive value and its source evidence', () => {
   assert.equal(validateSourceInventory(checked).inspected_candidate_cues, 365);
 });
 
+test('an optional original media URL is checked as HTTPS provenance', () => {
+  const accepted = structuredClone(candidates);
+  accepted.sources[0].original_media_url = 'https://www.youtube.com/watch?v=73XUeYRFsZU';
+  assert.equal(validateSourceInventory(accepted).inspected_candidate_cues, 365);
+  const rejected = structuredClone(candidates);
+  rejected.sources[0].original_media_url = 'http://www.youtube.com/watch?v=73XUeYRFsZU';
+  assert.throws(() => validateSourceInventory(rejected), /original_media_url.*HTTPS/u);
+});
+
 test('a related source cannot cross the development and holdout split', () => {
   const inventory = copy();
   const source = structuredClone(inventory.sources[0]);

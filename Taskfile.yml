@@ -1635,18 +1635,34 @@ tasks:
       - node --test --test-isolation=none eval/scripts/tests/cue-media-coverage.test.mjs
       - node eval/scripts/check-source-inventory.mjs eval/corpora/source-inventory-example-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-inspected-candidates-v1.json
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-inspected-candidates-v2.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-cc-commerce-candidate-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/youtube-mingfay-candidate-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-ying-candidate-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-vivo-candidate-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-geekerwan-two-scenes-candidate-v1.json
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-geekerwan-two-scenes-candidate-v2.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-sethlui-candidate-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/paywall-chinese-candidate-v1.json
       - node eval/scripts/check-source-inventory.mjs eval/corpora/youtube-geekerwan-kirin-original-candidate-v1.json
+      - node eval/scripts/check-cross-inventory-source-groups.mjs eval/corpora/commons-inspected-candidates-v2.json eval/corpora/commons-cc-commerce-candidate-v1.json eval/corpora/youtube-mingfay-candidate-v1.json eval/corpora/commons-ying-candidate-v1.json eval/corpora/commons-vivo-candidate-v1.json eval/corpora/commons-geekerwan-two-scenes-candidate-v2.json eval/corpora/commons-sethlui-candidate-v1.json eval/corpora/paywall-chinese-candidate-v1.json eval/corpora/youtube-geekerwan-kirin-original-candidate-v1.json
   eval:data:commons:ying:candidate:check:
     desc: Validate the non-admitted Commons Ying inventory and exact retained Chinese SRT bytes
     cmds:
       - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-ying-candidate-v1.json --require-candidate-bytes
+  eval:data:current:bytes:check:
+    desc: Rehash all current non-admitted Chinese source tracks and reject cross-inventory identity reuse
+    cmds:
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-inspected-candidates-v2.json --require-candidate-bytes
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-cc-commerce-candidate-v1.json --require-candidate-bytes
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/youtube-mingfay-candidate-v1.json --require-candidate-bytes
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-ying-candidate-v1.json --require-candidate-bytes
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-vivo-candidate-v1.json --require-candidate-bytes
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-geekerwan-two-scenes-candidate-v2.json --require-candidate-bytes
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/commons-sethlui-candidate-v1.json --require-candidate-bytes
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/paywall-chinese-candidate-v1.json --require-candidate-bytes
+      - node eval/scripts/check-source-inventory.mjs eval/corpora/youtube-geekerwan-kirin-original-candidate-v1.json --require-candidate-bytes
+      - node eval/scripts/check-cross-inventory-source-groups.mjs eval/corpora/commons-inspected-candidates-v2.json eval/corpora/commons-cc-commerce-candidate-v1.json eval/corpora/youtube-mingfay-candidate-v1.json eval/corpora/commons-ying-candidate-v1.json eval/corpora/commons-vivo-candidate-v1.json eval/corpora/commons-geekerwan-two-scenes-candidate-v2.json eval/corpora/commons-sethlui-candidate-v1.json eval/corpora/paywall-chinese-candidate-v1.json eval/corpora/youtube-geekerwan-kirin-original-candidate-v1.json
   eval:data:youtube:mingfay:preflight:
     desc: Check the declared video, pinned extractor and bounded metadata-only command
     env:

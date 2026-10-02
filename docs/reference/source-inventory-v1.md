@@ -69,6 +69,17 @@ The example's `local_fixture_path` is restricted to an owned SRT fixture under
 `eval/corpora/fixtures/`. The Taskfile checker recalculates its raw SHA-256.
 The separate [Commons candidate inventory](../../eval/corpora/commons-inspected-candidates-v1.json)
 uses `local_candidate_path` only under ignored `.cache/eval/<candidate-id>/source.zh.srt`.
+An optional `original_media_url` records a separately evidenced source-platform
+video for an archived media derivative. It must be HTTPS and does not itself
+approve rights or speech alignment. The [cross-inventory identity guard](../../eval/experiments/2026-10-02-cross-inventory-leakage-guard-plan.md)
+rejects repeated declared non-null subtitle SHA-256, even inside one group,
+and different groups with the same canonical YouTube video ID across
+source/media/original URLs or the same declared media URL. The retained Commons and original-platform Kirin versions
+now share the evidenced YouTube origin. `task eval:data:check` validates all
+currently registered manifest identities together after checking each schema;
+any new training, development or holdout manifest must be added to that command.
+Exact identity checks do not discover edited near-duplicates, inaccurate
+provenance or overlapping scenes; these remain for `DATA-05` audit.
 `task eval:data:check` checks its schema and reports 365 inspected candidate
 cues with zero eligible cues for that initial inventory. It also checks the
 separate 123-cue Commons commerce inventory and the [230-cue private Mandarin
@@ -155,3 +166,11 @@ The later [REG-050 counter correction](../../eval/experiments/2026-10-02-reg-050
 narrows `eligible_cues` to reviewed source states. The original fixture and
 historical acceptance wording remain visible above as dated evidence, while
 current `task eval:data:check` reports zero eligible fixture cues.
+
+The [cross-inventory correction](../../eval/experiments/2026-10-02-cross-inventory-leakage-guard-result.md)
+found the same 93-cue Ying SRT in two historical inventories. The prior
+12/3,336 count above remains a dated observation. Current versioned manifests
+count 11 track records, 10 media groups and 3,243 inspected cue slots, with
+zero eligible cues. The 304-cue archived and 343-cue original Kirin tracks
+are separate versions of one media group; the slot sum does not imply that
+all those lines are independent.
