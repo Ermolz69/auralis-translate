@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "id": "REG-058-prompt-screen-v1",
+  "split": "authored_development_not_holdout",
+  "source_family": "private_natural_commons_asus_development",
+  "parent_pack": "eval/regressions/v8-natural-7b-semantic-risk-v1.json",
+  "extra_controls": [
+    {
+      "id": "handheld_extra",
+      "for": "handheld_not_tablet",
+      "source": "这款掌机有两种颜色，但不是平板电脑。",
+      "expected_meaning": "This handheld console comes in two colors, but is not a tablet computer."
+    },
+    {
+      "id": "single_core_extra",
+      "for": "single_core_not_module",
+      "source": "这里说的是单核跑分，不是处理器模块的价格。",
+      "expected_meaning": "This refers to a single-core benchmark score, not the price of a processor module."
+    },
+    {
+      "id": "multicore_extra",
+      "for": "multicore_not_multiprocessor",
+      "source": "这颗芯片有八个核心，但设备只有一个处理器。",
+      "expected_meaning": "The chip has eight cores, but the device has only one processor."
+    },
+    {
+      "id": "longitudinal_extra",
+      "for": "longitudinal_not_spatial",
+      "source": "与去年的同一型号纵向比较，续航时间更长了。",
+      "expected_meaning": "Compared with the same model last year, battery life is longer."
+    },
+    {
+      "id": "platform_extra",
+      "for": "platform_action_not_three_presses",
+      "source": "请点赞、投币和收藏，不用把按钮按三次。",
+      "expected_meaning": "Please like, tip a coin, and favorite; do not press the button three times."
+    },
+    {
+      "id": "mouse_pad_extra",
+      "for": "mouse_pad_not_stand",
+      "source": "盒子里有鼠标垫，没有鼠标支架。",
+      "expected_meaning": "The box contains a mouse pad, not a mouse stand."
+    }
+  ]
+}
