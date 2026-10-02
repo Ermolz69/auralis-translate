@@ -15,6 +15,10 @@ on:
       - eval/scripts/check-delivery-plan.mjs
       - .github/workflows/pages.yml
       - eval/scripts/check-public-demo-site.mjs
+      - eval/scripts/current-report-data.mjs
+      - eval/scripts/current-report-site.mjs
+      - eval/scripts/public-demo-site.mjs
+      - eval/scripts/check-live-pages.mjs
       - eval/reports/public-demo-2026-09-27.json
       - eval/reports/public-demo-fidelity-2026-09-27.json
       - eval/reports/currency-controls-2026-09-27.json

@@ -299,7 +299,7 @@ tasks:
       - node --check eval/scripts/check-youtube-xiaolin-inventory.mjs
       - node eval/scripts/check-youtube-xiaolin-inventory.mjs
   site:live:check:
-    desc: Compare the live GitHub Pages HTML byte-for-byte with the committed local report
+    desc: Compare both live GitHub Pages HTML files byte-for-byte with committed reports
     cmds:
       - task: site:check
       - node --check eval/scripts/check-live-pages.mjs
@@ -1738,20 +1738,26 @@ tasks:
     cmds:
       - cargo test --offline -p auralis-translation-llamacpp --test profile_contract --test protocol
   site:preview:
-    desc: Preview the single report on loopback without exposing repository files
+    desc: Preview current and historical reports on loopback without exposing repository files
     cmds:
       - node eval/scripts/preview-public-demo.mjs
   site:build:
-    desc: Rebuild the single HTML report from frozen real benchmark evidence
+    desc: Rebuild current and historical HTML reports from frozen evidence
     cmds:
       - node eval/scripts/public-demo-site.mjs
+      - node eval/scripts/current-report-site.mjs
   site:capture:
-    desc: Deliberately replace report evidence with the latest successful authored benchmark
+    desc: Deliberately replace historical report evidence with the latest successful authored benchmark
     cmds:
       - node eval/scripts/public-demo-site.mjs --capture
+      - node eval/scripts/current-report-site.mjs
   site:check:
-    desc: Verify report data integrity, embedded scripts and public artifact boundaries
+    desc: Verify both reports, embedded scripts and public artifact boundaries
     cmds:
+      - node --check eval/scripts/current-report-data.mjs
+      - node --check eval/scripts/current-report-site.mjs
+      - node --check eval/scripts/check-public-demo-site.mjs
+      - node --check eval/scripts/preview-public-demo.mjs
       - task: eval:slot-schema:check
       - task: eval:voice:original-window:check
       - node eval/scripts/check-public-demo-site.mjs

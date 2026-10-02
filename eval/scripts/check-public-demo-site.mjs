@@ -50,10 +50,38 @@ import { loadSethluiFullV6, loadSethluiResume } from './sethlui-full-v6-section.
 import { loadSethluiRetry } from './sethlui-retry-section.mjs';
 import { loadSethluiAudio } from './sethlui-audio-section.mjs';
 import { loadApprovedTermDiagnostic } from './term-diagnostic-section.mjs';
+import { loadCurrentReport } from './current-report-data.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const html = await fs.readFile(path.join(root, 'site/index.html'), 'utf8');
-assert.deepEqual(await fs.readdir(path.join(root, 'site')), ['index.html'], 'Only the single report is public');
+const html = await fs.readFile(path.join(root, 'site/history.html'), 'utf8');
+const current = await fs.readFile(path.join(root, 'site/index.html'), 'utf8');
+assert.deepEqual(await fs.readdir(path.join(root, 'site')), ['history.html', 'index.html'],
+  'Only the current and historical reports are public');
+assert(html.includes('href="./index.html"'), 'History must link back to current state');
+assert(current.includes('href="./history.html"'), 'Current state must link to history');
+assert(current.includes('https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'));
+assert(current.includes('<title>Auralis Translate — текущее состояние</title>'));
+assert(!current.includes('id="report-data"'), 'Historical benchmark data belongs only in history');
+assert(!current.includes('id="examples"'), 'Historical example cards belong only in history');
+assert(current.length < html.length / 10, 'Current page must stay focused');
+const currentMatch = current.match(/<script id="current-data" type="application\/json">([\s\S]*?)<\/script>/);
+assert(currentMatch);
+const currentData = JSON.parse(currentMatch[1]);
+assert.deepEqual(currentData, await loadCurrentReport(root));
+assert.equal(currentData.release_decision, 'not_accepted');
+assert.equal(currentData.sources.eligible_cues, 0);
+assert.equal(currentData.translation.small.checkpoints, 263);
+assert.equal(currentData.translation.large.checkpoints, 263);
+assert.equal(currentData.translation.human_reviewed_cues, 0);
+assert.equal(currentData.audio.overrun_count, 256);
+assert.equal(currentData.audio.human_listeners, 0);
+assert(current.includes('G9 — финальная проверка офлайн-перевода'));
+assert(current.includes('2026-10-02-translation-depth-plan-v1.md'));
+for (const script of current.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)) {
+  if (!script[0].includes('application/json')) new vm.Script(script[1]);
+}
+assert(!/(?:E:\\\\|C:\\\\Users\\\\|00ermzahar@|gh[pousr]_[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)/.test(current));
+assert(!/<script[^>]+src="(?!https:\/\/cdn\.jsdelivr\.net\/npm\/@tailwindcss\/browser@4")/.test(current));
 assert(html.includes('https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'));
 assert.equal((html.match(/<article id="zh\d\d"/g) ?? []).length, 20);
 const match = html.match(/<script id="report-data" type="application\/json">([\s\S]*?)<\/script>/);
@@ -454,4 +482,4 @@ for (const script of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))
 }
 assert(!/(?:E:\\\\|C:\\\\Users\\\\|00ermzahar@|gh[pousr]_[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)/.test(html));
 assert(!/<script[^>]+src="(?!https:\/\/cdn\.jsdelivr\.net\/npm\/@tailwindcss\/browser@4")/.test(html));
-console.log('Public HTML verified: prior measurements retained, REG-011 model screen and REG-010 linked, SAPI evidence, report identity and single-file publication boundary.');
+console.log('Public HTML verified: focused current state, full historical measurements, reciprocal links, evidence identity and two-file publication boundary.');

@@ -584,3 +584,19 @@ term index. The authored reproducer, related and negative controls are pinned
 in [catalog v30](../eval/regressions/catalog-v30.json), while earlier catalog
 and report bytes remain historical. This changes no accepted translation,
 has no model or human quality rating and does not close G5 or `RELEASE-05`.
+
+The [translation quality critical path](../eval/experiments/2026-10-02-translation-depth-plan-v1.md)
+prioritizes `DATA-03` rights and speech alignment, then blinded same-source
+meaning/terminology review, token/seam/recovery controls and an evidence-based
+model decision. It freezes one bounded Kirin metadata probe before network
+access; zero eligible cues and zero independent reviewers remain the present
+state. This is an execution priority within PLAN-03, not a lowered gate or a
+new model result.
+
+The owner requested a current-state landing page and separate historical HTML.
+The [versioned public layout](reference/public-report-layout-v2.md) gives
+`EVAL-03` partial presentation evidence: current claims and next actions appear
+at `site/index.html`, while the prior detailed evidence and failures remain at
+`site/history.html`. The [split verification record](../eval/experiments/2026-10-02-public-report-split-result.md)
+tracks the generated boundary and publication check. It does not complete
+`EVAL-03` or any release gate.

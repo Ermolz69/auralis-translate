@@ -53,7 +53,9 @@ Backlog counts measure completed **tasks**, not percent of product quality or
 release readiness. Every `done` task needs linked evidence and scope. No release
 date or throughput promise is fixed before the long-file baseline. Record measured
 work and estimates separately. The [public report](https://ermolz69.github.io/auralis-translate/)
-retains all existing model evidence alongside the generated task progress.
+shows the current decision and generated task progress, with all prior model
+evidence on its separate historical page under the
+[owner-requested layout v2](reference/public-report-layout-v2.md).
 
 ## 3. Data and independent review
 

@@ -328,5 +328,10 @@ document.getElementById('download-reference').addEventListener('click',()=>downl
 </script>
 </body></html>`;
 await fs.mkdir(path.join(root, 'site'), { recursive: true });
-await fs.writeFile(path.join(root, 'site/index.html'), html);
-console.log(`Verified historical evidence and REG-011 paired model screen; wrote site/index.html (${Buffer.byteLength(html)} bytes)`);
+const historyHtml = html
+  .replace('<title>Auralis Translate — 20 примеров и реальные замеры</title>',
+    '<title>Auralis Translate — история измерений</title>')
+  .replace('<body>', '<body><div class="bg-slate-900 px-5 py-3 text-center text-sm font-semibold text-white"><a class="underline" href="./index.html">← Текущее состояние Auralis Translate</a> · История измерений и неудачных попыток</div>')
+  .replace('Единственный HTML-файл.', 'Историческая HTML-страница.');
+await fs.writeFile(path.join(root, 'site/history.html'), historyHtml);
+console.log(`Verified historical evidence and REG-011 paired model screen; wrote site/history.html (${Buffer.byteLength(historyHtml)} bytes)`);

@@ -115,11 +115,15 @@ matched local inference benchmark.
 
 ## 5. Presentation and public progress
 
-The single `site/index.html` uses remote Tailwind; keep deployment dependency-free
-apart from that browser CDN. Build from frozen evidence and the canonical backlog,
-not manually copied progress. A page should show the decision first, measured/
-proposed/reviewer labels, hardware and identities, then explorable examples and raw
-download. Preserve earlier evidence and failure records when publishing new work.
+The public report has two generated HTML files. `site/index.html` shows only the
+current decision, verified capabilities, open gates, workflow and next actions.
+`site/history.html` preserves earlier experiments, failures, detailed comparisons
+and raw downloads. The owner requested this split on 2 October 2026 because the
+single growing report obscured the present state. Both pages use remote Tailwind;
+keep deployment dependency-free apart from that browser CDN. Build from frozen
+evidence and the canonical backlog, not manually copied progress. Label measured,
+proposed, AI-reviewed and human-reviewed claims and link the pages both ways.
+Preserve all earlier evidence and failure records in the historical page.
 
 Context views show source scene, declared target, actual supplied context, proposed
 reference/provenance, model outputs and fact/meaning issues. Long-file views include
