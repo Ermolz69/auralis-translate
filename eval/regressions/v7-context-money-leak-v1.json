@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "REG-051",
+  "status": "narrow_guard_passes_under_unchanged_model_failure",
+  "severity": "major",
+  "source_family": "authored_v7_batch_development_scene",
+  "split": "known_development_regression",
+  "affected_profile": "Hy-MT2 1.8B Q4_K_M experimental batch v7 with one same-scene context line",
+  "expected_invariant": "A source-only context cue must not supply a monetary fact to a target without a recognized amount; reject such output before checkpoint and preserve its raw response.",
+  "minimal_reproducer": {
+    "source_sha256": "ad88b2d2f96b153d5d8880175b321167263d7abaae48ca693d89b925459bc8a7",
+    "target_segment_id": 1,
+    "target_source": "王经理说，明天不是星期五。",
+    "context_segment_id": 2,
+    "context_source": "这张票要十元，不要付一百元。",
+    "old_model_candidate": "Этот билет стоит десять юаней, не нужно платить сто юаней.",
+    "old_outcome": "validated_batch_with_wrong_meaning",
+    "new_outcome": "invalid_candidate_no_checkpoint",
+    "old_private_report_sha256": "e8ba208aa2ffd842bbb51dfcdce5aee527a6fc776dc0806b67a63e0c5cf474dd",
+    "new_private_report_sha256": "ad6b8505f89b6386a0fca47adcd4570988cb66536aac1f5cefb5853e0f91cebb"
+  },
+  "related_controls": [
+    { "id": "yuan_context", "condition": "Reject an invented yuan amount in a target without a protected amount." },
+    { "id": "dollar_context", "condition": "Reject an invented dollar amount in the same target." },
+    { "id": "euro_context", "condition": "Reject an invented euro amount in the same target." }
+  ],
+  "negative_controls": [
+    { "id": "noncurrency_word", "condition": "Do not classify 'европейский' as the currency euro." },
+    { "id": "protected_money_target", "condition": "The target containing two protected yuan amounts still restores both in order." },
+    { "id": "clean_nonmoney_target", "condition": "The ordinary target without a currency still maps and persists." }
+  ],
+  "contract_test": "crates/auralis-translation-llamacpp/tests/context_v7.rs",
+  "human_review": "unavailable; source-aware AI triage only",
+  "release_gate": "open"
+}

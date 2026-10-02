@@ -1,0 +1,24 @@
+{
+  "schema_version": 33,
+  "catalog_id": "zh-ru-development-regressions-v33",
+  "base_catalog_file": "catalog-v32.json",
+  "base_catalog_sha256": "387e544df3395f1a81432dca67b585ab8694a7162ced033c3c3c5fea4bc310c5",
+  "entries": [
+    {
+      "id": "REG-051",
+      "pack_file": "v7-context-money-leak-v1.json",
+      "pack_sha256": "64a71342ac898ff64b3ab1b08f924259b9515cb1ef71e0900e4a77d800d3ce70",
+      "source_family": "authored_v7_batch_development_scene",
+      "split": "known_development_regression",
+      "category": "context_money_contamination_under_correct_slot_id",
+      "profile_scope": "1.8B experimental v7 batch with same-scene source context",
+      "expected_invariant": "A source-only context cue must not supply a monetary fact to a target without a recognized amount; reject such output before checkpoint and preserve its raw response.",
+      "severity": "major",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-10-02-v7-authored-batch-result.md",
+      "last_outcome": "The repeated real model still copied the money context, but the revised v7 validator rejected it before any checkpoint; nonmonetary contamination and complete batching remain open."
+    }
+  ]
+}

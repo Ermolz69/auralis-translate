@@ -1,0 +1,45 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import fs from 'node:fs';
+import path from 'node:path';
+
+const root = path.resolve('.');
+const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
+const summary = JSON.parse(fs.readFileSync(path.join(root,
+  'eval/reports/2026-10-02-v7-authored-batch-screen.json')));
+assert.equal(summary.experiment, 'v7-authored-batch-v1');
+assert.equal(summary.attempts.length, 3);
+const [sandbox, oldRun, newRun] = summary.attempts.map(attempt => {
+  const bytes = fs.readFileSync(path.join(root, attempt.private_report));
+  assert.equal(sha256(bytes), attempt.private_report_sha256);
+  return JSON.parse(bytes);
+});
+assert.deepEqual(sandbox.errors, ['spawn EPERM']);
+assert.equal(sandbox.arms.length, 0);
+assert.equal(oldRun.identities.source_sha256, summary.source_sha256);
+assert.equal(newRun.identities.source_sha256, summary.source_sha256);
+assert.equal(oldRun.identities.model_sha256, summary.model_sha256);
+assert.equal(newRun.identities.model_sha256, summary.model_sha256);
+assert.equal(oldRun.identities.runtime_sha256, summary.runtime_sha256);
+assert.equal(newRun.identities.runtime_sha256, summary.runtime_sha256);
+assert.deepEqual(oldRun.arms.map(arm => arm.size), [1]);
+assert.deepEqual(newRun.arms.map(arm => arm.size), [1]);
+assert.equal(oldRun.arms[0].checkpoints.length, 1);
+assert.equal(oldRun.arms[0].results.length, 0);
+assert.equal(newRun.arms[0].checkpoints.length, 0);
+assert.equal(newRun.arms[0].results.length, 0);
+const oldChats = oldRun.arms[0].requests.filter(row => row.request_kind === 'chat_completion');
+const newChats = newRun.arms[0].requests.filter(row => row.request_kind === 'chat_completion');
+assert.deepEqual(oldChats.map(row => row.outcome), ['validated_batch', 'invalid_candidate']);
+assert.deepEqual(newChats.map(row => row.outcome), ['invalid_candidate']);
+assert.equal(oldChats[0].prompt_tokens, 240);
+assert.equal(newChats[0].prompt_tokens, 240);
+const oldCandidate = JSON.parse(JSON.parse(oldChats[0].raw_response).choices[0].message.content);
+const newCandidate = JSON.parse(JSON.parse(newChats[0].raw_response).choices[0].message.content);
+assert.deepEqual(oldCandidate, newCandidate);
+assert.equal(oldCandidate.translations[0].segment_id, 1);
+assert(oldCandidate.translations[0].text.includes('юаней'));
+assert(newChats[0].error_detail.includes('currency absent'));
+assert.equal(summary.paired_batch_1_vs_4_completed, false);
+assert.equal(summary.human_review_count, 0);
+console.log('V7 authored screen: three retained attempts; repeated real context leak now rejected, zero published results.');

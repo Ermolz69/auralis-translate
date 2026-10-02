@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "experiment": "v7-authored-batch-v1",
+  "task_ids": ["LONG-01", "EVAL-04"],
+  "source_sha256": "ad88b2d2f96b153d5d8880175b321167263d7abaae48ca693d89b925459bc8a7",
+  "source_split": "authored_development_not_holdout",
+  "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "attempts": [
+    {
+      "private_report": ".cache/eval/v7-authored-batch-v1/attempt-gL34Av/report.json",
+      "private_report_sha256": "c241ae362ad723700b63667e32dba0afff62ebe4083de14a3cf62691c8bb1ec1",
+      "status": "failed_before_server_start",
+      "error": "spawn EPERM",
+      "chat_requests": 0
+    },
+    {
+      "private_report": ".cache/eval/v7-authored-batch-v1/attempt-JAspgV/report.json",
+      "private_report_sha256": "e8ba208aa2ffd842bbb51dfcdce5aee527a6fc776dc0806b67a63e0c5cf474dd",
+      "profile_manifest_sha256": "f4c6245028efd4c3208b4b8ec608d93cf448ea6c468c14698273ecc7dd47e805",
+      "status": "stopped_on_model_failure",
+      "requested_batch_size": 1,
+      "chat_requests": 2,
+      "first_cue_outcome": "validated_batch_but_wrong_context_money_meaning",
+      "first_cue_prompt_tokens": 240,
+      "first_cue_completion_tokens": 49,
+      "second_cue_outcome": "invalid_candidate_missing_protected_money_tokens",
+      "saved_blocks": 1,
+      "published_results": 0,
+      "gpu_device_used_mib_samples": [3910, 3984],
+      "server_working_set_bytes_samples": [1513607168, 1513730048]
+    },
+    {
+      "private_report": ".cache/eval/v7-authored-batch-v1/attempt-WUmq4Q/report.json",
+      "private_report_sha256": "ad6b8505f89b6386a0fca47adcd4570988cb66536aac1f5cefb5853e0f91cebb",
+      "profile_manifest_sha256": "84695e78c6f41abbc0a337e4fa3c0a2df3d7a045d38505fdee8abcf1f6641620",
+      "status": "stopped_by_new_currency_guard",
+      "requested_batch_size": 1,
+      "chat_requests": 1,
+      "first_cue_outcome": "invalid_candidate_currency_absent_from_target",
+      "first_cue_prompt_tokens": 240,
+      "first_cue_completion_tokens": 49,
+      "saved_blocks": 0,
+      "published_results": 0,
+      "gpu_device_used_mib_samples": [3856, 3856],
+      "server_working_set_bytes_samples": [1513709568, 1513852928]
+    }
+  ],
+  "paired_batch_1_vs_4_completed": false,
+  "meaning_review": "source_aware_AI_triage_only",
+  "human_review_count": 0,
+  "quality_claim": "none",
+  "release_gate": "open"
+}

@@ -1229,7 +1229,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-050 packs and all control counts
+    desc: Verify versioned REG-001 through REG-051 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -1262,6 +1262,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v30.mjs
       - node eval/scripts/check-regression-catalog-v31.mjs
       - node eval/scripts/check-regression-catalog-v32.mjs
+      - node eval/scripts/check-regression-catalog-v33.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:
@@ -2005,6 +2006,32 @@ tasks:
     desc: Verify profile versioning, Chinese admission and unchanged legacy provider behavior
     cmds:
       - cargo test --offline -p auralis-translation-llamacpp --test profile_contract --test protocol
+  test:long-batch-v7:
+    desc: Verify opt-in multi-slot Chinese batch mapping, token sizing and legacy profile identity
+    cmds:
+      - cargo test --offline -p auralis-translation-llamacpp --test context_v7 --test profile_contract
+      - cargo test --offline -p auralis-translation-sqlite --test inference_requests --test migrations
+      - cargo test --offline -p auralis-translation-cli --test context_v5_admission
+  eval:long:v7:authored:preflight:
+    desc: Verify pinned model, runtime, source and v7 profile before a bounded authored batch screen
+    env:
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - node eval/scripts/probe-v7-authored-batch.mjs --preflight
+  eval:long:v7:authored:probe:
+    desc: Run pinned 1.8B v7 batches 1/4 on the same four authored Chinese cues
+    env:
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - task: build:release
+      - task: eval:long:v7:authored:preflight
+      - node eval/scripts/probe-v7-authored-batch.mjs
+  eval:long:v7:authored:check:
+    desc: Verify all frozen v7 authored model attempts and the open meaning regression
+    cmds:
+      - node eval/scripts/check-v7-authored-batch.mjs
   site:preview:
     desc: Preview current and historical reports on loopback without exposing repository files
     cmds:
