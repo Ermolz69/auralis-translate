@@ -574,3 +574,13 @@ diagnostic. Pages and affected engineering checks passed. No independent
 translation or listening review, admitted source, fitted audio or clean
 installation was added. `RELEASE-05` remains planned and the Goal remains
 incomplete.
+
+The [REG-046 term-pair audit correction](../eval/experiments/2026-10-02-reg-046-term-pair-audit.md)
+adds partial `CTX-02`/`EVAL-04` contract evidence. The prior whole-result
+report counted each applicable source-line/ledger-term pair but emitted only
+one line warning when two approved forms were omitted in the same cue.
+Report schema 2 counts each missing pair and identifies its zero-based ledger
+term index. The authored reproducer, related and negative controls are pinned
+in [catalog v30](../eval/regressions/catalog-v30.json), while earlier catalog
+and report bytes remain historical. This changes no accepted translation,
+has no model or human quality rating and does not close G5 or `RELEASE-05`.
