@@ -620,3 +620,12 @@ The original 12-call-plus-four-retry assumption was wrong: all 16 allowed
 chats covered source lines with zero retries. This source's film speech is
 English, reference rights and human ratings are absent, and no model or
 spoken script is selected. G3–G5, A1–A6 and RELEASE-05 remain open.
+
+A [private consent-first Paywall volunteer packet](../eval/experiments/2026-10-02-paywall-volunteer-review-packet.md)
+now binds the same 12 source cues to two counterbalanced opaque candidates
+each, with an immutable sealed model mapping and 24 blank judgment fields.
+`task eval:review:paywall:packet:check` verifies the original source and both
+candidate reports; receipt SHA-256 is
+`0cf8d030aedc80d8c7a460e03471f143f81f31243ea7c75711915faedc5e5cf0`.
+No invitation, consent, human review, or source admission is implied by packet
+creation. The free acquisition route remains open.

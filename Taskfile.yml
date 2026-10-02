@@ -1824,6 +1824,20 @@ tasks:
       - node --check eval/scripts/check-paywall-review-seed.mjs
       - node eval/scripts/check-paywall-review-seed.mjs --capture
 
+  eval:review:paywall:packet:create:
+    desc: Create a private consent-first blind development packet from the pinned model pair
+    cmds:
+      - task: eval:natural:paywall:review-seed:check
+      - node --check eval/scripts/paywall-volunteer-packet.mjs
+      - node eval/scripts/paywall-volunteer-packet.mjs --create
+
+  eval:review:paywall:packet:check:
+    desc: Verify private packet source, both candidates, sealed mapping and empty reviewer form
+    cmds:
+      - task: eval:natural:paywall:review-seed:check
+      - node --check eval/scripts/paywall-volunteer-packet.mjs
+      - node eval/scripts/paywall-volunteer-packet.mjs
+
   eval:natural:mingfay:capture:
     desc: Archive only the redacted verified same-source model metrics for public reporting
     cmds:

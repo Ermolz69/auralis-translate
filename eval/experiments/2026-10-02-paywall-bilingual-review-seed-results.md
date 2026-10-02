@@ -90,3 +90,12 @@ volunteer must first confirm ability to cite the source and explain target
 meaning; a second bilingual person is needed for critical/disputed calls.
 Russian TTS listening needs separate listeners. Neither film audio nor the
 English-language subtitles should be treated as a Chinese-speech gold source.
+
+The [consent-first volunteer packet](2026-10-02-paywall-volunteer-review-packet.md)
+has since been generated privately. Its receipt SHA-256 is
+`0cf8d030aedc80d8c7a460e03471f143f81f31243ea7c75711915faedc5e5cf0`;
+the reviewer-visible packet SHA-256 is
+`1149d62ebf5b931ead461e678595c16d74341c9db6c8d3239c4c1ebea8c5702e`.
+It contains 12 source cues and 24 blinded candidate judgments, all blank.
+The A/B mapping is a separate private file. No invitation has been sent, and
+the number of human reviewers and listeners remains zero.
