@@ -14,7 +14,7 @@ export async function loadCurrentReport(root) {
     kirinCaption, kirinMedia, paywall, captionOverlapRaw, packetRaw,
     activityRaw, voaRaw, batchRaw, salienceRaw, orderRaw, v8Raw, nameRaw,
     crossRaw, largeV8Raw, naturalV8Raw, resumeV8Raw, singleV8Raw,
-    riskV8Raw, controlV1Raw, controlV2Raw] = await Promise.all([
+    riskV8Raw, controlV1Raw, controlV2Raw, instructionRaw] = await Promise.all([
     loadDeliveryPlan(root), loadSourceCandidates(root), loadSethluiFullV6(root),
     loadSethluiRetry(root), loadSethluiAudio(root), loadApprovedTermDiagnostic(root),
     fs.readFile(path.join(root, 'eval/reports/youtube-geekerwan-kirin-license-v1.json'),
@@ -58,6 +58,8 @@ export async function loadCurrentReport(root) {
       'eval/reports/2026-10-02-reg-058-paired-controls-invalid.json'), 'utf8'),
     fs.readFile(path.join(root,
       'eval/reports/2026-10-02-reg-058-paired-controls-v2.json'), 'utf8'),
+    fs.readFile(path.join(root,
+      'eval/reports/2026-10-02-reg-058-semantic-instruction-v1.json'), 'utf8'),
   ]);
   const captionOverlap = JSON.parse(captionOverlapRaw);
   const salience = JSON.parse(salienceRaw);
@@ -72,6 +74,7 @@ export async function loadCurrentReport(root) {
   const riskV8 = JSON.parse(riskV8Raw);
   const controlV1 = JSON.parse(controlV1Raw);
   const controlV2 = JSON.parse(controlV2Raw);
+  const instruction = JSON.parse(instructionRaw);
   assert.equal(naturalV8.source_cues, 268);
   assert.equal(naturalV8.status, 'completed_with_failure');
   assert.deepEqual(naturalV8.arms.map(arm => arm.covered_prefix_cues), [216, 140]);
@@ -94,6 +97,18 @@ export async function loadCurrentReport(root) {
   assert.deepEqual(controlV2.arms.map(arm => arm.preflights), [24, 24]);
   assert.equal(controlV2.arms[1].controls.filter(row => row.leaked_json_syntax).length, 1);
   assert.equal(controlV2.human_bilingual_review_count, 0);
+  assert.equal(instruction.status,
+    'paired_real_model_prompt_screen_validated_unreviewed_meaning');
+  assert.equal(instruction.chats, 36);
+  assert.equal(instruction.preflights, 72);
+  assert.equal(instruction.rows.length, 36);
+  assert.equal(instruction.human_bilingual_review_count, 0);
+  for (const variant of ['baseline', 'instruction']) {
+    assert(instruction.rows.find(row => row.id === 'multicore_positive' &&
+      row.variant === variant).candidate.includes('многопоточную'));
+    assert.equal(instruction.rows.find(row => row.id === 'mouse_pad_positive' &&
+      row.variant === variant).candidate, 'Мы также продаём подставки для мышей.');
+  }
   const captionOverlapSha256 = createHash('sha256').update(captionOverlapRaw).digest('hex');
   const packet = JSON.parse(packetRaw);
   assert.equal(createHash('sha256').update(packetRaw).digest('hex'),
@@ -371,6 +386,18 @@ export async function loadCurrentReport(root) {
     human_review_count: controlV2.human_bilingual_review_count,
     invalid_report_sha256: createHash('sha256').update(controlV1Raw).digest('hex'),
     corrected_report_sha256: createHash('sha256').update(controlV2Raw).digest('hex') },
+    semantic_instruction: { chats: instruction.chats,
+      preflights: instruction.preflights,
+      structurally_accepted: instruction.rows.filter(row =>
+        row.structural_outcome === 'accepted_structure_unreviewed_meaning').length,
+      baseline_prompt_tokens: instruction.rows.filter(row => row.variant === 'baseline')
+        .reduce((sum, row) => sum + row.prompt_tokens, 0),
+      instruction_prompt_tokens: instruction.rows.filter(row =>
+        row.variant === 'instruction').reduce((sum, row) => sum + row.prompt_tokens, 0),
+      required_semantic_repairs_passed: false,
+      failed_launch_retained: Boolean(instruction.failed_launch_report_sha256),
+      human_review_count: instruction.human_bilingual_review_count,
+      report_sha256: createHash('sha256').update(instructionRaw).digest('hex') },
     backlog: { total_tasks: plan.total_tasks, counts: plan.counts },
   };
 }
