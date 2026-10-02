@@ -629,8 +629,10 @@ to participate; no human score or release threshold changes.
 The [bounded volunteer lead screen](../eval/experiments/2026-10-02-free-reviewer-lead-screen.md)
 found one public profile offering free indie localization with Russian and
 Chinese background. Its Chinese→Russian proficiency and willingness to
-review this commercial project are unverified; the prepared first invitation
-has not been sent. Human reviewer and listener coverage remain zero.
+review this commercial project are unverified. The owner then declined
+volunteer outreach; the invitation was not sent and the lead remains historical
+research. Human reviewer and listener coverage remain zero; independent
+engineering work continues without relabeling AI assessments as human scores.
 
 The [licensed Paywall Chinese-text paired screen](../eval/experiments/2026-10-02-paywall-bilingual-review-seed-results.md)
 adds partial `CTX-02`/`EVAL-04` development evidence without changing DATA-03

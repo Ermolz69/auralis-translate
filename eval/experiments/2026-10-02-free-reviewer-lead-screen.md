@@ -67,3 +67,28 @@ public post's contact route, record the date and exact text privately, and stop
 if the person declines or does not opt in. Do not interpret silence as consent.
 An independent reviewer and the second critical-error adjudicator remain
 unavailable until actual affirmative, qualified participation is recorded.
+
+## Published current-state check
+
+Translate commit `be2fd0d204e862e9c8011daed3514fccfbf1704f` recorded this
+lead as uncontacted in the current report. `task plan:check`, `task docs:check`,
+`task site:build` and `task site:check` passed. The
+[Pages workflow](https://github.com/Ermolz69/auralis-translate/actions/runs/37022212326)
+succeeded for that exact commit. The live
+[`index.html`](https://ermolz69.github.io/auralis-translate/?revision=be2fd0d204e862e9c8011daed3514fccfbf1704f)
+matched local SHA-256
+`134d9777ca2e428f84b106777b0606e8a6b218e73d1b77bf0d736f2e42b8856d`;
+the live [`history.html`](https://ermolz69.github.io/auralis-translate/history.html?revision=be2fd0d204e862e9c8011daed3514fccfbf1704f)
+matched SHA-256
+`57c356718a9c9f5f48ecdfb8264dee2c0d23ba059ec731ef71fe9552780979de`.
+The prior measurements remain in the history page.
+
+## Owner decision after the screen
+
+The owner declined the proposed volunteer invitation on 2 October 2026.
+No contact will be made and this lead is retained only as historical research.
+The no-budget human-acquisition path is inactive under the current preference.
+Automated/AI checks and Russian audio engineering can continue, but they do
+not supply independent bilingual or listening judgments. The full G3/G4/A4
+and RELEASE-05 gates remain open until the owner identifies an acceptable
+human-review route or explicitly changes the delivery scope.

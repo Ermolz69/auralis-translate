@@ -42,6 +42,11 @@ That is not a verified credential, offer to work on this project or permission
 to contact them. No messages, public recruitment posts or private source
 uploads have been sent.
 
+After the lead screen, the owner declined volunteer outreach on 2 October
+2026. This acquisition route is therefore inactive; the retained public lead
+is historical research, and no invitation will be sent. The unchanged full
+Goal still needs actual independent bilingual and listening evidence.
+
 A more directly relevant [volunteer localization lead and first invitation
 screen](2026-10-02-free-reviewer-lead-screen.md) identifies one public indie
 project volunteer profile with Russian and Chinese background. Its main stated
