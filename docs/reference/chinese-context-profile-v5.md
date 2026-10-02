@@ -75,7 +75,10 @@ release review must inspect the final file across all resumed blocks.
 The read-only `audit-terms SOURCE RESULT SCENE_MAP TERMS_LEDGER` command
 performs that file-wide screening on an exported SRT. It checks exact source
 and result structure/protected bytes, source/scene/term hashes and term scopes
-before reporting every missing approved form across all target lines. It
+before reporting every missing approved form across all target lines. Its
+report counts each applicable source-line/ledger-term pair and identifies the
+zero-based ledger index of each omitted form, including multiple terms on
+one line. It
 does not change checkpoints, the original, the result or reviewer claims.
 An empty warning list means only that the declared spellings were present;
 it does not establish correct meaning, pronunciation or human approval.

@@ -116,7 +116,7 @@ pub(crate) fn approved_term_missing(
     })
 }
 
-fn missing_form(translated: &str, target: &str, allowed_forms: &[String]) -> bool {
+pub(crate) fn missing_form(translated: &str, target: &str, allowed_forms: &[String]) -> bool {
     !translated.contains(&target.to_lowercase())
         && !allowed_forms
             .iter()

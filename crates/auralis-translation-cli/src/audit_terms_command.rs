@@ -3,17 +3,20 @@ use crate::{
     reporting::{CliFailure, CommandOutput, ErrorCode},
     scene_map_input, terms_input,
 };
-use auralis_translation::{SceneMap, SourceHash, TargetSegment, audit_approved_terms};
+use auralis_translation::{
+    DiagnosticCode, SceneMap, SourceHash, TargetSegment, audit_approved_terms,
+};
 use auralis_translation_formats::srt::SrtDocument;
 use serde::Serialize;
 use std::{error::Error, ffi::OsStr, path::Path};
 
-const REPORT_SCHEMA_VERSION: u32 = 1;
+const REPORT_SCHEMA_VERSION: u32 = 2;
 
 #[derive(Serialize)]
 struct MissingForm {
     segment_id: u32,
     line_index: u32,
+    term_index: usize,
     code: &'static str,
 }
 
@@ -26,7 +29,8 @@ struct AuditReport {
     terms_ledger_sha256: String,
     segments: usize,
     target_lines: usize,
-    checked_term_lines: usize,
+    checked_term_pairs: usize,
+    missing_term_pairs: usize,
     warnings: Vec<MissingForm>,
     human_review: &'static str,
     assessment: &'static str,
@@ -62,24 +66,17 @@ pub(crate) fn run(
             lines: segment.lines,
         })
         .collect::<Vec<_>>();
-    let warnings = audit_approved_terms(&source_segments, &accepted, &ledger.terms)?
+    let audit = audit_approved_terms(&source_segments, &accepted, &ledger.terms)?;
+    let warnings: Vec<MissingForm> = audit
+        .warnings
         .into_iter()
         .map(|warning| MissingForm {
             segment_id: warning.segment_id.get(),
             line_index: warning.line_index,
-            code: warning.code.as_str(),
+            term_index: warning.term_index,
+            code: DiagnosticCode::ApprovedTermMissing.as_str(),
         })
         .collect();
-    let checked_term_lines = source_segments
-        .iter()
-        .flat_map(|segment| {
-            ledger.terms.entries().iter().flat_map(move |term| {
-                segment.lines().iter().filter(move |line| {
-                    term.segment_ids().contains(&segment.id()) && line.contains(term.source())
-                })
-            })
-        })
-        .count();
     let report = AuditReport {
         schema_version: REPORT_SCHEMA_VERSION,
         source_sha256: SourceHash::digest(&source).to_string(),
@@ -88,7 +85,8 @@ pub(crate) fn run(
         terms_ledger_sha256: ledger.snapshot_hash.to_string(),
         segments: source_segments.len(),
         target_lines: accepted.iter().map(|segment| segment.lines.len()).sum(),
-        checked_term_lines,
+        checked_term_pairs: audit.checked_term_pairs,
+        missing_term_pairs: warnings.len(),
         warnings,
         human_review: "not_performed",
         assessment: "form_screen_only",

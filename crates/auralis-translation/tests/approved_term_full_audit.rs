@@ -1,6 +1,6 @@
 use auralis_translation::{
-    ApprovedTerm, ApprovedTerms, ContractError, DiagnosticCode, SegmentId, SourceSegment,
-    TargetSegment, audit_approved_terms,
+    ApprovedTerm, ApprovedTerms, ContractError, SegmentId, SourceSegment, TargetSegment,
+    audit_approved_terms,
 };
 use std::error::Error;
 
@@ -40,16 +40,19 @@ fn audits_complete_saved_result_and_rejects_missing_or_misordered_lines()
             lines: vec!["Заведение закрылось.".into()],
         },
     ];
-    let warnings = audit_approved_terms(&source, &accepted, &terms)?;
+    let audit = audit_approved_terms(&source, &accepted, &terms)?;
+    assert_eq!(audit.checked_term_pairs, 3);
     assert_eq!(
-        warnings
+        audit
+            .warnings
             .iter()
-            .map(|warning| (warning.code, warning.segment_id.get(), warning.line_index))
+            .map(|warning| (
+                warning.segment_id.get(),
+                warning.line_index,
+                warning.term_index
+            ))
             .collect::<Vec<_>>(),
-        [
-            (DiagnosticCode::ApprovedTermMissing, 1, 0),
-            (DiagnosticCode::ApprovedTermMissing, 3, 0),
-        ]
+        [(1, 0, 0), (3, 0, 0)]
     );
     assert_eq!(
         audit_approved_terms(&source, &accepted[..2], &terms),

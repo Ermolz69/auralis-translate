@@ -78,7 +78,9 @@ fn audits_all_result_lines_without_writing_or_claiming_human_review() -> Result<
     );
     assert_eq!(report["segments"], 3);
     assert_eq!(report["target_lines"], 4);
-    assert_eq!(report["checked_term_lines"], 3);
+    assert_eq!(report["schema_version"], 2);
+    assert_eq!(report["checked_term_pairs"], 3);
+    assert_eq!(report["missing_term_pairs"], 2);
     assert_eq!(report["human_review"], "not_performed");
     assert_eq!(report["assessment"], "form_screen_only");
     assert_eq!(report["warnings"].as_array().ok_or("warnings")?.len(), 2);
@@ -116,6 +118,7 @@ fn audits_all_result_lines_without_writing_or_claiming_human_review() -> Result<
     let (valid, response) = invoke(&request)?;
     assert_eq!(valid.status.code(), Some(0));
     assert_eq!(response["report"]["report"]["warnings"], json!([]));
+    assert_eq!(response["report"]["report"]["missing_term_pairs"], 0);
     assert_eq!(
         response["report"]["report"]["human_review"],
         "not_performed"
@@ -176,7 +179,8 @@ fn scans_first_seam_and_final_cues_of_1024_cue_result() -> Result<(), Box<dyn Er
     let report = &response["report"]["report"];
     assert_eq!(report["segments"], 1024);
     assert_eq!(report["target_lines"], 1024);
-    assert_eq!(report["checked_term_lines"], 3);
+    assert_eq!(report["checked_term_pairs"], 3);
+    assert_eq!(report["missing_term_pairs"], 3);
     let warnings = report["warnings"].as_array().ok_or("warnings")?;
     assert_eq!(warnings.len(), 3);
     assert_eq!(
@@ -190,5 +194,63 @@ fn scans_first_seam_and_final_cues_of_1024_cue_result() -> Result<(), Box<dyn Er
     assert_eq!(std::fs::read(&result_path)?, result.as_bytes());
     assert_eq!(std::fs::read(&scene_path)?, scene);
     assert_eq!(std::fs::read(&terms_path)?, terms);
+    Ok(())
+}
+
+#[test]
+fn counts_each_missing_term_when_two_apply_to_one_line() -> Result<(), Box<dyn Error>> {
+    let workspace = MachineWorkspace::new()?;
+    let source_path = workspace.0.join("two-terms-source.srt");
+    let result_path = workspace.0.join("two-terms-result.srt");
+    let scene_path = workspace.0.join("two-terms-scene.json");
+    let terms_path = workspace.0.join("two-terms-ledger.json");
+    let source = "1\n00:00:00,000 --> 00:00:01,000\n海湾餐厅和海湾车站。\n\n2\n00:00:01,000 --> 00:00:02,000\n海湾餐馆和海湾车库。\n\n3\n00:00:02,000 --> 00:00:03,000\n海湾餐厅和海湾车站。\n\n4\n00:00:03,000 --> 00:00:04,000\n海湾餐厅和海湾车站。\n";
+    let result = "1\n00:00:00,000 --> 00:00:01,000\nОни пришли.\n\n2\n00:00:01,000 --> 00:00:02,000\nДругое место.\n\n3\n00:00:02,000 --> 00:00:03,000\nХайвань открылся.\n\n4\n00:00:03,000 --> 00:00:04,000\nДругое место.\n";
+    std::fs::write(&source_path, source)?;
+    std::fs::write(&result_path, result)?;
+    let scene = serde_json::to_vec(&json!({
+        "schema_version": 1,
+        "source_sha256": SourceHash::digest(source.as_bytes()).to_string(),
+        "evidence_id": "authored-two-terms",
+        "scene_end_ids": [1, 4]
+    }))?;
+    std::fs::write(&scene_path, &scene)?;
+    let terms = serde_json::to_vec(&json!({
+        "schema_version": 1,
+        "source_sha256": SourceHash::digest(source.as_bytes()).to_string(),
+        "scene_map_sha256": SourceHash::digest(&scene).to_string(),
+        "terms": [
+            {"source": "海湾餐厅", "target": "Хайвань", "allowed_forms": [],
+             "segment_ids": [1, 3], "reviewer_id": "fixture-reviewer", "evidence_id": "fixture-a"},
+            {"source": "海湾车站", "target": "вокзал Хайвань", "allowed_forms": [],
+             "segment_ids": [1, 3], "reviewer_id": "fixture-reviewer", "evidence_id": "fixture-b"}
+        ]
+    }))?;
+    std::fs::write(&terms_path, &terms)?;
+    let output = Command::new(env!("CARGO_BIN_EXE_auralis-translation-cli"))
+        .arg("--json")
+        .arg("audit-terms")
+        .arg(&source_path)
+        .arg(&result_path)
+        .arg(&scene_path)
+        .arg(&terms_path)
+        .output()?;
+    assert_eq!(output.status.code(), Some(0));
+    let response: Value = serde_json::from_slice(&output.stdout)?;
+    let report = &response["report"]["report"];
+    assert_eq!(report["segments"], 4);
+    assert_eq!(report["checked_term_pairs"], 4);
+    assert_eq!(report["missing_term_pairs"], 3);
+    let warnings = report["warnings"].as_array().ok_or("warnings")?;
+    assert_eq!(warnings.len(), 3);
+    assert_eq!(
+        warnings
+            .iter()
+            .map(|item| (item["segment_id"].as_u64(), item["term_index"].as_u64()))
+            .collect::<Vec<_>>(),
+        vec![(Some(1), Some(0)), (Some(1), Some(1)), (Some(3), Some(1))]
+    );
+    assert_eq!(std::fs::read(&source_path)?, source.as_bytes());
+    assert_eq!(std::fs::read(&result_path)?, result.as_bytes());
     Ok(())
 }

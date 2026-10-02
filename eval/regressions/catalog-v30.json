@@ -1,0 +1,24 @@
+{
+  "schema_version": 30,
+  "catalog_id": "zh-ru-development-regressions-v30",
+  "base_catalog_file": "catalog-v29.json",
+  "base_catalog_sha256": "00bd690779d1a2185da43767833a4dbff0d68e174498566bb4438aaa3a1a7017",
+  "entries": [
+    {
+      "id": "REG-046",
+      "pack_file": "approved-term-pair-count-v1.json",
+      "pack_sha256": "1446027f142682bfa67b021eded13b4b77d7ceef6ced51a9e727c922c1d3ab15",
+      "source_family": "authored_chinese_multi_term_line_controls",
+      "split": "known_development_regression",
+      "category": "approved_term_pair_count_and_identity",
+      "profile_scope": "read-only v5 whole-result approved-term audit; no natural-source ledger approved",
+      "expected_invariant": "Each applicable source-line and ledger-term pair is counted separately and an omitted approved form identifies its ledger index, even when another term is omitted on the same line.",
+      "severity": "major",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-10-02-reg-046-term-pair-audit.md",
+      "last_outcome": "The pre-fix CLI reported one warning for two omitted terms on one line. Schema 2 reports two term-indexed warnings and a checked-pair denominator; all authored related and negative controls pass. No human quality claim."
+    }
+  ]
+}

@@ -13,7 +13,7 @@ mod translate_planned_run;
 mod translate_run_error;
 mod validate_batch_response;
 
-pub use audit_approved_terms::audit_approved_terms;
+pub use audit_approved_terms::{ApprovedTermAudit, MissingApprovedTerm, audit_approved_terms};
 pub use capacity_mismatch::source_capacity_mismatch;
 pub use identifier_mismatch::{source_identifier_mismatch, source_identifiers};
 pub use measurement_mismatch::source_measurement_mismatch;

@@ -3,8 +3,8 @@ mod domain;
 mod ports;
 
 pub use application::{
-    PlannedBatches, TranslateBatchError, TranslateRunError, audit_approved_terms,
-    source_capacity_mismatch, source_identifier_mismatch, source_identifiers,
+    ApprovedTermAudit, MissingApprovedTerm, PlannedBatches, TranslateBatchError, TranslateRunError,
+    audit_approved_terms, source_capacity_mismatch, source_identifier_mismatch, source_identifiers,
     source_measurement_mismatch, source_time_mismatch, translate_batch,
     translate_batch_with_control, translate_planned_run, translate_planned_run_with_control,
     translate_planned_run_with_policy, translate_planned_run_with_progress,

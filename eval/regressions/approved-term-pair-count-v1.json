@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "REG-046",
+  "status": "fixed_in_whole_result_audit_v2_contract_only",
+  "severity": "major",
+  "source_family": "authored_chinese_multi_term_line_controls",
+  "split": "known_development_regression",
+  "affected_profile": "read-only v5 whole-result approved-term audit; no natural-source ledger approved",
+  "expected_invariant": "Each applicable source-line and ledger-term pair is counted separately and an omitted approved form identifies its ledger index, even when another term is omitted on the same line.",
+  "minimal_reproducer": {
+    "source": "海湾餐厅和海湾车站。",
+    "accepted_target": "Они пришли.",
+    "approved_terms": [
+      {"source": "海湾餐厅", "target": "Хайвань"},
+      {"source": "海湾车站", "target": "вокзал Хайвань"}
+    ],
+    "expected_checked_pairs": 2,
+    "expected_missing_pairs": 2,
+    "observed_old_warnings": 1
+  },
+  "related_controls": [
+    {"id": "partial_form", "condition": "When one of two forms is present, only the other ledger term is warned."},
+    {"id": "scene_boundary", "condition": "The same two terms are checked again across a declared scene boundary."},
+    {"id": "long_file_seam", "condition": "A separate 1024-cue ladder still checks first, scene-boundary and final cues."}
+  ],
+  "negative_controls": [
+    {"id": "distinct_neighbor_names", "condition": "One-character-different Chinese names in the neighboring cue do not count as the scoped terms."},
+    {"id": "expired_scope", "condition": "An identical source term after its ledger scope ends causes neither a checked pair nor a warning."},
+    {"id": "allowed_form", "condition": "A present reviewed or allowed Russian form is counted but not warned."}
+  ],
+  "contract_test": "crates/auralis-translation-cli/tests/approved_term_audit_cli.rs",
+  "core_test": "crates/auralis-translation/tests/approved_term_full_audit.rs",
+  "failed_test_log_sha256": "91856b017e4ecfa809acb5faf3e91305b4cc4567e2a3a6a82fab42f1ff3c4228",
+  "control_model_runs": 0,
+  "human_review": "missing",
+  "release_gate": "open"
+}

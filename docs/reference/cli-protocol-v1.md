@@ -118,8 +118,12 @@ available. A complete review-required output ends with `completed`, exit code 3.
 payload schema version 3; diagnostics and doctor retain theirs. Inspect reports
 cue IDs, timing, source text slots/byte ranges and protected ranges. Inspection
 intentionally includes source text; ordinary lifecycle events do not.
-`audit-terms` reports source/result and input-ledger hashes, checked line counts,
-and missing-form segment/line warnings across the complete exported SRT. The
+`audit-terms` report schema 2 records source/result and input-ledger hashes,
+the number of applicable source-line/ledger-term pairs, and one missing-form
+warning per pair. Each warning contains its segment ID, zero-based line index
+and zero-based `term_index` into the frozen ledger. Two omitted terms on one
+line therefore produce two warnings. Counts describe case-insensitive form
+screening, not a language-quality or G5 score. The
 command reads files without modifying them or a translation database. It
 rejects changed cue structure or protected bytes and mismatched source/scene/
 term identities before emitting a report. Its successful exit is 0 even when
