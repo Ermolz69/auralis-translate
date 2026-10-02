@@ -1,0 +1,393 @@
+{
+  "schema_version": 1,
+  "experiment": "v8-asus-copy-resume-v1",
+  "split": "known_natural_development_not_holdout",
+  "initial_report_sha256": "85fb32d56be334ec48be1215df50d7c07cae0d067b05665dcdd252c256705bfe",
+  "code_commit": "5308db31f51315d5cb839fab5423429c80bcd92b",
+  "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+  "media_sha256": "9e4271f8112de2fa65ad67c4cec3390529e916d70363bc5f4c421f4479b97cc1",
+  "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "cli_sha256": "5cc85dee7751256ddf6963ed5606bac092d54ca91c1263001bcaf22898a158b3",
+  "harness_sha256": "11f6f8425c492f5245aaa827195c518962274316848f4fecdf6fb35018b15b12",
+  "private_report": ".cache/eval/v8-asus-copy-resume-v1/attempt-1LHWcZ/report.json",
+  "private_report_sha256": "b1e7507cd64623bce11508cbaad792ec1f583e6ecec9f14640be80d58bcfefe6",
+  "zero_model_infrastructure_failure_report_sha256": "42c6d87324b8b6d73fecb82f99989ced186745ab46cbf4bef138f30c72737c27",
+  "status": "completed_with_failure",
+  "source_cues": 268,
+  "wall_elapsed_ms": 70934,
+  "human_bilingual_review_count": 0,
+  "accepted_language_quality": false,
+  "arms": [
+    {
+      "id": "1_8b",
+      "status": "failed",
+      "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+      "manifest_sha256": "1803aeb68428e1b138a17ed72b01abe1cc5fbc5845b5bca66a402b8936b1081f",
+      "initial_checkpoints": 54,
+      "total_checkpoints": 61,
+      "initial_cues": 216,
+      "total_cues": 244,
+      "new_chat_requests": 8,
+      "new_preflight_requests": 16,
+      "new_prompt_tokens": 3807,
+      "new_completion_tokens": 1271,
+      "new_chat_http_ms": 9691,
+      "cli_elapsed_ms": 20512,
+      "result_count": 0,
+      "output_sha256": null,
+      "last_chat": {
+        "sequence": 189,
+        "outcome": "invalid_candidate",
+        "request_sha256": "071601bdb48768b6e81914315677bdcc78e885278a310c6b477ad7e2ccae71fe",
+        "raw_response_sha256": "d8c273273f5fcc23ecfcde852b4d5e8a531fd0087296493fff930a4b5ada99c9",
+        "error_detail": "v7 response contains invalid target text"
+      },
+      "resource_observation": {
+        "interval_ms": 5000,
+        "samples": [
+          {
+            "created_at": "2026-10-02T18:38:33.040Z",
+            "tracked_pids": [
+              9376
+            ],
+            "processes": [
+              {
+                "Id": 9376,
+                "WorkingSet64": 1513324544,
+                "PrivateMemorySize64": 1937760256,
+                "CPU": 1.65625
+              }
+            ],
+            "gpu_device": "NVIDIA GeForce RTX 3070, 3800, 8192",
+            "errors": []
+          },
+          {
+            "created_at": "2026-10-02T18:38:38.031Z",
+            "tracked_pids": [
+              9376,
+              9272
+            ],
+            "processes": [
+              {
+                "Id": 9272,
+                "WorkingSet64": 7643136,
+                "PrivateMemorySize64": 1798144,
+                "CPU": 4.203125
+              },
+              {
+                "Id": 9376,
+                "WorkingSet64": 1513463808,
+                "PrivateMemorySize64": 1914716160,
+                "CPU": 1.65625
+              }
+            ],
+            "gpu_device": "NVIDIA GeForce RTX 3070, 3797, 8192",
+            "errors": []
+          },
+          {
+            "created_at": "2026-10-02T18:38:43.034Z",
+            "tracked_pids": [
+              9376,
+              9272
+            ],
+            "processes": [
+              {
+                "Id": 9272,
+                "WorkingSet64": 8761344,
+                "PrivateMemorySize64": 2490368,
+                "CPU": 5.71875
+              },
+              {
+                "Id": 9376,
+                "WorkingSet64": 1540165632,
+                "PrivateMemorySize64": 1944616960,
+                "CPU": 2.9375
+              }
+            ],
+            "gpu_device": "NVIDIA GeForce RTX 3070, 3802, 8192",
+            "errors": []
+          },
+          {
+            "created_at": "2026-10-02T18:38:48.035Z",
+            "tracked_pids": [
+              9376,
+              9272
+            ],
+            "processes": [
+              {
+                "Id": 9272,
+                "WorkingSet64": 8957952,
+                "PrivateMemorySize64": 2666496,
+                "CPU": 5.765625
+              },
+              {
+                "Id": 9376,
+                "WorkingSet64": 1544658944,
+                "PrivateMemorySize64": 1955971072,
+                "CPU": 6.84375
+              }
+            ],
+            "gpu_device": "NVIDIA GeForce RTX 3070, 3804, 8192",
+            "errors": []
+          },
+          {
+            "created_at": "2026-10-02T18:38:53.050Z",
+            "tracked_pids": [
+              9376,
+              9272
+            ],
+            "processes": [
+              {
+                "Id": 9272,
+                "WorkingSet64": 8978432,
+                "PrivateMemorySize64": 2666496,
+                "CPU": 5.78125
+              },
+              {
+                "Id": 9376,
+                "WorkingSet64": 1543114752,
+                "PrivateMemorySize64": 1948274688,
+                "CPU": 11.28125
+              }
+            ],
+            "gpu_device": "NVIDIA GeForce RTX 3070, 3802, 8192",
+            "errors": []
+          }
+        ],
+        "limitations": "Sampled working set/private memory of tracked processes; device-wide GPU use includes other applications. Not an isolated peak or release hardware gate."
+      }
+    },
+    {
+      "id": "7b",
+      "status": "failed",
+      "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+      "manifest_sha256": "c287c53efbb4ce78471b64648ea3dd2f521363df0e168b7a61df1fdd6ae0479a",
+      "initial_checkpoints": 35,
+      "total_checkpoints": 35,
+      "initial_cues": 140,
+      "total_cues": 140,
+      "new_chat_requests": 1,
+      "new_preflight_requests": 2,
+      "new_prompt_tokens": 502,
+      "new_completion_tokens": 1024,
+      "new_chat_http_ms": 17255,
+      "cli_elapsed_ms": 42507,
+      "result_count": 0,
+      "output_sha256": null,
+      "last_chat": {
+        "sequence": 111,
+        "outcome": "invalid_candidate",
+        "request_sha256": "3049068ad712328bf93ec96bfa62d85dcdc9ebbaefa154cfe9ee9c1f0962358e",
+        "raw_response_sha256": "7d6601b3d2ba126d8c11a4ac312c847bae9c6f79aa4702a957f2a8779c68ac95",
+        "error_detail": "llama.cpp did not finish the response"
+      },
+      "resource_observation": {
+        "interval_ms": 5000,
+        "samples": [
+          {
+            "created_at": "2026-10-02T18:38:58.366Z",
+            "tracked_pids": [
+              15184
+            ],
+            "processes": [
+              {
+                "Id": 15184,
+                "WorkingSet64": 5034430464,
+                "PrivateMemorySize64": 5692112896,
+                "CPU": 4.359375
+              }
+            ],
+            "gpu_device": "NVIDIA GeForce RTX 3070, 7321, 8192",
+            "errors": []
+          },
+          {
+            "created_at": "2026-10-02T18:39:03.361Z",
+            "tracked_pids": [
+              15184,
+              11012
+            ],
+            "processes": [
+              {
+                "Id": 11012,
+                "WorkingSet64": 7655424,
+                "PrivateMemorySize64": 1802240,
+                "CPU": 4.625
+              },
+              {
+                "Id": 15184,
+                "WorkingSet64": 5034536960,
+                "PrivateMemorySize64": 5648289792,
+                "CPU": 4.359375
+              }
+            ],
+            "gpu_device": "NVIDIA GeForce RTX 3070, 7311, 8192",
+            "errors": []
+          },
+          {
+            "created_at": "2026-10-02T18:39:08.373Z",
+            "tracked_pids": [
+              15184,
+              11012
+            ],
+            "processes": [
+              {
+                "Id": 11012,
+                "WorkingSet64": 7655424,
+                "PrivateMemorySize64": 1802240,
+                "CPU": 9.640625
+              },
+              {
+                "Id": 15184,
+                "WorkingSet64": 5034536960,
+                "PrivateMemorySize64": 5648289792,
+                "CPU": 4.359375
+              }
+            ],
+            "gpu_device": "NVIDIA GeForce RTX 3070, 7299, 8192",
+            "errors": []
+          },
+          {
+            "created_at": "2026-10-02T18:39:13.381Z",
+            "tracked_pids": [
+              15184,
+              11012
+            ],
+            "processes": [
+              {
+                "Id": 11012,
+                "WorkingSet64": 7655424,
+                "PrivateMemorySize64": 1802240,
+                "CPU": 14.671875
+              },
+              {
+                "Id": 15184,
+                "WorkingSet64": 5034536960,
+                "PrivateMemorySize64": 5648289792,
+                "CPU": 4.359375
+              }
+            ],
+            "gpu_device": "NVIDIA GeForce RTX 3070, 7299, 8192",
+            "errors": []
+          },
+          {
+            "created_at": "2026-10-02T18:39:18.399Z",
+            "tracked_pids": [
+              15184,
+              11012
+            ],
+            "processes": [
+              {
+                "Id": 11012,
+                "WorkingSet64": 7655424,
+                "PrivateMemorySize64": 1802240,
+                "CPU": 19.625
+              },
+              {
+                "Id": 15184,
+                "WorkingSet64": 5034536960,
+                "PrivateMemorySize64": 5648289792,
+                "CPU": 4.359375
+              }
+            ],
+            "gpu_device": "NVIDIA GeForce RTX 3070, 7299, 8192",
+            "errors": []
+          },
+          {
+            "created_at": "2026-10-02T18:39:23.405Z",
+            "tracked_pids": [
+              15184,
+              11012
+            ],
+            "processes": [
+              {
+                "Id": 11012,
+                "WorkingSet64": 8724480,
+                "PrivateMemorySize64": 2478080,
+                "CPU": 24.21875
+              },
+              {
+                "Id": 15184,
+                "WorkingSet64": 5050343424,
+                "PrivateMemorySize64": 5668593664,
+                "CPU": 4.59375
+              }
+            ],
+            "gpu_device": "NVIDIA GeForce RTX 3070, 7298, 8192",
+            "errors": []
+          },
+          {
+            "created_at": "2026-10-02T18:39:28.419Z",
+            "tracked_pids": [
+              15184,
+              11012
+            ],
+            "processes": [
+              {
+                "Id": 11012,
+                "WorkingSet64": 8675328,
+                "PrivateMemorySize64": 2387968,
+                "CPU": 24.21875
+              },
+              {
+                "Id": 15184,
+                "WorkingSet64": 5058813952,
+                "PrivateMemorySize64": 5678981120,
+                "CPU": 9.640625
+              }
+            ],
+            "gpu_device": "NVIDIA GeForce RTX 3070, 7304, 8192",
+            "errors": []
+          },
+          {
+            "created_at": "2026-10-02T18:39:33.415Z",
+            "tracked_pids": [
+              15184,
+              11012
+            ],
+            "processes": [
+              {
+                "Id": 11012,
+                "WorkingSet64": 8675328,
+                "PrivateMemorySize64": 2387968,
+                "CPU": 24.21875
+              },
+              {
+                "Id": 15184,
+                "WorkingSet64": 5058813952,
+                "PrivateMemorySize64": 5677936640,
+                "CPU": 14.6875
+              }
+            ],
+            "gpu_device": "NVIDIA GeForce RTX 3070, 7303, 8192",
+            "errors": []
+          },
+          {
+            "created_at": "2026-10-02T18:39:38.428Z",
+            "tracked_pids": [
+              15184,
+              11012
+            ],
+            "processes": [
+              {
+                "Id": 11012,
+                "WorkingSet64": 8675328,
+                "PrivateMemorySize64": 2387968,
+                "CPU": 24.21875
+              },
+              {
+                "Id": 15184,
+                "WorkingSet64": 5058818048,
+                "PrivateMemorySize64": 5677936640,
+                "CPU": 19.703125
+              }
+            ],
+            "gpu_device": "NVIDIA GeForce RTX 3070, 7300, 8192",
+            "errors": []
+          }
+        ],
+        "limitations": "Sampled working set/private memory of tracked processes; device-wide GPU use includes other applications. Not an isolated peak or release hardware gate."
+      }
+    }
+  ],
+  "release_gate": "open"
+}

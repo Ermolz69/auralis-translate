@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "REG-056",
+  "status": "real_1_8b_recovery_rejected_no_result",
+  "severity": "major",
+  "source_family": "private_natural_commons_asus_development",
+  "split": "known_natural_development_not_holdout",
+  "category": "malformed_multi_slot_text_at_later_seam",
+  "profile_scope": "Hy-MT2 1.8B Q4_K_M experimental v8, batch four, copied-state resume",
+  "expected_invariant": "A malformed target at a later long-file seam must be rejected without losing prior checkpoints or publishing a partial SRT.",
+  "minimal_reproducer": {
+    "private_report_sha256": "b1e7507cd64623bce11508cbaad792ec1f583e6ecec9f14640be80d58bcfefe6",
+    "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+    "target_ids": [245, 246, 247, 248],
+    "request_sha256": "071601bdb48768b6e81914315677bdcc78e885278a310c6b477ad7e2ccae71fe",
+    "raw_response_sha256": "d8c273273f5fcc23ecfcde852b4d5e8a531fd0087296493fff930a4b5ada99c9",
+    "finish_reason": "stop",
+    "journal_outcome": "invalid_candidate",
+    "error_detail": "v7 response contains invalid target text",
+    "durable_prefix_cues": 244,
+    "published_results": 0
+  },
+  "related_controls": [
+    {"id":"late_gpu_comparison","source":"这部分的GPU表现仍需单独验证。","expected_meaning":"The GPU performance here still needs a separate check.","model_runs":0},
+    {"id":"late_amount_boundary","source":"最后一次测试读数是120瓦，不是100瓦。","expected_meaning":"The final reading is 120 watts, not 100.","model_runs":0},
+    {"id":"late_scene_transition","source":"接下来我们换一个场景继续测试。","expected_meaning":"Next we continue testing in another scene.","model_runs":0}
+  ],
+  "negative_controls": [
+    {"id":"plain_technical_target","candidate_text":"Здесь ещё нужно отдельно проверить производительность GPU.","expected_accept":true,"model_runs":0},
+    {"id":"plain_numeric_target","candidate_text":"Последнее значение — 120 ватт, а не 100.","expected_accept":true,"model_runs":0},
+    {"id":"plain_scene_target","candidate_text":"Далее проверим это в другой сцене.","expected_accept":true,"model_runs":0}
+  ],
+  "evidence_check": "task eval:long:v8:asus:resume:check",
+  "human_bilingual_review_count": 0,
+  "release_gate": "open"
+}

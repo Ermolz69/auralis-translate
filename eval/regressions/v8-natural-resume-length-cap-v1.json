@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "REG-057",
+  "status": "real_7b_recovery_hit_completion_cap_no_result",
+  "severity": "major",
+  "source_family": "private_natural_commons_asus_development",
+  "split": "known_natural_development_not_holdout",
+  "category": "batch_four_completion_length_cap",
+  "profile_scope": "Hy-MT2 7B Q4_K_M experimental v8, batch four, copied-state resume",
+  "expected_invariant": "A completion cut off at the declared token cap must be rejected, journaled and leave the durable prefix unchanged without a partial SRT.",
+  "minimal_reproducer": {
+    "private_report_sha256": "b1e7507cd64623bce11508cbaad792ec1f583e6ecec9f14640be80d58bcfefe6",
+    "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+    "target_ids": [141, 142, 143, 144],
+    "request_sha256": "3049068ad712328bf93ec96bfa62d85dcdc9ebbaefa154cfe9ee9c1f0962358e",
+    "raw_response_sha256": "7d6601b3d2ba126d8c11a4ac312c847bae9c6f79aa4702a957f2a8779c68ac95",
+    "finish_reason": "length",
+    "completion_tokens": 1024,
+    "journal_outcome": "invalid_candidate",
+    "error_detail": "llama.cpp did not finish the response",
+    "durable_prefix_cues": 140,
+    "published_results": 0
+  },
+  "related_controls": [
+    {"id":"four_short_technical_clauses","sources":["我们先看GPU。","然后检查CPU。","再看电池。","最后比较结果。"],"expected_cues":4,"model_runs":0},
+    {"id":"four_numbers_and_negation","sources":["功率是15瓦。","不是25瓦。","温度低于80度。","测试还没结束。"],"expected_cues":4,"model_runs":0},
+    {"id":"four_name_continuity","sources":["小李记录了数据。","王博士看了结果。","小李再次测量。","王博士确认了结果。"],"expected_cues":4,"model_runs":0}
+  ],
+  "negative_controls": [
+    {"id":"single_short_technical","sources":["我们先看GPU。"],"expected_cues":1,"model_runs":0},
+    {"id":"single_short_number","sources":["功率是15瓦。"],"expected_cues":1,"model_runs":0},
+    {"id":"single_short_name","sources":["小李记录了数据。"],"expected_cues":1,"model_runs":0}
+  ],
+  "evidence_check": "task eval:long:v8:asus:resume:check",
+  "human_bilingual_review_count": 0,
+  "release_gate": "open"
+}

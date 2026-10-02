@@ -1,0 +1,40 @@
+{
+  "schema_version": 37,
+  "catalog_id": "zh-ru-development-regressions-v37",
+  "base_catalog_file": "catalog-v36.json",
+  "base_catalog_sha256": "a0419392ae61977bb89e94771faeb3a2362014c04df0345768106b067e5b7be9",
+  "entries": [
+    {
+      "id": "REG-056",
+      "pack_file": "v8-natural-resume-malformed-v1.json",
+      "pack_sha256": "79ee345fbd115053cdfc7364e33eeb5181d3761679f1aa1fd4bc78a2ea6b6384",
+      "source_family": "private_natural_commons_asus_development",
+      "split": "known_natural_development_not_holdout",
+      "category": "malformed_multi_slot_text_at_later_seam",
+      "profile_scope": "Hy-MT2 1.8B Q4_K_M experimental v8, batch four, copied-state resume",
+      "expected_invariant": "A malformed target at a later long-file seam must be rejected without losing prior checkpoints or publishing a partial SRT.",
+      "severity": "major",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-10-02-v8-asus-copy-resume-result.md",
+      "last_outcome": "1.8B copy-only recovery kept 244 cues, then rejected a distinct malformed four-target response at cue 245; no result SRT. Six authored controls remain unrun by the model."
+    },
+    {
+      "id": "REG-057",
+      "pack_file": "v8-natural-resume-length-cap-v1.json",
+      "pack_sha256": "d5323d0d00810f986aed35d8b7307a864f954747787e9d4dc1a6fcdbbdd842d7",
+      "source_family": "private_natural_commons_asus_development",
+      "split": "known_natural_development_not_holdout",
+      "category": "batch_four_completion_length_cap",
+      "profile_scope": "Hy-MT2 7B Q4_K_M experimental v8, batch four, copied-state resume",
+      "expected_invariant": "A completion cut off at the declared token cap must be rejected, journaled and leave the durable prefix unchanged without a partial SRT.",
+      "severity": "major",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-10-02-v8-asus-copy-resume-result.md",
+      "last_outcome": "7B copy-only recovery hit finish_reason=length at 1,024 completion tokens on the same cue-141 request; all 140 earlier cues remained durable, no result SRT. Six authored controls remain unrun by the model."
+    }
+  ]
+}
