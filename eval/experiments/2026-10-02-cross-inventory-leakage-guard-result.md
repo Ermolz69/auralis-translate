@@ -68,6 +68,7 @@ media-boundary tests, all per-manifest schema checks and the 11-source /
 10-group aggregate. `task eval:data:current:bytes:check` passed all nine
 current manifest-to-file SHA-256 checks and the aggregate identity guard.
 Documentation, plan and generated-site checks were run after the correction.
-Live publication must be verified separately after deployment; a local build
-does not attest the live page. No Chinese speech, independent meaning,
+Live publication is verified in the separate
+[deployment record](2026-10-02-cross-inventory-leakage-guard-publication.md);
+a local build alone does not attest the live page. No Chinese speech, independent meaning,
 reference, listener or clean-install gate is satisfied by this correction.
