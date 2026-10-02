@@ -174,3 +174,12 @@ count 11 track records, 10 media groups and 3,243 inspected cue slots, with
 zero eligible cues. The 304-cue archived and 343-cue original Kirin tracks
 are separate versions of one media group; the slot sum does not imply that
 all those lines are independent.
+
+The [cross-group caption-overlap screen](../../eval/experiments/2026-10-02-cross-group-caption-overlap-result.md)
+rehashes and parses all eleven current private tracks, then compares 54
+cross-group pairs using a predeclared exact-text window threshold. None was
+flagged. The two Kirin versions share 4,010 of 4,176 distinct windows on the
+smaller track within their one media group. This is textual lineage evidence,
+not source-speech alignment or a complete near-duplicate audit. `task
+eval:data:current:bytes:check` now also checks the pinned machine-readable
+report; altered source bytes or inventory versions require a new report.
