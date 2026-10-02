@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "experiment_id": "DATA-03-SETHLUI-SOURCE-ACTIVITY-2026-10-02-v1",
+  "auralis_commit": "9e25b64",
+  "source_srt_sha256": "4777e11caa115e893f2328c2a33c25a76c7391ace8ecf0ac4b9436635fc27964",
+  "source_media_sha256": "6e29f1512a76f553bdfc1678f458a69cf010e4653ac3f1cdfc4c45742bfb39d6",
+  "private_report_sha256": "1ea748f6d4a3e19626155edbb01fe1b421b98d0f2a47c94e6f639bd6ce361ee7",
+  "raw_ffmpeg_log_sha256": "319bb3d841216aa01c7424e0f20f4434e72ddf3504c45469eeaba372ae93b1e7",
+  "threshold_db": -35,
+  "min_silence_ms": 300,
+  "media_duration_ms": 738056,
+  "cue_count": 263,
+  "silence_interval_count": 5,
+  "cues_with_silence_overlap": 2,
+  "cue_window_ms": 598432,
+  "cue_silence_overlap_ms": 155,
+  "review_priority_count": 0,
+  "thirds": [
+    { "cue_count": 86, "review_priority_count": 0 },
+    { "cue_count": 103, "review_priority_count": 0 },
+    { "cue_count": 74, "review_priority_count": 0 }
+  ],
+  "interpretation": "uninformative_for_speech_alignment",
+  "source_speech_alignment_verified": false,
+  "human_listening": "not_performed",
+  "eligible_cues_added": 0
+}

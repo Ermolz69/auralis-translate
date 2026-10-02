@@ -634,6 +634,15 @@ volunteer outreach; the invitation was not sent and the lead remains historical
 research. Human reviewer and listener coverage remain zero; independent
 engineering work continues without relabeling AI assessments as human scores.
 
+The [retained restaurant source-audio activity screen](../eval/experiments/2026-10-02-sethlui-source-activity-result.md)
+adds a bounded `DATA-03`/`VOICE-07` negative result. Local Auralis
+`1758a47`/`9e25b64` pinned the Chinese SRT, source media and FFmpeg version,
+checked silence/cue boundary controls and recomputed one raw run. Only 155 of
+598,432 cue-window milliseconds overlapped detected silence; zero of 263
+cues were almost quiet. Continuous sound is not evidence of Chinese speech,
+so the screen is uninformative for alignment and adds zero eligible cues.
+Human speech alignment, rights and listening remain open.
+
 The [licensed Paywall Chinese-text paired screen](../eval/experiments/2026-10-02-paywall-bilingual-review-seed-results.md)
 adds partial `CTX-02`/`EVAL-04` development evidence without changing DATA-03
 admission: identical v5 source-only prompts for 1.8B and 7B on 12 original
@@ -654,4 +663,5 @@ each, with an immutable sealed model mapping and 24 blank judgment fields.
 candidate reports; receipt SHA-256 is
 `0cf8d030aedc80d8c7a460e03471f143f81f31243ea7c75711915faedc5e5cf0`.
 No invitation, consent, human review, or source admission is implied by packet
-creation. The free acquisition route remains open.
+creation. The owner declined volunteer outreach; this packet is retained but
+the acquisition route is inactive under the current decision.

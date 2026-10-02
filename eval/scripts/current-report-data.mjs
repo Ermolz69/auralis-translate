@@ -11,7 +11,8 @@ import { loadApprovedTermDiagnostic } from './term-diagnostic-section.mjs';
 
 export async function loadCurrentReport(root) {
   const [plan, sources, comparison, retry, audio, terms, kirin,
-    kirinCaption, kirinMedia, paywall, captionOverlapRaw, packetRaw] = await Promise.all([
+    kirinCaption, kirinMedia, paywall, captionOverlapRaw, packetRaw,
+    activityRaw] = await Promise.all([
     loadDeliveryPlan(root), loadSourceCandidates(root), loadSethluiFullV6(root),
     loadSethluiRetry(root), loadSethluiAudio(root), loadApprovedTermDiagnostic(root),
     fs.readFile(path.join(root, 'eval/reports/youtube-geekerwan-kirin-license-v1.json'),
@@ -25,6 +26,8 @@ export async function loadCurrentReport(root) {
     fs.readFile(path.join(root, 'eval/reports/source-caption-overlap-v1.json'), 'utf8'),
     fs.readFile(path.join(root,
       'eval/reports/2026-10-02-sethlui-packet-boundary-summary.json'), 'utf8'),
+    fs.readFile(path.join(root,
+      'eval/reports/2026-10-02-sethlui-source-activity-summary.json'), 'utf8'),
   ]);
   const captionOverlap = JSON.parse(captionOverlapRaw);
   const captionOverlapSha256 = createHash('sha256').update(captionOverlapRaw).digest('hex');
@@ -37,6 +40,19 @@ export async function loadCurrentReport(root) {
   assert.equal(packet.packet_timeline_continuous, true);
   assert.equal(packet.human_listeners, 0);
   assert.equal(packet.cue_fit_admitted, false);
+  const activity = JSON.parse(activityRaw);
+  assert.equal(createHash('sha256').update(activityRaw).digest('hex'),
+    '162f900618cb006ec2ed2e23dcf3c4f1245e175b5d1b9c50e4a558049f95742d');
+  assert.equal(activity.source_srt_sha256, audio.summary.source_srt_sha256);
+  assert.equal(activity.source_media_sha256, audio.summary.source_media_sha256);
+  assert.equal(activity.cue_count, audio.summary.cue_count);
+  assert.equal(activity.cue_window_ms, 598_432);
+  assert.equal(activity.cue_silence_overlap_ms, 155);
+  assert.equal(activity.review_priority_count, 0);
+  assert.equal(activity.interpretation, 'uninformative_for_speech_alignment');
+  assert.equal(activity.source_speech_alignment_verified, false);
+  assert.equal(activity.human_listening, 'not_performed');
+  assert.equal(activity.eligible_cues_added, 0);
   const small = comparison.arms[0];
   const large = retry.second;
   assert.equal(small.model, '1.8B Q4_K_M');
@@ -150,6 +166,16 @@ export async function loadCurrentReport(root) {
       packet_overshoot_ms: packet.overshoot_ms,
       packet_timeline_continuous: packet.packet_timeline_continuous,
       human_listeners: 0, approved_script: audio.summary.approved_spoken_script },
+    source_activity: { cue_count: activity.cue_count,
+      silence_interval_count: activity.silence_interval_count,
+      cues_with_silence_overlap: activity.cues_with_silence_overlap,
+      cue_window_ms: activity.cue_window_ms,
+      cue_silence_overlap_ms: activity.cue_silence_overlap_ms,
+      review_priority_count: activity.review_priority_count,
+      thirds: activity.thirds,
+      interpretation: activity.interpretation,
+      source_speech_alignment_verified: activity.source_speech_alignment_verified,
+      eligible_cues_added: activity.eligible_cues_added },
     backlog: { total_tasks: plan.total_tasks, counts: plan.counts },
   };
 }
