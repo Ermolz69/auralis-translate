@@ -378,6 +378,25 @@ tasks:
     cmds:
       - task: eval:data:youtube:sethlui:license:preflight
       - node eval/scripts/inventory-youtube-sethlui-license.mjs
+  eval:data:voa:captions:preflight:
+    desc: Verify the frozen two-source Mandarin caption inventory and extractor identity
+    env:
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - node --check eval/scripts/inventory-voa-mandarin-captions.mjs
+      - node eval/scripts/inventory-voa-mandarin-captions.mjs --preflight
+  eval:data:voa:captions:inventory:
+    desc: Retain two bounded original-platform caption metadata responses without downloads
+    env:
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - task: eval:data:voa:captions:preflight
+      - node eval/scripts/inventory-voa-mandarin-captions.mjs
+  eval:data:voa:captions:check:
+    desc: Verify both retained Mandarin source screens and the sandbox failure offline
+    cmds:
+      - node --check eval/scripts/check-voa-mandarin-caption-inventory.mjs
+      - node eval/scripts/check-voa-mandarin-caption-inventory.mjs
   eval:data:youtube:sethlui:caption:preflight:
     desc: Verify the one expiring YouTube zh-Hans SRT URL and bounded acquisition inputs
     cmds:

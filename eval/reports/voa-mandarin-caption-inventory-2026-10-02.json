@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "experiment": "DATA-03-voa-mandarin-caption-inventory-2026-10-02-v1",
+  "candidate_git_commit": "bab16efe9a3e621db5e34069426661b8a9b6122f",
+  "extractor_sha256": "52fe3c26dcf71fbdc85b528589020bb0b8e383155cfa81b64dd447bbe35e24b8",
+  "sandbox_failure": {
+    "private_report": ".cache/eval/voa-mandarin-caption-inventory-v1/attempt-PkF6oZ/report.json",
+    "sha256": "59c56cbf334b8940dd92fb1f4f1e698e23c593644999a3c4495d1f0d01ac0dcd",
+    "outcome": "spawn EPERM before network",
+    "requests_sent": 0
+  },
+  "permitted_attempt": {
+    "private_report": ".cache/eval/voa-mandarin-caption-inventory-v1/attempt-6qcSW6/report.json",
+    "sha256": "7ff794ac883773782742ade6964936aba89152ce617a78f02c76d2dc85bcee82",
+    "started_at": "2026-10-02T15:32:58.175Z",
+    "finished_at": "2026-10-02T15:33:04.236Z",
+    "candidates": [
+      {
+        "youtube_id": "_Ok42iFpLpQ",
+        "commons_duration_seconds": 1204.937,
+        "original_duration_seconds": 1205,
+        "stdout_sha256": "09909d1fa1eb69b2a71d4fa6e6228c897cd98b9f3b2bae9fd73408073ee6c29f",
+        "original_chinese_subtitle_languages": [],
+        "automatic_chinese_caption_languages": [],
+        "eligible_cues_added": 0
+      },
+      {
+        "youtube_id": "bjWlhc_RpRc",
+        "commons_duration_seconds": 655.941,
+        "original_duration_seconds": 656,
+        "stdout_sha256": "967b1dab56c40069cbf9fe29f25663476da0a8b724d037e01cfc0fbdd48a29df",
+        "original_chinese_subtitle_languages": [],
+        "automatic_chinese_caption_languages": [],
+        "eligible_cues_added": 0
+      }
+    ]
+  },
+  "source_admission": "rejected_no_chinese_subtitle_track",
+  "human_review": "not_performed"
+}
