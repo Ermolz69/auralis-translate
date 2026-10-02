@@ -81,6 +81,8 @@ assert.equal(currentData.source_probe.original_media_acquired, false);
 assert.deepEqual(currentData.source_probe.media_http_statuses, [302, 403]);
 assert(current.includes('2026-10-02-kirin-original-caption-and-media-result.md'));
 assert(current.includes('допущенных реплик по-прежнему 0'));
+assert(current.includes('2026-10-02-sunflower-source-inventory-result.md'));
+assert(current.includes('китайские пункты — автоматический перевод'));
 assert.equal(currentData.development_screen.source_cues, 12);
 assert.equal(currentData.development_screen.source_text_slots, 16);
 assert.equal(currentData.development_screen.identical_requests, true);
