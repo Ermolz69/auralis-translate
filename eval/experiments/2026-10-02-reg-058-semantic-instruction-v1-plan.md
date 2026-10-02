@@ -63,3 +63,15 @@ Use `task eval:regression:reg058:instruction:preflight` before the single
 `task eval:regression:reg058:instruction:probe`. Then use
 `task eval:regression:reg058:instruction:report` and `:check` to validate
 the private journal and publish a source-free comparison.
+
+## Retained zero-request launch failure
+
+The first sandboxed `:probe` invocation passed preflight but failed before
+server startup or any model request with `spawn EPERM`. Its immutable private
+report at `.cache/eval/reg-058-semantic-instruction-v1/attempt-nXnb9r/report.json`
+has SHA-256
+`a2a110331c324a181eea0c3306f3f44ab9bd1c51fe5828a827c1ce5a93102d02`;
+the request journal is empty. A single elevated process-launch attempt is
+permitted against the unchanged corpus, parameters and instruction. This is
+an environment correction, not a model retry. Any further launch or model
+failure ends this screen; retain both reports.

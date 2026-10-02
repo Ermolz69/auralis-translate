@@ -123,9 +123,18 @@ if (preflight) {
 }
 
 const parent = path.join(root, '.cache/eval/reg-058-semantic-instruction-v1');
-assert.equal((await fs.readdir(parent).catch(error => error.code === 'ENOENT' ? [] :
-  Promise.reject(error))).filter(name => name.startsWith('attempt-')).length, 0,
-'Frozen experiment permits only one model attempt');
+const attempts = (await fs.readdir(parent).catch(error => error.code === 'ENOENT' ? [] :
+  Promise.reject(error))).filter(name => name.startsWith('attempt-'));
+if (attempts.length === 1) {
+  assert.equal(attempts[0], 'attempt-nXnb9r');
+  const failedLaunch = await fs.readFile(path.join(parent, attempts[0], 'report.json'));
+  assert.equal(digest(failedLaunch),
+    'a2a110331c324a181eea0c3306f3f44ab9bd1c51fe5828a827c1ce5a93102d02');
+  const failed = JSON.parse(failedLaunch);
+  assert.equal(failed.arms[0].requests.length, 0);
+  assert.deepEqual(failed.arms[0].errors, ['Error: spawn EPERM']);
+} else assert.equal(attempts.length, 0,
+  'Frozen experiment permits one model attempt after the retained zero-request launch failure');
 await fs.mkdir(parent, { recursive: true });
 const workspace = await fs.mkdtemp(path.join(parent, 'attempt-'));
 const started = performance.now();

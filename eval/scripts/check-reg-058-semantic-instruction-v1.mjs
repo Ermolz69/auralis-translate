@@ -11,8 +11,17 @@ const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 const relative = file => path.relative(root, file).replaceAll('\\', '/');
 const parent = path.join(root, '.cache/eval/reg-058-semantic-instruction-v1');
 const attempts = (await fs.readdir(parent)).filter(name => name.startsWith('attempt-'));
-assert.equal(attempts.length, 1, 'The frozen screen allows exactly one attempt');
-const attempt = path.join(parent, attempts[0]);
+assert.equal(attempts.length, 2, 'One zero-request launch failure and one model attempt are expected');
+assert(attempts.includes('attempt-nXnb9r'));
+const failedLaunchPath = path.join(parent, 'attempt-nXnb9r/report.json');
+const failedLaunchBytes = await fs.readFile(failedLaunchPath);
+const failedLaunchSha =
+  'a2a110331c324a181eea0c3306f3f44ab9bd1c51fe5828a827c1ce5a93102d02';
+assert.equal(digest(failedLaunchBytes), failedLaunchSha);
+const failedLaunch = JSON.parse(failedLaunchBytes);
+assert.equal(failedLaunch.arms[0].requests.length, 0);
+assert.deepEqual(failedLaunch.arms[0].errors, ['Error: spawn EPERM']);
+const attempt = path.join(parent, attempts.find(name => name !== 'attempt-nXnb9r'));
 const privatePath = path.join(attempt, 'report.json');
 const privateBytes = await fs.readFile(privatePath);
 const raw = JSON.parse(privateBytes);
@@ -175,6 +184,8 @@ const report = { schema_version: 1, experiment: raw.experiment,
     'paired_real_model_prompt_screen_validated_unreviewed_meaning' :
     'incomplete_real_model_prompt_screen_retained',
   split: 'authored_development_not_holdout',
+  failed_launch_report: relative(failedLaunchPath),
+  failed_launch_report_sha256: failedLaunchSha,
   private_report: relative(privatePath),
   private_report_sha256: digest(privateBytes),
   harness_sha256: raw.harness_sha256,
