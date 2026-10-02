@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "video_id": "73XUeYRFsZU",
+  "caption_sha256": "c2a5fa3ae5139fe90b2be0b4b48b10ddd20d9b42103f4dd8401e1426d1b3eae5",
+  "media_acquired": false,
+  "attempts": [
+    {
+      "experiment": "DATA-03-youtube-geekerwan-kirin-original-media-2026-10-02-v1",
+      "started_at": "2026-10-02T11:47:47.261Z",
+      "format_id": "133",
+      "http_status": 302,
+      "response_bytes": 0,
+      "redirected": false,
+      "audio_requested": false,
+      "report_sha256": "c937756018622b6ce6b744f2810d7112059467edb4723528073a3b0ee94ceb8a"
+    },
+    {
+      "experiment": "DATA-03-youtube-geekerwan-kirin-original-media-redirect-2026-10-02-v1",
+      "started_at": "2026-10-02T11:50:01.535Z",
+      "format_id": "133",
+      "http_status": 403,
+      "response_bytes": 0,
+      "redirected": false,
+      "audio_requested": false,
+      "report_sha256": "bde2fd18282ed4a42c592f1881462c0ce08863c99265e54e750e2a111d57aa38"
+    }
+  ],
+  "source_admission": "unassigned_unreviewed",
+  "further_requests_in_experiment": 0
+}
