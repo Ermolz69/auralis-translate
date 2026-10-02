@@ -23,7 +23,7 @@ const currentInventoryPaths = historicalInventoryPaths.map(file => {
     return 'eval/corpora/commons-geekerwan-two-scenes-candidate-v2.json';
   }
   return file;
-});
+}).concat('eval/corpora/commons-wikipedia-lesson-candidate-v1.json');
 
 async function loadCandidates(root, paths, current) {
   const inventories = await Promise.all(paths.map(async file => {
@@ -38,6 +38,7 @@ async function loadCandidates(root, paths, current) {
   const sethlui = inventories[6].inventory.sources[0];
   const paywall = inventories[7].inventory.sources[0];
   const originalKirin = inventories[8].inventory.sources[0];
+  const lesson = current ? inventories[9].inventory.sources[0] : null;
   if (inventories[1].inventory.sources.length !== 1
       || commerce.id !== 'commons-cc-commerce-906218083'
       || commerce.state !== 'inspected_candidate'
@@ -102,6 +103,14 @@ async function loadCandidates(root, paths, current) {
         originalKirin.rights[kind].decision !== 'unknown')) {
     throw new Error('Original Kirin candidate identity, grouping or admission changed');
   }
+  if (current && (inventories[9].inventory.sources.length !== 1
+      || lesson.id !== 'commons-wikipedia-lesson-2-100755166-derivative-v1'
+      || lesson.state !== 'inspected_candidate' || lesson.split !== 'unassigned'
+      || lesson.cue_count !== 37 || lesson.media_duration_ms !== 239000
+      || ['subtitle', 'reference', 'audio'].some(kind =>
+        lesson.rights[kind].decision !== 'unknown'))) {
+    throw new Error('Wikipedia lesson candidate identity, timing or admission changed');
+  }
   const identityCounts = current
     ? validateCrossInventorySourceGroups(inventories.map(entry => entry.inventory))
     : null;
@@ -131,6 +140,9 @@ async function loadCandidates(root, paths, current) {
     paywall_cues: paywall.cue_count,
     paywall_sha256: paywall.sha256,
     paywall_media_duration_ms: paywall.media_duration_ms,
+    ...(lesson ? { lesson_cues: lesson.cue_count,
+      lesson_sha256: lesson.sha256,
+      lesson_media_duration_ms: lesson.media_duration_ms } : {}),
   };
 }
 

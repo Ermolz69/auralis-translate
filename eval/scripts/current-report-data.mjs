@@ -25,7 +25,7 @@ export async function loadCurrentReport(root) {
       'utf8').then(JSON.parse),
     fs.readFile(path.join(root, 'eval/reports/paywall-review-seed-v1.json'),
       'utf8').then(JSON.parse),
-    fs.readFile(path.join(root, 'eval/reports/source-caption-overlap-v1.json'), 'utf8'),
+    fs.readFile(path.join(root, 'eval/reports/source-caption-overlap-v2.json'), 'utf8'),
     fs.readFile(path.join(root,
       'eval/reports/2026-10-02-sethlui-packet-boundary-summary.json'), 'utf8'),
     fs.readFile(path.join(root,
@@ -141,13 +141,15 @@ export async function loadCurrentReport(root) {
   assert.equal(large.checkpoints, comparison.source_cues);
   assert.equal(audio.summary.source_srt_sha256, comparison.source_sha256);
   assert.equal(audio.summary.candidate_ru_srt_sha256, large.output_sha256);
-  assert.equal(sources.source_count, 11);
-  assert.equal(sources.media_groups, 10);
-  assert.equal(sources.inspected_cues, 3243);
+  assert.equal(sources.source_count, 12);
+  assert.equal(sources.media_groups, 11);
+  assert.equal(sources.inspected_cues, 3280);
+  assert.equal(sources.lesson_cues, 37);
+  assert.equal(sources.lesson_media_duration_ms, 239000);
   assert.equal(sources.eligible_cues, 0);
   assert.equal(captionOverlap.source_count, sources.source_count);
   assert.equal(captionOverlap.media_group_count, sources.media_groups);
-  assert.equal(captionOverlap.compared_pairs, 54);
+  assert.equal(captionOverlap.compared_pairs, 65);
   assert.deepEqual(captionOverlap.flagged_pairs, []);
   assert.equal(captionOverlap.same_group_pairs.length, 1);
   assert.equal(captionOverlap.same_group_pairs[0].shared_windows, 4010);
@@ -179,6 +181,10 @@ export async function loadCurrentReport(root) {
     sources: { candidates: sources.source_count, media_groups: sources.media_groups,
       inspected_cues: sources.inspected_cues,
       eligible_cues: sources.eligible_cues },
+    lesson_source: { cues: sources.lesson_cues,
+      caption_sha256: sources.lesson_sha256,
+      media_duration_ms: sources.lesson_media_duration_ms,
+      strict_derivative: true, human_alignment_review: false },
     caption_overlap: { compared_pairs: captionOverlap.compared_pairs,
       flagged_pairs: captionOverlap.flagged_pairs.length,
       kirin_shared_windows: captionOverlap.same_group_pairs[0].shared_windows,
