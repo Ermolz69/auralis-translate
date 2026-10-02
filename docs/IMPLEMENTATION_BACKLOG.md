@@ -814,3 +814,10 @@ supply independent language or listening ratings. G3–G9 and A1–A6 remain
 open, as do source admission, the approved spoken script, clean installation
 and the deferred desktop decision. The [v7 audit](../eval/experiments/2026-10-02-release-05-audit-attempt-v7.md)
 and failed harness are retained.
+
+The [RELEASE-05 v9 self-audit](../eval/experiments/2026-10-02-release-05-audit-attempt-v9.md)
+checks committed candidate `b8985d4`, the rejected one-factor REG-058 prompt
+screen, current source eligibility, the full regression task and the deployed
+current/history pages. All required G3–G9 and A1–A6 gates remain open;
+G1–G2 retain partial development evidence only. The 7B v8 product profile
+and Auralis checkout were not modified by the rejected experiment.
