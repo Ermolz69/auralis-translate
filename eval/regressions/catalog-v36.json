@@ -1,0 +1,40 @@
+{
+  "schema_version": 36,
+  "catalog_id": "zh-ru-development-regressions-v36",
+  "base_catalog_file": "catalog-v35.json",
+  "base_catalog_sha256": "203b05fff636f8d59ed85b757ce2c0df7edc4c7063e9715b58497c5e385fd318",
+  "entries": [
+    {
+      "id": "REG-054",
+      "pack_file": "v8-natural-malformed-multislot-v1.json",
+      "pack_sha256": "660e762bab340d81a5a56a4d97d96ee34b8901907285006f88994ccd9dc27311",
+      "source_family": "private_natural_commons_asus_development",
+      "split": "known_natural_development_not_holdout",
+      "category": "malformed_multi_slot_text_after_stop",
+      "profile_scope": "Hy-MT2 1.8B Q4_K_M experimental v8, batch four",
+      "expected_invariant": "A stopped model response with malformed inner target text must be rejected before checkpoint and never produce a partial SRT.",
+      "severity": "major",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-10-02-v8-asus-natural-long-result.md",
+      "last_outcome": "The real 1.8B run retained 216 of 268 cues, rejected malformed target text on the next batch, and produced no result file. Three related and three negative authored controls remain unrun by the model."
+    },
+    {
+      "id": "REG-055",
+      "pack_file": "v8-natural-leaked-json-structure-v1.json",
+      "pack_sha256": "e8e014410b198b4fc302358ff033a78a77f6939d720cb16768c3164f067b0a8a",
+      "source_family": "private_natural_commons_asus_development",
+      "split": "known_natural_development_not_holdout",
+      "category": "leaked_json_structure_in_target_text",
+      "profile_scope": "Hy-MT2 7B Q4_K_M experimental v8, batch four",
+      "expected_invariant": "Leaked JSON structural fragments inside target text must be rejected before the provider records a validated batch; no invalid checkpoint or partial SRT may appear.",
+      "severity": "major",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-10-02-v8-asus-natural-long-result.md",
+      "last_outcome": "The real 7B run retained 140 of 268 cues. The old provider journal marked the leaked-wrapper response validated, but the SRT guard rejected it before checkpoint; no result file was produced. The new provider guard and synthetic controls require affected-test verification."
+    }
+  ]
+}

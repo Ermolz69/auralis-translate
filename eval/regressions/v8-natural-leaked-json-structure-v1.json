@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "id": "REG-055",
+  "status": "real_7b_provider_journal_misclassified_before_srt_rejection",
+  "severity": "major",
+  "source_family": "private_natural_commons_asus_development",
+  "split": "known_natural_development_not_holdout",
+  "category": "leaked_json_structure_in_target_text",
+  "profile_scope": "Hy-MT2 7B Q4_K_M experimental v8, batch four",
+  "expected_invariant": "Leaked JSON structural fragments inside target text must be rejected before the provider records a validated batch; no invalid checkpoint or partial SRT may appear.",
+  "minimal_reproducer": {
+    "private_report": ".cache/eval/v8-asus-natural-long-v1/attempt-UhjJZn/report.json",
+    "private_report_sha256": "e67560c2cf31bd8571df5d73cbc5d4b9f8c4ff8e0343f549d03ddee703c1657e",
+    "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+    "target_ids": [141, 142, 143, 144],
+    "request_sha256": "3049068ad712328bf93ec96bfa62d85dcdc9ebbaefa154cfe9ee9c1f0962358e",
+    "raw_response_sha256": "71a7145720321dc0b657f1bbbc9ca4438d3ab76e33777e47d46ca0c300907436",
+    "finish_reason": "stop",
+    "journal_outcome_before_fix": "validated_batch",
+    "document_error": "SRT target line violates supported text grammar",
+    "durable_prefix_cues": 140,
+    "published_results": 0
+  },
+  "related_controls": [
+    {"id":"escaped_object_separator","candidate_text":"Анализ GPU\\\"},{\\\"line_index\\\":0","expected_accept":false,"model_runs":0},
+    {"id":"literal_object_separator","candidate_text":"Анализ GPU\"},{\"line_index\":0","expected_accept":false,"model_runs":0},
+    {"id":"closing_wrapper_fragment","candidate_text":"При максимальной нагрузке\"}]}","expected_accept":false,"model_runs":0}
+  ],
+  "negative_controls": [
+    {"id":"ordinary_russian_quote","candidate_text":"В тексте сказано «GPU Z1 Extreme».","expected_accept":true,"model_runs":0},
+    {"id":"ordinary_square_brackets","candidate_text":"Уровень GPU [Z1 Extreme] проверен.","expected_accept":true,"model_runs":0},
+    {"id":"ordinary_colon_comma","candidate_text":"Тест завершён: GPU, CPU и память проверены.","expected_accept":true,"model_runs":0}
+  ],
+  "fix_test": "task test:long-batch-v8",
+  "evidence_check": "task eval:long:v8:asus:check",
+  "human_bilingual_review_count": 0,
+  "release_gate": "open"
+}

@@ -1229,7 +1229,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-053 packs and all control counts
+    desc: Verify versioned REG-001 through REG-055 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -1265,6 +1265,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v33.mjs
       - node eval/scripts/check-regression-catalog-v34.mjs
       - node eval/scripts/check-regression-catalog-v35.mjs
+      - node eval/scripts/check-regression-catalog-v36.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:
@@ -2083,6 +2084,32 @@ tasks:
     desc: Verify the 7B v8 prompt, raw model response, checkpoint, full SRT and original source
     cmds:
       - node eval/scripts/check-v8-7b-authored.mjs
+  eval:long:v8:asus:preflight:
+    desc: Verify pinned natural 268-cue source, paired media, two v8 profiles, models and CLI
+    env:
+      AURALIS_TEST_GGUF_SMALL: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_LARGE: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - node eval/scripts/probe-v8-asus-natural-long.mjs --preflight
+  eval:long:v8:asus:probe:
+    desc: Run bounded real 1.8B/7B v8 four-target CLI attempts on the same natural 268-cue SRT
+    env:
+      AURALIS_TEST_GGUF_SMALL: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_LARGE: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - task: build:release
+      - task: eval:long:v8:asus:preflight
+      - node eval/scripts/probe-v8-asus-natural-long.mjs
+  eval:long:v8:asus:report:
+    desc: Extract source-free failure evidence from both retained natural 268-cue v8 attempts
+    cmds:
+      - node eval/scripts/check-v8-asus-natural-long.mjs --write
+  eval:long:v8:asus:check:
+    desc: Verify both raw natural v8 failures, durable prefixes, source hashes and no partial SRT
+    cmds:
+      - node eval/scripts/check-v8-asus-natural-long.mjs
   eval:regression:v8:name:preflight:
     desc: Verify frozen REG-052 source, v8 request, model and runtime before name controls
     env:

@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "REG-054",
+  "status": "real_1_8b_batch_rejected_no_checkpoint",
+  "severity": "major",
+  "source_family": "private_natural_commons_asus_development",
+  "split": "known_natural_development_not_holdout",
+  "category": "malformed_multi_slot_text_after_stop",
+  "profile_scope": "Hy-MT2 1.8B Q4_K_M experimental v8, batch four",
+  "expected_invariant": "A stopped model response with malformed inner target text must be rejected before checkpoint and never produce a partial SRT.",
+  "minimal_reproducer": {
+    "private_report": ".cache/eval/v8-asus-natural-long-v1/attempt-UhjJZn/report.json",
+    "private_report_sha256": "e67560c2cf31bd8571df5d73cbc5d4b9f8c4ff8e0343f549d03ddee703c1657e",
+    "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+    "target_ids": [217, 218, 219, 220],
+    "request_sha256": "e173be2886df01f1cfcaf9149fd9c3b925b34bcd2131073068557a4b33dfc9f9",
+    "raw_response_sha256": "d27870f599155eecee70a8fe83f90a4df7b5b7ad8d24e9dd0f2778314f4c72c9",
+    "finish_reason": "stop",
+    "journal_outcome": "invalid_candidate",
+    "error_detail": "v7 response contains invalid target text",
+    "durable_prefix_cues": 216,
+    "published_results": 0
+  },
+  "related_controls": [
+    {"id":"gpu_model_name","source":"如果你好奇这颗芯片的GPU表现，我们继续测试。","expected_meaning":"Continue testing the GPU performance of this chip.","model_runs":0},
+    {"id":"benchmark_next_sentence","source":"我们还进行了WildLife Extreme测试。","expected_meaning":"We also ran the WildLife Extreme benchmark.","model_runs":0},
+    {"id":"full_load_comparison","source":"满载时它接近另一款芯片。","expected_meaning":"At full load it approaches another chip.","model_runs":0}
+  ],
+  "negative_controls": [
+    {"id":"ordinary_russian_quote","candidate_text":"Мы проверили «GPU Z1 Extreme».","expected_accept":true,"model_runs":0},
+    {"id":"ordinary_russian_bracket","candidate_text":"Результат теста [WildLife Extreme] сохранён.","expected_accept":true,"model_runs":0},
+    {"id":"ordinary_model_number","candidate_text":"Сравнение с моделью M1 завершено.","expected_accept":true,"model_runs":0}
+  ],
+  "evidence_check": "task eval:long:v8:asus:check",
+  "human_bilingual_review_count": 0,
+  "release_gate": "open"
+}
