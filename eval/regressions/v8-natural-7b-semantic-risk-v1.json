@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "id": "REG-058",
+  "status": "ai_source_aware_semantic_findings_human_unreviewed",
+  "severity": "major",
+  "source_family": "private_natural_commons_asus_development",
+  "split": "known_natural_development_not_holdout",
+  "category": "long_file_device_technical_idiom_and_item_meaning",
+  "profile_scope": "Hy-MT2 7B Q4_K_M experimental v8, one target per batch, real 268-cue SRT",
+  "expected_invariant": "A complete structurally valid SRT must still preserve device type, core mode, comparison frame, platform action and product item meaning in every target cue.",
+  "minimal_reproducers": [
+    {"id":"handheld_not_tablet","cue_id":3,"source_text_sha256":"b3a332edf15688bca9ebd9940ff772e3fc8e8d41302dab7ec373445e58017257","candidate_text_sha256":"7399b04a65e6fac44ea89c47135f726ff40b1cbd36a9f98f9bfdf0cbcf1d3772","source_aware_ai_finding":"handheld game device rendered as tablet"},
+    {"id":"single_core_not_module","cue_id":140,"source_text_sha256":"89928e268824ab0126987a6b28e74f7b1b479b8a48272bd914663e3a0e9e2d9b","candidate_text_sha256":"4780a340e7c882bb4254d27a5235a561cd3ae2e2d8173b48c5438bc3a26480eb","source_aware_ai_finding":"single-core performance rendered as single-processor module"},
+    {"id":"multicore_not_multiprocessor","cue_id":143,"source_text_sha256":"4dc4b15ed1eb4a5304907456d5597467d8a7e277007f5f6f69c36afd4937d14d","candidate_text_sha256":"4928ce733c958de5b474b0540bf433df4de61525f6706c4c7f38724bccbe36c0","source_aware_ai_finding":"multi-core case rendered as multi-processor systems"},
+    {"id":"longitudinal_not_spatial","cue_id":215,"source_text_sha256":"bf1a86bfac04c41c0546f78d5ebd78274531f32b8320c19aa2f2d848a27b0276","candidate_text_sha256":"8316c49b24567f157f771047f0e149df59df892deda2b3b0425d8c17bdbe05b9","source_aware_ai_finding":"comparative direction rendered as spatial orientation"},
+    {"id":"platform_action_not_three_presses","cue_id":263,"source_text_sha256":"ffe15e4c380ee686c4dc381c61364ebe2229426d531953dcca9e9a3b52b8095e","candidate_text_sha256":"003ff1176f97c6ebe993c2c160336ec100a5e0076643503251e74e8772fb6490","source_aware_ai_finding":"one-action support idiom rendered as three presses of one button"},
+    {"id":"mouse_pad_not_stand","cue_id":267,"source_text_sha256":"c2a8ba581c82c02c2b737d0fa7fd8aaba920037cfd689b6c576909b887077d2f","candidate_text_sha256":"64154455e10c5e12d4d38ceb2aa12cbf79c1b8c32d8d78bb57d19df892b96c02","source_aware_ai_finding":"mouse pads rendered as mouse stands"}
+  ],
+  "related_controls": [
+    {"id":"handheld_positive","for":"handheld_not_tablet","source":"这是一台掌机，不是平板。","expected_meaning":"This is a handheld console, not a tablet.","model_runs":0},
+    {"id":"single_core_positive","for":"single_core_not_module","source":"单核性能提高了16%。","expected_meaning":"Single-core performance improved by 16 percent.","model_runs":0},
+    {"id":"multicore_positive","for":"multicore_not_multiprocessor","source":"多核测试得分达到一万分。","expected_meaning":"The multi-core test score reached ten thousand.","model_runs":0},
+    {"id":"longitudinal_positive","for":"longitudinal_not_spatial","source":"与上一代纵向比较，能效提高了。","expected_meaning":"Efficiency improved compared with the previous generation.","model_runs":0},
+    {"id":"platform_positive","for":"platform_action_not_three_presses","source":"一键三连支持我们。","expected_meaning":"Use the platform's three support actions with one gesture.","model_runs":0},
+    {"id":"mouse_pad_positive","for":"mouse_pad_not_stand","source":"我们也卖鼠标垫。","expected_meaning":"We also sell mouse pads.","model_runs":0}
+  ],
+  "negative_controls": [
+    {"id":"tablet_negative","for":"handheld_not_tablet","source":"这是一台平板，不是掌机。","expected_meaning":"This is a tablet, not a handheld console.","model_runs":0},
+    {"id":"module_negative","for":"single_core_not_module","source":"这个处理器模块的功耗提高了。","expected_meaning":"This processor module's power consumption increased.","model_runs":0},
+    {"id":"multiprocessor_negative","for":"multicore_not_multiprocessor","source":"这是一套多处理器系统。","expected_meaning":"This is a multi-processor system.","model_runs":0},
+    {"id":"chart_axis_negative","for":"longitudinal_not_spatial","source":"图表纵轴显示能效。","expected_meaning":"The chart's vertical axis shows efficiency.","model_runs":0},
+    {"id":"three_presses_negative","for":"platform_action_not_three_presses","source":"把这个按钮按三次。","expected_meaning":"Press this button three times.","model_runs":0},
+    {"id":"mouse_stand_negative","for":"mouse_pad_not_stand","source":"我们也卖鼠标支架。","expected_meaning":"We also sell mouse stands.","model_runs":0}
+  ],
+  "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+  "candidate_sha256": "746495ba8bfc9c7c3cee0b5021fea87c10605b1d8e07be6dc316907138ea48ee",
+  "private_model_report_sha256": "9ae192177dd51611f49adf7699ca4fe9677a230dc74cbdedded2618040cc193c",
+  "private_audit_pairs_sha256": "61fc8649fbf1f824acef185cbadc696168b634ec965f39e36720e3205fb33bef",
+  "evidence_check": "task eval:long:v8:asus:single:semantic:check",
+  "human_bilingual_review_count": 0,
+  "release_gate": "open"
+}

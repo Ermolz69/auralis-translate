@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "audit": "v8-asus-single-target-source-aware-ai-triage-v1",
+  "split": "known_natural_development_not_holdout",
+  "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+  "candidate_sha256": "746495ba8bfc9c7c3cee0b5021fea87c10605b1d8e07be6dc316907138ea48ee",
+  "private_selection_sha256": "61fc8649fbf1f824acef185cbadc696168b634ec965f39e36720e3205fb33bef",
+  "sample_strategy": "fixed seam anchors plus source-only first/median/last ASCII-digit, Chinese-negation-heuristic and Latin-marker cues, then immediate neighbors",
+  "selected_cues": 43,
+  "selected_ids": [1,2,3,4,5,78,79,80,81,132,133,134,135,136,139,140,141,142,143,144,145,146,159,160,161,215,216,217,218,243,244,245,246,254,255,256,261,262,263,265,266,267,268],
+  "source_only_category_matches": {"ascii_digit":109,"chinese_negation_heuristic":62,"latin_marker":144},
+  "machine_warnings": {"total":54,"cue_count":51,"digit_verbatim_warnings":3,"latin_marker_verbatim_warnings":51,"warning_interpretation":"diagnostic_only; three digit warnings are locale/wording variants on AI review; Latin warnings include translated units"},
+  "ai_review": {
+    "reviewed_selected_cues": 43,
+    "high_confidence_semantic_issue_ids": [3,140,143,215,263,267],
+    "russian_language_issue_ids": [1,142,218,254],
+    "unresolved_name_or_term_id": [265],
+    "negation_probe": "The first source-only negation hit is a false positive inside a non-negative word; sampled cue 160 preserves less-than meaning and cue 262 preserves qualified positive meaning.",
+    "number_probe": "No clear quantity loss found in selected windows; all three digit-verbatim warnings checked as locale or spelled-number variants. This is not a full numeric meaning review.",
+    "scene_continuity_probe": "Single provisional video-wide scene; adjacent windows at 139–143 and 217–218 have broken Russian technical phrasing or referents. Real cut boundaries remain unchecked."
+  },
+  "human_bilingual_review_count": 0,
+  "accepted_language_quality": false,
+  "approved_spoken_script": false,
+  "release_gate": "open"
+}

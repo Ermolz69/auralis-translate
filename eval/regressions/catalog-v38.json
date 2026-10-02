@@ -1,0 +1,40 @@
+{
+  "schema_version": 38,
+  "catalog_id": "zh-ru-development-regressions-v38",
+  "base_catalog_file": "catalog-v37.json",
+  "base_catalog_sha256": "a5109902fdbca2f10e91d43ff408c7b061e05d0eb26cc21281b77d9e19f8528a",
+  "entries": [
+    {
+      "id": "REG-058",
+      "pack_file": "v8-natural-7b-semantic-risk-v1.json",
+      "pack_sha256": "fcba9d337e8bdf3dd0d431cf886917bcefa999a44d9eb30fcc5450a6147ebe09",
+      "source_family": "private_natural_commons_asus_development",
+      "split": "known_natural_development_not_holdout",
+      "category": "long_file_device_technical_idiom_and_item_meaning",
+      "profile_scope": "Hy-MT2 7B Q4_K_M experimental v8, one target per batch, real 268-cue SRT",
+      "expected_invariant": "A complete structurally valid SRT must still preserve device type, core mode, comparison frame, platform action and product item meaning in every target cue.",
+      "severity": "major",
+      "minimal_reproducer_count": 6,
+      "related_control_count": 6,
+      "negative_control_count": 6,
+      "evidence_record": "eval/experiments/2026-10-02-v8-asus-single-target-risk-audit-result.md",
+      "last_outcome": "The complete 7B natural draft has six high-confidence source-aware AI meaning findings in a 43-cue source-only-selected audit. Each cue has pinned private source/candidate hashes and authored paired controls; no human assessment or control model runs."
+    },
+    {
+      "id": "REG-059",
+      "pack_file": "v8-natural-single-target-repetition-v1.json",
+      "pack_sha256": "574730bcad624d1523d0b3607d74bc712bfa43384815fea82464187d9f750c5d",
+      "source_family": "private_natural_commons_asus_development",
+      "split": "known_natural_development_not_holdout",
+      "category": "single_target_repeated_embedded_newlines",
+      "profile_scope": "Hy-MT2 1.8B Q4_K_M experimental v8, one target per batch, real 268-cue SRT",
+      "expected_invariant": "A one-line target repeated with embedded newlines must be rejected before checkpoint even when the model response ends normally and maps to the correct ID.",
+      "severity": "major",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-10-02-v8-asus-single-target-result.md",
+      "last_outcome": "The real 1.8B single-target run rejected a three-line repetition at cue 80 with 79 earlier cues durable and no output SRT. Six authored controls remain unrun on the model."
+    }
+  ]
+}

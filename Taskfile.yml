@@ -1229,7 +1229,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-055 packs and all control counts
+    desc: Verify versioned REG-001 through REG-059 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -1266,6 +1266,8 @@ tasks:
       - node eval/scripts/check-regression-catalog-v34.mjs
       - node eval/scripts/check-regression-catalog-v35.mjs
       - node eval/scripts/check-regression-catalog-v36.mjs
+      - node eval/scripts/check-regression-catalog-v37.mjs
+      - node eval/scripts/check-regression-catalog-v38.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:
@@ -2110,6 +2112,68 @@ tasks:
     desc: Verify both raw natural v8 failures, durable prefixes, source hashes and no partial SRT
     cmds:
       - node eval/scripts/check-v8-asus-natural-long.mjs
+  eval:long:v8:asus:resume:preflight:
+    desc: Verify pinned failed states, sources, two v8 models, runtime and current CLI before copy-only recovery
+    env:
+      AURALIS_TEST_GGUF_SMALL: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_LARGE: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - node eval/scripts/probe-v8-asus-copy-resume.mjs --preflight
+  eval:long:v8:asus:resume:probe:
+    desc: Run one bounded resume per model on copied natural v8 SQLite states
+    env:
+      AURALIS_TEST_GGUF_SMALL: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_LARGE: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - node eval/scripts/guard-v8-asus-one-attempt.mjs copy-resume
+      - task: build:release
+      - task: eval:long:v8:asus:resume:preflight
+      - node eval/scripts/probe-v8-asus-copy-resume.mjs
+  eval:long:v8:asus:resume:report:
+    desc: Extract source-free copy-only natural v8 recovery evidence
+    cmds:
+      - node eval/scripts/check-v8-asus-copy-resume.mjs --write
+  eval:long:v8:asus:resume:check:
+    desc: Verify copied durable states, recovery requests and original-state preservation
+    cmds:
+      - node eval/scripts/check-v8-asus-copy-resume.mjs
+  eval:long:v8:asus:single:preflight:
+    desc: Verify pinned natural 268-cue source, models, single-target v8 profiles and release CLI
+    env:
+      AURALIS_TEST_GGUF_SMALL: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_LARGE: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - node eval/scripts/probe-v8-asus-single-target.mjs --preflight
+  eval:long:v8:asus:single:probe:
+    desc: Run one matched real 1.8B/7B v8 single-target CLI attempt per model
+    env:
+      AURALIS_TEST_GGUF_SMALL: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_LARGE: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - node eval/scripts/guard-v8-asus-one-attempt.mjs single-target
+      - task: build:release
+      - task: eval:long:v8:asus:single:preflight
+      - node eval/scripts/probe-v8-asus-single-target.mjs
+  eval:long:v8:asus:single:report:
+    desc: Extract source-free matched natural v8 single-target evidence
+    cmds:
+      - node eval/scripts/check-v8-asus-single-target.mjs --write
+  eval:long:v8:asus:single:check:
+    desc: Verify single-target natural v8 raw requests, checkpoints, source and full-result boundary
+    cmds:
+      - node eval/scripts/check-v8-asus-single-target.mjs
+  eval:long:v8:asus:single:risk:select:
+    desc: Select source-only risk windows and source-free warning counts for the full 7B draft
+    cmds:
+      - node eval/scripts/select-v8-asus-single-target-risk.mjs
+  eval:long:v8:asus:single:semantic:check:
+    desc: Verify private source-aware AI findings and control lineage without accepting language quality
+    cmds:
+      - node eval/scripts/check-v8-asus-single-semantic.mjs
   eval:regression:v8:name:preflight:
     desc: Verify frozen REG-052 source, v8 request, model and runtime before name controls
     env:
