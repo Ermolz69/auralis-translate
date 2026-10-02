@@ -406,6 +406,20 @@ tasks:
       - task: eval:data:youtube:xiaolin:preflight
       - node --check eval/scripts/check-youtube-xiaolin-inventory.mjs
       - node eval/scripts/check-youtube-xiaolin-inventory.mjs
+  eval:data:youtube:sunflower:preflight:
+    desc: Verify pinned one-call metadata-only 30-minute Mandarin source screen
+    env:
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - node --check eval/scripts/inventory-youtube-sunflower.mjs
+      - node eval/scripts/inventory-youtube-sunflower.mjs --preflight
+  eval:data:youtube:sunflower:inventory:
+    desc: Retain one bounded original-platform subtitle-track inventory without downloads
+    env:
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - task: eval:data:youtube:sunflower:preflight
+      - node eval/scripts/inventory-youtube-sunflower.mjs
   site:live:check:
     desc: Compare both live GitHub Pages HTML files byte-for-byte with committed reports
     cmds:
