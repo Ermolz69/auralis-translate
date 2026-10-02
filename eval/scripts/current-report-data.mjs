@@ -12,7 +12,7 @@ import { loadApprovedTermDiagnostic } from './term-diagnostic-section.mjs';
 export async function loadCurrentReport(root) {
   const [plan, sources, comparison, retry, audio, terms, kirin,
     kirinCaption, kirinMedia, paywall, captionOverlapRaw, packetRaw,
-    activityRaw] = await Promise.all([
+    activityRaw, voaRaw] = await Promise.all([
     loadDeliveryPlan(root), loadSourceCandidates(root), loadSethluiFullV6(root),
     loadSethluiRetry(root), loadSethluiAudio(root), loadApprovedTermDiagnostic(root),
     fs.readFile(path.join(root, 'eval/reports/youtube-geekerwan-kirin-license-v1.json'),
@@ -28,6 +28,8 @@ export async function loadCurrentReport(root) {
       'eval/reports/2026-10-02-sethlui-packet-boundary-summary.json'), 'utf8'),
     fs.readFile(path.join(root,
       'eval/reports/2026-10-02-sethlui-source-activity-summary.json'), 'utf8'),
+    fs.readFile(path.join(root,
+      'eval/reports/voa-mandarin-caption-inventory-2026-10-02.json'), 'utf8'),
   ]);
   const captionOverlap = JSON.parse(captionOverlapRaw);
   const captionOverlapSha256 = createHash('sha256').update(captionOverlapRaw).digest('hex');
@@ -53,6 +55,13 @@ export async function loadCurrentReport(root) {
   assert.equal(activity.source_speech_alignment_verified, false);
   assert.equal(activity.human_listening, 'not_performed');
   assert.equal(activity.eligible_cues_added, 0);
+  const voa = JSON.parse(voaRaw);
+  assert.equal(voa.source_admission, 'rejected_no_chinese_subtitle_track');
+  assert.equal(voa.permitted_attempt.candidates.length, 2);
+  assert(voa.permitted_attempt.candidates.every(candidate =>
+    candidate.original_chinese_subtitle_languages.length === 0
+    && candidate.automatic_chinese_caption_languages.length === 0
+    && candidate.eligible_cues_added === 0));
   const small = comparison.arms[0];
   const large = retry.second;
   assert.equal(small.model, '1.8B Q4_K_M');
@@ -176,6 +185,10 @@ export async function loadCurrentReport(root) {
       interpretation: activity.interpretation,
       source_speech_alignment_verified: activity.source_speech_alignment_verified,
       eligible_cues_added: activity.eligible_cues_added },
+    voa_source_screen: { tested_sources: voa.permitted_attempt.candidates.length,
+      chinese_subtitle_tracks: 0, eligible_cues_added: 0,
+      sandbox_failure_retained: true,
+      report_sha256: createHash('sha256').update(voaRaw).digest('hex') },
     backlog: { total_tasks: plan.total_tasks, counts: plan.counts },
   };
 }

@@ -81,6 +81,10 @@ const sapiOriginalWindow = await loadSapiOriginalWindow(root);
 const auralisPrivateSpeech = await loadAuralisPrivateSpeech(root);
 const managedSpeech = await loadManagedSpeech(root);
 const sourceCandidates = await loadHistoricalSourceCandidates(root);
+const voaSourceScreen = JSON.parse(await fs.readFile(path.join(root,
+  'eval/reports/voa-mandarin-caption-inventory-2026-10-02.json'), 'utf8'));
+assert.equal(voaSourceScreen.source_admission, 'rejected_no_chinese_subtitle_track');
+assert.equal(voaSourceScreen.permitted_attempt.candidates.length, 2);
 const sethluiOriginalTrack = await loadSethluiOriginalTrack(root);
 const sethluiFullV6 = await loadSethluiFullV6(root);
 const sethluiResume = await loadSethluiResume(root);
@@ -242,6 +246,7 @@ ${renderSourceCandidates(sourceCandidates)}
 ${renderPaywallSource(sourceCandidates)}
 ${renderXiaolinMetadataScreen()}
 ${renderSethluiTimingScreen(sourceCandidates)}
+<section id="voa-caption-screen" class="my-8 scroll-mt-8 rounded-2xl border border-slate-300 bg-slate-50 p-5 md:p-7"><p class="text-sm font-semibold text-slate-600">DATA-03 · неудачный поиск источника · 2 октября 2026</p><h2 class="mt-2 text-2xl font-bold">Два мандаринских ролика VOA без китайских дорожек</h2><p class="mt-3 max-w-4xl text-slate-700">Оригинальные видео длительностью ${voaSourceScreen.permitted_attempt.candidates.map(candidate => Math.round(candidate.original_duration_seconds / 60)).join(' и ')} минут вернули пустой список ручных и автоматических субтитров. Данные пришли от двух ограниченных запросов yt-dlp; видео и субтитры не скачивались. Первую попытку заблокировала песочница до отправки запросов, и она сохранена. Оба источника отклонены для текущего корпуса: 0 новых допущенных реплик.</p><a class="mt-3 inline-block text-sm font-semibold text-blue-700 underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-10-02-voa-mandarin-caption-inventory-result.md">Исходные страницы, хеши и предел проверки (EN)</a></section>
 ${renderSethluiOriginalTrack(sethluiOriginalTrack)}
 ${renderSethluiFullV6(sethluiFullV6, sethluiResume)}
 ${renderSethluiRetry(sethluiRetry)}
