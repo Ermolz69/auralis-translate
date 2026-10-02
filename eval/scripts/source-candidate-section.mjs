@@ -3,7 +3,7 @@ import path from 'node:path';
 import { validateSourceInventory } from './source-inventory.mjs';
 import { validateCrossInventorySourceGroups } from './cross-inventory-source-groups.mjs';
 
-const inventoryPaths = [
+const historicalInventoryPaths = [
   'eval/corpora/commons-inspected-candidates-v1.json',
   'eval/corpora/commons-cc-commerce-candidate-v1.json',
   'eval/corpora/youtube-mingfay-candidate-v1.json',
@@ -15,8 +15,18 @@ const inventoryPaths = [
   'eval/corpora/youtube-geekerwan-kirin-original-candidate-v1.json',
 ];
 
-export async function loadSourceCandidates(root) {
-  const inventories = await Promise.all(inventoryPaths.map(async file => {
+const currentInventoryPaths = historicalInventoryPaths.map(file => {
+  if (file === 'eval/corpora/commons-inspected-candidates-v1.json') {
+    return 'eval/corpora/commons-inspected-candidates-v2.json';
+  }
+  if (file === 'eval/corpora/commons-geekerwan-two-scenes-candidate-v1.json') {
+    return 'eval/corpora/commons-geekerwan-two-scenes-candidate-v2.json';
+  }
+  return file;
+});
+
+async function loadCandidates(root, paths, current) {
+  const inventories = await Promise.all(paths.map(async file => {
     const inventory = JSON.parse(await fs.readFile(path.join(root, file), 'utf8'));
     return { inventory, counts: validateSourceInventory(inventory) };
   }));
@@ -92,9 +102,12 @@ export async function loadSourceCandidates(root) {
         originalKirin.rights[kind].decision !== 'unknown')) {
     throw new Error('Original Kirin candidate identity, grouping or admission changed');
   }
-  validateCrossInventorySourceGroups(inventories.map(entry => entry.inventory));
+  const identityCounts = current
+    ? validateCrossInventorySourceGroups(inventories.map(entry => entry.inventory))
+    : null;
   return {
     source_count: inventories.reduce((total, entry) => total + entry.counts.source_count, 0),
+    ...(identityCounts ? { media_groups: identityCounts.group_count } : {}),
     inspected_cues: inventories.reduce((total, entry) => total + entry.counts.inspected_candidate_cues, 0),
     eligible_cues: inventories.reduce((total, entry) => total + entry.counts.eligible_cues, 0),
     commerce_revision: commerce.revision,
@@ -119,6 +132,14 @@ export async function loadSourceCandidates(root) {
     paywall_sha256: paywall.sha256,
     paywall_media_duration_ms: paywall.media_duration_ms,
   };
+}
+
+export async function loadSourceCandidates(root) {
+  return loadCandidates(root, currentInventoryPaths, true);
+}
+
+export async function loadHistoricalSourceCandidates(root) {
+  return loadCandidates(root, historicalInventoryPaths, false);
 }
 
 export function renderSourceCandidates(summary) {

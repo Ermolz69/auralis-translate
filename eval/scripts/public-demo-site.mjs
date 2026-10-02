@@ -24,7 +24,7 @@ import { loadSapiMultivoice, loadSapiMultivoiceMedia } from './sapi-multivoice-s
 import { loadSapiOriginalWindow, renderSapiOriginalWindow } from './sapi-original-window-section.mjs';
 import { loadAuralisPrivateSpeech, renderAuralisPrivateSpeech } from './auralis-private-speech-section.mjs';
 import { loadManagedSpeech, renderManagedSpeech } from './managed-speech-section.mjs';
-import { loadSourceCandidates, renderSourceCandidates, renderXiaolinMetadataScreen, renderSethluiTimingScreen, renderPaywallSource } from './source-candidate-section.mjs';
+import { loadHistoricalSourceCandidates, renderSourceCandidates, renderXiaolinMetadataScreen, renderSethluiTimingScreen, renderPaywallSource } from './source-candidate-section.mjs';
 import { loadSethluiOriginalTrack, renderSethluiOriginalTrack } from './sethlui-original-track-section.mjs';
 import { loadNaturalScreen, renderNaturalScreen } from './natural-screen-section.mjs';
 import { loadYingFullFailure, renderYingFullFailure } from './ying-full-failure-section.mjs';
@@ -80,7 +80,7 @@ const sapiMultivoiceMedia = await loadSapiMultivoiceMedia(root);
 const sapiOriginalWindow = await loadSapiOriginalWindow(root);
 const auralisPrivateSpeech = await loadAuralisPrivateSpeech(root);
 const managedSpeech = await loadManagedSpeech(root);
-const sourceCandidates = await loadSourceCandidates(root);
+const sourceCandidates = await loadHistoricalSourceCandidates(root);
 const sethluiOriginalTrack = await loadSethluiOriginalTrack(root);
 const sethluiFullV6 = await loadSethluiFullV6(root);
 const sethluiResume = await loadSethluiResume(root);

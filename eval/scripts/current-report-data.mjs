@@ -31,8 +31,9 @@ export async function loadCurrentReport(root) {
   assert.equal(large.checkpoints, comparison.source_cues);
   assert.equal(audio.summary.source_srt_sha256, comparison.source_sha256);
   assert.equal(audio.summary.candidate_ru_srt_sha256, large.output_sha256);
-  assert.equal(sources.source_count, 12);
-  assert.equal(sources.inspected_cues, 3336);
+  assert.equal(sources.source_count, 11);
+  assert.equal(sources.media_groups, 10);
+  assert.equal(sources.inspected_cues, 3243);
   assert.equal(sources.eligible_cues, 0);
   assert.equal(comparison.review.independent_human_cues, 0);
   assert.equal(large.independent_human_reviewed_cues, 0);
@@ -58,7 +59,8 @@ export async function loadCurrentReport(root) {
     schema_version: 1,
     as_of: '2026-10-02',
     release_decision: 'not_accepted',
-    sources: { candidates: sources.source_count, inspected_cues: sources.inspected_cues,
+    sources: { candidates: sources.source_count, media_groups: sources.media_groups,
+      inspected_cues: sources.inspected_cues,
       eligible_cues: sources.eligible_cues },
     source_probe: { original_video_id: kirin.original_video_id,
       original_duration_ms: kirin.original_duration_ms,
