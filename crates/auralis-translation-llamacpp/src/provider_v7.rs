@@ -252,7 +252,10 @@ impl LlamaCppProvider {
             .and_then(|lines| {
                 lines
                     .into_iter()
-                    .map(|line| crate::target_text_json_tail::reject_leaked_json_tail(line, false))
+                    .map(|line| {
+                        crate::target_text_json_tail::reject_leaked_json_tail(line, false)
+                            .and_then(crate::target_text_json_tail::reject_leaked_json_structure)
+                    })
                     .collect::<Result<Vec<_>, _>>()
             });
         if let Some(journal) = &self.inference_journal {

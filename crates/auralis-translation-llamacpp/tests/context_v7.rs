@@ -544,6 +544,59 @@ fn v7_rejects_currency_copied_from_context_into_nonmoney_target() -> Result<(), 
 }
 
 #[test]
+fn v7_and_v8_reject_embedded_json_structure_before_journal_acceptance() -> Result<(), Box<dyn Error>>
+{
+    for version in [7, 8] {
+        for text in [
+            "Результат GPU\\\"},{\\\"line_index\\\":0",
+            "Результат GPU\"},{\"line_index\":0",
+            "Результат GPU\"}]}",
+        ] {
+            let (url, stop, server) = mock_server(Reply::ContextMoney(text), TokenCost::Small)?;
+            let journal = Arc::new(Journal::default());
+            let selected = if version == 7 {
+                profile(1)?
+            } else {
+                target_first_profile(1)?
+            };
+            let provider =
+                LlamaCppProvider::new(&url, selected)?.with_inference_journal(journal.clone());
+            assert!(translate_batch(&provider, &batch(1, 0, false)?).is_err());
+            finish_server(stop, server)?;
+            let finishes = journal.finishes.lock().map_err(|_| "journal lock")?;
+            let chat = finishes.last().ok_or("no chat finish")?;
+            assert_eq!(chat.outcome, InferenceRequestOutcome::InvalidCandidate);
+            assert!(chat.restored_candidate.is_none());
+            assert!(chat.raw_response.is_some());
+            assert!(
+                chat.error_detail
+                    .as_deref()
+                    .unwrap_or("")
+                    .contains("JSON structure")
+            );
+        }
+        for text in [
+            "В тексте сказано «GPU Z1 Extreme».",
+            "Уровень GPU [Z1 Extreme] проверен.",
+        ] {
+            let (url, stop, server) = mock_server(Reply::ContextMoney(text), TokenCost::Small)?;
+            let selected = if version == 7 {
+                profile(1)?
+            } else {
+                target_first_profile(1)?
+            };
+            let provider = LlamaCppProvider::new(&url, selected)?;
+            assert_eq!(
+                translate_batch(&provider, &batch(1, 0, false)?)?[0].lines[0],
+                text
+            );
+            finish_server(stop, server)?;
+        }
+    }
+    Ok(())
+}
+
+#[test]
 fn v7_trims_context_then_rejects_unsized_single_target_without_chat() -> Result<(), Box<dyn Error>>
 {
     let (url, stop, server) = mock_server(Reply::Exact, TokenCost::ContextMustTrim)?;

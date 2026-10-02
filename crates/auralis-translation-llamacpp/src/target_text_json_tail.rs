@@ -47,3 +47,13 @@ pub(crate) fn reject_leaked_json_tail(
         Ok(text)
     }
 }
+
+pub(crate) fn reject_leaked_json_structure(text: String) -> Result<String, ProviderError> {
+    if text.contains('{') || text.contains('}') {
+        Err(ProviderError::Permanent(
+            "model text contains leaked JSON structure".into(),
+        ))
+    } else {
+        Ok(text)
+    }
+}
