@@ -94,6 +94,8 @@ assert.deepEqual(currentData.development_screen.variants.map(arm =>
 [['1b', 12, true, true], ['7b', 12, false, true]]);
 assert(current.includes('2026-10-02-paywall-bilingual-review-seed-results.md'));
 assert(current.includes('REG-047–049'));
+assert(current.includes('2026-10-02-paywall-volunteer-review-packet.md'));
+assert(current.includes('Все 24 поля оценки пусты'));
 assert.equal(currentData.translation.small.checkpoints, 263);
 assert.equal(currentData.translation.large.checkpoints, 263);
 assert.equal(currentData.translation.human_reviewed_cues, 0);
