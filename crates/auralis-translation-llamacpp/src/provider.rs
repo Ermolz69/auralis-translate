@@ -30,19 +30,19 @@ const TOKENIZE_PATH: &str = "/tokenize";
 const RESPONSE_SCHEMA_VERSION: u32 = 1;
 
 #[derive(Clone, Copy)]
-struct PreflightTarget {
-    run_id: RunId,
-    batch_fingerprint: SourceHash,
-    segment_id: SegmentId,
-    line_index: u32,
+pub(crate) struct PreflightTarget {
+    pub run_id: RunId,
+    pub batch_fingerprint: SourceHash,
+    pub segment_id: SegmentId,
+    pub line_index: u32,
 }
 
 pub struct LlamaCppProvider {
-    http: LocalHttp,
-    base: Url,
-    endpoint: Url,
-    profile: ModelProfile,
-    inference_journal: Option<Arc<dyn InferenceRequestJournal>>,
+    pub(crate) http: LocalHttp,
+    pub(crate) base: Url,
+    pub(crate) endpoint: Url,
+    pub(crate) profile: ModelProfile,
+    pub(crate) inference_journal: Option<Arc<dyn InferenceRequestJournal>>,
 }
 
 impl LlamaCppProvider {
@@ -344,7 +344,7 @@ impl LlamaCppProvider {
         }
     }
 
-    fn preflight_post(
+    pub(crate) fn preflight_post(
         &self,
         kind: InferenceRequestKind,
         body: serde_json::Value,
@@ -455,12 +455,32 @@ impl LlamaCppProvider {
         target: PreflightTarget,
         control: Option<(&dyn RunControl, RunId)>,
     ) -> Result<usize, ProviderError> {
+        self.rendered_chat_tokens_with_format(
+            prompt_text,
+            self.response_format(
+                target.segment_id.get(),
+                usize::try_from(target.line_index).map_err(|_| {
+                    ProviderError::Permanent("line index exceeds platform range".into())
+                })?,
+            ),
+            target,
+            control,
+        )
+    }
+
+    pub(crate) fn rendered_chat_tokens_with_format(
+        &self,
+        prompt_text: &str,
+        response_format: serde_json::Value,
+        target: PreflightTarget,
+        control: Option<(&dyn RunControl, RunId)>,
+    ) -> Result<usize, ProviderError> {
         let template = self.preflight_post(
             InferenceRequestKind::ApplyTemplate,
             json!({
                 "model": self.profile.model_alias,
                 "messages": [{"role": "user", "content": prompt_text}],
-                "response_format": self.response_format(target.segment_id.get(), usize::try_from(target.line_index).map_err(|_| ProviderError::Permanent("line index exceeds platform range".into()))?),
+                "response_format": response_format,
             }),
             target,
             control,
@@ -543,7 +563,7 @@ impl LlamaCppProvider {
         batch: &TranslationBatch,
         control: Option<(&dyn RunControl, RunId)>,
     ) -> Result<(ProviderResponse, Vec<TranslationDiagnostic>), ProviderError> {
-        if matches!(self.profile.prompt_version, 4..=6)
+        if matches!(self.profile.prompt_version, 4..=7)
             && batch.language_pair().source() != LanguageCode::Chinese
         {
             return Err(ProviderError::Permanent(
@@ -572,7 +592,7 @@ impl LlamaCppProvider {
                 "glossary exceeds profile byte limit".into(),
             ));
         }
-        if !matches!(self.profile.prompt_version, 5 | 6) && !batch.approved_terms().is_empty() {
+        if !matches!(self.profile.prompt_version, 5..=7) && !batch.approved_terms().is_empty() {
             return Err(ProviderError::Permanent(
                 "profile does not support approved terms".into(),
             ));
@@ -602,6 +622,9 @@ impl LlamaCppProvider {
             return Err(ProviderError::Permanent(
                 "context exceeds profile byte limit".into(),
             ));
+        }
+        if self.profile.prompt_version == 7 {
+            return self.translate_v7_batch(batch, control);
         }
         let mut translations = Vec::with_capacity(batch.targets().len());
         let mut diagnostics = Vec::new();
@@ -697,7 +720,7 @@ impl LlamaCppProvider {
     }
 }
 
-fn response_usage(raw: &[u8]) -> (Option<u32>, Option<u32>) {
+pub(crate) fn response_usage(raw: &[u8]) -> (Option<u32>, Option<u32>) {
     let Ok(value) = serde_json::from_slice::<serde_json::Value>(raw) else {
         return (None, None);
     };

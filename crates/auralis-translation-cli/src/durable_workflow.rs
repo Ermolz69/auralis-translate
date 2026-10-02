@@ -41,7 +41,7 @@ pub(crate) fn block_policy(
     profile: &ModelProfile,
     has_scene_map: bool,
 ) -> Result<BlockPolicy, Box<dyn Error>> {
-    if matches!(profile.prompt_version, 5 | 6)
+    if matches!(profile.prompt_version, 5..=7)
         && (profile.context_before_segments != 0 || profile.context_after_segments != 0)
         && !has_scene_map
     {

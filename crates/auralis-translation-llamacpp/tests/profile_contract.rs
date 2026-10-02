@@ -25,6 +25,38 @@ const LARGE_V5_SCENE_PROFILE: &[u8] =
 const V6_SLOT_PROFILE: &[u8] = include_bytes!(
     "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v6_slot.experimental.json"
 );
+const V7_BATCH_PROFILE: &[u8] = include_bytes!(
+    "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v7_batch4.experimental.json"
+);
+
+#[test]
+fn v7_batch_profile_is_checked_and_cannot_resume_legacy_identity() -> Result<(), Box<dyn Error>> {
+    let profile = ModelProfile::from_json(V7_BATCH_PROFILE)?;
+    assert_eq!(profile.prompt_version, 7);
+    assert_eq!(profile.target_segments_per_block, 4);
+    assert_eq!(profile.min_context_tokens, Some(2048));
+    let mut value: serde_json::Value = serde_json::from_slice(V7_BATCH_PROFILE)?;
+    for (key, bad) in [
+        ("prompt_version", serde_json::json!(6)),
+        ("target_segments_per_block", serde_json::json!(9)),
+        ("min_context_tokens", serde_json::Value::Null),
+        ("token_safety_margin_tokens", serde_json::Value::Null),
+        ("max_block_attempts", serde_json::json!(2)),
+        ("retry_json_tail_once", serde_json::json!(true)),
+        ("strict_source_identifiers", serde_json::json!(true)),
+    ] {
+        let mut changed = value.clone();
+        changed[key] = bad;
+        assert!(
+            ModelProfile::from_json(&serde_json::to_vec(&changed)?).is_err(),
+            "{key}"
+        );
+    }
+    value["prompt_template_sha256"] = serde_json::json!("0".repeat(64));
+    assert!(ModelProfile::from_json(&serde_json::to_vec(&value)?).is_err());
+    assert!(ModelProfile::from_json(V6_SLOT_PROFILE).is_ok());
+    Ok(())
+}
 const LARGE_V6_SLOT_PROFILE: &[u8] =
     include_bytes!("../../../models/manifests/hy_mt2_7b_q4_k_m.context_v6_slot.experimental.json");
 const LARGE_V6_TAIL_RETRY_PROFILE: &[u8] = include_bytes!(
