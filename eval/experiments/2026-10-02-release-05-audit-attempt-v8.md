@@ -71,8 +71,16 @@ verified public/runnable rollback point is
 and report slice, revert `33186ea` then `bcbb33f` after review, or publish
 the earlier `site/` pair from a separate clean checkout; retain the private
 raw source/media, previous reports, SQLite data and accepted results.
-No migration or Auralis change was made. Pages deployment of this audit
-record is checked separately after publication.
+No migration or Auralis change was made. The [Pages workflow for `a18b7a8`](https://github.com/Ermolz69/auralis-translate/actions/runs/37058796432)
+completed successfully. `task site:live:check` returned HTTP 200 and
+byte-identical published/local HTML: current page 52,056 bytes, SHA-256
+`e69118e354f430f9abdd62df55bfaefb0f1fe7e19aca4d3b62bc626225bd66fe`,
+and historical page 1,132,560 bytes, SHA-256
+`8c7272b48e0f5e866cd36065e6fb08a74dc0d2fd66f5e7548f316707d30f162c`.
+The ignored private live-check report SHA-256 is
+`0bb6000432c20ad1b857e7ea020c8b65f66da8a28ae7df79e00fc8abb90d9d35`.
+Publication confirms the displayed incomplete decision, not language or
+audio quality.
 
 **Decision: RELEASE-05 failed/open.** Next engineering work is a frozen
 source-scoped correction of the measured 7B meaning/term failures, followed
