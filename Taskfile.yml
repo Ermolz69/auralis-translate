@@ -1749,6 +1749,50 @@ tasks:
       - task: eval:natural:mingfay:journal:check
       - node eval/scripts/check-mingfay-natural-model-screen.mjs
 
+  eval:natural:paywall:review-seed:1b:preflight:
+    desc: Verify the bounded licensed Chinese-text reviewer seed and 1.8B local runtime
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_PAYWALL_REVIEW_VARIANT: 1b
+    cmds:
+      - task: eval:data:paywall:candidate:check
+      - task: build:release
+      - node --check eval/scripts/probe-paywall-review-seed.mjs
+      - node eval/scripts/probe-paywall-review-seed.mjs --preflight
+
+  eval:natural:paywall:review-seed:1b:probe:
+    desc: Retain one real 1.8B v5 screen of three licensed Chinese-text windows
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_PAYWALL_REVIEW_VARIANT: 1b
+    cmds:
+      - task: eval:natural:paywall:review-seed:1b:preflight
+      - node eval/scripts/probe-paywall-review-seed.mjs
+
+  eval:natural:paywall:review-seed:7b:preflight:
+    desc: Verify the same bounded reviewer seed and 7B local runtime
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+      AURALIS_PAYWALL_REVIEW_VARIANT: 7b
+    cmds:
+      - task: eval:data:paywall:candidate:check
+      - task: build:release
+      - node --check eval/scripts/probe-paywall-review-seed.mjs
+      - node eval/scripts/probe-paywall-review-seed.mjs --preflight
+
+  eval:natural:paywall:review-seed:7b:probe:
+    desc: Retain one real 7B v5 screen of identical licensed Chinese-text windows
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+      AURALIS_PAYWALL_REVIEW_VARIANT: 7b
+    cmds:
+      - task: eval:natural:paywall:review-seed:7b:preflight
+      - node eval/scripts/probe-paywall-review-seed.mjs
+
   eval:natural:mingfay:capture:
     desc: Archive only the redacted verified same-source model metrics for public reporting
     cmds:
