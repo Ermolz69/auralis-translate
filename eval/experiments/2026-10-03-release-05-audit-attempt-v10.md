@@ -95,4 +95,21 @@ work can continue without contacting volunteers.
 
 ## Publication addendum
 
-Pending committed candidate, full affected checks and live Pages verification.
+The evidence/result commit `64ea177` and site commit
+`2de0609bbb473e64131d29d9de074a44d0e7736a` are on `main` and
+`origin/main`. Author and committer of the three new commits use the checked
+primary global identity `Ermolz <00ermzahar@gmail.com>`. The
+[Pages workflow](https://github.com/Ermolz69/auralis-translate/actions/runs/37065254162)
+completed successfully. `task site:live:check` returned HTTP 200 and exact
+local/live byte equality for the
+[current report](https://ermolz69.github.io/auralis-translate/?revision=2de0609bbb473e64131d29d9de074a44d0e7736a):
+56,568 bytes, SHA-256
+`917d8d6d720869c8bb95cb10d14290bb1519e786af3afb1a55dc07a803e64abd`;
+and [history](https://ermolz69.github.io/auralis-translate/history.html?revision=2de0609bbb473e64131d29d9de074a44d0e7736a):
+1,132,560 bytes, SHA-256
+`4f4d485a4299ed4f6419f1a015fe5ac42522889feb0bc5214bda0d1ac6bf8e14`.
+The private live-check report SHA-256 is
+`f78ff1b05fa261ecd508ad0a2d440753c6a99ed6334fb96de1073fffb108fa70`.
+The historical measurements remain in their separate page; the history rebuild
+updated the embedded backlog identity and did not discard prior measurements.
+This publication does not change the failed/open RELEASE-05 decision.
