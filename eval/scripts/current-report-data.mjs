@@ -13,7 +13,8 @@ export async function loadCurrentReport(root) {
   const [plan, sources, comparison, retry, audio, terms, kirin,
     kirinCaption, kirinMedia, paywall, captionOverlapRaw, packetRaw,
     activityRaw, voaRaw, batchRaw, salienceRaw, orderRaw, v8Raw, nameRaw,
-    crossRaw, largeV8Raw, naturalV8Raw] = await Promise.all([
+    crossRaw, largeV8Raw, naturalV8Raw, resumeV8Raw, singleV8Raw,
+    riskV8Raw] = await Promise.all([
     loadDeliveryPlan(root), loadSourceCandidates(root), loadSethluiFullV6(root),
     loadSethluiRetry(root), loadSethluiAudio(root), loadApprovedTermDiagnostic(root),
     fs.readFile(path.join(root, 'eval/reports/youtube-geekerwan-kirin-license-v1.json'),
@@ -47,6 +48,12 @@ export async function loadCurrentReport(root) {
       'eval/reports/2026-10-02-v8-7b-authored-cli.json'), 'utf8'),
     fs.readFile(path.join(root,
       'eval/reports/2026-10-02-v8-asus-natural-long.json'), 'utf8'),
+    fs.readFile(path.join(root,
+      'eval/reports/2026-10-02-v8-asus-copy-resume.json'), 'utf8'),
+    fs.readFile(path.join(root,
+      'eval/reports/2026-10-02-v8-asus-single-target.json'), 'utf8'),
+    fs.readFile(path.join(root,
+      'eval/reports/2026-10-02-v8-asus-single-target-risk-audit.json'), 'utf8'),
   ]);
   const captionOverlap = JSON.parse(captionOverlapRaw);
   const salience = JSON.parse(salienceRaw);
@@ -56,12 +63,22 @@ export async function loadCurrentReport(root) {
   const cross = JSON.parse(crossRaw);
   const largeV8 = JSON.parse(largeV8Raw);
   const naturalV8 = JSON.parse(naturalV8Raw);
+  const resumeV8 = JSON.parse(resumeV8Raw);
+  const singleV8 = JSON.parse(singleV8Raw);
+  const riskV8 = JSON.parse(riskV8Raw);
   assert.equal(naturalV8.source_cues, 268);
   assert.equal(naturalV8.status, 'completed_with_failure');
   assert.deepEqual(naturalV8.arms.map(arm => arm.covered_prefix_cues), [216, 140]);
   assert(naturalV8.arms.every(arm => arm.published_results === 0
     && arm.output_sha256 === null));
   assert.equal(naturalV8.human_bilingual_review_count, 0);
+  assert.deepEqual(resumeV8.arms.map(arm => arm.total_cues), [244, 140]);
+  assert.deepEqual(singleV8.arms.map(arm => arm.covered_prefix_cues), [79, 268]);
+  assert.equal(singleV8.arms[1].published_results, 1);
+  assert.equal(singleV8.arms[0].published_results, 0);
+  assert.equal(riskV8.selected_cues, 43);
+  assert.equal(riskV8.ai_review.high_confidence_semantic_issue_ids.length, 6);
+  assert.equal(riskV8.human_bilingual_review_count, 0);
   const captionOverlapSha256 = createHash('sha256').update(captionOverlapRaw).digest('hex');
   const packet = JSON.parse(packetRaw);
   assert.equal(createHash('sha256').update(packetRaw).digest('hex'),
@@ -303,6 +320,28 @@ export async function loadCurrentReport(root) {
       human_review_count: naturalV8.human_bilingual_review_count,
       accepted_language_quality: naturalV8.accepted_language_quality,
       report_sha256: createHash('sha256').update(naturalV8Raw).digest('hex') },
+    resume_v8: { arms: resumeV8.arms.map(arm => ({ id: arm.id,
+      total_cues: arm.total_cues, new_chat_requests: arm.new_chat_requests,
+      total_checkpoints: arm.total_checkpoints, result_count: arm.result_count })),
+      report_sha256: createHash('sha256').update(resumeV8Raw).digest('hex') },
+    single_v8: { source_cues: singleV8.source_cues,
+      arms: singleV8.arms.map(arm => ({ id: arm.id, status: arm.status,
+        covered_prefix_cues: arm.covered_prefix_cues,
+        chat_requests: arm.chat_requests,
+        prompt_tokens: arm.prompt_tokens,
+        completion_tokens: arm.completion_tokens,
+        cli_elapsed_ms: arm.cli_elapsed_ms,
+        published_results: arm.published_results,
+        output_sha256: arm.output_sha256 })),
+      human_review_count: singleV8.human_bilingual_review_count,
+      accepted_language_quality: singleV8.accepted_language_quality,
+      report_sha256: createHash('sha256').update(singleV8Raw).digest('hex') },
+    risk_v8: { selected_cues: riskV8.selected_cues,
+      semantic_issue_count: riskV8.ai_review.high_confidence_semantic_issue_ids.length,
+      language_issue_count: riskV8.ai_review.russian_language_issue_ids.length,
+      machine_warning_count: riskV8.machine_warnings.total,
+      human_review_count: riskV8.human_bilingual_review_count,
+      report_sha256: createHash('sha256').update(riskV8Raw).digest('hex') },
     backlog: { total_tasks: plan.total_tasks, counts: plan.counts },
   };
 }

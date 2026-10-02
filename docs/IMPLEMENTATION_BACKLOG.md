@@ -755,3 +755,31 @@ comparison or release gate. Next: one predeclared bounded recovery attempt,
 then explicit beginning/middle/end, seam, name, number, negation and scene
 review on any full output; source rights, human review and real audio remain
 independent requirements.
+
+The [copy-only v8 recovery](../eval/experiments/2026-10-02-v8-asus-copy-resume-result.md)
+adds partial `LONG-01`/`LONG-02`/`EVAL-04` durability evidence: the
+original states stayed byte-identical while 1.8B advanced from 216 to
+244 cues, then rejected another malformed target; 7B hit a 1,024-token
+completion length cap on cue 141 and remained at 140 cues. The earlier
+zero-model `spawn EPERM` is retained. [REG-056/057](../eval/regressions/catalog-v37.json)
+pin both new model failures and related controls. No four-target SRT was
+published.
+
+The [fresh one-target v8 comparison](../eval/experiments/2026-10-02-v8-asus-single-target-result.md)
+adds partial `LONG-01`/`LONG-02`/`LONG-04`/`EVAL-04` evidence on the
+same 268-cue natural development file: 7B produced 268 checked
+checkpoints and a separate `needs_review` SRT; 1.8B stopped at cue 80
+after a repeated multi-line target and kept 79 checkpoints with no
+result. Both ran within the declared request/time budgets, but only 7B
+completed and the source still lacks rights/alignment admission. The
+[43-cue source-only-selected AI audit](../eval/experiments/2026-10-02-v8-asus-single-target-risk-audit-result.md)
+found six high-confidence semantic/term problems and four Russian
+language problems in the complete 7B draft. [REG-058/059](../eval/regressions/catalog-v38.json)
+retain the six private paired reproductions, the 1.8B repeated-line
+failure and eighteen authored controls, all with zero human ratings.
+The deterministic warning scan also produced false positives for
+locale-formatted or spelled numbers and translated units; it is not a
+quality score. Next: bounded same-request tests of REG-058 controls,
+source-scoped terminology/meaning fixes, another full natural run,
+real scene seams, independent bilingual review, approved spoken script
+and Auralis listening. `LONG-04`, G3–G9 and A1–A6 remain open.

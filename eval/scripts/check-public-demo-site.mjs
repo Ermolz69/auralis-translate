@@ -124,6 +124,17 @@ assert.deepEqual(currentData.natural_v8.arms.map(arm => arm.covered_prefix_cues)
 assert(currentData.natural_v8.arms.every(arm => arm.published_results === 0));
 assert.equal(currentData.natural_v8.accepted_language_quality, false);
 assert.equal(currentData.natural_v8.human_review_count, 0);
+assert(current.includes('2026-10-02-v8-asus-copy-resume-result.md'));
+assert(current.includes('2026-10-02-v8-asus-single-target-result.md'));
+assert(current.includes('2026-10-02-v8-asus-single-target-risk-audit-result.md'));
+assert.deepEqual(currentData.resume_v8.arms.map(arm => arm.total_cues), [244, 140]);
+assert.deepEqual(currentData.single_v8.arms.map(arm => arm.covered_prefix_cues), [79, 268]);
+assert.deepEqual(currentData.single_v8.arms.map(arm => arm.published_results), [0, 1]);
+assert.equal(currentData.single_v8.accepted_language_quality, false);
+assert.equal(currentData.single_v8.human_review_count, 0);
+assert.equal(currentData.risk_v8.selected_cues, 43);
+assert.equal(currentData.risk_v8.semantic_issue_count, 6);
+assert.equal(currentData.risk_v8.human_review_count, 0);
 assert.equal(currentData.voa_source_screen.tested_sources, 2);
 assert.equal(currentData.voa_source_screen.chinese_subtitle_tracks, 0);
 assert.equal(currentData.voa_source_screen.eligible_cues_added, 0);
