@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "experiment": "v8-authored-batch-v1",
+  "task_ids": ["LONG-01", "EVAL-04"],
+  "source_split": "authored_development_not_holdout",
+  "source_sha256": "ad88b2d2f96b153d5d8880175b321167263d7abaae48ca693d89b925459bc8a7",
+  "manifest_sha256": "1803aeb68428e1b138a17ed72b01abe1cc5fbc5845b5bca66a402b8936b1081f",
+  "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "release_cli_sha256": "854da57df8dff73e5349a3bb6eb7a50352ca5ff7d2ef74e89ec4aaecc1a7ad3e",
+  "private_report": ".cache/eval/v8-authored-batch-v1/attempt-GdrV2t/report.json",
+  "private_report_sha256": "ecdf4d7e02190a5b81e8fd06c0477c7bb5219076ad2138a91dbd9d15f912ee52",
+  "status": "completed_structural_needs_review",
+  "wall_ms_rounded": 20046,
+  "arms": [
+    {
+      "size": 1,
+      "chat_requests": 4,
+      "preflight_requests": 8,
+      "prompt_tokens": 1104,
+      "completion_tokens": 178,
+      "chat_http_ms": 1968,
+      "cli_elapsed_ms_rounded": 9938,
+      "checkpoints": 4,
+      "results": 1,
+      "review_state": "needs_review",
+      "source_after_sha256": "ad88b2d2f96b153d5d8880175b321167263d7abaae48ca693d89b925459bc8a7",
+      "output_sha256": "e422a2c8f77e6c4e710a049a9dcdf4bcf4cd675e96d8f17cf6f42b2536312200",
+      "cues": [
+        "Менеджер Ванг сказал, что завтра не будет пятница.",
+        "Этот билет стоит 10 юаней, не нужно платить 100 юаней.",
+        "Ли Шао ли передал ключи менеджеру Вану?",
+        "Нет, он оставил ключи на столе."
+      ]
+    },
+    {
+      "size": 4,
+      "chat_requests": 1,
+      "preflight_requests": 2,
+      "prompt_tokens": 467,
+      "completion_tokens": 158,
+      "chat_http_ms": 1549,
+      "cli_elapsed_ms_rounded": 7880,
+      "checkpoints": 1,
+      "results": 1,
+      "review_state": "needs_review",
+      "source_after_sha256": "ad88b2d2f96b153d5d8880175b321167263d7abaae48ca693d89b925459bc8a7",
+      "output_sha256": "e92834112507dffada3f38b3fbf8882e3138c2ed137ba901e2048ac5475f7ba6",
+      "cues": [
+        "Менеджер Ванг сказал, что завтра не пятница.",
+        "Этот билет стоит 10 юаней, не нужно платить 100 юаней.",
+        "Был ли Ли Сяо передал ключи менеджеру Вангу?",
+        "Нет, он оставил ключи на столе."
+      ]
+    }
+  ],
+  "resource_observation": {
+    "samples": 4,
+    "server_working_set_max_observed_bytes": 1542537216,
+    "gpu_device_max_observed_mib": 3662,
+    "limitation": "Sparse process samples and device-wide GPU readings are not isolated peaks."
+  },
+  "human_bilingual_review_count": 0,
+  "accepted_language_quality": false,
+  "release_gate": "open"
+}

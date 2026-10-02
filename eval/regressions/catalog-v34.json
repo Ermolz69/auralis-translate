@@ -1,0 +1,24 @@
+{
+  "schema_version": 34,
+  "catalog_id": "zh-ru-development-regressions-v34",
+  "base_catalog_file": "catalog-v33.json",
+  "base_catalog_sha256": "a4757dfd776dd206addfca64793fb158409d334282669a1ef831c1e357ebd82d",
+  "entries": [
+    {
+      "id": "REG-052",
+      "pack_file": "v8-name-question-controls-v1.json",
+      "pack_sha256": "23ecdaeb253d281e7651d5b76acdf10fd672793b428fd13262d38672a2ac82ed",
+      "source_family": "authored_v8_batch_development_scene",
+      "split": "known_development_regression",
+      "category": "name_consistency_and_russian_question_grammar",
+      "profile_scope": "Hy-MT2 1.8B Q4_K_M experimental v8, batch sizes 1 and 4",
+      "expected_invariant": "A source-aware review of a question about Xiao Li handing the key to Manager Wang must preserve the person, action and interrogative sense in grammatical Russian; batch boundaries must not change name identity.",
+      "severity": "major",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 3,
+      "negative_control_count": 3,
+      "evidence_record": "eval/experiments/2026-10-02-v8-authored-cli-result.md",
+      "last_outcome": "Both real CLI batch sizes completed, but cue 3 has inconsistent Xiao Li renderings and the four-target Russian question is ungrammatical by AI triage; human judgment and model controls remain open."
+    }
+  ]
+}

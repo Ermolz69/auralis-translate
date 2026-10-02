@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "experiment": "v7-target-first-order-v1",
+  "task_ids": ["LONG-01", "EVAL-04"],
+  "split": "authored_development_not_holdout",
+  "fixture_sha256": "9fbd7075ea490c13e674677d483a7ad68bd0d9abb90d9adccc936f621ae9e7a9",
+  "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "manifest_sha256": "84695e78c6f41abbc0a337e4fa3c0a2df3d7a045d38505fdee8abcf1f6641620",
+  "baseline_request_sha256": "457fa9c51d43fd1c848c9b2e2c135e65890d8ab245499bde79497ee193307e33",
+  "private_report": ".cache/eval/v7-target-first-order-v1/attempt-8mWzFh/report.json",
+  "private_report_sha256": "32e27379eba888a588eff70383e8c0afc3cb15b73359640c3d9a62498250d87b",
+  "status": "complete_outer_json_unreviewed",
+  "chat_requests": 12,
+  "template_token_preflight_calls": 24,
+  "human_review_count": 0,
+  "accepted_product_results": 0,
+  "published_subtitle_files": 0,
+  "baseline_totals": {
+    "chats": 6,
+    "prompt_tokens": 1418,
+    "completion_tokens": 254,
+    "chat_http_ms": 2891,
+    "cached_prompt_tokens": 693
+  },
+  "target_first_totals": {
+    "chats": 6,
+    "prompt_tokens": 1418,
+    "completion_tokens": 236,
+    "chat_http_ms": 2511,
+    "cached_prompt_tokens": 1093
+  },
+  "rows": [
+    {"case_id":"known_money_leak","seed":101,"order":"baseline","prompt_tokens":240,"completion_tokens":49,"chat_ms":474,"text":"Этот билет стоит десять юаней, не нужно платить сто юаней.","source_aware_ai_classification":"wrong_neighbor_money_content"},
+    {"case_id":"known_money_leak","seed":101,"order":"target_first","prompt_tokens":240,"completion_tokens":43,"chat_ms":406,"text":"Менеджер Ванг сказал, что завтра не будет пятница.","source_aware_ai_classification":"target_sense_rough_russian"},
+    {"case_id":"known_money_leak","seed":202,"order":"target_first","prompt_tokens":240,"completion_tokens":43,"chat_ms":399,"text":"Менеджер Ванг сказал, что завтра не будет пятница.","source_aware_ai_classification":"target_sense_rough_russian"},
+    {"case_id":"known_money_leak","seed":202,"order":"baseline","prompt_tokens":240,"completion_tokens":49,"chat_ms":507,"text":"Этот билет стоит десять юаней, не нужно платить сто юаней.","source_aware_ai_classification":"wrong_neighbor_money_content"},
+    {"case_id":"unseen_nonmoney_neighbor","seed":101,"order":"baseline","prompt_tokens":233,"completion_tokens":44,"chat_ms":462,"text":"Доктор Чен сказал, что сегодня не идет дождь.","source_aware_ai_classification":"target_sense_present"},
+    {"case_id":"unseen_nonmoney_neighbor","seed":101,"order":"target_first","prompt_tokens":233,"completion_tokens":41,"chat_ms":433,"text":"Доктор Чен сказал, что сегодня не шел дождь.","source_aware_ai_classification":"target_sense_present_tense_varies"},
+    {"case_id":"unseen_nonmoney_neighbor","seed":202,"order":"target_first","prompt_tokens":233,"completion_tokens":41,"chat_ms":431,"text":"Доктор Чен сказал, что сегодня не шел дождь.","source_aware_ai_classification":"target_sense_present_tense_varies"},
+    {"case_id":"unseen_nonmoney_neighbor","seed":202,"order":"baseline","prompt_tokens":233,"completion_tokens":44,"chat_ms":451,"text":"Доктор Чен сказал, что сегодня не идет дождь.","source_aware_ai_classification":"target_sense_present"},
+    {"case_id":"return_vs_borrow_scene","seed":101,"order":"baseline","prompt_tokens":236,"completion_tokens":34,"chat_ms":422,"text":"Он вернул ключ менеджеру.","source_aware_ai_classification":"target_return_sense_present"},
+    {"case_id":"return_vs_borrow_scene","seed":101,"order":"target_first","prompt_tokens":236,"completion_tokens":34,"chat_ms":408,"text":"Он вернул ключ менеджеру.","source_aware_ai_classification":"target_return_sense_present"},
+    {"case_id":"return_vs_borrow_scene","seed":202,"order":"target_first","prompt_tokens":236,"completion_tokens":34,"chat_ms":434,"text":"Он вернул ключ менеджеру.","source_aware_ai_classification":"target_return_sense_present"},
+    {"case_id":"return_vs_borrow_scene","seed":202,"order":"baseline","prompt_tokens":236,"completion_tokens":34,"chat_ms":575,"text":"Он вернул ключ менеджеру.","source_aware_ai_classification":"target_return_sense_present"}
+  ],
+  "resource_observation": {
+    "samples": 2,
+    "server_working_set_max_observed_bytes": 1546190848,
+    "gpu_device_max_observed_mib": 3794,
+    "limitation": "Sparse process samples and device-wide GPU readings are not isolated peaks."
+  },
+  "quality_claim": "local_source_aware_ai_triage_only",
+  "release_gate": "open"
+}

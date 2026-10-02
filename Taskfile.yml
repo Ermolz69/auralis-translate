@@ -1229,7 +1229,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-051 packs and all control counts
+    desc: Verify versioned REG-001 through REG-052 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -1263,6 +1263,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v31.mjs
       - node eval/scripts/check-regression-catalog-v32.mjs
       - node eval/scripts/check-regression-catalog-v33.mjs
+      - node eval/scripts/check-regression-catalog-v34.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:
@@ -2012,6 +2013,11 @@ tasks:
       - cargo test --offline -p auralis-translation-llamacpp --test context_v7 --test profile_contract
       - cargo test --offline -p auralis-translation-sqlite --test inference_requests --test migrations
       - cargo test --offline -p auralis-translation-cli --test context_v5_admission
+  test:long-batch-v8:
+    desc: Verify opt-in target-first prompt identity and v7/v8 provider mapping
+    cmds:
+      - cargo test --offline -p auralis-translation-llamacpp --test context_v7 --test profile_contract
+      - cargo test --offline -p auralis-translation-cli --test context_v5_admission
   eval:long:v7:authored:preflight:
     desc: Verify pinned model, runtime, source and v7 profile before a bounded authored batch screen
     env:
@@ -2032,6 +2038,26 @@ tasks:
     desc: Verify all frozen v7 authored model attempts and the open meaning regression
     cmds:
       - node eval/scripts/check-v7-authored-batch.mjs
+  eval:long:v8:authored:preflight:
+    desc: Verify pinned v8 target-first model, runtime, source and profile before CLI batch screen
+    env:
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - node eval/scripts/probe-v8-authored-batch.mjs --preflight
+  eval:long:v8:authored:probe:
+    desc: Run real v8 target-first CLI on one and four target batches of the same Chinese source
+    env:
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - task: build:release
+      - task: eval:long:v8:authored:preflight
+      - node eval/scripts/probe-v8-authored-batch.mjs
+  eval:long:v8:authored:check:
+    desc: Verify retained v8 real CLI one/four-target requests, checkpoints, exports and source
+    cmds:
+      - node eval/scripts/check-v8-authored-batch.mjs
   eval:context:v7:salience:preflight:
     desc: Verify frozen v7 cue and model identities before the context salience diagnostic
     env:
@@ -2051,6 +2077,25 @@ tasks:
     desc: Verify retained paired v7 model requests, raw responses and published diagnostic
     cmds:
       - node eval/scripts/check-v7-context-salience.mjs
+  eval:context:v7:target-first:preflight:
+    desc: Verify fixed sources, model and v7 request identity for the bounded target-first order screen
+    env:
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - node eval/scripts/probe-v7-target-first-order.mjs --preflight
+  eval:context:v7:target-first:probe:
+    desc: Compare original and target-first JSON order on three authored Chinese pairs and two seeds
+    env:
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - task: eval:context:v7:target-first:preflight
+      - node eval/scripts/probe-v7-target-first-order.mjs
+  eval:context:v7:target-first:check:
+    desc: Verify all retained target-first requests, raw responses, pairs and published diagnostic
+    cmds:
+      - node eval/scripts/check-v7-target-first-order.mjs
   site:preview:
     desc: Preview current and historical reports on loopback without exposing repository files
     cmds:

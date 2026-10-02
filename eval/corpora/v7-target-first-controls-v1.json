@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "split": "authored_development_not_holdout",
+  "cases": [
+    {
+      "id": "known_money_leak",
+      "target_source": "王经理说，明天不是星期五。",
+      "context_source": "这张票要十元，不要付一百元。"
+    },
+    {
+      "id": "unseen_nonmoney_neighbor",
+      "target_source": "陈医生说，今天没有下雨。",
+      "context_source": "窗边的猫正在睡觉。"
+    },
+    {
+      "id": "return_vs_borrow_scene",
+      "target_source": "他把钥匙还给了经理。",
+      "context_source": "小李昨天向王经理借了那把钥匙。"
+    }
+  ]
+}
