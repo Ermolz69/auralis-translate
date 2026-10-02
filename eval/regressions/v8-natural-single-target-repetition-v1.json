@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "REG-059",
+  "status": "real_1_8b_single_target_repetition_rejected",
+  "severity": "major",
+  "source_family": "private_natural_commons_asus_development",
+  "split": "known_natural_development_not_holdout",
+  "category": "single_target_repeated_embedded_newlines",
+  "profile_scope": "Hy-MT2 1.8B Q4_K_M experimental v8, one target per batch, real 268-cue SRT",
+  "expected_invariant": "A one-line target repeated with embedded newlines must be rejected before checkpoint even when the model response ends normally and maps to the correct ID.",
+  "minimal_reproducer": {
+    "private_report_sha256": "9ae192177dd51611f49adf7699ca4fe9677a230dc74cbdedded2618040cc193c",
+    "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+    "target_id": 80,
+    "request_sha256": "758ddf354acabe872abb9a3ccd6de6a5b5d233804173f26f1d033901610dfabc",
+    "raw_response_sha256": "133c743381520789d7cf4308d6373e65f89642bb2a71c633eecf4a555b658872",
+    "finish_reason": "stop",
+    "repeated_inner_lines": 3,
+    "journal_outcome": "invalid_candidate",
+    "error_detail": "v7 response contains invalid target text",
+    "durable_prefix_cues": 79,
+    "published_results": 0
+  },
+  "related_controls": [
+    {"id":"one_technical_part","source":"左上角是一个无线网卡。","expected_meaning":"A wireless card is in the upper left.","model_runs":0},
+    {"id":"one_model_code","source":"这块网卡的型号是MT7922。","expected_meaning":"The network card model is MT7922.","model_runs":0},
+    {"id":"one_neighbor_transition","source":"接下来我们看看旁边的内存。","expected_meaning":"Next we look at the neighboring memory.","model_runs":0}
+  ],
+  "negative_controls": [
+    {"id":"single_clean_line","candidate_text":"Слева сверху находится беспроводная карта.","expected_accept":true,"model_runs":0},
+    {"id":"single_code_line","candidate_text":"Это сетевая карта модели MT7922.","expected_accept":true,"model_runs":0},
+    {"id":"single_neighbor_line","candidate_text":"Далее посмотрим на расположенную рядом память.","expected_accept":true,"model_runs":0}
+  ],
+  "evidence_check": "task eval:long:v8:asus:single:check",
+  "human_bilingual_review_count": 0,
+  "release_gate": "open"
+}

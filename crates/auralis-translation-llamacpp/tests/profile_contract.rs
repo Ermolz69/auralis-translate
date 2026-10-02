@@ -34,6 +34,42 @@ const V8_BATCH_PROFILE: &[u8] = include_bytes!(
 const LARGE_V8_BATCH_PROFILE: &[u8] = include_bytes!(
     "../../../models/manifests/hy_mt2_7b_q4_k_m.context_v8_target_first_batch4.experimental.json"
 );
+const V8_SINGLE_PROFILE: &[u8] = include_bytes!(
+    "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v8_target_first_batch1.experimental.json"
+);
+const LARGE_V8_SINGLE_PROFILE: &[u8] = include_bytes!(
+    "../../../models/manifests/hy_mt2_7b_q4_k_m.context_v8_target_first_batch1.experimental.json"
+);
+
+#[test]
+fn v8_single_target_profiles_change_only_batch_size() -> Result<(), Box<dyn Error>> {
+    for (batch, single) in [
+        (V8_BATCH_PROFILE, V8_SINGLE_PROFILE),
+        (LARGE_V8_BATCH_PROFILE, LARGE_V8_SINGLE_PROFILE),
+    ] {
+        let batch_profile = ModelProfile::from_json(batch)?;
+        let single_profile = ModelProfile::from_json(single)?;
+        assert_eq!(batch_profile.prompt_version, 8);
+        assert_eq!(batch_profile.target_segments_per_block, 4);
+        assert_eq!(single_profile.target_segments_per_block, 1);
+        assert_eq!(
+            batch_profile.prompt_template_sha256,
+            single_profile.prompt_template_sha256
+        );
+        let mut batch_json: serde_json::Value = serde_json::from_slice(batch)?;
+        let mut single_json: serde_json::Value = serde_json::from_slice(single)?;
+        batch_json
+            .as_object_mut()
+            .ok_or("batch profile JSON must be an object")?
+            .remove("target_segments_per_block");
+        single_json
+            .as_object_mut()
+            .ok_or("single profile JSON must be an object")?
+            .remove("target_segments_per_block");
+        assert_eq!(batch_json, single_json);
+    }
+    Ok(())
+}
 
 #[test]
 fn large_v8_target_first_profile_keeps_prompt_and_changes_model_identity()
