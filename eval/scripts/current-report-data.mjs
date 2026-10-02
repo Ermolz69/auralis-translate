@@ -14,7 +14,7 @@ export async function loadCurrentReport(root) {
     kirinCaption, kirinMedia, paywall, captionOverlapRaw, packetRaw,
     activityRaw, voaRaw, batchRaw, salienceRaw, orderRaw, v8Raw, nameRaw,
     crossRaw, largeV8Raw, naturalV8Raw, resumeV8Raw, singleV8Raw,
-    riskV8Raw] = await Promise.all([
+    riskV8Raw, controlV1Raw, controlV2Raw] = await Promise.all([
     loadDeliveryPlan(root), loadSourceCandidates(root), loadSethluiFullV6(root),
     loadSethluiRetry(root), loadSethluiAudio(root), loadApprovedTermDiagnostic(root),
     fs.readFile(path.join(root, 'eval/reports/youtube-geekerwan-kirin-license-v1.json'),
@@ -54,6 +54,10 @@ export async function loadCurrentReport(root) {
       'eval/reports/2026-10-02-v8-asus-single-target.json'), 'utf8'),
     fs.readFile(path.join(root,
       'eval/reports/2026-10-02-v8-asus-single-target-risk-audit.json'), 'utf8'),
+    fs.readFile(path.join(root,
+      'eval/reports/2026-10-02-reg-058-paired-controls-invalid.json'), 'utf8'),
+    fs.readFile(path.join(root,
+      'eval/reports/2026-10-02-reg-058-paired-controls-v2.json'), 'utf8'),
   ]);
   const captionOverlap = JSON.parse(captionOverlapRaw);
   const salience = JSON.parse(salienceRaw);
@@ -66,6 +70,8 @@ export async function loadCurrentReport(root) {
   const resumeV8 = JSON.parse(resumeV8Raw);
   const singleV8 = JSON.parse(singleV8Raw);
   const riskV8 = JSON.parse(riskV8Raw);
+  const controlV1 = JSON.parse(controlV1Raw);
+  const controlV2 = JSON.parse(controlV2Raw);
   assert.equal(naturalV8.source_cues, 268);
   assert.equal(naturalV8.status, 'completed_with_failure');
   assert.deepEqual(naturalV8.arms.map(arm => arm.covered_prefix_cues), [216, 140]);
@@ -79,6 +85,15 @@ export async function loadCurrentReport(root) {
   assert.equal(riskV8.selected_cues, 43);
   assert.equal(riskV8.ai_review.high_confidence_semantic_issue_ids.length, 6);
   assert.equal(riskV8.human_bilingual_review_count, 0);
+  assert.equal(controlV1.status, 'invalid_harness_target_fields_disagree');
+  assert.equal(controlV1.arms.reduce((total, arm) =>
+    total + arm.target_field_mismatches, 0), 24);
+  assert.equal(controlV2.paired_case_comparison_valid, true);
+  assert.equal(controlV2.population_quality_comparison_valid, false);
+  assert.deepEqual(controlV2.arms.map(arm => arm.chats), [12, 12]);
+  assert.deepEqual(controlV2.arms.map(arm => arm.preflights), [24, 24]);
+  assert.equal(controlV2.arms[1].controls.filter(row => row.leaked_json_syntax).length, 1);
+  assert.equal(controlV2.human_bilingual_review_count, 0);
   const captionOverlapSha256 = createHash('sha256').update(captionOverlapRaw).digest('hex');
   const packet = JSON.parse(packetRaw);
   assert.equal(createHash('sha256').update(packetRaw).digest('hex'),
@@ -342,6 +357,14 @@ export async function loadCurrentReport(root) {
       machine_warning_count: riskV8.machine_warnings.total,
       human_review_count: riskV8.human_bilingual_review_count,
       report_sha256: createHash('sha256').update(riskV8Raw).digest('hex') },
+    reg058_controls: { invalid_v1_target_fields: controlV1.arms.reduce(
+      (total, arm) => total + arm.target_field_mismatches, 0),
+    chats: controlV2.arms.map(arm => arm.chats),
+    preflights: controlV2.arms.map(arm => arm.preflights),
+    leaked_json_7b: controlV2.arms[1].controls.filter(row => row.leaked_json_syntax).length,
+    human_review_count: controlV2.human_bilingual_review_count,
+    invalid_report_sha256: createHash('sha256').update(controlV1Raw).digest('hex'),
+    corrected_report_sha256: createHash('sha256').update(controlV2Raw).digest('hex') },
     backlog: { total_tasks: plan.total_tasks, counts: plan.counts },
   };
 }
