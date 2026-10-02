@@ -738,3 +738,20 @@ unreviewed by a Chinese–Russian person. The 7B CLI took 29,900 ms in this
 one run and reached 7,212 MiB device-wide GPU use on an 8 GiB card; no
 portable speed or headroom claim follows. Natural long-file translation,
 scene seams, human meaning review and spoken-script approval remain open.
+
+The [matched natural 268-cue v8 screen](../eval/experiments/2026-10-02-v8-asus-natural-long-result.md)
+adds partial `LONG-01`/`LONG-02`/`EVAL-04` evidence on the same private
+Chinese SRT for 1.8B and 7B. Four-target batches used checked rendered-token
+preflights and separate durable SQLite states. The 1.8B run retained 216 cues
+before malformed inner text at cue 217; the 7B run retained 140 before a
+leaked JSON fragment at cue 141. Neither produced a result SRT. The 7B
+provider journal incorrectly called the final request `validated_batch`,
+although the SRT guard rejected it before checkpoint. A new provider guard
+rejects leaked JSON structure before that journal status; the document
+validator remains a second boundary. [REG-054/055](../eval/regressions/catalog-v36.json)
+pin both private raw hashes and twelve unrun related/negative controls.
+These are retained development failures, not a completed long-file quality
+comparison or release gate. Next: one predeclared bounded recovery attempt,
+then explicit beginning/middle/end, seam, name, number, negation and scene
+review on any full output; source rights, human review and real audio remain
+independent requirements.
