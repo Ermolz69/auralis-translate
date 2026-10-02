@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { loadDeliveryPlan } from './delivery-progress-section.mjs';
@@ -10,7 +11,7 @@ import { loadApprovedTermDiagnostic } from './term-diagnostic-section.mjs';
 
 export async function loadCurrentReport(root) {
   const [plan, sources, comparison, retry, audio, terms, kirin,
-    kirinCaption, kirinMedia, paywall] = await Promise.all([
+    kirinCaption, kirinMedia, paywall, captionOverlapRaw] = await Promise.all([
     loadDeliveryPlan(root), loadSourceCandidates(root), loadSethluiFullV6(root),
     loadSethluiRetry(root), loadSethluiAudio(root), loadApprovedTermDiagnostic(root),
     fs.readFile(path.join(root, 'eval/reports/youtube-geekerwan-kirin-license-v1.json'),
@@ -21,7 +22,10 @@ export async function loadCurrentReport(root) {
       'utf8').then(JSON.parse),
     fs.readFile(path.join(root, 'eval/reports/paywall-review-seed-v1.json'),
       'utf8').then(JSON.parse),
+    fs.readFile(path.join(root, 'eval/reports/source-caption-overlap-v1.json'), 'utf8'),
   ]);
+  const captionOverlap = JSON.parse(captionOverlapRaw);
+  const captionOverlapSha256 = createHash('sha256').update(captionOverlapRaw).digest('hex');
   const small = comparison.arms[0];
   const large = retry.second;
   assert.equal(small.model, '1.8B Q4_K_M');
@@ -35,6 +39,13 @@ export async function loadCurrentReport(root) {
   assert.equal(sources.media_groups, 10);
   assert.equal(sources.inspected_cues, 3243);
   assert.equal(sources.eligible_cues, 0);
+  assert.equal(captionOverlap.source_count, sources.source_count);
+  assert.equal(captionOverlap.media_group_count, sources.media_groups);
+  assert.equal(captionOverlap.compared_pairs, 54);
+  assert.deepEqual(captionOverlap.flagged_pairs, []);
+  assert.equal(captionOverlap.same_group_pairs.length, 1);
+  assert.equal(captionOverlap.same_group_pairs[0].shared_windows, 4010);
+  assert.equal(captionOverlap.same_group_pairs[0].smaller_windows, 4176);
   assert.equal(comparison.review.independent_human_cues, 0);
   assert.equal(large.independent_human_reviewed_cues, 0);
   assert.equal(audio.summary.human_listening_review, 'missing');
@@ -62,6 +73,11 @@ export async function loadCurrentReport(root) {
     sources: { candidates: sources.source_count, media_groups: sources.media_groups,
       inspected_cues: sources.inspected_cues,
       eligible_cues: sources.eligible_cues },
+    caption_overlap: { compared_pairs: captionOverlap.compared_pairs,
+      flagged_pairs: captionOverlap.flagged_pairs.length,
+      kirin_shared_windows: captionOverlap.same_group_pairs[0].shared_windows,
+      kirin_smaller_windows: captionOverlap.same_group_pairs[0].smaller_windows,
+      report_sha256: captionOverlapSha256 },
     source_probe: { original_video_id: kirin.original_video_id,
       original_duration_ms: kirin.original_duration_ms,
       local_media_duration_ms: kirin.local_media_duration_ms,
