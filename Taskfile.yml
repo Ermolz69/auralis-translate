@@ -2082,6 +2082,29 @@ tasks:
     desc: Verify all REG-052 raw requests, 48 preflights and public report identity
     cmds:
       - node eval/scripts/check-reg-052-v8-controls.mjs
+  eval:regression:cross-model:preflight:
+    desc: Verify pinned 7B model, runtime and twelve same-source REG-052 requests
+    env:
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - node eval/scripts/probe-reg-052-cross-model.mjs --preflight
+  eval:regression:cross-model:probe:
+    desc: Run twelve bounded 7B requests paired to retained 1.8B context-on controls
+    env:
+      AURALIS_TEST_GGUF: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - task: eval:regression:cross-model:preflight
+      - node eval/scripts/probe-reg-052-cross-model.mjs
+  eval:regression:cross-model:report:
+    desc: Extract pinned paired 1.8B/7B REG-052 raw responses into a public report
+    cmds:
+      - node eval/scripts/check-reg-052-cross-model.mjs --write
+  eval:regression:cross-model:check:
+    desc: Verify exact same prompt text and pinned 1.8B/7B raw model pairs
+    cmds:
+      - node eval/scripts/check-reg-052-cross-model.mjs
   eval:context:v7:salience:preflight:
     desc: Verify frozen v7 cue and model identities before the context salience diagnostic
     env:
