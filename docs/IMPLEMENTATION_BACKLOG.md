@@ -445,6 +445,15 @@ admitted. Its initial sandbox spawn failure is retained and has a process
 capture regression check. At that point the nine registered sources remained
 at 1,850 inspected and zero eligible cues.
 
+The [30:19 Sunflower Movement source screen](../eval/experiments/2026-10-02-sunflower-source-inventory-result.md)
+finds a Commons-reviewed CC BY 3.0 media license but zero original-platform
+manual subtitle tracks. Automatically translated Chinese caption listings and
+conflicting `ja` source-language metadata cannot establish Chinese source
+subtitles or speech alignment. The one metadata response and offline check are
+retained; no subtitle/media download or model call was made. `DATA-03` remains
+in progress with 12 previously counted candidates, 3,336 inspected cues and
+zero eligible cues.
+
 The [12:18 restaurant-video source screen](../eval/experiments/2026-10-01-sethlui-caption-media-mismatch.md)
 adds a failed `DATA-03`/`DATA-05` timing admission case: 271 strict Chinese
 SRT cues were acquired at a pinned Commons revision, but eight end beyond a

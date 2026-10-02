@@ -420,6 +420,11 @@ tasks:
     cmds:
       - task: eval:data:youtube:sunflower:preflight
       - node eval/scripts/inventory-youtube-sunflower.mjs
+  eval:data:youtube:sunflower:check:
+    desc: Verify retained metadata separates source subtitles from automatic translations
+    cmds:
+      - node --check eval/scripts/check-youtube-sunflower-inventory.mjs
+      - node eval/scripts/check-youtube-sunflower-inventory.mjs
   site:live:check:
     desc: Compare both live GitHub Pages HTML files byte-for-byte with committed reports
     cmds:
