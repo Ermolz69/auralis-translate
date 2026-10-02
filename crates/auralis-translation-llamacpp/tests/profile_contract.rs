@@ -31,6 +31,22 @@ const V7_BATCH_PROFILE: &[u8] = include_bytes!(
 const V8_BATCH_PROFILE: &[u8] = include_bytes!(
     "../../../models/manifests/hy_mt2_1_8b_q4_k_m.context_v8_target_first_batch4.experimental.json"
 );
+const LARGE_V8_BATCH_PROFILE: &[u8] = include_bytes!(
+    "../../../models/manifests/hy_mt2_7b_q4_k_m.context_v8_target_first_batch4.experimental.json"
+);
+
+#[test]
+fn large_v8_target_first_profile_keeps_prompt_and_changes_model_identity()
+-> Result<(), Box<dyn Error>> {
+    let small = ModelProfile::from_json(V8_BATCH_PROFILE)?;
+    let large = ModelProfile::from_json(LARGE_V8_BATCH_PROFILE)?;
+    assert_eq!(large.prompt_version, 8);
+    assert_eq!(large.target_segments_per_block, 4);
+    assert_eq!(small.prompt_template_sha256, large.prompt_template_sha256);
+    assert_ne!(small.model_file_sha256, large.model_file_sha256);
+    assert_ne!(small.model_alias, large.model_alias);
+    Ok(())
+}
 
 #[test]
 fn v8_target_first_profile_has_distinct_checked_identity() -> Result<(), Box<dyn Error>> {
