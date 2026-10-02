@@ -12,7 +12,7 @@ import { loadApprovedTermDiagnostic } from './term-diagnostic-section.mjs';
 export async function loadCurrentReport(root) {
   const [plan, sources, comparison, retry, audio, terms, kirin,
     kirinCaption, kirinMedia, paywall, captionOverlapRaw, packetRaw,
-    activityRaw, voaRaw, batchRaw] = await Promise.all([
+    activityRaw, voaRaw, batchRaw, salienceRaw] = await Promise.all([
     loadDeliveryPlan(root), loadSourceCandidates(root), loadSethluiFullV6(root),
     loadSethluiRetry(root), loadSethluiAudio(root), loadApprovedTermDiagnostic(root),
     fs.readFile(path.join(root, 'eval/reports/youtube-geekerwan-kirin-license-v1.json'),
@@ -32,8 +32,11 @@ export async function loadCurrentReport(root) {
       'eval/reports/voa-mandarin-caption-inventory-2026-10-02.json'), 'utf8'),
     fs.readFile(path.join(root,
       'eval/reports/2026-10-02-v7-authored-batch-screen.json'), 'utf8'),
+    fs.readFile(path.join(root,
+      'eval/reports/2026-10-02-v7-context-salience.json'), 'utf8'),
   ]);
   const captionOverlap = JSON.parse(captionOverlapRaw);
+  const salience = JSON.parse(salienceRaw);
   const captionOverlapSha256 = createHash('sha256').update(captionOverlapRaw).digest('hex');
   const packet = JSON.parse(packetRaw);
   assert.equal(createHash('sha256').update(packetRaw).digest('hex'),
@@ -207,6 +210,14 @@ export async function loadCurrentReport(root) {
       paired_batch_1_vs_4_completed: batch.paired_batch_1_vs_4_completed,
       human_review_count: batch.human_review_count,
       report_sha256: createHash('sha256').update(batchRaw).digest('hex') },
+    context_salience: { pairs: salience.pairs.length,
+      context_on_wrong: salience.pairs.filter(pair =>
+        pair.context_on.source_aware_ai_classification === 'wrong_neighbor_ticket_content').length,
+      context_off_target_sense: salience.pairs.filter(pair =>
+        pair.context_off.source_aware_ai_classification === 'target_sense_present_russian_grammar_rough').length,
+      human_review_count: salience.attempts[1].human_review_count,
+      source_split: salience.source_split,
+      report_sha256: createHash('sha256').update(salienceRaw).digest('hex') },
     backlog: { total_tasks: plan.total_tasks, counts: plan.counts },
   };
 }
