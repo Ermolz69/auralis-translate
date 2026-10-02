@@ -70,10 +70,16 @@ const currentData = JSON.parse(currentMatch[1]);
 assert.deepEqual(currentData, await loadCurrentReport(root));
 assert.equal(currentData.release_decision, 'not_accepted');
 assert.equal(currentData.sources.eligible_cues, 0);
+assert.equal(currentData.sources.candidates, 12);
+assert.equal(currentData.sources.inspected_cues, 3336);
 assert.equal(currentData.source_probe.duration_comparison.difference_ms, 90_182);
 assert.equal(currentData.source_probe.duration_comparison.alignment_verified, false);
 assert.equal(currentData.source_probe.source_admission, 'unassigned_unreviewed');
-assert(current.includes('2026-10-02-youtube-geekerwan-kirin-license-result.md'));
+assert.equal(currentData.source_probe.original_track_cues, 343);
+assert.equal(currentData.source_probe.cues_beyond_archived_media_end, 39);
+assert.equal(currentData.source_probe.original_media_acquired, false);
+assert.deepEqual(currentData.source_probe.media_http_statuses, [302, 403]);
+assert(current.includes('2026-10-02-kirin-original-caption-and-media-result.md'));
 assert(current.includes('допущенных реплик по-прежнему 0'));
 assert.equal(currentData.translation.small.checkpoints, 263);
 assert.equal(currentData.translation.large.checkpoints, 263);
@@ -206,8 +212,8 @@ assert.deepEqual(data.natural_audio, await loadNaturalAudio(root));
 assert.deepEqual(data.asus_full_audio, await loadAsusFullAudio(root));
 assert.deepEqual(data.asus_fit, await loadAsusFit(root));
 assert.deepEqual(data.source_candidates, {
-  source_count: 11,
-  inspected_cues: 2993,
+  source_count: 12,
+  inspected_cues: 3336,
   eligible_cues: 0,
   commerce_revision: '906218083',
   commerce_cues: 123,
@@ -222,6 +228,8 @@ assert.deepEqual(data.source_candidates, {
   asus_sha256: '923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b',
   kirin_cues: 304,
   kirin_sha256: '57dfd9feb3bfe6381421c4142820b780af341e195e52ee81d58e8f9f12858feb',
+  original_kirin_cues: 343,
+  original_kirin_sha256: 'c2a5fa3ae5139fe90b2be0b4b48b10ddd20d9b42103f4dd8401e1426d1b3eae5',
   sethlui_cues: 263,
   sethlui_sha256: '4777e11caa115e893f2328c2a33c25a76c7391ace8ecf0ac4b9436635fc27964',
   sethlui_media_duration_ms: 738056,
@@ -243,7 +251,8 @@ assert(html.includes('2026-10-01-sethlui-stream-derivative-result.md'));
 assert(html.includes('2026-10-01-sethlui-audio-windows-result.md'));
 assert(html.includes('их никто не прослушал'));
 assert(html.includes('Реплики 264–271 исходного китайского SRT идут после конца видео'));
-assert(html.includes('11 источников, 2993 проверенных реплик и 0 допущенных'));
+assert(html.includes('12 источников, 3336 проверенных реплик и 0 допущенных'));
+assert(html.includes('2026-10-02-kirin-original-caption-and-media-result.md'));
 assert(html.includes('id="paywall-source-screen"'));
 assert(html.includes('2026-10-01-paywall-licensed-long-source-result.md'));
 assert(html.includes('294 354 909 байт'));

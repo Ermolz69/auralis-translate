@@ -9,10 +9,15 @@ import { loadSethluiAudio } from './sethlui-audio-section.mjs';
 import { loadApprovedTermDiagnostic } from './term-diagnostic-section.mjs';
 
 export async function loadCurrentReport(root) {
-  const [plan, sources, comparison, retry, audio, terms, kirin] = await Promise.all([
+  const [plan, sources, comparison, retry, audio, terms, kirin,
+    kirinCaption, kirinMedia] = await Promise.all([
     loadDeliveryPlan(root), loadSourceCandidates(root), loadSethluiFullV6(root),
     loadSethluiRetry(root), loadSethluiAudio(root), loadApprovedTermDiagnostic(root),
     fs.readFile(path.join(root, 'eval/reports/youtube-geekerwan-kirin-license-v1.json'),
+      'utf8').then(JSON.parse),
+    fs.readFile(path.join(root, 'eval/reports/youtube-geekerwan-kirin-caption-v1.json'),
+      'utf8').then(JSON.parse),
+    fs.readFile(path.join(root, 'eval/reports/youtube-geekerwan-kirin-media-failure-v1.json'),
       'utf8').then(JSON.parse),
   ]);
   const small = comparison.arms[0];
@@ -24,8 +29,8 @@ export async function loadCurrentReport(root) {
   assert.equal(large.checkpoints, comparison.source_cues);
   assert.equal(audio.summary.source_srt_sha256, comparison.source_sha256);
   assert.equal(audio.summary.candidate_ru_srt_sha256, large.output_sha256);
-  assert.equal(sources.source_count, 11);
-  assert.equal(sources.inspected_cues, 2993);
+  assert.equal(sources.source_count, 12);
+  assert.equal(sources.inspected_cues, 3336);
   assert.equal(sources.eligible_cues, 0);
   assert.equal(comparison.review.independent_human_cues, 0);
   assert.equal(large.independent_human_reviewed_cues, 0);
@@ -34,6 +39,11 @@ export async function loadCurrentReport(root) {
   assert.equal(kirin.duration_comparison.status, 'duration_discrepancy');
   assert.equal(kirin.duration_comparison.difference_ms, 90_182);
   assert.equal(kirin.source_admission, 'unassigned_unreviewed');
+  assert.equal(kirinCaption.strict_cues, 343);
+  assert.equal(kirinCaption.cues_beyond_archived_media_end, 39);
+  assert.equal(kirinCaption.source_admission, 'unassigned_unreviewed');
+  assert.equal(kirinMedia.media_acquired, false);
+  assert.deepEqual(kirinMedia.attempts.map(item => item.http_status), [302, 403]);
   return {
     schema_version: 1,
     as_of: '2026-10-02',
@@ -45,6 +55,10 @@ export async function loadCurrentReport(root) {
       local_media_duration_ms: kirin.local_media_duration_ms,
       duration_comparison: kirin.duration_comparison,
       chinese_srt_track_advertised: kirin.chinese_srt_track_advertised,
+      original_track_cues: kirinCaption.strict_cues,
+      cues_beyond_archived_media_end: kirinCaption.cues_beyond_archived_media_end,
+      original_media_acquired: kirinMedia.media_acquired,
+      media_http_statuses: kirinMedia.attempts.map(item => item.http_status),
       source_admission: kirin.source_admission },
     translation: {
       source_sha256: comparison.source_sha256,

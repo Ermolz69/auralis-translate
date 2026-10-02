@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { validateSourceInventory } from './source-inventory.mjs';
+import { validateCrossInventorySourceGroups } from './cross-inventory-source-groups.mjs';
 
 const inventoryPaths = [
   'eval/corpora/commons-inspected-candidates-v1.json',
@@ -11,6 +12,7 @@ const inventoryPaths = [
   'eval/corpora/commons-geekerwan-two-scenes-candidate-v1.json',
   'eval/corpora/commons-sethlui-candidate-v1.json',
   'eval/corpora/paywall-chinese-candidate-v1.json',
+  'eval/corpora/youtube-geekerwan-kirin-original-candidate-v1.json',
 ];
 
 export async function loadSourceCandidates(root) {
@@ -25,6 +27,7 @@ export async function loadSourceCandidates(root) {
   const [asus, kirin] = inventories[5].inventory.sources;
   const sethlui = inventories[6].inventory.sources[0];
   const paywall = inventories[7].inventory.sources[0];
+  const originalKirin = inventories[8].inventory.sources[0];
   if (inventories[1].inventory.sources.length !== 1
       || commerce.id !== 'commons-cc-commerce-906218083'
       || commerce.state !== 'inspected_candidate'
@@ -79,6 +82,17 @@ export async function loadSourceCandidates(root) {
       || paywall.rights.reference.decision !== 'unknown') {
     throw new Error('Paywall candidate identity, rights or admission state changed');
   }
+  if (inventories[8].inventory.sources.length !== 1
+      || originalKirin.id !== 'youtube-geekerwan-kirin-original-2026-10-02'
+      || originalKirin.group_id !== kirin.group_id
+      || originalKirin.state !== 'inspected_candidate'
+      || originalKirin.split !== 'unassigned'
+      || originalKirin.cue_count !== 343
+      || ['subtitle', 'reference', 'audio'].some(kind =>
+        originalKirin.rights[kind].decision !== 'unknown')) {
+    throw new Error('Original Kirin candidate identity, grouping or admission changed');
+  }
+  validateCrossInventorySourceGroups(inventories.map(entry => entry.inventory));
   return {
     source_count: inventories.reduce((total, entry) => total + entry.counts.source_count, 0),
     inspected_cues: inventories.reduce((total, entry) => total + entry.counts.inspected_candidate_cues, 0),
@@ -96,6 +110,8 @@ export async function loadSourceCandidates(root) {
     asus_sha256: asus.sha256,
     kirin_cues: kirin.cue_count,
     kirin_sha256: kirin.sha256,
+    original_kirin_cues: originalKirin.cue_count,
+    original_kirin_sha256: originalKirin.sha256,
     sethlui_cues: sethlui.cue_count,
     sethlui_sha256: sethlui.sha256,
     sethlui_media_duration_ms: sethlui.media_duration_ms,
@@ -106,7 +122,7 @@ export async function loadSourceCandidates(root) {
 }
 
 export function renderSourceCandidates(summary) {
-  return `<section id="source-candidates" class="my-8 scroll-mt-8 rounded-2xl border border-amber-200 bg-amber-50/60 p-5 md:p-7"><p class="text-sm font-semibold text-amber-900">DATA-03 · проверка источников, без оценки перевода</p><h2 class="mt-2 text-2xl font-bold">${summary.source_count} источников, ${summary.inspected_cues} проверенных реплик, ${summary.eligible_cues} допущенных</h2><p class="mt-3 max-w-4xl text-slate-700">Первые 4 источника Commons дали 488 реплик. Ролик Mingfay Chinese длится 13:47: его смешанный трек разделён в отдельный китайский SRT с ${summary.mingfay_cues} строго разобранными репликами. Совпадающие субтитры и видео Ying добавили ${summary.ying_cues} реплики, но пробный русский перевод содержит серьёзные ошибки смысла. 20:30 видео о поезде имеет 206 реплик; 240p-копия содержит VP9/Opus, но китайская речь не подтверждена. Разговор Geekerwan с vivo и MediaTek длится 18:36 и дал ${summary.vivo_cues} строго разобранных китайских реплик. Два других видео Geekerwan длительностью 14:42 и 12:41 добавили ${summary.asus_cues} и ${summary.kirin_cues} реплики. Все три совпадающие 240p-копии содержат VP9/Opus; девять фрагментов начала, середины и конца декодированы для приватного прослушивания, но речь и совпадение реплик человеком пока не проверены. Ролик о кухне добавил ${summary.sethlui_cues} реплики после проверки фактической длительности потока; исходные восемь поздних реплик сохранены только в оригинале. Для первых десяти источников права на видео или подписи остаются неустановленными. У Paywall лицензии фильма и титров подтверждены первичными страницами, но точность речевого соответствия, русский эталон и независимая оценка не установлены; ни одна реплика из ${summary.source_count} источников не входит в допущенный корпус или закрытый holdout.</p><p class="mt-3 text-xs text-slate-600">Китайские SRT SHA-256: Vivo <code class="hash">${summary.vivo_sha256}</code>; ASUS <code class="hash">${summary.asus_sha256}</code>; Kirin <code class="hash">${summary.kirin_sha256}</code>; Ying <code class="hash">${summary.ying_sha256}</code>; производная Mingfay <code class="hash">${summary.mingfay_sha256}</code>. Ранее проверенный Commons SRT: ревизия ${summary.commerce_revision}, ${summary.commerce_cues} реплики, SHA-256 <code class="hash">${summary.commerce_sha256}</code>. Исходные строки и медиа в отчёт не встроены.</p><div class="mt-3 flex flex-wrap gap-4 text-sm font-semibold text-blue-700"><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-30-geekerwan-two-scene-media-result.md">Два новых видео и шесть фрагментов (EN)</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-30-commons-vivo-media-samples-result.md">18:36 видео и фрагменты (EN)</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-30-commons-train-240p-stream-result.md">20:30 видео и дорожки (EN)</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/corpora/commons-geekerwan-two-scenes-candidate-v1.json">Недопущенные ASUS/Kirin</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-29-youtube-mingfay-caption-candidate.md">Mingfay и ограничения (EN)</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-29-commons-cc-commerce-candidate.md">Ранний Commons источник (EN)</a></div></section>`;
+  return `<section id="source-candidates" class="my-8 scroll-mt-8 rounded-2xl border border-amber-200 bg-amber-50/60 p-5 md:p-7"><p class="text-sm font-semibold text-amber-900">DATA-03 · проверка источников, без оценки перевода</p><h2 class="mt-2 text-2xl font-bold">${summary.source_count} источников, ${summary.inspected_cues} проверенных реплик, ${summary.eligible_cues} допущенных</h2><p class="mt-3 max-w-4xl text-slate-700">Первые 4 источника Commons дали 488 реплик. Ролик Mingfay Chinese длится 13:47: его смешанный трек разделён в отдельный китайский SRT с ${summary.mingfay_cues} строго разобранными репликами. Совпадающие субтитры и видео Ying добавили ${summary.ying_cues} реплики, но пробный русский перевод содержит серьёзные ошибки смысла. 20:30 видео о поезде имеет 206 реплик; 240p-копия содержит VP9/Opus, но китайская речь не подтверждена. Разговор Geekerwan с vivo и MediaTek длится 18:36 и дал ${summary.vivo_cues} строго разобранных китайских реплик. Два других видео Geekerwan длительностью 14:42 и 12:41 добавили ${summary.asus_cues} и ${summary.kirin_cues} реплики. Все три совпадающие 240p-копии содержат VP9/Opus; девять фрагментов начала, середины и конца декодированы для приватного прослушивания, но речь и совпадение реплик человеком пока не проверены. Отдельная текущая дорожка оригинального Kirin дала ${summary.original_kirin_cues} строго разобранные реплики; 39 идут после архивного видео, а две ограниченные попытки получить оригинальное медиа вернули HTTP 302 и 403. Ролик о кухне добавил ${summary.sethlui_cues} реплики после проверки фактической длительности потока; исходные восемь поздних реплик сохранены только в оригинале. Для остальных одиннадцати источников права на видео или подписи остаются неустановленными. У Paywall лицензии фильма и титров подтверждены первичными страницами, но точность речевого соответствия, русский эталон и независимая оценка не установлены; ни одна реплика из ${summary.source_count} источников не входит в допущенный корпус или закрытый holdout.</p><p class="mt-3 text-xs text-slate-600">Китайские SRT SHA-256: Vivo <code class="hash">${summary.vivo_sha256}</code>; ASUS <code class="hash">${summary.asus_sha256}</code>; архивный Kirin <code class="hash">${summary.kirin_sha256}</code>; текущий Kirin <code class="hash">${summary.original_kirin_sha256}</code>; Ying <code class="hash">${summary.ying_sha256}</code>; производная Mingfay <code class="hash">${summary.mingfay_sha256}</code>. Ранее проверенный Commons SRT: ревизия ${summary.commerce_revision}, ${summary.commerce_cues} реплики, SHA-256 <code class="hash">${summary.commerce_sha256}</code>. Исходные строки и медиа в отчёт не встроены.</p><div class="mt-3 flex flex-wrap gap-4 text-sm font-semibold text-blue-700"><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-30-geekerwan-two-scene-media-result.md">Два новых видео и шесть фрагментов (EN)</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-30-commons-vivo-media-samples-result.md">18:36 видео и фрагменты (EN)</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-30-commons-train-240p-stream-result.md">20:30 видео и дорожки (EN)</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/corpora/commons-geekerwan-two-scenes-candidate-v1.json">Недопущенные ASUS/Kirin</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-10-02-kirin-original-caption-and-media-result.md">Текущий Kirin и отказ медиа (EN)</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-29-youtube-mingfay-caption-candidate.md">Mingfay и ограничения (EN)</a><a class="underline" href="https://github.com/Ermolz69/auralis-translate/blob/main/eval/experiments/2026-09-29-commons-cc-commerce-candidate.md">Ранний Commons источник (EN)</a></div></section>`;
 }
 
 export function renderXiaolinMetadataScreen() {
