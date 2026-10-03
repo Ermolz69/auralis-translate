@@ -1335,7 +1335,7 @@ tasks:
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/natural-caption-regression.test.mjs
   eval:regression:catalog:check:
-    desc: Verify versioned REG-001 through REG-061 packs and all control counts
+    desc: Verify versioned REG-001 through REG-064 packs and all control counts
     cmds:
       - node eval/scripts/check-regression-catalog-v2.mjs
       - node eval/scripts/check-regression-catalog-v3.mjs
@@ -1378,7 +1378,14 @@ tasks:
       - node eval/scripts/check-regression-catalog-v40.mjs
       - node eval/scripts/check-regression-catalog-v41.mjs
       - node eval/scripts/check-regression-catalog-v42.mjs
+      - node eval/scripts/check-regression-catalog-v43.mjs
       - task: eval:regression:reg060:check
+  eval:regression:catalog:recent:check:
+    desc: Verify REG-061 through REG-064 catalog deltas and the TERM-02 follow-up
+    cmds:
+      - node eval/scripts/check-regression-catalog-v41.mjs
+      - node eval/scripts/check-regression-catalog-v42.mjs
+      - node eval/scripts/check-regression-catalog-v43.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:
@@ -2481,11 +2488,22 @@ tasks:
     desc: Extract a public source-aware REG-062 development report from retained raw replies
     cmds:
       - node eval/scripts/check-reg-062-occurrences-v1.mjs --write
+  eval:regression:reg062:review:record:
+    desc: Retain the one source-aware REG-062 AI fact review with raw-response hashes
+    cmds:
+      - node --check eval/scripts/record-reg-062-ai-review-v1.mjs
+      - node eval/scripts/record-reg-062-ai-review-v1.mjs
   eval:regression:reg062:check:
     desc: Verify REG-062 freeze, raw responses, resource records and review hashes
     cmds:
       - task: test:term-occurrences
       - node eval/scripts/check-reg-062-occurrences-v1.mjs
+      - node eval/scripts/check-regression-catalog-v43.mjs
+  eval:regression:reg062:catalog:write:
+    desc: Record REG-062 follow-up pack and chained catalog after the review decision
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v43.mjs
+      - node eval/scripts/build-regression-catalog-v43.mjs --write
   eval:regression:reg060:check:
     desc: Verify the invalid REG-058 harness and four target-field regression controls
     cmds:

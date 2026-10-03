@@ -1,0 +1,1093 @@
+{
+  "schema_version": 1,
+  "experiment": "reg-062-occurrence-terms-v1",
+  "reviewer_type": "AI_source_aware_not_independent_human",
+  "reviewer_provenance": "Codex Ulya self-review of all 120 visible Russian candidates against frozen Chinese source facts; no independent bilingual reviewer",
+  "reviewed_at": "2026-10-03T09:14:07.210Z",
+  "private_report_sha256": "bfa0ef2cbe4b49853792eec173838542ca0777ae15297e812c2ac183b110569a",
+  "source_fact_rubric": "Frozen plan: noun identities, processor/core/thread counts, availability, polarity, amount, actor attribution and neighbor exclusion; unclear is not a pass.",
+  "scope": "All exposed development outputs, three paired runs per arm; no sealed holdout or reference translation in requests.",
+  "human_bilingual_review_count": 0,
+  "rows": [
+    {
+      "id": "multicore_positive",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "21978158996fbc1867ef4d6783765b3b9c9e08c62aff9b68dc218e9fb122a7c1",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "Multi-core testing is changed to multithread testing; the ten-thousand score remains."
+    },
+    {
+      "id": "multicore_positive",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "4147222f6fb722745af54436d45f9742710f0242049b6989ef25c50e6f971ba7",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Multi-core testing and the ten-thousand score are retained."
+    },
+    {
+      "id": "multicore_positive",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "136c088c5337a6acbc31d24e529ad01f04dffc98cef85d1b08c03c005e1a4092",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Multi-core testing and the ten-thousand score are retained."
+    },
+    {
+      "id": "multicore_positive",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "6b148b629f6ad094d2740b925c4dd295513bb8fe80846ef57b8759936fc38e3e",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "Multi-core testing is changed to multithread testing; the ten-thousand score remains."
+    },
+    {
+      "id": "multicore_positive",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "90fade00743909d1e03eca97f210383b5c63f3534a62d685c700ac7202f13f66",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "Multi-core testing is changed to multithread testing; the ten-thousand score remains."
+    },
+    {
+      "id": "multicore_positive",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "e86fccbc8cb7f88e900a287020b1e0df3ffb8a172db8d951ade839a5bce52849",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Multi-core testing and the ten-thousand score are retained."
+    },
+    {
+      "id": "multiprocessor_negative",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "44d0a1af2b73742ae93423385da48b8f0da7be322b75f13dbf0853c2d2ac9cf8",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Multiple processors remain multiple processors; no core-count substitution."
+    },
+    {
+      "id": "multiprocessor_negative",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "02dc873e9c1d99403364097d401f72b8b2e04a9e4f79acd255800ae1c11d2469",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Multiple processors remain multiple processors; no core-count substitution."
+    },
+    {
+      "id": "multiprocessor_negative",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "8b57780c761f5d954a6bf3080f267c46105f94d3485723e0cd0116a4cdaec678",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Multiple processors remain multiple processors; no core-count substitution."
+    },
+    {
+      "id": "multiprocessor_negative",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "fe327746d52367402b7c28d390655b7feb5dc3cba5998bb2553eaa347f29fc25",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Multiple processors remain multiple processors; no core-count substitution."
+    },
+    {
+      "id": "multiprocessor_negative",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "8e8ce14c6d0ee96b2ddbe3a92e319a41ca03c65a44e9cc6ff71df1952e4daa8e",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Multiple processors remain multiple processors; no core-count substitution."
+    },
+    {
+      "id": "multiprocessor_negative",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "6de0a8ee6af6e2a80ddd928fdb8f0d94970f8bbd4e0777f013bec972b5c6214a",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Multiple processors remain multiple processors; no core-count substitution."
+    },
+    {
+      "id": "multicore_extra",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "fced6946d64c3cb8a831c12abc3d2affc57d3dee5984e9e23f55c2ccf290df2a",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Eight chip cores and only one device processor remain distinct."
+    },
+    {
+      "id": "multicore_extra",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "5d9adbfec529e1fe4e298a5dce5bda4c5d6032db41d6bae8f247501c10ed0af1",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Eight chip cores and only one device processor remain distinct."
+    },
+    {
+      "id": "multicore_extra",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "7e38e55736ce3f0bdd24d49552427547510ab3af7fa8cbaf576ab7bcca991533",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Eight chip cores and only one device processor remain distinct."
+    },
+    {
+      "id": "multicore_extra",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "75339bee6a59bb1da1dcf26723c41023271391c12f2c41e482e2b1609a2cf103",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Eight chip cores and only one device processor remain distinct."
+    },
+    {
+      "id": "multicore_extra",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "afe2ff44576b56f053f65587e1bde909de819bd7c4691d2d57a6062f1e85033e",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Eight chip cores and only one device processor remain distinct."
+    },
+    {
+      "id": "multicore_extra",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "85a1299875d2a43890d31000629bce4926308a3a7afeaf44e8272383fbc00e90",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Eight chip cores and only one device processor remain distinct."
+    },
+    {
+      "id": "multicore_thread_contrast",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "fff3cecf88816e1e607c8eca87bf6cf7c6c68b28eacf67ba9f999ed405c3bf21",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Core and thread tests remain distinct; the former is higher by two points."
+    },
+    {
+      "id": "multicore_thread_contrast",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "bdbb07f601f4690d432d2b5bb1916af893d3d5ed10b06cc26ed1f810132ad184",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Core and thread tests remain distinct; the former is higher by two points."
+    },
+    {
+      "id": "multicore_thread_contrast",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "82a78b03a4229da02669bcce592aa62df58a4e510473394a231fc96c1683b35f",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Core and thread tests remain distinct; the former is higher by two points."
+    },
+    {
+      "id": "multicore_thread_contrast",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "e2aa6a83b384b417eaf0e0af3937f9c760c7eb567824083eeb656d9ba6f14a73",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Core and thread tests remain distinct; the former is higher by two points."
+    },
+    {
+      "id": "multicore_thread_contrast",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "09becd9c86f209eeb6a19d3cdf02ce8eae1d5c0f88d08c3f6773045acde552dc",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Core and thread tests remain distinct; the former is higher by two points."
+    },
+    {
+      "id": "multicore_thread_contrast",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "5d0c41f68d615b7e862068310e407c49adf9c62a547459023ae3a4dd6a57aa85",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Core and thread tests remain distinct; the former is higher by two points."
+    },
+    {
+      "id": "multithread_negative",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "3d5418924e566c106283030fc282303aa01cbdc1fc88f7850b0668ae878c0d83",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Only the multithread result is reported; the multicore result is absent."
+    },
+    {
+      "id": "multithread_negative",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "d88c99a62660ce41091472c505c5ee8fc51d332423f564ab5719a7effa0e4c3d",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Only the multithread result is reported; the multicore result is absent."
+    },
+    {
+      "id": "multithread_negative",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "e14ca9e5299cc197763ad7bd256f280c641fcc287e4bb17d6fd21428bf28fba5",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Only the multithread result is reported; the multicore result is absent."
+    },
+    {
+      "id": "multithread_negative",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "e43ea32db7b3d4a8ed97245991efc8a61fff3472636f44d539da41f9d38819ab",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Only the multithread result is reported; the multicore result is absent."
+    },
+    {
+      "id": "multithread_negative",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "f67244fb296a99979248e5a79abbe0f8848bf279fadee3ae943204097282d9a5",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Only the multithread result is reported; the multicore result is absent."
+    },
+    {
+      "id": "multithread_negative",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "3e1fe3fd2fa35c30a8f83bbbd526e839ab97dc6e74c5175d0e214b97ed76d61e",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Only the multithread result is reported; the multicore result is absent."
+    },
+    {
+      "id": "mouse_pad_positive",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "8a9def56cfe7c8f143fca5ffc1114b6e0c0e65421196df130ee971aebf11f92e",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The sold item is a mouse pad."
+    },
+    {
+      "id": "mouse_pad_positive",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "d53ab61c4c677ccad0c5df98a5a6d1132499a6f30ab2cebcd0daf92e63fb23b0",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "The sold mouse pad is rendered as a mouse stand."
+    },
+    {
+      "id": "mouse_pad_positive",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "04f08f35333e8fc2de4efce48bd54f09a4d9fa793fe0e1a0a7140c285ef08531",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "The sold mouse pad is rendered as a mouse stand."
+    },
+    {
+      "id": "mouse_pad_positive",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "abef277e708be7857c6c5ff47bd9ed87eb9c9f502f97e553d86d75dd1c31541f",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The sold item is a mouse pad."
+    },
+    {
+      "id": "mouse_pad_positive",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "ed20459329434eeeb939ea0330cdf3708d893b3d24fdc7b28d254aa92a706e3b",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The sold item is a mouse pad."
+    },
+    {
+      "id": "mouse_pad_positive",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "1bf6352cafdac87cc12a0a1b8f7a66683a5106718e10e9f6002bac662ea1210b",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "The sold mouse pad is rendered as a mouse stand."
+    },
+    {
+      "id": "mouse_stand_negative",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "28998543f7f4790b0c3ce81e0b2c5dd395dd820f1b88c1cb7ef9f8c398e44a40",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The sold item remains a mouse stand."
+    },
+    {
+      "id": "mouse_stand_negative",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "25ec0f0710b19ef91024c80c909fd65eaaa0e29f2cc8c3eeba4ac49c9d6f8319",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The sold item remains a mouse stand."
+    },
+    {
+      "id": "mouse_stand_negative",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "9f058d12c23d9d0855d1b6896d5bedd2170cdcba586631f4814635ccab824fb8",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The sold item remains a mouse stand."
+    },
+    {
+      "id": "mouse_stand_negative",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "63938709cbbd6814c223231be4049c69d968d36adda853324014731628ac69ae",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The sold item remains a mouse stand."
+    },
+    {
+      "id": "mouse_stand_negative",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "824b1f0843f83c4a841cea4a497a209870f9c2faf2541c1c987af9f7fe1da9e6",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The sold item remains a mouse stand."
+    },
+    {
+      "id": "mouse_stand_negative",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "d42c456b1991f3b38fde1d3c3d8e2fe5a472e4a30df732f4aefc579cc5008e04",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The sold item remains a mouse stand."
+    },
+    {
+      "id": "mouse_pad_extra",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "36dbe4ce81eab9bc056f34e6259154214f2bdcf5961985b8ce9585e754d1c4c1",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The box contains a mouse pad and lacks a distinct mouse stand."
+    },
+    {
+      "id": "mouse_pad_extra",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "0707712ef58411422ea3e7dd7b7ec7c232a52b201963bc7f682f324971419925",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "The present pad becomes an unintelligible mouse item; the absent stand remains a stand."
+    },
+    {
+      "id": "mouse_pad_extra",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "0bb9e60f3457318e9c3ed51779578d1bf46d38627d1a65bd597ff988e1008d55",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "The present pad and absent stand are both rendered as stands, losing the pad identity."
+    },
+    {
+      "id": "mouse_pad_extra",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "643f73015dc9951031e73a17b17360f07d3598896b8425b5bee123b546d2c027",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The box contains a mouse pad and lacks a distinct mouse stand."
+    },
+    {
+      "id": "mouse_pad_extra",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "f32acbd81104d84cf73df81f31524040fedc0994570cbf6e5d0012817f014e10",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The box contains a mouse pad and lacks a distinct mouse stand."
+    },
+    {
+      "id": "mouse_pad_extra",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "66dc1b046a9f0569e8de0a87681d8a90939a8b399cc591d7b8f51b112a20c123",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "The present pad becomes an unintelligible mouse item; the absent stand remains a stand."
+    },
+    {
+      "id": "mouse_pad_price_contrast",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "81b663f2ee20940a115577bc4aec49dad6972d50c8a7a78cb7d50265c2f01d63",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The pad is twenty yuan cheaper than the separate stand."
+    },
+    {
+      "id": "mouse_pad_price_contrast",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "1495c5a7d10f5ce5c8e9597106f659918317275be2961337a99bad38a9367c50",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The pad is twenty yuan cheaper than the separate stand."
+    },
+    {
+      "id": "mouse_pad_price_contrast",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "dd457dbd1681be7188a040786ac2e6bfa117d8c9cc13e40a3f767899e3b3a866",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The pad is twenty yuan cheaper than the separate stand."
+    },
+    {
+      "id": "mouse_pad_price_contrast",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "fa0217dd80e73871657d2318c8b31554ebd6563d3f32245ce729a448a7b95c36",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The pad is twenty yuan cheaper than the separate stand."
+    },
+    {
+      "id": "mouse_pad_price_contrast",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "feac19681ed4d4cdcd6a13f659bf90a198334283dd02f100561215462d669f10",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The pad is twenty yuan cheaper than the separate stand."
+    },
+    {
+      "id": "mouse_pad_price_contrast",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "9d288354521ce03b9c5781905d4208f06762adde9a028c639d69792f656f85b2",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The pad is twenty yuan cheaper than the separate stand."
+    },
+    {
+      "id": "stand_only_new",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "c2ac72dfe351dad2ceb81324e67665f3a4733203926124867c5b0bfae506efc1",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "The stand stockout survives, but the prohibition says not to call it a mouse, not a pad."
+    },
+    {
+      "id": "stand_only_new",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "1586250c44edf2b50d0ca48396f061c644b4cfd8056c6e21f6097e7159079900",
+      "fact_verdict": "needs_review",
+      "severity": "uncertain",
+      "reason": "The stand stockout survives, but the forbidden pad name becomes a nonstandard mouse-pillow term."
+    },
+    {
+      "id": "stand_only_new",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "a50b020b2c175af426d14ac3291564dca228f39a497424b6fde5f9033e17fd5a",
+      "fact_verdict": "needs_review",
+      "severity": "uncertain",
+      "reason": "The stand stockout survives, but the forbidden pad name becomes a nonstandard mouse-pillow term."
+    },
+    {
+      "id": "stand_only_new",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "08f05f773ebc4d4e544c44739b5cb4b4931634ef6d28049402df71fc115c5089",
+      "fact_verdict": "needs_review",
+      "severity": "uncertain",
+      "reason": "The stand stockout survives, but the forbidden pad name becomes a mouse-pillow term."
+    },
+    {
+      "id": "stand_only_new",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "bf529e1de5e2a4ce1d20efdd4344fadeedc01609478fc81b64971cbc166015e3",
+      "fact_verdict": "needs_review",
+      "severity": "uncertain",
+      "reason": "The stand stockout survives, but the forbidden pad name becomes a mouse-pillow term."
+    },
+    {
+      "id": "stand_only_new",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "25e086ac112f77f432b586af6c36cd315a05fab3ac66cb103f6b2dd4fda4c668",
+      "fact_verdict": "needs_review",
+      "severity": "uncertain",
+      "reason": "The stand stockout survives, but the forbidden pad name becomes a nonstandard mouse-pillow term."
+    },
+    {
+      "id": "dual_cpu_each_eight_cores",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "f3d8a6f24186f1f1a70e09e8b5eddf5ffcfb48cca235a1996546c65c218ccc5b",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Two processors, each with eight cores, retain their count and attribution."
+    },
+    {
+      "id": "dual_cpu_each_eight_cores",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "9b0d8f471e4545be75639372053797dade07049f288a2e073dc6a213e2d41190",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Two processors, each with eight cores, retain their count and attribution."
+    },
+    {
+      "id": "dual_cpu_each_eight_cores",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "3e6a7841762919dcc08bfe94a176d904b3e3429b42e3f38d6efc6b04a4a3526c",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Two processors, each with eight cores, retain their count and attribution."
+    },
+    {
+      "id": "dual_cpu_each_eight_cores",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "34eb59bd5c3f27b3e6ffa32dbad74f2ce21bcb8c5105f5a59e9ef06899979550",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Two processors, each with eight cores, retain their count and attribution."
+    },
+    {
+      "id": "dual_cpu_each_eight_cores",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "b8ae99c5886abf49f6ba1d70fa4914c734a5e246a82c4931a91883681582e667",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Two processors, each with eight cores, retain their count and attribution."
+    },
+    {
+      "id": "dual_cpu_each_eight_cores",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "4142176683a1eb8a7d48d9d343ea853d2fda0d7bca95f98bcb4dedd2d09ef9ba",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Two processors, each with eight cores, retain their count and attribution."
+    },
+    {
+      "id": "stand_not_pad_in_box",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "b335ecb1ee02448af5f74e6bdc2b0fa547b63ab5b4f893c8acc9b0ed7e313515",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "The box first contains only a stand, then incorrectly says the stand is absent."
+    },
+    {
+      "id": "stand_not_pad_in_box",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "ceb1c2d415b6bea9c59bf8c18f3abc89b712d744aa37ea0198b0c05d4849a7fe",
+      "fact_verdict": "needs_review",
+      "severity": "uncertain",
+      "reason": "The stand is present and pad absent, but the pad is called a nonstandard mouse pillow."
+    },
+    {
+      "id": "stand_not_pad_in_box",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "3975602c777924abe97bcf3bc3859ef20a55e0b83b74b23803730f10089e43c4",
+      "fact_verdict": "needs_review",
+      "severity": "uncertain",
+      "reason": "The stand is present and pad absent, but the pad is called a nonstandard mouse pillow."
+    },
+    {
+      "id": "stand_not_pad_in_box",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "5d56023052773ff09f536e06ab4442d20dab575e7a421a2aac16d307b1325dbc",
+      "fact_verdict": "needs_review",
+      "severity": "uncertain",
+      "reason": "The stand is present and pad absent, but the pad is called a mouse pillow."
+    },
+    {
+      "id": "stand_not_pad_in_box",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "677eee54e812968548a20226d0f2a48ff436194983f4188fcdfc3550f8af0db3",
+      "fact_verdict": "needs_review",
+      "severity": "uncertain",
+      "reason": "The stand is present and pad absent, but the pad is called a nonstandard mouse pillow."
+    },
+    {
+      "id": "stand_not_pad_in_box",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "49804fe922be4a693edb87702afe49223ab5be15666a478ac34ea9d9ea669392",
+      "fact_verdict": "needs_review",
+      "severity": "uncertain",
+      "reason": "The stand is present and pad absent, but the pad is called a nonstandard mouse pillow."
+    },
+    {
+      "id": "pad_out_stand_available",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "5d0e5aa2d72662d009f9bd5d41e5b255cb058774424a393dfe6f7048951a7b79",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The pad is out of stock and the separate stand remains available."
+    },
+    {
+      "id": "pad_out_stand_available",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "9d3d8be01be911b0942b369f155206af77944a92815138bee988301018e59e92",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "Both stock statements refer to a mouse pad; the available stand identity is lost."
+    },
+    {
+      "id": "pad_out_stand_available",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "f484cd7c2069e2d92888a1d405e7936fc3af917d4ad86c9caf7b6286a94abbdb",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "Both stock statements refer to a mouse pad; the available stand identity is lost."
+    },
+    {
+      "id": "pad_out_stand_available",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "17f6924d732d0046ebfd874e439e91329896de4d17106da2fd75477f9be66dde",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The pad is out of stock and the separate stand remains available."
+    },
+    {
+      "id": "pad_out_stand_available",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "ce4946e534c4b9f9669c5ba4134c40fef217ab6834e9b14e7bcd3fdb298f6056",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The pad is out of stock and the separate stand remains available."
+    },
+    {
+      "id": "pad_out_stand_available",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "c63bfa07d6b5babf971dd4b7099707c51dcc942c58e460d277d8e02fa46b3cb6",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "Both stock statements refer to a mouse pad; the available stand identity is lost."
+    },
+    {
+      "id": "multicore_term_positive",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "cefb9ceb53c95e7638f41344b27d029acef61e92f370a691322be5e60eee8b92",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The multi-core test and ten-thousand score are retained."
+    },
+    {
+      "id": "multicore_term_positive",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "d6908e5d7a66b84c599b7d8d781fce4920dbbb29b66c24378cf17f5f07ecfa53",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "The multi-core test is changed to multithread testing; ten thousand points remain."
+    },
+    {
+      "id": "multicore_term_positive",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "9c36d6138b88287d39710038445f6bb9c00085086322adf5d19f23fe20f9109e",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "The multi-core test is changed to multithread testing; ten thousand points remain."
+    },
+    {
+      "id": "multicore_term_positive",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "b33de129744ca5ca7f8c4ee02843a8ae9c32ec9592aa72e256ed70430ac24c82",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The multi-core test and ten-thousand score are retained."
+    },
+    {
+      "id": "multicore_term_positive",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "7f28e1cc19572f014c4a568b3bf3485f7c7a73e64b23d80d8dba4d724dfe8449",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The multi-core test and ten-thousand score are retained."
+    },
+    {
+      "id": "multicore_term_positive",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "bbb22eae25c0cc2898bcf0ac33925f95ee899088f8cbeec6cc9a2474fe8d5df4",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "The multi-core test is changed to multithread testing; ten thousand points remain."
+    },
+    {
+      "id": "mouse_pad_term_positive",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "12c57ac5ba36be563867115598f3ccad59425c5e14f2de470412965ef6f10978",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "The sold mouse pad is rendered as a mouse stand."
+    },
+    {
+      "id": "mouse_pad_term_positive",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "88ad9f3721d6946c696fea297d2312b4e95f3529de94e0185c069f9989695f91",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The sold item is a mouse pad."
+    },
+    {
+      "id": "mouse_pad_term_positive",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "1dd2bca39d0bc481807bd0636179968af0e1dedd0fc20eaea4a6601441275055",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The sold item is a mouse pad."
+    },
+    {
+      "id": "mouse_pad_term_positive",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "606b218b262c1be816702c5e5fc421392b8a03acf7f0645937caf8d69b4d9e7e",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "The sold mouse pad is rendered as a mouse stand."
+    },
+    {
+      "id": "mouse_pad_term_positive",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "e47996d30858857896219702cfec045dbdf89e4c7cf1270afe710cf1eb21dbd6",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "The sold mouse pad is rendered as a mouse stand."
+    },
+    {
+      "id": "mouse_pad_term_positive",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "e878ab61f6bba8f9ecaed7311d8f5b660352ac47de428811e9cf9d73302710fa",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The sold item is a mouse pad."
+    },
+    {
+      "id": "stand_stockout_pad_available",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "436f84f9fe54ada21eca829220479e1dc59d47a8b57ad32a0624f6b2a3e3fae3",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The stand is out of stock while the separate pad remains available."
+    },
+    {
+      "id": "stand_stockout_pad_available",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "fb5b690dfde6347446d1934e4cc107445c4fc20fc980f1a57c50dbfcd9ed601f",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The stand is out of stock while the separate pad remains available."
+    },
+    {
+      "id": "stand_stockout_pad_available",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "67ea9b16b4a5b4d2757e30a8c68fae7243da1cc2e10e01c5b8d1879e3279a6dc",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The stand is out of stock while the separate pad remains available."
+    },
+    {
+      "id": "stand_stockout_pad_available",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "e2a84ecfc5614477b9e720683edcc1882a551e408f98c1af750f737db895a516",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The stand is out of stock while the separate pad remains available."
+    },
+    {
+      "id": "stand_stockout_pad_available",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "b7fa61162daac54c62c3ed16d2df8b58fe399bbb2c4c805dd881c9f49ef5496d",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The stand is out of stock while the separate pad remains available."
+    },
+    {
+      "id": "stand_stockout_pad_available",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "78241b478c6faecb38bbd36da2e7d417909165c5502112b10f766ba32274707c",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The stand is out of stock while the separate pad remains available."
+    },
+    {
+      "id": "pad_bought_stand_not_bought",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "67c787748dcb648306bfde6a5a08bbe966829592a0a1baaad4c36ccfd0821a2c",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The pad was bought and the separate stand was not bought."
+    },
+    {
+      "id": "pad_bought_stand_not_bought",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "5cf7b831db9dc6d7d1ba003aff0074b3dd9266db1dd3f9e2b99c329463f09196",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The pad was bought and the separate stand was not bought."
+    },
+    {
+      "id": "pad_bought_stand_not_bought",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "749a0c8b6a4d916e0e3e34858feef003affe02661ab8c23f6db39c0dcb7ee567",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The pad was bought and the separate stand was not bought."
+    },
+    {
+      "id": "pad_bought_stand_not_bought",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "7f81f5e0ec637b2db13df337a134606c7ebd933e506a4fa8708cbc15823b4640",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The pad was bought and the separate stand was not bought."
+    },
+    {
+      "id": "pad_bought_stand_not_bought",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "6a9619fb4725987e64afbaf821e245f618fc7eccd4e86952f37de56d3dea1094",
+      "fact_verdict": "needs_review",
+      "severity": "uncertain",
+      "reason": "The pad was bought, but the unbought stand becomes an unclear tracer item."
+    },
+    {
+      "id": "pad_bought_stand_not_bought",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "976c1b23279e32cc11d882ec1007858efdb8ec434881e067a66ef965ecce80e2",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The pad was bought and the separate stand was not bought."
+    },
+    {
+      "id": "stand_only_available",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "8676fdea566833c16db31ff2068f3f1a85db82a5864d314523a299a0305783a4",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Only the mouse stand is stated to remain available."
+    },
+    {
+      "id": "stand_only_available",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "2af312c3aee1e9afe5ae0a8040271f82f44e2f4864cf8507cf4658d6c2eae324",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Only the mouse stand is stated to remain available."
+    },
+    {
+      "id": "stand_only_available",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "1c8163424668752738b0ca23f1eae8eebcaf3e1a605b9f77d19aa2d91be3102e",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Only the mouse stand is stated to remain available."
+    },
+    {
+      "id": "stand_only_available",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "60b3a0b51bc4cd1cc2e2dbd5965d602c1fd6cd0f101ac6440411ad10bbe8eef4",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Only the mouse stand is stated to remain available."
+    },
+    {
+      "id": "stand_only_available",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "3b5ca9fadd88b7e5a20396c3cac29ded3faba4ebd823434e9388c33bab843f75",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Only the mouse stand is stated to remain available."
+    },
+    {
+      "id": "stand_only_available",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "a4c5e3c5f30b09f1b0254a0d6781987398918fac091590c846e3bdc3ef52a681",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "Only the mouse stand is stated to remain available."
+    },
+    {
+      "id": "reverse_availability_at_start",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "15735ca31fb98a76c406b916c3ea3f31dfbe164ba4287136d3f8d1560d662f84",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The stand remains available while the pad is out of stock."
+    },
+    {
+      "id": "reverse_availability_at_start",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "2c8ba3a7070922b5e8bd3325b2efb9a8ea22d8689666701d78136e2fd3e98d78",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The stand remains available while the pad is out of stock; one run has minor Russian grammar awkwardness."
+    },
+    {
+      "id": "reverse_availability_at_start",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "03d9f97f2a2ba85bfd335c74ad925f088a88015fecbcaf6a014d554183a9cea6",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The stand remains available while the pad is out of stock; one run has minor Russian grammar awkwardness."
+    },
+    {
+      "id": "reverse_availability_at_start",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "b9c58ccb4b768f363ebbca7050a6ae416b5b55ce33533a88322417f5b815eaa3",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The stand remains available while the pad is out of stock."
+    },
+    {
+      "id": "reverse_availability_at_start",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "838457bb6c53ba77b9e1fa6d3c292e956af7a15cf1f3de4c8d3c33bfdd434efe",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The stand remains available while the pad is out of stock."
+    },
+    {
+      "id": "reverse_availability_at_start",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "35e3e2950ad448c70b1e5cf7e268e5e245db7525c59a0df89c77413b0a73c860",
+      "fact_verdict": "pass",
+      "severity": "none",
+      "reason": "The stand remains available while the pad is out of stock; one run has minor Russian grammar awkwardness."
+    },
+    {
+      "id": "speaker_split_at_end",
+      "run": 1,
+      "variant": "occurrence",
+      "raw_response_sha256": "2d806c062c64952cb58feee7f79ec58fada98ec7c89386a363bed469d842cb4a",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "Speaker A has the pad stockout, but speaker B has a generic mouse place rather than the available stand."
+    },
+    {
+      "id": "speaker_split_at_end",
+      "run": 1,
+      "variant": "baseline",
+      "raw_response_sha256": "8d688e477f3de233c084b6e37d565069cf76952d94b5d54f2ede12cfe82b2c76",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "Speaker A attributes the stockout to a stand rather than the pad; speaker B still has a stand available."
+    },
+    {
+      "id": "speaker_split_at_end",
+      "run": 2,
+      "variant": "baseline",
+      "raw_response_sha256": "125da426f743887c8c652bae7783492a8eb5c7cb4f22ceb36585f6ecf43b182a",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "Speaker A attributes the stockout to a stand rather than the pad; speaker B still has a stand available."
+    },
+    {
+      "id": "speaker_split_at_end",
+      "run": 2,
+      "variant": "occurrence",
+      "raw_response_sha256": "bf76d4aaef2a4fac96dd5cb9b34985589b1699cedd78fa42d88118ae71b8b20b",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "Speaker A has the pad stockout, but speaker B has a generic mouse place rather than the available stand."
+    },
+    {
+      "id": "speaker_split_at_end",
+      "run": 3,
+      "variant": "occurrence",
+      "raw_response_sha256": "a02f9402fb0cfbd5d0169f6eaa3d5b8aaccf04af6233ed109867fbd45c1c74d4",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "Speaker A has the pad stockout, but speaker B has a generic mouse place rather than the available stand."
+    },
+    {
+      "id": "speaker_split_at_end",
+      "run": 3,
+      "variant": "baseline",
+      "raw_response_sha256": "33e468c41a3b0d6d886de94414a2f1d1eda1579ec04730ffb8d9b3e0f196c262",
+      "fact_verdict": "fail",
+      "severity": "major",
+      "reason": "Speaker A attributes the stockout to a stand rather than the pad; speaker B still has a stand available."
+    }
+  ]
+}

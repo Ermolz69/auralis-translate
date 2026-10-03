@@ -1,0 +1,24 @@
+{
+  "schema_version": 43,
+  "catalog_id": "zh-ru-development-regressions-v43",
+  "base_catalog_file": "catalog-v42.json",
+  "base_catalog_sha256": "33b60f8ef269676a80680eb4e35f9585bccf161a83cf22f5f6ab0968c64d116e",
+  "entries": [
+    {
+      "id": "REG-062",
+      "source_family": "authored_ASUS_development_controls",
+      "split": "known_development_not_holdout",
+      "category": "target_term_hint_contrast_referent_contamination",
+      "profile_scope": "Hy-MT2 7B Q4_K_M v8 plus rejected target-scoped and exact-occurrence experimental term transformers",
+      "expected_invariant": "A hint for one target noun must preserve every contrasting unhinted referent and its availability or negation.",
+      "severity": "major",
+      "pack_file": "reg-062-contrast-referent-contamination-v2.json",
+      "pack_sha256": "25477abbfa7c04b54159a374be7e79479241c822ff98a97d48b518b8177b6031",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 2,
+      "negative_control_count": 1,
+      "evidence_record": "eval/experiments/2026-10-03-reg-062-occurrence-terms-v1-result.md",
+      "last_outcome": "Exact-occurrence candidate repairs all twelve known positive observations, but loses the available stand in all three REG-062 reproducers and all three two-speaker controls; rejected, product v8 unchanged."
+    }
+  ]
+}
