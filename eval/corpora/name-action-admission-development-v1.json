@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "name-action-admission-development-v1",
+  "split": "development_unseen_by_NAME_01_model",
+  "provenance": "CC0-1.0 source-only authored controls by Codex, 3 October 2026. Facts are AI assertions, not independent human references. No inference or holdout.",
+  "cases": [
+    {"id":"reg063","target_id":6,"source":"小李，你几点能来？","context":["请把文件交给我。","小王，请来。"],"name":"小李","proposal":"Сяо Ли","fact":"Li arrival-time question, not file transfer.","position":"middle","seam":"batch"},
+    {"id":"teacher_arrival","target_id":16,"source":"王老师，您几点能到？","context":["请把窗户关上。","王老师，请坐。"],"name":"王老师","proposal":"учитель Ван","fact":"Teacher Wang arrival-time question, not window closing.","position":"middle","seam":"batch"},
+    {"id":"li_departure","target_id":17,"source":"小李，你几点要走？","context":["小李，你几点能来？","请把文件交给我。"],"name":"小李","proposal":"Сяо Ли","fact":"Li departure-time question, not arrival or file transfer.","position":"middle","seam":"batch"},
+    {"id":"enter_beginning","target_id":1,"source":"小李，请进。","context":["王老师，请坐。"],"name":"小李","proposal":"Сяо Ли","fact":"Invite Li to enter, not Teacher Wang to sit.","position":"beginning","seam":"scene"},
+    {"id":"friday_end","target_id":1024,"source":"小李，周五见。","context":["小王，周六见。"],"name":"小李","proposal":"Сяо Ли","fact":"Meet Li Friday, not Wang Saturday.","position":"end","seam":"scene"},
+    {"id":"negation_middle","target_id":512,"source":"小王，别走。","context":["小李，请走。"],"name":"小王","proposal":"Сяо Ван","fact":"Do not leave, addressed to Wang.","position":"middle","seam":"batch"},
+    {"id":"negative_arrival","target_id":18,"source":"小李，你明天不能来吗？","context":["小王，你明天能来吗？"],"name":"小李","proposal":"Сяо Ли","fact":"Negative arrival question about Li, not positive Wang question.","position":"middle","seam":"batch"},
+    {"id":"similar_ning","target_id":19,"source":"我叫王宁。","context":["我叫王凝。"],"name":"王宁","proposal":"Ван Нин","fact":"Self-introduction Wang Ning/宁 remains a separate entity.","position":"middle","seam":"batch"},
+    {"id":"similar_ning_other","target_id":20,"source":"我叫王凝。","context":["我叫王宁。"],"name":"王凝","proposal":"Ван Нин","fact":"Self-introduction Wang Ning/凝 remains separate despite identical Russian proposal.","position":"middle","seam":"batch"},
+    {"id":"teacher_scene_start","target_id":513,"source":"王老师，请进。","context":["王老师，请坐。"],"name":"王老师","proposal":"учитель Ван","fact":"New scene teacher enters; previous scene sitting is not target action.","position":"middle","seam":"scene","separate_context_scene":true},
+    {"id":"mr_scene_end","target_id":1023,"source":"王先生，请坐。","context":["王老师，请进。"],"name":"王先生","proposal":"господин Ван","fact":"Mr Wang sits; teacher address is not an alias assertion.","position":"end","seam":"scene"},
+    {"id":"do_not_give","target_id":21,"source":"小李，别把钥匙交给小王。","context":["小王，请把文件交给我。"],"name":"小李","proposal":"Сяо Ли","fact":"Li must not give keys to Wang; neither file transfer nor positive giving.","position":"middle","seam":"batch"},
+    {"id":"wang_question_end","target_id":1024,"source":"小王，你几点能来？","context":["小李，你几点要走？"],"name":"小王","proposal":"Сяо Ван","fact":"Wang arrival, not Li departure.","position":"end","seam":"batch"},
+    {"id":"teacher_negation_beginning","target_id":1,"source":"王老师，别关门。","context":["小李，请关窗户。"],"name":"王老师","proposal":"учитель Ван","fact":"Teacher must not close door; window action is neighboring context.","position":"beginning","seam":"scene"},
+    {"id":"no_name_arrival","target_id":22,"source":"你几点能来？","context":["小李，请进。","王老师，请坐。"],"name":null,"proposal":null,"fact":"Unnamed addressee arrival question; neighbors must not activate a proposal.","position":"middle","seam":"batch"},
+    {"id":"no_name_negation","target_id":1,"source":"别走。","context":["小王，请来。"],"name":null,"proposal":null,"fact":"Unnamed do-not-leave action.","position":"beginning","seam":"scene"},
+    {"id":"no_name_transfer","target_id":1024,"source":"请把文件交给我。","context":["小李，你几点能来？"],"name":null,"proposal":null,"fact":"Unnamed file-transfer request remains file transfer.","position":"end","seam":"scene"},
+    {"id":"book_false_name","target_id":23,"source":"小王子是一本书。","context":["小王，请进。"],"name":null,"proposal":null,"fact":"Book title is not an occurrence of the neighbor's personal name.","position":"middle","seam":"batch"},
+    {"id":"no_name_tomorrow","target_id":512,"source":"明天见。","context":["小李，周五见。"],"name":null,"proposal":null,"fact":"Tomorrow, with no target name.","position":"middle","seam":"batch"},
+    {"id":"no_name_departure","target_id":514,"source":"你几点要走？","context":["王老师，您几点能到？"],"name":null,"proposal":null,"fact":"Unnamed departure question, not teacher arrival.","position":"middle","seam":"scene","separate_context_scene":true}
+  ]
+}

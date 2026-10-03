@@ -18,6 +18,8 @@ mod managed_glossary;
 mod manual_command;
 mod manual_manifest;
 mod manual_translation;
+mod name_proposals_input;
+mod name_registry_command;
 mod offline_install_command;
 mod online_install_command;
 mod pause_command;
@@ -88,6 +90,9 @@ fn main() -> ExitCode {
                     | "status"
                     | "diagnostics"
                     | "audit-terms"
+                    | "name-registry"
+                    | "revise-name-proposals"
+                    | "translate-v8-names"
                     | "pause"
                     | "translate"
                     | "translate-vtt"

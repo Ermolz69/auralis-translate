@@ -83,6 +83,14 @@ pub(crate) fn load(
         ));
     }
     let scene = scene_map_input::load(&state_dir, run_id, &source)?;
+    let name_registry = if db.run_state(run_id)? == auralis_translation::RunState::Validated {
+        db.frozen_name_registry_for_run(run_id)?
+    } else {
+        db.name_registry_for_run(run_id)?
+    };
+    if name_registry.is_some() && profile.name_registry_policy_sha256.is_none() {
+        return Err("frozen name registry requires a pinned experimental profile".into());
+    }
     let policy = block_policy(&profile, scene.is_some())?;
     let terms = if matches!(profile.prompt_version, 5..=8) {
         terms_input::load(
@@ -147,6 +155,17 @@ pub(crate) fn load(
             policy,
             glossary.as_ref(),
         )?
+    };
+    let plan = if let Some(registry) = &name_registry {
+        plan.with_name_registry(
+            registry,
+            &scene
+                .as_ref()
+                .ok_or("name registry scene is missing")?
+                .end_ids,
+        )?
+    } else {
+        plan
     };
     if plan.blocks() != run.blocks
         || run.parser_version != plan.parser_version()

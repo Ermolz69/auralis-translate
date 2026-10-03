@@ -108,6 +108,17 @@ impl DocumentRunPlan {
         }
     }
 
+    pub fn with_name_registry(
+        self,
+        registry: &auralis_translation::NameRegistry,
+        scene_end_ids: &[SegmentId],
+    ) -> Result<Self, Box<dyn Error>> {
+        match self {
+            Self::Srt(plan) => Ok(Self::Srt(plan.with_name_registry(registry, scene_end_ids)?)),
+            Self::Vtt(_) => Err("experimental name registry requires SRT".into()),
+        }
+    }
+
     pub fn source_hash(&self) -> SourceHash {
         match self {
             Self::Srt(plan) => plan.source_hash(),

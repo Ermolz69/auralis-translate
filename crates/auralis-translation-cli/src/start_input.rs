@@ -7,6 +7,7 @@ pub(crate) struct StartInput<'a> {
     pub glossary_path: Option<&'a OsStr>,
     pub scene_map_path: Option<&'a OsStr>,
     pub terms_path: Option<&'a OsStr>,
+    pub name_proposals_path: Option<&'a OsStr>,
     pub endpoint: &'a OsStr,
     pub output_path: &'a OsStr,
     pub format: &'static str,

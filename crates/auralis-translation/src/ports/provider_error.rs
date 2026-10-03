@@ -5,6 +5,7 @@ pub enum ProviderError {
     Permanent(String),
     Transient(String),
     Storage(String),
+    NameProposalReviewRequired(String),
 }
 
 impl ProviderError {
@@ -16,9 +17,10 @@ impl ProviderError {
 impl fmt::Display for ProviderError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Self::Permanent(message) | Self::Transient(message) | Self::Storage(message) => {
-                message.fmt(f)
-            }
+            Self::Permanent(message)
+            | Self::Transient(message)
+            | Self::Storage(message)
+            | Self::NameProposalReviewRequired(message) => message.fmt(f),
         }
     }
 }
