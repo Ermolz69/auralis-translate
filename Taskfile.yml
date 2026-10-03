@@ -45,6 +45,11 @@ tasks:
     cmds:
       - node eval/scripts/check-source-name-registry-v1.mjs
       - node eval/scripts/check-regression-catalog-v42.mjs
+  eval:name-registry:audit:
+    desc: Audit frozen experiment source content against the committed candidate without inference
+    cmds:
+      - task: eval:name-registry:check
+      - node eval/scripts/check-source-name-registry-v1.mjs --audit-code
   eval:name-registry:report:
     desc: Extract immutable authored registry observations for separate AI assessment
     cmds:
@@ -1372,6 +1377,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v39.mjs
       - node eval/scripts/check-regression-catalog-v40.mjs
       - node eval/scripts/check-regression-catalog-v41.mjs
+      - node eval/scripts/check-regression-catalog-v42.mjs
       - task: eval:regression:reg060:check
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows

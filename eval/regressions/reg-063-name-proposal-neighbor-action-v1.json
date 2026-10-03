@@ -1,0 +1,20 @@
+{
+  "schema_version":1,"id":"REG-063","source_family":"authored_source_name_development",
+  "split":"known_development_not_holdout","category":"name_proposal_neighbor_action_copy",
+  "profile_scope":"Hy-MT2 1.8B Q4_K_M v8 plus rejected source-name-registry-v1 extension",
+  "expected_invariant":"A target-scoped name proposal must preserve the target person's arrival-time question and must not replace it with the neighboring file-transfer action.",
+  "severity":"major",
+  "minimal_reproducers":[{"id":"li_arrival_not_file_transfer","segment_id":6,"source":"小李，你几点能来？",
+    "source_context":["请把文件交给我。","小王，请来。"],"proposal":"Сяо Ли",
+    "expected_fact":"Li is asked at what time they can arrive; passing a file is not the target action.",
+    "baseline_candidate":"Бай Ли, в котором час ты придёшь?","registry_candidate":"Пожалуйста, передайте файл мне.",
+    "repetition":1,"registry_request_sha256":"42436ed569f17dcb43fe919c1ed72548bd7c819a85b05abb3c3b3b0ade4c6c08","registry_raw_response_sha256":"4dd44ba9a7274dbb8145af10490f2d02e455fa17e9146684bc3ad4226b8ec3be",
+    "checkpoint_accepted":true,"result_review_state":"needs_review"}],
+  "related_controls":[
+    {"id":"teacher_arrival_not_window","source":"王老师，您几点能到？","source_context":["请把窗户关上。","王老师，请坐。"],"expected_meaning":"Teacher Wang is asked their arrival time; no instruction to close a window.","model_runs":0},
+    {"id":"li_departure_not_arrival","source":"小李，你几点要走？","source_context":["小李，你几点能来？","请把文件交给我。"],"expected_meaning":"Li is asked when they will leave; do not change departure to arrival or file transfer.","model_runs":0}
+  ],
+  "negative_controls":[{"id":"arrival_without_target_name","source":"你几点能来？","source_context":["小李，请进。","王老师，请坐。"],"expected_meaning":"Ask the addressed person's arrival time; no target-name proposal may activate from neighboring names.","model_runs":0}],
+  "public_report_sha256":"191b9a1af432c95a94f5e415f24e6f71b346eefe65a043aef58a4784f80406c8","evidence_check":"task eval:name-registry:check",
+  "human_bilingual_review_count":0,"release_gate":"open","backlog_fix":"CTX-03 and EVAL-04 remain open; rejected extension requires a new source-aware candidate review. No long-file advancement."
+}

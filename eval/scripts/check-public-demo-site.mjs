@@ -62,6 +62,8 @@ assert(html.includes('id="voa-caption-screen"'));
 assert(html.includes('id="v7-batch-screen"'));
 assert(html.includes('2026-10-02-voa-mandarin-caption-inventory-result.md'));
 assert(current.includes('href="./history.html"'), 'Current state must link to history');
+assert(current.includes('id="name-registry-current"'));
+assert(html.includes('id="source-name-registry"'));
 assert(current.includes('2026-10-03-release-05-audit-attempt-v10.md'));
 assert(current.includes('https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'));
 assert(current.includes('<title>Auralis Translate — текущее состояние</title>'));
@@ -72,6 +74,8 @@ const currentMatch = current.match(/<script id="current-data" type="application\
 assert(currentMatch);
 const currentData = JSON.parse(currentMatch[1]);
 assert.deepEqual(currentData, await loadCurrentReport(root));
+assert.equal(currentData.name_registry.human_review_count,0);
+assert.equal(currentData.name_registry.long_file_run,false);
 assert.equal(currentData.audio.packet_count, 36_904);
 assert.equal(currentData.audio.packet_timeline_continuous, true);
 assert(current.includes('2026-10-02-sethlui-packet-boundary-result.md'));
