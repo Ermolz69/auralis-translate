@@ -1,4 +1,5 @@
 import { loadTargetTerms } from './target-terms-section.mjs';
+import { loadOccurrenceTerms } from './occurrence-terms-section.mjs';
 import { loadNameRegistry } from './name-registry-section.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -202,10 +203,12 @@ export async function loadCurrentReport(root) {
   assert.equal(paywall.selected_model, null);
   assert.deepEqual(paywall.variants.map(arm => arm.model), ['1b', '7b']);
   const targetTerms = await loadTargetTerms(root);
+  const occurrenceTerms = await loadOccurrenceTerms(root);
   const nameRegistry = await loadNameRegistry(root);
   return {
     name_registry:nameRegistry.summary,
     target_terms:targetTerms.summary,
+    occurrence_terms:occurrenceTerms.summary,
     schema_version: 1,
     as_of: '2026-10-03',
     release_decision: 'not_accepted',
