@@ -8,7 +8,7 @@ const labels = { done: 'Готово', ready: 'Можно начинать', in_
 const phases = [
   { title: 'База и план', prefixes: ['BASE', 'PLAN'] },
   { title: 'Данные и сравнения', prefixes: ['DATA', 'EVAL'] },
-  { title: 'Контекст и термины', prefixes: ['CTX', 'NAME'] },
+  { title: 'Контекст и термины', prefixes: ['CTX', 'NAME', 'TERM'] },
   { title: 'Куски и длинные файлы', prefixes: ['LONG'] },
   { title: 'Выбор и дообучение', prefixes: ['DECIDE', 'TUNE', 'PRECISION'] },
   { title: 'Доставка и релиз перевода', prefixes: ['HOST', 'RELEASE'] },

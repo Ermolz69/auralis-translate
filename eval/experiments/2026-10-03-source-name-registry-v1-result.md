@@ -139,6 +139,17 @@ was retried; all publication mutations/builds use the owned candidate checkout.
 The original checkout's unrelated 014 file and the REG-061 worktree are excluded.
 Remote push, Pages workflow and two live byte hashes remain pending below.
 
+Publication follow-up on 3 October 2026: the owner explicitly requested the
+merge. `9173efd..300fa35` fast-forwarded `main` without force. GitHub Pages
+[run 37110323407](https://github.com/Ermolz69/auralis-translate/actions/runs/37110323407)
+completed successfully at `300fa35ba82b3d9d4493be3c71a0d0fdaec61656`.
+`task site:live:check` found both published files byte-identical to the committed
+build: `index.html` SHA-256
+`f9d673eafd3aa8bea63e8d49fca2dd67f34f6ca5e1b770465349beefc4165cf0`
+(55,408 bytes), `history.html` SHA-256
+`d7f336a817627d8746afe391fa8730f57c6c06d2ff1921e9d8f7143b31108e4d`
+(1,172,442 bytes). This confirms publication, not language or audio quality.
+
 Historical catalog validation: `task eval:regression:catalog:check` in the owned
 checkout stopped at v19 because an older private ASUS request journal was not
 copied there. Its failure is retained in `catalog-check.log`. The same read-only
