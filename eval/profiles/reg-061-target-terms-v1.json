@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "id": "reg-061-target-terms-v1",
+  "status": "experimental_not_product",
+  "provenance": "ASUS manufacturer usage retained in reg-058-provisional-terms-controls-v1.json; no human approval",
+  "terms": [
+    {"source":"多核","target":"многоядерный","sense":"processor cores, not processor count or threads","affirmative_suffix":"^(测试|成绩|性能|处理器|跑分|基准|CPU)"},
+    {"source":"鼠标垫","target":"коврик для мыши","sense":"mouse pad, distinct from a mouse stand","affirmative_suffix":null}
+  ],
+  "clause_delimiters": "[，,。.!！?？;；\\n]",
+  "mention_pattern": "[‘’“”\"«»]|叫|称|翻译|说法|名字|命名|术语",
+  "negation_pattern": "不|没|无|非|别|勿|未|禁止",
+  "contrast_pattern": "但|而|却|比|只有|不是|没有|多处理器|多线程|鼠标支架",
+  "limits": {
+    "chats_per_arm":30,"preflights_per_arm":60,"per_chat_ms":120000,
+    "per_preflight_ms":15000,"readiness_ms":180000,"wall_ms":600000,
+    "retries":0,"context_tokens":2048,"response_tokens":256,"safety_tokens":64
+  }
+}

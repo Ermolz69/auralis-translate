@@ -1,0 +1,905 @@
+{
+  "schema_version": 1,
+  "experiment": "reg-061-target-terms-v1",
+  "expected": {
+    "pack": "fcba9d337e8bdf3dd0d431cf886917bcefa999a44d9eb30fcc5450a6147ebe09",
+    "controls": "b4cd39caae1bbac13847d9a5ee2cb8e21993882d0342cc710a9cb44957a9d344",
+    "prior": "9ae192177dd51611f49adf7699ca4fe9677a230dc74cbdedded2618040cc193c",
+    "runtime": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+    "regression": "24a4acafd6e7035fbc2fa58da39ead78aad069588b4a58344af5fd19e70e0499",
+    "policy": "025a822db1de5b91ce455236324876b5a4314328861241420016bc0adfc217cc"
+  },
+  "limits": {
+    "chats_per_arm": 30,
+    "preflights_per_arm": 60,
+    "per_chat_ms": 120000,
+    "per_preflight_ms": 15000,
+    "readiness_ms": 180000,
+    "wall_ms": 600000,
+    "retries": 0,
+    "context_tokens": 2048,
+    "response_tokens": 256,
+    "safety_tokens": 64
+  },
+  "sourceHashes": {
+    "eval/profiles/reg-061-target-terms-v1.json": "025a822db1de5b91ce455236324876b5a4314328861241420016bc0adfc217cc",
+    "eval/scripts/target-term-scope.mjs": "6e55f6d1a5b2826a63284d6e7cd334e31ab06b72743ff16fcfd1284601dff0f4",
+    "eval/scripts/probe-reg-061-target-terms-v1.mjs": "f1b5037ec6ba10484f8983717c2ed82bbc3b4d26ded2817ba1b053d262b0a1ac",
+    "eval/scripts/local-process.mjs": "86cdd5abdbb435f26408116f077515417297a02fdd5a223abb4f9d388fd9fb05",
+    "eval/scripts/runtime-sampler.mjs": "870726c41dc93fcb13beccc313c2229ac9c7b519ceb1827f67aa7bebf034f8b5",
+    "eval/experiments/2026-10-03-reg-061-target-terms-v1-plan.md": "878b0f1b3610cfd1f83147f97d83ae6eeb3b2ab79b6ca4987b8fa301065be67f"
+  },
+  "identities": {
+    "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+    "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+    "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+    "manifest_sha256": "a748572cea20fc46c53ced5c39c5b8e3fb85887c2e90d559a27fd41ea818f2bc",
+    "policy_sha256": "025a822db1de5b91ce455236324876b5a4314328861241420016bc0adfc217cc",
+    "implementation_sha256": "6e55f6d1a5b2826a63284d6e7cd334e31ab06b72743ff16fcfd1284601dff0f4"
+  },
+  "private_requests_sha256": "4c6ccd046f2c9053bfd1f9581055bc297ec3ec765a2e6384443814d2ecd1837b",
+  "rows": [
+    {
+      "case_id": "multicore_not_multiprocessor",
+      "cue_id": 143,
+      "control_id": "multicore_positive",
+      "role": "known_positive",
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_request_sha256": "478133f41df07e0639a208a1ee937d4f6ca589904026e5f735533b8cb0cf7a8f",
+      "request_sha256": "894b8d1c6fe0c33a8884e59020f5d8faf90de56a064e739181c45284f0e8be3a",
+      "resume_identity": "2f8a84245a1878725cacbac4d7b9c8c85c83641044ad902b2b1a1b2c43e32f65"
+    },
+    {
+      "case_id": "multicore_not_multiprocessor",
+      "cue_id": 143,
+      "control_id": "multicore_positive",
+      "role": "known_positive",
+      "variant": "scoped",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_request_sha256": "478133f41df07e0639a208a1ee937d4f6ca589904026e5f735533b8cb0cf7a8f",
+      "request_sha256": "574ffe7cb2db8c540215b018ea7e3ec9bb3ba196f516f5df1a6d685266aa07ec",
+      "resume_identity": "97eec3184758f69df5d860d7fbd3d10f27400a1c5ae2402faea53ff696408131"
+    },
+    {
+      "case_id": "multicore_not_multiprocessor",
+      "cue_id": 143,
+      "control_id": "multiprocessor_negative",
+      "role": "known_negative",
+      "variant": "scoped",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_request_sha256": "478133f41df07e0639a208a1ee937d4f6ca589904026e5f735533b8cb0cf7a8f",
+      "request_sha256": "7ff1ccb1c2716a63f663a4bacdff5273f2ed87c10ba81bf7c713aea98752d917",
+      "resume_identity": "1a1ccec372a414cc390a83d5d2c76eee3ba724acc8951de429d195fdd6908721"
+    },
+    {
+      "case_id": "multicore_not_multiprocessor",
+      "cue_id": 143,
+      "control_id": "multiprocessor_negative",
+      "role": "known_negative",
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_request_sha256": "478133f41df07e0639a208a1ee937d4f6ca589904026e5f735533b8cb0cf7a8f",
+      "request_sha256": "7ff1ccb1c2716a63f663a4bacdff5273f2ed87c10ba81bf7c713aea98752d917",
+      "resume_identity": "1a1ccec372a414cc390a83d5d2c76eee3ba724acc8951de429d195fdd6908721"
+    },
+    {
+      "case_id": "multicore_not_multiprocessor",
+      "cue_id": 143,
+      "control_id": "multicore_extra",
+      "role": "known_related_no_exact_term",
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_request_sha256": "478133f41df07e0639a208a1ee937d4f6ca589904026e5f735533b8cb0cf7a8f",
+      "request_sha256": "0797dbc0313b3ad8fa42971ffd9b9df35ccb7303fa92affc8a569d93c2fcc764",
+      "resume_identity": "b180ce3697aff4642f5b0be48a941db7de84a6458b4b9affcab2471901aba0a1"
+    },
+    {
+      "case_id": "multicore_not_multiprocessor",
+      "cue_id": 143,
+      "control_id": "multicore_extra",
+      "role": "known_related_no_exact_term",
+      "variant": "scoped",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_request_sha256": "478133f41df07e0639a208a1ee937d4f6ca589904026e5f735533b8cb0cf7a8f",
+      "request_sha256": "0797dbc0313b3ad8fa42971ffd9b9df35ccb7303fa92affc8a569d93c2fcc764",
+      "resume_identity": "b180ce3697aff4642f5b0be48a941db7de84a6458b4b9affcab2471901aba0a1"
+    },
+    {
+      "case_id": "multicore_not_multiprocessor",
+      "cue_id": 143,
+      "control_id": "multicore_thread_contrast",
+      "role": "new_positive_contrast",
+      "variant": "scoped",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_request_sha256": "478133f41df07e0639a208a1ee937d4f6ca589904026e5f735533b8cb0cf7a8f",
+      "request_sha256": "abfc2400c90b5d037f31dc201ac7201ebba280c2879e5de3727285baddee67ff",
+      "resume_identity": "8166534b9ac5d4f7981f5768a3ab3ab46ba9ead94394654076494268317d243a"
+    },
+    {
+      "case_id": "multicore_not_multiprocessor",
+      "cue_id": 143,
+      "control_id": "multicore_thread_contrast",
+      "role": "new_positive_contrast",
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_request_sha256": "478133f41df07e0639a208a1ee937d4f6ca589904026e5f735533b8cb0cf7a8f",
+      "request_sha256": "abfc2400c90b5d037f31dc201ac7201ebba280c2879e5de3727285baddee67ff",
+      "resume_identity": "8166534b9ac5d4f7981f5768a3ab3ab46ba9ead94394654076494268317d243a"
+    },
+    {
+      "case_id": "multicore_not_multiprocessor",
+      "cue_id": 143,
+      "control_id": "multithread_negative",
+      "role": "new_negation_contrast",
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_request_sha256": "478133f41df07e0639a208a1ee937d4f6ca589904026e5f735533b8cb0cf7a8f",
+      "request_sha256": "c69d273455205bb54864a1a0fa8285a939ff7a273ced1f27a0228047356e12bb",
+      "resume_identity": "5731f13e68bde024f10e367a221f7f6de24d441bfbbf626bce72f1ac53e27d96"
+    },
+    {
+      "case_id": "multicore_not_multiprocessor",
+      "cue_id": 143,
+      "control_id": "multithread_negative",
+      "role": "new_negation_contrast",
+      "variant": "scoped",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_request_sha256": "478133f41df07e0639a208a1ee937d4f6ca589904026e5f735533b8cb0cf7a8f",
+      "request_sha256": "c69d273455205bb54864a1a0fa8285a939ff7a273ced1f27a0228047356e12bb",
+      "resume_identity": "5731f13e68bde024f10e367a221f7f6de24d441bfbbf626bce72f1ac53e27d96"
+    },
+    {
+      "case_id": "mouse_pad_not_stand",
+      "cue_id": 267,
+      "control_id": "mouse_pad_positive",
+      "role": "known_positive",
+      "variant": "scoped",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_request_sha256": "6bdcee8ec40589669d2769353cc41c89e00771683b357eaad5c8b92604e21d67",
+      "request_sha256": "ed3e2e8b51d034faf7a2fea1de1c909381b47b254bb2052ebcc674ee9dc37636",
+      "resume_identity": "f38c6d7227006a021e6f20e0e3a1740adb10158f1b4d0986a4259ab1a10ca596"
+    },
+    {
+      "case_id": "mouse_pad_not_stand",
+      "cue_id": 267,
+      "control_id": "mouse_pad_positive",
+      "role": "known_positive",
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_request_sha256": "6bdcee8ec40589669d2769353cc41c89e00771683b357eaad5c8b92604e21d67",
+      "request_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "resume_identity": "304258574a8c2e81d0b0f558891702a14c3b02ecdc529eab59fd4439ac64e289"
+    },
+    {
+      "case_id": "mouse_pad_not_stand",
+      "cue_id": 267,
+      "control_id": "mouse_stand_negative",
+      "role": "known_negative",
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_request_sha256": "6bdcee8ec40589669d2769353cc41c89e00771683b357eaad5c8b92604e21d67",
+      "request_sha256": "f3b520dfb0bb388897904c78f2731e0b2068ea2c0c79a6501ac6b79462020154",
+      "resume_identity": "4a8016e0a9297eaf1f4dc17f7264f25869e2ecc4fb6c3e2d5d81820045770ec5"
+    },
+    {
+      "case_id": "mouse_pad_not_stand",
+      "cue_id": 267,
+      "control_id": "mouse_stand_negative",
+      "role": "known_negative",
+      "variant": "scoped",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_request_sha256": "6bdcee8ec40589669d2769353cc41c89e00771683b357eaad5c8b92604e21d67",
+      "request_sha256": "f3b520dfb0bb388897904c78f2731e0b2068ea2c0c79a6501ac6b79462020154",
+      "resume_identity": "4a8016e0a9297eaf1f4dc17f7264f25869e2ecc4fb6c3e2d5d81820045770ec5"
+    },
+    {
+      "case_id": "mouse_pad_not_stand",
+      "cue_id": 267,
+      "control_id": "mouse_pad_extra",
+      "role": "known_related_negation",
+      "variant": "scoped",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_request_sha256": "6bdcee8ec40589669d2769353cc41c89e00771683b357eaad5c8b92604e21d67",
+      "request_sha256": "6c7cfab7a273449bcaaaf7ff7f68b76a555964988c92fc0a9609dca6fb7f0326",
+      "resume_identity": "a3f94e6dcf979684053339fafa8f5767944f15be09090d3c2ea56a1654e158a2"
+    },
+    {
+      "case_id": "mouse_pad_not_stand",
+      "cue_id": 267,
+      "control_id": "mouse_pad_extra",
+      "role": "known_related_negation",
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_request_sha256": "6bdcee8ec40589669d2769353cc41c89e00771683b357eaad5c8b92604e21d67",
+      "request_sha256": "c37a880fadb3476e6d324dce76a38e943a1276edb1d4f4851bc9323bbb73bf7e",
+      "resume_identity": "a6ff353b3b8a22e69a0aa583e011879a52fccc62445917cd0c439e6c9947bc2c"
+    },
+    {
+      "case_id": "mouse_pad_not_stand",
+      "cue_id": 267,
+      "control_id": "mouse_pad_price_contrast",
+      "role": "new_price_contrast",
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_request_sha256": "6bdcee8ec40589669d2769353cc41c89e00771683b357eaad5c8b92604e21d67",
+      "request_sha256": "0724aeb0d8bf9fd2a4d12db7408df61d057c2f4f30a921c2328341c5a139393a",
+      "resume_identity": "1877d281d5039ff9ec8c16d6aeb5a5d17f1568a4fac9121ebc7c059f0d353d47"
+    },
+    {
+      "case_id": "mouse_pad_not_stand",
+      "cue_id": 267,
+      "control_id": "mouse_pad_price_contrast",
+      "role": "new_price_contrast",
+      "variant": "scoped",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_request_sha256": "6bdcee8ec40589669d2769353cc41c89e00771683b357eaad5c8b92604e21d67",
+      "request_sha256": "36c65b4904479da7c245019105964e6dc6b4e8ddb2a1f5a3068bc8e0a87ed5b3",
+      "resume_identity": "67333966d9ade0cd5fdbd8f5adc1bdc4ab5b9e0d1b968b31ac9def32c0691f26"
+    },
+    {
+      "case_id": "mouse_pad_not_stand",
+      "cue_id": 267,
+      "control_id": "stand_only_new",
+      "role": "new_negative_contrast",
+      "variant": "scoped",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "metalinguistic_mention"
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_request_sha256": "6bdcee8ec40589669d2769353cc41c89e00771683b357eaad5c8b92604e21d67",
+      "request_sha256": "90bc3b5cda13618a6e733665ed2de34fe9adf5d9594878b3d43483a8720d68aa",
+      "resume_identity": "193e838248dc3fed03088f8260e269f7a5f833927ebc984f3d0ce098cb814796"
+    },
+    {
+      "case_id": "mouse_pad_not_stand",
+      "cue_id": 267,
+      "control_id": "stand_only_new",
+      "role": "new_negative_contrast",
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "metalinguistic_mention"
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_request_sha256": "6bdcee8ec40589669d2769353cc41c89e00771683b357eaad5c8b92604e21d67",
+      "request_sha256": "90bc3b5cda13618a6e733665ed2de34fe9adf5d9594878b3d43483a8720d68aa",
+      "resume_identity": "193e838248dc3fed03088f8260e269f7a5f833927ebc984f3d0ce098cb814796"
+    },
+    {
+      "case_id": "multicore_not_multiprocessor",
+      "cue_id": 143,
+      "control_id": "dual_cpu_each_eight_cores",
+      "role": "new_REG061",
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_request_sha256": "478133f41df07e0639a208a1ee937d4f6ca589904026e5f735533b8cb0cf7a8f",
+      "request_sha256": "26914e9bb3dc777e1913c8b5ec644eea568727480137707afe25a47ebe1f334d",
+      "resume_identity": "5dcbaeaa14a7c181a052c31b38fa95baa581367a287c2126bad64049ecb662d6"
+    },
+    {
+      "case_id": "multicore_not_multiprocessor",
+      "cue_id": 143,
+      "control_id": "dual_cpu_each_eight_cores",
+      "role": "new_REG061",
+      "variant": "scoped",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_request_sha256": "478133f41df07e0639a208a1ee937d4f6ca589904026e5f735533b8cb0cf7a8f",
+      "request_sha256": "26914e9bb3dc777e1913c8b5ec644eea568727480137707afe25a47ebe1f334d",
+      "resume_identity": "5dcbaeaa14a7c181a052c31b38fa95baa581367a287c2126bad64049ecb662d6"
+    },
+    {
+      "case_id": "mouse_pad_not_stand",
+      "cue_id": 267,
+      "control_id": "stand_not_pad_in_box",
+      "role": "new_REG061",
+      "variant": "scoped",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause"
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_request_sha256": "6bdcee8ec40589669d2769353cc41c89e00771683b357eaad5c8b92604e21d67",
+      "request_sha256": "6f3cddd994e70c87f2d3e0b3adb5dd924a30fe073a88414f7b99fe7fc65d5f22",
+      "resume_identity": "b4963ee59a6f9de1c0a677617f795d6547aea392e676da21db57bcd8418285a8"
+    },
+    {
+      "case_id": "mouse_pad_not_stand",
+      "cue_id": 267,
+      "control_id": "stand_not_pad_in_box",
+      "role": "new_REG061",
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause"
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_request_sha256": "6bdcee8ec40589669d2769353cc41c89e00771683b357eaad5c8b92604e21d67",
+      "request_sha256": "6f3cddd994e70c87f2d3e0b3adb5dd924a30fe073a88414f7b99fe7fc65d5f22",
+      "resume_identity": "b4963ee59a6f9de1c0a677617f795d6547aea392e676da21db57bcd8418285a8"
+    },
+    {
+      "case_id": "mouse_pad_not_stand",
+      "cue_id": 267,
+      "control_id": "pad_out_stand_available",
+      "role": "new_REG061",
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_request_sha256": "6bdcee8ec40589669d2769353cc41c89e00771683b357eaad5c8b92604e21d67",
+      "request_sha256": "ca965d4b01bb1f9150d3d175c667a0ab266acd8521870f2020a9cf59239abf67",
+      "resume_identity": "8a14102819e328dd8a046123cb8608faf5d13d5f68368a2d6268b2cdfc10e29b"
+    },
+    {
+      "case_id": "mouse_pad_not_stand",
+      "cue_id": 267,
+      "control_id": "pad_out_stand_available",
+      "role": "new_REG061",
+      "variant": "scoped",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_request_sha256": "6bdcee8ec40589669d2769353cc41c89e00771683b357eaad5c8b92604e21d67",
+      "request_sha256": "61e22553d8007c288a9f082ab7841738c4c2c5e7a256b887899a4dc7b132e175",
+      "resume_identity": "7381cb47c313314a864942b5c189b86e02c7bc90b2288e979f58348770acf9d7"
+    },
+    {
+      "case_id": "multicore_not_multiprocessor",
+      "cue_id": 143,
+      "control_id": "multicore_term_positive",
+      "role": "new_REG061",
+      "variant": "scoped",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_request_sha256": "478133f41df07e0639a208a1ee937d4f6ca589904026e5f735533b8cb0cf7a8f",
+      "request_sha256": "192c7d4931d34cef757cc53b22c0aaf59dc92bad8e3580b292dc72db7a83fcfd",
+      "resume_identity": "63e809e0c75256e459aba68b6043bf4b696e3404c0dc9237873bbcce70c02239"
+    },
+    {
+      "case_id": "multicore_not_multiprocessor",
+      "cue_id": 143,
+      "control_id": "multicore_term_positive",
+      "role": "new_REG061",
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_request_sha256": "478133f41df07e0639a208a1ee937d4f6ca589904026e5f735533b8cb0cf7a8f",
+      "request_sha256": "ca361ce9605321d323b9578f0e734180153b5248f9f4287227464d509376ba5c",
+      "resume_identity": "6c137d0ab37422d6d39040845621ce037d75047d52c5623d8f7d0ea3c2454754"
+    },
+    {
+      "case_id": "mouse_pad_not_stand",
+      "cue_id": 267,
+      "control_id": "mouse_pad_term_positive",
+      "role": "new_REG061",
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_request_sha256": "6bdcee8ec40589669d2769353cc41c89e00771683b357eaad5c8b92604e21d67",
+      "request_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "resume_identity": "304258574a8c2e81d0b0f558891702a14c3b02ecdc529eab59fd4439ac64e289"
+    },
+    {
+      "case_id": "mouse_pad_not_stand",
+      "cue_id": 267,
+      "control_id": "mouse_pad_term_positive",
+      "role": "new_REG061",
+      "variant": "scoped",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_request_sha256": "6bdcee8ec40589669d2769353cc41c89e00771683b357eaad5c8b92604e21d67",
+      "request_sha256": "ed3e2e8b51d034faf7a2fea1de1c909381b47b254bb2052ebcc674ee9dc37636",
+      "resume_identity": "f38c6d7227006a021e6f20e0e3a1740adb10158f1b4d0986a4259ab1a10ca596"
+    }
+  ]
+}

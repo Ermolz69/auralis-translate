@@ -2342,6 +2342,43 @@ tasks:
     desc: Verify manufacturer term experiment lineage, raw responses and tokenizer evidence
     cmds:
       - node eval/scripts/check-reg-058-provisional-terms-v1.mjs
+  test:target-terms:
+    desc: Verify conservative target term scope, exact v8 bytes, identities and response rejection
+    cmds:
+      - node --test --test-isolation=none eval/scripts/tests/target-term-scope.test.mjs
+  eval:regression:reg061:freeze:
+    desc: Freeze all thirty exact REG-061 requests and identities before model calls
+    env:
+      AURALIS_TEST_GGUF_LARGE: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - task: test:target-terms
+      - node --check eval/scripts/probe-reg-061-target-terms-v1.mjs
+      - node eval/scripts/probe-reg-061-target-terms-v1.mjs --freeze
+  eval:regression:reg061:preflight:
+    desc: Verify the immutable REG-061 freeze without model calls
+    env:
+      AURALIS_TEST_GGUF_LARGE: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - node eval/scripts/probe-reg-061-target-terms-v1.mjs --preflight
+  eval:regression:reg061:probe:
+    desc: Run the one permitted REG-061 paired real-model attempt with no retries
+    env:
+      AURALIS_TEST_GGUF_LARGE: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+    cmds:
+      - task: eval:regression:reg061:preflight
+      - node eval/scripts/probe-reg-061-target-terms-v1.mjs
+  eval:regression:reg061:report:
+    desc: Extract and verify the retained source-free REG-061 paired report
+    cmds:
+      - node eval/scripts/check-reg-061-target-terms-v1.mjs --write
+  eval:regression:reg061:check:
+    desc: Verify frozen scope, raw requests and responses, tokenizer evidence and separate review
+    cmds:
+      - task: test:target-terms
+      - node eval/scripts/check-reg-061-target-terms-v1.mjs
   eval:regression:reg060:check:
     desc: Verify the invalid REG-058 harness and four target-field regression controls
     cmds:
