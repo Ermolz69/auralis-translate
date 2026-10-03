@@ -2403,6 +2403,10 @@ tasks:
     desc: Verify conservative target term scope, exact v8 bytes, identities and response rejection
     cmds:
       - node --test --test-isolation=none eval/scripts/tests/target-term-scope.test.mjs
+  test:term-occurrences:
+    desc: Verify exact target occurrence hints, contrast referents and v8 byte fallback
+    cmds:
+      - node --test --test-isolation=none eval/scripts/tests/occurrence-term-scope.test.mjs
   eval:regression:reg061:freeze:
     desc: Freeze all thirty exact REG-061 requests and identities before model calls
     env:
@@ -2448,6 +2452,40 @@ tasks:
       - task: eval:regression:reg061:check
       - node --check eval/scripts/audit-reg-061-evidence-v1.mjs
       - node eval/scripts/audit-reg-061-evidence-v1.mjs --record
+  eval:regression:reg062:freeze:
+    desc: Freeze one exact REG-062 occurrence candidate and 120 paired requests before model calls
+    cmds:
+      - task: test:term-occurrences
+      - node --check eval/scripts/build-reg-062-occurrences-v1.mjs
+      - node --check eval/scripts/probe-reg-062-occurrences-v1.mjs
+      - node eval/scripts/check-reg-062-plan-v1.mjs
+      - node eval/scripts/probe-reg-062-occurrences-v1.mjs --freeze
+  eval:regression:reg062:plan-check:
+    desc: Verify the twenty-case paired REG-062 plan without writing or calling a model
+    cmds:
+      - task: test:term-occurrences
+      - node --check eval/scripts/build-reg-062-occurrences-v1.mjs
+      - node --check eval/scripts/probe-reg-062-occurrences-v1.mjs
+      - node --check eval/scripts/check-reg-062-occurrences-v1.mjs
+      - node eval/scripts/check-reg-062-plan-v1.mjs
+  eval:regression:reg062:preflight:
+    desc: Verify the immutable REG-062 request and identity freeze without model calls
+    cmds:
+      - node eval/scripts/probe-reg-062-occurrences-v1.mjs --preflight
+  eval:regression:reg062:probe:
+    desc: Run the one permitted REG-062 paired model screen with no retries
+    cmds:
+      - task: eval:regression:reg062:preflight
+      - node eval/scripts/probe-reg-062-occurrences-v1.mjs --probe
+  eval:regression:reg062:report:
+    desc: Extract a public source-aware REG-062 development report from retained raw replies
+    cmds:
+      - node eval/scripts/check-reg-062-occurrences-v1.mjs --write
+  eval:regression:reg062:check:
+    desc: Verify REG-062 freeze, raw responses, resource records and review hashes
+    cmds:
+      - task: test:term-occurrences
+      - node eval/scripts/check-reg-062-occurrences-v1.mjs
   eval:regression:reg060:check:
     desc: Verify the invalid REG-058 harness and four target-field regression controls
     cmds:

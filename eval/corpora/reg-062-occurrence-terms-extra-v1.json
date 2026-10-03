@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "split": "authored_development_not_holdout",
+  "cases": [
+    {
+      "id": "reverse_availability_at_start",
+      "source": "鼠标支架仍有现货，鼠标垫缺货。",
+      "role": "reversed_contrast_beginning_seam",
+      "cue_id": 1,
+      "source_facts": ["mouse stand remains available", "mouse pad is out of stock", "stand and pad are distinct"]
+    },
+    {
+      "id": "speaker_split_at_end",
+      "source": "甲说鼠标垫缺货，乙说鼠标支架仍有现货。",
+      "role": "distinct_speakers_end_seam",
+      "cue_id": 268,
+      "source_facts": ["speaker A says mouse pad is out of stock", "speaker B says mouse stand remains available", "stand and pad are distinct"]
+    }
+  ]
+}

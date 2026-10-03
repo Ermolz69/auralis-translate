@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "id": "reg-062-occurrence-terms-v1",
+  "status": "experimental_not_product",
+  "provenance": "REG-058 authored ASUS source usages; terms remain provisional without human approval",
+  "terms": [
+    {
+      "source": "多核",
+      "target": "многоядерный",
+      "sense": "processor cores, not processor count or threads",
+      "affirmative_suffix": "^(测试|成绩|性能|处理器|跑分|基准|CPU)",
+      "distinct_referents": [
+        {"source":"多线程","sense":"multi-threading, not core count"},
+        {"source":"多处理器","sense":"multiple processors, not core count"}
+      ]
+    },
+    {
+      "source": "鼠标垫",
+      "target": "коврик для мыши",
+      "sense": "mouse pad",
+      "affirmative_suffix": null,
+      "distinct_referents": [
+        {"source":"鼠标支架","sense":"mouse stand, a separate accessory"}
+      ]
+    }
+  ],
+  "clause_delimiters": "[，,。.!！?？;；\\n]",
+  "mention_pattern": "[‘’“”\"«»]|叫|称|翻译|说法|名字|命名|术语",
+  "negation_pattern": "不|没|无|非|别|勿|未|禁止",
+  "contrast_pattern": "但|而|却|比|只有|不是|没有|多处理器|多线程|鼠标支架",
+  "limits": {
+    "development_cues": 20,
+    "paired_runs_per_arm": 3,
+    "maximum_chats": 120,
+    "maximum_preflights": 240,
+    "per_chat_ms": 120000,
+    "per_preflight_ms": 15000,
+    "readiness_ms": 180000,
+    "wall_ms": 900000,
+    "retries": 0,
+    "context_tokens": 2048,
+    "response_tokens": 256,
+    "safety_tokens": 64
+  }
+}
