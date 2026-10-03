@@ -1,6 +1,55 @@
 version: "3"
 
 tasks:
+  test:name-registry:
+    desc: Verify source name occurrences, scene isolation, SQLite revisions and recovery
+    env:
+      CARGO_TARGET_DIR: '{{.ROOT_DIR}}/.cache/build/name-registry'
+    cmds:
+      - cargo test --offline -p auralis-translation --test name_registry
+      - cargo test --offline -p auralis-translation-formats --test srt_name_registry
+      - cargo test --offline -p auralis-translation-sqlite --test name_registry
+      - cargo test --offline -p auralis-translation-llamacpp --test name_registry
+      - cargo test --offline -p auralis-translation-cli --test name_registry
+  name-registry:check:
+    desc: Verify the registry in an isolated Cargo target directory
+    env:
+      CARGO_TARGET_DIR: '{{.ROOT_DIR}}/.cache/build/name-registry'
+    cmds:
+      - task fmt
+      - task lint
+      - task test
+  name-registry:build:
+    desc: Build the experimental registry CLI without sharing parallel build artifacts
+    env:
+      CARGO_TARGET_DIR: '{{.ROOT_DIR}}/.cache/build/name-registry'
+    cmds:
+      - cargo build --offline -p auralis-translation-cli
+  eval:name-registry:freeze:
+    desc: Freeze the bounded source-only paired v8 name experiment before inference
+    cmds:
+      - task: name-registry:build
+      - node --check eval/scripts/probe-source-name-registry-v1.mjs
+      - node eval/scripts/probe-source-name-registry-v1.mjs --freeze
+  eval:name-registry:preflight:
+    desc: Verify frozen source, profiles, registry policy, model and executable hashes
+    cmds:
+      - node eval/scripts/probe-source-name-registry-v1.mjs --preflight
+  eval:name-registry:probe:
+    desc: Run one bounded paired real-model registry experiment with no retries
+    cmds:
+      - task: eval:name-registry:preflight
+      - node eval/scripts/probe-source-name-registry-v1.mjs
+  eval:name-registry:check:
+    desc: Verify registry experiment raw journals, checkpoints, hashes and review decision
+    cmds:
+      - node eval/scripts/check-source-name-registry-v1.mjs
+      - node eval/scripts/check-regression-catalog-v42.mjs
+  eval:name-registry:report:
+    desc: Extract immutable authored registry observations for separate AI assessment
+    cmds:
+      - node --check eval/scripts/check-source-name-registry-v1.mjs
+      - node eval/scripts/check-source-name-registry-v1.mjs --write
   eval:data:commons:wikipedia-lesson:caption:preflight:
     desc: Verify bounded Commons Chinese Wikipedia lesson caption request
     cmds:

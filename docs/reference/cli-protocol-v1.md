@@ -19,6 +19,16 @@ Other development commands return a usage error in machine mode instead of
 mixing text with structured output. A CLI-owned translation runtime remains
 separate work.
 
+The separately versioned [name registry experiment](../architecture/016-source-name-registry.md)
+adds positional `translate-v8-names SOURCE STATE_DIR PROFILE SCENE_MAP PROPOSALS
+SERVER_URL OUTPUT`, `name-registry STATE_DIR TRANSLATION_ID`, and
+`revise-name-proposals STATE_DIR TRANSLATION_ID PROPOSALS`. These three commands
+also support the existing JSON/JSONL output flags; they are not new `--request`
+enum variants. Name proposals have algorithm/model provenance and remain
+`needs_review`. Resume reads the frozen SQLite binding, rejects a changed head
+and never reloads an external proposal file. Old result export/edit remains
+available under its original identity; new decisions require a new run.
+
 Use existing positional arguments or `--request REQUEST.json` after the output
 flag. The UTF-8 request is a versioned object with a `request` object containing
 the command and named fields. Unknown fields and unsupported versions are errors.

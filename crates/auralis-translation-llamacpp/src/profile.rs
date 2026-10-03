@@ -49,6 +49,12 @@ pub struct ModelProfile {
     pub strict_source_times: bool,
     #[serde(default)]
     pub prompt_template_sha256: Option<String>,
+    #[serde(default)]
+    pub name_registry_policy_sha256: Option<String>,
+    #[serde(default)]
+    pub max_name_proposals_entries: usize,
+    #[serde(default)]
+    pub max_name_proposals_bytes: usize,
     #[serde(default = "default_target_segments")]
     pub target_segments_per_block: usize,
     #[serde(default)]
@@ -179,6 +185,22 @@ impl ModelProfile {
         };
         if self.prompt_template_sha256.as_deref() != expected_template.as_deref() {
             return Err(ProfileError::Invalid("prompt template identity differs"));
+        }
+        if let Some(hash) = &self.name_registry_policy_sha256 {
+            if hash != &crate::name_registry_policy_sha256()
+                || self.prompt_version != 8
+                || self.model_file_bytes.is_none()
+                || !(1..=MAX_APPROVED_TERMS_ENTRIES).contains(&self.max_name_proposals_entries)
+                || !(1..=MAX_APPROVED_TERMS_BYTES).contains(&self.max_name_proposals_bytes)
+            {
+                return Err(ProfileError::Invalid(
+                    "name registry policy or limits differ",
+                ));
+            }
+        } else if self.max_name_proposals_entries != 0 || self.max_name_proposals_bytes != 0 {
+            return Err(ProfileError::Invalid(
+                "name proposal limits require a pinned policy",
+            ));
         }
         if !(1..=MAX_TARGET_SEGMENTS).contains(&self.target_segments_per_block)
             || self.context_before_segments > MAX_CONTEXT_SEGMENTS

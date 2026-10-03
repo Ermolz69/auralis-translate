@@ -95,6 +95,7 @@ pub(crate) fn dispatch(
                     glossary_path: None,
                     scene_map_path: None,
                     terms_path: None,
+                    name_proposals_path: None,
                     endpoint,
                     output_path: output,
                     format: DocumentRunPlan::SRT_FORMAT,
@@ -111,6 +112,7 @@ pub(crate) fn dispatch(
                     glossary_path: None,
                     scene_map_path: None,
                     terms_path: None,
+                    name_proposals_path: None,
                     endpoint,
                     output_path: output,
                     format: DocumentRunPlan::VTT_FORMAT,
@@ -134,6 +136,7 @@ pub(crate) fn dispatch(
                 glossary_path: Some(glossary),
                 scene_map_path: None,
                 terms_path: None,
+                name_proposals_path: None,
                 endpoint,
                 output_path: output,
                 format: DocumentRunPlan::SRT_FORMAT,
@@ -156,6 +159,7 @@ pub(crate) fn dispatch(
                 glossary_path: None,
                 scene_map_path: Some(scene_map),
                 terms_path: None,
+                name_proposals_path: None,
                 endpoint,
                 output_path: output,
                 format: DocumentRunPlan::SRT_FORMAT,
@@ -179,6 +183,37 @@ pub(crate) fn dispatch(
                 glossary_path: None,
                 scene_map_path: Some(scene_map),
                 terms_path: Some(terms),
+                name_proposals_path: None,
+                endpoint,
+                output_path: output,
+                format: DocumentRunPlan::SRT_FORMAT,
+            },
+            reporter,
+        ),
+        [command, state_dir, translation_id] if command == "name-registry" => {
+            crate::name_registry_command::run(state_dir, translation_id, None, reporter)
+        }
+        [command, state_dir, translation_id, proposals] if command == "revise-name-proposals" => {
+            crate::name_registry_command::run(state_dir, translation_id, Some(proposals), reporter)
+        }
+        [
+            command,
+            source,
+            state_dir,
+            profile,
+            scene_map,
+            proposals,
+            endpoint,
+            output,
+        ] if command == "translate-v8-names" => durable_start::run(
+            StartInput {
+                source_path: source,
+                state_dir,
+                profile_path: profile,
+                glossary_path: None,
+                scene_map_path: Some(scene_map),
+                terms_path: None,
+                name_proposals_path: Some(proposals),
                 endpoint,
                 output_path: output,
                 format: DocumentRunPlan::SRT_FORMAT,

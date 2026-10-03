@@ -21,6 +21,13 @@ impl LlamaCppProvider {
         batch: &TranslationBatch,
         control: Option<(&dyn RunControl, RunId)>,
     ) -> Result<(ProviderResponse, Vec<TranslationDiagnostic>), ProviderError> {
+        if batch.name_registry_identity().is_some()
+            && self.profile.name_registry_policy_sha256.is_none()
+        {
+            return Err(ProviderError::Permanent(
+                "name registry requires a pinned experimental profile".into(),
+            ));
+        }
         if batch.targets().len() > self.profile.target_segments_per_block {
             return Err(ProviderError::Permanent(
                 "v7 batch exceeds profile target limit".into(),
@@ -141,11 +148,19 @@ impl LlamaCppProvider {
             .map(|slot| slot.segment.id().get())
             .unwrap_or(first_id);
         loop {
-            let prompt = if self.profile.prompt_version == 8 {
+            let mut prompt = if self.profile.prompt_version == 8 {
                 crate::contextual_prompt_v8::render(slots, &context, batch.approved_terms())?
             } else {
                 contextual_prompt_v7::render(slots, &context, batch.approved_terms())
             };
+            if batch.name_registry_identity().is_some() {
+                prompt = crate::render_v8_name_proposals(
+                    &prompt,
+                    batch.name_entities(),
+                    self.profile.max_name_proposals_entries,
+                    self.profile.max_name_proposals_bytes,
+                )?;
+            }
             if self.rendered_chat_tokens_with_format(
                 &prompt,
                 contextual_prompt_v7::response_format(slots.len()),

@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "source-name-registry-development-v1",
+  "split": "development",
+  "provenance": "Authored Chinese source-only controls by Codex, 2026-10-03; no Russian reference translations consulted.",
+  "rights": "CC0-1.0 authored fixture",
+  "scene_end_ids": [12, 14],
+  "cues": [
+    {"id": 1, "source": "小李，请进。", "category": "repeat_beginning"},
+    {"id": 2, "source": "王老师，请坐。", "category": "address"},
+    {"id": 3, "source": "我叫王宁。", "category": "similar_person_a"},
+    {"id": 4, "source": "我叫王凝。", "category": "similar_person_b"},
+    {"id": 5, "source": "请把文件交给我。", "category": "context_only_name"},
+    {"id": 6, "source": "小李，你几点能来？", "category": "repeat_middle_question"},
+    {"id": 7, "source": "小王，请来。", "category": "address_alias_unresolved"},
+    {"id": 8, "source": "小王子是一本书。", "category": "false_substring"},
+    {"id": 9, "source": "明天见。", "category": "context_only_name"},
+    {"id": 10, "source": "王老师，你明天来吗？", "category": "address_repeat_question"},
+    {"id": 11, "source": "小李，周五见。", "category": "repeat_end"},
+    {"id": 12, "source": "小王，别走。", "category": "negation"},
+    {"id": 13, "source": "王老师，请进。", "category": "scene_separated_same_surface"},
+    {"id": 14, "source": "王先生，请坐。", "category": "different_address"}
+  ],
+  "proposals": [
+    {"entity_id": 1, "chinese": "小李", "scene_index": 0, "russian": "Сяо Ли", "origin": "model", "evidence_id": "source-only-codex-name-proposal-v1"},
+    {"entity_id": 2, "chinese": "小王", "scene_index": 0, "russian": "Сяо Ван", "origin": "model", "evidence_id": "source-only-codex-name-proposal-v1"},
+    {"entity_id": 3, "chinese": "王凝", "scene_index": 0, "russian": "Ван Нин", "origin": "model", "evidence_id": "source-only-codex-name-proposal-v1"},
+    {"entity_id": 4, "chinese": "王宁", "scene_index": 0, "russian": "Ван Нин", "origin": "model", "evidence_id": "source-only-codex-name-proposal-v1"},
+    {"entity_id": 5, "chinese": "王老师", "scene_index": 0, "russian": "учитель Ван", "origin": "model", "evidence_id": "source-only-codex-name-proposal-v1"},
+    {"entity_id": 6, "chinese": "王先生", "scene_index": 1, "russian": "господин Ван", "origin": "model", "evidence_id": "source-only-codex-name-proposal-v1"},
+    {"entity_id": 7, "chinese": "王老师", "scene_index": 1, "russian": "учитель Ван", "origin": "model", "evidence_id": "source-only-codex-name-proposal-v1"}
+  ]
+}

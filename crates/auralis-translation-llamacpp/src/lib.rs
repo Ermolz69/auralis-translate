@@ -42,3 +42,5 @@ pub use asset_download::{
     download_release_assets_with_observer, download_selected_release_asset,
     release_download_client,
 };
+mod name_registry_prompt;
+pub use name_registry_prompt::{name_registry_policy_sha256, render_v8_name_proposals};

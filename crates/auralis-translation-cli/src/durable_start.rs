@@ -26,6 +26,7 @@ pub(crate) fn run(
         glossary_path,
         scene_map_path,
         terms_path,
+        name_proposals_path,
         endpoint,
         output_path,
         format,
@@ -90,6 +91,28 @@ pub(crate) fn run(
         TranslationId::new(Uuid::new_v4()).ok_or("failed to create translation ID")?;
     let run_id = RunId::new(Uuid::new_v4()).ok_or("failed to create run ID")?;
     let pair = LanguagePair::new(LanguageCode::Chinese, LanguageCode::Russian)?;
+    let name_registry = if let Some(path) = name_proposals_path {
+        if profile.name_registry_policy_sha256.is_none() || profile.prompt_version != 8 {
+            return Err("name registry requires a pinned v8 experimental profile".into());
+        }
+        let scene = scene_snapshot
+            .as_ref()
+            .ok_or("name registry requires a scene map")?;
+        let segments = auralis_translation_formats::inspect(&source)?.source_segments()?;
+        let scenes = auralis_translation::SceneMap::new(&segments, &scene.end_ids)?;
+        let registry = auralis_translation::extract_source_names(
+            translation_id,
+            auralis_translation::SourceHash::digest(&source),
+            &segments,
+            &scenes,
+        )?;
+        Some((
+            crate::name_proposals_input::read(Path::new(path), &registry, registry.revision())?,
+            scenes,
+        ))
+    } else {
+        None
+    };
     let block_policy = block_policy(&profile, scene_snapshot.is_some())?;
     let plan = if let (Some(scene), Some(terms)) = (&scene_snapshot, &terms_snapshot) {
         DocumentRunPlan::with_scene_map_and_terms(
@@ -124,6 +147,18 @@ pub(crate) fn run(
             block_policy,
             glossary_snapshot.as_ref().map(|(glossary, _, _)| glossary),
         )?
+    };
+
+    let plan = if let Some((registry, _)) = &name_registry {
+        plan.with_name_registry(
+            registry,
+            &scene_snapshot
+                .as_ref()
+                .ok_or("name registry scene is missing")?
+                .end_ids,
+        )?
+    } else {
+        plan
     };
 
     let state_dir = Path::new(state_dir);
@@ -179,6 +214,10 @@ pub(crate) fn run(
         blocks: plan.blocks().to_vec(),
     };
     db.ensure_run(&run)?;
+    if let Some((registry, scenes)) = &name_registry {
+        db.append_name_registry(registry, scenes, None)?;
+        db.bind_name_registry(run_id, registry)?;
+    }
     if reporter.is_machine() {
         reporter.emit(CliEvent::RunStarted {
             translation_id: translation_id.to_string(),
