@@ -1,0 +1,5080 @@
+{
+  "schema_version": 1,
+  "experiment": "reg-062-occurrence-terms-v1",
+  "expected": {
+    "prior_freeze_sha256": "4c6ccd046f2c9053bfd1f9581055bc297ec3ec765a2e6384443814d2ecd1837b",
+    "files": {
+      "controls": "b4cd39caae1bbac13847d9a5ee2cb8e21993882d0342cc710a9cb44957a9d344",
+      "reg061": "24a4acafd6e7035fbc2fa58da39ead78aad069588b4a58344af5fd19e70e0499",
+      "reg062": "6897c54ff38e539c861b2d270a30a7b95003d025dbbbf7f523e738a313912b00",
+      "extras": "b56dcae7eb48e4fdd389665f08664c982bc509a9f60de2b337de14d345249d0a",
+      "policy": "c2118394db2bb3b19eb4a2a7f9c2521f81fef23c9ecbe8a39fccbb3926ea15bd"
+    }
+  },
+  "limits": {
+    "development_cues": 20,
+    "paired_runs_per_arm": 3,
+    "maximum_chats": 120,
+    "maximum_preflights": 240,
+    "per_chat_ms": 120000,
+    "per_preflight_ms": 15000,
+    "readiness_ms": 180000,
+    "wall_ms": 900000,
+    "retries": 0,
+    "context_tokens": 2048,
+    "response_tokens": 256,
+    "safety_tokens": 64
+  },
+  "sourceHashes": {
+    "eval/regressions/reg-058-provisional-terms-controls-v1.json": "b4cd39caae1bbac13847d9a5ee2cb8e21993882d0342cc710a9cb44957a9d344",
+    "eval/regressions/reg-061-term-hint-contamination-v1.json": "24a4acafd6e7035fbc2fa58da39ead78aad069588b4a58344af5fd19e70e0499",
+    "eval/regressions/reg-062-contrast-referent-contamination-v1.json": "6897c54ff38e539c861b2d270a30a7b95003d025dbbbf7f523e738a313912b00",
+    "eval/corpora/reg-062-occurrence-terms-extra-v1.json": "b56dcae7eb48e4fdd389665f08664c982bc509a9f60de2b337de14d345249d0a",
+    "eval/profiles/reg-062-occurrence-terms-v1.json": "c2118394db2bb3b19eb4a2a7f9c2521f81fef23c9ecbe8a39fccbb3926ea15bd",
+    "eval/scripts/occurrence-term-scope.mjs": "c2d18412b62cb127f40dc2d8caf49a78ca7943d2c29b5b3d56021f88b83c0b53",
+    "eval/scripts/build-reg-062-occurrences-v1.mjs": "d7cb1c8a7040ca9d67cb6b0ba125f883b827b38376ef907a5535d7c2c089da92",
+    "eval/scripts/probe-reg-062-occurrences-v1.mjs": "f41ab91ca9a0ceb162dcc43ed46d3f599883d3694b1e8114f09cde0ad2157182",
+    "eval/scripts/local-process.mjs": "47c9c036885a3f07a7609d97b70a15709b6c4876640da24d0b67e4126c982df4",
+    "eval/scripts/runtime-sampler.mjs": "61d15a1f4a7a334627799e3c601113ecb9b532425c3c4b07354541e90e78a78b",
+    "eval/experiments/2026-10-03-reg-062-occurrence-terms-v1-plan.md": "e18c2b9c694e478628517c22ef4948b0b0778038049ec1911df908537d85350a",
+    "docs/reference/provisional-target-terms-v2.md": "09f2a1cfcf07b689ce76d2049c695027ab41051b428298f8ae9717c77ca7401e"
+  },
+  "identities": {
+    "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+    "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+    "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+    "manifest_sha256": "a748572cea20fc46c53ced5c39c5b8e3fb85887c2e90d559a27fd41ea818f2bc",
+    "policy_sha256": "c2118394db2bb3b19eb4a2a7f9c2521f81fef23c9ecbe8a39fccbb3926ea15bd",
+    "implementation_sha256": "c2d18412b62cb127f40dc2d8caf49a78ca7943d2c29b5b3d56021f88b83c0b53",
+    "corpus_sha256": "b56dcae7eb48e4fdd389665f08664c982bc509a9f60de2b337de14d345249d0a"
+  },
+  "private_requests_sha256": "6f8dec03c1eadd090bc72899522e0809cbf5d709967f830aaa1da7ba67187477",
+  "cases": [
+    {
+      "id": "multicore_positive",
+      "source": "多核测试得分达到一万分。",
+      "role": "known_positive",
+      "source_facts": [
+        "The multi-core test score reached ten thousand."
+      ]
+    },
+    {
+      "id": "multiprocessor_negative",
+      "source": "这是一套多处理器系统。",
+      "role": "known_negative",
+      "source_facts": [
+        "This is a multi-processor system."
+      ]
+    },
+    {
+      "id": "multicore_extra",
+      "source": "这颗芯片有八个核心，但设备只有一个处理器。",
+      "role": "known_related_no_exact_term",
+      "source_facts": [
+        "The chip has eight cores, but the device has only one processor."
+      ]
+    },
+    {
+      "id": "multicore_thread_contrast",
+      "source": "多核测试和多线程测试不是同一项，前者高了两分。",
+      "role": "new_positive_contrast",
+      "source_facts": [
+        "Multi-core and multi-thread tests are distinct; the former was two points higher."
+      ]
+    },
+    {
+      "id": "multithread_negative",
+      "source": "这里只报告多线程成绩，没有多核成绩。",
+      "role": "new_negation_contrast",
+      "source_facts": [
+        "Only the multi-thread score is reported here, not the multi-core score."
+      ]
+    },
+    {
+      "id": "mouse_pad_positive",
+      "source": "我们也卖鼠标垫。",
+      "role": "known_positive",
+      "source_facts": [
+        "We also sell mouse pads."
+      ]
+    },
+    {
+      "id": "mouse_stand_negative",
+      "source": "我们也卖鼠标支架。",
+      "role": "known_negative",
+      "source_facts": [
+        "We also sell mouse stands."
+      ]
+    },
+    {
+      "id": "mouse_pad_extra",
+      "source": "盒子里有鼠标垫，没有鼠标支架。",
+      "role": "known_related_negation",
+      "source_facts": [
+        "The box contains a mouse pad, not a mouse stand."
+      ]
+    },
+    {
+      "id": "mouse_pad_price_contrast",
+      "source": "鼠标垫比鼠标支架便宜二十元。",
+      "role": "new_price_contrast",
+      "source_facts": [
+        "The mouse pad is twenty yuan cheaper than the mouse stand."
+      ]
+    },
+    {
+      "id": "stand_only_new",
+      "source": "鼠标支架缺货了，但别把它叫作鼠标垫。",
+      "role": "new_negative_contrast",
+      "source_facts": [
+        "The mouse stand is out of stock; do not call it a mouse pad."
+      ]
+    },
+    {
+      "id": "dual_cpu_each_eight_cores",
+      "source": "这台工作站装了两颗处理器，每颗各有八个核心。",
+      "role": "REG061_followup",
+      "source_facts": [
+        "The workstation has two processors, each with eight cores."
+      ]
+    },
+    {
+      "id": "stand_not_pad_in_box",
+      "source": "包装里只有鼠标支架，没有鼠标垫。",
+      "role": "REG061_followup",
+      "source_facts": [
+        "The box has only a mouse stand and no mouse pad."
+      ]
+    },
+    {
+      "id": "pad_out_stand_available",
+      "source": "鼠标垫缺货，鼠标支架仍有现货。",
+      "role": "REG061_followup",
+      "source_facts": [
+        "The mouse pad is out of stock while the mouse stand is available."
+      ]
+    },
+    {
+      "id": "multicore_term_positive",
+      "source": "这项多核测试得分一万分。",
+      "role": "REG061_followup",
+      "source_facts": [
+        "The multi-core test scored ten thousand points."
+      ]
+    },
+    {
+      "id": "mouse_pad_term_positive",
+      "source": "我们也卖鼠标垫。",
+      "role": "REG061_followup",
+      "source_facts": [
+        "We also sell mouse pads."
+      ]
+    },
+    {
+      "id": "stand_stockout_pad_available",
+      "source": "鼠标支架缺货，鼠标垫仍有现货。",
+      "role": "REG062_unrun",
+      "source_facts": [
+        "The stand is out of stock while the pad remains available."
+      ]
+    },
+    {
+      "id": "pad_bought_stand_not_bought",
+      "source": "我买了鼠标垫，但没有买鼠标支架。",
+      "role": "REG062_unrun",
+      "source_facts": [
+        "I bought a mouse pad but did not buy a mouse stand."
+      ]
+    },
+    {
+      "id": "stand_only_available",
+      "source": "鼠标支架仍有现货。",
+      "role": "REG062_unrun",
+      "source_facts": [
+        "The mouse stand is still available."
+      ]
+    },
+    {
+      "id": "reverse_availability_at_start",
+      "source": "鼠标支架仍有现货，鼠标垫缺货。",
+      "role": "reversed_contrast_beginning_seam",
+      "source_facts": [
+        "mouse stand remains available",
+        "mouse pad is out of stock",
+        "stand and pad are distinct"
+      ]
+    },
+    {
+      "id": "speaker_split_at_end",
+      "source": "甲说鼠标垫缺货，乙说鼠标支架仍有现货。",
+      "role": "distinct_speakers_end_seam",
+      "source_facts": [
+        "speaker A says mouse pad is out of stock",
+        "speaker B says mouse stand remains available",
+        "stand and pad are distinct"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "case_id": "multicore_positive",
+      "control_id": "multicore_positive",
+      "role": "known_positive",
+      "run": 1,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 0,
+                  "end": 2,
+                  "source": "多核"
+                }
+              ],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "894b8d1c6fe0c33a8884e59020f5d8faf90de56a064e739181c45284f0e8be3a",
+      "request_sha256": "894b8d1c6fe0c33a8884e59020f5d8faf90de56a064e739181c45284f0e8be3a",
+      "resume_identity": "e1cff8888bde174be5fbf03c263779bea6d571b0740fd0bbd950956591e38d8c"
+    },
+    {
+      "case_id": "multicore_positive",
+      "control_id": "multicore_positive",
+      "role": "known_positive",
+      "run": 1,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 0,
+                  "end": 2,
+                  "source": "多核"
+                }
+              ],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "894b8d1c6fe0c33a8884e59020f5d8faf90de56a064e739181c45284f0e8be3a",
+      "request_sha256": "7dcb8b8ddbc9d141e735fc7d65728fddc79ee8f52d07e2995e0d1f9f0a5675bf",
+      "resume_identity": "2a4e27e179544b318150bdf48284bdba998cf5483dbef9d768b8056504e32466"
+    },
+    {
+      "case_id": "multicore_positive",
+      "control_id": "multicore_positive",
+      "role": "known_positive",
+      "run": 2,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 0,
+                  "end": 2,
+                  "source": "多核"
+                }
+              ],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "894b8d1c6fe0c33a8884e59020f5d8faf90de56a064e739181c45284f0e8be3a",
+      "request_sha256": "7dcb8b8ddbc9d141e735fc7d65728fddc79ee8f52d07e2995e0d1f9f0a5675bf",
+      "resume_identity": "2a4e27e179544b318150bdf48284bdba998cf5483dbef9d768b8056504e32466"
+    },
+    {
+      "case_id": "multicore_positive",
+      "control_id": "multicore_positive",
+      "role": "known_positive",
+      "run": 2,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 0,
+                  "end": 2,
+                  "source": "多核"
+                }
+              ],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "894b8d1c6fe0c33a8884e59020f5d8faf90de56a064e739181c45284f0e8be3a",
+      "request_sha256": "894b8d1c6fe0c33a8884e59020f5d8faf90de56a064e739181c45284f0e8be3a",
+      "resume_identity": "e1cff8888bde174be5fbf03c263779bea6d571b0740fd0bbd950956591e38d8c"
+    },
+    {
+      "case_id": "multicore_positive",
+      "control_id": "multicore_positive",
+      "role": "known_positive",
+      "run": 3,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 0,
+                  "end": 2,
+                  "source": "多核"
+                }
+              ],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "894b8d1c6fe0c33a8884e59020f5d8faf90de56a064e739181c45284f0e8be3a",
+      "request_sha256": "894b8d1c6fe0c33a8884e59020f5d8faf90de56a064e739181c45284f0e8be3a",
+      "resume_identity": "e1cff8888bde174be5fbf03c263779bea6d571b0740fd0bbd950956591e38d8c"
+    },
+    {
+      "case_id": "multicore_positive",
+      "control_id": "multicore_positive",
+      "role": "known_positive",
+      "run": 3,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 0,
+                  "end": 2,
+                  "source": "多核"
+                }
+              ],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "894b8d1c6fe0c33a8884e59020f5d8faf90de56a064e739181c45284f0e8be3a",
+      "request_sha256": "7dcb8b8ddbc9d141e735fc7d65728fddc79ee8f52d07e2995e0d1f9f0a5675bf",
+      "resume_identity": "2a4e27e179544b318150bdf48284bdba998cf5483dbef9d768b8056504e32466"
+    },
+    {
+      "case_id": "multiprocessor_negative",
+      "control_id": "multiprocessor_negative",
+      "role": "known_negative",
+      "run": 1,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "7ff1ccb1c2716a63f663a4bacdff5273f2ed87c10ba81bf7c713aea98752d917",
+      "request_sha256": "7ff1ccb1c2716a63f663a4bacdff5273f2ed87c10ba81bf7c713aea98752d917",
+      "resume_identity": "b29a486586c7e5627f36a29b851366021311359bdbe191fb48ab094819a09b0d"
+    },
+    {
+      "case_id": "multiprocessor_negative",
+      "control_id": "multiprocessor_negative",
+      "role": "known_negative",
+      "run": 1,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "7ff1ccb1c2716a63f663a4bacdff5273f2ed87c10ba81bf7c713aea98752d917",
+      "request_sha256": "7ff1ccb1c2716a63f663a4bacdff5273f2ed87c10ba81bf7c713aea98752d917",
+      "resume_identity": "b29a486586c7e5627f36a29b851366021311359bdbe191fb48ab094819a09b0d"
+    },
+    {
+      "case_id": "multiprocessor_negative",
+      "control_id": "multiprocessor_negative",
+      "role": "known_negative",
+      "run": 2,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "7ff1ccb1c2716a63f663a4bacdff5273f2ed87c10ba81bf7c713aea98752d917",
+      "request_sha256": "7ff1ccb1c2716a63f663a4bacdff5273f2ed87c10ba81bf7c713aea98752d917",
+      "resume_identity": "b29a486586c7e5627f36a29b851366021311359bdbe191fb48ab094819a09b0d"
+    },
+    {
+      "case_id": "multiprocessor_negative",
+      "control_id": "multiprocessor_negative",
+      "role": "known_negative",
+      "run": 2,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "7ff1ccb1c2716a63f663a4bacdff5273f2ed87c10ba81bf7c713aea98752d917",
+      "request_sha256": "7ff1ccb1c2716a63f663a4bacdff5273f2ed87c10ba81bf7c713aea98752d917",
+      "resume_identity": "b29a486586c7e5627f36a29b851366021311359bdbe191fb48ab094819a09b0d"
+    },
+    {
+      "case_id": "multiprocessor_negative",
+      "control_id": "multiprocessor_negative",
+      "role": "known_negative",
+      "run": 3,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "7ff1ccb1c2716a63f663a4bacdff5273f2ed87c10ba81bf7c713aea98752d917",
+      "request_sha256": "7ff1ccb1c2716a63f663a4bacdff5273f2ed87c10ba81bf7c713aea98752d917",
+      "resume_identity": "b29a486586c7e5627f36a29b851366021311359bdbe191fb48ab094819a09b0d"
+    },
+    {
+      "case_id": "multiprocessor_negative",
+      "control_id": "multiprocessor_negative",
+      "role": "known_negative",
+      "run": 3,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "7ff1ccb1c2716a63f663a4bacdff5273f2ed87c10ba81bf7c713aea98752d917",
+      "request_sha256": "7ff1ccb1c2716a63f663a4bacdff5273f2ed87c10ba81bf7c713aea98752d917",
+      "resume_identity": "b29a486586c7e5627f36a29b851366021311359bdbe191fb48ab094819a09b0d"
+    },
+    {
+      "case_id": "multicore_extra",
+      "control_id": "multicore_extra",
+      "role": "known_related_no_exact_term",
+      "run": 1,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "0797dbc0313b3ad8fa42971ffd9b9df35ccb7303fa92affc8a569d93c2fcc764",
+      "request_sha256": "0797dbc0313b3ad8fa42971ffd9b9df35ccb7303fa92affc8a569d93c2fcc764",
+      "resume_identity": "a059694ce0d0422b334808b3daf6de8ae80a43a69e4cdf24c967a0a04a065c69"
+    },
+    {
+      "case_id": "multicore_extra",
+      "control_id": "multicore_extra",
+      "role": "known_related_no_exact_term",
+      "run": 1,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "0797dbc0313b3ad8fa42971ffd9b9df35ccb7303fa92affc8a569d93c2fcc764",
+      "request_sha256": "0797dbc0313b3ad8fa42971ffd9b9df35ccb7303fa92affc8a569d93c2fcc764",
+      "resume_identity": "a059694ce0d0422b334808b3daf6de8ae80a43a69e4cdf24c967a0a04a065c69"
+    },
+    {
+      "case_id": "multicore_extra",
+      "control_id": "multicore_extra",
+      "role": "known_related_no_exact_term",
+      "run": 2,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "0797dbc0313b3ad8fa42971ffd9b9df35ccb7303fa92affc8a569d93c2fcc764",
+      "request_sha256": "0797dbc0313b3ad8fa42971ffd9b9df35ccb7303fa92affc8a569d93c2fcc764",
+      "resume_identity": "a059694ce0d0422b334808b3daf6de8ae80a43a69e4cdf24c967a0a04a065c69"
+    },
+    {
+      "case_id": "multicore_extra",
+      "control_id": "multicore_extra",
+      "role": "known_related_no_exact_term",
+      "run": 2,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "0797dbc0313b3ad8fa42971ffd9b9df35ccb7303fa92affc8a569d93c2fcc764",
+      "request_sha256": "0797dbc0313b3ad8fa42971ffd9b9df35ccb7303fa92affc8a569d93c2fcc764",
+      "resume_identity": "a059694ce0d0422b334808b3daf6de8ae80a43a69e4cdf24c967a0a04a065c69"
+    },
+    {
+      "case_id": "multicore_extra",
+      "control_id": "multicore_extra",
+      "role": "known_related_no_exact_term",
+      "run": 3,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "0797dbc0313b3ad8fa42971ffd9b9df35ccb7303fa92affc8a569d93c2fcc764",
+      "request_sha256": "0797dbc0313b3ad8fa42971ffd9b9df35ccb7303fa92affc8a569d93c2fcc764",
+      "resume_identity": "a059694ce0d0422b334808b3daf6de8ae80a43a69e4cdf24c967a0a04a065c69"
+    },
+    {
+      "case_id": "multicore_extra",
+      "control_id": "multicore_extra",
+      "role": "known_related_no_exact_term",
+      "run": 3,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "0797dbc0313b3ad8fa42971ffd9b9df35ccb7303fa92affc8a569d93c2fcc764",
+      "request_sha256": "0797dbc0313b3ad8fa42971ffd9b9df35ccb7303fa92affc8a569d93c2fcc764",
+      "resume_identity": "a059694ce0d0422b334808b3daf6de8ae80a43a69e4cdf24c967a0a04a065c69"
+    },
+    {
+      "case_id": "multicore_thread_contrast",
+      "control_id": "multicore_thread_contrast",
+      "role": "new_positive_contrast",
+      "run": 1,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "abfc2400c90b5d037f31dc201ac7201ebba280c2879e5de3727285baddee67ff",
+      "request_sha256": "abfc2400c90b5d037f31dc201ac7201ebba280c2879e5de3727285baddee67ff",
+      "resume_identity": "fe7b75afc6a94790cbeb3b2da2d246b8a29d21e09cc8bcf1cd9cc21213fb63a8"
+    },
+    {
+      "case_id": "multicore_thread_contrast",
+      "control_id": "multicore_thread_contrast",
+      "role": "new_positive_contrast",
+      "run": 1,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "abfc2400c90b5d037f31dc201ac7201ebba280c2879e5de3727285baddee67ff",
+      "request_sha256": "abfc2400c90b5d037f31dc201ac7201ebba280c2879e5de3727285baddee67ff",
+      "resume_identity": "fe7b75afc6a94790cbeb3b2da2d246b8a29d21e09cc8bcf1cd9cc21213fb63a8"
+    },
+    {
+      "case_id": "multicore_thread_contrast",
+      "control_id": "multicore_thread_contrast",
+      "role": "new_positive_contrast",
+      "run": 2,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "abfc2400c90b5d037f31dc201ac7201ebba280c2879e5de3727285baddee67ff",
+      "request_sha256": "abfc2400c90b5d037f31dc201ac7201ebba280c2879e5de3727285baddee67ff",
+      "resume_identity": "fe7b75afc6a94790cbeb3b2da2d246b8a29d21e09cc8bcf1cd9cc21213fb63a8"
+    },
+    {
+      "case_id": "multicore_thread_contrast",
+      "control_id": "multicore_thread_contrast",
+      "role": "new_positive_contrast",
+      "run": 2,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "abfc2400c90b5d037f31dc201ac7201ebba280c2879e5de3727285baddee67ff",
+      "request_sha256": "abfc2400c90b5d037f31dc201ac7201ebba280c2879e5de3727285baddee67ff",
+      "resume_identity": "fe7b75afc6a94790cbeb3b2da2d246b8a29d21e09cc8bcf1cd9cc21213fb63a8"
+    },
+    {
+      "case_id": "multicore_thread_contrast",
+      "control_id": "multicore_thread_contrast",
+      "role": "new_positive_contrast",
+      "run": 3,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "abfc2400c90b5d037f31dc201ac7201ebba280c2879e5de3727285baddee67ff",
+      "request_sha256": "abfc2400c90b5d037f31dc201ac7201ebba280c2879e5de3727285baddee67ff",
+      "resume_identity": "fe7b75afc6a94790cbeb3b2da2d246b8a29d21e09cc8bcf1cd9cc21213fb63a8"
+    },
+    {
+      "case_id": "multicore_thread_contrast",
+      "control_id": "multicore_thread_contrast",
+      "role": "new_positive_contrast",
+      "run": 3,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "abfc2400c90b5d037f31dc201ac7201ebba280c2879e5de3727285baddee67ff",
+      "request_sha256": "abfc2400c90b5d037f31dc201ac7201ebba280c2879e5de3727285baddee67ff",
+      "resume_identity": "fe7b75afc6a94790cbeb3b2da2d246b8a29d21e09cc8bcf1cd9cc21213fb63a8"
+    },
+    {
+      "case_id": "multithread_negative",
+      "control_id": "multithread_negative",
+      "role": "new_negation_contrast",
+      "run": 1,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "c69d273455205bb54864a1a0fa8285a939ff7a273ced1f27a0228047356e12bb",
+      "request_sha256": "c69d273455205bb54864a1a0fa8285a939ff7a273ced1f27a0228047356e12bb",
+      "resume_identity": "16bdbb118efc5401c10f259ff6f3a49fa4a88cbfea1a619c8edd5ef059bad1fb"
+    },
+    {
+      "case_id": "multithread_negative",
+      "control_id": "multithread_negative",
+      "role": "new_negation_contrast",
+      "run": 1,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "c69d273455205bb54864a1a0fa8285a939ff7a273ced1f27a0228047356e12bb",
+      "request_sha256": "c69d273455205bb54864a1a0fa8285a939ff7a273ced1f27a0228047356e12bb",
+      "resume_identity": "16bdbb118efc5401c10f259ff6f3a49fa4a88cbfea1a619c8edd5ef059bad1fb"
+    },
+    {
+      "case_id": "multithread_negative",
+      "control_id": "multithread_negative",
+      "role": "new_negation_contrast",
+      "run": 2,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "c69d273455205bb54864a1a0fa8285a939ff7a273ced1f27a0228047356e12bb",
+      "request_sha256": "c69d273455205bb54864a1a0fa8285a939ff7a273ced1f27a0228047356e12bb",
+      "resume_identity": "16bdbb118efc5401c10f259ff6f3a49fa4a88cbfea1a619c8edd5ef059bad1fb"
+    },
+    {
+      "case_id": "multithread_negative",
+      "control_id": "multithread_negative",
+      "role": "new_negation_contrast",
+      "run": 2,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "c69d273455205bb54864a1a0fa8285a939ff7a273ced1f27a0228047356e12bb",
+      "request_sha256": "c69d273455205bb54864a1a0fa8285a939ff7a273ced1f27a0228047356e12bb",
+      "resume_identity": "16bdbb118efc5401c10f259ff6f3a49fa4a88cbfea1a619c8edd5ef059bad1fb"
+    },
+    {
+      "case_id": "multithread_negative",
+      "control_id": "multithread_negative",
+      "role": "new_negation_contrast",
+      "run": 3,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "c69d273455205bb54864a1a0fa8285a939ff7a273ced1f27a0228047356e12bb",
+      "request_sha256": "c69d273455205bb54864a1a0fa8285a939ff7a273ced1f27a0228047356e12bb",
+      "resume_identity": "16bdbb118efc5401c10f259ff6f3a49fa4a88cbfea1a619c8edd5ef059bad1fb"
+    },
+    {
+      "case_id": "multithread_negative",
+      "control_id": "multithread_negative",
+      "role": "new_negation_contrast",
+      "run": 3,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "c69d273455205bb54864a1a0fa8285a939ff7a273ced1f27a0228047356e12bb",
+      "request_sha256": "c69d273455205bb54864a1a0fa8285a939ff7a273ced1f27a0228047356e12bb",
+      "resume_identity": "16bdbb118efc5401c10f259ff6f3a49fa4a88cbfea1a619c8edd5ef059bad1fb"
+    },
+    {
+      "case_id": "mouse_pad_positive",
+      "control_id": "mouse_pad_positive",
+      "role": "known_positive",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 4,
+                  "end": 7,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "request_sha256": "7967027488f9ca0ba9c1f6314ec9050095095ffe1baf62edc621800c3691ef85",
+      "resume_identity": "ad1afc22822ef1c3810a37c919b40ac5c86ed8c1e368e6497bddbd18bb0bfd55"
+    },
+    {
+      "case_id": "mouse_pad_positive",
+      "control_id": "mouse_pad_positive",
+      "role": "known_positive",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 4,
+                  "end": 7,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "request_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "resume_identity": "4103849c49a95397430d48471bcc10de3f029254904fe8632dc8bd09d08eae1c"
+    },
+    {
+      "case_id": "mouse_pad_positive",
+      "control_id": "mouse_pad_positive",
+      "role": "known_positive",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 4,
+                  "end": 7,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "request_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "resume_identity": "4103849c49a95397430d48471bcc10de3f029254904fe8632dc8bd09d08eae1c"
+    },
+    {
+      "case_id": "mouse_pad_positive",
+      "control_id": "mouse_pad_positive",
+      "role": "known_positive",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 4,
+                  "end": 7,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "request_sha256": "7967027488f9ca0ba9c1f6314ec9050095095ffe1baf62edc621800c3691ef85",
+      "resume_identity": "ad1afc22822ef1c3810a37c919b40ac5c86ed8c1e368e6497bddbd18bb0bfd55"
+    },
+    {
+      "case_id": "mouse_pad_positive",
+      "control_id": "mouse_pad_positive",
+      "role": "known_positive",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 4,
+                  "end": 7,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "request_sha256": "7967027488f9ca0ba9c1f6314ec9050095095ffe1baf62edc621800c3691ef85",
+      "resume_identity": "ad1afc22822ef1c3810a37c919b40ac5c86ed8c1e368e6497bddbd18bb0bfd55"
+    },
+    {
+      "case_id": "mouse_pad_positive",
+      "control_id": "mouse_pad_positive",
+      "role": "known_positive",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 4,
+                  "end": 7,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "request_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "resume_identity": "4103849c49a95397430d48471bcc10de3f029254904fe8632dc8bd09d08eae1c"
+    },
+    {
+      "case_id": "mouse_stand_negative",
+      "control_id": "mouse_stand_negative",
+      "role": "known_negative",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "f3b520dfb0bb388897904c78f2731e0b2068ea2c0c79a6501ac6b79462020154",
+      "request_sha256": "f3b520dfb0bb388897904c78f2731e0b2068ea2c0c79a6501ac6b79462020154",
+      "resume_identity": "b94b0683e95b0754454006a0bc054fe5466568185cb51cef9d301b58e31d8473"
+    },
+    {
+      "case_id": "mouse_stand_negative",
+      "control_id": "mouse_stand_negative",
+      "role": "known_negative",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "f3b520dfb0bb388897904c78f2731e0b2068ea2c0c79a6501ac6b79462020154",
+      "request_sha256": "f3b520dfb0bb388897904c78f2731e0b2068ea2c0c79a6501ac6b79462020154",
+      "resume_identity": "b94b0683e95b0754454006a0bc054fe5466568185cb51cef9d301b58e31d8473"
+    },
+    {
+      "case_id": "mouse_stand_negative",
+      "control_id": "mouse_stand_negative",
+      "role": "known_negative",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "f3b520dfb0bb388897904c78f2731e0b2068ea2c0c79a6501ac6b79462020154",
+      "request_sha256": "f3b520dfb0bb388897904c78f2731e0b2068ea2c0c79a6501ac6b79462020154",
+      "resume_identity": "b94b0683e95b0754454006a0bc054fe5466568185cb51cef9d301b58e31d8473"
+    },
+    {
+      "case_id": "mouse_stand_negative",
+      "control_id": "mouse_stand_negative",
+      "role": "known_negative",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "f3b520dfb0bb388897904c78f2731e0b2068ea2c0c79a6501ac6b79462020154",
+      "request_sha256": "f3b520dfb0bb388897904c78f2731e0b2068ea2c0c79a6501ac6b79462020154",
+      "resume_identity": "b94b0683e95b0754454006a0bc054fe5466568185cb51cef9d301b58e31d8473"
+    },
+    {
+      "case_id": "mouse_stand_negative",
+      "control_id": "mouse_stand_negative",
+      "role": "known_negative",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "f3b520dfb0bb388897904c78f2731e0b2068ea2c0c79a6501ac6b79462020154",
+      "request_sha256": "f3b520dfb0bb388897904c78f2731e0b2068ea2c0c79a6501ac6b79462020154",
+      "resume_identity": "b94b0683e95b0754454006a0bc054fe5466568185cb51cef9d301b58e31d8473"
+    },
+    {
+      "case_id": "mouse_stand_negative",
+      "control_id": "mouse_stand_negative",
+      "role": "known_negative",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "f3b520dfb0bb388897904c78f2731e0b2068ea2c0c79a6501ac6b79462020154",
+      "request_sha256": "f3b520dfb0bb388897904c78f2731e0b2068ea2c0c79a6501ac6b79462020154",
+      "resume_identity": "b94b0683e95b0754454006a0bc054fe5466568185cb51cef9d301b58e31d8473"
+    },
+    {
+      "case_id": "mouse_pad_extra",
+      "control_id": "mouse_pad_extra",
+      "role": "known_related_negation",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 4,
+                  "end": 7,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 10,
+                  "end": 14,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "c37a880fadb3476e6d324dce76a38e943a1276edb1d4f4851bc9323bbb73bf7e",
+      "request_sha256": "114e3ee42fdc03ba72c9bfa280138b4809c1aa4578dac1c5874dc2e8068e3fae",
+      "resume_identity": "612cccfd5dafd42aab1bb313f486a48ef7d9e2a0a5fd52fb87c7773eaf1ecac0"
+    },
+    {
+      "case_id": "mouse_pad_extra",
+      "control_id": "mouse_pad_extra",
+      "role": "known_related_negation",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 4,
+                  "end": 7,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 10,
+                  "end": 14,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "c37a880fadb3476e6d324dce76a38e943a1276edb1d4f4851bc9323bbb73bf7e",
+      "request_sha256": "c37a880fadb3476e6d324dce76a38e943a1276edb1d4f4851bc9323bbb73bf7e",
+      "resume_identity": "955551e46bbfee3f48e967a15085977b9eb705331f9bdcf41145bdf5c7b41457"
+    },
+    {
+      "case_id": "mouse_pad_extra",
+      "control_id": "mouse_pad_extra",
+      "role": "known_related_negation",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 4,
+                  "end": 7,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 10,
+                  "end": 14,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "c37a880fadb3476e6d324dce76a38e943a1276edb1d4f4851bc9323bbb73bf7e",
+      "request_sha256": "c37a880fadb3476e6d324dce76a38e943a1276edb1d4f4851bc9323bbb73bf7e",
+      "resume_identity": "955551e46bbfee3f48e967a15085977b9eb705331f9bdcf41145bdf5c7b41457"
+    },
+    {
+      "case_id": "mouse_pad_extra",
+      "control_id": "mouse_pad_extra",
+      "role": "known_related_negation",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 4,
+                  "end": 7,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 10,
+                  "end": 14,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "c37a880fadb3476e6d324dce76a38e943a1276edb1d4f4851bc9323bbb73bf7e",
+      "request_sha256": "114e3ee42fdc03ba72c9bfa280138b4809c1aa4578dac1c5874dc2e8068e3fae",
+      "resume_identity": "612cccfd5dafd42aab1bb313f486a48ef7d9e2a0a5fd52fb87c7773eaf1ecac0"
+    },
+    {
+      "case_id": "mouse_pad_extra",
+      "control_id": "mouse_pad_extra",
+      "role": "known_related_negation",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 4,
+                  "end": 7,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 10,
+                  "end": 14,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "c37a880fadb3476e6d324dce76a38e943a1276edb1d4f4851bc9323bbb73bf7e",
+      "request_sha256": "114e3ee42fdc03ba72c9bfa280138b4809c1aa4578dac1c5874dc2e8068e3fae",
+      "resume_identity": "612cccfd5dafd42aab1bb313f486a48ef7d9e2a0a5fd52fb87c7773eaf1ecac0"
+    },
+    {
+      "case_id": "mouse_pad_extra",
+      "control_id": "mouse_pad_extra",
+      "role": "known_related_negation",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 4,
+                  "end": 7,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 10,
+                  "end": 14,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "c37a880fadb3476e6d324dce76a38e943a1276edb1d4f4851bc9323bbb73bf7e",
+      "request_sha256": "c37a880fadb3476e6d324dce76a38e943a1276edb1d4f4851bc9323bbb73bf7e",
+      "resume_identity": "955551e46bbfee3f48e967a15085977b9eb705331f9bdcf41145bdf5c7b41457"
+    },
+    {
+      "case_id": "mouse_pad_price_contrast",
+      "control_id": "mouse_pad_price_contrast",
+      "role": "new_price_contrast",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 0,
+                  "end": 3,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 4,
+                  "end": 8,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "0724aeb0d8bf9fd2a4d12db7408df61d057c2f4f30a921c2328341c5a139393a",
+      "request_sha256": "0724aeb0d8bf9fd2a4d12db7408df61d057c2f4f30a921c2328341c5a139393a",
+      "resume_identity": "08287f1b90fc3d5cc655e4114fcbf14b28fd6a3ba26a0e16f474558ad7d49cee"
+    },
+    {
+      "case_id": "mouse_pad_price_contrast",
+      "control_id": "mouse_pad_price_contrast",
+      "role": "new_price_contrast",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 0,
+                  "end": 3,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 4,
+                  "end": 8,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "0724aeb0d8bf9fd2a4d12db7408df61d057c2f4f30a921c2328341c5a139393a",
+      "request_sha256": "86db194f57d399cb851b96c01a677745d6fa2245cef2ad49caddcce74f2fd3a7",
+      "resume_identity": "a655680bf0560711211e8cd8936ec214c68179e161fa3a62406eaff83846981d"
+    },
+    {
+      "case_id": "mouse_pad_price_contrast",
+      "control_id": "mouse_pad_price_contrast",
+      "role": "new_price_contrast",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 0,
+                  "end": 3,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 4,
+                  "end": 8,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "0724aeb0d8bf9fd2a4d12db7408df61d057c2f4f30a921c2328341c5a139393a",
+      "request_sha256": "86db194f57d399cb851b96c01a677745d6fa2245cef2ad49caddcce74f2fd3a7",
+      "resume_identity": "a655680bf0560711211e8cd8936ec214c68179e161fa3a62406eaff83846981d"
+    },
+    {
+      "case_id": "mouse_pad_price_contrast",
+      "control_id": "mouse_pad_price_contrast",
+      "role": "new_price_contrast",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 0,
+                  "end": 3,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 4,
+                  "end": 8,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "0724aeb0d8bf9fd2a4d12db7408df61d057c2f4f30a921c2328341c5a139393a",
+      "request_sha256": "0724aeb0d8bf9fd2a4d12db7408df61d057c2f4f30a921c2328341c5a139393a",
+      "resume_identity": "08287f1b90fc3d5cc655e4114fcbf14b28fd6a3ba26a0e16f474558ad7d49cee"
+    },
+    {
+      "case_id": "mouse_pad_price_contrast",
+      "control_id": "mouse_pad_price_contrast",
+      "role": "new_price_contrast",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 0,
+                  "end": 3,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 4,
+                  "end": 8,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "0724aeb0d8bf9fd2a4d12db7408df61d057c2f4f30a921c2328341c5a139393a",
+      "request_sha256": "0724aeb0d8bf9fd2a4d12db7408df61d057c2f4f30a921c2328341c5a139393a",
+      "resume_identity": "08287f1b90fc3d5cc655e4114fcbf14b28fd6a3ba26a0e16f474558ad7d49cee"
+    },
+    {
+      "case_id": "mouse_pad_price_contrast",
+      "control_id": "mouse_pad_price_contrast",
+      "role": "new_price_contrast",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 0,
+                  "end": 3,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 4,
+                  "end": 8,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "0724aeb0d8bf9fd2a4d12db7408df61d057c2f4f30a921c2328341c5a139393a",
+      "request_sha256": "86db194f57d399cb851b96c01a677745d6fa2245cef2ad49caddcce74f2fd3a7",
+      "resume_identity": "a655680bf0560711211e8cd8936ec214c68179e161fa3a62406eaff83846981d"
+    },
+    {
+      "case_id": "stand_only_new",
+      "control_id": "stand_only_new",
+      "role": "new_negative_contrast",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "metalinguistic_mention",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "90bc3b5cda13618a6e733665ed2de34fe9adf5d9594878b3d43483a8720d68aa",
+      "request_sha256": "90bc3b5cda13618a6e733665ed2de34fe9adf5d9594878b3d43483a8720d68aa",
+      "resume_identity": "b10ec800418b0fcefe06d61e485f0cce7b094cb3b9e731fd33224d6987d20f3e"
+    },
+    {
+      "case_id": "stand_only_new",
+      "control_id": "stand_only_new",
+      "role": "new_negative_contrast",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "metalinguistic_mention",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "90bc3b5cda13618a6e733665ed2de34fe9adf5d9594878b3d43483a8720d68aa",
+      "request_sha256": "90bc3b5cda13618a6e733665ed2de34fe9adf5d9594878b3d43483a8720d68aa",
+      "resume_identity": "b10ec800418b0fcefe06d61e485f0cce7b094cb3b9e731fd33224d6987d20f3e"
+    },
+    {
+      "case_id": "stand_only_new",
+      "control_id": "stand_only_new",
+      "role": "new_negative_contrast",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "metalinguistic_mention",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "90bc3b5cda13618a6e733665ed2de34fe9adf5d9594878b3d43483a8720d68aa",
+      "request_sha256": "90bc3b5cda13618a6e733665ed2de34fe9adf5d9594878b3d43483a8720d68aa",
+      "resume_identity": "b10ec800418b0fcefe06d61e485f0cce7b094cb3b9e731fd33224d6987d20f3e"
+    },
+    {
+      "case_id": "stand_only_new",
+      "control_id": "stand_only_new",
+      "role": "new_negative_contrast",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "metalinguistic_mention",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "90bc3b5cda13618a6e733665ed2de34fe9adf5d9594878b3d43483a8720d68aa",
+      "request_sha256": "90bc3b5cda13618a6e733665ed2de34fe9adf5d9594878b3d43483a8720d68aa",
+      "resume_identity": "b10ec800418b0fcefe06d61e485f0cce7b094cb3b9e731fd33224d6987d20f3e"
+    },
+    {
+      "case_id": "stand_only_new",
+      "control_id": "stand_only_new",
+      "role": "new_negative_contrast",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "metalinguistic_mention",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "90bc3b5cda13618a6e733665ed2de34fe9adf5d9594878b3d43483a8720d68aa",
+      "request_sha256": "90bc3b5cda13618a6e733665ed2de34fe9adf5d9594878b3d43483a8720d68aa",
+      "resume_identity": "b10ec800418b0fcefe06d61e485f0cce7b094cb3b9e731fd33224d6987d20f3e"
+    },
+    {
+      "case_id": "stand_only_new",
+      "control_id": "stand_only_new",
+      "role": "new_negative_contrast",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "metalinguistic_mention",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "90bc3b5cda13618a6e733665ed2de34fe9adf5d9594878b3d43483a8720d68aa",
+      "request_sha256": "90bc3b5cda13618a6e733665ed2de34fe9adf5d9594878b3d43483a8720d68aa",
+      "resume_identity": "b10ec800418b0fcefe06d61e485f0cce7b094cb3b9e731fd33224d6987d20f3e"
+    },
+    {
+      "case_id": "dual_cpu_each_eight_cores",
+      "control_id": "dual_cpu_each_eight_cores",
+      "role": "REG061_followup",
+      "run": 1,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "26914e9bb3dc777e1913c8b5ec644eea568727480137707afe25a47ebe1f334d",
+      "request_sha256": "26914e9bb3dc777e1913c8b5ec644eea568727480137707afe25a47ebe1f334d",
+      "resume_identity": "75e4f16c685b6925e7a3cea744e1915b7aca60cbebf48afda9ba773f8331f6a4"
+    },
+    {
+      "case_id": "dual_cpu_each_eight_cores",
+      "control_id": "dual_cpu_each_eight_cores",
+      "role": "REG061_followup",
+      "run": 1,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "26914e9bb3dc777e1913c8b5ec644eea568727480137707afe25a47ebe1f334d",
+      "request_sha256": "26914e9bb3dc777e1913c8b5ec644eea568727480137707afe25a47ebe1f334d",
+      "resume_identity": "75e4f16c685b6925e7a3cea744e1915b7aca60cbebf48afda9ba773f8331f6a4"
+    },
+    {
+      "case_id": "dual_cpu_each_eight_cores",
+      "control_id": "dual_cpu_each_eight_cores",
+      "role": "REG061_followup",
+      "run": 2,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "26914e9bb3dc777e1913c8b5ec644eea568727480137707afe25a47ebe1f334d",
+      "request_sha256": "26914e9bb3dc777e1913c8b5ec644eea568727480137707afe25a47ebe1f334d",
+      "resume_identity": "75e4f16c685b6925e7a3cea744e1915b7aca60cbebf48afda9ba773f8331f6a4"
+    },
+    {
+      "case_id": "dual_cpu_each_eight_cores",
+      "control_id": "dual_cpu_each_eight_cores",
+      "role": "REG061_followup",
+      "run": 2,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "26914e9bb3dc777e1913c8b5ec644eea568727480137707afe25a47ebe1f334d",
+      "request_sha256": "26914e9bb3dc777e1913c8b5ec644eea568727480137707afe25a47ebe1f334d",
+      "resume_identity": "75e4f16c685b6925e7a3cea744e1915b7aca60cbebf48afda9ba773f8331f6a4"
+    },
+    {
+      "case_id": "dual_cpu_each_eight_cores",
+      "control_id": "dual_cpu_each_eight_cores",
+      "role": "REG061_followup",
+      "run": 3,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "26914e9bb3dc777e1913c8b5ec644eea568727480137707afe25a47ebe1f334d",
+      "request_sha256": "26914e9bb3dc777e1913c8b5ec644eea568727480137707afe25a47ebe1f334d",
+      "resume_identity": "75e4f16c685b6925e7a3cea744e1915b7aca60cbebf48afda9ba773f8331f6a4"
+    },
+    {
+      "case_id": "dual_cpu_each_eight_cores",
+      "control_id": "dual_cpu_each_eight_cores",
+      "role": "REG061_followup",
+      "run": 3,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "26914e9bb3dc777e1913c8b5ec644eea568727480137707afe25a47ebe1f334d",
+      "request_sha256": "26914e9bb3dc777e1913c8b5ec644eea568727480137707afe25a47ebe1f334d",
+      "resume_identity": "75e4f16c685b6925e7a3cea744e1915b7aca60cbebf48afda9ba773f8331f6a4"
+    },
+    {
+      "case_id": "stand_not_pad_in_box",
+      "control_id": "stand_not_pad_in_box",
+      "role": "REG061_followup",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "6f3cddd994e70c87f2d3e0b3adb5dd924a30fe073a88414f7b99fe7fc65d5f22",
+      "request_sha256": "6f3cddd994e70c87f2d3e0b3adb5dd924a30fe073a88414f7b99fe7fc65d5f22",
+      "resume_identity": "b22fc2504b430177ac55a11115faf8b1461f4978899f5eefd8d47e49fe64ea45"
+    },
+    {
+      "case_id": "stand_not_pad_in_box",
+      "control_id": "stand_not_pad_in_box",
+      "role": "REG061_followup",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "6f3cddd994e70c87f2d3e0b3adb5dd924a30fe073a88414f7b99fe7fc65d5f22",
+      "request_sha256": "6f3cddd994e70c87f2d3e0b3adb5dd924a30fe073a88414f7b99fe7fc65d5f22",
+      "resume_identity": "b22fc2504b430177ac55a11115faf8b1461f4978899f5eefd8d47e49fe64ea45"
+    },
+    {
+      "case_id": "stand_not_pad_in_box",
+      "control_id": "stand_not_pad_in_box",
+      "role": "REG061_followup",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "6f3cddd994e70c87f2d3e0b3adb5dd924a30fe073a88414f7b99fe7fc65d5f22",
+      "request_sha256": "6f3cddd994e70c87f2d3e0b3adb5dd924a30fe073a88414f7b99fe7fc65d5f22",
+      "resume_identity": "b22fc2504b430177ac55a11115faf8b1461f4978899f5eefd8d47e49fe64ea45"
+    },
+    {
+      "case_id": "stand_not_pad_in_box",
+      "control_id": "stand_not_pad_in_box",
+      "role": "REG061_followup",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "6f3cddd994e70c87f2d3e0b3adb5dd924a30fe073a88414f7b99fe7fc65d5f22",
+      "request_sha256": "6f3cddd994e70c87f2d3e0b3adb5dd924a30fe073a88414f7b99fe7fc65d5f22",
+      "resume_identity": "b22fc2504b430177ac55a11115faf8b1461f4978899f5eefd8d47e49fe64ea45"
+    },
+    {
+      "case_id": "stand_not_pad_in_box",
+      "control_id": "stand_not_pad_in_box",
+      "role": "REG061_followup",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "6f3cddd994e70c87f2d3e0b3adb5dd924a30fe073a88414f7b99fe7fc65d5f22",
+      "request_sha256": "6f3cddd994e70c87f2d3e0b3adb5dd924a30fe073a88414f7b99fe7fc65d5f22",
+      "resume_identity": "b22fc2504b430177ac55a11115faf8b1461f4978899f5eefd8d47e49fe64ea45"
+    },
+    {
+      "case_id": "stand_not_pad_in_box",
+      "control_id": "stand_not_pad_in_box",
+      "role": "REG061_followup",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": "6f3cddd994e70c87f2d3e0b3adb5dd924a30fe073a88414f7b99fe7fc65d5f22",
+      "request_sha256": "6f3cddd994e70c87f2d3e0b3adb5dd924a30fe073a88414f7b99fe7fc65d5f22",
+      "resume_identity": "b22fc2504b430177ac55a11115faf8b1461f4978899f5eefd8d47e49fe64ea45"
+    },
+    {
+      "case_id": "pad_out_stand_available",
+      "control_id": "pad_out_stand_available",
+      "role": "REG061_followup",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 0,
+                  "end": 3,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 6,
+                  "end": 10,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "ca965d4b01bb1f9150d3d175c667a0ab266acd8521870f2020a9cf59239abf67",
+      "request_sha256": "ca965d4b01bb1f9150d3d175c667a0ab266acd8521870f2020a9cf59239abf67",
+      "resume_identity": "4f8cb3bfa16c0a13ae879fb7fe9f782fa96eea0ff6216565e0933eb3dc382df7"
+    },
+    {
+      "case_id": "pad_out_stand_available",
+      "control_id": "pad_out_stand_available",
+      "role": "REG061_followup",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 0,
+                  "end": 3,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 6,
+                  "end": 10,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "ca965d4b01bb1f9150d3d175c667a0ab266acd8521870f2020a9cf59239abf67",
+      "request_sha256": "62175b612573ff640edf0e88cd1bfc72c578786e8ee48aa4337677e2c2f4a80f",
+      "resume_identity": "fac8b62a29f262d7887a987f17b96c0494be77cebff7db6e1de5ac5e7bcb2d13"
+    },
+    {
+      "case_id": "pad_out_stand_available",
+      "control_id": "pad_out_stand_available",
+      "role": "REG061_followup",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 0,
+                  "end": 3,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 6,
+                  "end": 10,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "ca965d4b01bb1f9150d3d175c667a0ab266acd8521870f2020a9cf59239abf67",
+      "request_sha256": "62175b612573ff640edf0e88cd1bfc72c578786e8ee48aa4337677e2c2f4a80f",
+      "resume_identity": "fac8b62a29f262d7887a987f17b96c0494be77cebff7db6e1de5ac5e7bcb2d13"
+    },
+    {
+      "case_id": "pad_out_stand_available",
+      "control_id": "pad_out_stand_available",
+      "role": "REG061_followup",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 0,
+                  "end": 3,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 6,
+                  "end": 10,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "ca965d4b01bb1f9150d3d175c667a0ab266acd8521870f2020a9cf59239abf67",
+      "request_sha256": "ca965d4b01bb1f9150d3d175c667a0ab266acd8521870f2020a9cf59239abf67",
+      "resume_identity": "4f8cb3bfa16c0a13ae879fb7fe9f782fa96eea0ff6216565e0933eb3dc382df7"
+    },
+    {
+      "case_id": "pad_out_stand_available",
+      "control_id": "pad_out_stand_available",
+      "role": "REG061_followup",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 0,
+                  "end": 3,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 6,
+                  "end": 10,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "ca965d4b01bb1f9150d3d175c667a0ab266acd8521870f2020a9cf59239abf67",
+      "request_sha256": "ca965d4b01bb1f9150d3d175c667a0ab266acd8521870f2020a9cf59239abf67",
+      "resume_identity": "4f8cb3bfa16c0a13ae879fb7fe9f782fa96eea0ff6216565e0933eb3dc382df7"
+    },
+    {
+      "case_id": "pad_out_stand_available",
+      "control_id": "pad_out_stand_available",
+      "role": "REG061_followup",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 0,
+                  "end": 3,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 6,
+                  "end": 10,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "ca965d4b01bb1f9150d3d175c667a0ab266acd8521870f2020a9cf59239abf67",
+      "request_sha256": "62175b612573ff640edf0e88cd1bfc72c578786e8ee48aa4337677e2c2f4a80f",
+      "resume_identity": "fac8b62a29f262d7887a987f17b96c0494be77cebff7db6e1de5ac5e7bcb2d13"
+    },
+    {
+      "case_id": "multicore_term_positive",
+      "control_id": "multicore_term_positive",
+      "role": "REG061_followup",
+      "run": 1,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 2,
+                  "end": 4,
+                  "source": "多核"
+                }
+              ],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "ca361ce9605321d323b9578f0e734180153b5248f9f4287227464d509376ba5c",
+      "request_sha256": "7b458ffcd4d09f700dab0438a168af8bc39a09b84efedb3a1effc0e65b949f1c",
+      "resume_identity": "b651643c6a5971df1a70235913d4ba4f3d18068d9ca92600b87a12999930e1ba"
+    },
+    {
+      "case_id": "multicore_term_positive",
+      "control_id": "multicore_term_positive",
+      "role": "REG061_followup",
+      "run": 1,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 2,
+                  "end": 4,
+                  "source": "多核"
+                }
+              ],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "ca361ce9605321d323b9578f0e734180153b5248f9f4287227464d509376ba5c",
+      "request_sha256": "ca361ce9605321d323b9578f0e734180153b5248f9f4287227464d509376ba5c",
+      "resume_identity": "5343232396f7a2f4a21ecdd1126614bae30ac19a2f904547f9b9f184ac41efdd"
+    },
+    {
+      "case_id": "multicore_term_positive",
+      "control_id": "multicore_term_positive",
+      "role": "REG061_followup",
+      "run": 2,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 2,
+                  "end": 4,
+                  "source": "多核"
+                }
+              ],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "ca361ce9605321d323b9578f0e734180153b5248f9f4287227464d509376ba5c",
+      "request_sha256": "ca361ce9605321d323b9578f0e734180153b5248f9f4287227464d509376ba5c",
+      "resume_identity": "5343232396f7a2f4a21ecdd1126614bae30ac19a2f904547f9b9f184ac41efdd"
+    },
+    {
+      "case_id": "multicore_term_positive",
+      "control_id": "multicore_term_positive",
+      "role": "REG061_followup",
+      "run": 2,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 2,
+                  "end": 4,
+                  "source": "多核"
+                }
+              ],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "ca361ce9605321d323b9578f0e734180153b5248f9f4287227464d509376ba5c",
+      "request_sha256": "7b458ffcd4d09f700dab0438a168af8bc39a09b84efedb3a1effc0e65b949f1c",
+      "resume_identity": "b651643c6a5971df1a70235913d4ba4f3d18068d9ca92600b87a12999930e1ba"
+    },
+    {
+      "case_id": "multicore_term_positive",
+      "control_id": "multicore_term_positive",
+      "role": "REG061_followup",
+      "run": 3,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 2,
+                  "end": 4,
+                  "source": "多核"
+                }
+              ],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "ca361ce9605321d323b9578f0e734180153b5248f9f4287227464d509376ba5c",
+      "request_sha256": "7b458ffcd4d09f700dab0438a168af8bc39a09b84efedb3a1effc0e65b949f1c",
+      "resume_identity": "b651643c6a5971df1a70235913d4ba4f3d18068d9ca92600b87a12999930e1ba"
+    },
+    {
+      "case_id": "multicore_term_positive",
+      "control_id": "multicore_term_positive",
+      "role": "REG061_followup",
+      "run": 3,
+      "cue_id": 143,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 2,
+                  "end": 4,
+                  "source": "多核"
+                }
+              ],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "ca361ce9605321d323b9578f0e734180153b5248f9f4287227464d509376ba5c",
+      "request_sha256": "ca361ce9605321d323b9578f0e734180153b5248f9f4287227464d509376ba5c",
+      "resume_identity": "5343232396f7a2f4a21ecdd1126614bae30ac19a2f904547f9b9f184ac41efdd"
+    },
+    {
+      "case_id": "mouse_pad_term_positive",
+      "control_id": "mouse_pad_term_positive",
+      "role": "REG061_followup",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 4,
+                  "end": 7,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "request_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "resume_identity": "4103849c49a95397430d48471bcc10de3f029254904fe8632dc8bd09d08eae1c"
+    },
+    {
+      "case_id": "mouse_pad_term_positive",
+      "control_id": "mouse_pad_term_positive",
+      "role": "REG061_followup",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 4,
+                  "end": 7,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "request_sha256": "7967027488f9ca0ba9c1f6314ec9050095095ffe1baf62edc621800c3691ef85",
+      "resume_identity": "ad1afc22822ef1c3810a37c919b40ac5c86ed8c1e368e6497bddbd18bb0bfd55"
+    },
+    {
+      "case_id": "mouse_pad_term_positive",
+      "control_id": "mouse_pad_term_positive",
+      "role": "REG061_followup",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 4,
+                  "end": 7,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "request_sha256": "7967027488f9ca0ba9c1f6314ec9050095095ffe1baf62edc621800c3691ef85",
+      "resume_identity": "ad1afc22822ef1c3810a37c919b40ac5c86ed8c1e368e6497bddbd18bb0bfd55"
+    },
+    {
+      "case_id": "mouse_pad_term_positive",
+      "control_id": "mouse_pad_term_positive",
+      "role": "REG061_followup",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 4,
+                  "end": 7,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "request_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "resume_identity": "4103849c49a95397430d48471bcc10de3f029254904fe8632dc8bd09d08eae1c"
+    },
+    {
+      "case_id": "mouse_pad_term_positive",
+      "control_id": "mouse_pad_term_positive",
+      "role": "REG061_followup",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 4,
+                  "end": 7,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "request_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "resume_identity": "4103849c49a95397430d48471bcc10de3f029254904fe8632dc8bd09d08eae1c"
+    },
+    {
+      "case_id": "mouse_pad_term_positive",
+      "control_id": "mouse_pad_term_positive",
+      "role": "REG061_followup",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative",
+              "occurrences": [
+                {
+                  "start": 4,
+                  "end": 7,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "request_sha256": "7967027488f9ca0ba9c1f6314ec9050095095ffe1baf62edc621800c3691ef85",
+      "resume_identity": "ad1afc22822ef1c3810a37c919b40ac5c86ed8c1e368e6497bddbd18bb0bfd55"
+    },
+    {
+      "case_id": "stand_stockout_pad_available",
+      "control_id": "stand_stockout_pad_available",
+      "role": "REG062_unrun",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 7,
+                  "end": 10,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 0,
+                  "end": 4,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "678bf5bf638a988c64933e9b32a08a8a9c746cc5214f304e4a4c27641fa1ebf6",
+      "resume_identity": "3c9c9b561aa0cdd34f9f15e1574d54fd09ee3d0380e5b50bd1c84b3386e9d17d"
+    },
+    {
+      "case_id": "stand_stockout_pad_available",
+      "control_id": "stand_stockout_pad_available",
+      "role": "REG062_unrun",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 7,
+                  "end": 10,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 0,
+                  "end": 4,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "44bc56e30140e23ca713fb75f73079c339450f83a83442a4eff8a3c168623a96",
+      "resume_identity": "b7e2d375b11c5a22e0b0b733f953a37e2691348fa54f2bfa82b91b7d31f5d2da"
+    },
+    {
+      "case_id": "stand_stockout_pad_available",
+      "control_id": "stand_stockout_pad_available",
+      "role": "REG062_unrun",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 7,
+                  "end": 10,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 0,
+                  "end": 4,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "44bc56e30140e23ca713fb75f73079c339450f83a83442a4eff8a3c168623a96",
+      "resume_identity": "b7e2d375b11c5a22e0b0b733f953a37e2691348fa54f2bfa82b91b7d31f5d2da"
+    },
+    {
+      "case_id": "stand_stockout_pad_available",
+      "control_id": "stand_stockout_pad_available",
+      "role": "REG062_unrun",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 7,
+                  "end": 10,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 0,
+                  "end": 4,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "678bf5bf638a988c64933e9b32a08a8a9c746cc5214f304e4a4c27641fa1ebf6",
+      "resume_identity": "3c9c9b561aa0cdd34f9f15e1574d54fd09ee3d0380e5b50bd1c84b3386e9d17d"
+    },
+    {
+      "case_id": "stand_stockout_pad_available",
+      "control_id": "stand_stockout_pad_available",
+      "role": "REG062_unrun",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 7,
+                  "end": 10,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 0,
+                  "end": 4,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "678bf5bf638a988c64933e9b32a08a8a9c746cc5214f304e4a4c27641fa1ebf6",
+      "resume_identity": "3c9c9b561aa0cdd34f9f15e1574d54fd09ee3d0380e5b50bd1c84b3386e9d17d"
+    },
+    {
+      "case_id": "stand_stockout_pad_available",
+      "control_id": "stand_stockout_pad_available",
+      "role": "REG062_unrun",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 7,
+                  "end": 10,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 0,
+                  "end": 4,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "44bc56e30140e23ca713fb75f73079c339450f83a83442a4eff8a3c168623a96",
+      "resume_identity": "b7e2d375b11c5a22e0b0b733f953a37e2691348fa54f2bfa82b91b7d31f5d2da"
+    },
+    {
+      "case_id": "pad_bought_stand_not_bought",
+      "control_id": "pad_bought_stand_not_bought",
+      "role": "REG062_unrun",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 3,
+                  "end": 6,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 11,
+                  "end": 15,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "cea8726ac9096b9bdd8ff3eea4cce76ed2ec55cf48cf35eb1a8996733db8dd7a",
+      "resume_identity": "c7a355974b29b756313d7f4a5462ef1320d58e0fe273757b49468599462e7d5e"
+    },
+    {
+      "case_id": "pad_bought_stand_not_bought",
+      "control_id": "pad_bought_stand_not_bought",
+      "role": "REG062_unrun",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 3,
+                  "end": 6,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 11,
+                  "end": 15,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "6c9698fd7838dd68e402455878b970d8cd9184975103d09312382963995a087c",
+      "resume_identity": "98a4f0875d1fa0c57e2b096e5deefbea495937a1d961766a205d53369cff449d"
+    },
+    {
+      "case_id": "pad_bought_stand_not_bought",
+      "control_id": "pad_bought_stand_not_bought",
+      "role": "REG062_unrun",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 3,
+                  "end": 6,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 11,
+                  "end": 15,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "6c9698fd7838dd68e402455878b970d8cd9184975103d09312382963995a087c",
+      "resume_identity": "98a4f0875d1fa0c57e2b096e5deefbea495937a1d961766a205d53369cff449d"
+    },
+    {
+      "case_id": "pad_bought_stand_not_bought",
+      "control_id": "pad_bought_stand_not_bought",
+      "role": "REG062_unrun",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 3,
+                  "end": 6,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 11,
+                  "end": 15,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "cea8726ac9096b9bdd8ff3eea4cce76ed2ec55cf48cf35eb1a8996733db8dd7a",
+      "resume_identity": "c7a355974b29b756313d7f4a5462ef1320d58e0fe273757b49468599462e7d5e"
+    },
+    {
+      "case_id": "pad_bought_stand_not_bought",
+      "control_id": "pad_bought_stand_not_bought",
+      "role": "REG062_unrun",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 3,
+                  "end": 6,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 11,
+                  "end": 15,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "cea8726ac9096b9bdd8ff3eea4cce76ed2ec55cf48cf35eb1a8996733db8dd7a",
+      "resume_identity": "c7a355974b29b756313d7f4a5462ef1320d58e0fe273757b49468599462e7d5e"
+    },
+    {
+      "case_id": "pad_bought_stand_not_bought",
+      "control_id": "pad_bought_stand_not_bought",
+      "role": "REG062_unrun",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 3,
+                  "end": 6,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 11,
+                  "end": 15,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "6c9698fd7838dd68e402455878b970d8cd9184975103d09312382963995a087c",
+      "resume_identity": "98a4f0875d1fa0c57e2b096e5deefbea495937a1d961766a205d53369cff449d"
+    },
+    {
+      "case_id": "stand_only_available",
+      "control_id": "stand_only_available",
+      "role": "REG062_unrun",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "7cb0f1c0b8a4809831216817293b414952acc6432aa43a01a837cf2538173a5c",
+      "resume_identity": "21ff03cd0ab92f89dbf36e1eb167a29444e848d03c392629a443aa7805839594"
+    },
+    {
+      "case_id": "stand_only_available",
+      "control_id": "stand_only_available",
+      "role": "REG062_unrun",
+      "run": 1,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "7cb0f1c0b8a4809831216817293b414952acc6432aa43a01a837cf2538173a5c",
+      "resume_identity": "21ff03cd0ab92f89dbf36e1eb167a29444e848d03c392629a443aa7805839594"
+    },
+    {
+      "case_id": "stand_only_available",
+      "control_id": "stand_only_available",
+      "role": "REG062_unrun",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "7cb0f1c0b8a4809831216817293b414952acc6432aa43a01a837cf2538173a5c",
+      "resume_identity": "21ff03cd0ab92f89dbf36e1eb167a29444e848d03c392629a443aa7805839594"
+    },
+    {
+      "case_id": "stand_only_available",
+      "control_id": "stand_only_available",
+      "role": "REG062_unrun",
+      "run": 2,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "7cb0f1c0b8a4809831216817293b414952acc6432aa43a01a837cf2538173a5c",
+      "resume_identity": "21ff03cd0ab92f89dbf36e1eb167a29444e848d03c392629a443aa7805839594"
+    },
+    {
+      "case_id": "stand_only_available",
+      "control_id": "stand_only_available",
+      "role": "REG062_unrun",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "7cb0f1c0b8a4809831216817293b414952acc6432aa43a01a837cf2538173a5c",
+      "resume_identity": "21ff03cd0ab92f89dbf36e1eb167a29444e848d03c392629a443aa7805839594"
+    },
+    {
+      "case_id": "stand_only_available",
+      "control_id": "stand_only_available",
+      "role": "REG062_unrun",
+      "run": 3,
+      "cue_id": 267,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "7cb0f1c0b8a4809831216817293b414952acc6432aa43a01a837cf2538173a5c",
+      "resume_identity": "21ff03cd0ab92f89dbf36e1eb167a29444e848d03c392629a443aa7805839594"
+    },
+    {
+      "case_id": "reverse_availability_at_start",
+      "control_id": "reverse_availability_at_start",
+      "role": "reversed_contrast_beginning_seam",
+      "run": 1,
+      "cue_id": 1,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 1,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 9,
+                  "end": 12,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 0,
+                  "end": 4,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "7be5abee76c6871cb336409a60e2c573ce1e1bb02a758263fb6f9c48ff341d79",
+      "resume_identity": "70354fb78d89ae051dcd9df82421c2dc13bd2afdc99dc8c969adf9bce46b8d3d"
+    },
+    {
+      "case_id": "reverse_availability_at_start",
+      "control_id": "reverse_availability_at_start",
+      "role": "reversed_contrast_beginning_seam",
+      "run": 1,
+      "cue_id": 1,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 1,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 9,
+                  "end": 12,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 0,
+                  "end": 4,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "88424f110f56e5e9da06f0cadb85a08d4f179e284ae099ce55a318afa75d72ff",
+      "resume_identity": "34236a900244a0be6010e108806ee70cfd976759db68fcb953c1eb00d8b4d505"
+    },
+    {
+      "case_id": "reverse_availability_at_start",
+      "control_id": "reverse_availability_at_start",
+      "role": "reversed_contrast_beginning_seam",
+      "run": 2,
+      "cue_id": 1,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 1,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 9,
+                  "end": 12,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 0,
+                  "end": 4,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "88424f110f56e5e9da06f0cadb85a08d4f179e284ae099ce55a318afa75d72ff",
+      "resume_identity": "34236a900244a0be6010e108806ee70cfd976759db68fcb953c1eb00d8b4d505"
+    },
+    {
+      "case_id": "reverse_availability_at_start",
+      "control_id": "reverse_availability_at_start",
+      "role": "reversed_contrast_beginning_seam",
+      "run": 2,
+      "cue_id": 1,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 1,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 9,
+                  "end": 12,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 0,
+                  "end": 4,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "7be5abee76c6871cb336409a60e2c573ce1e1bb02a758263fb6f9c48ff341d79",
+      "resume_identity": "70354fb78d89ae051dcd9df82421c2dc13bd2afdc99dc8c969adf9bce46b8d3d"
+    },
+    {
+      "case_id": "reverse_availability_at_start",
+      "control_id": "reverse_availability_at_start",
+      "role": "reversed_contrast_beginning_seam",
+      "run": 3,
+      "cue_id": 1,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 1,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 9,
+                  "end": 12,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 0,
+                  "end": 4,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "7be5abee76c6871cb336409a60e2c573ce1e1bb02a758263fb6f9c48ff341d79",
+      "resume_identity": "70354fb78d89ae051dcd9df82421c2dc13bd2afdc99dc8c969adf9bce46b8d3d"
+    },
+    {
+      "case_id": "reverse_availability_at_start",
+      "control_id": "reverse_availability_at_start",
+      "role": "reversed_contrast_beginning_seam",
+      "run": 3,
+      "cue_id": 1,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 1,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 9,
+                  "end": 12,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 0,
+                  "end": 4,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "88424f110f56e5e9da06f0cadb85a08d4f179e284ae099ce55a318afa75d72ff",
+      "resume_identity": "34236a900244a0be6010e108806ee70cfd976759db68fcb953c1eb00d8b4d505"
+    },
+    {
+      "case_id": "speaker_split_at_end",
+      "control_id": "speaker_split_at_end",
+      "role": "distinct_speakers_end_seam",
+      "run": 1,
+      "cue_id": 268,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 268,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 2,
+                  "end": 5,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 10,
+                  "end": 14,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "20aa37161eecdd336d67415906db04c8c1067a26b95a6808a96973c9affbbc17",
+      "resume_identity": "734040a8df284074449c66bf58b9312de8b634d5368e695d826a9ddfc636776a"
+    },
+    {
+      "case_id": "speaker_split_at_end",
+      "control_id": "speaker_split_at_end",
+      "role": "distinct_speakers_end_seam",
+      "run": 1,
+      "cue_id": 268,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 268,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 2,
+                  "end": 5,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 10,
+                  "end": 14,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "7da0d9b98b91fff94de0e1d8e2d94340e13b903a886fff1441919e1d4e11bf97",
+      "resume_identity": "40c49447cd32076c5b6448a3dba243261fb6e93f2ef711b26f4c669201026f1c"
+    },
+    {
+      "case_id": "speaker_split_at_end",
+      "control_id": "speaker_split_at_end",
+      "role": "distinct_speakers_end_seam",
+      "run": 2,
+      "cue_id": 268,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 268,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 2,
+                  "end": 5,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 10,
+                  "end": 14,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "7da0d9b98b91fff94de0e1d8e2d94340e13b903a886fff1441919e1d4e11bf97",
+      "resume_identity": "40c49447cd32076c5b6448a3dba243261fb6e93f2ef711b26f4c669201026f1c"
+    },
+    {
+      "case_id": "speaker_split_at_end",
+      "control_id": "speaker_split_at_end",
+      "role": "distinct_speakers_end_seam",
+      "run": 2,
+      "cue_id": 268,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 268,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 2,
+                  "end": 5,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 10,
+                  "end": 14,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "20aa37161eecdd336d67415906db04c8c1067a26b95a6808a96973c9affbbc17",
+      "resume_identity": "734040a8df284074449c66bf58b9312de8b634d5368e695d826a9ddfc636776a"
+    },
+    {
+      "case_id": "speaker_split_at_end",
+      "control_id": "speaker_split_at_end",
+      "role": "distinct_speakers_end_seam",
+      "run": 3,
+      "cue_id": 268,
+      "line_index": 0,
+      "variant": "occurrence",
+      "decisions": [
+        {
+          "segment_id": 268,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 2,
+                  "end": 5,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 10,
+                  "end": 14,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "20aa37161eecdd336d67415906db04c8c1067a26b95a6808a96973c9affbbc17",
+      "resume_identity": "734040a8df284074449c66bf58b9312de8b634d5368e695d826a9ddfc636776a"
+    },
+    {
+      "case_id": "speaker_split_at_end",
+      "control_id": "speaker_split_at_end",
+      "role": "distinct_speakers_end_seam",
+      "run": 3,
+      "cue_id": 268,
+      "line_index": 0,
+      "variant": "baseline",
+      "decisions": [
+        {
+          "segment_id": 268,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent",
+              "occurrences": [],
+              "distinct_referents": []
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast",
+              "occurrences": [
+                {
+                  "start": 2,
+                  "end": 5,
+                  "source": "鼠标垫"
+                }
+              ],
+              "distinct_referents": [
+                {
+                  "start": 10,
+                  "end": 14,
+                  "source": "鼠标支架",
+                  "sense": "mouse stand, a separate accessory"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "original_reg061_baseline_sha256": null,
+      "request_sha256": "7da0d9b98b91fff94de0e1d8e2d94340e13b903a886fff1441919e1d4e11bf97",
+      "resume_identity": "40c49447cd32076c5b6448a3dba243261fb6e93f2ef711b26f4c669201026f1c"
+    }
+  ]
+}
