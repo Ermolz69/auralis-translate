@@ -1,0 +1,1088 @@
+{
+  "schema_version": 1,
+  "experiment": "reg-061-target-terms-v1",
+  "status": "complete_responses_unreviewed",
+  "decision": "reject_keep_product_v8",
+  "split": "authored_development_not_holdout",
+  "private_report": ".cache/eval/reg-061-target-terms-v1/attempt-OuGsSV/report.json",
+  "private_report_sha256": "fb30997468ca7e71fcafb7d2f97658849618d807a0558249449cbae568fd5423",
+  "journal_sha256": "aaa03a979fb76a136f57e960f8834f91da9d2906107ae843b7958a724cd8d2b0",
+  "freeze_sha256": "4c6ccd046f2c9053bfd1f9581055bc297ec3ec765a2e6384443814d2ecd1837b",
+  "identities": {
+    "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+    "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+    "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+    "manifest_sha256": "a748572cea20fc46c53ced5c39c5b8e3fb85887c2e90d559a27fd41ea818f2bc",
+    "policy_sha256": "025a822db1de5b91ce455236324876b5a4314328861241420016bc0adfc217cc",
+    "implementation_sha256": "6e55f6d1a5b2826a63284d6e7cd334e31ab06b72743ff16fcfd1284601dff0f4"
+  },
+  "sourceHashes": {
+    "eval/profiles/reg-061-target-terms-v1.json": "025a822db1de5b91ce455236324876b5a4314328861241420016bc0adfc217cc",
+    "eval/scripts/target-term-scope.mjs": "6e55f6d1a5b2826a63284d6e7cd334e31ab06b72743ff16fcfd1284601dff0f4",
+    "eval/scripts/probe-reg-061-target-terms-v1.mjs": "f1b5037ec6ba10484f8983717c2ed82bbc3b4d26ded2817ba1b053d262b0a1ac",
+    "eval/scripts/local-process.mjs": "86cdd5abdbb435f26408116f077515417297a02fdd5a223abb4f9d388fd9fb05",
+    "eval/scripts/runtime-sampler.mjs": "870726c41dc93fcb13beccc313c2229ac9c7b519ceb1827f67aa7bebf034f8b5",
+    "eval/experiments/2026-10-03-reg-061-target-terms-v1-plan.md": "878b0f1b3610cfd1f83147f97d83ae6eeb3b2ab79b6ca4987b8fa301065be67f"
+  },
+  "code_commit": "b26092fd6949c25e18765eba0349fd7ebebbce21",
+  "dirty_state": " M crates/auralis-translation/src/domain/contract_error.rs\n M crates/auralis-translation/src/domain/mod.rs\n M crates/auralis-translation/src/lib.rs\n M docs/architecture/014-result-history-selection.md\n?? crates/auralis-translation/src/domain/name_registry/\n?? docs/architecture/016-source-name-registry.md\n",
+  "started_at": "2026-10-03T06:36:58.844Z",
+  "finished_at": "2026-10-03T06:37:38.925Z",
+  "timezone_offset": "+03:00",
+  "wall_elapsed_ms": 40081,
+  "limits": {
+    "chats_per_arm": 30,
+    "preflights_per_arm": 60,
+    "per_chat_ms": 120000,
+    "per_preflight_ms": 15000,
+    "readiness_ms": 180000,
+    "wall_ms": 600000,
+    "retries": 0,
+    "context_tokens": 2048,
+    "response_tokens": 256,
+    "safety_tokens": 64
+  },
+  "chats": 30,
+  "preflights": 60,
+  "structurally_accepted": 30,
+  "identical_pairs": 8,
+  "checkpoint_count": 0,
+  "published_results": 0,
+  "totals": {
+    "baseline": {
+      "prompt_tokens": 4351,
+      "completion_tokens": 756,
+      "chat_elapsed_ms": 13808
+    },
+    "scoped": {
+      "prompt_tokens": 4749,
+      "completion_tokens": 752,
+      "chat_elapsed_ms": 13724
+    }
+  },
+  "sampled_max_process_working_set_bytes": 5066006528,
+  "sampled_max_device_gpu_mib": 5884,
+  "resource_sample_count": 6,
+  "sampling_interval_ms": 5000,
+  "sampler_errors": [],
+  "observer_overhead_ms": null,
+  "observer_overhead_reason": "Not measured; samples are lower-bound process peaks and whole-device GPU use.",
+  "ai_review_sha256": "41e626de96901cbf717d487c42fe8ffe4e1c03571dd6b82b760ab1909579a71a",
+  "human_bilingual_review_count": 0,
+  "errors": [],
+  "rows": [
+    {
+      "id": "multicore_positive",
+      "variant": "baseline",
+      "source": "多核测试得分达到一万分。",
+      "expected_meaning": "The multi-core test score reached ten thousand.",
+      "candidate": "Результаты тестов на многопоточную работу достигли десяти тысяч баллов.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "request_sha256": "894b8d1c6fe0c33a8884e59020f5d8faf90de56a064e739181c45284f0e8be3a",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":143,\\\"text\\\":\\\"Результаты тестов на многопоточную работу достигли десяти тысяч баллов.\\\"}]}\"}}],\"created\":1791009429,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":52,\"prompt_tokens\":281,\"total_tokens\":333,\"prompt_tokens_details\":{\"cached_tokens\":0}},\"id\":\"chatcmpl-WSXbcLPAfTwuzK7p9p6lqHdM2e7s2z6W\",\"timings\":{\"cache_n\":0,\"prompt_n\":281,\"prompt_ms\":377.992,\"prompt_per_token_ms\":1.345167259786477,\"prompt_per_second\":743.4019767614129,\"predicted_n\":52,\"predicted_ms\":860.397,\"predicted_per_token_ms\":16.870529411764707,\"predicted_per_second\":59.274962604472115}}",
+      "raw_response_sha256": "a6693d3b6208b2945775ea7dc22ff1319e5ff1f0545934971deac86b696a0e4a",
+      "prompt_tokens": 281,
+      "completion_tokens": 52,
+      "chat_elapsed_ms": 1259,
+      "error": null
+    },
+    {
+      "id": "multicore_positive",
+      "variant": "scoped",
+      "source": "多核测试得分达到一万分。",
+      "expected_meaning": "The multi-core test score reached ten thousand.",
+      "candidate": "Рейтинг в тестах на многоядерность достиг десяти тысяч баллов.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "request_sha256": "574ffe7cb2db8c540215b018ea7e3ec9bb3ba196f516f5df1a6d685266aa07ec",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":143,\\\"text\\\":\\\"Рейтинг в тестах на многоядерность достиг десяти тысяч баллов.\\\"}]}\"}}],\"created\":1791009430,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":51,\"prompt_tokens\":335,\"total_tokens\":386,\"prompt_tokens_details\":{\"cached_tokens\":114}},\"id\":\"chatcmpl-Q90MgrhmrrsFm9JWwqn2nxqtCwYb8LvL\",\"timings\":{\"cache_n\":114,\"prompt_n\":221,\"prompt_ms\":85.698,\"prompt_per_token_ms\":0.38777375565610855,\"prompt_per_second\":2578.8233097621887,\"predicted_n\":51,\"predicted_ms\":851.52,\"predicted_per_token_ms\":17.0304,\"predicted_per_second\":58.718526869597895}}",
+      "raw_response_sha256": "5fee7bb31c1d69e6f4c618f072d5ce0e09997f2cb257892cc181cbc0934d7155",
+      "prompt_tokens": 335,
+      "completion_tokens": 51,
+      "chat_elapsed_ms": 947,
+      "error": null
+    },
+    {
+      "id": "multiprocessor_negative",
+      "variant": "scoped",
+      "source": "这是一套多处理器系统。",
+      "expected_meaning": "This is a multi-processor system.",
+      "candidate": "Это многопроцессорная система.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "request_sha256": "7ff1ccb1c2716a63f663a4bacdff5273f2ed87c10ba81bf7c713aea98752d917",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":143,\\\"text\\\":\\\"Это многопроцессорная система.\\\"}]}\"}}],\"created\":1791009431,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":35,\"prompt_tokens\":277,\"total_tokens\":312,\"prompt_tokens_details\":{\"cached_tokens\":114}},\"id\":\"chatcmpl-6OZ9VeM7hd7tGMBgyDwoqWaVJPhyKSNR\",\"timings\":{\"cache_n\":114,\"prompt_n\":163,\"prompt_ms\":72.695,\"prompt_per_token_ms\":0.4459815950920245,\"prompt_per_second\":2242.2449962170717,\"predicted_n\":35,\"predicted_ms\":580.186,\"predicted_per_token_ms\":17.06429411764706,\"predicted_per_second\":58.60189663314868}}",
+      "raw_response_sha256": "3ae6a6c3ff359eee959277b116f45978014a7f7b25e0626d10556b2aa40d7072",
+      "prompt_tokens": 277,
+      "completion_tokens": 35,
+      "chat_elapsed_ms": 660,
+      "error": null
+    },
+    {
+      "id": "multiprocessor_negative",
+      "variant": "baseline",
+      "source": "这是一套多处理器系统。",
+      "expected_meaning": "This is a multi-processor system.",
+      "candidate": "Это система с несколькими процессорами.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "request_sha256": "7ff1ccb1c2716a63f663a4bacdff5273f2ed87c10ba81bf7c713aea98752d917",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":143,\\\"text\\\":\\\"Это система с несколькими процессорами.\\\"}]}\"}}],\"created\":1791009432,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":37,\"prompt_tokens\":277,\"total_tokens\":314,\"prompt_tokens_details\":{\"cached_tokens\":276}},\"id\":\"chatcmpl-FdDsizlcMtSz3iKrtFz5t5RiEu1WcViz\",\"timings\":{\"cache_n\":276,\"prompt_n\":1,\"prompt_ms\":16.693,\"prompt_per_token_ms\":16.693,\"prompt_per_second\":59.90534954771461,\"predicted_n\":37,\"predicted_ms\":605.859,\"predicted_per_token_ms\":16.829416666666667,\"predicted_per_second\":59.41976598515496}}",
+      "raw_response_sha256": "a44d77f3ecc0feb928532f17feba535be6f279f5264d435afe1b1e0e64e86a2b",
+      "prompt_tokens": 277,
+      "completion_tokens": 37,
+      "chat_elapsed_ms": 629,
+      "error": null
+    },
+    {
+      "id": "multicore_extra",
+      "variant": "baseline",
+      "source": "这颗芯片有八个核心，但设备只有一个处理器。",
+      "expected_meaning": "The chip has eight cores, but the device has only one processor.",
+      "candidate": "У этого чипа восемь ядер, но у устройства только один процессор.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "request_sha256": "0797dbc0313b3ad8fa42971ffd9b9df35ccb7303fa92affc8a569d93c2fcc764",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":143,\\\"text\\\":\\\"У этого чипа восемь ядер, но у устройства только один процессор.\\\"}]}\"}}],\"created\":1791009433,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":48,\"prompt_tokens\":289,\"total_tokens\":337,\"prompt_tokens_details\":{\"cached_tokens\":161}},\"id\":\"chatcmpl-PrtV3ls5DtkhpOzwhcFus796zIYh5Mke\",\"timings\":{\"cache_n\":161,\"prompt_n\":128,\"prompt_ms\":55.839,\"prompt_per_token_ms\":0.4362421875,\"prompt_per_second\":2292.304661616433,\"predicted_n\":48,\"predicted_ms\":791.584,\"predicted_per_token_ms\":16.842212765957445,\"predicted_per_second\":59.374621013057364}}",
+      "raw_response_sha256": "d6179a7c2b2abef353cf4c86b07a7ed1c12c62756c6a1e804727027eb218bae5",
+      "prompt_tokens": 289,
+      "completion_tokens": 48,
+      "chat_elapsed_ms": 864,
+      "error": null
+    },
+    {
+      "id": "multicore_extra",
+      "variant": "scoped",
+      "source": "这颗芯片有八个核心，但设备只有一个处理器。",
+      "expected_meaning": "The chip has eight cores, but the device has only one processor.",
+      "candidate": "У этого чипа восемь ядер, но у устройства только один процессор.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "request_sha256": "0797dbc0313b3ad8fa42971ffd9b9df35ccb7303fa92affc8a569d93c2fcc764",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":143,\\\"text\\\":\\\"У этого чипа восемь ядер, но у устройства только один процессор.\\\"}]}\"}}],\"created\":1791009434,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":48,\"prompt_tokens\":289,\"total_tokens\":337,\"prompt_tokens_details\":{\"cached_tokens\":288}},\"id\":\"chatcmpl-cRAyMhvRAhCHZDxBqBkLG7QqLYcftdwA\",\"timings\":{\"cache_n\":288,\"prompt_n\":1,\"prompt_ms\":19.091,\"prompt_per_token_ms\":19.091,\"prompt_per_second\":52.38070294903358,\"predicted_n\":48,\"predicted_ms\":801.35,\"predicted_per_token_ms\":17.05,\"predicted_per_second\":58.65102639296187}}",
+      "raw_response_sha256": "c931cffeb58f02df9e2e866a37b3bd4b4fec316cd5c15b6faca1f4673d27ac65",
+      "prompt_tokens": 289,
+      "completion_tokens": 48,
+      "chat_elapsed_ms": 829,
+      "error": null
+    },
+    {
+      "id": "multicore_thread_contrast",
+      "variant": "scoped",
+      "source": "多核测试和多线程测试不是同一项，前者高了两分。",
+      "expected_meaning": "Multi-core and multi-thread tests are distinct; the former was two points higher.",
+      "candidate": "Тесты на множественные ядра и тесты на множественные потоки — это не одно и то же; результаты первых на два балла выше.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "request_sha256": "abfc2400c90b5d037f31dc201ac7201ebba280c2879e5de3727285baddee67ff",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":143,\\\"text\\\":\\\"Тесты на множественные ядра и тесты на множественные потоки — это не одно и то же; результаты первых на два балла выше.\\\"}]}\"}}],\"created\":1791009435,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":70,\"prompt_tokens\":297,\"total_tokens\":367,\"prompt_tokens_details\":{\"cached_tokens\":161}},\"id\":\"chatcmpl-MjQYRlKyP8GG7fh0O4pREykdBmbROyt3\",\"timings\":{\"cache_n\":161,\"prompt_n\":136,\"prompt_ms\":69.269,\"prompt_per_token_ms\":0.5093308823529412,\"prompt_per_second\":1963.3602332933922,\"predicted_n\":70,\"predicted_ms\":1158.819,\"predicted_per_token_ms\":16.794478260869564,\"predicted_per_second\":59.54337994112972}}",
+      "raw_response_sha256": "d457647d251ac8811d5051169eb3a547cdb6acec0a4d2b15cd86ca385d476f52",
+      "prompt_tokens": 297,
+      "completion_tokens": 70,
+      "chat_elapsed_ms": 1247,
+      "error": null
+    },
+    {
+      "id": "multicore_thread_contrast",
+      "variant": "baseline",
+      "source": "多核测试和多线程测试不是同一项，前者高了两分。",
+      "expected_meaning": "Multi-core and multi-thread tests are distinct; the former was two points higher.",
+      "candidate": "Тесты на множественные ядра и тесты на множественные потоки — это не одно и то же; результаты первых на два балла выше.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "request_sha256": "abfc2400c90b5d037f31dc201ac7201ebba280c2879e5de3727285baddee67ff",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":143,\\\"text\\\":\\\"Тесты на множественные ядра и тесты на множественные потоки — это не одно и то же; результаты первых на два балла выше.\\\"}]}\"}}],\"created\":1791009436,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":70,\"prompt_tokens\":297,\"total_tokens\":367,\"prompt_tokens_details\":{\"cached_tokens\":296}},\"id\":\"chatcmpl-xQrspYGv9vnICpS8nzJ7c7VyzUmuPzVH\",\"timings\":{\"cache_n\":296,\"prompt_n\":1,\"prompt_ms\":16.909,\"prompt_per_token_ms\":16.909,\"prompt_per_second\":59.14010290377906,\"predicted_n\":70,\"predicted_ms\":1134.63,\"predicted_per_token_ms\":16.44391304347826,\"predicted_per_second\":60.81277597102138}}",
+      "raw_response_sha256": "e07227053ba02897813fedb7d0110bb831117b7fd0fbf80eb4c74e390359c3ab",
+      "prompt_tokens": 297,
+      "completion_tokens": 70,
+      "chat_elapsed_ms": 1160,
+      "error": null
+    },
+    {
+      "id": "multithread_negative",
+      "variant": "baseline",
+      "source": "这里只报告多线程成绩，没有多核成绩。",
+      "expected_meaning": "Only the multi-thread score is reported here, not the multi-core score.",
+      "candidate": "Здесь отображаются только результаты тестирования с множественными потоками, результаты с множественными ядрами не показываются.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "request_sha256": "c69d273455205bb54864a1a0fa8285a939ff7a273ced1f27a0228047356e12bb",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":143,\\\"text\\\":\\\"Здесь отображаются только результаты тестирования с множественными потоками, результаты с множественными ядрами не показываются.\\\"}]}\"}}],\"created\":1791009438,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":69,\"prompt_tokens\":289,\"total_tokens\":358,\"prompt_tokens_details\":{\"cached_tokens\":161}},\"id\":\"chatcmpl-uEExHNjfYF4dC7L2lEwJFZGCQWuQgsFf\",\"timings\":{\"cache_n\":161,\"prompt_n\":128,\"prompt_ms\":58.675,\"prompt_per_token_ms\":0.4583984375,\"prompt_per_second\":2181.5083084789094,\"predicted_n\":69,\"predicted_ms\":1140.641,\"predicted_per_token_ms\":16.774132352941177,\"predicted_per_second\":59.61560210443075}}",
+      "raw_response_sha256": "80f5cf8339ac6949cc2eacd2d0e70a59d44e313c886006099276d9e50663a5eb",
+      "prompt_tokens": 289,
+      "completion_tokens": 69,
+      "chat_elapsed_ms": 1216,
+      "error": null
+    },
+    {
+      "id": "multithread_negative",
+      "variant": "scoped",
+      "source": "这里只报告多线程成绩，没有多核成绩。",
+      "expected_meaning": "Only the multi-thread score is reported here, not the multi-core score.",
+      "candidate": "Здесь отчитываются только результаты работы в многопоточном режиме, результаты в многоядерном режиме не показаны.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "request_sha256": "c69d273455205bb54864a1a0fa8285a939ff7a273ced1f27a0228047356e12bb",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":143,\\\"text\\\":\\\"Здесь отчитываются только результаты работы в многопоточном режиме, результаты в многоядерном режиме не показаны.\\\"}]}\"}}],\"created\":1791009439,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":66,\"prompt_tokens\":289,\"total_tokens\":355,\"prompt_tokens_details\":{\"cached_tokens\":288}},\"id\":\"chatcmpl-6DzWIQo1vukzej05t3DomHmQLo0msjWK\",\"timings\":{\"cache_n\":288,\"prompt_n\":1,\"prompt_ms\":15.11,\"prompt_per_token_ms\":15.11,\"prompt_per_second\":66.18133686300463,\"predicted_n\":66,\"predicted_ms\":1050.564,\"predicted_per_token_ms\":16.16252307692308,\"predicted_per_second\":61.87152805540643}}",
+      "raw_response_sha256": "a86b415a8bfe5655d083fbbe2a3fc06c7192ee2d6f10ea2f063190c820ca7563",
+      "prompt_tokens": 289,
+      "completion_tokens": 66,
+      "chat_elapsed_ms": 1083,
+      "error": null
+    },
+    {
+      "id": "mouse_pad_positive",
+      "variant": "scoped",
+      "source": "我们也卖鼠标垫。",
+      "expected_meaning": "We also sell mouse pads.",
+      "candidate": "Мы также продаём коврик для мыши.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "request_sha256": "ed3e2e8b51d034faf7a2fea1de1c909381b47b254bb2052ebcc674ee9dc37636",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":267,\\\"text\\\":\\\"Мы также продаём коврик для мыши.\\\"}]}\"}}],\"created\":1791009439,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":36,\"prompt_tokens\":344,\"total_tokens\":380,\"prompt_tokens_details\":{\"cached_tokens\":114}},\"id\":\"chatcmpl-67Fn8ZHaX1fnZOeF3CQK9GgCuRCQRN0B\",\"timings\":{\"cache_n\":114,\"prompt_n\":230,\"prompt_ms\":91.159,\"prompt_per_token_ms\":0.3963434782608696,\"prompt_per_second\":2523.0640967979025,\"predicted_n\":36,\"predicted_ms\":630.677,\"predicted_per_token_ms\":18.019342857142856,\"predicted_per_second\":55.495919464321666}}",
+      "raw_response_sha256": "6b65765594d40345ed22d47cd1b0587cb06940e63c2700ff1b6fa0507451185e",
+      "prompt_tokens": 344,
+      "completion_tokens": 36,
+      "chat_elapsed_ms": 729,
+      "error": null
+    },
+    {
+      "id": "mouse_pad_positive",
+      "variant": "baseline",
+      "source": "我们也卖鼠标垫。",
+      "expected_meaning": "We also sell mouse pads.",
+      "candidate": "Мы также продаём подставки для мышей.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "request_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":267,\\\"text\\\":\\\"Мы также продаём подставки для мышей.\\\"}]}\"}}],\"created\":1791009440,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":36,\"prompt_tokens\":286,\"total_tokens\":322,\"prompt_tokens_details\":{\"cached_tokens\":114}},\"id\":\"chatcmpl-p5wmQRnev2dnld5NEQl7UWjElzoBEEJw\",\"timings\":{\"cache_n\":114,\"prompt_n\":172,\"prompt_ms\":72.467,\"prompt_per_token_ms\":0.42131976744186045,\"prompt_per_second\":2373.49414216126,\"predicted_n\":36,\"predicted_ms\":620.279,\"predicted_per_token_ms\":17.722257142857142,\"predicted_per_second\":56.42622110372913}}",
+      "raw_response_sha256": "0b6d55843147cf385df98a09c4314d2910a8dd439d284c7e849be52f6c420578",
+      "prompt_tokens": 286,
+      "completion_tokens": 36,
+      "chat_elapsed_ms": 707,
+      "error": null
+    },
+    {
+      "id": "mouse_stand_negative",
+      "variant": "baseline",
+      "source": "我们也卖鼠标支架。",
+      "expected_meaning": "We also sell mouse stands.",
+      "candidate": "Мы также продаём подставки для мышей.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "request_sha256": "f3b520dfb0bb388897904c78f2731e0b2068ea2c0c79a6501ac6b79462020154",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":267,\\\"text\\\":\\\"Мы также продаём подставки для мышей.\\\"}]}\"}}],\"created\":1791009441,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":36,\"prompt_tokens\":286,\"total_tokens\":322,\"prompt_tokens_details\":{\"cached_tokens\":164}},\"id\":\"chatcmpl-xBj1dSRo4ij0XOgREHUFmwR3HknRXLAq\",\"timings\":{\"cache_n\":164,\"prompt_n\":122,\"prompt_ms\":51.404,\"prompt_per_token_ms\":0.421344262295082,\"prompt_per_second\":2373.35615905377,\"predicted_n\":36,\"predicted_ms\":604.771,\"predicted_per_token_ms\":17.279171428571427,\"predicted_per_second\":57.87314537238063}}",
+      "raw_response_sha256": "baa503c4860ea6e2853a91190e55373ea51f0a6fd8b8696a648bfd7b2758112a",
+      "prompt_tokens": 286,
+      "completion_tokens": 36,
+      "chat_elapsed_ms": 667,
+      "error": null
+    },
+    {
+      "id": "mouse_stand_negative",
+      "variant": "scoped",
+      "source": "我们也卖鼠标支架。",
+      "expected_meaning": "We also sell mouse stands.",
+      "candidate": "Мы также продаём подставки для мышей.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "request_sha256": "f3b520dfb0bb388897904c78f2731e0b2068ea2c0c79a6501ac6b79462020154",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":267,\\\"text\\\":\\\"Мы также продаём подставки для мышей.\\\"}]}\"}}],\"created\":1791009442,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":36,\"prompt_tokens\":286,\"total_tokens\":322,\"prompt_tokens_details\":{\"cached_tokens\":285}},\"id\":\"chatcmpl-ValXP2FQZgvtjenL5vazQXkinlopqyGj\",\"timings\":{\"cache_n\":285,\"prompt_n\":1,\"prompt_ms\":17.847,\"prompt_per_token_ms\":17.847,\"prompt_per_second\":56.03182607721185,\"predicted_n\":36,\"predicted_ms\":589.871,\"predicted_per_token_ms\":16.853457142857142,\"predicted_per_second\":59.335007145630144}}",
+      "raw_response_sha256": "f7eb26bd86fc1dbc65701a9fd87820bc61f31afd545c1508066035e1e22297f5",
+      "prompt_tokens": 286,
+      "completion_tokens": 36,
+      "chat_elapsed_ms": 619,
+      "error": null
+    },
+    {
+      "id": "mouse_pad_extra",
+      "variant": "scoped",
+      "source": "盒子里有鼠标垫，没有鼠标支架。",
+      "expected_meaning": "The box contains a mouse pad, not a mouse stand.",
+      "candidate": "В коробке есть коврик для мыши, нет кронштейна для мыши.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "request_sha256": "6c7cfab7a273449bcaaaf7ff7f68b76a555964988c92fc0a9609dca6fb7f0326",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":267,\\\"text\\\":\\\"В коробке есть коврик для мыши, нет кронштейна для мыши.\\\"}]}\"}}],\"created\":1791009443,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":45,\"prompt_tokens\":354,\"total_tokens\":399,\"prompt_tokens_details\":{\"cached_tokens\":114}},\"id\":\"chatcmpl-5mvvIvR9l34ZW3WonHhroggocTnckyfF\",\"timings\":{\"cache_n\":114,\"prompt_n\":240,\"prompt_ms\":95.592,\"prompt_per_token_ms\":0.3983,\"prompt_per_second\":2510.6703489831784,\"predicted_n\":45,\"predicted_ms\":760.557,\"predicted_per_token_ms\":17.285386363636363,\"predicted_per_second\":57.85233716868032}}",
+      "raw_response_sha256": "5c2501bebc7a61f4f1d72b176b63b29c0bc78ae1bc48e7d85e69571b92e0fb05",
+      "prompt_tokens": 354,
+      "completion_tokens": 45,
+      "chat_elapsed_ms": 873,
+      "error": null
+    },
+    {
+      "id": "mouse_pad_extra",
+      "variant": "baseline",
+      "source": "盒子里有鼠标垫，没有鼠标支架。",
+      "expected_meaning": "The box contains a mouse pad, not a mouse stand.",
+      "candidate": "В коробке есть подкладка для мыши, но нет стойки для мыши.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "request_sha256": "c37a880fadb3476e6d324dce76a38e943a1276edb1d4f4851bc9323bbb73bf7e",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":267,\\\"text\\\":\\\"В коробке есть подкладка для мыши, но нет стойки для мыши.\\\"}]}\"}}],\"created\":1791009443,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":43,\"prompt_tokens\":296,\"total_tokens\":339,\"prompt_tokens_details\":{\"cached_tokens\":114}},\"id\":\"chatcmpl-zJESvp0zLP4zlxRKOzRuj8a62xTElpoo\",\"timings\":{\"cache_n\":114,\"prompt_n\":182,\"prompt_ms\":75.454,\"prompt_per_token_ms\":0.41458241758241754,\"prompt_per_second\":2412.065629390092,\"predicted_n\":43,\"predicted_ms\":733.078,\"predicted_per_token_ms\":17.454238095238093,\"predicted_per_second\":57.29267554066553}}",
+      "raw_response_sha256": "2ce8b8a9ec3a976667e78a9cc6fb97da8ae4e9ca8281d4496882e294a8e343f5",
+      "prompt_tokens": 296,
+      "completion_tokens": 43,
+      "chat_elapsed_ms": 816,
+      "error": null
+    },
+    {
+      "id": "mouse_pad_price_contrast",
+      "variant": "baseline",
+      "source": "鼠标垫比鼠标支架便宜二十元。",
+      "expected_meaning": "The mouse pad is twenty yuan cheaper than the mouse stand.",
+      "candidate": "Коврик для мыши стоит на двадцать юаней дешевле, чем подставка для мыши.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "request_sha256": "0724aeb0d8bf9fd2a4d12db7408df61d057c2f4f30a921c2328341c5a139393a",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":267,\\\"text\\\":\\\"Коврик для мыши стоит на двадцать юаней дешевле, чем подставка для мыши.\\\"}]}\"}}],\"created\":1791009444,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":54,\"prompt_tokens\":294,\"total_tokens\":348,\"prompt_tokens_details\":{\"cached_tokens\":161}},\"id\":\"chatcmpl-i1gnzP17VGMsAmMgxOmDzOupZOasRfE3\",\"timings\":{\"cache_n\":161,\"prompt_n\":133,\"prompt_ms\":65.975,\"prompt_per_token_ms\":0.4960526315789473,\"prompt_per_second\":2015.9151193633952,\"predicted_n\":54,\"predicted_ms\":890.933,\"predicted_per_token_ms\":16.810056603773585,\"predicted_per_second\":59.4881994493413}}",
+      "raw_response_sha256": "9e20b7564f8446c17bede3081baf19689509216f9e13a30257561e5bc00532b3",
+      "prompt_tokens": 294,
+      "completion_tokens": 54,
+      "chat_elapsed_ms": 965,
+      "error": null
+    },
+    {
+      "id": "mouse_pad_price_contrast",
+      "variant": "scoped",
+      "source": "鼠标垫比鼠标支架便宜二十元。",
+      "expected_meaning": "The mouse pad is twenty yuan cheaper than the mouse stand.",
+      "candidate": "Коврик для мыши стоит на двадцать юаней дешевле, чем стойка для мыши.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "request_sha256": "36c65b4904479da7c245019105964e6dc6b4e8ddb2a1f5a3068bc8e0a87ed5b3",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":267,\\\"text\\\":\\\"Коврик для мыши стоит на двадцать юаней дешевле, чем стойка для мыши.\\\"}]}\"}}],\"created\":1791009446,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":54,\"prompt_tokens\":352,\"total_tokens\":406,\"prompt_tokens_details\":{\"cached_tokens\":114}},\"id\":\"chatcmpl-ME4uBOw17YFuILos44NsBsV09NFsCaVB\",\"timings\":{\"cache_n\":114,\"prompt_n\":238,\"prompt_ms\":99.753,\"prompt_per_token_ms\":0.4191302521008403,\"prompt_per_second\":2385.893156095556,\"predicted_n\":54,\"predicted_ms\":909.099,\"predicted_per_token_ms\":17.15281132075472,\"predicted_per_second\":58.2994811346179}}",
+      "raw_response_sha256": "26115ed3c54597be148999b54082dbcd024fe10579961e16b0e19c2e4ba0c350",
+      "prompt_tokens": 352,
+      "completion_tokens": 54,
+      "chat_elapsed_ms": 1020,
+      "error": null
+    },
+    {
+      "id": "stand_only_new",
+      "variant": "scoped",
+      "source": "鼠标支架缺货了，但别把它叫作鼠标垫。",
+      "expected_meaning": "The mouse stand is out of stock; do not call it a mouse pad.",
+      "candidate": "Подставка для мыши находится в нехватке, но её не следует называть мышью-подушкой.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "metalinguistic_mention"
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "request_sha256": "90bc3b5cda13618a6e733665ed2de34fe9adf5d9594878b3d43483a8720d68aa",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":267,\\\"text\\\":\\\"Подставка для мыши находится в нехватке, но её не следует называть мышью-подушкой.\\\"}]}\"}}],\"created\":1791009447,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":59,\"prompt_tokens\":304,\"total_tokens\":363,\"prompt_tokens_details\":{\"cached_tokens\":114}},\"id\":\"chatcmpl-IczYtzUPHFWhGK6EGVYuxdxblMhiGMSI\",\"timings\":{\"cache_n\":114,\"prompt_n\":190,\"prompt_ms\":73.488,\"prompt_per_token_ms\":0.38677894736842106,\"prompt_per_second\":2585.456128891792,\"predicted_n\":59,\"predicted_ms\":999.086,\"predicted_per_token_ms\":17.225620689655173,\"predicted_per_second\":58.053060497294524}}",
+      "raw_response_sha256": "2387e702fa51c33346c0acb40f55fbadb6575625ea70d795b0b9a9e4881742be",
+      "prompt_tokens": 304,
+      "completion_tokens": 59,
+      "chat_elapsed_ms": 1082,
+      "error": null
+    },
+    {
+      "id": "stand_only_new",
+      "variant": "baseline",
+      "source": "鼠标支架缺货了，但别把它叫作鼠标垫。",
+      "expected_meaning": "The mouse stand is out of stock; do not call it a mouse pad.",
+      "candidate": "Подставка для мыши отсутствует в наличии, но её не следует называть мышью-подушкой.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "metalinguistic_mention"
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "request_sha256": "90bc3b5cda13618a6e733665ed2de34fe9adf5d9594878b3d43483a8720d68aa",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":267,\\\"text\\\":\\\"Подставка для мыши отсутствует в наличии, но её не следует называть мышью-подушкой.\\\"}]}\"}}],\"created\":1791009448,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":59,\"prompt_tokens\":304,\"total_tokens\":363,\"prompt_tokens_details\":{\"cached_tokens\":303}},\"id\":\"chatcmpl-hGGHRIbPSwjDd8SvZITuuesTS1fxypLK\",\"timings\":{\"cache_n\":303,\"prompt_n\":1,\"prompt_ms\":16.94,\"prompt_per_token_ms\":16.94,\"prompt_per_second\":59.03187721369539,\"predicted_n\":59,\"predicted_ms\":956.741,\"predicted_per_token_ms\":16.49553448275862,\"predicted_per_second\":60.622467313515365}}",
+      "raw_response_sha256": "63950320126a137eee5e96805bfabb7d7ffaef511a0aeb9fe98bffb091723258",
+      "prompt_tokens": 304,
+      "completion_tokens": 59,
+      "chat_elapsed_ms": 991,
+      "error": null
+    },
+    {
+      "id": "dual_cpu_each_eight_cores",
+      "variant": "baseline",
+      "source": "这台工作站装了两颗处理器，每颗各有八个核心。",
+      "expected_meaning": "The workstation has two processors, each with eight cores.",
+      "candidate": "В этой рабочей станции установлено два процессора, каждый из которых имеет по восемь ядер.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "request_sha256": "26914e9bb3dc777e1913c8b5ec644eea568727480137707afe25a47ebe1f334d",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":143,\\\"text\\\":\\\"В этой рабочей станции установлено два процессора, каждый из которых имеет по восемь ядер.\\\"}]}\"}}],\"created\":1791009449,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":59,\"prompt_tokens\":293,\"total_tokens\":352,\"prompt_tokens_details\":{\"cached_tokens\":133}},\"id\":\"chatcmpl-oqnPGN9pAtZCFIY0Jlq56lCjDvgy2Cbw\",\"timings\":{\"cache_n\":133,\"prompt_n\":160,\"prompt_ms\":67.341,\"prompt_per_token_ms\":0.42088125,\"prompt_per_second\":2375.9670928557643,\"predicted_n\":59,\"predicted_ms\":967.084,\"predicted_per_token_ms\":16.673862068965516,\"predicted_per_second\":59.97410773004207}}",
+      "raw_response_sha256": "69dbfe1ae3ac9f7c5cb28119a61f417f7af35b8867688920c4718d2dc98217e3",
+      "prompt_tokens": 293,
+      "completion_tokens": 59,
+      "chat_elapsed_ms": 1043,
+      "error": null
+    },
+    {
+      "id": "dual_cpu_each_eight_cores",
+      "variant": "scoped",
+      "source": "这台工作站装了两颗处理器，每颗各有八个核心。",
+      "expected_meaning": "The workstation has two processors, each with eight cores.",
+      "candidate": "В этой рабочей станции установлено два процессора, каждый из которых имеет по восемь ядер.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": true,
+      "request_sha256": "26914e9bb3dc777e1913c8b5ec644eea568727480137707afe25a47ebe1f334d",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":143,\\\"text\\\":\\\"В этой рабочей станции установлено два процессора, каждый из которых имеет по восемь ядер.\\\"}]}\"}}],\"created\":1791009450,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":59,\"prompt_tokens\":293,\"total_tokens\":352,\"prompt_tokens_details\":{\"cached_tokens\":292}},\"id\":\"chatcmpl-AkTBXJynHI6BiyFCZNqSLBzfkAQWSDSI\",\"timings\":{\"cache_n\":292,\"prompt_n\":1,\"prompt_ms\":17.029,\"prompt_per_token_ms\":17.029,\"prompt_per_second\":58.72335427799636,\"predicted_n\":59,\"predicted_ms\":982.721,\"predicted_per_token_ms\":16.94346551724138,\"predicted_per_second\":59.019803179132225}}",
+      "raw_response_sha256": "9a14ca0fe812894a9ef1b8dbbf7c5e1506048c17e70792def1308457f881ff5d",
+      "prompt_tokens": 293,
+      "completion_tokens": 59,
+      "chat_elapsed_ms": 1007,
+      "error": null
+    },
+    {
+      "id": "stand_not_pad_in_box",
+      "variant": "scoped",
+      "source": "包装里只有鼠标支架，没有鼠标垫。",
+      "expected_meaning": "The box has only a mouse stand and no mouse pad.",
+      "candidate": "В упаковке только кронштейн для мыши, мышьная подушка отсутствует.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause"
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "request_sha256": "6f3cddd994e70c87f2d3e0b3adb5dd924a30fe073a88414f7b99fe7fc65d5f22",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":267,\\\"text\\\":\\\"В упаковке только кронштейн для мыши, мышьная подушка отсутствует.\\\"}]}\"}}],\"created\":1791009451,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":52,\"prompt_tokens\":296,\"total_tokens\":348,\"prompt_tokens_details\":{\"cached_tokens\":133}},\"id\":\"chatcmpl-UndfL4V6JcyhTaByzJG3RYtNEvNvcejh\",\"timings\":{\"cache_n\":133,\"prompt_n\":163,\"prompt_ms\":72.879,\"prompt_per_token_ms\":0.4471104294478528,\"prompt_per_second\":2236.5839267827496,\"predicted_n\":52,\"predicted_ms\":868.979,\"predicted_per_token_ms\":17.03880392156863,\"predicted_per_second\":58.68956557062943}}",
+      "raw_response_sha256": "d9367f5656c7014ec5a61c8f405258d5ba66f76c4ce5cde403cea18b6ba85b70",
+      "prompt_tokens": 296,
+      "completion_tokens": 52,
+      "chat_elapsed_ms": 951,
+      "error": null
+    },
+    {
+      "id": "stand_not_pad_in_box",
+      "variant": "baseline",
+      "source": "包装里只有鼠标支架，没有鼠标垫。",
+      "expected_meaning": "The box has only a mouse stand and no mouse pad.",
+      "candidate": "В упаковке только крепление для мыши, мышьная подушка отсутствует.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "needs_review",
+              "reason": "negated_or_uncertain_clause"
+            }
+          ]
+        }
+      ],
+      "review_state": "needs_review",
+      "baseline_identical": true,
+      "request_sha256": "6f3cddd994e70c87f2d3e0b3adb5dd924a30fe073a88414f7b99fe7fc65d5f22",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":267,\\\"text\\\":\\\"В упаковке только крепление для мыши, мышьная подушка отсутствует.\\\"}]}\"}}],\"created\":1791009452,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":49,\"prompt_tokens\":296,\"total_tokens\":345,\"prompt_tokens_details\":{\"cached_tokens\":295}},\"id\":\"chatcmpl-kB7SLUQ8zQwlBReLFjcIQhy2Q4rOtyKX\",\"timings\":{\"cache_n\":295,\"prompt_n\":1,\"prompt_ms\":16.145,\"prompt_per_token_ms\":16.145,\"prompt_per_second\":61.93868070610096,\"predicted_n\":49,\"predicted_ms\":808.544,\"predicted_per_token_ms\":16.844666666666665,\"predicted_per_second\":59.3659714251791}}",
+      "raw_response_sha256": "879146b8477815c08bfce6474f6c02b96948914e9c09e5130fe8dbbfa055bb5d",
+      "prompt_tokens": 296,
+      "completion_tokens": 49,
+      "chat_elapsed_ms": 833,
+      "error": null
+    },
+    {
+      "id": "pad_out_stand_available",
+      "variant": "baseline",
+      "source": "鼠标垫缺货，鼠标支架仍有现货。",
+      "expected_meaning": "The mouse pad is out of stock while the mouse stand is available.",
+      "candidate": "Подкладка для мыши отсутствует в наличии, но крепление для мыши всё ещё есть.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "request_sha256": "ca965d4b01bb1f9150d3d175c667a0ab266acd8521870f2020a9cf59239abf67",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":267,\\\"text\\\":\\\"Подкладка для мыши отсутствует в наличии, но крепление для мыши всё ещё есть.\\\"}]}\"}}],\"created\":1791009453,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":54,\"prompt_tokens\":296,\"total_tokens\":350,\"prompt_tokens_details\":{\"cached_tokens\":161}},\"id\":\"chatcmpl-k1pGUsgLljXQtECjfE7QnVne0eyMP4Ob\",\"timings\":{\"cache_n\":161,\"prompt_n\":135,\"prompt_ms\":68.598,\"prompt_per_token_ms\":0.5081333333333333,\"prompt_per_second\":1967.9874048806087,\"predicted_n\":54,\"predicted_ms\":892.717,\"predicted_per_token_ms\":16.843716981132076,\"predicted_per_second\":59.369318608248754}}",
+      "raw_response_sha256": "410d8e28acbe2c5f0e87952e1377417c0b16ba853b2795873c4e542074a21d70",
+      "prompt_tokens": 296,
+      "completion_tokens": 54,
+      "chat_elapsed_ms": 979,
+      "error": null
+    },
+    {
+      "id": "pad_out_stand_available",
+      "variant": "scoped",
+      "source": "鼠标垫缺货，鼠标支架仍有现货。",
+      "expected_meaning": "The mouse pad is out of stock while the mouse stand is available.",
+      "candidate": "Коврик для мыши отсутствует в наличии, но коврик-стенд всё ещё есть.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "contrast"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "request_sha256": "61e22553d8007c288a9f082ab7841738c4c2c5e7a256b887899a4dc7b132e175",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":267,\\\"text\\\":\\\"Коврик для мыши отсутствует в наличии, но коврик-стенд всё ещё есть.\\\"}]}\"}}],\"created\":1791009454,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":54,\"prompt_tokens\":354,\"total_tokens\":408,\"prompt_tokens_details\":{\"cached_tokens\":114}},\"id\":\"chatcmpl-xUN7IZY8wShTlqfPA9SJt8OYTK8isw5l\",\"timings\":{\"cache_n\":114,\"prompt_n\":240,\"prompt_ms\":92.413,\"prompt_per_token_ms\":0.38505416666666664,\"prompt_per_second\":2597.03721337907,\"predicted_n\":54,\"predicted_ms\":899.78,\"predicted_per_token_ms\":16.976981132075473,\"predicted_per_second\":58.903287470270506}}",
+      "raw_response_sha256": "0a4e2f3d2dee101ddc75da59f2d3926c8bd7ccf89884b507e5fd101eff56b168",
+      "prompt_tokens": 354,
+      "completion_tokens": 54,
+      "chat_elapsed_ms": 1001,
+      "error": null
+    },
+    {
+      "id": "multicore_term_positive",
+      "variant": "scoped",
+      "source": "这项多核测试得分一万分。",
+      "expected_meaning": "The multi-core test scored ten thousand points.",
+      "candidate": "Результаты этого теста на многоядерность составили десять тысяч баллов.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "request_sha256": "192c7d4931d34cef757cc53b22c0aaf59dc92bad8e3580b292dc72db7a83fcfd",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":143,\\\"text\\\":\\\"Результаты этого теста на многоядерность составили десять тысяч баллов.\\\"}]}\"}}],\"created\":1791009455,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":51,\"prompt_tokens\":335,\"total_tokens\":386,\"prompt_tokens_details\":{\"cached_tokens\":116}},\"id\":\"chatcmpl-JAH1FO322ivgDHMb7GQC5LnmeItsPmpM\",\"timings\":{\"cache_n\":116,\"prompt_n\":219,\"prompt_ms\":86.645,\"prompt_per_token_ms\":0.39563926940639266,\"prompt_per_second\":2527.554965664493,\"predicted_n\":51,\"predicted_ms\":858.506,\"predicted_per_token_ms\":17.17012,\"predicted_per_second\":58.24071118897247}}",
+      "raw_response_sha256": "046542b9f495289c122720ffbf7b91a66876089c2ea51bafb52c4d14c652de7a",
+      "prompt_tokens": 335,
+      "completion_tokens": 51,
+      "chat_elapsed_ms": 954,
+      "error": null
+    },
+    {
+      "id": "multicore_term_positive",
+      "variant": "baseline",
+      "source": "这项多核测试得分一万分。",
+      "expected_meaning": "The multi-core test scored ten thousand points.",
+      "candidate": "Результаты этого теста на многопоточную работу составили десять тысяч баллов.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 143,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "eligible",
+              "usage": "affirmative"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "absent"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "request_sha256": "ca361ce9605321d323b9578f0e734180153b5248f9f4287227464d509376ba5c",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":143,\\\"text\\\":\\\"Результаты этого теста на многопоточную работу составили десять тысяч баллов.\\\"}]}\"}}],\"created\":1791009456,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":55,\"prompt_tokens\":281,\"total_tokens\":336,\"prompt_tokens_details\":{\"cached_tokens\":114}},\"id\":\"chatcmpl-4VEqovKOvOXDTAuxwdvDf4f2WeUE7ehe\",\"timings\":{\"cache_n\":114,\"prompt_n\":167,\"prompt_ms\":73.401,\"prompt_per_token_ms\":0.4395269461077844,\"prompt_per_second\":2275.1733627607255,\"predicted_n\":55,\"predicted_ms\":903.728,\"predicted_per_token_ms\":16.735703703703702,\"predicted_per_second\":59.75249190021777}}",
+      "raw_response_sha256": "6f3087fe7a4ac3c3988438ea2d5826909fbaae4920e3895b09ac0538d5d3e84c",
+      "prompt_tokens": 281,
+      "completion_tokens": 55,
+      "chat_elapsed_ms": 991,
+      "error": null
+    },
+    {
+      "id": "mouse_pad_term_positive",
+      "variant": "baseline",
+      "source": "我们也卖鼠标垫。",
+      "expected_meaning": "We also sell mouse pads.",
+      "candidate": "Мы также продаём подставки для мыши.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "request_sha256": "441746604bb9e4912f01a547d11c0aa99603a7e929d7f469fa4375647a080648",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":267,\\\"text\\\":\\\"Мы также продаём подставки для мыши.\\\"}]}\"}}],\"created\":1791009457,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":35,\"prompt_tokens\":286,\"total_tokens\":321,\"prompt_tokens_details\":{\"cached_tokens\":133}},\"id\":\"chatcmpl-53COYfexlG3DmBQW5dj8vHvHGPG9EJvj\",\"timings\":{\"cache_n\":133,\"prompt_n\":153,\"prompt_ms\":64.475,\"prompt_per_token_ms\":0.4214052287581699,\"prompt_per_second\":2373.012795657232,\"predicted_n\":35,\"predicted_ms\":605.44,\"predicted_per_token_ms\":17.807058823529413,\"predicted_per_second\":56.157505285412256}}",
+      "raw_response_sha256": "a3c04e467e5ecd5be200d79672b900cb722c7ea7a903205c2ff061f4f287af86",
+      "prompt_tokens": 286,
+      "completion_tokens": 35,
+      "chat_elapsed_ms": 688,
+      "error": null
+    },
+    {
+      "id": "mouse_pad_term_positive",
+      "variant": "scoped",
+      "source": "我们也卖鼠标垫。",
+      "expected_meaning": "We also sell mouse pads.",
+      "candidate": "Мы также продаём коврик для мыши.",
+      "structural_outcome": "accepted_structure_unreviewed_meaning",
+      "scope_decisions": [
+        {
+          "segment_id": 267,
+          "line_index": 0,
+          "terms": [
+            {
+              "source": "多核",
+              "outcome": "absent"
+            },
+            {
+              "source": "鼠标垫",
+              "outcome": "eligible",
+              "usage": "affirmative"
+            }
+          ]
+        }
+      ],
+      "review_state": "unreviewed",
+      "baseline_identical": false,
+      "request_sha256": "ed3e2e8b51d034faf7a2fea1de1c909381b47b254bb2052ebcc674ee9dc37636",
+      "raw_response": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"translations\\\":[{\\\"line_index\\\":0,\\\"segment_id\\\":267,\\\"text\\\":\\\"Мы также продаём коврик для мыши.\\\"}]}\"}}],\"created\":1791009458,\"model\":\"auralis-hy-mt2-7b-q4\",\"system_fingerprint\":\"b10977-0ecb159c9\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":36,\"prompt_tokens\":344,\"total_tokens\":380,\"prompt_tokens_details\":{\"cached_tokens\":114}},\"id\":\"chatcmpl-3WXCPjbDoEkr2IOIrQAOr8rGWgRuJrDJ\",\"timings\":{\"cache_n\":114,\"prompt_n\":230,\"prompt_ms\":91.161,\"prompt_per_token_ms\":0.3963521739130435,\"prompt_per_second\":2523.0087427737735,\"predicted_n\":36,\"predicted_ms\":620.858,\"predicted_per_token_ms\":17.738799999999998,\"predicted_per_second\":56.373599116061975}}",
+      "raw_response_sha256": "601b319c831c2cf5cb09a39b2c63af3ac164cd9818a8cc3cf5a44089e8668013",
+      "prompt_tokens": 344,
+      "completion_tokens": 36,
+      "chat_elapsed_ms": 722,
+      "error": null
+    }
+  ],
+  "release_gate": "open"
+}

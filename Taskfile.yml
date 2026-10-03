@@ -1244,6 +1244,7 @@ tasks:
       - task: eval:regression:catalog:check
       - task: eval:regression:reg058:instruction:check
       - task: eval:regression:reg058:terms:check
+      - task: eval:regression:reg061:check
       - node eval/scripts/check-scene-pronoun-regression.mjs
       - task: eval:cli:long:v5:failure-check
       - task: eval:cli:long:v6:timeout-check
@@ -1321,6 +1322,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v38.mjs
       - node eval/scripts/check-regression-catalog-v39.mjs
       - node eval/scripts/check-regression-catalog-v40.mjs
+      - node eval/scripts/check-regression-catalog-v41.mjs
       - task: eval:regression:reg060:check
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows

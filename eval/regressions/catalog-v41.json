@@ -1,0 +1,40 @@
+{
+  "schema_version": 41,
+  "catalog_id": "zh-ru-development-regressions-v41",
+  "base_catalog_file": "catalog-v40.json",
+  "base_catalog_sha256": "f48909581a6dbb70770345465ea6ab4d0d482fb357c24cb09c8791b1b5f728f3",
+  "entries": [
+    {
+      "id": "REG-061",
+      "source_family": "authored_ASUS_development_controls",
+      "split": "known_development_not_holdout",
+      "category": "provisional_term_hint_out_of_target_scope",
+      "profile_scope": "Hy-MT2 7B Q4_K_M v8 plus rejected provisional ASUS terminology instruction",
+      "expected_invariant": "A terminology hint must not change a target's processor count, mouse accessory referent, amount or negation when the hinted term is absent or negated.",
+      "severity": "major",
+      "pack_file": "reg-061-term-hint-contamination-v2.json",
+      "pack_sha256": "4f055fbf405798debd10bc7cbde0dd2fc6541d733be85bc3cdef947d384e1342",
+      "minimal_reproducer_count": 2,
+      "related_control_count": 3,
+      "negative_control_count": 2,
+      "evidence_record": "eval/experiments/2026-10-03-reg-061-target-terms-v1-result.md",
+      "last_outcome": "Target absence/negation/mention isolation passes exact v8 byte checks and both original positives repair; variant rejected after new contrast referent loss and unclear negative accessory terms. Product v8 unchanged."
+    },
+    {
+      "id": "REG-062",
+      "source_family": "authored_ASUS_development_controls",
+      "split": "known_development_not_holdout",
+      "category": "target_term_hint_contrast_referent_contamination",
+      "profile_scope": "Hy-MT2 7B Q4_K_M v8 plus rejected target-scoped provisional term transformer v1",
+      "expected_invariant": "A hint for one target noun must preserve every contrasting unhinted referent and its availability or negation.",
+      "severity": "major",
+      "pack_file": "reg-062-contrast-referent-contamination-v1.json",
+      "pack_sha256": "6897c54ff38e539c861b2d270a30a7b95003d025dbbbf7f523e738a313912b00",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 2,
+      "negative_control_count": 1,
+      "evidence_record": "eval/experiments/2026-10-03-reg-061-target-terms-v1-result.md",
+      "last_outcome": "One target-scoped term hint changes the available stand into a pad-stand hybrid; raw rejected development observation retained, zero checkpoints or published results."
+    }
+  ]
+}

@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "experiment": "reg-061-target-terms-v1",
+  "reviewer_type": "AI_source_aware_not_independent_human",
+  "private_report_sha256": "fb30997468ca7e71fcafb7d2f97658849618d807a0558249449cbae568fd5423",
+  "human_bilingual_review_count": 0,
+  "scope": "All thirty visible authored development observations, source-aware AI reading; no blind score or holdout.",
+  "rows": [
+    {
+      "id": "multicore_positive",
+      "variant": "baseline",
+      "raw_response_sha256": "a6693d3b6208b2945775ea7dc22ff1319e5ff1f0545934971deac86b696a0e4a",
+      "fact_verdict": "fail",
+      "reason": "Changes processor core testing to multithread testing; ten thousand points remain."
+    },
+    {
+      "id": "multicore_positive",
+      "variant": "scoped",
+      "raw_response_sha256": "5fee7bb31c1d69e6f4c618f072d5ce0e09997f2cb257892cc181cbc0934d7155",
+      "fact_verdict": "pass",
+      "reason": "Multi-core sense and ten thousand points are preserved; terminology was disclosed to the model."
+    },
+    {
+      "id": "multiprocessor_negative",
+      "variant": "scoped",
+      "raw_response_sha256": "3ae6a6c3ff359eee959277b116f45978014a7f7b25e0626d10556b2aa40d7072",
+      "fact_verdict": "pass",
+      "reason": "Multiple processors are preserved without replacing processor count with core count; requests are byte-identical."
+    },
+    {
+      "id": "multiprocessor_negative",
+      "variant": "baseline",
+      "raw_response_sha256": "a44d77f3ecc0feb928532f17feba535be6f279f5264d435afe1b1e0e64e86a2b",
+      "fact_verdict": "pass",
+      "reason": "Multiple processors are preserved without replacing processor count with core count; requests are byte-identical."
+    },
+    {
+      "id": "multicore_extra",
+      "variant": "baseline",
+      "raw_response_sha256": "d6179a7c2b2abef353cf4c86b07a7ed1c12c62756c6a1e804727027eb218bae5",
+      "fact_verdict": "pass",
+      "reason": "Eight cores, one chip and only one device processor are preserved; no provisional hint was selected."
+    },
+    {
+      "id": "multicore_extra",
+      "variant": "scoped",
+      "raw_response_sha256": "c931cffeb58f02df9e2e866a37b3bd4b4fec316cd5c15b6faca1f4673d27ac65",
+      "fact_verdict": "pass",
+      "reason": "Eight cores, one chip and only one device processor are preserved; no provisional hint was selected."
+    },
+    {
+      "id": "multicore_thread_contrast",
+      "variant": "scoped",
+      "raw_response_sha256": "d457647d251ac8811d5051169eb3a547cdb6acec0a4d2b15cd86ca385d476f52",
+      "fact_verdict": "pass",
+      "reason": "Core/thread distinction, not-the-same contrast and former higher by two points survive; no hint was selected."
+    },
+    {
+      "id": "multicore_thread_contrast",
+      "variant": "baseline",
+      "raw_response_sha256": "e07227053ba02897813fedb7d0110bb831117b7fd0fbf80eb4c74e390359c3ab",
+      "fact_verdict": "pass",
+      "reason": "Core/thread distinction, not-the-same contrast and former higher by two points survive; no hint was selected."
+    },
+    {
+      "id": "multithread_negative",
+      "variant": "baseline",
+      "raw_response_sha256": "80f5cf8339ac6949cc2eacd2d0e70a59d44e313c886006099276d9e50663a5eb",
+      "fact_verdict": "pass",
+      "reason": "Only multithread score is reported; multicore score remains absent; baseline bytes and explicit needs_review scope warning retained."
+    },
+    {
+      "id": "multithread_negative",
+      "variant": "scoped",
+      "raw_response_sha256": "a86b415a8bfe5655d083fbbe2a3fc06c7192ee2d6f10ea2f063190c820ca7563",
+      "fact_verdict": "pass",
+      "reason": "Only multithread score is reported; multicore score remains absent; baseline bytes and explicit needs_review scope warning retained."
+    },
+    {
+      "id": "mouse_pad_positive",
+      "variant": "scoped",
+      "raw_response_sha256": "6b65765594d40345ed22d47cd1b0587cb06940e63c2700ff1b6fa0507451185e",
+      "fact_verdict": "pass",
+      "reason": "Mouse pad sense is present; this provisional term was disclosed to the model."
+    },
+    {
+      "id": "mouse_pad_positive",
+      "variant": "baseline",
+      "raw_response_sha256": "0b6d55843147cf385df98a09c4314d2910a8dd439d284c7e849be52f6c420578",
+      "fact_verdict": "fail",
+      "reason": "Replaces a mouse pad with a mouse stand."
+    },
+    {
+      "id": "mouse_stand_negative",
+      "variant": "baseline",
+      "raw_response_sha256": "baa503c4860ea6e2853a91190e55373ea51f0a6fd8b8696a648bfd7b2758112a",
+      "fact_verdict": "pass",
+      "reason": "Mouse stand sale remains a stand, without a pad claim; requests are byte-identical."
+    },
+    {
+      "id": "mouse_stand_negative",
+      "variant": "scoped",
+      "raw_response_sha256": "f7eb26bd86fc1dbc65701a9fd87820bc61f31afd545c1508066035e1e22297f5",
+      "fact_verdict": "pass",
+      "reason": "Mouse stand sale remains a stand, without a pad claim; requests are byte-identical."
+    },
+    {
+      "id": "mouse_pad_extra",
+      "variant": "scoped",
+      "raw_response_sha256": "5c2501bebc7a61f4f1d72b176b63b29c0bc78ae1bc48e7d85e69571b92e0fb05",
+      "fact_verdict": "pass",
+      "reason": "Pad is present and stand is absent; both accessory referents and negation survive."
+    },
+    {
+      "id": "mouse_pad_extra",
+      "variant": "baseline",
+      "raw_response_sha256": "2ce8b8a9ec3a976667e78a9cc6fb97da8ae4e9ca8281d4496882e294a8e343f5",
+      "fact_verdict": "pass",
+      "reason": "Pad is present and stand is absent; both accessory referents and negation survive."
+    },
+    {
+      "id": "mouse_pad_price_contrast",
+      "variant": "baseline",
+      "raw_response_sha256": "9e20b7564f8446c17bede3081baf19689509216f9e13a30257561e5bc00532b3",
+      "fact_verdict": "pass",
+      "reason": "Pad is twenty yuan cheaper than stand; both referents, direction and amount survive."
+    },
+    {
+      "id": "mouse_pad_price_contrast",
+      "variant": "scoped",
+      "raw_response_sha256": "26115ed3c54597be148999b54082dbcd024fe10579961e16b0e19c2e4ba0c350",
+      "fact_verdict": "pass",
+      "reason": "Pad is twenty yuan cheaper than stand; both referents, direction and amount survive."
+    },
+    {
+      "id": "stand_only_new",
+      "variant": "scoped",
+      "raw_response_sha256": "2387e702fa51c33346c0acb40f55fbadb6575625ea70d795b0b9a9e4881742be",
+      "fact_verdict": "needs_review",
+      "reason": "Stand is out of stock and do-not-call negation remains, but nonstandard mouse-pillow wording leaves the excluded pad referent unclear; no hint was selected."
+    },
+    {
+      "id": "stand_only_new",
+      "variant": "baseline",
+      "raw_response_sha256": "63950320126a137eee5e96805bfabb7d7ffaef511a0aeb9fe98bffb091723258",
+      "fact_verdict": "needs_review",
+      "reason": "Stand is out of stock and do-not-call negation remains, but nonstandard mouse-pillow wording leaves the excluded pad referent unclear; no hint was selected."
+    },
+    {
+      "id": "dual_cpu_each_eight_cores",
+      "variant": "baseline",
+      "raw_response_sha256": "69dbfe1ae3ac9f7c5cb28119a61f417f7af35b8867688920c4718d2dc98217e3",
+      "fact_verdict": "pass",
+      "reason": "Two processors, each with eight cores, are preserved; requests are byte-identical."
+    },
+    {
+      "id": "dual_cpu_each_eight_cores",
+      "variant": "scoped",
+      "raw_response_sha256": "9a14ca0fe812894a9ef1b8dbbf7c5e1506048c17e70792def1308457f881ff5d",
+      "fact_verdict": "pass",
+      "reason": "Two processors, each with eight cores, are preserved; requests are byte-identical."
+    },
+    {
+      "id": "stand_not_pad_in_box",
+      "variant": "scoped",
+      "raw_response_sha256": "d9367f5656c7014ec5a61c8f405258d5ba66f76c4ce5cde403cea18b6ba85b70",
+      "fact_verdict": "needs_review",
+      "reason": "Only a stand is included and a mouse pillow is absent; nonstandard target term prevents confident preservation of the mouse-pad referent. No hint was selected."
+    },
+    {
+      "id": "stand_not_pad_in_box",
+      "variant": "baseline",
+      "raw_response_sha256": "879146b8477815c08bfce6474f6c02b96948914e9c09e5130fe8dbbfa055bb5d",
+      "fact_verdict": "needs_review",
+      "reason": "Only a stand is included and a mouse pillow is absent; nonstandard target term prevents confident preservation of the mouse-pad referent. No hint was selected."
+    },
+    {
+      "id": "pad_out_stand_available",
+      "variant": "baseline",
+      "raw_response_sha256": "410d8e28acbe2c5f0e87952e1377417c0b16ba853b2795873c4e542074a21d70",
+      "fact_verdict": "pass",
+      "reason": "Pad stockout and stand availability are preserved using an acceptable surface/attachment paraphrase."
+    },
+    {
+      "id": "pad_out_stand_available",
+      "variant": "scoped",
+      "raw_response_sha256": "0a4e2f3d2dee101ddc75da59f2d3926c8bd7ccf89884b507e5fd101eff56b168",
+      "fact_verdict": "fail",
+      "reason": "Pad stockout is preserved, but the still-available stand becomes a hybrid pad-stand (коврик-стенд), losing the clear distinct stand referent."
+    },
+    {
+      "id": "multicore_term_positive",
+      "variant": "scoped",
+      "raw_response_sha256": "046542b9f495289c122720ffbf7b91a66876089c2ea51bafb52c4d14c652de7a",
+      "fact_verdict": "pass",
+      "reason": "Multi-core sense and ten thousand points are preserved; terminology was disclosed to the model."
+    },
+    {
+      "id": "multicore_term_positive",
+      "variant": "baseline",
+      "raw_response_sha256": "6f3087fe7a4ac3c3988438ea2d5826909fbaae4920e3895b09ac0538d5d3e84c",
+      "fact_verdict": "fail",
+      "reason": "Changes processor core testing to multithread testing; ten thousand points remain."
+    },
+    {
+      "id": "mouse_pad_term_positive",
+      "variant": "baseline",
+      "raw_response_sha256": "a3c04e467e5ecd5be200d79672b900cb722c7ea7a903205c2ff061f4f287af86",
+      "fact_verdict": "fail",
+      "reason": "Replaces a mouse pad with a mouse stand."
+    },
+    {
+      "id": "mouse_pad_term_positive",
+      "variant": "scoped",
+      "raw_response_sha256": "601b319c831c2cf5cb09a39b2c63af3ac164cd9818a8cc3cf5a44089e8668013",
+      "fact_verdict": "pass",
+      "reason": "Mouse pad sense is present; this provisional term was disclosed to the model."
+    }
+  ]
+}

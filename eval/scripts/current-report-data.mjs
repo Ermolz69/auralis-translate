@@ -1,3 +1,4 @@
+import { loadTargetTerms } from './target-terms-section.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
@@ -199,9 +200,11 @@ export async function loadCurrentReport(root) {
   assert.equal(paywall.independent_human_reviewed_cues, 0);
   assert.equal(paywall.selected_model, null);
   assert.deepEqual(paywall.variants.map(arm => arm.model), ['1b', '7b']);
+  const targetTerms = await loadTargetTerms(root);
   return {
+    target_terms:targetTerms.summary,
     schema_version: 1,
-    as_of: '2026-10-02',
+    as_of: '2026-10-03',
     release_decision: 'not_accepted',
     sources: { candidates: sources.source_count, media_groups: sources.media_groups,
       inspected_cues: sources.inspected_cues,

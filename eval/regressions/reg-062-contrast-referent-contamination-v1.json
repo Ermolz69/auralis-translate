@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "id": "REG-062",
+  "source_family": "authored_ASUS_development_controls",
+  "split": "known_development_not_holdout",
+  "category": "target_term_hint_contrast_referent_contamination",
+  "profile_scope": "Hy-MT2 7B Q4_K_M v8 plus rejected target-scoped provisional term transformer v1",
+  "expected_invariant": "A hint for one target noun must preserve every contrasting unhinted referent and its availability or negation.",
+  "severity": "major",
+  "minimal_reproducers": [
+    {
+      "id": "pad_stockout_stand_available",
+      "control_id": "pad_out_stand_available",
+      "source": "鼠标垫缺货，鼠标支架仍有现货。",
+      "expected_fact": "The mouse pad is out of stock while the mouse stand is available.",
+      "baseline_candidate": "Подкладка для мыши отсутствует в наличии, но крепление для мыши всё ещё есть.",
+      "scoped_candidate": "Коврик для мыши отсутствует в наличии, но коврик-стенд всё ещё есть.",
+      "scoped_request_sha256": "61e22553d8007c288a9f082ab7841738c4c2c5e7a256b887899a4dc7b132e175",
+      "scoped_raw_response_sha256": "0a4e2f3d2dee101ddc75da59f2d3926c8bd7ccf89884b507e5fd101eff56b168"
+    }
+  ],
+  "related_controls": [
+    {
+      "id": "stand_stockout_pad_available",
+      "source": "鼠标支架缺货，鼠标垫仍有现货。",
+      "expected_meaning": "The stand is out of stock while the pad remains available.",
+      "model_runs": 0
+    },
+    {
+      "id": "pad_bought_stand_not_bought",
+      "source": "我买了鼠标垫，但没有买鼠标支架。",
+      "expected_meaning": "I bought a mouse pad but did not buy a mouse stand.",
+      "model_runs": 0
+    }
+  ],
+  "negative_controls": [
+    {
+      "id": "stand_only_available",
+      "source": "鼠标支架仍有现货。",
+      "expected_meaning": "The mouse stand is still available.",
+      "model_runs": 0
+    }
+  ],
+  "public_report_sha256": "85b37138c805b8bfc164e552bac8d8d24df68b377dc298aa8a127b5a4dc70844",
+  "private_report_sha256": "fb30997468ca7e71fcafb7d2f97658849618d807a0558249449cbae568fd5423",
+  "evidence_check": "task eval:regression:reg061:check",
+  "human_bilingual_review_count": 0,
+  "release_gate": "open"
+}

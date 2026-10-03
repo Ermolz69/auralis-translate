@@ -1,3 +1,4 @@
+import { loadTargetTerms, renderTargetTerms } from './target-terms-section.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -58,6 +59,7 @@ const review = JSON.parse(await fs.readFile(path.join(root, 'eval/corpora/public
 const currency = await loadCurrencyReport(root, dataset);
 const modelComparison = await loadModelComparison(root);
 const deliveryPlan = await loadDeliveryPlan(root);
+const targetTerms = await loadTargetTerms(root);
 const v5Envelope = await loadV5Envelope(root, dataset, currency.benchmark);
 const sceneContext = await loadSceneContext(root);
 const pronounCrossModel = await loadPronounCrossModel(root);
@@ -246,6 +248,7 @@ const html = `<!doctype html>
 ${renderReleaseReadiness()}
 ${renderModelComparison(modelComparison, escape, number)}
 ${renderDeliveryProgress(deliveryPlan, escape)}
+${renderTargetTerms(targetTerms,escape)}
 ${renderSourceCandidates(sourceCandidates)}
 ${renderPaywallSource(sourceCandidates)}
 ${renderXiaolinMetadataScreen()}
