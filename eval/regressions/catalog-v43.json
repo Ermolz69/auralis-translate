@@ -1,0 +1,26 @@
+{
+  "schema_version": 43,
+  "catalog_id": "zh-ru-development-regressions-v43",
+  "base_catalog_file": "catalog-v42.json",
+  "base_catalog_sha256": "17ecb8f71f343061f2f554397724a97ac4aee7e820d911ea6855b5eb8c3b9c50",
+  "entries": [
+    {
+      "id": "REG-063",
+      "source_family": "authored_source_name_development",
+      "split": "known_development_not_holdout",
+      "category": "name_proposal_neighbor_action_copy",
+      "profile_scope": "Hy-MT2 1.8B Q4_K_M v8 source-name profiles; NAME-02 admission-only safety containment",
+      "expected_invariant": "A target-scoped name proposal must preserve the target person's arrival-time question and must not replace it with the neighboring file-transfer action.",
+      "severity": "major",
+      "pack_file": "reg-063-name-proposal-neighbor-action-v2.json",
+      "pack_sha256": "70514d4391ef110d274898b9eea182a4e5c1c90f2afc49873534137fa24b3af0",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 2,
+      "negative_control_count": 1,
+      "evidence_record": "eval/experiments/2026-10-03-name-action-admission-v1-result.md",
+      "last_outcome": "NAME-02 fail-closed admission contains active proposals before checkpoint; linguistic fix and human review remain open. Keep baseline v8, no long file.",
+      "deterministic_admission_control_count": 20,
+      "new_model_runs": 0
+    }
+  ]
+}

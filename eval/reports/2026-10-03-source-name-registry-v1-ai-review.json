@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "experiment": "source-name-registry-v1",
+  "reviewer_type": "Codex AI self-review, source-aware and model-visible; not independent bilingual human review",
+  "report_sha256": "191b9a1af432c95a94f5e415f24e6f71b346eefe65a043aef58a4784f80406c8",
+  "human_ratings": 0,
+  "reviewed_observations": 84,
+  "coverage": "All 14 targets in all three fresh runs of each arm; 42 baseline and 42 registry observations. No exclusions.",
+  "rubric": "Preserve person/address, action, question, time and negation. Russian inflection is allowed. Name spelling consistency does not prove correct pronunciation or identity. Uncertain regressions prevent advancement.",
+  "consistency_definition": "An entity-run is inconsistent if its repeated source occurrences use different name/address forms or omit a required name/address. Count separately for each exact source entity and scene; do not merge by surname or identical Russian output.",
+  "consistency": {
+    "entity_run_denominator_per_arm": 9,
+    "repeated_occurrence_denominator_per_arm": 21,
+    "baseline_inconsistent_entity_runs": 9,
+    "registry_inconsistent_entity_runs": 5,
+    "entities": [
+      {"entity_id": 1, "source": "小李", "scene_index": 0, "segments": [1,6,11], "baseline_inconsistent_repetitions": [1,2,3], "registry_inconsistent_repetitions": [1,2,3]},
+      {"entity_id": 2, "source": "小王", "scene_index": 0, "segments": [7,12], "baseline_inconsistent_repetitions": [1,2,3], "registry_inconsistent_repetitions": [1,3]},
+      {"entity_id": 5, "source": "王老师", "scene_index": 0, "segments": [2,10], "baseline_inconsistent_repetitions": [1,2,3], "registry_inconsistent_repetitions": []}
+    ],
+    "limits": "Small correlated authored scenes, unknown seeds and shared cache. Scene-1 teacher has only one occurrence and is excluded from repeated-name consistency. Missing names count as inconsistency, not a consistent empty spelling. No language accuracy percentage."
+  },
+  "consistency_improved": true,
+  "new_semantic_errors": 9,
+  "new_semantic_error_definition": "Nine registry observations fail a person/name or action/question fact that the matched baseline preserved: segments 1,6,11 in repetitions 1,2,3. Baseline name errors within segment 6 are retained separately; its question/action remains intact in baseline and is lost in registry.",
+  "uncertain_regressions": 0,
+  "decision": "reject_keep_experimental_no_long_file",
+  "decision_reason": "Repeated-name inconsistency falls from 9/9 to 5/9 entity-runs, but all three arrival-time questions become a neighboring file-transfer request and previously correct Li addresses become Bai/Bley. The predeclared no-new-semantic-error condition fails. No natural full-file run or product promotion.",
+  "rows": [
+    {"segment_id":1,"baseline":["pass","pass","pass"],"registry":["fail_name","fail_name","fail_name"],"new_error_repetitions":[1,2,3],"reason":"Baseline preserves the Li address as Syao Li. Registry produces Bai Li, Bley, Bai Li despite the disclosed Syao Li proposal. Entering is preserved, but the new name form is unsupported by the source."},
+    {"segment_id":2,"baseline":["pass","pass","pass"],"registry":["pass","pass","pass"],"new_error_repetitions":[],"reason":"Teacher Wang and invitation to sit survive in both arms. Stylistic sit/prisazhivaites variation is allowed; teacher address still requires human cultural review."},
+    {"segment_id":3,"baseline":["pass","pass","pass"],"registry":["pass","pass","pass"],"new_error_repetitions":[],"reason":"Self-introduction Wang Ning is preserved. Registry entity 4 remains distinct from entity 3 even though the Russian transliterations coincide; output spelling does not prove alias identity."},
+    {"segment_id":4,"baseline":["pass","pass","pass"],"registry":["pass","pass","pass"],"new_error_repetitions":[],"reason":"Self-introduction with the different Chinese name Wang Ning/凝 is preserved as a separate entity. Pronunciation and final preferred Russian spelling are not human-approved."},
+    {"segment_id":5,"baseline":["pass","pass","pass"],"registry":["pass","pass","pass"],"new_error_repetitions":[],"reason":"The target asks for the file to be passed to the speaker. It receives no name proposal despite neighboring named people; requests are byte-identical across arms."},
+    {"segment_id":6,"baseline":["fail_name_awkward_question","fail_name_awkward_question","fail_name_awkward_question"],"registry":["fail_action_question_neighbor_copy","fail_action_question_neighbor_copy","fail_action_question_neighbor_copy"],"new_error_repetitions":[1,2,3],"reason":"Baseline keeps the question about what time Li can arrive, though Bai Li/Li Syao and grammar are wrong or awkward. Registry drops Li and the arrival-time question and repeats the previous cue's request to pass a file. Major new action/question failure in all three runs; retained as REG-063."},
+    {"segment_id":7,"baseline":["fail_neighbor_book_copy","fail_neighbor_book_copy","fail_neighbor_book_copy"],"registry":["fail_invented_time_question","needs_review_address","fail_invented_time_question"],"new_error_repetitions":[],"reason":"Baseline wrongly copies the next book-title cue. Registry repetition 2 keeps Wang and the invitation to come, but repetitions 1/3 borrow an arrival-time question. Baseline was already wrong, so these are retained failures rather than counted as newly broken baseline facts."},
+    {"segment_id":8,"baseline":["pass","pass","pass"],"registry":["pass","pass","pass"],"new_error_repetitions":[],"reason":"The Little Prince book assertion is preserved. No Xiao Wang hint is attached to the false substring; all paired requests are byte-identical."},
+    {"segment_id":9,"baseline":["pass","fail_time","pass"],"registry":["pass","pass","pass"],"new_error_repetitions":[],"reason":"Tomorrow is preserved except baseline repetition 2, which says today. This target receives no hint and paired requests are identical; the differing output is sampling variation and cannot be credited to the registry."},
+    {"segment_id":10,"baseline":["fail_missing_surname","fail_missing_surname","fail_missing_surname"],"registry":["pass","pass","pass"],"new_error_repetitions":[],"reason":"Baseline omits Wang from the teacher address. Registry preserves Teacher Wang and tomorrow's arrival question in all repetitions, improving repeated teacher-address consistency."},
+    {"segment_id":11,"baseline":["pass","pass","pass"],"registry":["fail_name","fail_name","fail_name"],"new_error_repetitions":[1,2,3],"reason":"Friday and meeting are retained. Correct baseline Syao Li becomes unsupported Bai Li in all registry runs; stable wrong spelling is not language acceptance."},
+    {"segment_id":12,"baseline":["needs_review_address","needs_review_address","needs_review_address"],"registry":["needs_review_address","needs_review_address","needs_review_address"],"new_error_repetitions":[],"reason":"Wang and do-not-leave negation survive. Shao/little/bare Wang vary in rendering Xiao's familiar address; same surname is not evidence to merge with Teacher Wang. Proposed Syao Wang is not reliably followed."},
+    {"segment_id":13,"baseline":["fail_missing_surname","fail_missing_surname","fail_missing_surname"],"registry":["pass","pass","pass"],"new_error_repetitions":[],"reason":"In the new scene baseline loses Wang while registry retains Teacher Wang and entering. The identical Chinese surface belongs to a separate scene-scoped entity; no identity continuation is inferred."},
+    {"segment_id":14,"baseline":["fail_missing_action","fail_missing_action","fail_missing_action"],"registry":["pass","pass","pass"],"new_error_repetitions":[],"reason":"Baseline stops after Mr Wang and omits sit. Registry keeps Mr Wang and the invitation to sit. This teacher/Mr address pair remains separate without asserted alias evidence."}
+  ],
+  "open_gates": ["CTX-03","EVAL-04","LONG-04","G3","G4","G5","RELEASE-05"],
+  "next_review": "Retain REG-063, unseen related question/action controls and negative name-free prompts; review name proposals and source meaning before any new predeclared candidate. No volunteer contact."
+}

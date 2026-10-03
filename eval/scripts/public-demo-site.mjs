@@ -1,4 +1,5 @@
 import { loadTargetTerms, renderTargetTerms } from './target-terms-section.mjs';
+import { loadNameRegistry, renderNameRegistry } from './name-registry-section.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -60,6 +61,7 @@ const currency = await loadCurrencyReport(root, dataset);
 const modelComparison = await loadModelComparison(root);
 const deliveryPlan = await loadDeliveryPlan(root);
 const targetTerms = await loadTargetTerms(root);
+const nameRegistry = await loadNameRegistry(root);
 const v5Envelope = await loadV5Envelope(root, dataset, currency.benchmark);
 const sceneContext = await loadSceneContext(root);
 const pronounCrossModel = await loadPronounCrossModel(root);
@@ -249,6 +251,7 @@ ${renderReleaseReadiness()}
 ${renderModelComparison(modelComparison, escape, number)}
 ${renderDeliveryProgress(deliveryPlan, escape)}
 ${renderTargetTerms(targetTerms,escape)}
+${renderNameRegistry(nameRegistry,escape)}
 ${renderSourceCandidates(sourceCandidates)}
 ${renderPaywallSource(sourceCandidates)}
 ${renderXiaolinMetadataScreen()}

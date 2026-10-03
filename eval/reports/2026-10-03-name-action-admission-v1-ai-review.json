@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "experiment": "name-action-admission-v1",
+  "reviewer_type": "Codex AI source-aware self-review, model-visible; not independent human review",
+  "report_sha256": "85a39dcaaf8ef728960a80079cef618ba7a4f261db13bffd751c8b3a14ab5d52",
+  "human_review_count": 0,
+  "historic_language_observations_revisited": 84,
+  "historic_new_name_action_failures_traced": 9,
+  "new_language_observations": 0,
+  "deterministic_new_controls": 20,
+  "proposal_rejections": 33,
+  "proposal_replay_denominator": 33,
+  "unchanged_old_no_name_pairs": 9,
+  "unchanged_new_no_name_controls": 6,
+  "new_accepted_named_outputs": 0,
+  "new_critical_major_language_error_count": null,
+  "unknown_reason": "No new inference or eligible named output: this barrier cannot establish language quality or the zero-new-error threshold.",
+  "source_fact_basis": "Li entering at cue 1, arrival-time question at cue 6, and Friday meeting at cue 11. NAME-01 changes Li to Bai/Bley or replaces arrival with neighboring file transfer. Name spelling and schema do not verify actor/action.",
+  "candidate_reason": "One admission-only barrier rejects every active proposal; no reliable general source-aware action verifier is supported. No prompt search, sentence correction or semantic retry.",
+  "uncertainty": "Authored correlated development scenes, unknown prior RNG, model-visible proposals, zero independent Chinese-Russian ratings. Automated rejections are not human judgments.",
+  "decision": "reject_quality_advancement_keep_v8",
+  "long_file_run": false,
+  "open_gates": [
+    "CTX-03",
+    "EVAL-04",
+    "LONG-04",
+    "G3",
+    "G4",
+    "G5",
+    "RELEASE-05"
+  ]
+}

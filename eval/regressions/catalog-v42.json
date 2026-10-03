@@ -1,0 +1,40 @@
+{
+  "schema_version": 42,
+  "catalog_id": "zh-ru-development-regressions-v42",
+  "base_catalog_file": "catalog-v41.json",
+  "base_catalog_sha256": "9edc32c3c71f3d127445e0afef7926e315d60966c4919cec53d4f80dc296f379",
+  "entries": [
+    {
+      "id": "REG-063",
+      "source_family": "authored_source_name_development",
+      "split": "known_development_not_holdout",
+      "category": "name_proposal_neighbor_action_copy",
+      "profile_scope": "Hy-MT2 1.8B Q4_K_M v8 plus rejected source-name-registry-v1 extension",
+      "expected_invariant": "A target-scoped name proposal must preserve the target person's arrival-time question and must not replace it with the neighboring file-transfer action.",
+      "severity": "major",
+      "pack_file": "reg-063-name-proposal-neighbor-action-v1.json",
+      "pack_sha256": "200e9b6307132ae08c5bb4dfa3618155794cb1592c3ff06a9c7f2e16802da7a8",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 2,
+      "negative_control_count": 1,
+      "evidence_record": "eval/experiments/2026-10-03-source-name-registry-v1-result.md",
+      "last_outcome": "CTX-03 and EVAL-04 remain open; rejected extension requires a new source-aware candidate review. No long-file advancement."
+    },
+    {
+      "id": "REG-064",
+      "source_family": "authored_source_name_development",
+      "split": "known_development_not_holdout",
+      "category": "source_name_false_substring_occurrence",
+      "profile_scope": "chinese-explicit-address-v1 extractor",
+      "expected_invariant": "An exact person surface collected from one cue must not become an occurrence inside an unrelated book, place or award compound.",
+      "severity": "major",
+      "pack_file": "reg-064-name-false-substring-v1.json",
+      "pack_sha256": "18e31483d8dffaca588ff5d4fdb290b961636b07d1c87951b4bbb24fb5819a7f",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 2,
+      "negative_control_count": 1,
+      "evidence_record": "eval/experiments/2026-10-03-source-name-registry-v1-result.md",
+      "last_outcome": "NAME-01 bounded extraction fix; no semantic release claim."
+    }
+  ]
+}

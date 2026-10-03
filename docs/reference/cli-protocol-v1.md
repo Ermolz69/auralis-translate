@@ -1,5 +1,13 @@
 # CLI machine protocol v1
 
+NAME-02 adds `name_proposal_review_required` for a rejected target with an active
+name proposal (classified exit 4), before checkpoint. The raw and parsed response
+remain in the inference journal as `invalid_candidate`. This explicit review
+outcome is distinct from a complete file labelled `needs_review`. See
+[admission v1](name-proposal-admission-v1.md); no automatic semantic retry or
+correction is performed. Legacy proposal identities remain usable for old-result
+export; new active-proposal inference requires a separately pinned barrier.
+
 Status: implementation contract, 26 September 2026. Machine mode is opt-in with
 `--json` or `--jsonl` before the command. The existing unflagged positional CLI
 keeps its output and 0/1 exit behavior for the local scripts already using it.
@@ -18,6 +26,16 @@ Machine mode supports `inspect`, `inspect-vtt`, `doctor`, `status`, `diagnostics
 Other development commands return a usage error in machine mode instead of
 mixing text with structured output. A CLI-owned translation runtime remains
 separate work.
+
+The separately versioned [name registry experiment](../architecture/016-source-name-registry.md)
+adds positional `translate-v8-names SOURCE STATE_DIR PROFILE SCENE_MAP PROPOSALS
+SERVER_URL OUTPUT`, `name-registry STATE_DIR TRANSLATION_ID`, and
+`revise-name-proposals STATE_DIR TRANSLATION_ID PROPOSALS`. These three commands
+also support the existing JSON/JSONL output flags; they are not new `--request`
+enum variants. Name proposals have algorithm/model provenance and remain
+`needs_review`. Resume reads the frozen SQLite binding, rejects a changed head
+and never reloads an external proposal file. Old result export/edit remains
+available under its original identity; new decisions require a new run.
 
 Use existing positional arguments or `--request REQUEST.json` after the output
 flag. The UTF-8 request is a versioned object with a `request` object containing

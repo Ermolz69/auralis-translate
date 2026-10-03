@@ -1,0 +1,16 @@
+{
+  "schema_version":1,"id":"REG-064","legacy_reproduction_id":"NAME-BUG-001",
+  "source_family":"authored_source_name_development","split":"known_development_not_holdout",
+  "category":"source_name_false_substring_occurrence","profile_scope":"chinese-explicit-address-v1 extractor",
+  "expected_invariant":"An exact person surface collected from one cue must not become an occurrence inside an unrelated book, place or award compound.",
+  "severity":"major",
+  "minimal_reproducers":[{"id":"wang_not_little_prince","sources":["小王，请进。","小王子是一本书。"],"expected_occurrence_segments":[1],"prior_failure":"Unbounded substring matching linked segment 2 to Xiao Wang.","model_runs":0}],
+  "related_controls":[
+    {"id":"wang_not_kingdom","sources":["小王，请进。","小王国不是人名。"],"expected_occurrence_segments":[1],"model_runs":0},
+    {"id":"teacher_not_award","sources":["王老师，请进。","王老师奖不是人。"],"expected_occurrence_segments":[1],"model_runs":0}
+  ],
+  "negative_controls":[{"id":"actual_second_address","sources":["小王，请进。","小王，别走。"],"expected_occurrence_segments":[1,2],"model_runs":0}],
+  "evidence_check":"task test:name-registry","test_file":"crates/auralis-translation/tests/name_registry.rs",
+  "last_outcome":"Bounded suffix checks retain actual addresses and reject the compounds; extraction recall remains deliberately incomplete.",
+  "human_bilingual_review_count":0,"release_gate":"open","backlog_fix":"NAME-01 bounded extraction fix; no semantic release claim."
+}
