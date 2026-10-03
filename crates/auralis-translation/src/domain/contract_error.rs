@@ -16,6 +16,7 @@ pub enum ContractError {
     InvalidApprovedTerms,
     ApprovedTermsConflict,
     InvalidSceneMap,
+    InvalidNameRegistry,
 }
 
 impl fmt::Display for ContractError {

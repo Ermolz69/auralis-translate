@@ -31,6 +31,7 @@ pub(crate) fn commit(connection: &mut Connection, spec: &CheckpointSpec) -> Resu
     let accepted_json = encode_segments(&spec.accepted)?;
     let run_id = spec.run_id.to_string();
     let transaction = connection.transaction()?;
+    crate::name_registry_store::check_current(&transaction, spec.run_id)?;
     let run: Option<(String, String)> = transaction
         .query_row(
             "SELECT block_plan_json, state FROM runs WHERE run_id = ?1",

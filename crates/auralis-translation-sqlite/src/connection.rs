@@ -17,7 +17,7 @@ use rusqlite::Connection;
 use std::path::Path;
 
 pub struct TranslateDb {
-    connection: Connection,
+    pub(crate) connection: Connection,
 }
 
 impl TranslateDb {

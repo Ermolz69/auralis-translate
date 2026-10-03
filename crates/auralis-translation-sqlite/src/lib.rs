@@ -7,6 +7,8 @@ mod error;
 mod inference_request_sink;
 mod migrations;
 mod model_preflight_outcome;
+mod name_registry_codec;
+mod name_registry_store;
 mod repositories;
 mod specs;
 
