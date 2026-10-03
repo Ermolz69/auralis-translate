@@ -1,6 +1,41 @@
 version: "3"
 
 tasks:
+  eval:name-action:trace:
+    desc: Trace all nine frozen NAME-01 regressions without inference or mutation
+    cmds:
+      - node eval/scripts/trace-name-action-v1.mjs
+  test:name-action:
+    desc: Verify the fail-closed proposal barrier and durable rejection
+    env:
+      CARGO_TARGET_DIR: '{{.ROOT_DIR}}/.cache/build/name-registry'
+    cmds:
+      - cargo test --offline -p auralis-translation-llamacpp --test name_action_admission
+      - cargo test --offline -p auralis-translation-cli --test name_action_admission
+  eval:name-action:freeze:
+    desc: Freeze the single offline admission candidate and its zero-inference budget
+    cmds:
+      - task: name-registry:build
+      - node eval/scripts/name-action-screen-v1.mjs --freeze
+  name-action:prepare:
+    desc: Write the separately pinned conservative admission profile
+    cmds:
+      - node eval/scripts/name-action-screen-v1.mjs --prepare
+  eval:name-action:preflight:
+    desc: Verify immutable screen inputs and model/runtime/code identities
+    cmds:
+      - node eval/scripts/name-action-screen-v1.mjs --preflight
+  eval:name-action:probe:
+    desc: Run one frozen offline replay; never call a model or inspect holdout
+    cmds:
+      - task: eval:name-action:preflight
+      - node eval/scripts/name-action-screen-v1.mjs --probe
+  eval:name-action:check:
+    desc: Verify trace, rejection evidence and combined regression catalog
+    cmds:
+      - task: eval:name-action:trace
+      - node eval/scripts/name-action-screen-v1.mjs --check
+      - node eval/scripts/check-regression-catalog-v44.mjs
   test:name-registry:
     desc: Verify source name occurrences, scene isolation, SQLite revisions and recovery
     env:
@@ -1379,13 +1414,15 @@ tasks:
       - node eval/scripts/check-regression-catalog-v41.mjs
       - node eval/scripts/check-regression-catalog-v42.mjs
       - node eval/scripts/check-regression-catalog-v43.mjs
+      - node eval/scripts/check-regression-catalog-v44.mjs
       - task: eval:regression:reg060:check
   eval:regression:catalog:recent:check:
-    desc: Verify REG-061 through REG-064 catalog deltas and the TERM-02 follow-up
+    desc: Verify REG-061 through REG-064 and both bounded follow-up outcomes
     cmds:
       - node eval/scripts/check-regression-catalog-v41.mjs
       - node eval/scripts/check-regression-catalog-v42.mjs
       - node eval/scripts/check-regression-catalog-v43.mjs
+      - node eval/scripts/check-regression-catalog-v44.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:

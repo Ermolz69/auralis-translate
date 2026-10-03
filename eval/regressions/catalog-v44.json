@@ -1,0 +1,42 @@
+{
+  "schema_version": 44,
+  "catalog_id": "zh-ru-development-regressions-v44",
+  "base_catalog_file": "catalog-v43.json",
+  "base_catalog_sha256": "924e30b4e4de180409b5882795bc5b82530773e082d5d9c18427889746fed719",
+  "entries": [
+    {
+      "id": "REG-062",
+      "source_family": "authored_ASUS_development_controls",
+      "split": "known_development_not_holdout",
+      "category": "target_term_hint_contrast_referent_contamination",
+      "profile_scope": "Hy-MT2 7B Q4_K_M v8 plus rejected target-scoped and exact-occurrence experimental term transformers",
+      "expected_invariant": "A hint for one target noun must preserve every contrasting unhinted referent and its availability or negation.",
+      "severity": "major",
+      "pack_file": "reg-062-contrast-referent-contamination-v2.json",
+      "pack_sha256": "25477abbfa7c04b54159a374be7e79479241c822ff98a97d48b518b8177b6031",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 2,
+      "negative_control_count": 1,
+      "evidence_record": "eval/experiments/2026-10-03-reg-062-occurrence-terms-v1-result.md",
+      "last_outcome": "Exact-occurrence candidate repairs all twelve known positive observations, but loses the available stand in all three REG-062 reproducers and all three two-speaker controls; rejected, product v8 unchanged."
+    },
+    {
+      "id": "REG-063",
+      "source_family": "authored_source_name_development",
+      "split": "known_development_not_holdout",
+      "category": "name_proposal_neighbor_action_copy",
+      "profile_scope": "Hy-MT2 1.8B Q4_K_M v8 source-name profiles; NAME-02 admission-only safety containment",
+      "expected_invariant": "A target-scoped name proposal must preserve the target person's arrival-time question and must not replace it with the neighboring file-transfer action.",
+      "severity": "major",
+      "pack_file": "reg-063-name-proposal-neighbor-action-v2.json",
+      "pack_sha256": "70514d4391ef110d274898b9eea182a4e5c1c90f2afc49873534137fa24b3af0",
+      "minimal_reproducer_count": 1,
+      "related_control_count": 2,
+      "negative_control_count": 1,
+      "evidence_record": "eval/experiments/2026-10-03-name-action-admission-v1-result.md",
+      "last_outcome": "NAME-02 fail-closed admission contains active proposals before checkpoint; linguistic fix and human review remain open. Keep baseline v8, no long file.",
+      "deterministic_admission_control_count": 20,
+      "new_model_runs": 0
+    }
+  ]
+}

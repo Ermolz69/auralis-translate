@@ -1,10 +1,16 @@
 # Next bounded Goal assignments
 
-Updated: 3 October 2026. These are ready assignments, not acceptance records or
-authorization to claim release quality. Run them sequentially on isolated clean
+Updated: 3 October 2026. These were the ready assignments, not acceptance records or
+authorization to claim release quality. Run independent follow-ups on isolated clean
 checkouts. The current product baseline is unchanged v8; the NAME-01 and EVAL-05
 model extensions remain rejected. Preserve the shared checkout, foreign `014`
 change, source media, old SQLite results and all failed observations.
+
+NAME-02 now has [admission-only containment](../eval/experiments/2026-10-03-name-action-admission-v1-result.md)
+with zero new model calls. TERM-02 has a [rejected 120-answer screen](../eval/experiments/2026-10-03-reg-062-occurrence-terms-v1-result.md).
+The bounded assignments below remain the original instructions; the linguistic
+fixes, independent review and full Goal remain open. Their combined regression
+state is [catalog v44](../eval/regressions/catalog-v44.json).
 
 ## NAME-02
 
@@ -76,3 +82,45 @@ These development screens cannot replace DATA-03/04/05, CTX-03, EVAL-04,
 LONG-04, the independent G3-G5 review, or real Auralis listening. No volunteer
 contact is authorized. Desktop remains deferred by the owner. A rejected
 candidate is a valid bounded result; it leaves the full Goal open.
+
+## Next executable assignments after both rejections
+
+### EVAL-04 / CTX-03: source-fact admission screen
+
+> Continue the Goal on the existing `EVAL-04` and `CTX-03` backlog work. Start
+> from the retained REG-062 and REG-063 raw replies, the NAME-02 admission
+> result and catalog v44. First diagnose whether one source-grounded, output-only
+> guard can distinguish the missing stand, changed availability, changed person
+> and copied neighboring action from valid alternative Russian wordings. Freeze
+> explicit source facts and at least 20 new development controls before testing
+> the guard. Use the existing 84 NAME-01 and 120 TERM-02 replies for an offline
+> replay; make zero new model calls in this first screen. Record every caught
+> major error, missed major error and false refusal with source interpretation
+> and separate AI/human provenance. Implement a typed reject-before-checkpoint
+> outcome only where the source-to-target assertion is defensible; abstain
+> explicitly elsewhere. Do not rewrite the model's Russian sentence, add a
+> general prompt, consume sealed holdout or promote a product profile. Add
+> Taskfile commands, minimal/related/negative regressions, and exact evidence.
+> Stop if the guard cannot protect both defect families without rejecting valid
+> alternatives; preserve v8 and the failed result. Only a separately frozen
+> same-source model comparison could justify later quality advancement.
+
+### DATA-03: one eligible natural scene
+
+> Continue the Goal on `DATA-03` using the existing source inventory and rights
+> schema. Select one potentially licensed 10-20-minute Mandarin video with its
+> matching original Chinese subtitle track, including a YouTube source only if
+> its rights and media/caption alignment can actually be documented. Freeze URL,
+> version, expected duration, retrieval attempts, size/time limits and failure
+> handling before acquisition. Preserve original bytes and keep uncertain-rights
+> media private. Verify caption grammar, timing containment, speech/cue alignment
+> at the beginning, middle, end and scene boundaries; record who actually
+> listened and what they heard. If no direct listening or rights evidence is
+> available, retain the candidate with the precise missing gate and do not call
+> it eligible. Add Taskfile checks and an immutable source inventory update.
+> Do not use a sealed holdout or infer translation quality from alignment.
+
+These assignments can run independently after the integrated evidence is
+published. No volunteer outreach is authorized. Human Chinese-Russian review,
+the owner-deferred desktop stage, clean Windows install and real Auralis media
+listening remain separate requirements of the full Goal.
