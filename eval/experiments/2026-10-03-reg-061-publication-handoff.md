@@ -123,3 +123,13 @@ Independent Chinese–Russian review is absent. No contact was made. Source
 admission, human meaning/term approval, clean installation, listened real audio
 and approved spoken script remain open. EVAL-04, CTX-03, RELEASE-05, G3–G9,
 A1–A6 and the overall Goal remain incomplete.
+
+## Continuation evidence audit
+
+The [requirement-by-requirement self-audit](2026-10-03-reg-061-requirement-audit-v1.md)
+adds `task eval:regression:reg061:audit` and a single immutable audit snapshot.
+It verifies committed-before-inference provenance, the actual five-file attempt
+inventory, source/foreign-edit preservation and per-entry time/token limits without
+new model calls. The rejected policy, raw replies and product v8 remain unchanged.
+The follow-up audit commit is reverted before the earlier three slice commits
+when rolling back development-only changes. The overall Goal is still incomplete.

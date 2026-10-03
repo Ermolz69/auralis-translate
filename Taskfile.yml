@@ -2381,6 +2381,18 @@ tasks:
     cmds:
       - task: test:target-terms
       - node eval/scripts/check-reg-061-target-terms-v1.mjs
+  eval:regression:reg061:audit:
+    desc: Audit pre-inference commits, attempt files, budgets and preserved scope without model calls
+    cmds:
+      - task: eval:regression:reg061:check
+      - node --check eval/scripts/audit-reg-061-evidence-v1.mjs
+      - node eval/scripts/audit-reg-061-evidence-v1.mjs
+  eval:regression:reg061:audit:record:
+    desc: Retain one immutable REG-061 evidence audit snapshot without new inference
+    cmds:
+      - task: eval:regression:reg061:check
+      - node --check eval/scripts/audit-reg-061-evidence-v1.mjs
+      - node eval/scripts/audit-reg-061-evidence-v1.mjs --record
   eval:regression:reg060:check:
     desc: Verify the invalid REG-058 harness and four target-field regression controls
     cmds:

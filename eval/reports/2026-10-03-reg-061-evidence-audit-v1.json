@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "id": "reg-061-evidence-audit-v1",
+  "status": "verified_rejection_branch_only",
+  "audited_at": "2026-10-03T07:17:57.355Z",
+  "audited_head": "d8387e155391e616a3e1732b7744c2fb3677e2e6",
+  "implementation_commit": "b26092fd6949c25e18765eba0349fd7ebebbce21",
+  "publication_commit": "260452400b39b343efdba4e85fbf001f1f812d37",
+  "implementation_committed_at": "2026-10-03T06:36:23.000Z",
+  "inference_started_at": "2026-10-03T06:36:58.844Z",
+  "audit_script_sha256": "1d0d880388c40c62872958f2d8556d99cd844c2e0902903151e7ceb28d0fd52e",
+  "prior_result_sha256": "85b37138c805b8bfc164e552bac8d8d24df68b377dc298aa8a127b5a4dc70844",
+  "live_report_sha256": "dc60c503dc55b713516d5f86c42e5e3a607a9e82a03ccc3ed3bb01540e7b826f",
+  "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+  "protected_foreign_edit_sha256": "28e1d12c1afb4f1640128a2183564f26e119797e9b7f187134f0fd4f2f215aec",
+  "chat_count": 30,
+  "preflight_count": 60,
+  "model_attempt_count": 1,
+  "checkpoint_count": 0,
+  "published_subtitle_count": 0,
+  "inventory": [
+    {
+      "file": "7b/requests.jsonl",
+      "bytes": 221497,
+      "sha256": "aaa03a979fb76a136f57e960f8834f91da9d2906107ae843b7958a724cd8d2b0"
+    },
+    {
+      "file": "7b/resources.jsonl",
+      "bytes": 1372,
+      "sha256": "26445c8b4c4a3bc082bbf0bd4139d58e90024c20e9df3c9358ddb1ecea0a40e6"
+    },
+    {
+      "file": "7b/server.stderr.log",
+      "bytes": 27473,
+      "sha256": "3ac0dcdadd85203163b9d771ba7ae0dd769d4c66fdd3941cd391019eb27afad2"
+    },
+    {
+      "file": "7b/server.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "report.json",
+      "bytes": 29691,
+      "sha256": "fb30997468ca7e71fcafb7d2f97658849618d807a0558249449cbae568fd5423"
+    }
+  ],
+  "scoped_ai_facts": {
+    "pass": 12,
+    "fail": 1,
+    "needs_review": 2
+  },
+  "human_bilingual_review_count": 0,
+  "product_changed": false,
+  "full_file_branch": "forbidden_after_rejection",
+  "overall_goal": "incomplete",
+  "release_05": "incomplete",
+  "audio_gates": "incomplete",
+  "scope_commits": [
+    "b26092fd6949c25e18765eba0349fd7ebebbce21",
+    "260452400b39b343efdba4e85fbf001f1f812d37",
+    "d8387e155391e616a3e1732b7744c2fb3677e2e6"
+  ],
+  "scope_files": [
+    "Taskfile.yml",
+    "docs/IMPLEMENTATION_BACKLOG.md",
+    "docs/reference/provisional-target-terms-v1.md",
+    "eval/experiments/2026-10-03-reg-061-publication-handoff.md",
+    "eval/experiments/2026-10-03-reg-061-target-terms-v1-freeze.json",
+    "eval/experiments/2026-10-03-reg-061-target-terms-v1-plan.md",
+    "eval/experiments/2026-10-03-reg-061-target-terms-v1-result.md",
+    "eval/profiles/reg-061-target-terms-v1.json",
+    "eval/regressions/catalog-v41.json",
+    "eval/regressions/reg-061-term-hint-contamination-v2.json",
+    "eval/regressions/reg-062-contrast-referent-contamination-v1.json",
+    "eval/reports/2026-10-03-reg-061-target-terms-v1-ai-review.json",
+    "eval/reports/2026-10-03-reg-061-target-terms-v1.json",
+    "eval/scripts/check-public-demo-site.mjs",
+    "eval/scripts/check-reg-061-target-terms-v1.mjs",
+    "eval/scripts/check-regression-catalog-v41.mjs",
+    "eval/scripts/current-report-data.mjs",
+    "eval/scripts/current-report-site.mjs",
+    "eval/scripts/probe-reg-061-target-terms-v1.mjs",
+    "eval/scripts/public-demo-site.mjs",
+    "eval/scripts/target-term-scope.mjs",
+    "eval/scripts/target-terms-section.mjs",
+    "eval/scripts/tests/target-term-scope.test.mjs",
+    "site/history.html",
+    "site/index.html"
+  ],
+  "limitation": "A self-audit of existing development evidence; it neither adds inference nor supplies independent language or listening review."
+}
