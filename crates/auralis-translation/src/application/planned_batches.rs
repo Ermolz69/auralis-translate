@@ -184,6 +184,18 @@ impl PlannedBatches {
     pub fn batches(&self) -> &[TranslationBatch] {
         &self.batches
     }
+
+    pub fn with_name_registry(
+        mut self,
+        registry: &crate::NameRegistry,
+    ) -> Result<Self, ContractError> {
+        self.batches = self
+            .batches
+            .into_iter()
+            .map(|batch| batch.with_name_registry(registry))
+            .collect::<Result<Vec<_>, _>>()?;
+        Ok(self)
+    }
     pub fn ids(&self) -> &[Vec<SegmentId>] {
         &self.ids
     }

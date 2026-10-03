@@ -27,6 +27,7 @@ pub(crate) fn commit<V: VerifiedRenderer>(
         ));
     }
     let transaction = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
+    crate::name_registry_store::check_current(&transaction, spec.run_id)?;
     let run: Option<(String, String, String, bool)> = transaction
         .query_row(
             "SELECT source_sha256, block_plan_json, state, pause_requested FROM runs WHERE run_id = ?1",

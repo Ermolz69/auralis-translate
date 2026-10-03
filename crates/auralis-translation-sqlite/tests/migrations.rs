@@ -11,7 +11,7 @@ fn migration_and_ensure_are_idempotent_across_reopen() -> Result<(), Box<dyn Err
     let directory = test_directory()?;
     let path = directory.join("auralis-translate.sqlite");
     let mut db = TranslateDb::open(&path, SqliteConfig::default())?;
-    assert_eq!(db.schema_version()?, 9);
+    assert_eq!(db.schema_version()?, 10);
     let translation = translation_spec()?;
     let run = run_spec()?;
     db.ensure_translation(&translation)?;
@@ -21,7 +21,7 @@ fn migration_and_ensure_are_idempotent_across_reopen() -> Result<(), Box<dyn Err
     drop(db);
 
     let db = TranslateDb::open(&path, SqliteConfig::default())?;
-    assert_eq!(db.schema_version()?, 9);
+    assert_eq!(db.schema_version()?, 10);
     let stored_translation = db.translation(translation.translation_id)?;
     let stored_run = db.run(run.run_id)?;
     assert_eq!(stored_translation.source_hash, translation.source_hash);
@@ -71,11 +71,11 @@ fn refuses_database_from_a_newer_schema() -> Result<(), Box<dyn Error>> {
     let directory = test_directory()?;
     let path = directory.join("future.sqlite");
     let connection = Connection::open(&path)?;
-    connection.pragma_update(None, "user_version", 10)?;
+    connection.pragma_update(None, "user_version", 11)?;
     drop(connection);
     assert!(matches!(
         TranslateDb::open(&path, SqliteConfig::default()),
-        Err(DbError::UnsupportedSchemaVersion(10))
+        Err(DbError::UnsupportedSchemaVersion(11))
     ));
     std::fs::remove_dir_all(directory)?;
     Ok(())
@@ -91,7 +91,7 @@ fn upgrades_existing_v1_run_without_losing_it() -> Result<(), Box<dyn Error>> {
     drop(connection);
 
     let mut db = TranslateDb::open(&path, SqliteConfig::default())?;
-    assert_eq!(db.schema_version()?, 9);
+    assert_eq!(db.schema_version()?, 10);
     let translation = translation_spec()?;
     let run = run_spec()?;
     db.ensure_translation(&translation)?;
@@ -142,7 +142,7 @@ fn upgrades_existing_v2_run_and_adds_edit_selections() -> Result<(), Box<dyn Err
     drop(connection);
 
     let db = TranslateDb::open(&path, SqliteConfig::default())?;
-    assert_eq!(db.schema_version()?, 9);
+    assert_eq!(db.schema_version()?, 10);
     assert_eq!(db.run(run.run_id)?.translation_id, run.translation_id);
     let connection = Connection::open(&path)?;
     let table: String = connection.query_row(
@@ -171,7 +171,7 @@ fn upgrades_v3_and_prevents_recreating_deleted_project_translation() -> Result<(
     drop(connection);
 
     let mut database = TranslateDb::open(&path, SqliteConfig::default())?;
-    assert_eq!(database.schema_version()?, 9);
+    assert_eq!(database.schema_version()?, 10);
     let translation = translation_spec()?;
     database.ensure_translation(&translation)?;
     assert!(database.delete_project_translation(translation.translation_id, "project-1")?);
@@ -223,7 +223,7 @@ fn upgrades_v6_without_changing_existing_run_or_source() -> Result<(), Box<dyn E
     connection.pragma_update(None, "user_version", 6)?;
     drop(connection);
     let db = TranslateDb::open(&path, SqliteConfig::default())?;
-    assert_eq!(db.schema_version()?, 9);
+    assert_eq!(db.schema_version()?, 10);
     assert_eq!(
         db.translation(translation.translation_id)?.source_hash,
         translation.source_hash
@@ -304,7 +304,7 @@ fn upgrades_v7_chat_journal_without_changing_saved_request() -> Result<(), Box<d
     drop(connection);
 
     let db = TranslateDb::open(&path, SqliteConfig::default())?;
-    assert_eq!(db.schema_version()?, 9);
+    assert_eq!(db.schema_version()?, 10);
     let saved = db.inference_requests(run.run_id)?;
     assert_eq!(saved.len(), 1);
     assert_eq!(saved[0].start.kind, InferenceRequestKind::ChatCompletion);
@@ -388,7 +388,7 @@ fn upgrades_v8_preflight_journal_without_relabeling_it_as_chat() -> Result<(), B
     drop(connection);
 
     let db = TranslateDb::open(&path, SqliteConfig::default())?;
-    assert_eq!(db.schema_version()?, 9);
+    assert_eq!(db.schema_version()?, 10);
     let saved = db.inference_requests(run.run_id)?;
     assert_eq!(saved.len(), 1);
     assert_eq!(saved[0].start.kind, InferenceRequestKind::ApplyTemplate);

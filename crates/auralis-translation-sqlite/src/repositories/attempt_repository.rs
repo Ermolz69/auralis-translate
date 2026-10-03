@@ -13,6 +13,7 @@ pub(crate) fn begin(
         return Err(DbError::InvalidSpec("empty host job ID"));
     }
     let transaction = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
+    crate::name_registry_store::check_current(&transaction, run_id)?;
     if let Some(guard) = guard {
         super::attempt_admission::check(&transaction, guard)?;
     }

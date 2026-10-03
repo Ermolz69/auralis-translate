@@ -16,6 +16,7 @@ pub struct SrtRunPlan {
     planned: PlannedBatches,
     source_hash: SourceHash,
     scene_identity: Option<SourceHash>,
+    scene_map_hash: Option<SourceHash>,
 }
 
 impl SrtRunPlan {
@@ -111,66 +112,109 @@ impl SrtRunPlan {
         let document = inspect(source).map_err(SrtPlanError::Inspect)?;
         let source_hash = SourceHash::digest(source);
         let segments = document.source_segments().map_err(SrtPlanError::Contract)?;
-        let (planned, scene_identity) = if let Some((end_ids, snapshot_hash)) = scene {
-            let map = SceneMap::new(&segments, end_ids).map_err(SrtPlanError::Contract)?;
-            let planned = if let Some(terms) = approved_terms {
-                PlannedBatches::with_scenes_and_terms(
-                    &segments,
-                    &map,
-                    translation_id,
-                    run_id,
-                    source_hash,
-                    pair,
-                    policy,
-                    terms,
+        let (planned, scene_identity, scene_map_hash) =
+            if let Some((end_ids, snapshot_hash)) = scene {
+                let map = SceneMap::new(&segments, end_ids).map_err(SrtPlanError::Contract)?;
+                let planned = if let Some(terms) = approved_terms {
+                    PlannedBatches::with_scenes_and_terms(
+                        &segments,
+                        &map,
+                        translation_id,
+                        run_id,
+                        source_hash,
+                        pair,
+                        policy,
+                        terms,
+                    )
+                } else {
+                    PlannedBatches::with_scenes(
+                        &segments,
+                        &map,
+                        translation_id,
+                        run_id,
+                        source_hash,
+                        pair,
+                        policy,
+                        glossary,
+                    )
+                }
+                .map_err(SrtPlanError::Contract)?;
+                let mut identity = Vec::new();
+                identity.extend_from_slice(&map.fingerprint().bytes());
+                identity.extend_from_slice(&snapshot_hash.bytes());
+                (
+                    planned,
+                    Some(SourceHash::digest(&identity)),
+                    Some(map.fingerprint()),
                 )
             } else {
-                PlannedBatches::with_scenes(
-                    &segments,
-                    &map,
-                    translation_id,
-                    run_id,
-                    source_hash,
-                    pair,
-                    policy,
-                    glossary,
+                if approved_terms.is_some() {
+                    return Err(SrtPlanError::Contract(
+                        auralis_translation::ContractError::InvalidApprovedTerms,
+                    ));
+                }
+                (
+                    PlannedBatches::new(
+                        &segments,
+                        translation_id,
+                        run_id,
+                        source_hash,
+                        pair,
+                        policy,
+                        glossary,
+                    )
+                    .map_err(SrtPlanError::Contract)?,
+                    None,
+                    None,
                 )
-            }
-            .map_err(SrtPlanError::Contract)?;
-            let mut identity = Vec::new();
-            identity.extend_from_slice(&map.fingerprint().bytes());
-            identity.extend_from_slice(&snapshot_hash.bytes());
-            (planned, Some(SourceHash::digest(&identity)))
-        } else {
-            if approved_terms.is_some() {
-                return Err(SrtPlanError::Contract(
-                    auralis_translation::ContractError::InvalidApprovedTerms,
-                ));
-            }
-            (
-                PlannedBatches::new(
-                    &segments,
-                    translation_id,
-                    run_id,
-                    source_hash,
-                    pair,
-                    policy,
-                    glossary,
-                )
-                .map_err(SrtPlanError::Contract)?,
-                None,
-            )
-        };
+            };
         Ok(Self {
             document,
             planned,
             source_hash,
             scene_identity,
+            scene_map_hash,
         })
     }
 
     pub fn source_hash(&self) -> SourceHash {
         self.source_hash
+    }
+
+    pub fn with_name_registry(
+        mut self,
+        registry: &auralis_translation::NameRegistry,
+        scene_end_ids: &[SegmentId],
+    ) -> Result<Self, SrtPlanError> {
+        let segments = self
+            .document
+            .source_segments()
+            .map_err(SrtPlanError::Contract)?;
+        let scenes = SceneMap::new(&segments, scene_end_ids).map_err(SrtPlanError::Contract)?;
+        if registry.source_hash() != self.source_hash
+            || self.scene_map_hash != Some(scenes.fingerprint())
+        {
+            return Err(SrtPlanError::Contract(
+                auralis_translation::ContractError::InvalidNameRegistry,
+            ));
+        }
+        registry
+            .validate_against(&segments, &scenes)
+            .map_err(SrtPlanError::Contract)?;
+        self.planned = self
+            .planned
+            .with_name_registry(registry)
+            .map_err(SrtPlanError::Contract)?;
+        let mut identity = self
+            .scene_identity
+            .ok_or(SrtPlanError::Contract(
+                auralis_translation::ContractError::InvalidNameRegistry,
+            ))?
+            .bytes()
+            .to_vec();
+        identity.extend(registry.fingerprint().bytes());
+        self.scene_identity = Some(SourceHash::digest(&identity));
+        Ok(self)
     }
 
     pub fn source_len(&self) -> usize {

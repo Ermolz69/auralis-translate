@@ -1,6 +1,12 @@
 mod application;
 mod domain;
 mod ports;
+pub use application::{SOURCE_NAME_EXTRACTION_POLICY, extract_source_names};
+
+pub use domain::{
+    NameEntity, NameEntityId, NameOccurrence, NameProposal, NameProposalOrigin, NameRegistry,
+    NameStatus,
+};
 
 pub use application::{
     ApprovedTermAudit, MissingApprovedTerm, PlannedBatches, TranslateBatchError, TranslateRunError,

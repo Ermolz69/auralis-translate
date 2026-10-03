@@ -14,6 +14,7 @@ mod inference_request_outcome;
 mod inference_request_start;
 mod language_code;
 mod language_pair;
+mod name_registry;
 mod provider_response;
 mod result_id;
 mod retry_policy;
@@ -46,6 +47,10 @@ pub use inference_request_outcome::InferenceRequestOutcome;
 pub use inference_request_start::InferenceRequestStart;
 pub use language_code::LanguageCode;
 pub use language_pair::LanguagePair;
+pub use name_registry::{
+    NameEntity, NameEntityId, NameOccurrence, NameProposal, NameProposalOrigin, NameRegistry,
+    NameStatus,
+};
 pub(crate) use provider_response::PROVIDER_RESPONSE_SCHEMA_VERSION;
 pub use provider_response::ProviderResponse;
 pub use result_id::ResultId;

@@ -20,6 +20,8 @@ pub struct TranslationBatch {
     context: Vec<SourceSegment>,
     glossary: Vec<GlossaryEntry>,
     approved_terms: Vec<ApprovedTerm>,
+    name_registry_identity: Option<SourceHash>,
+    name_entities: Vec<super::NameEntity>,
 }
 
 impl TranslationBatch {
@@ -140,7 +142,30 @@ impl TranslationBatch {
             context,
             glossary,
             approved_terms,
+            name_registry_identity: None,
+            name_entities: Vec::new(),
         })
+    }
+
+    pub fn with_name_registry(
+        mut self,
+        registry: &super::NameRegistry,
+    ) -> Result<Self, ContractError> {
+        if self.translation_id != registry.translation_id()
+            || self.source_hash != registry.source_hash()
+        {
+            return Err(ContractError::InvalidNameRegistry);
+        }
+        self.name_registry_identity = Some(registry.fingerprint());
+        self.name_entities = registry.applicable(&self.targets);
+        Ok(self)
+    }
+
+    pub fn name_entities(&self) -> &[super::NameEntity] {
+        &self.name_entities
+    }
+    pub fn name_registry_identity(&self) -> Option<SourceHash> {
+        self.name_registry_identity
     }
 
     pub fn schema_version(&self) -> u32 {
@@ -190,6 +215,10 @@ impl TranslationBatch {
         hasher.update([language_byte(self.language_pair.target())]);
         hash_segments(&mut hasher, &self.targets);
         hash_segments(&mut hasher, &self.context);
+        if let Some(identity) = self.name_registry_identity {
+            hasher.update(b"name-registry-v1");
+            hasher.update(identity.bytes());
+        }
         if !self.glossary.is_empty() {
             hasher.update(GLOSSARY_FINGERPRINT_VERSION.to_le_bytes());
             hasher.update((self.glossary.len() as u64).to_le_bytes());
