@@ -51,8 +51,18 @@ No new translation inference, natural full-file run, independent Chinese-Russian
 judgment, audio listening or clean-install validation occurred during integration.
 The shared checkout's unrelated `014` change, original subtitle/media files,
 registry revisions, prior accepted results and both failed experiment journals
-remain untouched. Site publication and live byte checks are recorded separately
-after push.
+remain untouched.
+
+Publication follow-up: `e599ad3..b893b80` fast-forwarded `main` without
+force. [Pages run 37116109512](https://github.com/Ermolz69/auralis-translate/actions/runs/37116109512)
+completed successfully for `b893b8007727a2ce219151d9cfb33508a06682df`.
+`task site:live:check` confirmed byte-identical published pages: current
+`index.html` SHA-256
+`f1477b6756f64d8fa72c2d2563cf0a70e616ca937e649683d75fdcc0b22cbfcc`
+(58,976 bytes) and historical `history.html` SHA-256
+`4efa4e5655f3cf90de52d6a66673d459443591e2c2a2ba5fd45a011e5f7b5afb`
+(1,187,833 bytes). This confirms publication only, not translation or audio
+acceptance.
 
 ## Rollback
 
