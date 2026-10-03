@@ -114,6 +114,7 @@ pub(crate) fn execute(
             ProviderError::Permanent(_) => "permanent",
             ProviderError::Transient(_) => "transient",
             ProviderError::Storage(_) => "storage",
+            ProviderError::NameProposalReviewRequired(_) => "name_proposal_review_required",
         };
         db.finish_model_preflight(
             run.run_id,

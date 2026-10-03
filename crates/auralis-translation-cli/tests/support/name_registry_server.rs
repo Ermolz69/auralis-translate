@@ -6,6 +6,32 @@ use std::{
 };
 
 pub fn serve(listener: TcpListener, model: String, fail_second: bool) -> Result<Vec<u32>, String> {
+    serve_with_reply(listener, model, fail_second, None)
+}
+
+pub fn serve_review_rejection(
+    listener: TcpListener,
+    model: String,
+    reply: String,
+) -> Result<Vec<u32>, String> {
+    serve_with_reply(listener, model, false, Some(reply))
+}
+
+pub fn serve_two_targets(listener: TcpListener, model: String) -> Result<Vec<u32>, String> {
+    serve_with_reply(
+        listener,
+        model,
+        true,
+        Some("Детерминированный ответ.".into()),
+    )
+}
+
+fn serve_with_reply(
+    listener: TcpListener,
+    model: String,
+    fail_second: bool,
+    reply: Option<String>,
+) -> Result<Vec<u32>, String> {
     listener.set_nonblocking(true).map_err(|e| e.to_string())?;
     let deadline = Instant::now() + Duration::from_secs(30);
     let mut targets = Vec::new();
@@ -72,9 +98,15 @@ pub fn serve(listener: TcpListener, model: String, fail_second: bool) -> Result<
                 let slot=&envelope["target_slots"][0];
                 let id=slot["segment_id"].as_u64().ok_or("id")? as u32;
                 targets.push(id);
-                if slot["name_proposals"][0]["source"]!="小王" {return Err("missing scoped name".into());}
-                let content=if fail_second && id==2 {"not valid JSON".into()}
-                    else {json!({"translations":[{"segment_id":id,"line_index":0,"text":if id==1 {"Сяо Ван, входите."} else {"Сяо Ван, садитесь."}}]}).to_string()};
+                if let Some(hints) = slot.get("name_proposals").and_then(Value::as_array) {
+                    for hint in hints {
+                        if !slot["source_original"].as_str().ok_or("source")?.contains(hint["source"].as_str().ok_or("hint")?) {
+                            return Err("invalid scoped name".into());
+                        }
+                    }
+                }
+                let content=if fail_second && id==2 && reply.is_none() {"not valid JSON".into()}
+                    else {json!({"translations":[{"segment_id":id,"line_index":0,"text":reply.as_deref().unwrap_or(if id==1 {"Сяо Ван, входите."} else {"Сяо Ван, садитесь."})}]}).to_string()};
                 json!({"choices":[{"message":{"content":content},"finish_reason":"stop"}],"usage":{"prompt_tokens":10,"completion_tokens":10}})
             },
             _=>return Err(format!("unexpected route {route}")),

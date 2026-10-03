@@ -44,3 +44,5 @@ pub use asset_download::{
 };
 mod name_registry_prompt;
 pub use name_registry_prompt::{name_registry_policy_sha256, render_v8_name_proposals};
+mod name_proposal_admission;
+pub use name_proposal_admission::{check_name_proposal_admission, name_proposal_admission_sha256};

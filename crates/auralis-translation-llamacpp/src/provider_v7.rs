@@ -21,6 +21,16 @@ impl LlamaCppProvider {
         batch: &TranslationBatch,
         control: Option<(&dyn RunControl, RunId)>,
     ) -> Result<(ProviderResponse, Vec<TranslationDiagnostic>), ProviderError> {
+        if self.profile.name_proposal_admission_sha256.is_none()
+            && batch
+                .name_entities()
+                .iter()
+                .any(|entity| entity.proposal.is_some())
+        {
+            return Err(ProviderError::NameProposalReviewRequired(
+                "name_proposal_review_required: legacy name proposal profile has no pinned admission barrier; use baseline v8 or a fresh guarded run".into(),
+            ));
+        }
         if batch.name_registry_identity().is_some()
             && self.profile.name_registry_policy_sha256.is_none()
         {
@@ -204,7 +214,7 @@ impl LlamaCppProvider {
             .ok_or_else(|| ProviderError::Permanent("v7 response reserve overflow".into()))?;
         let payload = json!({
             "model": self.profile.model_alias,
-            "messages": [{"role": "user", "content": prompt_text}],
+            "messages": [{"role": "user", "content": &prompt_text}],
             "temperature": self.profile.temperature,
             "top_p": self.profile.top_p,
             "top_k": self.profile.top_k,
@@ -273,13 +283,23 @@ impl LlamaCppProvider {
                     })
                     .collect::<Result<Vec<_>, _>>()
             });
+        let admitted = translated
+            .as_ref()
+            .map_err(|error| ProviderError::Permanent(error.to_string()))
+            .and_then(|_| {
+                if self.profile.name_proposal_admission_sha256.is_some() {
+                    crate::check_name_proposal_admission(&prompt_text)
+                } else {
+                    Ok(())
+                }
+            });
         if let Some(journal) = &self.inference_journal {
             let (prompt_tokens, completion_tokens) = response
                 .as_ref()
                 .ok()
                 .and_then(|http| http.body_result().ok())
                 .map_or((None, None), crate::provider::response_usage);
-            let outcome = match (&response, &translated) {
+            let outcome = match (&response, &admitted) {
                 (_, Ok(_)) => InferenceRequestOutcome::ValidatedBatch,
                 (Err(error), _) if error.to_string().contains("paused") => {
                     InferenceRequestOutcome::Paused
@@ -322,7 +342,7 @@ impl LlamaCppProvider {
                     prompt_tokens,
                     completion_tokens,
                     elapsed_ms: u64::try_from(clock.elapsed().as_millis()).unwrap_or(u64::MAX),
-                    error_detail: translated.as_ref().err().map(ToString::to_string),
+                    error_detail: admitted.as_ref().err().map(ToString::to_string),
                 })
                 .map_err(|error| ProviderError::Storage(error.to_string()))?;
         }
@@ -330,7 +350,7 @@ impl LlamaCppProvider {
             Err(error) => Err(error),
             Ok(http) => match http.body_result() {
                 Err(error) => Err(error),
-                Ok(_) => translated,
+                Ok(_) => admitted.and(translated),
             },
         }
     }

@@ -75,8 +75,11 @@ pub(crate) fn classify(error: &(dyn Error + 'static)) -> ErrorCode {
     {
         return ErrorCode::InvalidInput;
     }
-    if error.is::<ProviderError>() || error.is::<TranslateBatchError>() {
-        return ErrorCode::RuntimeFailure;
+    if let Some(error) = error.downcast_ref::<ProviderError>() {
+        return provider(error);
+    }
+    if let Some(error) = error.downcast_ref::<TranslateBatchError>() {
+        return batch(error);
     }
     if let Some(error) = error.downcast_ref::<std::io::Error>() {
         return io_code(error);
@@ -108,8 +111,22 @@ fn run(error: &TranslateRunError<DbError>) -> ErrorCode {
         TranslateRunError::Paused => ErrorCode::Paused,
         TranslateRunError::Store(error) => database(error),
         TranslateRunError::Control(_) => ErrorCode::StorageFailure,
-        TranslateRunError::Batch(_) => ErrorCode::RuntimeFailure,
+        TranslateRunError::Batch(error) => batch(error),
         TranslateRunError::InvalidCheckpoint(_) => ErrorCode::Conflict,
         TranslateRunError::InvalidPlan(_) => ErrorCode::InvalidInput,
+    }
+}
+
+fn batch(error: &TranslateBatchError) -> ErrorCode {
+    match error {
+        TranslateBatchError::Provider(error) => provider(error),
+        TranslateBatchError::Contract(_) => ErrorCode::RuntimeFailure,
+    }
+}
+
+fn provider(error: &ProviderError) -> ErrorCode {
+    match error {
+        ProviderError::NameProposalReviewRequired(_) => ErrorCode::NameProposalReviewRequired,
+        _ => ErrorCode::RuntimeFailure,
     }
 }

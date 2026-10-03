@@ -1,6 +1,7 @@
 #[path = "support/machine_workspace.rs"]
 mod machine_workspace;
 #[path = "support/name_registry_server.rs"]
+#[allow(dead_code)]
 mod name_registry_server;
 use auralis_translation::{RunId, SOURCE_NAME_EXTRACTION_POLICY, SourceHash, TranslationId};
 use auralis_translation_llamacpp::name_registry_policy_sha256;
@@ -9,7 +10,7 @@ use serde_json::{Value, json};
 use std::{error::Error, process::Command};
 
 #[test]
-fn fresh_worker_resumes_names_after_invalid_response_and_reexports_old_revision()
+fn fresh_worker_resumes_registry_without_proposals_and_reexports_old_revision()
 -> Result<(), Box<dyn Error>> {
     let workspace = machine_workspace::MachineWorkspace::new()?;
     let source = workspace.0.join("source.srt");
@@ -39,7 +40,7 @@ fn fresh_worker_resumes_names_after_invalid_response_and_reexports_old_revision(
         )?,
     )?;
     let mut payload = json!({"schema_version":1,"source_sha256":SourceHash::digest(original.as_bytes()).to_string(),"extraction_policy_id":SOURCE_NAME_EXTRACTION_POLICY,
-        "expected_revision":1,"proposals":[{"entity_id":1,"chinese":"小王","scene_index":0,"russian":"Сяо Ван","origin":"model","evidence_id":"owned-mock-proposal"}]});
+        "expected_revision":1,"proposals":[]});
     std::fs::write(&proposals, serde_json::to_vec(&payload)?)?;
     let cli = env!("CARGO_BIN_EXE_auralis-translation-cli");
     let listener = std::net::TcpListener::bind("127.0.0.1:0")?;
@@ -110,7 +111,8 @@ fn fresh_worker_resumes_names_after_invalid_response_and_reexports_old_revision(
     assert_eq!(db.checkpoints(run_id)?[0], checkpoint[0]);
     assert_eq!(db.checkpoints(run_id)?.len(), 2);
     drop(db);
-    payload["proposals"][0]["russian"] = "Сяо Вань".into();
+    payload["proposals"] = json!([{"entity_id":1,"chinese":"小王","scene_index":0,
+        "russian":"Сяо Вань","origin":"model","evidence_id":"owned-mock-proposal"}]);
     std::fs::write(&proposals, serde_json::to_vec(&payload)?)?;
     let revised = Command::new(cli)
         .arg("revise-name-proposals")

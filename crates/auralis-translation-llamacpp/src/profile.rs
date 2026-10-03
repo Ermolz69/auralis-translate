@@ -52,6 +52,8 @@ pub struct ModelProfile {
     #[serde(default)]
     pub name_registry_policy_sha256: Option<String>,
     #[serde(default)]
+    pub name_proposal_admission_sha256: Option<String>,
+    #[serde(default)]
     pub max_name_proposals_entries: usize,
     #[serde(default)]
     pub max_name_proposals_bytes: usize,
@@ -200,6 +202,18 @@ impl ModelProfile {
         } else if self.max_name_proposals_entries != 0 || self.max_name_proposals_bytes != 0 {
             return Err(ProfileError::Invalid(
                 "name proposal limits require a pinned policy",
+            ));
+        }
+        if self
+            .name_proposal_admission_sha256
+            .as_ref()
+            .is_some_and(|hash| {
+                hash != &crate::name_proposal_admission_sha256()
+                    || self.name_registry_policy_sha256.is_none()
+            })
+        {
+            return Err(ProfileError::Invalid(
+                "name proposal admission identity differs",
             ));
         }
         if !(1..=MAX_TARGET_SEGMENTS).contains(&self.target_segments_per_block)

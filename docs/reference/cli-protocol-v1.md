@@ -1,5 +1,13 @@
 # CLI machine protocol v1
 
+NAME-02 adds `name_proposal_review_required` for a rejected target with an active
+name proposal (classified exit 4), before checkpoint. The raw and parsed response
+remain in the inference journal as `invalid_candidate`. This explicit review
+outcome is distinct from a complete file labelled `needs_review`. See
+[admission v1](name-proposal-admission-v1.md); no automatic semantic retry or
+correction is performed. Legacy proposal identities remain usable for old-result
+export; new active-proposal inference requires a separately pinned barrier.
+
 Status: implementation contract, 26 September 2026. Machine mode is opt-in with
 `--json` or `--jsonl` before the command. The existing unflagged positional CLI
 keeps its output and 0/1 exit behavior for the local scripts already using it.

@@ -3,6 +3,12 @@
 Date: 3 October 2026. NAME-01 is a bounded engineering/development prerequisite
 of CTX-03, EVAL-04 and LONG-04. It does not complete those tasks or G3–G5.
 
+NAME-02 adds [admission v1](../reference/name-proposal-admission-v1.md).
+The NAME-01 proposal screen is rejected: old proposal profiles are historical
+identities, not permission for new unguarded inference. A fresh guarded profile
+retains raw/parsed candidates and explicitly rejects active proposals before
+checkpoint because source-aware identity/action verification is unavailable.
+
 Translate SQLite owns immutable registry revisions under an existing translation
 snapshot (and its external project identity). Source digest, scene map, extraction
 policy and revision are part of the identity. Each entity stores Chinese surface,
