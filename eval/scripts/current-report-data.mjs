@@ -205,16 +205,41 @@ export async function loadCurrentReport(root) {
   const targetTerms = await loadTargetTerms(root);
   const occurrenceTerms = await loadOccurrenceTerms(root);
   const nameRegistry = await loadNameRegistry(root);
+  const vivoSourceRaw = await fs.readFile(path.join(root,
+    'eval/reports/youtube-geekerwan-vivo-caption-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(vivoSourceRaw).digest('hex'),
+    '51a8cfacb56437cb9f87ccff4920a57d9df53c0363752af21da7036882beea3c');
+  const vivoSource = JSON.parse(vivoSourceRaw);
+  assert.equal(vivoSource.video_id, '_G4e2p1p-is');
+  assert.equal(vivoSource.regular_chinese_srt_advertised, true);
+  assert.equal(vivoSource.youtube_auto_captions_advertised, false);
+  assert.equal(vivoSource.cue_count, 467);
+  assert.equal(vivoSource.text_identical_cues, vivoSource.cue_count);
+  assert.equal(vivoSource.timing_differences.length, 8);
+  assert.equal(vivoSource.cues_past_retained_media, 0);
+  assert.equal(vivoSource.speech_alignment, 'not_listened');
+  assert.equal(vivoSource.source_admission, 'inspected_candidate_zero_eligible');
   return {
     name_registry:nameRegistry.summary,
     target_terms:targetTerms.summary,
     occurrence_terms:occurrenceTerms.summary,
     schema_version: 1,
-    as_of: '2026-10-03',
+    as_of: '2026-10-09',
     release_decision: 'not_accepted',
     sources: { candidates: sources.source_count, media_groups: sources.media_groups,
       inspected_cues: sources.inspected_cues,
       eligible_cues: sources.eligible_cues },
+    youtube_source: { video_id: vivoSource.video_id,
+      duration_ms: vivoSource.metadata_duration_ms,
+      cue_count: vivoSource.cue_count,
+      text_identical_cues: vivoSource.text_identical_cues,
+      timing_difference_rows: vivoSource.timing_differences.length,
+      cues_past_retained_media: vivoSource.cues_past_retained_media,
+      regular_chinese_srt_advertised: vivoSource.regular_chinese_srt_advertised,
+      auto_captions_advertised: vivoSource.youtube_auto_captions_advertised,
+      speech_alignment: vivoSource.speech_alignment,
+      source_admission: vivoSource.source_admission,
+      report_sha256: createHash('sha256').update(vivoSourceRaw).digest('hex') },
     lesson_source: { cues: sources.lesson_cues,
       caption_sha256: sources.lesson_sha256,
       media_duration_ms: sources.lesson_media_duration_ms,
