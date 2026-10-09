@@ -1897,6 +1897,42 @@ tasks:
     cmds:
       - node --check eval/scripts/check-vivo-technical-senses-v2.mjs
       - node eval/scripts/check-vivo-technical-senses-v2.mjs --check
+  eval:reg076:v3:unit:
+    desc: Check source-scoped negated multi-core notes and unchanged v8/v2 requests
+    cmds:
+      - node --check eval/scripts/vivo-technical-senses-v3.mjs
+      - node --check eval/scripts/probe-vivo-technical-senses-v3.mjs
+      - node --test --test-isolation=none eval/scripts/tests/vivo-technical-senses-v3.test.mjs
+  eval:reg076:v3:freeze:
+    desc: Freeze 120 paired REG-076 request identities before inference
+    requires:
+      vars: [ASSET_ROOT, MODEL_ROOT]
+    env:
+      AURALIS_EVAL_ASSET_ROOT: '{{.ASSET_ROOT}}'
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+    cmds:
+      - task: eval:reg076:v3:unit
+      - node eval/scripts/probe-vivo-technical-senses-v3.mjs --freeze
+  eval:reg076:v3:preflight:
+    desc: Verify the frozen REG-076 screen and exact local model/runtime assets
+    requires:
+      vars: [ASSET_ROOT, MODEL_ROOT]
+    env:
+      AURALIS_EVAL_ASSET_ROOT: '{{.ASSET_ROOT}}'
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+    cmds:
+      - task: eval:reg076:v3:unit
+      - node eval/scripts/probe-vivo-technical-senses-v3.mjs --preflight
+  eval:reg076:v3:probe:
+    desc: Run one bounded 7B paired REG-076 screen with three seeds
+    requires:
+      vars: [ASSET_ROOT, MODEL_ROOT]
+    env:
+      AURALIS_EVAL_ASSET_ROOT: '{{.ASSET_ROOT}}'
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+    cmds:
+      - task: eval:reg076:v3:preflight
+      - node eval/scripts/probe-vivo-technical-senses-v3.mjs --probe
   eval:vivo:post-edit:freeze:
     desc: Freeze ten source-and-draft revision request identities before inference
     cmds:
