@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "REG-075",
+  "status": "v1_preflight_rejected_no_model_calls",
+  "severity": "target_hint_false_abstention",
+  "split": "exposed_natural_development_not_holdout",
+  "source_family": "youtube_geekerwan_vivo_original_platform",
+  "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "freeze_sha256": "c2816d2a50571ec1abf168b1eb317891911094867e1311ab897162226bba7f61",
+  "expected_invariant": "An affirmative continuation adverb containing the character 不 must not suppress an exact target-slot semiconductor-process sense note; genuine negation and word mentions must still preserve baseline bytes.",
+  "minimal_reproducer": {
+    "cue_id": 393,
+    "source_text_sha256": "6a7e7480ad824df5104534cb58353520deb889f6f155a27720e949b5e2cb78ff",
+    "source_inventory_sha256": "c6d459d9103a2b48ef46239cf2c980096f85624d32d977aab0e811edfece0ea8",
+    "v1_baseline_request_sha256": "fdc969ff84ce243b1c2112e015bbb42575b2cbb19a1df0ede1d6ce129e857084",
+    "v1_candidate_request_sha256": "fdc969ff84ce243b1c2112e015bbb42575b2cbb19a1df0ede1d6ce129e857084",
+    "v1_eligible_terms": [],
+    "expected_v2_eligible_terms": ["制程"]
+  },
+  "related_controls": [
+    {"id":"continually_develop_process","source_line":"我们会不断研发先进制程。","expected_term":"制程"},
+    {"id":"continuation_with_chip_subject","source_line":"这家芯片公司不断改进制程。","expected_term":"制程"},
+    {"id":"unrelated_continuation","source_line":"我们不断改进摄像头。","expected_term":null}
+  ],
+  "negative_controls": [
+    {"id":"do_not_develop_process","source_line":"我们不开发先进制程。","expected_term":null},
+    {"id":"no_process_work","source_line":"我们没有研发先进制程。","expected_term":null},
+    {"id":"quoted_process_word","source_line":"他只解释了“制程”这个词。","expected_term":null}
+  ],
+  "control_model_runs": 0,
+  "human_review": "missing",
+  "product_status": "v8_unchanged"
+}
