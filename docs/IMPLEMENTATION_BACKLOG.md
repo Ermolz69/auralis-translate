@@ -940,3 +940,5 @@ do not fix the five paired natural-file risks, so `CTX-03`, `EVAL-04`,
 `DECIDE-01`, G3–G5 and RELEASE-05 remain open. Next is a bounded same-source
 cue-fragment/scene-boundary comparison; a source-derived fact guard may be
 tested only with the negative controls and a no-new-major-error rule.
+The [RELEASE-05 v12 self-audit](../eval/experiments/2026-10-09-release-05-audit-attempt-v12.md)
+keeps every release and audio gate open after this short-control result.

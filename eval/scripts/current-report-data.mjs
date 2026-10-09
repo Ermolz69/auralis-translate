@@ -257,6 +257,24 @@ export async function loadCurrentReport(root) {
   assert.equal(vivoRecovery.review_state, 'needs_review');
   assert.equal(vivoRecovery.human_bilingual_reviews, 0);
   assert.equal(vivoRecovery.accepted_language_quality, false);
+  const reg066Raw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-09-reg066-authored-v8-screen.json'), 'utf8');
+  assert.equal(createHash('sha256').update(reg066Raw).digest('hex'),
+    'ac02b59ed3da899c6f253c21ee00106fa6c615615457487a41916ddbf489154d');
+  const reg066 = JSON.parse(reg066Raw);
+  const reg066ReviewRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-09-reg066-authored-v8-screen-ai-review.json'), 'utf8');
+  assert.equal(createHash('sha256').update(reg066ReviewRaw).digest('hex'),
+    '99df8aaa4cb7f967d3d07e1a764182fbd5d305b302b152f8b8371f0a29e50c40');
+  const reg066Review = JSON.parse(reg066ReviewRaw);
+  assert.equal(reg066.chat_requests, 20);
+  assert.equal(reg066.template_token_preflights, 40);
+  assert.equal(reg066Review.machine_report_sha256,
+    createHash('sha256').update(reg066Raw).digest('hex'));
+  assert.equal(reg066Review.summary['1_8b'].fact_preserved, 8);
+  assert.equal(reg066Review.summary['7b'].fact_preserved, 8);
+  assert.equal(reg066Review.summary.human_bilingual_reviews, 0);
+  assert.equal(reg066Review.summary.natural_file_errors_resolved, false);
   return {
     name_registry:nameRegistry.summary,
     target_terms:targetTerms.summary,
@@ -304,6 +322,15 @@ export async function loadCurrentReport(root) {
       human_bilingual_reviews: vivoRecovery.human_bilingual_reviews,
       accepted_language_quality: vivoRecovery.accepted_language_quality,
       report_sha256: createHash('sha256').update(vivoRecoveryRaw).digest('hex') },
+    reg066_screen: { chats: reg066.chat_requests,
+      preflights: reg066.template_token_preflights,
+      small_fact_preserved: reg066Review.summary['1_8b'].fact_preserved,
+      large_fact_preserved: reg066Review.summary['7b'].fact_preserved,
+      cases_per_model: reg066Review.cases.length,
+      human_bilingual_reviews: reg066Review.summary.human_bilingual_reviews,
+      natural_errors_resolved: reg066Review.summary.natural_file_errors_resolved,
+      report_sha256: createHash('sha256').update(reg066Raw).digest('hex'),
+      ai_review_sha256: createHash('sha256').update(reg066ReviewRaw).digest('hex') },
     lesson_source: { cues: sources.lesson_cues,
       caption_sha256: sources.lesson_sha256,
       media_duration_ms: sources.lesson_media_duration_ms,
