@@ -400,6 +400,24 @@ export async function loadCurrentReport(root) {
   assert.equal(vivoGroup.new_tts_requests, 0);
   assert.equal(vivoGroup.human_audio_listeners, 0);
   assert.equal(vivoGroup.audio_gates_admitted, false);
+  const vivoEdgeRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-vivo-edge-silence-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(vivoEdgeRaw).digest('hex'),
+    '03d64bbaf1954c0b74d9a13dd0f842963e61c794f418d153aa1ac81321b9d535');
+  const vivoEdge = JSON.parse(vivoEdgeRaw);
+  assert.equal(vivoEdge.status, 'edge_only_rejected');
+  assert.equal(vivoEdge.cue_count, vivoGroup.cue_count);
+  assert.equal(vivoEdge.tts_report_sha256, vivoGroup.tts_report_sha256);
+  assert.equal(vivoEdge.total_wav_ms, vivoGroup.total_wav_ms);
+  assert.equal(vivoEdge.source_span_ms, vivoGroup.source_span_ms);
+  assert.equal(vivoEdge.deficit_at_1_5x_ms,
+    vivoGroup.duration_reduction_needed_for_1_5x_ms);
+  assert.equal(vivoEdge.thresholds['328'].potential_edge_ms, 432905);
+  assert.equal(vivoEdge.thresholds['328'].remaining_deficit_ms, 187273);
+  assert.equal(vivoEdge.new_tts_requests, 0);
+  assert.equal(vivoEdge.human_audio_listeners, 0);
+  assert.equal(vivoEdge.approved_trim, false);
+  assert.equal(vivoEdge.audio_gates_admitted, false);
   return {
     name_registry:nameRegistry.summary,
     target_terms:targetTerms.summary,
@@ -450,6 +468,16 @@ export async function loadCurrentReport(root) {
       human_audio_listeners: vivoGroup.human_audio_listeners,
       audio_gates_admitted: vivoGroup.audio_gates_admitted,
       report_sha256: createHash('sha256').update(vivoGroupRaw).digest('hex') },
+    vivo_edge_silence: { cue_count: vivoEdge.cue_count,
+      conservative_edge_ms: vivoEdge.thresholds['33'].potential_edge_ms,
+      broad_edge_ms: vivoEdge.thresholds['328'].potential_edge_ms,
+      broad_remaining_deficit_ms: vivoEdge.thresholds['328'].remaining_deficit_ms,
+      broad_ideal_tempo: vivoEdge.thresholds['328'].ideal_tempo_after_edge_removal,
+      new_tts_requests: vivoEdge.new_tts_requests,
+      human_audio_listeners: vivoEdge.human_audio_listeners,
+      approved_trim: vivoEdge.approved_trim,
+      audio_gates_admitted: vivoEdge.audio_gates_admitted,
+      report_sha256: createHash('sha256').update(vivoEdgeRaw).digest('hex') },
     source_fact_hints: { chats: facts.chat_requests,
       preflights: facts.template_token_preflights,
       exact_abstentions: facts.identical_no_hint_pairs,

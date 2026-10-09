@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "experiment_id": "VOICE-VIVO-EDGE-SILENCE-2026-10-10-v1",
+  "status": "edge_only_rejected",
+  "auralis_plan_commit": "18b96fa",
+  "auralis_result_commit": "7b2b06d",
+  "private_report_sha256": "091ca9e3f71f509ade8867faeec23f741c6d54a65f423254c47df22a5fb1efbc",
+  "tts_report_sha256": "eeb049e1bd3ad4639e0ba4f3aaead95cd7a464c1cda3c534f03f5d6bd7ade7c1",
+  "wav_analysis_sha256": "5e8680d88bbadbccbd247284db9bacc0583db249137b81ca5b6ae1805dba6de8",
+  "cue_count": 467,
+  "sample_rate_hz": 22050,
+  "frame_samples": 221,
+  "total_wav_ms": 2291610,
+  "source_span_ms": 1114363,
+  "end_margin_ms": 75,
+  "deficit_at_1_5x_ms": 620178,
+  "thresholds": {
+    "33": { "approx_dbfs": -60, "potential_edge_ms": 320802, "remaining_deficit_ms": 299376, "ideal_tempo_after_edge_removal": 1.768670218112373, "all_quiet_cues": 0 },
+    "104": { "approx_dbfs": -50, "potential_edge_ms": 416097, "remaining_deficit_ms": 204081, "ideal_tempo_after_edge_removal": 1.6831492396938672, "all_quiet_cues": 0 },
+    "328": { "approx_dbfs": -40, "potential_edge_ms": 432905, "remaining_deficit_ms": 187273, "ideal_tempo_after_edge_removal": 1.66806516807145, "all_quiet_cues": 0 }
+  },
+  "new_tts_requests": 0,
+  "new_model_requests": 0,
+  "new_media_requests": 0,
+  "human_audio_listeners": 0,
+  "approved_trim": false,
+  "audio_gates_admitted": false
+}
