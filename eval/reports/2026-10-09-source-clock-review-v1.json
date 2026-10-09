@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "experiment": "source-clock-review-v1-offline-2026-10-09",
+  "split": "known_natural_development_not_holdout",
+  "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "draft_sha256": "4451868ea3e7cbb3ed81f3d24b5f85bc61a749168b213c54c88ae552208c4831",
+  "prior_journal_sha256": "72e52f740ffa1b4dce7e88168a6872eb2687ab44e1f39fd19e0316a10b8f767f",
+  "rule_sha256": "ee240fe846ce67e931da0c4da2c4f7d0e295ef06c82a5ee3f6672f2076910aac",
+  "source_cues": 467,
+  "draft_cues": 467,
+  "recognized_source_clocks": [
+    {
+      "cue_id": 328,
+      "expected": "after_midnight_one_two"
+    }
+  ],
+  "full_draft_warnings": [
+    {
+      "cue_id": 328,
+      "expected": "after_midnight_one_two",
+      "observed": "eleven_twelve"
+    }
+  ],
+  "paired_natural_328": {
+    "candidate": {
+      "request_sha256": "d281c6df71f7cb2b472f098002e604bd6f5532eb2c9f06dd1af1dbbfcf8eeb42",
+      "raw_http_sha256": "f88adfd0185cca05dbba8193e3fa975e74b894bfc1e470f711beca5cd93caf4e",
+      "warning": {
+        "cue_id": 328,
+        "expected": "after_midnight_one_two",
+        "observed": "eleven_twelve"
+      }
+    },
+    "baseline": {
+      "request_sha256": "9ea3696c8965605918a5653247453bc9bfcbf8e0b665962a1fda495f2585b1d9",
+      "raw_http_sha256": "82ddb26eee1ae7d0fe5f4bdb3a31d7dc1a40691cfdf9be7b0d6792bae793f411",
+      "warning": null
+    }
+  },
+  "model_requests": 0,
+  "human_bilingual_reviews": 0,
+  "decision": "evaluation_only_warning_no_product_change"
+}

@@ -1632,6 +1632,23 @@ tasks:
     cmds:
       - node --check eval/scripts/source-fact-hints-v1.mjs
       - node --test --test-isolation=none eval/scripts/tests/source-fact-hints-v1.test.mjs
+  eval:source-clock:unit:
+    desc: Verify source-derived clock warning and abstention controls without inference
+    cmds:
+      - node --check eval/scripts/source-clock-review-v1.mjs
+      - node --test --test-isolation=none eval/scripts/tests/source-clock-review-v1.test.mjs
+  eval:source-clock:report:
+    desc: Capture a source-free report from pinned private v8 SRT and prior paired replies
+    cmds:
+      - task: eval:source-clock:unit
+      - node --check eval/scripts/check-source-clock-review-v1.mjs
+      - node eval/scripts/check-source-clock-review-v1.mjs --capture
+  eval:source-clock:check:
+    desc: Rehash pinned private source, draft and replies and verify clock warning report
+    cmds:
+      - task: eval:source-clock:unit
+      - node --check eval/scripts/check-source-clock-review-v1.mjs
+      - node eval/scripts/check-source-clock-review-v1.mjs --check
   eval:source-facts:freeze:
     desc: Freeze 36 paired 7B requests and source-fact extractor identity before inference
     cmds:
