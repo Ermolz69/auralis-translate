@@ -1108,3 +1108,17 @@ relation. There is no measured natural precision/recall or independent
 language review; the warning stays out of product v8. The
 [v23 RELEASE-05 self-audit](../eval/experiments/2026-10-10-release-05-audit-attempt-v23.md)
 keeps G3–G5, audio, rights, clean-install and final release gates open.
+
+The [frozen ten-chat Vivo scene post-edit comparison](../eval/experiments/2026-10-10-vivo-scene-post-edit-v1-result.md)
+adds partial `CTX-03`/`LONG-04`/`EVAL-04` evidence using the unchanged
+467-cue source and 7B/v8 Russian draft. All ten calls were structurally
+valid, but source-aware AI review confirmed **zero of three** primary
+relation repairs and a new major displacement of the 1–2 a.m. fact across
+cues 327–328. The candidate is rejected before any whole-file run or
+checkpoint; five related negative controls kept their main facts, while one
+neighboring thanks line lost “everyone.” [REG-072 and catalog v51](../eval/regressions/catalog-v51.json)
+pin the raw failure and six fresh, still-unrun controls. No independent
+language rating or released SRT follows. The
+[v24 RELEASE-05 self-audit](../eval/experiments/2026-10-10-release-05-audit-attempt-v24.md)
+retains the source-rights, speech-alignment, audio-fit and clean-install
+gaps; v8 and all older source/candidate bytes remain unchanged.

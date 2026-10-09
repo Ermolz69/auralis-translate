@@ -1,0 +1,502 @@
+{
+  "schema_version": 1,
+  "experiment": "VIVO-SCENE-POST-EDIT-2026-10-10-v1",
+  "split": "exposed_natural_and_reg066_negative_development_not_holdout",
+  "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "baseline_draft_sha256": "4451868ea3e7cbb3ed81f3d24b5f85bc61a749168b213c54c88ae552208c4831",
+  "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+  "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "manifest_sha256": "c287c53efbb4ce78471b64648ea3dd2f521363df0e168b7a61df1fdd6ae0479a",
+  "freeze_sha256": "1df1121d6cbd858c3baf16838e01d597777e519d5ec321f67f754a6bb2146465",
+  "helper_sha256": "33b29498fafbeeeb569f8c5fa1fe7ba08ed9f1f3458240f6ca188bf366a229b9",
+  "harness_sha256": "29f15de9b038fc93cb91edd387dd3018c24cacf7944398158906797d45789d83",
+  "private_report_sha256": "957ded8ccc613f7287d2cb81633a3f2e127f32b82e2efcbda9629f03f29689c5",
+  "private_journal_sha256": "430b591d5401aa373804618eee1e4a076da9a996e628defb5572c5fd5af681f5",
+  "ai_review_sha256": "4d1670f8a7e4ebf3680d9b08017a5f2da67809101d464d7248f9a8014fd28135",
+  "chats": 10,
+  "preflights": 20,
+  "total_tokens": 5840,
+  "prompt_tokens": 3742,
+  "completion_tokens": 2098,
+  "summed_chat_elapsed_ms": 32009,
+  "wall_elapsed_ms": 42171,
+  "resource_samples": 8,
+  "peak_tracked_working_set_bytes": 5061619712,
+  "peak_device_gpu_mib": 7343,
+  "resource_sample_errors": 0,
+  "responses": [
+    {
+      "case_id": "natural_9400",
+      "family": "natural",
+      "target_ids": [
+        57,
+        58,
+        59,
+        60
+      ],
+      "changed_cue_ids": [
+        57,
+        58,
+        59,
+        60
+      ],
+      "request_sha256": "aace778f2270e1448be549da839984929f4ea200eb37e71241f0fc4de173ce51",
+      "prompt_sha256": "0fdee9ca3be498385d9655d6d57786119400ee387c5656056557d329a3455f6f",
+      "baseline_sha256": "6064c89aa55127cbda8038fb5cb47bf9a3d5356837b9730dd668bc8b6b5c18cb",
+      "raw_http_sha256": "ccc5f63a8843a89debb158dc17cbddd5d49402c4b058dd33cdaf65e74c7ba3d2",
+      "candidate_text_sha256": [
+        {
+          "id": 57,
+          "sha256": "909e60c103db4b8a48bc5ec14f0a59a2f2e44c79bba033e3620dd0deecbe3be8"
+        },
+        {
+          "id": 58,
+          "sha256": "eb44d68c3942352615a8b29f3d51f502b50f45b010ae950dbaf1464e8a0b7400"
+        },
+        {
+          "id": 59,
+          "sha256": "c50c17bed701e4209c7fc5360a31be72c332a0fe88cd92aea2e2f758f4dad7c1"
+        },
+        {
+          "id": 60,
+          "sha256": "f1f0e6158b1a71912f84ad2a2433d5d6cf0679c568dd200b536453e6b66727e4"
+        }
+      ],
+      "prompt_tokens_preflight": 412,
+      "prompt_tokens": 412,
+      "completion_tokens": 203,
+      "chat_elapsed_ms": 3148,
+      "ai_judgment": "The 9400 generation remains, but one incomplete source line changes from a product-oriented draft to an awkward production noun; no established meaning gain.",
+      "new_major_error": false,
+      "primary_relation_repaired": false
+    },
+    {
+      "case_id": "natural_planning",
+      "family": "natural",
+      "target_ids": [
+        273,
+        274,
+        275,
+        276,
+        277
+      ],
+      "changed_cue_ids": [
+        273,
+        274,
+        275,
+        276,
+        277
+      ],
+      "request_sha256": "5efb439687e0619488d459cc3b3bbb4616a6a88e2127a2a176593a715fe17100",
+      "prompt_sha256": "a5b9898a43e2ea3d47cb158d956eb98aa0584ca795ced4d5dd4f8702bc602b45",
+      "baseline_sha256": "a1a757ba3ef43a6c1f4eb61aad64aae276a25b0e550e98d9df815881e0aa5f6f",
+      "raw_http_sha256": "87d5605079931b7d512dc1d1327414304e233014e1c9ed446b81807f00f513d1",
+      "candidate_text_sha256": [
+        {
+          "id": 273,
+          "sha256": "fb88ad9ca7c526b0ff22d022f2443df19a33265313e121285af60230f38c90ab"
+        },
+        {
+          "id": 274,
+          "sha256": "d4d63e970b5c31d47e8461283f96bc8baf4d1ec28a1dd06d14f7cd31c7c01931"
+        },
+        {
+          "id": 275,
+          "sha256": "f256cc3c83c3abfc2ea8c906e9c4c240d7ebae048387f3ab2c0fa47d56a809e6"
+        },
+        {
+          "id": 276,
+          "sha256": "ca483c728fe909a3869d9fd3674753140c8ea7cbbbc40641fd19bad89430c2ef"
+        },
+        {
+          "id": 277,
+          "sha256": "e3399c04e92453e7bd8c68f54f232ecac3bfb77d89f0152866565e865b7a9d60"
+        }
+      ],
+      "prompt_tokens_preflight": 479,
+      "prompt_tokens": 479,
+      "completion_tokens": 242,
+      "chat_elapsed_ms": 3708,
+      "ai_judgment": "The revised 36-month phrase moves the anchor from an imaginary earliest stage to before development, but does not clearly attach the 36-month lead to joint planning. Do not count a confirmed relation repair.",
+      "new_major_error": false,
+      "primary_relation_repaired": false
+    },
+    {
+      "case_id": "natural_team",
+      "family": "natural",
+      "target_ids": [
+        278,
+        279,
+        280,
+        281,
+        282
+      ],
+      "changed_cue_ids": [
+        279,
+        281,
+        282
+      ],
+      "request_sha256": "61aa0c469776ebba5f0d1dd9b4ac1be9f0dee38b86c9cc14548db652354440e2",
+      "prompt_sha256": "8eede8fbad55f90de8083bf74dd386516d53f763fef78515cfa18c274f5f220d",
+      "baseline_sha256": "9bd0541e3f65cfa6ca25c9fa61879c6709db96f2fd8df2ea18f4e76da715f231",
+      "raw_http_sha256": "e8f515c5196ac95da7f9ff6d3683745a230ee5412e70c71d29db1bdef4003245",
+      "candidate_text_sha256": [
+        {
+          "id": 278,
+          "sha256": "b97b428048d9e15b8601fd21a5b8ad55327f651878c7864234f032d8c073f5f6"
+        },
+        {
+          "id": 279,
+          "sha256": "4bd37806cd7b6eb97020e1bedc9621a84ef39339aee675ca4a3e925b179df5c3"
+        },
+        {
+          "id": 280,
+          "sha256": "fde9b36ae34658169be25d3377c8add8f39a0e0875c15582aad39b85ab2333eb"
+        },
+        {
+          "id": 281,
+          "sha256": "73b557e762a4d1169600d0aa419d4953c15f6edded5b9964db9fa5e1614492c9"
+        },
+        {
+          "id": 282,
+          "sha256": "6b13ae39df90a8d3aafcfab312d1fa986036f6e02ca0cc30cd403965496f74ff"
+        }
+      ],
+      "prompt_tokens_preflight": 493,
+      "prompt_tokens": 493,
+      "completion_tokens": 267,
+      "chat_elapsed_ms": 4065,
+      "ai_judgment": "The rejected draft's financial-investment wording remains even though the following cue specifies a jointly committed development team of more than one thousand people.",
+      "new_major_error": false,
+      "primary_relation_repaired": false
+    },
+    {
+      "case_id": "natural_midnight",
+      "family": "natural",
+      "target_ids": [
+        325,
+        326,
+        327,
+        328,
+        329
+      ],
+      "changed_cue_ids": [
+        326,
+        327,
+        328,
+        329
+      ],
+      "request_sha256": "0b25f0a9df060967642f62892f7727ce2af50274e8b767c0c8c424ad240bade9",
+      "prompt_sha256": "d81c93f97bb8947633ff228fee032dd41081189f6a34d9f701d98206201c3f89",
+      "baseline_sha256": "eacba35df8cbfa79936ec24e8f3f63e2c8b8a6b8be52d95629c3ee7413ef2392",
+      "raw_http_sha256": "cd354cf9e4ede1700b2b5fe57fed3d04ccd90f56fdbc2a003352fc3c90bf98eb",
+      "candidate_text_sha256": [
+        {
+          "id": 325,
+          "sha256": "9b4ae863842a7c597630fa64f02b3b543debc74ac5650368750143382f205afb"
+        },
+        {
+          "id": 326,
+          "sha256": "3404f8a6d07dae2b0c1c522a31002d9d1faa9429a5d9154fd13f9ddbecc4c8bf"
+        },
+        {
+          "id": 327,
+          "sha256": "bcfaabdd39f714e78de24e59c4ffbefe250be8065e2cee85d6db3c862511f1a7"
+        },
+        {
+          "id": 328,
+          "sha256": "f918bafd36c2e46b010c023428be578841772496321bd7f11537f755232b9db8"
+        },
+        {
+          "id": 329,
+          "sha256": "b1b2e82c424304d459458cb0f1cae722dfe7271857691eb4c63d2542c23570a1"
+        }
+      ],
+      "prompt_tokens_preflight": 494,
+      "prompt_tokens": 494,
+      "completion_tokens": 275,
+      "chat_elapsed_ms": 4166,
+      "ai_judgment": "The revision moves 11–12 at night into preceding cue 327, whose Chinese text supplies no such number, and replaces cue 328's one-or-two-in-the-morning statement with generic late-night work. This worsens the cross-cue time fact.",
+      "new_major_error": true,
+      "primary_relation_repaired": false
+    },
+    {
+      "case_id": "natural_future",
+      "family": "natural",
+      "target_ids": [
+        464,
+        465,
+        466,
+        467
+      ],
+      "changed_cue_ids": [
+        464,
+        465,
+        466,
+        467
+      ],
+      "request_sha256": "f2f2539b700831d0476854022bcfd8bfd48de080c89d516b6841c30e9d050ab3",
+      "prompt_sha256": "acb458c740245fefd241335d4bc8b0774263c6462f0a5b8203434819b9533ad2",
+      "baseline_sha256": "a5f3d40fd2f096f5fede1ee29e9f2c8dc17dad47654331009352212bfbb7bbd2",
+      "raw_http_sha256": "d20d2184f14e69c0d1e2b62eddd5f87e17d364d515d828b1168e2b62c52afcdc",
+      "candidate_text_sha256": [
+        {
+          "id": 464,
+          "sha256": "08ea481f7b3c7b47499fc503d68403fbc1062187a22e27eba32616e20f029f7d"
+        },
+        {
+          "id": 465,
+          "sha256": "147e160180ed211829eee489f6bc69e89b436393d0aa98383112a4b09d8b40d7"
+        },
+        {
+          "id": 466,
+          "sha256": "03e52ff24299f3aa5c5d20c4fde424d7a044819b9124edf2007463e739be72a1"
+        },
+        {
+          "id": 467,
+          "sha256": "aaa2315ad5455081c9831dd5a0ba82006d3619c9213db72d5a7896856f373f1e"
+        }
+      ],
+      "prompt_tokens_preflight": 346,
+      "prompt_tokens": 346,
+      "completion_tokens": 192,
+      "chat_elapsed_ms": 2906,
+      "ai_judgment": "The revised text uses future tense rather than present availability, but switches to an owned 'we will have products' claim; the Chinese scene expresses expectation about the addressees' further cooperation bringing products to everyone. Full agency is unconfirmed.",
+      "new_major_error": false,
+      "primary_relation_repaired": false
+    },
+    {
+      "case_id": "explicit_first_generation",
+      "family": "reg066_negative",
+      "target_ids": [
+        1021,
+        1022,
+        1023,
+        1024
+      ],
+      "changed_cue_ids": [
+        1021,
+        1024
+      ],
+      "request_sha256": "845eb6a195f914f5f5583cf1cb13816e6bdab498203a91e1a248e70ab9d3a2fc",
+      "prompt_sha256": "90703bdeb0440ff71c19f1c32689362a0291d326c98c269428eeeb69b02ed2ae",
+      "baseline_sha256": "c7805d9cd790e1dc0922436553fe6bb92a13de256b8a5bf3702f04df67e76598",
+      "raw_http_sha256": "a3549c295c10619e00437ca373915bbce5ac2c8fc4166cc82043bf858fc2c719",
+      "candidate_text_sha256": [
+        {
+          "id": 1021,
+          "sha256": "627cd65e293673d6685b11f575b9e53dc9c12c81d3d9d69fc9299abe4b107dde"
+        },
+        {
+          "id": 1022,
+          "sha256": "ed957b2adca6d659e2da44928bc52bfa1172bd0aecf122548c9a5c272bc6a79c"
+        },
+        {
+          "id": 1023,
+          "sha256": "33ef9da94676c4ba09e785af6a9b90869018787fb14ee839e89975b234c2e2ff"
+        },
+        {
+          "id": 1024,
+          "sha256": "d34921bc56be01bba3a15fae2d5bc8d5a5e717c50b6682d2b25a52b704f3968b"
+        }
+      ],
+      "prompt_tokens_preflight": 290,
+      "prompt_tokens": 290,
+      "completion_tokens": 172,
+      "chat_elapsed_ms": 2595,
+      "ai_judgment": "The explicit first-generation 9400 fact remains. A neighboring thanks line drops 'everyone', a minor omission outside the protected primary fact.",
+      "new_major_error": false,
+      "primary_relation_repaired": null
+    },
+    {
+      "case_id": "thirty_six_months_after_start",
+      "family": "reg066_negative",
+      "target_ids": [
+        1025,
+        1026,
+        1027,
+        1028
+      ],
+      "changed_cue_ids": [
+        1025,
+        1026,
+        1027,
+        1028
+      ],
+      "request_sha256": "a1809503836e688a5cf9741d3fcbbc58a051791b4eb05d80d4fe4fcba5f42d21",
+      "prompt_sha256": "861618c61345254aa8f1d5452ed44fb35d192c1d0274de6c28ca3e1b133d6c7d",
+      "baseline_sha256": "9bca6bf031ff57d54377517b6dc5b0393000834b31be59fffd5af0f50085fa8b",
+      "raw_http_sha256": "ffa723a12a945cf5c72622c6a8e194085e4eb5c79cad1be9cda600fabe633726",
+      "candidate_text_sha256": [
+        {
+          "id": 1025,
+          "sha256": "627cd65e293673d6685b11f575b9e53dc9c12c81d3d9d69fc9299abe4b107dde"
+        },
+        {
+          "id": 1026,
+          "sha256": "12d538a56512c5abcff3a8745b8845827cf6ab98bec2941a7383ecc975957d29"
+        },
+        {
+          "id": 1027,
+          "sha256": "e28ae5a3a745b21e7b915adca044ccbc74db60420eb97f97014770459a7f66ab"
+        },
+        {
+          "id": 1028,
+          "sha256": "d34921bc56be01bba3a15fae2d5bc8d5a5e717c50b6682d2b25a52b704f3968b"
+        }
+      ],
+      "prompt_tokens_preflight": 325,
+      "prompt_tokens": 325,
+      "completion_tokens": 193,
+      "chat_elapsed_ms": 2924,
+      "ai_judgment": "The source explicitly says joint development starts 36 months after project start; this after-start relation remains.",
+      "new_major_error": false,
+      "primary_relation_repaired": null
+    },
+    {
+      "case_id": "money_and_team_both_explicit",
+      "family": "reg066_negative",
+      "target_ids": [
+        1029,
+        1030,
+        1031,
+        1032
+      ],
+      "changed_cue_ids": [
+        1029,
+        1030
+      ],
+      "request_sha256": "9f475def82d2047004c776e725a2ddf584d12bc4f2cd6966326470988c00e4bb",
+      "prompt_sha256": "4614293a9bc2d7e4c7fd3247dfd29fce5ef67075237d44c519f9bc3902c18dd1",
+      "baseline_sha256": "17a203f014be9cd07bea64f8e06ee49c5f253a6bb8c7e8acdbd36b186016277f",
+      "raw_http_sha256": "828fe5ae9439c17785f6a1d862acae7a608949823c69e35f3c642252d844a639",
+      "candidate_text_sha256": [
+        {
+          "id": 1029,
+          "sha256": "627cd65e293673d6685b11f575b9e53dc9c12c81d3d9d69fc9299abe4b107dde"
+        },
+        {
+          "id": 1030,
+          "sha256": "bcaf4b92df114d9033563ad6b3c8e9f87558b732d8ee8a2c1787f0bde023ab7b"
+        },
+        {
+          "id": 1031,
+          "sha256": "33ef9da94676c4ba09e785af6a9b90869018787fb14ee839e89975b234c2e2ff"
+        },
+        {
+          "id": 1032,
+          "sha256": "525db85a7616d71c57eae735007996709d0d482327c0ba53631718c06a24c340"
+        }
+      ],
+      "prompt_tokens_preflight": 320,
+      "prompt_tokens": 320,
+      "completion_tokens": 194,
+      "chat_elapsed_ms": 2972,
+      "ai_judgment": "Both ten million yuan and a one-thousand-person team remain in the Russian answer.",
+      "new_major_error": false,
+      "primary_relation_repaired": null
+    },
+    {
+      "case_id": "eleven_twelve_at_night",
+      "family": "reg066_negative",
+      "target_ids": [
+        1033,
+        1034,
+        1035,
+        1036
+      ],
+      "changed_cue_ids": [
+        1033,
+        1034,
+        1036
+      ],
+      "request_sha256": "d63084f43d2d8c4385e4b419e7e081b379bac328a8c4f9374a6f47f26262b932",
+      "prompt_sha256": "a8e7987dd755410bad00b597d29b1bf1bb98e1e0246a86b3f755b27864dd21f2",
+      "baseline_sha256": "2e7df7b84330f5576f06bc0bdd91b5888e6f9c37c41cb0e88796241af4330c88",
+      "raw_http_sha256": "e364e2c254615d48f0c24f5a9da4c64d1f19d507a0eb1787a89a25f0cf77365f",
+      "candidate_text_sha256": [
+        {
+          "id": 1033,
+          "sha256": "1c9ebf7544729dd1d69d6ca891a270ca593a02fe6f6784fb1301a6bf767101fe"
+        },
+        {
+          "id": 1034,
+          "sha256": "bcaf4b92df114d9033563ad6b3c8e9f87558b732d8ee8a2c1787f0bde023ab7b"
+        },
+        {
+          "id": 1035,
+          "sha256": "33ef9da94676c4ba09e785af6a9b90869018787fb14ee839e89975b234c2e2ff"
+        },
+        {
+          "id": 1036,
+          "sha256": "d34921bc56be01bba3a15fae2d5bc8d5a5e717c50b6682d2b25a52b704f3968b"
+        }
+      ],
+      "prompt_tokens_preflight": 297,
+      "prompt_tokens": 297,
+      "completion_tokens": 180,
+      "chat_elapsed_ms": 2792,
+      "ai_judgment": "The explicitly stated 11–12 at night remains in the revision; do not force 1–2 in the morning here.",
+      "new_major_error": false,
+      "primary_relation_repaired": null
+    },
+    {
+      "case_id": "products_already_available",
+      "family": "reg066_negative",
+      "target_ids": [
+        1037,
+        1038,
+        1039,
+        1040
+      ],
+      "changed_cue_ids": [
+        1037,
+        1038,
+        1039
+      ],
+      "request_sha256": "59a08ff94b259b4c007364f38394f5bb160265dd61f81b3ca8c19b074237f1ee",
+      "prompt_sha256": "f599c45b9fb0d0b8a143ffae6e9d9608fd7053c1fda39443c6c784710d992df2",
+      "baseline_sha256": "ae29b6288af955c4f07cc432af6eff53cc37be15f4e0129ea18e280f253b9a91",
+      "raw_http_sha256": "c8249e33411f7e8d666e57fcb997e214d2219963c5843d7aaf2eba7a9eeb9604",
+      "candidate_text_sha256": [
+        {
+          "id": 1037,
+          "sha256": "627cd65e293673d6685b11f575b9e53dc9c12c81d3d9d69fc9299abe4b107dde"
+        },
+        {
+          "id": 1038,
+          "sha256": "4940e4262acdde3c0e47a09f77f3ee93ac5f3f1668bbe409ff19502bb07ce0a1"
+        },
+        {
+          "id": 1039,
+          "sha256": "07fd947b05ae8a9c142bb9b7874be5071280934b0a94d96ee3236d53675b9985"
+        },
+        {
+          "id": 1040,
+          "sha256": "0429113ba8caedb78c1574b8ce9f2acc2c6c90f15cd75d227f1b90322c5e71e1"
+        }
+      ],
+      "prompt_tokens_preflight": 286,
+      "prompt_tokens": 286,
+      "completion_tokens": 180,
+      "chat_elapsed_ms": 2733,
+      "ai_judgment": "Explicit current availability remains rather than being forced into future hope.",
+      "new_major_error": false,
+      "primary_relation_repaired": null
+    }
+  ],
+  "ai_triage": {
+    "known_primary_relations_confirmed_repaired": 0,
+    "new_major_errors": 1,
+    "negative_controls_with_primary_fact_preserved": 5,
+    "negative_controls_with_minor_loss": 1,
+    "candidate_shortlisted": false,
+    "human_bilingual_reviews": 0,
+    "full_file_quality_accepted": false,
+    "product_profile_changed": false
+  },
+  "human_bilingual_reviews": 0,
+  "full_file_rerun": false,
+  "product_profile_changed": false,
+  "decision": "rejected_new_major_time_displacement"
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "experiment": "VIVO-SCENE-POST-EDIT-2026-10-10-v1",
+  "provenance": "AI source-aware triage of exposed Chinese development cues and retained raw Russian drafts; no independent bilingual reviewer",
+  "case_reviews": [
+    {"case_id":"natural_9400","family":"natural","assessment":"The 9400 generation remains, but one incomplete source line changes from a product-oriented draft to an awkward production noun; no established meaning gain.","primary_relation_repaired":false,"new_major_error":false,"needs_review":true},
+    {"case_id":"natural_planning","family":"natural","assessment":"The revised 36-month phrase moves the anchor from an imaginary earliest stage to before development, but does not clearly attach the 36-month lead to joint planning. Do not count a confirmed relation repair.","primary_relation_repaired":false,"new_major_error":false,"needs_review":true},
+    {"case_id":"natural_team","family":"natural","assessment":"The rejected draft's financial-investment wording remains even though the following cue specifies a jointly committed development team of more than one thousand people.","primary_relation_repaired":false,"new_major_error":false,"needs_review":true},
+    {"case_id":"natural_midnight","family":"natural","assessment":"The revision moves 11–12 at night into preceding cue 327, whose Chinese text supplies no such number, and replaces cue 328's one-or-two-in-the-morning statement with generic late-night work. This worsens the cross-cue time fact.","primary_relation_repaired":false,"new_major_error":true,"needs_review":true},
+    {"case_id":"natural_future","family":"natural","assessment":"The revised text uses future tense rather than present availability, but switches to an owned 'we will have products' claim; the Chinese scene expresses expectation about the addressees' further cooperation bringing products to everyone. Full agency is unconfirmed.","primary_relation_repaired":false,"new_major_error":false,"needs_review":true},
+    {"case_id":"explicit_first_generation","family":"reg066_negative","assessment":"The explicit first-generation 9400 fact remains. A neighboring thanks line drops 'everyone', a minor omission outside the protected primary fact.","primary_relation_repaired":null,"new_major_error":false,"needs_review":true},
+    {"case_id":"thirty_six_months_after_start","family":"reg066_negative","assessment":"The source explicitly says joint development starts 36 months after project start; this after-start relation remains.","primary_relation_repaired":null,"new_major_error":false,"needs_review":false},
+    {"case_id":"money_and_team_both_explicit","family":"reg066_negative","assessment":"Both ten million yuan and a one-thousand-person team remain in the Russian answer.","primary_relation_repaired":null,"new_major_error":false,"needs_review":false},
+    {"case_id":"eleven_twelve_at_night","family":"reg066_negative","assessment":"The explicitly stated 11–12 at night remains in the revision; do not force 1–2 in the morning here.","primary_relation_repaired":null,"new_major_error":false,"needs_review":false},
+    {"case_id":"products_already_available","family":"reg066_negative","assessment":"Explicit current availability remains rather than being forced into future hope.","primary_relation_repaired":null,"new_major_error":false,"needs_review":false}
+  ],
+  "summary": {
+    "known_primary_relations_confirmed_repaired": 0,
+    "new_major_errors": 1,
+    "negative_controls_with_primary_fact_preserved": 5,
+    "negative_controls_with_minor_loss": 1,
+    "candidate_shortlisted": false,
+    "human_bilingual_reviews": 0,
+    "full_file_quality_accepted": false,
+    "product_profile_changed": false
+  }
+}

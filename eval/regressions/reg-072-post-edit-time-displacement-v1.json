@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "REG-072",
+  "status": "rejected_post_edit_candidate_ai_triage_only",
+  "severity": "major_fact",
+  "split": "known_natural_development_not_holdout",
+  "source_family": "youtube_geekerwan_vivo_original_platform",
+  "profile_scope": "Hy-MT2 7B Q4_K_M v8 plus rejected scene-level post-edit pass",
+  "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "baseline_draft_sha256": "4451868ea3e7cbb3ed81f3d24b5f85bc61a749168b213c54c88ae552208c4831",
+  "post_edit_report_sha256": "ea135459148721da5819e616a0a691af0c9ffe6f1fd9d6a683636ec1b3069e51",
+  "expected_invariant": "If a source scene says the team often works after midnight until about one or two in the morning, the Russian scene must not replace that hour with eleven or twelve at night or move an invented hour into the preceding cue.",
+  "minimal_reproducer": {
+    "source_cue_ids": [327, 328],
+    "request_sha256": "0b25f0a9df060967642f62892f7727ce2af50274e8b767c0c8c424ad240bade9",
+    "raw_http_sha256": "cd354cf9e4ede1700b2b5fe57fed3d04ccd90f56fdbc2a003352fc3c90bf98eb",
+    "cues": [
+      {"cue_id":327,"source_text_sha256":"689b3156d3a4eff1c4b90b1d9329cc96508a95fa8e581920a6ecb4b234eb4aa6","baseline_text_sha256":"a41a346f05f912ebe9d38210e0bda90a9f63e6d74c37c60430454eed50e06990","candidate_text_sha256":"bcfaabdd39f714e78de24e59c4ffbefe250be8065e2cee85d6db3c862511f1a7"},
+      {"cue_id":328,"source_text_sha256":"91228c0337653551a47cb48f8db3c7c94380fed09fa0bdcbfe9cf029e8549fad","baseline_text_sha256":"2869a1c79a67da2a0878e9e7062a94833a70ef4c89f23f8cc99a33523afe5a58","candidate_text_sha256":"f918bafd36c2e46b010c023428be578841772496321bd7f11537f755232b9db8"}
+    ],
+    "ai_source_aware_judgment": "new 11–12 time inserted into cue 327; source 1–2 a.m. in cue 328 omitted"
+  },
+  "related_controls": [
+    {"id":"midnight_then_one_two","source_lines":["我们经常半夜还在工作，","一直到凌晨一两点才结束。"],"expected_fact":"Preserve a continuing 01:00–02:00 end time across the cue boundary.","outcome":"pending_model_screen"},
+    {"id":"second_cue_one_two_without_clock_in_first","source_lines":["大家都在解决难题，","一直到一两点钟才回去。"],"expected_fact":"Do not invent 11–12 in the first cue; resolve the hour from context without moving it.","outcome":"pending_model_screen"},
+    {"id":"both_late_evening_and_after_midnight","source_lines":["晚上十一二点我们还在讨论，","凌晨一两点才结束。"],"expected_fact":"Keep both distinct times and their order.","outcome":"pending_model_screen"}
+  ],
+  "negative_controls": [
+    {"id":"explicit_eleven_twelve_evening","source_lines":["我们晚上十一二点就结束了。"],"expected_fact":"11–12 in the evening is explicit; do not force 01:00–02:00.","outcome":"pending_model_screen"},
+    {"id":"no_hour_in_either_cue","source_lines":["我们经常在半夜讨论，","最后解决了难题。"],"expected_fact":"No hour number is supplied; do not invent one.","outcome":"pending_model_screen"},
+    {"id":"negated_after_midnight_work","source_lines":["我们并没有工作到凌晨一两点，","十一点之前就结束了。"],"expected_fact":"Do not assert work until 01:00–02:00; preserve the negation and before-eleven end.","outcome":"pending_model_screen"}
+  ],
+  "control_model_runs": 0,
+  "human_review": "missing",
+  "product_status": "v8_unchanged_post_edit_rejected"
+}

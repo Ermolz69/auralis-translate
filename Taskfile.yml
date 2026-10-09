@@ -1527,6 +1527,7 @@ tasks:
       - node eval/scripts/build-regression-catalog-v48.mjs
       - node eval/scripts/build-regression-catalog-v49.mjs
       - node eval/scripts/build-regression-catalog-v50.mjs
+      - node eval/scripts/build-regression-catalog-v51.mjs
   eval:regression:catalog:portable:check:
     desc: Verify recent public catalog evidence in a clean checkout without private source files
     cmds:
@@ -1538,6 +1539,17 @@ tasks:
       - node eval/scripts/build-regression-catalog-v48.mjs
       - node eval/scripts/build-regression-catalog-v49.mjs
       - node eval/scripts/build-regression-catalog-v50.mjs
+      - node eval/scripts/build-regression-catalog-v51.mjs
+  eval:regression:catalog:v51:write:
+    desc: Append REG-072 scene post-edit time displacement without rewriting v50
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v51.mjs
+      - node eval/scripts/build-regression-catalog-v51.mjs --write
+  eval:regression:catalog:v51:check:
+    desc: Verify rejected post-edit report and six pending REG-072 controls
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v51.mjs
+      - node eval/scripts/build-regression-catalog-v51.mjs
   eval:regression:catalog:v50:write:
     desc: Append REG-071 diagnostic false negative without changing catalog v49
     cmds:
@@ -1737,6 +1749,18 @@ tasks:
     cmds:
       - task: eval:vivo:post-edit:preflight
       - node eval/scripts/probe-vivo-scene-post-edit-v1.mjs --probe
+  eval:vivo:post-edit:report:
+    desc: Capture source-free hashes and separate AI triage of the retained post-edit replies
+    cmds:
+      - task: eval:vivo:post-edit:unit
+      - node --check eval/scripts/check-vivo-scene-post-edit-v1.mjs
+      - node eval/scripts/check-vivo-scene-post-edit-v1.mjs --capture
+  eval:vivo:post-edit:check:
+    desc: Rehash all raw post-edit replies, preflights, source and AI review
+    cmds:
+      - task: eval:vivo:post-edit:unit
+      - node --check eval/scripts/check-vivo-scene-post-edit-v1.mjs
+      - node eval/scripts/check-vivo-scene-post-edit-v1.mjs --check
   eval:focus-slot:freeze:
     desc: Freeze bounded 7B batch versus one-target requests before inference
     cmds:
