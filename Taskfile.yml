@@ -474,6 +474,24 @@ tasks:
       - task inspect -- .cache/eval/youtube-geekerwan-vivo-original-caption/attempt-LQWxgw/source.zh.srt
       - node --check eval/scripts/check-youtube-geekerwan-vivo-caption.mjs
       - node eval/scripts/check-youtube-geekerwan-vivo-caption.mjs
+  eval:data:youtube:vivo:asr:preflight:
+    desc: Verify pinned private audio windows and limits for local ASR triage
+    cmds:
+      - python eval/scripts/probe-youtube-vivo-audio-asr.py --preflight
+  eval:data:youtube:vivo:asr:install:
+    desc: Install one pinned CPU ASR diagnostic package into ignored workspace storage
+    env:
+      PIP_CACHE_DIR: '{{.ROOT_DIR}}/.cache/eval/vivo-asr-pip-cache'
+    cmds:
+      - task: eval:data:youtube:vivo:asr:preflight
+      - node eval/scripts/install-youtube-vivo-asr.mjs
+  eval:data:youtube:vivo:asr:probe:
+    desc: Transcribe three 12-second source windows locally without subtitle input
+    env:
+      HF_HOME: '{{.ROOT_DIR}}/.cache/eval/vivo-asr-hf-cache'
+    cmds:
+      - task: eval:data:youtube:vivo:asr:preflight
+      - node eval/scripts/run-youtube-vivo-asr.mjs
   eval:data:youtube:kirin:license:inventory:
     desc: Retain one bounded YouTube metadata response without downloading captions or media
     env:
