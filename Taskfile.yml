@@ -1738,6 +1738,7 @@ tasks:
     desc: Verify source-only stratified Vivo long-file window selection
     cmds:
       - node --check eval/scripts/vivo-blindspot-selector-v1.mjs
+      - node --check eval/scripts/check-vivo-stratified-blindspot-v1.mjs
       - node --test --test-isolation=none eval/scripts/tests/vivo-blindspot-selector-v1.test.mjs
   eval:vivo:blindspot:freeze:
     desc: Freeze 15 source-only Vivo review windows before reading draft text
@@ -1751,6 +1752,21 @@ tasks:
       - task: eval:vivo:blindspot:unit
       - node --check eval/scripts/freeze-vivo-blindspot-v1.mjs
       - node eval/scripts/freeze-vivo-blindspot-v1.mjs --check
+  eval:vivo:blindspot:preflight:
+    desc: Rehash both full Vivo drafts and all 467 source/timing identities
+    cmds:
+      - task: eval:vivo:blindspot:selection:check
+      - node eval/scripts/check-vivo-stratified-blindspot-v1.mjs --preflight
+  eval:vivo:blindspot:report:
+    desc: Capture one private 45-cue, two-draft Vivo blind-spot packet
+    cmds:
+      - task: eval:vivo:blindspot:preflight
+      - node eval/scripts/check-vivo-stratified-blindspot-v1.mjs --capture
+  eval:vivo:blindspot:check:
+    desc: Recompute selected source/draft pairs and source-free packet hashes
+    cmds:
+      - task: eval:vivo:blindspot:preflight
+      - node eval/scripts/check-vivo-stratified-blindspot-v1.mjs --check
   eval:vivo:post-edit:freeze:
     desc: Freeze ten source-and-draft revision request identities before inference
     cmds:
