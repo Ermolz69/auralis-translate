@@ -364,6 +364,18 @@ export async function loadCurrentReport(root) {
   assert.equal(relationV2.v2_full_draft_warnings.length, 3);
   assert.equal(relationV2.new_full_draft_warnings.length, 0);
   assert.equal(relationV2.model_requests, 0);
+  const relationCrossRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-source-relation-cross-source-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(relationCrossRaw).digest('hex'),
+    'd1141b970dd5ee6871024443f98189a4619c141e3c09dd2520acf0f9379bb6b6');
+  const relationCross = JSON.parse(relationCrossRaw);
+  assert.equal(relationCross.source_groups.length, 2);
+  assert.equal(relationCross.unique_source_cues, 531);
+  assert.equal(relationCross.source_target_pairs, 794);
+  assert.equal(relationCross.recognized_relation_count, 0);
+  assert.equal(relationCross.warning_count, 0);
+  assert.equal(relationCross.warning_precision, null);
+  assert.equal(relationCross.release_admitted, false);
   const catalogV50Raw = await fs.readFile(path.join(root,
     'eval/regressions/catalog-v50.json'), 'utf8');
   assert.equal(createHash('sha256').update(catalogV50Raw).digest('hex'),
@@ -558,6 +570,16 @@ export async function loadCurrentReport(root) {
       model_requests: relationV2.model_requests,
       human_bilingual_reviews: relationV2.human_bilingual_reviews,
       report_sha256: createHash('sha256').update(relationV2Raw).digest('hex') },
+    source_relation_cross_source: { groups: relationCross.source_groups.length,
+      unique_source_cues: relationCross.unique_source_cues,
+      source_target_pairs: relationCross.source_target_pairs,
+      recognized_relations: relationCross.recognized_relation_count,
+      warnings: relationCross.warning_count,
+      warning_precision: relationCross.warning_precision,
+      model_requests: relationCross.model_requests,
+      human_bilingual_reviews: relationCross.human_bilingual_reviews,
+      release_admitted: relationCross.release_admitted,
+      report_sha256: createHash('sha256').update(relationCrossRaw).digest('hex') },
     youtube_v8_long: { source_cues: vivoV8.source_cues,
       small_prefix_cues: vivoV8.arms[0].covered_prefix_cues,
       large_complete_cues: vivoV8.arms[1].covered_prefix_cues,
