@@ -1038,3 +1038,26 @@ ratings do not advance translation quality. Product v8, prior results and
 original media remain unchanged. `EVAL-04`, `CTX-03`, `LONG-04`, G3–G5,
 `VOICE-01` and `RELEASE-05` remain open. A separately sourced precision
 check and independently approved script precede any product gate.
+
+## Focus-slot 7B screen and REG-071 follow-up
+
+The [frozen 20-chat same-source comparison](../eval/experiments/2026-10-10-vivo-focus-slot-v1-result.md)
+used ten exposed Vivo/REG-066 cases, one seed, 40 template/tokenizer
+preflights and 9,606 combined tokens. All replies were structurally valid,
+but narrowing a four/three-slot target batch to the risky cue repaired
+**zero of three** primary 36-month/team/future-product relation errors.
+One after-midnight hour improved while its Russian phrase became
+ungrammatical; five authored contrast facts remained. The predeclared
+shortlist rule rejected the candidate, so v8 and both full SRTs remain
+unchanged. The shorthand present-product answer also exposed a false
+negative in the evaluation-only v1 relation warning. [REG-071 and catalog
+v50](../eval/regressions/catalog-v50.json) retain the raw hashes, minimal
+reproducer and five new related/negative controls. The
+[v2 offline replay](../eval/experiments/2026-10-10-source-relation-review-v2-result.md)
+warns on that new reply while preserving the same three warnings in the
+full 467-cue draft; it makes no product change and has no second-source
+precision or human ratings. `CTX-03`, `LONG-02/04`, `EVAL-04`, `DECIDE-01`,
+G3–G5, `VOICE-01` and `RELEASE-05` remain open. Next compare a different
+quality strategy against the retained v8 baseline, with new controls and
+bounded attempts; another batch-boundary tweak is not justified by this
+screen.

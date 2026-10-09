@@ -344,6 +344,31 @@ export async function loadCurrentReport(root) {
   assert.equal(relation.paired_natural_replay.length, 6);
   assert.equal(relation.model_requests, 0);
   assert.equal(relation.human_bilingual_reviews, 0);
+  const focusRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-vivo-focus-slot-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(focusRaw).digest('hex'),
+    'd779f08043e3410f78f25613ed7bf3ed1ef6c15d75019ed3494b9860e6dd2b75');
+  const focus = JSON.parse(focusRaw);
+  assert.equal(focus.source_sha256, vivoSource.original_srt_sha256);
+  assert.equal(focus.chats, 20);
+  assert.equal(focus.preflights, 40);
+  assert.equal(focus.ai_triage.known_relation_errors_repaired, 0);
+  assert.equal(focus.ai_triage.focus_candidate_shortlisted, false);
+  const relationV2Raw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-source-relation-review-v2.json'), 'utf8');
+  assert.equal(createHash('sha256').update(relationV2Raw).digest('hex'),
+    '98d72ac7e45beb9dab56ebc9c82b840b38c59e023727f46d63d3dbbacf88d0c9');
+  const relationV2 = JSON.parse(relationV2Raw);
+  assert.equal(relationV2.focus_report_sha256,
+    createHash('sha256').update(focusRaw).digest('hex'));
+  assert.equal(relationV2.v2_full_draft_warnings.length, 3);
+  assert.equal(relationV2.new_full_draft_warnings.length, 0);
+  assert.equal(relationV2.model_requests, 0);
+  const catalogV50Raw = await fs.readFile(path.join(root,
+    'eval/regressions/catalog-v50.json'), 'utf8');
+  assert.equal(createHash('sha256').update(catalogV50Raw).digest('hex'),
+    'fc2523ce1361e48c49d8a0bbf6ebaeba5c7f987bc3207bc5bf51b298f73486c1');
+  assert.equal(JSON.parse(catalogV50Raw).entries.at(-1).id, 'REG-071');
   const vivoAudioRaw = await fs.readFile(path.join(root,
     'eval/reports/2026-10-10-vivo-real-sapi-technical.json'), 'utf8');
   assert.equal(createHash('sha256').update(vivoAudioRaw).digest('hex'),
@@ -430,6 +455,31 @@ export async function loadCurrentReport(root) {
       model_requests: relation.model_requests,
       human_bilingual_reviews: relation.human_bilingual_reviews,
       report_sha256: createHash('sha256').update(relationRaw).digest('hex') },
+    focus_slot: { chats: focus.chats, preflights: focus.preflights,
+      total_tokens: focus.total_tokens, wall_elapsed_ms: focus.wall_elapsed_ms,
+      batch_prompt_tokens: focus.arms.batch.prompt_tokens,
+      focus_prompt_tokens: focus.arms.focus.prompt_tokens,
+      known_relation_repairs:
+        focus.ai_triage.known_relation_errors_repaired,
+      clock_fact_improved: focus.ai_triage.clock_fact_improved,
+      authored_controls_preserved:
+        focus.ai_triage.authored_controls_preserved,
+      shortlisted: focus.ai_triage.focus_candidate_shortlisted,
+      human_bilingual_reviews: focus.ai_triage.human_bilingual_reviews,
+      report_sha256: createHash('sha256').update(focusRaw).digest('hex') },
+    source_relation_v2: { scanned_cues: relationV2.source_cues,
+      full_warnings: relationV2.v2_full_draft_warnings.length,
+      new_full_warnings: relationV2.new_full_draft_warnings.length,
+      replayed_replies: relationV2.replay.length,
+      reg071_v1_missed: relationV2.replay.some(row => row.family === 'focus' &&
+        row.case_id === 'natural_466' && row.arm === 'focus' &&
+        row.v1_warnings.length === 0),
+      reg071_v2_warned: relationV2.replay.some(row => row.family === 'focus' &&
+        row.case_id === 'natural_466' && row.arm === 'focus' &&
+        row.v2_warnings.length === 1),
+      model_requests: relationV2.model_requests,
+      human_bilingual_reviews: relationV2.human_bilingual_reviews,
+      report_sha256: createHash('sha256').update(relationV2Raw).digest('hex') },
     youtube_v8_long: { source_cues: vivoV8.source_cues,
       small_prefix_cues: vivoV8.arms[0].covered_prefix_cues,
       large_complete_cues: vivoV8.arms[1].covered_prefix_cues,
