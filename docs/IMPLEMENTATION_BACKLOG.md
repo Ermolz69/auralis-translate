@@ -1023,3 +1023,18 @@ scope. A second source family, measured false positives, approved terms,
 human review and all final language/audio gates remain open. The
 [v15 self-audit](../eval/experiments/2026-10-09-release-05-audit-attempt-v15.md)
 retains the rejection of `RELEASE-05`.
+
+## Source relation review after model output
+
+The [frozen offline replay](../eval/experiments/2026-10-10-source-relation-review-v1-result.md)
+rehashes the 467-cue original Chinese SRT, complete v8/7B draft and 36-chat
+prior journal. Three source-derived relations were recognized and all three
+known draft errors at cues 276, 280 and 466 received evaluation-only review
+warnings. Five of six saved paired answers were warned; the unflagged cue-466
+candidate still has uncertain agency under AI review. Four deterministic
+control groups passed after a recorded fixture/rule correction. The other
+464 cues were outside this narrow rule; zero new model calls and zero human
+ratings do not advance translation quality. Product v8, prior results and
+original media remain unchanged. `EVAL-04`, `CTX-03`, `LONG-04`, G3–G5,
+`VOICE-01` and `RELEASE-05` remain open. A separately sourced precision
+check and independently approved script precede any product gate.

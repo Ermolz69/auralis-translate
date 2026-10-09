@@ -38,6 +38,13 @@ the failed attempt remains in this record. `task eval:source-relations:unit`
 then passed 4/4 groups; `task eval:source-relations:report` captured the
 above result. Zero new model, ASR or TTS requests; zero retries. Chinese and
 Russian text remain only in the private inputs, not the public report.
+After capture, `task eval:source-relations:check` rehashed and reproduced the
+report. `task plan:check` verified 53 task IDs and their evidence;
+`task docs:check` verified local links across 455 Markdown files.
+`task site:build` regenerated current and historical HTML, and
+`task site:check` passed after its stale v16-audit assertion was updated to
+v17. The first site check failed only on that stale expected link; no report
+data or private source changed to satisfy it.
 
 ## Decision and next gate
 
