@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "experiment": "source-relation-review-v1-offline-2026-10-10",
+  "split": "known_natural_development_not_holdout",
+  "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "draft_sha256": "4451868ea3e7cbb3ed81f3d24b5f85bc61a749168b213c54c88ae552208c4831",
+  "prior_journal_sha256": "72e52f740ffa1b4dce7e88168a6872eb2687ab44e1f39fd19e0316a10b8f767f",
+  "rule_sha256": "215486c2a6fa85fc278ef84b28d0bd0abf7c99174311414aa982ab7c9b83c18a",
+  "source_cues": 467,
+  "draft_cues": 467,
+  "recognized_source_relations": [
+    {
+      "cue_id": 276,
+      "kind": "planning_in_advance"
+    },
+    {
+      "cue_id": 280,
+      "kind": "people_team_referent"
+    },
+    {
+      "cue_id": 466,
+      "kind": "future_product_expectation"
+    }
+  ],
+  "full_draft_warnings": [
+    {
+      "cue_id": 276,
+      "kind": "planning_in_advance"
+    },
+    {
+      "cue_id": 280,
+      "kind": "people_team_referent"
+    },
+    {
+      "cue_id": 466,
+      "kind": "future_product_expectation"
+    }
+  ],
+  "paired_natural_replay": [
+    {
+      "case_id": "natural_276",
+      "arm": "candidate",
+      "request_sha256": "91f130abddeb13d89921bba726c04a9a95b4aa9c7186f2e64d9312685a47b711",
+      "raw_http_sha256": "1cbb2fdc97dfad276062262e961b49fb00d040c50a2354d8f6a12a70185066d6",
+      "warnings": [
+        {
+          "cue_id": 276,
+          "kind": "planning_in_advance"
+        }
+      ]
+    },
+    {
+      "case_id": "natural_276",
+      "arm": "baseline",
+      "request_sha256": "988881505a2aa0983fc4495092cc3caa5af403fbb4cc0177d50606cec7f97980",
+      "raw_http_sha256": "da0f78a913518e197dead3529a33f9d2d14645fa0a3b73b8cd882c469312d733",
+      "warnings": [
+        {
+          "cue_id": 276,
+          "kind": "planning_in_advance"
+        }
+      ]
+    },
+    {
+      "case_id": "natural_280",
+      "arm": "baseline",
+      "request_sha256": "1513478998e22999c0ecfa67c8497e6f057a81f6fb132f7a5818d29c0cd8412c",
+      "raw_http_sha256": "1810c3ec6d24d56b5756b38f0ff4bd834e7f4b5452f5804afd50fe42084b442f",
+      "warnings": [
+        {
+          "cue_id": 280,
+          "kind": "people_team_referent"
+        }
+      ]
+    },
+    {
+      "case_id": "natural_280",
+      "arm": "candidate",
+      "request_sha256": "7aa22ae125a15cf5c9ef38d86744adf4b69d406e2079477f59a0af1b72785f20",
+      "raw_http_sha256": "f763944637cefe4d4fbc4e2654e6e587b67315de3746ed8ff21662479a6ac35c",
+      "warnings": [
+        {
+          "cue_id": 280,
+          "kind": "people_team_referent"
+        }
+      ]
+    },
+    {
+      "case_id": "natural_466",
+      "arm": "baseline",
+      "request_sha256": "e98fdf09043524ae485c52791e555848d6ad927686b4f7c1e19229959e1d80ca",
+      "raw_http_sha256": "9f5be26b49113d91f93d1c55147900d449b4ffb6a201678153f5c1adb2ba38a5",
+      "warnings": [
+        {
+          "cue_id": 466,
+          "kind": "future_product_expectation"
+        }
+      ]
+    },
+    {
+      "case_id": "natural_466",
+      "arm": "candidate",
+      "request_sha256": "b0386312ac8db2745a5a23e00ef5cbccae8f3be573e13a540810450dabeb41b6",
+      "raw_http_sha256": "6c35583acf90aa29c9f5a518edfa9c1d8f77ad99a9ee84e3d47f703503a37f6d",
+      "warnings": []
+    }
+  ],
+  "model_requests": 0,
+  "human_bilingual_reviews": 0,
+  "decision": "evaluation_only_warning_no_product_change"
+}

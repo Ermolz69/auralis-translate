@@ -1637,6 +1637,23 @@ tasks:
     cmds:
       - node --check eval/scripts/source-clock-review-v1.mjs
       - node --test --test-isolation=none eval/scripts/tests/source-clock-review-v1.test.mjs
+  eval:source-relations:unit:
+    desc: Verify conservative post-answer planning, team and future-product review warnings
+    cmds:
+      - node --check eval/scripts/source-relation-review-v1.mjs
+      - node --test --test-isolation=none eval/scripts/tests/source-relation-review-v1.test.mjs
+  eval:source-relations:report:
+    desc: Capture pinned full-draft and saved-pair relation warnings without inference
+    cmds:
+      - task: eval:source-relations:unit
+      - node --check eval/scripts/check-source-relation-review-v1.mjs
+      - node eval/scripts/check-source-relation-review-v1.mjs --capture
+  eval:source-relations:check:
+    desc: Rehash pinned private inputs and verify the source-free relation report
+    cmds:
+      - task: eval:source-relations:unit
+      - node --check eval/scripts/check-source-relation-review-v1.mjs
+      - node eval/scripts/check-source-relation-review-v1.mjs --check
   eval:source-clock:report:
     desc: Capture a source-free report from pinned private v8 SRT and prior paired replies
     cmds:
