@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "experiment_id": "VOICE-VIVO-MEDIA-TECH-2026-10-10-v1",
+  "status": "technical_media_complete_quality_rejected",
+  "source": {
+    "youtube_video_id": "_G4e2p1p-is",
+    "original_srt_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+    "russian_draft_sha256": "4451868ea3e7cbb3ed81f3d24b5f85bc61a749168b213c54c88ae552208c4831",
+    "media_sha256": "7ad0484b31a6788c31632616649c51e6aaf6cdcdd7d90083d88e1d5ee66e1507",
+    "media_duration_ms": 1115570,
+    "rights_admitted": false,
+    "source_speech_alignment_human_verified": false
+  },
+  "tts": {
+    "engine": "Windows SAPI",
+    "voice": "Microsoft Irina Desktop",
+    "language": "ru-RU",
+    "runtime_sha256": "362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139",
+    "report_sha256": "eeb049e1bd3ad4639e0ba4f3aaead95cd7a464c1cda3c534f03f5d6bd7ade7c1",
+    "analysis_sha256": "5e8680d88bbadbccbd247284db9bacc0583db249137b81ca5b6ae1805dba6de8",
+    "elapsed_ms": 291942,
+    "generated_cues": 467,
+    "overrun_cues": 465,
+    "overlapping_starts": 464,
+    "maximum_overrun_ms": 8541,
+    "clipped_pcm_samples": 0,
+    "reviewed_spoken_script": false
+  },
+  "fit": {
+    "private_report_sha256": "67cc5fa98e8416b53ac7f1ca4764d40fab4f600dfa494084bc9de5cf0484480a",
+    "end_margin_ms": 75,
+    "at_most_tempo": { "1": 1, "1.25": 17, "1.5": 50, "2": 175 },
+    "median_required_tempo": 2.192231075697211,
+    "p95_required_tempo": 3.699493528418683,
+    "maximum_required_tempo": 6.115432873274781,
+    "at_most_1_5_by_third": [20, 9, 21],
+    "third_cue_counts": [156, 156, 155],
+    "approved_tempo_policy": false
+  },
+  "media": {
+    "private_report_sha256": "58a5b64a3f7773cd0eb16b884eec9a768a6066646e21663aaaba1e97b6916135",
+    "output_sha256": "3215003c8b5302f19896d54ffb64a398e15c91eea46b40b010b70f2da08c4bd5",
+    "output_bytes": 52394280,
+    "video_codec": "vp9",
+    "audio_codec": "opus",
+    "container_duration_ms": 1116835,
+    "decoded_audio_duration_ms": 1116828,
+    "video_tail_gap_ms": 1258,
+    "audio_packets": 55842,
+    "maximum_packet_gap_ms": 1,
+    "clipped_decoded_pcm_samples": 0,
+    "playback_status": "player_process_completed",
+    "playback_elapsed_ms": 1117185,
+    "playback_report_sha256": "5fbcbdedfec08f26dd21c28cbf4e6cbafa61279333ac8e1a05bb4c9ee0ceb5ab"
+  },
+  "review": {
+    "human_bilingual_reviews": 0,
+    "human_audio_listeners": 0,
+    "selected_product_result": false,
+    "quality_admitted": false,
+    "audio_gates_admitted": false
+  }
+}

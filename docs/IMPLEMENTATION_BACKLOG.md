@@ -210,6 +210,18 @@ median required tempo is 1.906× and p95 2.745×. The independently checked
 counts make tempo-only adaptation insufficient for this unreviewed script;
 they do not establish a listenable speed, approved script or A3/A4 pass.
 
+The [original-platform Vivo real-SAPI technical pilot](../eval/experiments/2026-10-10-vivo-real-sapi-technical-result.md)
+adds partial `VOICE-02`/`VOICE-03` evidence on the same 467-cue, 18:36
+source in Auralis local `feat/natural-tts-pilot`. One run generated 467/467
+real WAVs; one private media assembly decoded fully and one FFplay process
+completed. Independent rehash covered all WAVs and output. Yet 465 cue
+windows overrun, 464 starts overlap prior speech, only 50/467 could
+mathematically fit by 1.5×, and speech lasts 1,258 ms past the picture.
+There is no approved script, source/caption rights, human sound rating or
+selected-result lineage. A length-scaled beginning/middle/end regression
+replaces the fit checker’s former 89/89/rest assumption while old reports
+remain immutable. `VOICE-01`–`VOICE-07` and A1–A6 remain open.
+
 The [Vivo 467-cue copied-state run](../eval/experiments/2026-09-30-commons-vivo-full-7b-resume-result.md)
 adds partial `DATA-03`/`CTX-02`/`LONG-04`/`EVAL-04` evidence: a first real 7B
 pass stopped at cue 276 with malformed model JSON, kept 275 durable checkpoints
