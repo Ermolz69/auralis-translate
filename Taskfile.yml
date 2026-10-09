@@ -1672,6 +1672,23 @@ tasks:
       - task: eval:source-relations:v2:unit
       - node --check eval/scripts/check-source-relation-review-v2.mjs
       - node eval/scripts/check-source-relation-review-v2.mjs --check
+  eval:source-relations:cross-source:unit:
+    desc: Verify second-source warning counts and strict source/draft alignment
+    cmds:
+      - task: eval:source-relations:v2:unit
+      - node --check eval/scripts/cross-source-relation-screen.mjs
+      - node --check eval/scripts/check-cross-source-relation-screen.mjs
+      - node --test --test-isolation=none eval/scripts/tests/cross-source-relation-screen.test.mjs
+  eval:source-relations:cross-source:report:
+    desc: Capture one pinned private-file ASUS and Sethlui relation-warning replay
+    cmds:
+      - task: eval:source-relations:cross-source:unit
+      - node eval/scripts/check-cross-source-relation-screen.mjs --capture
+  eval:source-relations:cross-source:check:
+    desc: Rehash and independently recompute the second-source warning report
+    cmds:
+      - task: eval:source-relations:cross-source:unit
+      - node eval/scripts/check-cross-source-relation-screen.mjs --check
   eval:focus-slot:unit:
     desc: Verify single target isolation preserves the Chinese source inventory
     cmds:
