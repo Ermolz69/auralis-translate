@@ -408,6 +408,23 @@ export async function loadCurrentReport(root) {
   assert.equal(createHash('sha256').update(catalogV51Raw).digest('hex'),
     '9e8c9990164e0ebe49bd639704df792bf47d9daef1a1989e8a7e2ee299ea2004');
   assert.equal(JSON.parse(catalogV51Raw).entries.at(-1).id, 'REG-072');
+  const blindspotRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-vivo-stratified-blindspot-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(blindspotRaw).digest('hex'),
+    '94ed2dce1bf48b4eef4b71fa34c12cbd50ad60834599dcdfba6741e02ec4b396');
+  const blindspot = JSON.parse(blindspotRaw);
+  const blindspotReviewRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-vivo-stratified-blindspot-v1-ai-review.json'), 'utf8');
+  assert.equal(createHash('sha256').update(blindspotReviewRaw).digest('hex'),
+    '2c8e7bc4088b9e0d584173b605a2f352154f868e5c3b49f43988684f278eb77e');
+  const blindspotReview = JSON.parse(blindspotReviewRaw);
+  const catalogV52Raw = await fs.readFile(path.join(root,
+    'eval/regressions/catalog-v52.json'), 'utf8');
+  assert.equal(JSON.parse(catalogV52Raw).entries.at(-1).id, 'REG-073');
+  assert.equal(blindspot.selected_windows, 15);
+  assert.equal(blindspot.source_target_pairs, 90);
+  assert.equal(blindspotReview.summary.clear_major_windows_ai_only, 6);
+  assert.equal(blindspotReview.summary.human_bilingual_reviews, 0);
   const vivoAudioRaw = await fs.readFile(path.join(root,
     'eval/reports/2026-10-10-vivo-real-sapi-technical.json'), 'utf8');
   assert.equal(createHash('sha256').update(vivoAudioRaw).digest('hex'),
@@ -618,6 +635,19 @@ export async function loadCurrentReport(root) {
       human_bilingual_reviews: countCategory.arms[0].human_bilingual_reviews,
       product_rule_admitted: countCategory.product_rule_admitted,
       report_sha256: createHash('sha256').update(countCategoryRaw).digest('hex') },
+    vivo_blindspot: { selected_windows: blindspot.selected_windows,
+      unique_source_cues: blindspot.unique_source_cues,
+      source_target_pairs: blindspot.source_target_pairs,
+      major_windows_ai_only: blindspotReview.summary.clear_major_windows_ai_only,
+      one_b_major_windows_ai_only:
+        blindspotReview.summary.clear_major_one_b_windows_ai_only,
+      seven_b_major_windows_ai_only:
+        blindspotReview.summary.clear_major_seven_b_windows_ai_only,
+      human_bilingual_reviews: blindspotReview.summary.human_bilingual_reviews,
+      model_requests: blindspot.model_requests,
+      machine_report_sha256: createHash('sha256').update(blindspotRaw).digest('hex'),
+      ai_review_sha256: createHash('sha256').update(blindspotReviewRaw).digest('hex'),
+      catalog_sha256: createHash('sha256').update(catalogV52Raw).digest('hex') },
     vivo_scene_post_edit: { chats: postEdit.chats,
       preflights: postEdit.preflights,
       total_tokens: postEdit.total_tokens,

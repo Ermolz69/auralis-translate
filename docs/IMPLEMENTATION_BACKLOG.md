@@ -1122,3 +1122,20 @@ language rating or released SRT follows. The
 [v24 RELEASE-05 self-audit](../eval/experiments/2026-10-10-release-05-audit-attempt-v24.md)
 retains the source-rights, speech-alignment, audio-fit and clean-install
 gaps; v8 and all older source/candidate bytes remain unchanged.
+
+The [source-only frozen Vivo blind-spot review](../eval/experiments/2026-10-10-vivo-stratified-blindspot-v1-result.md)
+extends `LONG-04`/`CTX-03`/`EVAL-04` evidence across the beginning, middle
+and end of the same 467-cue full file. Fifteen purposively chosen windows
+contain 45 unique Chinese cues and 90 paired observations from the two
+retained v8 drafts. Source-aware **AI-only** triage marked six windows with
+major meaning or scene problems, including CPU cores versus chips,
+all-big-core architecture, process technology, scenario-led planning and
+a duplicated adjacent cue. [REG-073/catalog v52](../eval/regressions/catalog-v52.json)
+pins exact hashes and twelve new unrun related/negative controls. No new
+model/TTS/ASR calls or product edit occurred. The broad numeric sampling
+feature selected two generic “one” expressions; retain this weakness and
+tighten it only in a new predeclared source-only sample. These selected
+windows cannot yield a quality rate or model winner. The
+[v25 RELEASE-05 self-audit](../eval/experiments/2026-10-10-release-05-audit-attempt-v25.md)
+keeps human language assessment, source-rights/alignment, script approval,
+audio fit/listening and clean installation open; v8 remains `needs_review`.
