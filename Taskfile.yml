@@ -1508,14 +1508,26 @@ tasks:
       - node eval/scripts/check-regression-catalog-v42.mjs
       - node eval/scripts/check-regression-catalog-v43.mjs
       - node eval/scripts/check-regression-catalog-v44.mjs
+      - node eval/scripts/build-regression-catalog-v45.mjs
       - task: eval:regression:reg060:check
   eval:regression:catalog:recent:check:
-    desc: Verify REG-061 through REG-064 and both bounded follow-up outcomes
+    desc: Verify REG-061 through REG-065 and the retained bounded outcomes
     cmds:
       - node eval/scripts/check-regression-catalog-v41.mjs
       - node eval/scripts/check-regression-catalog-v42.mjs
       - node eval/scripts/check-regression-catalog-v43.mjs
       - node eval/scripts/check-regression-catalog-v44.mjs
+      - node eval/scripts/build-regression-catalog-v45.mjs
+  eval:regression:reg065:catalog:write:
+    desc: Add the exact Vivo terminal-line-break failure after preserving catalog v44
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v45.mjs
+      - node eval/scripts/build-regression-catalog-v45.mjs --write
+  eval:regression:reg065:check:
+    desc: Verify the original model failure, related controls and catalog v45 without model calls
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v45.mjs
+      - node eval/scripts/build-regression-catalog-v45.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:
@@ -2358,6 +2370,21 @@ tasks:
     cmds:
       - task: eval:long:v8:vivo:preflight
       - node eval/scripts/probe-v8-vivo-original-long.mjs
+  eval:long:v8:vivo:report:
+    desc: Capture source-free evidence from both frozen original Vivo model runs
+    cmds:
+      - node --check eval/scripts/check-v8-vivo-original-long.mjs
+      - node eval/scripts/check-v8-vivo-original-long.mjs --capture
+  eval:long:v8:vivo:check:
+    desc: Rehash the original Vivo runs, source, requests, results and private failure
+    cmds:
+      - node --check eval/scripts/check-v8-vivo-original-long.mjs
+      - node eval/scripts/check-v8-vivo-original-long.mjs
+  eval:long:v8:vivo:offline-export:
+    desc: Re-export the completed 7B Vivo result from a copied validated SQLite state without a model server
+    cmds:
+      - node --check eval/scripts/export-v8-vivo-original-offline.mjs
+      - node eval/scripts/export-v8-vivo-original-offline.mjs
   eval:long:v8:asus:preflight:
     desc: Verify pinned natural 268-cue source, paired media, two v8 profiles, models and CLI
     env:

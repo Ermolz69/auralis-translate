@@ -7,7 +7,7 @@ use auralis_translation::{
     TranslationBatch, TranslationDiagnostic,
 };
 use reqwest::header::CONTENT_TYPE;
-use serde_json::json;
+use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 use std::ops::Range;
 use std::time::Instant;
@@ -273,7 +273,9 @@ impl LlamaCppProvider {
             .map_err(|error| ProviderError::Permanent(error.to_string()))
             .and_then(|http| http.body_result())
             .and_then(|body| decode_chat_response_with_tail_retry(body, false))
-            .and_then(|candidate| contextual_prompt_v7::decode(&candidate, slots))
+            .and_then(|candidate| {
+                contextual_prompt_v7::decode(&normalize_terminal_line_endings(candidate), slots)
+            })
             .and_then(|lines| {
                 lines
                     .into_iter()
@@ -353,5 +355,30 @@ impl LlamaCppProvider {
                 Ok(_) => admitted.and(translated),
             },
         }
+    }
+}
+
+fn normalize_terminal_line_endings(candidate: String) -> String {
+    let Ok(mut value) = serde_json::from_str::<Value>(&candidate) else {
+        return candidate;
+    };
+    let Some(translations) = value.get_mut("translations").and_then(Value::as_array_mut) else {
+        return candidate;
+    };
+    let mut changed = false;
+    for translation in translations {
+        let Some(text) = translation.get("text").and_then(Value::as_str) else {
+            continue;
+        };
+        let normalized = text.trim_end_matches(['\r', '\n']);
+        if normalized.len() != text.len() {
+            translation["text"] = Value::String(normalized.to_owned());
+            changed = true;
+        }
+    }
+    if changed {
+        serde_json::to_string(&value).unwrap_or(candidate)
+    } else {
+        candidate
     }
 }

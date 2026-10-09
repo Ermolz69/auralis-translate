@@ -25,6 +25,18 @@ journal retains each raw subrequest anchored to its first slot and its complete
 rendered body. The checkpoint retains the full mapped response. V7 does not
 claim a separate per-slot journal row for a shared HTTP request.
 
+The real original-platform 467-cue Vivo v8 screen found a narrow output-layout
+failure: the 1.8B reply for cues 113–116 put an escaped terminal line feed in
+each otherwise mapped single-line `text` field. The shared v7/v8 provider now
+removes only terminal CR/LF characters **after** JSON parsing, before the
+unchanged version-hashed decoder's control-character, currency and
+protected-fact checks. It keeps the
+raw response in the request journal. Leading or internal line breaks, tabs,
+empty text and JSON wrapper leakage remain invalid. This deterministic
+normalization changes no prompt, model, source, slot identity or saved older
+result. The stopped run and its original invalid response remain preserved;
+the change alone does not establish language quality or finish that run.
+
 The 2 October authored real-model screen found a context leak: with Wang's
 nonmonetary target and an adjacent ticket-price context line, the 1.8B model
 returned the ticket's monetary sentence under Wang's correct slot ID. That

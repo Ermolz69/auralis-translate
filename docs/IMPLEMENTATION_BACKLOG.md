@@ -108,6 +108,19 @@ explicit recognition errors. Mandarin was forced rather than independently
 detected; no person listened or mapped speakers. `DATA-03` stays in progress
 with zero newly eligible cues. This diagnostic does not activate `ASR-01`.
 
+The [original-platform Vivo v8 long-file screen](../eval/experiments/2026-10-09-vivo-original-v8-long-result.md)
+adds partial `CTX-02`/`LONG-01`/`LONG-02`/`LONG-04`/`EVAL-04`/`DECIDE-01`
+evidence on the same 467-cue source: 1.8B stopped safely after 112 cues,
+while 7B produced 467/467 mapped cues and a byte-identical offline export
+from a copied database. AI review found recurrent timing, workforce and
+future-product errors in the complete 7B result; no human adequacy score or
+approved script follows. [REG-065](../eval/regressions/reg-065-vivo-v8-terminal-line-break-v1.json)
+captures the 1.8B trailing-line-break failure with nine related/negative
+controls. A narrow provider normalization passed deterministic tests, but no
+real full-file recheck of the changed binary has run. `LONG-04` remains planned
+because admitted distinct scenes, source-aware human review and a reliable
+final candidate are still missing; G3–G5 and RELEASE-05 remain open.
+
 The [matched natural-caption model screen](../eval/experiments/2026-09-29-mingfay-natural-model-screen-results.md)
 adds partial `CTX-02` and `EVAL-04` evidence: both v5 scene profiles
 completed the same 16 exact source cues and durable journals, but 1.8B had

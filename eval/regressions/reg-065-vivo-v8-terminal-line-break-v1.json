@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "REG-065",
+  "status": "deterministic_fix_verified_natural_recheck_pending",
+  "severity": "major_reliability",
+  "source_family": "youtube_geekerwan_vivo_original_platform",
+  "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "profile_sha256": "1803aeb68428e1b138a17ed72b01abe1cc5fbc5845b5bca66a402b8936b1081f",
+  "private_report_sha256": "84a737e1cc8c7b468ea66718f2507882929344f259d7824d9071953d24c1a5b5",
+  "minimal_reproduction": {
+    "target_ids": [113, 114, 115, 116],
+    "request_sha256": "876f65f33f388f5dd51bcda72d462f993bb54a5e71ca15475a33fbfa5ed5b0fa",
+    "raw_response_sha256": "19dfd4ad6a18317b4779fd379b353d650dca2f66157116dccc19f6a347b36981",
+    "observed": "Each of four correctly mapped JSON text fields ended in one escaped line feed; v8 rejected the entire batch before checkpoint 29.",
+    "durable_prefix_batches": 28,
+    "published_result_count": 0,
+    "expected": "Remove only terminal CR/LF layout characters after JSON decoding; preserve raw reply, then run every existing identity, control, currency and protected-fact check."
+  },
+  "related_controls": [
+    { "id": "one_terminal_lf", "shape": "one of four valid target texts ends in LF", "expected": "strip only its suffix and keep four mapped outputs" },
+    { "id": "all_terminal_crlf", "shape": "all four valid target texts end in CRLF", "expected": "strip suffixes without changing words or mapping" },
+    { "id": "money_token_terminal_lf", "shape": "a protected amount token precedes a terminal LF", "expected": "restore the token exactly once after suffix stripping" },
+    { "id": "short_final_batch", "shape": "the final natural-file batch has three target slots", "expected": "keep the exact three IDs and source timings" }
+  ],
+  "negative_controls": [
+    { "id": "internal_lf", "shape": "a text field contains an internal line break", "expected": "reject" },
+    { "id": "leading_lf", "shape": "a text field starts with a line break", "expected": "reject" },
+    { "id": "only_line_breaks", "shape": "a text field is only CR/LF and spaces", "expected": "reject" },
+    { "id": "tab_control", "shape": "a text field contains a tab", "expected": "reject" },
+    { "id": "wrapper_leak", "shape": "a text field contains JSON wrapper delimiters", "expected": "reject before checkpoint" }
+  ],
+  "human_review": "missing",
+  "language_quality_claim": false
+}

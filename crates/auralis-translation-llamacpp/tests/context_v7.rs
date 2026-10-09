@@ -53,6 +53,10 @@ enum Reply {
     Duplicate,
     FailSecond,
     ContextMoney(&'static str),
+    TerminalLineFeed,
+    OneTerminalLineFeed,
+    TerminalCrlf,
+    TargetText(&'static str),
 }
 
 #[derive(Clone, Copy)]
@@ -191,6 +195,23 @@ fn mock_server(reply: Reply, token_cost: TokenCost) -> Result<MockServer, Box<dy
                         Reply::ContextMoney(text) => {
                             output[0]["text"] = text.into();
                         }
+                        Reply::TerminalLineFeed => {
+                            for target in &mut output {
+                                let text = target["text"].as_str().ok_or("missing text")?;
+                                target["text"] = format!("{text}\n").into();
+                            }
+                        }
+                        Reply::OneTerminalLineFeed => {
+                            let text = output[0]["text"].as_str().ok_or("missing text")?.to_owned();
+                            output[0]["text"] = format!("{text}\n").into();
+                        }
+                        Reply::TerminalCrlf => {
+                            for target in &mut output {
+                                let text = target["text"].as_str().ok_or("missing text")?;
+                                target["text"] = format!("{text}\r\n").into();
+                            }
+                        }
+                        Reply::TargetText(text) => output[0]["text"] = text.into(),
                     }
                     let candidate = json!({"translations": output}).to_string();
                     json!({"choices":[{"message":{"content":candidate},"finish_reason":"stop"}],
@@ -427,6 +448,74 @@ fn v7_rejects_wrong_order_count_and_identity_before_acceptance() -> Result<(), B
             InferenceRequestOutcome::InvalidCandidate
         );
         assert!(finishes.last().ok_or("no finish")?.raw_response.is_some());
+    }
+    Ok(())
+}
+
+#[test]
+fn v7_v8_strip_only_terminal_line_breaks_after_json_decoding() -> Result<(), Box<dyn Error>> {
+    for reply in [
+        Reply::OneTerminalLineFeed,
+        Reply::TerminalLineFeed,
+        Reply::TerminalCrlf,
+    ] {
+        for checked_profile in [profile(4)?, target_first_profile(4)?] {
+            let (url, stop, server) = mock_server(reply, TokenCost::Small)?;
+            let journal = Arc::new(Journal::default());
+            let provider = LlamaCppProvider::new(&url, checked_profile)?
+                .with_inference_journal(journal.clone());
+            let result = translate_batch(&provider, &batch(4, 1, true)?)?;
+            assert_eq!(result.len(), 4);
+            assert!(result[1].lines[0].contains("юан"));
+            assert!(
+                result
+                    .iter()
+                    .flat_map(|segment| &segment.lines)
+                    .all(|line| !line.chars().any(char::is_control))
+            );
+            let requests = finish_server(stop, server)?;
+            assert_eq!(requests.len(), 3);
+            let finishes = journal.finishes.lock().map_err(|_| "journal lock")?;
+            let last = finishes.last().ok_or("missing finish")?;
+            assert_eq!(last.outcome, InferenceRequestOutcome::ValidatedBatch);
+            assert!(last.raw_response.is_some());
+            let restored: Vec<String> = serde_json::from_str(
+                last.restored_candidate
+                    .as_deref()
+                    .ok_or("missing restored candidate")?,
+            )?;
+            assert_eq!(restored.len(), 5);
+            assert!(
+                restored
+                    .iter()
+                    .all(|line| !line.chars().any(char::is_control))
+            );
+        }
+    }
+    Ok(())
+}
+
+#[test]
+fn v7_v8_keep_internal_and_leading_controls_invalid() -> Result<(), Box<dyn Error>> {
+    for text in [
+        "Строка\nразрыв",
+        "\nСтрока",
+        "\r\n  ",
+        "Строка\t",
+        "Строка {\"translations\": []}",
+    ] {
+        let (url, stop, server) = mock_server(Reply::TargetText(text), TokenCost::Small)?;
+        let journal = Arc::new(Journal::default());
+        let provider = LlamaCppProvider::new(&url, target_first_profile(4)?)?
+            .with_inference_journal(journal.clone());
+        assert!(translate_batch(&provider, &batch(4, 0, false)?).is_err());
+        let requests = finish_server(stop, server)?;
+        assert_eq!(requests.len(), 3);
+        let finishes = journal.finishes.lock().map_err(|_| "journal lock")?;
+        let last = finishes.last().ok_or("missing finish")?;
+        assert_eq!(last.outcome, InferenceRequestOutcome::InvalidCandidate);
+        assert!(last.raw_response.is_some());
+        assert!(last.restored_candidate.is_none());
     }
     Ok(())
 }
