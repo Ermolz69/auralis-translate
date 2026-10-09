@@ -925,3 +925,18 @@ becomes available. The owner has ruled out volunteer outreach.
 The [RELEASE-05 v11 interim self-audit](../eval/experiments/2026-10-09-release-05-audit-attempt-v11.md)
 records all G1–G9 and A1–A6 decisions as partial or open; it does not certify
 a final candidate.
+
+## REG-066 authored fact-control screen
+
+The [frozen 20-request 1.8B/7B v8 screen](../eval/experiments/2026-10-09-reg066-authored-v8-screen-result.md)
+ran all five related and five negative authored controls without Russian
+references in prompts. All 20 chats and 40 template/tokenizer preflights were
+structurally valid. Separate AI review marked eight focus facts preserved and
+two `needs_review` for each model; it noted five awkward 1.8B and two awkward
+7B Russian outputs. There are zero independent bilingual ratings. [Catalog
+v47](../eval/regressions/catalog-v47.json) retains exact request/response
+identities, prior v46 and this observed control outcome. The short controls
+do not fix the five paired natural-file risks, so `CTX-03`, `EVAL-04`,
+`DECIDE-01`, G3–G5 and RELEASE-05 remain open. Next is a bounded same-source
+cue-fragment/scene-boundary comparison; a source-derived fact guard may be
+tested only with the negative controls and a no-new-major-error rule.

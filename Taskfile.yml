@@ -1510,9 +1510,10 @@ tasks:
       - node eval/scripts/check-regression-catalog-v44.mjs
       - node eval/scripts/build-regression-catalog-v45.mjs
       - node eval/scripts/build-regression-catalog-v46.mjs
+      - node eval/scripts/build-regression-catalog-v47.mjs
       - task: eval:regression:reg060:check
   eval:regression:catalog:recent:check:
-    desc: Verify REG-061 through REG-066 and the retained bounded outcomes
+    desc: Verify REG-061 through REG-066 and the observed authored control outcome
     cmds:
       - node eval/scripts/check-regression-catalog-v41.mjs
       - node eval/scripts/check-regression-catalog-v42.mjs
@@ -1520,6 +1521,7 @@ tasks:
       - node eval/scripts/check-regression-catalog-v44.mjs
       - node eval/scripts/build-regression-catalog-v45.mjs
       - node eval/scripts/build-regression-catalog-v46.mjs
+      - node eval/scripts/build-regression-catalog-v47.mjs
   eval:regression:reg065:catalog:write:
     desc: Add the exact Vivo terminal-line-break failure after preserving catalog v44
     cmds:
@@ -1555,6 +1557,26 @@ tasks:
     cmds:
       - task: eval:regression:reg066:screen:preflight
       - node eval/scripts/probe-reg066-authored-v8-screen.mjs
+  eval:regression:reg066:screen:report:
+    desc: Capture the source-free paired REG-066 authored model observations
+    cmds:
+      - node --check eval/scripts/check-reg066-authored-v8-screen.mjs
+      - node eval/scripts/check-reg066-authored-v8-screen.mjs --capture
+  eval:regression:reg066:screen:check:
+    desc: Rehash all 20 REG-066 chats, 40 preflights and exact paired prompts
+    cmds:
+      - node --check eval/scripts/check-reg066-authored-v8-screen.mjs
+      - node eval/scripts/check-reg066-authored-v8-screen.mjs
+  eval:regression:reg066:screen:catalog:write:
+    desc: Preserve the observed paired authored control outcomes in catalog v47
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v47.mjs
+      - node eval/scripts/build-regression-catalog-v47.mjs --write
+  eval:regression:reg066:screen:catalog:check:
+    desc: Verify v47 preserves v46 and links separate machine and AI assessments
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v47.mjs
+      - node eval/scripts/build-regression-catalog-v47.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:

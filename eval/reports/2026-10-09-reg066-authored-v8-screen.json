@@ -1,0 +1,418 @@
+{
+  "schema_version": 1,
+  "experiment": "REG-066-authored-v8-two-model-2026-10-09-v1",
+  "task_ids": [
+    "EVAL-04",
+    "CTX-03"
+  ],
+  "split": "known_authored_development_not_holdout",
+  "frozen_requests_sha256": "19042dd89f4a3a5e2cd2ca28b369b99157e59777732e38d9cb4f264606d631ab",
+  "control_pack_sha256": "33b74c9a337acd931b87a4f101e54070c95a5ed69a40f04ab342768da24b061e",
+  "private_report_sha256": "13ad5dba7d6f7811c5989ba0d66e32747af55603d61f0b2300d7f72f04476f9a",
+  "private_journal_sha256": "7ba723de6d16b771e7e3046e96df209025eace21c8a2c4d6a8316bf395d889ba",
+  "code_commit": "8fda73b5b5ea57c21e5258100de6ac11d47d4852",
+  "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "model_identities": [
+    {
+      "id": "1_8b",
+      "sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+      "manifest_sha256": "1803aeb68428e1b138a17ed72b01abe1cc5fbc5845b5bca66a402b8936b1081f",
+      "alias": "auralis-hy-mt2-1.8b-q4"
+    },
+    {
+      "id": "7b",
+      "sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+      "manifest_sha256": "c287c53efbb4ce78471b64648ea3dd2f521363df0e168b7a61df1fdd6ae0479a",
+      "alias": "auralis-hy-mt2-7b-q4"
+    }
+  ],
+  "status": "complete_structural_observations_unreviewed",
+  "chat_requests": 20,
+  "template_token_preflights": 40,
+  "prompt_tokens": 7336,
+  "completion_tokens": 2643,
+  "wall_elapsed_ms": 76460,
+  "human_bilingual_reviews": 0,
+  "accepted_language_quality": false,
+  "resource_observation": {
+    "1_8b": {
+      "samples": 3,
+      "max_tracked_working_set_bytes": 1543311360,
+      "max_whole_device_gpu_mib": 4131,
+      "limitation": "Sampled working set/private memory of tracked processes; device-wide GPU use includes other applications. Not an isolated peak or release hardware gate."
+    },
+    "7b": {
+      "samples": 12,
+      "max_tracked_working_set_bytes": 5060780032,
+      "max_whole_device_gpu_mib": 7346,
+      "limitation": "Sampled working set/private memory of tracked processes; device-wide GPU use includes other applications. Not an isolated peak or release hardware gate."
+    }
+  },
+  "observations": [
+    {
+      "model": "1_8b",
+      "case_id": "9400_current_generation",
+      "kind": "related",
+      "focus_segment_ids": [
+        1001
+      ],
+      "accepted_focus": [
+        "В этом году модель 9400 продолжила улучшение энергопотребления."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "01f75849c414865804a7b9728db8635ccfe2176a62911636edcf7702b3db6997",
+      "request_sha256": "19ce18973ce6e71218ec71037a835f22f965824d7d4f26a8c3f4b14ed75976f2",
+      "raw_response_sha256": "5663bee78ba2c2b61269d2c2efa73630745690c9ec5f2d4f32c5e0d85d417982",
+      "prompt_tokens": 365,
+      "completion_tokens": 124,
+      "chat_elapsed_ms": 1308
+    },
+    {
+      "model": "1_8b",
+      "case_id": "thirty_six_months_before_launch",
+      "kind": "related",
+      "focus_segment_ids": [
+        1006
+      ],
+      "accepted_focus": [
+        "Мы начали планировать за тридцать шесть месяцев, а затем вошли в совместное разработку программного и аппаратного компонентов."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "b053af898d3a5e8c8a1b471bcede17de0b226dfe13f95e34919158277e0941c3",
+      "request_sha256": "e3c52e664c5796a2eceab1f061a16bc4af85e39db2669aa989839c050d56f168",
+      "raw_response_sha256": "d52ff8886190a6991faae016523ddc0acfdf295b5b67aed5bab63b5d424fa241",
+      "prompt_tokens": 374,
+      "completion_tokens": 139,
+      "chat_elapsed_ms": 1550
+    },
+    {
+      "model": "1_8b",
+      "case_id": "joint_team_spans_cues",
+      "kind": "related",
+      "focus_segment_ids": [
+        1010,
+        1011
+      ],
+      "accepted_focus": [
+        "Две компании совместно создали...",
+        "команду разработчиков более тысячи человек."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "eff4799f65f0b45aefc89cae226051c54f4424216eaae48af201a22cdb724c33",
+      "request_sha256": "bac62bf6d4757ef6fea27972a28b798983817c34f7626c6e96f739ebdc150ce4",
+      "raw_response_sha256": "3014ab5854047d8d92c4408624a853881ac04d182f0166730a6977149b9b0941",
+      "prompt_tokens": 364,
+      "completion_tokens": 109,
+      "chat_elapsed_ms": 1088
+    },
+    {
+      "model": "1_8b",
+      "case_id": "work_until_two_three",
+      "kind": "related",
+      "focus_segment_ids": [
+        1016
+      ],
+      "accepted_focus": [
+        "Мы часто работаем до два-три часа ночи."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "d0dbea255db6ab5c46fd409419494d0aef30b96e537b4483793269531a2f9c85",
+      "request_sha256": "3536d4e725ce826de150d0d301466cd06bff0ec90b0cd3e2fea59876a27533c8",
+      "raw_response_sha256": "621b979cf9721f5fff1175f583c5037dad9050ba1b5320b919c03a4261ccbfb5",
+      "prompt_tokens": 364,
+      "completion_tokens": 119,
+      "chat_elapsed_ms": 1223
+    },
+    {
+      "model": "1_8b",
+      "case_id": "future_products_after_cooperation",
+      "kind": "related",
+      "focus_segment_ids": [
+        1017
+      ],
+      "accepted_focus": [
+        "Надеюсь, следующий сотрудничество принесет вам лучшие продукты."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "ca48e19ffbfdd90044be5d2da181391f92453e50b55b96efc2eab0e0b45d23e7",
+      "request_sha256": "911d5cf8856517675726718f2ecaea686a30c4c461385a141a740fc053efb1ce",
+      "raw_response_sha256": "ffbdb15f3423bfed0d554c4b9421730a5c8fe0fc74e9404bf1c4467a8591783e",
+      "prompt_tokens": 364,
+      "completion_tokens": 127,
+      "chat_elapsed_ms": 1267
+    },
+    {
+      "model": "1_8b",
+      "case_id": "explicit_first_generation",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1022
+      ],
+      "accepted_focus": [
+        "Это первое поколение продукции 9400."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "489c0b8c2f482f66878aaf5f43aa25bd27d5a416bd603c63f95bc89e9b86ad27",
+      "request_sha256": "9acd357b6776555d7b2081c58a0995157f2159fe9b2885a77881b2d96ee41bea",
+      "raw_response_sha256": "b2496211e543d09e0a28b4529b8d26fa2e8df83e45054287c1cef746f2c1c14c",
+      "prompt_tokens": 358,
+      "completion_tokens": 108,
+      "chat_elapsed_ms": 1126
+    },
+    {
+      "model": "1_8b",
+      "case_id": "thirty_six_months_after_start",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1027
+      ],
+      "accepted_focus": [
+        "Спустя тридцать шесть месяцев после запуска проекта мы начали совместное разработку."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "d56506df5c623d858965914108473f3eafb1d358987c3653e213cfa262c2a0a4",
+      "request_sha256": "ae1b6054b565e7deda84119605d2b3d89f60ba704ab67fc0ce0a37b71ae496eb",
+      "raw_response_sha256": "6c73707ef192758357128a60eab07feb1286425627740194f49f18df6f6272ab",
+      "prompt_tokens": 370,
+      "completion_tokens": 131,
+      "chat_elapsed_ms": 1354
+    },
+    {
+      "model": "1_8b",
+      "case_id": "money_and_team_both_explicit",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1032
+      ],
+      "accepted_focus": [
+        "Мы инвестировали десять миллионов юаней и создали команду из тысячи человек."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "f7f9f616360286919512b3486a99a6c904ca51f85b3c74d64e30100a580c7174",
+      "request_sha256": "016b106b92e9c0bdd63b9515c941c3ce76e1ee31fd570b9b0b3f7ed7aee0b012",
+      "raw_response_sha256": "e50b404699e598442dc0964d6e554c28025fd256817efcc584187da3678aaab6",
+      "prompt_tokens": 378,
+      "completion_tokens": 130,
+      "chat_elapsed_ms": 1378
+    },
+    {
+      "model": "1_8b",
+      "case_id": "eleven_twelve_at_night",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1033
+      ],
+      "accepted_focus": [
+        "Мы работаем до одиннадцати двенадцать часов ночи."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "82e9ac38250b606ff18de8216e14599b0a4cc0ae1d8b6aa7ad2bcb469eacb665",
+      "request_sha256": "7482b5e1139002db3fda4ad157753d91ad2e96f4067c670652467fc1b2ea0344",
+      "raw_response_sha256": "bc889c8195162643e47a936e8aecfca625d5a176604629614562809b010c8a5f",
+      "prompt_tokens": 362,
+      "completion_tokens": 121,
+      "chat_elapsed_ms": 1216
+    },
+    {
+      "model": "1_8b",
+      "case_id": "products_already_available",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1038
+      ],
+      "accepted_focus": [
+        "Лучший продукт уже вышел в продажу."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "3f99ed31b541a19d6cda8e1ca708e59f7b27609c370de7b07d91b76899d1ea1c",
+      "request_sha256": "aeaaf600bcf266689c7c675aee51c6b086e66b8f6eb5409af2a38dfea55823bd",
+      "raw_response_sha256": "af7461d467e153b6da5b9e3425a0826c3671f634ea46574dde7c4d756ef7a9a6",
+      "prompt_tokens": 358,
+      "completion_tokens": 111,
+      "chat_elapsed_ms": 1192
+    },
+    {
+      "model": "7b",
+      "case_id": "9400_current_generation",
+      "kind": "related",
+      "focus_segment_ids": [
+        1001
+      ],
+      "accepted_focus": [
+        "В этом году текущая версия 9400 продолжила совершенствоваться с точки зрения энергопотребления."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "01f75849c414865804a7b9728db8635ccfe2176a62911636edcf7702b3db6997",
+      "request_sha256": "60259560515a910d1aaf3a8e0c328eb225d510b0ce7797f15dc077d46a22ceb8",
+      "raw_response_sha256": "88d304f40f2c75d2ad46e0a81101ea5b65f9a39579a07665bb28ab4cdef7870f",
+      "prompt_tokens": 361,
+      "completion_tokens": 150,
+      "chat_elapsed_ms": 5581
+    },
+    {
+      "model": "7b",
+      "case_id": "thirty_six_months_before_launch",
+      "kind": "related",
+      "focus_segment_ids": [
+        1006
+      ],
+      "accepted_focus": [
+        "Мы начали планирование за тридцать шесть месяцев до начала работы, а затем перешли к совместной разработке программного и аппаратного обеспечения."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "b053af898d3a5e8c8a1b471bcede17de0b226dfe13f95e34919158277e0941c3",
+      "request_sha256": "6cf4747c4d53d56262f06f29f06297608a2a75f276e234f4f1b138b689196931",
+      "raw_response_sha256": "830a0f3d939e0f5ef390880e6c6b9f2f4873319ebf340612f706d3686b11ccfb",
+      "prompt_tokens": 378,
+      "completion_tokens": 167,
+      "chat_elapsed_ms": 6112
+    },
+    {
+      "model": "7b",
+      "case_id": "joint_team_spans_cues",
+      "kind": "related",
+      "focus_segment_ids": [
+        1010,
+        1011
+      ],
+      "accepted_focus": [
+        "Две компании совместно вложили ресурсы в команду разработки.",
+        "Команду разработки, насчитывающую более тысячи человек."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "eff4799f65f0b45aefc89cae226051c54f4424216eaae48af201a22cdb724c33",
+      "request_sha256": "33b2e8d525720d507fc070ec24d44d460011ee4d326117607f68688182a54588",
+      "raw_response_sha256": "da1896f4fec5f4a15d4600d317bd7a95b9bd77f6a9cf719b6be13a3d9b9b0c52",
+      "prompt_tokens": 366,
+      "completion_tokens": 148,
+      "chat_elapsed_ms": 5412
+    },
+    {
+      "model": "7b",
+      "case_id": "work_until_two_three",
+      "kind": "related",
+      "focus_segment_ids": [
+        1016
+      ],
+      "accepted_focus": [
+        "Мы часто работаем до двух-трех часов ночи."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "d0dbea255db6ab5c46fd409419494d0aef30b96e537b4483793269531a2f9c85",
+      "request_sha256": "87d6163b8faade84c8e7c1c53757e71348d0f2fd9c14e6b8df695c283a9b6ec3",
+      "raw_response_sha256": "7e775567bb56c8bfb6a280f5ab1e3e8cb567b4ae26b9f09d48b84a761ee47b83",
+      "prompt_tokens": 366,
+      "completion_tokens": 134,
+      "chat_elapsed_ms": 4816
+    },
+    {
+      "model": "7b",
+      "case_id": "future_products_after_cooperation",
+      "kind": "related",
+      "focus_segment_ids": [
+        1017
+      ],
+      "accepted_focus": [
+        "Надеюсь, что будущее сотрудничество принесет всем лучшие продукты."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "ca48e19ffbfdd90044be5d2da181391f92453e50b55b96efc2eab0e0b45d23e7",
+      "request_sha256": "4f5368dbedd5c0af483423f741919aff0b826c622f40fbf2c5499758cfed27fb",
+      "raw_response_sha256": "5544bb296189907b3df62410ecf847eb7d983c6c8ab5d5235ee1597c0e4878ff",
+      "prompt_tokens": 366,
+      "completion_tokens": 138,
+      "chat_elapsed_ms": 4965
+    },
+    {
+      "model": "7b",
+      "case_id": "explicit_first_generation",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1022
+      ],
+      "accepted_focus": [
+        "Это первое поколение продуктов серии 9400."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "489c0b8c2f482f66878aaf5f43aa25bd27d5a416bd603c63f95bc89e9b86ad27",
+      "request_sha256": "8f42bf324f5b0bff2fff4d5e28088474b6391fea0cecccd803543e57e7ff49e4",
+      "raw_response_sha256": "9a882a5c86d2e6269ca01a119b3c2b904e1c54dfffe006202deabf898e0afff9",
+      "prompt_tokens": 366,
+      "completion_tokens": 129,
+      "chat_elapsed_ms": 4673
+    },
+    {
+      "model": "7b",
+      "case_id": "thirty_six_months_after_start",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1027
+      ],
+      "accepted_focus": [
+        "Лишь спустя тридцать шесть месяцев после начала проекта мы приступили к совместной разработке."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "d56506df5c623d858965914108473f3eafb1d358987c3653e213cfa262c2a0a4",
+      "request_sha256": "78f07ac9d7526339cca7835a2deb9eb0a41621231734257c1f3813d51e565482",
+      "raw_response_sha256": "7e3036603f124b1eca5120e1d11a2aa39d09276554202ec2f56d6a6f72182a9c",
+      "prompt_tokens": 374,
+      "completion_tokens": 152,
+      "chat_elapsed_ms": 5398
+    },
+    {
+      "model": "7b",
+      "case_id": "money_and_team_both_explicit",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1032
+      ],
+      "accepted_focus": [
+        "Мы вложили 10 миллионов юаней и сформировали команду из тысячи человек."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "f7f9f616360286919512b3486a99a6c904ca51f85b3c74d64e30100a580c7174",
+      "request_sha256": "1d23146932f192a04b987c5294790bd784a26922e519eaaa257a05caf60efa35",
+      "raw_response_sha256": "57688531f61120cd4b245e82fab78524003f2560240dcba981d59cc2dc787db0",
+      "prompt_tokens": 378,
+      "completion_tokens": 149,
+      "chat_elapsed_ms": 5374
+    },
+    {
+      "model": "7b",
+      "case_id": "eleven_twelve_at_night",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1033
+      ],
+      "accepted_focus": [
+        "Мы работаем до одиннадцати-двенадцати часов вечера."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "82e9ac38250b606ff18de8216e14599b0a4cc0ae1d8b6aa7ad2bcb469eacb665",
+      "request_sha256": "9a7fde7849d9f4c564db172e46c8e2b142384574952a2291e2e94659484b1173",
+      "raw_response_sha256": "5ddb64f82041ac4bde96caa0c57114f7bae3d6672717592f227b2a153569c0aa",
+      "prompt_tokens": 364,
+      "completion_tokens": 133,
+      "chat_elapsed_ms": 4844
+    },
+    {
+      "model": "7b",
+      "case_id": "products_already_available",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1038
+      ],
+      "accepted_focus": [
+        "Лучшие продукты уже поступили на рынок."
+      ],
+      "structural_outcome": "valid_unreviewed",
+      "prompt_sha256": "3f99ed31b541a19d6cda8e1ca708e59f7b27609c370de7b07d91b76899d1ea1c",
+      "request_sha256": "0f9206c2c03e3fb2e08e7834b8e10c3563541bdde18378c43feab21fe112f4bb",
+      "raw_response_sha256": "c03f5e05f591f7ab0bae326a7201aa7b04fec8ac1b61a0b9d2250b9c094f5525",
+      "prompt_tokens": 360,
+      "completion_tokens": 124,
+      "chat_elapsed_ms": 4597
+    }
+  ],
+  "release_gate": "open"
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "review_id": "REG-066-authored-v8-source-aware-ai-review-2026-10-09-v1",
+  "reviewer_type": "ai_assistant_source_aware_not_independent_human",
+  "reviewer": "Ulya",
+  "machine_report_sha256": "ac02b59ed3da899c6f253c21ee00106fa6c615615457487a41916ddbf489154d",
+  "control_pack_sha256": "33b74c9a337acd931b87a4f101e54070c95a5ed69a40f04ab342768da24b061e",
+  "basis": "Compare the Chinese authored source and meaning notes with only the focus-slot Russian outputs after the model run. The meaning notes were not included in requests. Review is model-visible and not blinded or human-adjudicated.",
+  "cases": [
+    { "id": "9400_current_generation", "1_8b": { "fact": "fact_preserved", "russian_form": "acceptable", "note": "Keeps this year's 9400 without inventing first generation; 'model' is a loose rendering of generation." }, "7b": { "fact": "fact_preserved", "russian_form": "acceptable", "note": "Keeps this year's 9400 without an ordinal claim." } },
+    { "id": "thirty_six_months_before_launch", "1_8b": { "fact": "needs_review", "russian_form": "awkward", "note": "Says planning began 36 months in advance but leaves the anchor unstated and has a case error in joint development." }, "7b": { "fact": "needs_review", "russian_form": "acceptable", "note": "Adds 'before the start of work' as an anchor; the Chinese only establishes advance planning followed by joint development." } },
+    { "id": "joint_team_spans_cues", "1_8b": { "fact": "fact_preserved", "russian_form": "acceptable", "note": "Across the two focus slots, retains joint action, development team and more than one thousand people without money." }, "7b": { "fact": "fact_preserved", "russian_form": "awkward", "note": "Retains the team and people count without money, but repeats 'development team' across slots." } },
+    { "id": "work_until_two_three", "1_8b": { "fact": "fact_preserved", "russian_form": "awkward", "note": "Keeps 02:00–03:00 at night but uses an incorrect Russian case after 'до'." }, "7b": { "fact": "fact_preserved", "russian_form": "acceptable", "note": "Keeps 02:00–03:00 at night." } },
+    { "id": "future_products_after_cooperation", "1_8b": { "fact": "fact_preserved", "russian_form": "awkward", "note": "Keeps hope for future products but uses an incorrect gender with 'cooperation'." }, "7b": { "fact": "fact_preserved", "russian_form": "acceptable", "note": "Keeps future hope rather than present availability." } },
+    { "id": "explicit_first_generation", "1_8b": { "fact": "fact_preserved", "russian_form": "acceptable", "note": "Translates the explicitly stated first generation." }, "7b": { "fact": "fact_preserved", "russian_form": "acceptable", "note": "Translates the explicitly stated first generation." } },
+    { "id": "thirty_six_months_after_start", "1_8b": { "fact": "fact_preserved", "russian_form": "awkward", "note": "Keeps 36 months after project start; joint development has a Russian case error." }, "7b": { "fact": "fact_preserved", "russian_form": "acceptable", "note": "Keeps 36 months after project start." } },
+    { "id": "money_and_team_both_explicit", "1_8b": { "fact": "fact_preserved", "russian_form": "acceptable", "note": "Retains ten million yuan and a separate one-thousand-person team." }, "7b": { "fact": "fact_preserved", "russian_form": "acceptable", "note": "Retains ten million yuan and a separate one-thousand-person team." } },
+    { "id": "eleven_twelve_at_night", "1_8b": { "fact": "needs_review", "russian_form": "awkward", "note": "Eleven/twelve are present but the Russian clock range is malformed and 'night' could be misread." }, "7b": { "fact": "needs_review", "russian_form": "awkward", "note": "Eleven/twelve are present, but 'twelve in the evening' is ambiguous at midnight." } },
+    { "id": "products_already_available", "1_8b": { "fact": "fact_preserved", "russian_form": "acceptable", "note": "Keeps the explicitly stated already-on-sale meaning." }, "7b": { "fact": "fact_preserved", "russian_form": "acceptable", "note": "Keeps the explicitly stated already-on-sale meaning." } }
+  ],
+  "summary": { "1_8b": { "fact_preserved": 8, "needs_review": 2, "major_fact_error": 0, "awkward_russian": 5 }, "7b": { "fact_preserved": 8, "needs_review": 2, "major_fact_error": 0, "awkward_russian": 2 }, "human_bilingual_reviews": 0, "natural_file_errors_resolved": false, "model_promoted": false },
+  "limitation": "Ten exposed authored cases and one stochastic reply per model do not estimate natural long-file adequacy. The original natural REG-066 errors remain unresolved; this screen does not isolate a corrective mechanism.",
+  "release_gate": "open"
+}
