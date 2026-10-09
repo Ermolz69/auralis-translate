@@ -1529,6 +1529,7 @@ tasks:
       - node eval/scripts/build-regression-catalog-v50.mjs
       - node eval/scripts/build-regression-catalog-v51.mjs
       - node eval/scripts/build-regression-catalog-v52.mjs
+      - node eval/scripts/build-regression-catalog-v53.mjs
   eval:regression:catalog:portable:check:
     desc: Verify recent public catalog evidence in a clean checkout without private source files
     cmds:
@@ -1542,6 +1543,17 @@ tasks:
       - node eval/scripts/build-regression-catalog-v50.mjs
       - node eval/scripts/build-regression-catalog-v51.mjs
       - node eval/scripts/build-regression-catalog-v52.mjs
+      - node eval/scripts/build-regression-catalog-v53.mjs
+  eval:regression:catalog:v53:write:
+    desc: Append source numeric sampler false positives without rewriting v52
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v53.mjs
+      - node eval/scripts/build-regression-catalog-v53.mjs --write
+  eval:regression:catalog:v53:check:
+    desc: Verify rejected v1 and bounded v2 REG-074 source-only evidence
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v53.mjs
+      - node eval/scripts/build-regression-catalog-v53.mjs
   eval:regression:catalog:v52:write:
     desc: Append six source-aware Vivo blind spots without rewriting v51
     cmds:
