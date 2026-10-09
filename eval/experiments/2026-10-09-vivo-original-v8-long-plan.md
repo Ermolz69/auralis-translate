@@ -71,3 +71,16 @@ receive minimal reproductions and related controls under policy 008. No
 language score, model promotion, approved spoken script, G3–G5 or audio gate
 follows from structural completion or an AI reading. Subtitle/audio rights
 and human listener coverage remain unresolved.
+
+## Infrastructure stop before inference
+
+The first `task eval:long:v8:vivo:probe` invocation passed preflight but
+failed at the initial child-process launch with `spawn EPERM` after 6 ms.
+Its private report is
+`.cache/eval/v8-vivo-original-long-v1/attempt-k0peWA/report.json`, SHA-256
+`3a8ea031258fd13ffeb3e7cc7105f016385117dc9133dd155529cf7c58be643`.
+It has zero arms, zero server starts and zero model requests. Preserve it.
+Permit exactly one separately recorded infrastructure retry with the same
+committed harness and inputs outside the restricted process sandbox. This
+does not add an inference retry to either arm. If process launch still fails,
+stop and diagnose without another model run.
