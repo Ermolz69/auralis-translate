@@ -1854,6 +1854,27 @@ tasks:
     cmds:
       - task: eval:vivo:technical-senses:preflight
       - node eval/scripts/probe-vivo-technical-senses-v1.mjs --probe
+  eval:vivo:technical-senses:v2:unit:
+    desc: Verify REG-075 continuation and genuine-negation isolation
+    cmds:
+      - node --check eval/scripts/vivo-technical-senses-v2.mjs
+      - node --check eval/scripts/probe-vivo-technical-senses-v2.mjs
+      - node --test --test-isolation=none eval/scripts/tests/vivo-technical-senses-v2.test.mjs
+  eval:vivo:technical-senses:v2:freeze:
+    desc: Freeze corrected technical-sense requests without rewriting v1
+    cmds:
+      - task: eval:vivo:technical-senses:v2:unit
+      - node eval/scripts/probe-vivo-technical-senses-v2.mjs --freeze
+  eval:vivo:technical-senses:v2:preflight:
+    desc: Verify the v2 request freeze, REG-075 and all asset identities
+    cmds:
+      - task: eval:vivo:technical-senses:v2:unit
+      - node eval/scripts/probe-vivo-technical-senses-v2.mjs --preflight
+  eval:vivo:technical-senses:v2:probe:
+    desc: Run one bounded corrected paired 7B technical-sense screen
+    cmds:
+      - task: eval:vivo:technical-senses:v2:preflight
+      - node eval/scripts/probe-vivo-technical-senses-v2.mjs --probe
   eval:vivo:post-edit:freeze:
     desc: Freeze ten source-and-draft revision request identities before inference
     cmds:
