@@ -1779,6 +1779,27 @@ tasks:
     cmds:
       - task: eval:vivo:blindspot:preflight
       - node eval/scripts/check-vivo-stratified-blindspot-v1.mjs --check
+  eval:vivo:quantity:unit:
+    desc: Verify a future source-only explicit quantity classifier
+    cmds:
+      - node --check eval/scripts/source-quantity-feature-v1.mjs
+      - node --check eval/scripts/check-vivo-quantity-feature-v1.mjs
+      - node --test --test-isolation=none eval/scripts/tests/source-quantity-feature-v1.test.mjs
+  eval:vivo:quantity:preflight:
+    desc: Verify the pinned Chinese source without reading either Russian draft
+    cmds:
+      - task: eval:vivo:quantity:unit
+      - node eval/scripts/check-vivo-quantity-feature-v1.mjs --preflight
+  eval:vivo:quantity:report:
+    desc: Capture one bounded source-only quantity-feature diagnostic
+    cmds:
+      - task: eval:vivo:quantity:preflight
+      - node eval/scripts/check-vivo-quantity-feature-v1.mjs --capture
+  eval:vivo:quantity:check:
+    desc: Recompute the source-only quantity diagnostic from pinned bytes
+    cmds:
+      - task: eval:vivo:quantity:preflight
+      - node eval/scripts/check-vivo-quantity-feature-v1.mjs --check
   eval:vivo:post-edit:freeze:
     desc: Freeze ten source-and-draft revision request identities before inference
     cmds:
