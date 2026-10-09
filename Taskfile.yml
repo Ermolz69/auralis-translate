@@ -2961,6 +2961,10 @@ tasks:
       - task: eval:slot-schema:check
       - task: eval:voice:original-window:check
       - node eval/scripts/check-public-demo-site.mjs
+  site:staged:check:
+    desc: Ensure both generated HTML reports have no unstaged changes before publication
+    cmds:
+      - git diff --exit-code -- site/index.html site/history.html
   eval:voice:original-window:check:
     desc: Verify retained real-SAPI original-window tempo and playback metadata
     cmds:

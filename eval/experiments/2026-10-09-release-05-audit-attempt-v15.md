@@ -36,6 +36,15 @@ the ignored source/draft/journal can run the authored unit controls but
 cannot rehash private inputs. The v14 distinction between portable and
 full private regression checks remains in force.
 
+The first [Pages run for this update](https://github.com/Ermolz69/auralis-translate/actions/runs/37989478733)
+failed `Verify report`: regenerated `site/history.html` contained the new
+backlog digest but was left unstaged, so CI compared the committed historical
+page against the updated backlog. No page was deployed from that run. The
+historical measurements are preserved; the regenerated page is now included
+and `task site:staged:check` catches this packaging mistake before another
+push. Recheck the next Actions run and live page bytes before reporting
+publication success.
+
 **RELEASE-05 remains failed/open.** Keep production v8, raw journals,
 both drafts and the newer SQLite data. Next test the warning on a second
 natural source family and address remaining source-fact errors without
