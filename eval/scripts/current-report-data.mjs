@@ -275,6 +275,26 @@ export async function loadCurrentReport(root) {
   assert.equal(reg066Review.summary['7b'].fact_preserved, 8);
   assert.equal(reg066Review.summary.human_bilingual_reviews, 0);
   assert.equal(reg066Review.summary.natural_file_errors_resolved, false);
+  const seamsRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-09-reg066-natural-seams.json'), 'utf8');
+  assert.equal(createHash('sha256').update(seamsRaw).digest('hex'),
+    '91399791c61f9daa8fc3f6e1adc9457871f86a7ea5641179524209b7f3dbb6ef');
+  const seams = JSON.parse(seamsRaw);
+  const seamsReviewRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-09-reg066-natural-seams-ai-review.json'), 'utf8');
+  assert.equal(createHash('sha256').update(seamsReviewRaw).digest('hex'),
+    '970eeb289978bf498eea2cbe72c64f9bc600cd3bb340028a21bf182cea8c25a5');
+  const seamsReview = JSON.parse(seamsReviewRaw);
+  assert.equal(seamsReview.machine_report_sha256,
+    createHash('sha256').update(seamsRaw).digest('hex'));
+  assert.equal(seams.chat_requests, 30);
+  assert.equal(seams.template_token_preflights, 60);
+  assert.equal(seams.structurally_valid, 28);
+  assert.equal(seams.structurally_invalid, 2);
+  assert.equal(seamsReview.summary.observed_7b_time_repairs, 1);
+  assert.equal(seamsReview.summary.new_mixed_script_observations, 1);
+  assert.equal(seamsReview.summary.new_tail_id_omissions, 2);
+  assert.equal(seamsReview.summary.shifted_candidate_promoted, false);
   return {
     name_registry:nameRegistry.summary,
     target_terms:targetTerms.summary,
@@ -331,6 +351,17 @@ export async function loadCurrentReport(root) {
       natural_errors_resolved: reg066Review.summary.natural_file_errors_resolved,
       report_sha256: createHash('sha256').update(reg066Raw).digest('hex'),
       ai_review_sha256: createHash('sha256').update(reg066ReviewRaw).digest('hex') },
+    reg066_seams: { chats: seams.chat_requests,
+      preflights: seams.template_token_preflights,
+      valid: seams.structurally_valid,
+      invalid: seams.structurally_invalid,
+      seven_b_time_repairs: seamsReview.summary.observed_7b_time_repairs,
+      mixed_script: seamsReview.summary.new_mixed_script_observations,
+      tail_id_omissions: seamsReview.summary.new_tail_id_omissions,
+      candidate_promoted: seamsReview.summary.shifted_candidate_promoted,
+      human_bilingual_reviews: seamsReview.human_bilingual_reviews,
+      report_sha256: createHash('sha256').update(seamsRaw).digest('hex'),
+      ai_review_sha256: createHash('sha256').update(seamsReviewRaw).digest('hex') },
     lesson_source: { cues: sources.lesson_cues,
       caption_sha256: sources.lesson_sha256,
       media_duration_ms: sources.lesson_media_duration_ms,

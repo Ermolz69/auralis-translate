@@ -942,3 +942,21 @@ cue-fragment/scene-boundary comparison; a source-derived fact guard may be
 tested only with the negative controls and a no-new-major-error rule.
 The [RELEASE-05 v12 self-audit](../eval/experiments/2026-10-09-release-05-audit-attempt-v12.md)
 keeps every release and audio gate open after this short-control result.
+
+## REG-066 natural cue-seam comparison
+
+The [frozen same-source 30-chat screen](../eval/experiments/2026-10-09-reg066-natural-seams-result.md)
+compared original versus shifted four-cue target windows around all five
+natural fact risks, with five unchanged negative controls on each v8 model.
+All 60 template/tokenizer preflights passed, 28 replies were structurally
+valid, and both shifted final batches omitted cue 467. A source-aware AI
+review found one 7B time repair at cue 328, but the 36-month relation,
+thousand-person team and future-product modality remained wrong or unclear;
+1.8B introduced a French word at cue 60. [REG-067/068 in catalog
+v48](../eval/regressions/catalog-v48.json) retain exact reproductions, two
+new related and two contrast controls per failure; authored follow-ups are
+pending. The blanket shift is rejected and v8 unchanged. `CTX-03`,
+`EVAL-04`, `DECIDE-01`, human source/translation review, G3–G5 and
+RELEASE-05 remain open. The [v13 self-audit](../eval/experiments/2026-10-09-release-05-audit-attempt-v13.md)
+records the unchanged audio and installation gates. Next experiment may
+test only source-derived typed facts with a frozen no-new-major-error rule.
