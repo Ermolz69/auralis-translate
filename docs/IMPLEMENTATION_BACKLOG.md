@@ -1180,3 +1180,11 @@ predeclared screen for a later private audition; three sample cues still
 miss that fit limit. There was zero human listening and no new full-file
 TTS. The [v28 RELEASE-05 self-audit](../eval/experiments/2026-10-10-release-05-audit-attempt-v28.md)
 keeps A1–A6, G3–G5, source rights and clean installation open.
+
+The [private Vivo rate audition packet](../eval/experiments/2026-10-10-vivo-rate-audition-packet-result.md)
+adds partial `VOICE-04` preparation at Auralis local commits `d7afd9b`
+and `7ca79a9`: nine byte-matched real WAV copies cover three exposed
+beginning/middle/end cues at rates 0/5/10, with a private blind player
+and empty review form. There were no new TTS calls and no human listeners.
+The [v29 RELEASE-05 self-audit](../eval/experiments/2026-10-10-release-05-audit-attempt-v29.md)
+keeps A1–A6 and G3–G9 open; the short packet is not a full-scene A4 check.
