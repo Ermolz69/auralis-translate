@@ -393,6 +393,21 @@ export async function loadCurrentReport(root) {
   assert.equal(createHash('sha256').update(catalogV50Raw).digest('hex'),
     'fc2523ce1361e48c49d8a0bbf6ebaeba5c7f987bc3207bc5bf51b298f73486c1');
   assert.equal(JSON.parse(catalogV50Raw).entries.at(-1).id, 'REG-071');
+  const postEditRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-vivo-scene-post-edit-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(postEditRaw).digest('hex'),
+    'ea135459148721da5819e616a0a691af0c9ffe6f1fd9d6a683636ec1b3069e51');
+  const postEdit = JSON.parse(postEditRaw);
+  assert.equal(postEdit.chats, 10);
+  assert.equal(postEdit.preflights, 20);
+  assert.equal(postEdit.ai_triage.known_primary_relations_confirmed_repaired, 0);
+  assert.equal(postEdit.ai_triage.new_major_errors, 1);
+  assert.equal(postEdit.product_profile_changed, false);
+  const catalogV51Raw = await fs.readFile(path.join(root,
+    'eval/regressions/catalog-v51.json'), 'utf8');
+  assert.equal(createHash('sha256').update(catalogV51Raw).digest('hex'),
+    '9e8c9990164e0ebe49bd639704df792bf47d9daef1a1989e8a7e2ee299ea2004');
+  assert.equal(JSON.parse(catalogV51Raw).entries.at(-1).id, 'REG-072');
   const vivoAudioRaw = await fs.readFile(path.join(root,
     'eval/reports/2026-10-10-vivo-real-sapi-technical.json'), 'utf8');
   assert.equal(createHash('sha256').update(vivoAudioRaw).digest('hex'),
@@ -603,6 +618,18 @@ export async function loadCurrentReport(root) {
       human_bilingual_reviews: countCategory.arms[0].human_bilingual_reviews,
       product_rule_admitted: countCategory.product_rule_admitted,
       report_sha256: createHash('sha256').update(countCategoryRaw).digest('hex') },
+    vivo_scene_post_edit: { chats: postEdit.chats,
+      preflights: postEdit.preflights,
+      total_tokens: postEdit.total_tokens,
+      wall_elapsed_ms: postEdit.wall_elapsed_ms,
+      primary_repairs: postEdit.ai_triage.known_primary_relations_confirmed_repaired,
+      new_major_errors: postEdit.ai_triage.new_major_errors,
+      negative_primary_facts_preserved:
+        postEdit.ai_triage.negative_controls_with_primary_fact_preserved,
+      human_bilingual_reviews: postEdit.human_bilingual_reviews,
+      full_file_rerun: postEdit.full_file_rerun,
+      product_profile_changed: postEdit.product_profile_changed,
+      report_sha256: createHash('sha256').update(postEditRaw).digest('hex') },
     youtube_v8_long: { source_cues: vivoV8.source_cues,
       small_prefix_cues: vivoV8.arms[0].covered_prefix_cues,
       large_complete_cues: vivoV8.arms[1].covered_prefix_cues,
