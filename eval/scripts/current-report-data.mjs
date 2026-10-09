@@ -521,6 +521,21 @@ export async function loadCurrentReport(root) {
   assert.equal(vivoVoice.voices['Microsoft Pavel'].eligible_for_full_technical_screen, false);
   assert.equal(vivoVoice.human_audio_listeners, 0);
   assert.equal(vivoVoice.audio_gates_admitted, false);
+  const vivoRateRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-vivo-sapi-rate-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(vivoRateRaw).digest('hex'),
+    'fb53146e7ebd01ecb4f559fcf41f222996736deb6459817b1c3bd794db5c908f');
+  const vivoRate = JSON.parse(vivoRateRaw);
+  assert.equal(vivoRate.source_srt_sha256, vivoSource.original_srt_sha256);
+  assert.equal(vivoRate.russian_draft_sha256, vivoV8.arms[1].output_sha256);
+  assert.equal(vivoRate.rates['0'].sum_duration_ms,
+    vivoVoice.voices['Microsoft Irina Desktop'].sum_median_duration_ms);
+  assert.equal(vivoRate.real_wav_count, 36);
+  assert.equal(vivoRate.signal_present_wav_count, 36);
+  assert.equal(vivoRate.clipped_samples, 0);
+  assert.equal(vivoRate.advanced_to_private_audition_only, true);
+  assert.equal(vivoRate.human_audio_listeners, 0);
+  assert.equal(vivoRate.audio_gates_admitted, false);
   return {
     name_registry:nameRegistry.summary,
     target_terms:targetTerms.summary,
@@ -596,6 +611,22 @@ export async function loadCurrentReport(root) {
       human_audio_listeners: vivoVoice.human_audio_listeners,
       audio_gates_admitted: vivoVoice.audio_gates_admitted,
       report_sha256: createHash('sha256').update(vivoVoiceRaw).digest('hex') },
+    vivo_sapi_rate: { selected_cues: vivoRate.cue_ids.length,
+      real_wav_count: vivoRate.real_wav_count,
+      elapsed_ms: vivoRate.tts_elapsed_ms,
+      default_duration_ms: vivoRate.rates['0'].sum_duration_ms,
+      mid_duration_ms: vivoRate.rates['5'].sum_duration_ms,
+      max_duration_ms: vivoRate.rates['10'].sum_duration_ms,
+      default_fits: vivoRate.rates['0'].fits_at_most_1_5,
+      mid_fits: vivoRate.rates['5'].fits_at_most_1_5,
+      max_fits: vivoRate.rates['10'].fits_at_most_1_5,
+      max_ratio: vivoRate.rates['10'].sum_ratio_to_zero,
+      signal_present_wavs: vivoRate.signal_present_wav_count,
+      clipped_samples: vivoRate.clipped_samples,
+      audition_only: vivoRate.advanced_to_private_audition_only,
+      human_audio_listeners: vivoRate.human_audio_listeners,
+      audio_gates_admitted: vivoRate.audio_gates_admitted,
+      report_sha256: createHash('sha256').update(vivoRateRaw).digest('hex') },
     source_fact_hints: { chats: facts.chat_requests,
       preflights: facts.template_token_preflights,
       exact_abstentions: facts.identical_no_hint_pairs,
