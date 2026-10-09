@@ -639,6 +639,8 @@ fn v7_and_v8_reject_embedded_json_structure_before_journal_acceptance() -> Resul
         for text in [
             "Результат GPU\\\"},{\\\"line_index\\\":0",
             "Результат GPU\"},{\"line_index\":0",
+            "Результат\"},{",
+            "План\"}]}",
             "Результат GPU\"}]}",
             "Одним кликом поддержите нас.\"}]}",
         ] {
