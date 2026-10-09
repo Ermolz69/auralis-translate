@@ -1512,9 +1512,10 @@ tasks:
       - node eval/scripts/build-regression-catalog-v46.mjs
       - node eval/scripts/build-regression-catalog-v47.mjs
       - node eval/scripts/build-regression-catalog-v48.mjs
+      - node eval/scripts/build-regression-catalog-v49.mjs
       - task: eval:regression:reg060:check
   eval:regression:catalog:recent:check:
-    desc: Verify recent regressions through REG-068 and both observed Vivo screens
+    desc: Verify recent regressions through REG-070 and the observed Vivo screens
     cmds:
       - node eval/scripts/check-regression-catalog-v41.mjs
       - node eval/scripts/check-regression-catalog-v42.mjs
@@ -1524,6 +1525,7 @@ tasks:
       - node eval/scripts/build-regression-catalog-v46.mjs
       - node eval/scripts/build-regression-catalog-v47.mjs
       - node eval/scripts/build-regression-catalog-v48.mjs
+      - node eval/scripts/build-regression-catalog-v49.mjs
   eval:regression:reg065:catalog:write:
     desc: Add the exact Vivo terminal-line-break failure after preserving catalog v44
     cmds:
@@ -1637,6 +1639,26 @@ tasks:
     cmds:
       - task: eval:source-facts:preflight
       - node eval/scripts/probe-source-fact-hints-v1.mjs
+  eval:source-facts:report:
+    desc: Capture source-free paired hint observations after raw-identity verification
+    cmds:
+      - node --check eval/scripts/check-source-fact-hints-v1.mjs
+      - node eval/scripts/check-source-fact-hints-v1.mjs --capture
+  eval:source-facts:check:
+    desc: Rehash 36 raw chats, 72 preflights, exact abstentions and JSON-structure leak
+    cmds:
+      - node --check eval/scripts/check-source-fact-hints-v1.mjs
+      - node eval/scripts/check-source-fact-hints-v1.mjs
+  eval:regression:reg069070:catalog:write:
+    desc: Preserve the source-fact JSON leak and midnight shift in catalog v49
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v49.mjs
+      - node eval/scripts/build-regression-catalog-v49.mjs --write
+  eval:regression:reg069070:check:
+    desc: Verify exact source-fact failure hashes, controls and catalog v49
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v49.mjs
+      - node eval/scripts/build-regression-catalog-v49.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:

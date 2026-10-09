@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "REG-069",
+  "status": "observed_contained_candidate_rejected",
+  "severity": "major_reliability",
+  "split": "known_natural_development_not_holdout",
+  "source_family": "youtube_geekerwan_vivo_original_platform",
+  "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "machine_report_sha256": "fd7a661edd0aa09cafba16fddeda1d598ad8973abd8da3f6e4a4cba02dea6b96",
+  "expected_invariant": "Russian target text must not contain copied JSON wrapper punctuation; the v7/v8 provider rejects it before a checkpoint and retains the raw reply for review.",
+  "minimal_reproducer": {
+    "focus_cue": 276,
+    "target_ids": [273, 274, 275, 276],
+    "baseline_request_sha256": "988881505a2aa0983fc4495092cc3caa5af403fbb4cc0177d50606cec7f97980",
+    "baseline_raw_http_sha256": "da0f78a913518e197dead3529a33f9d2d14645fa0a3b73b8cd882c469312d733",
+    "candidate_request_sha256": "91f130abddeb13d89921bba726c04a9a95b4aa9c7186f2e64d9312685a47b711",
+    "candidate_raw_http_sha256": "1cbb2fdc97dfad276062262e961b49fb00d040c50a2354d8f6a12a70185066d6",
+    "candidate_raw_text_sha256": "d4dd5c80f1ccb360710c45b7f9fb05333e31b51a1ce5fbd3b54aabdd50245bf0",
+    "direct_probe_result": "JSON object and target IDs parse, but all four target strings contain wrapper punctuation",
+    "product_decoder_result": "existing_v7_v8_guard_rejects_before_journal_acceptance"
+  },
+  "related_controls": [
+    { "id": "embedded_object_boundary", "target_text_shape": "Russian text followed by object-boundary punctuation", "expected": "Reject before checkpoint; retain raw response and mark invalid candidate.", "outcome": "deterministic_provider_test_passed" },
+    { "id": "embedded_array_terminator", "target_text_shape": "Russian text followed by array/object terminators", "expected": "Reject before checkpoint under both v7 and v8.", "outcome": "deterministic_provider_test_passed" },
+    { "id": "future_fact_hint_four_slot", "source_lines": ["双方从规划初期就开始合作。", "项目提前三十六个月共同定义。", "后期继续协调。", "谢谢。"], "expected": "A future model candidate returns four clean Russian target strings and keeps the 36-month planning relation.", "outcome": "pending_model_screen" }
+  ],
+  "negative_controls": [
+    { "id": "ordinary_quoted_russian", "target_text_shape": "Russian text with ordinary quotes but no JSON braces", "expected": "Allow ordinary quotes.", "outcome": "deterministic_provider_test_passed" },
+    { "id": "square_bracket_term", "target_text_shape": "Russian text with square brackets and no JSON braces", "expected": "Allow square brackets used in natural text.", "outcome": "deterministic_provider_test_passed" }
+  ],
+  "human_review": "missing",
+  "product_status": "v8_guard_retained_hint_candidate_rejected"
+}

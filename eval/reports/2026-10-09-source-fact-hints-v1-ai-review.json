@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "experiment": "source-fact-hints-v1-7b-paired-2026-10-09",
+  "machine_report_sha256": "fd7a661edd0aa09cafba16fddeda1d598ad8973abd8da3f6e4a4cba02dea6b96",
+  "private_journal_sha256": "72e52f740ffa1b4dce7e88168a6872eb2687ab44e1f39fd19e0316a10b8f767f",
+  "reviewer_kind": "ai_source_aware_self_review",
+  "human_bilingual_reviews": 0,
+  "target_language_reference_in_model_requests": false,
+  "scope": "18 known development pairs, one 7B seed, including an intentional duplicate natural tail request; not a holdout or full-file evaluation",
+  "judgments": [
+    { "case_id": "natural_60", "classification": "partial_wording_change", "reason": "Both arms keep the current 9400 generation rather than inventing a first ordinal; the candidate changes the preceding 9300 brand rendering." },
+    { "case_id": "natural_276", "classification": "unchanged_major_and_new_decoder_rejection", "reason": "Both arms still reverse the 36-month planning relation. All four candidate target strings additionally contain leaked JSON wrapper punctuation. The existing product v7/v8 decoder rejects this structure before checkpoint; the direct probe's ID/JSON-shape result is narrower." },
+    { "case_id": "natural_280", "classification": "unchanged_major", "reason": "Both arms still render the investment verb as funds rather than attaching its later thousand-person team referent." },
+    { "case_id": "natural_328", "classification": "new_major", "reason": "The baseline keeps approximately 01:00–02:00 after midnight, while the candidate changes it to 11:00–12:00 at night despite the source's late-night context." },
+    { "case_id": "natural_466", "classification": "partial_repair_needs_review", "reason": "The candidate conveys future availability more clearly, but the speaker/recipient agency is still not established; no quality promotion follows." },
+    { "case_id": "explicit_first_generation", "classification": "new_terminology_uncertainty", "reason": "The baseline describes an explicit first generation; the candidate says first series. A Chinese–Russian reviewer must decide whether this is an additional material error." },
+    { "case_id": "thirty_six_months_after_start", "classification": "negative_preserved", "reason": "Both arms retain the explicitly after-start 36-month relation." },
+    { "case_id": "money_and_team_both_explicit", "classification": "negative_preserved", "reason": "Both arms keep the explicit monetary amount and the separate team headcount." },
+    { "case_id": "eleven_twelve_at_night", "classification": "negative_preserved", "reason": "Both arms preserve the explicitly late-evening 11–12 time; Russian clock wording is awkward and remains unreviewed." },
+    { "case_id": "products_already_available", "classification": "negative_preserved", "reason": "Both arms retain present availability instead of changing the explicit already-launched statement into a future claim." },
+    { "case_id": "four_slot_future_then_repeated_thanks", "classification": "structural_control_pass", "reason": "Both arms return all four authored IDs; no hint was applied and the requests are byte-identical." },
+    { "case_id": "four_slot_ok_and_tail_thanks", "classification": "structural_control_pass", "reason": "Both arms return all four authored IDs, including final thanks; no hint was applied and the requests are byte-identical." },
+    { "case_id": "original_three_slot_tail", "classification": "duplicate_natural_control", "reason": "Both arms return all three original tail IDs. This case repeats the natural cue-466 request and is not an independent observation." },
+    { "case_id": "four_distinct_complete_cues", "classification": "structural_control_pass", "reason": "Both arms return four authored IDs; no hint was applied and the requests are byte-identical." },
+    { "case_id": "9400_current_model_near_batch_end", "classification": "related_control_no_regression", "reason": "Both arms preserve 9300 and 9400 without an unlicensed foreign common word; a hint was applied only to the 9400 target." },
+    { "case_id": "9400_digit_one_speech_variant", "classification": "known_authored_repair", "reason": "The baseline invents a first-generation ordinal; the candidate instead keeps 9400 as the current model. This single authored repair does not offset natural regressions." },
+    { "case_id": "foreign_brand_licensed", "classification": "negative_preserved", "reason": "Both arms retain Latin-script proper names, with no unlicensed foreign common word; no hint was applied." },
+    { "case_id": "quoted_french_word_licensed", "classification": "negative_preserved", "reason": "Both arms retain a French word explicitly quoted in the authored Chinese source; this is licensed quotation, not language contamination." }
+  ],
+  "summary": {
+    "pairs": 18,
+    "natural_pairs": 5,
+    "exact_no_hint_request_pairs": 5,
+    "known_authored_repairs": 1,
+    "new_natural_major_fact_errors": 1,
+    "new_natural_product_decoder_rejections": 1,
+    "natural_major_errors_still_present": 2,
+    "candidate_promoted": false,
+    "decision": "reject_source_fact_hint_candidate_keep_v8"
+  }
+}

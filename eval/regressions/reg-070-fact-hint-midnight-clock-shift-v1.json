@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "id": "REG-070",
+  "status": "observed_unfixed_candidate_rejected",
+  "severity": "major_fact",
+  "split": "known_natural_development_not_holdout",
+  "source_family": "youtube_geekerwan_vivo_original_platform",
+  "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "machine_report_sha256": "fd7a661edd0aa09cafba16fddeda1d598ad8973abd8da3f6e4a4cba02dea6b96",
+  "expected_invariant": "With source context indicating after midnight, a Chinese one-or-two-o'clock statement must remain approximately 01:00–02:00, not shift to 11:00–12:00 at night.",
+  "minimal_reproducer": {
+    "focus_cue": 328,
+    "target_ids": [325, 326, 327, 328],
+    "baseline_request_sha256": "9ea3696c8965605918a5653247453bc9bfcbf8e0b665962a1fda495f2585b1d9",
+    "baseline_raw_http_sha256": "82ddb26eee1ae7d0fe5f4bdb3a31d7dc1a40691cfdf9be7b0d6792bae793f411",
+    "candidate_request_sha256": "d281c6df71f7cb2b472f098002e604bd6f5532eb2c9f06dd1af1dbbfcf8eeb42",
+    "candidate_raw_http_sha256": "f88adfd0185cca05dbba8193e3fa975e74b894bfc1e470f711beca5cd93caf4e",
+    "baseline_clock_interpretation": "01:00-02:00",
+    "candidate_clock_interpretation": "11:00-12:00_at_night"
+  },
+  "related_controls": [
+    { "id": "early_morning_one_plus", "source_lines": ["凌晨一点多我们还在工作。", "继续解决问题。"], "expected": "Keep the work after 01:00 and do not turn it into 11:00.", "outcome": "pending_model_screen" },
+    { "id": "after_midnight_two", "source_lines": ["半夜十二点后还在讨论。", "直到两点钟才结束。"], "expected": "Keep the discussion after midnight and the end near 02:00.", "outcome": "pending_model_screen" }
+  ],
+  "negative_controls": [
+    { "id": "explicit_late_evening_eleven_twelve", "source_lines": ["晚上十一二点还在工作。"], "expected": "Keep the explicit 23:00–00:00 sense.", "outcome": "observed_both_arms_preserve_evening_time" },
+    { "id": "afternoon_one_to_two", "source_lines": ["明天下午一点到两点开会。"], "expected": "Keep 13:00–14:00 in the afternoon.", "outcome": "pending_model_screen" }
+  ],
+  "human_review": "missing",
+  "product_status": "v8_unchanged_hint_candidate_rejected"
+}
