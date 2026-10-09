@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "experiment": "SOURCE-RELATION-CROSS-SOURCE-2026-10-10-v1",
+  "split": "exposed_natural_development_not_holdout",
+  "rule_sha256": {
+    "source-relation-review-v1.mjs": "215486c2a6fa85fc278ef84b28d0bd0abf7c99174311414aa982ab7c9b83c18a",
+    "source-relation-review-v2.mjs": "f0d1bb879fbc869aa7ed7f1d3165eb657dfad0add8f7d873029bd44913315eb5"
+  },
+  "source_groups": [
+    {
+      "id": "geekerwan-asus-rog-ally",
+      "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+      "source_cues": 268,
+      "recognized_relations": [],
+      "drafts": [
+        {
+          "id": "7b-v8",
+          "warning_count": 0,
+          "warnings": [],
+          "warning_precision": null,
+          "warning_precision_reason": "no_source_relations_recognized",
+          "sha256": "746495ba8bfc9c7c3cee0b5021fea87c10605b1d8e07be6dc316907138ea48ee"
+        }
+      ]
+    },
+    {
+      "id": "sethlui-restaurant",
+      "source_sha256": "4777e11caa115e893f2328c2a33c25a76c7391ace8ecf0ac4b9436635fc27964",
+      "source_cues": 263,
+      "recognized_relations": [],
+      "drafts": [
+        {
+          "id": "1_8b-v6",
+          "warning_count": 0,
+          "warnings": [],
+          "warning_precision": null,
+          "warning_precision_reason": "no_source_relations_recognized",
+          "sha256": "042c0ffffd67a4ea6f562645655ffe9db823866d7505b4ed64708e0ff829df4d"
+        },
+        {
+          "id": "7b-v6",
+          "warning_count": 0,
+          "warnings": [],
+          "warning_precision": null,
+          "warning_precision_reason": "no_source_relations_recognized",
+          "sha256": "45f140e201f5a6228a0754e48d1e2b4153a392a7869dc279768339882fa53511"
+        }
+      ]
+    }
+  ],
+  "unique_source_cues": 531,
+  "source_target_pairs": 794,
+  "recognized_relation_count": 0,
+  "warning_count": 0,
+  "human_bilingual_reviews": 0,
+  "model_requests": 0,
+  "asr_requests": 0,
+  "tts_requests": 0,
+  "warning_precision": null,
+  "release_admitted": false
+}

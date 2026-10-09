@@ -1085,3 +1085,15 @@ G3–G5, `VOICE-01` and `RELEASE-05` remain open. Next compare a different
 quality strategy against the retained v8 baseline, with new controls and
 bounded attempts; another batch-boundary tweak is not justified by this
 screen.
+
+The [frozen cross-source v2 warning screen](../eval/experiments/2026-10-10-source-relation-cross-source-result.md)
+rehashes the distinct ASUS and Sethlui Chinese source groups and three
+retained Russian drafts. All 794 source/target cue pairs aligned, but the
+rule recognized zero source relations among 531 unique Chinese cues, so
+it emitted zero warnings. This **does not measure precision** or validate
+the warning outside its exposed Vivo cases. The rule remains in `eval/`;
+v8 and all drafts remain unchanged. Before product admission, `EVAL-04`
+needs another source-derived fact relation with related negatives,
+measured trigger coverage and source-aware assessment of every warning.
+The [v22 RELEASE-05 self-audit](../eval/experiments/2026-10-10-release-05-audit-attempt-v22.md)
+retains all human, rights, fit and installation gaps.
