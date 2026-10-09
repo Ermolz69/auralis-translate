@@ -424,6 +424,20 @@ tasks:
     cmds:
       - task: eval:data:youtube:asus:license:preflight
       - node eval/scripts/inventory-youtube-geekerwan-asus-license.mjs
+  eval:data:youtube:asus:license:retry:preflight:
+    desc: Verify the one-attempt retry after the retained pre-spawn EPERM
+    env:
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - node --check eval/scripts/inventory-youtube-geekerwan-asus-license.mjs
+      - node eval/scripts/inventory-youtube-geekerwan-asus-license.mjs --retry-after-eperm --preflight
+  eval:data:youtube:asus:license:retry:
+    desc: Run one bounded ASUS metadata retry after pre-spawn EPERM
+    env:
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - task: eval:data:youtube:asus:license:retry:preflight
+      - node eval/scripts/inventory-youtube-geekerwan-asus-license.mjs --retry-after-eperm
   eval:data:youtube:kirin:license:inventory:
     desc: Retain one bounded YouTube metadata response without downloading captions or media
     env:

@@ -7,7 +7,12 @@ import { fileURLToPath } from 'node:url';
 import { captureBoundedProcess } from './bounded-process-capture.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const experiment = 'DATA-03-youtube-geekerwan-asus-license-2026-10-09-v1';
+const retryAfterEperm = process.argv.includes('--retry-after-eperm');
+assert(process.argv.slice(2).every(argument =>
+  argument === '--preflight' || argument === '--retry-after-eperm'));
+const experiment = retryAfterEperm
+  ? 'DATA-03-youtube-geekerwan-asus-license-eperm-retry-2026-10-09-v1'
+  : 'DATA-03-youtube-geekerwan-asus-license-2026-10-09-v1';
 const videoId = 'y3-4FgTmGIQ';
 const url = `https://www.youtube.com/watch?v=${videoId}`;
 const executable = process.env.AURALIS_TEST_YTDLP;
@@ -18,7 +23,9 @@ const media = '.cache/eval/commons-geekerwan-two-media/asus-rog-ally-fd0d9bf6-f2
 const expectedMediaSha256 = '9e4271f8112de2fa65ad67c4cec3390529e916d70363bc5f4c421f4479b97cc1';
 const timeoutMs = 90_000;
 const maxOutputBytes = 12 * 1024 * 1024;
-const parent = path.join(root, '.cache/eval/youtube-geekerwan-asus-license');
+const parent = path.join(root, retryAfterEperm
+  ? '.cache/eval/youtube-geekerwan-asus-license-eperm-retry'
+  : '.cache/eval/youtube-geekerwan-asus-license');
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
 async function shaFile(file) {
@@ -34,6 +41,17 @@ const [actualExecutableSha256, actualSourceSha256, actualMediaSha256] = await Pr
 assert.equal(actualExecutableSha256, expectedExecutableSha256, 'yt-dlp executable changed');
 assert.equal(actualSourceSha256, expectedSourceSha256, 'original candidate SRT changed');
 assert.equal(actualMediaSha256, expectedMediaSha256, 'matched private media changed');
+if (retryAfterEperm) {
+  const failedAttempt = path.join(root,
+    '.cache/eval/youtube-geekerwan-asus-license/attempt-tDLs57/inventory.json');
+  const failedBytes = await fs.readFile(failedAttempt);
+  assert.equal(sha256(failedBytes),
+    '62e6d8bb561bc5897c0b64773f8cae25031931bcaff6698062683e3ca58bcaec');
+  const failed = JSON.parse(failedBytes.toString('utf8'));
+  assert.equal(failed.outcome.error, 'Error: spawn EPERM');
+  assert.equal(failed.outcome.stdout_bytes, 0);
+  assert.equal(failed.outcome.stderr_bytes, 0);
+}
 const previous = await fs.readdir(parent).catch(error => {
   if (error.code === 'ENOENT') return [];
   throw error;

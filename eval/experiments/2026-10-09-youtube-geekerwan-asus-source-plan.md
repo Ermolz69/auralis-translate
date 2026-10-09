@@ -40,3 +40,16 @@ boundaries. Record reviewer identity, heard words and timing; machine checks
 or nonzero PCM alone cannot make that claim. Russian references and
 independent language review are later gates. No model or TTS call belongs to
 this screen, and no source is promoted or publicly redistributed from it.
+
+## One pre-spawn infrastructure retry
+
+The first frozen attempt reached no extractor or network call: local process
+creation returned `spawn EPERM`, with zero stdout/stderr. Its retained report
+SHA-256 is
+`62e6d8bb561bc5897c0b64773f8cae25031931bcaff6698062683e3ca58bcaec`.
+One separate retry is authorized by this plan, using the same exact source,
+media, executable, URL and limits. Its identity is
+`DATA-03-youtube-geekerwan-asus-license-eperm-retry-2026-10-09-v1` and its
+raw output goes to a new ignored directory. Run its Taskfile preflight first.
+The retry is consumed even if launch or network access fails again; do not
+switch videos or silently retry the extractor.
