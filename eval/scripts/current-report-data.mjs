@@ -245,6 +245,18 @@ export async function loadCurrentReport(root) {
   assert.equal(vivoV8.offline_export.output_sha256, vivoV8.arms[1].output_sha256);
   assert.equal(vivoV8.human_bilingual_reviews, 0);
   assert.equal(vivoV8.accepted_language_quality, false);
+  const vivoRecoveryRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-09-reg065-vivo-copy-recovery.json'), 'utf8');
+  assert.equal(createHash('sha256').update(vivoRecoveryRaw).digest('hex'),
+    '1b8c1f0d7761386aef4a5039af94e3092eacbc86bcc30fdb0bfe02eca63b69cd');
+  const vivoRecovery = JSON.parse(vivoRecoveryRaw);
+  assert.equal(vivoRecovery.source_sha256, vivoV8.source_sha256);
+  assert.equal(vivoRecovery.original_report_sha256, vivoV8.private_report_sha256);
+  assert.equal(vivoRecovery.status, 'completed');
+  assert.equal(vivoRecovery.total_checkpoints, 117);
+  assert.equal(vivoRecovery.review_state, 'needs_review');
+  assert.equal(vivoRecovery.human_bilingual_reviews, 0);
+  assert.equal(vivoRecovery.accepted_language_quality, false);
   return {
     name_registry:nameRegistry.summary,
     target_terms:targetTerms.summary,
@@ -283,6 +295,15 @@ export async function loadCurrentReport(root) {
       human_bilingual_reviews: vivoV8.human_bilingual_reviews,
       accepted_language_quality: vivoV8.accepted_language_quality,
       report_sha256: createHash('sha256').update(vivoV8Raw).digest('hex') },
+    youtube_v8_recovery: { source_cues: vivoRecovery.source_cues,
+      covered_cues: vivoRecovery.total_checkpoints * 4 > vivoRecovery.source_cues
+        ? vivoRecovery.source_cues : vivoRecovery.total_checkpoints * 4,
+      new_chats: vivoRecovery.new_chat_requests,
+      new_preflights: vivoRecovery.new_preflight_requests,
+      review_state: vivoRecovery.review_state,
+      human_bilingual_reviews: vivoRecovery.human_bilingual_reviews,
+      accepted_language_quality: vivoRecovery.accepted_language_quality,
+      report_sha256: createHash('sha256').update(vivoRecoveryRaw).digest('hex') },
     lesson_source: { cues: sources.lesson_cues,
       caption_sha256: sources.lesson_sha256,
       media_duration_ms: sources.lesson_media_duration_ms,
