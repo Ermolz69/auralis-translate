@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "experiment": "VOICE-VIVO-SAPI-RATE-2026-10-10-v1",
+  "scope": "private_unreviewed_technical_screen",
+  "auralis_commit": "f4f820e",
+  "source_srt_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "russian_draft_sha256": "4451868ea3e7cbb3ed81f3d24b5f85bc61a749168b213c54c88ae552208c4831",
+  "sapi_runtime_sha256": "362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139",
+  "voice": "Microsoft Irina Desktop",
+  "cue_ids": [1, 11, 15, 114, 233, 262, 276, 280, 328, 415, 466, 467],
+  "tts_report_sha256": "f7edbeafc02f3e4791370f8246b0b131f9a2beb48e199cce7d098e39a71901b0",
+  "analysis_sha256": "3a13253f7320b4c7974dcb080e9c42832c5255bc7de1e7fbd1c022f4cbe48596",
+  "tts_elapsed_ms": 28347,
+  "tts_attempts": 1,
+  "real_wav_count": 36,
+  "signal_present_wav_count": 36,
+  "sample_rate_hz": 22050,
+  "clipped_samples": 0,
+  "rates": {
+    "0": {"sum_duration_ms": 69242, "sum_ratio_to_zero": 1, "fits_at_most_1_5": 0},
+    "5": {"sum_duration_ms": 40077, "sum_ratio_to_zero": 0.5787961064094047, "fits_at_most_1_5": 8},
+    "10": {"sum_duration_ms": 23158, "sum_ratio_to_zero": 0.33445018919153113, "fits_at_most_1_5": 9}
+  },
+  "screen_limit": {"max_sum_ratio": 0.73, "min_fit_cues": 8, "max_clipped_samples": 0},
+  "advanced_to_private_audition_only": true,
+  "full_file_rate_rerun": false,
+  "human_audio_listeners": 0,
+  "approved_spoken_script": false,
+  "audio_gates_admitted": false
+}
