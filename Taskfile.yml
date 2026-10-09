@@ -2348,6 +2348,16 @@ tasks:
     desc: Verify the 7B v8 prompt, raw model response, checkpoint, full SRT and original source
     cmds:
       - node eval/scripts/check-v8-7b-authored.mjs
+  eval:long:v8:vivo:preflight:
+    desc: Verify the original-platform 467-cue Vivo source, matched media, two v8 models and clean CLI
+    cmds:
+      - node --check eval/scripts/probe-v8-vivo-original-long.mjs
+      - node eval/scripts/probe-v8-vivo-original-long.mjs --preflight
+  eval:long:v8:vivo:probe:
+    desc: Run one bounded matched 1.8B/7B v8 long-file attempt per model on the original Vivo SRT
+    cmds:
+      - task: eval:long:v8:vivo:preflight
+      - node eval/scripts/probe-v8-vivo-original-long.mjs
   eval:long:v8:asus:preflight:
     desc: Verify pinned natural 268-cue source, paired media, two v8 profiles, models and CLI
     env:
