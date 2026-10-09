@@ -1515,7 +1515,7 @@ tasks:
       - node eval/scripts/build-regression-catalog-v49.mjs
       - task: eval:regression:reg060:check
   eval:regression:catalog:recent:check:
-    desc: Verify recent regressions through REG-070 and the observed Vivo screens
+    desc: Verify recent regressions through REG-071 and the observed Vivo screens
     cmds:
       - node eval/scripts/check-regression-catalog-v41.mjs
       - node eval/scripts/check-regression-catalog-v42.mjs
@@ -1526,6 +1526,7 @@ tasks:
       - node eval/scripts/build-regression-catalog-v47.mjs
       - node eval/scripts/build-regression-catalog-v48.mjs
       - node eval/scripts/build-regression-catalog-v49.mjs
+      - node eval/scripts/build-regression-catalog-v50.mjs
   eval:regression:catalog:portable:check:
     desc: Verify recent public catalog evidence in a clean checkout without private source files
     cmds:
@@ -1536,6 +1537,17 @@ tasks:
       - node eval/scripts/build-regression-catalog-v47.mjs
       - node eval/scripts/build-regression-catalog-v48.mjs
       - node eval/scripts/build-regression-catalog-v49.mjs
+      - node eval/scripts/build-regression-catalog-v50.mjs
+  eval:regression:catalog:v50:write:
+    desc: Append REG-071 diagnostic false negative without changing catalog v49
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v50.mjs
+      - node eval/scripts/build-regression-catalog-v50.mjs --write
+  eval:regression:catalog:v50:check:
+    desc: Verify focus-slot hashes, REG-071 controls and catalog v50
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v50.mjs
+      - node eval/scripts/build-regression-catalog-v50.mjs
   eval:regression:reg065:catalog:write:
     desc: Add the exact Vivo terminal-line-break failure after preserving catalog v44
     cmds:
@@ -1642,6 +1654,24 @@ tasks:
     cmds:
       - node --check eval/scripts/source-relation-review-v1.mjs
       - node --test --test-isolation=none eval/scripts/tests/source-relation-review-v1.test.mjs
+  eval:source-relations:v2:unit:
+    desc: Verify REG-071 shorthand future-product warning and abstention controls
+    cmds:
+      - task: eval:source-relations:unit
+      - node --check eval/scripts/source-relation-review-v2.mjs
+      - node --test --test-isolation=none eval/scripts/tests/source-relation-review-v2.test.mjs
+  eval:source-relations:v2:report:
+    desc: Capture pinned full-draft and REG-071 warning replay without inference
+    cmds:
+      - task: eval:source-relations:v2:unit
+      - node --check eval/scripts/check-source-relation-review-v2.mjs
+      - node eval/scripts/check-source-relation-review-v2.mjs --capture
+  eval:source-relations:v2:check:
+    desc: Rehash source, old and new raw pairs and verify v2 relation warnings
+    cmds:
+      - task: eval:source-relations:v2:unit
+      - node --check eval/scripts/check-source-relation-review-v2.mjs
+      - node eval/scripts/check-source-relation-review-v2.mjs --check
   eval:focus-slot:unit:
     desc: Verify single target isolation preserves the Chinese source inventory
     cmds:
@@ -1665,6 +1695,18 @@ tasks:
     cmds:
       - task: eval:focus-slot:preflight
       - node eval/scripts/probe-vivo-focus-slot-v1.mjs --probe
+  eval:focus-slot:report:
+    desc: Capture source-free paired focus-slot observations from retained raw replies
+    cmds:
+      - task: eval:focus-slot:unit
+      - node --check eval/scripts/check-vivo-focus-slot-v1.mjs
+      - node eval/scripts/check-vivo-focus-slot-v1.mjs --capture
+  eval:focus-slot:check:
+    desc: Rehash all 20 focus-slot replies, preflights, resources and public report
+    cmds:
+      - task: eval:focus-slot:unit
+      - node --check eval/scripts/check-vivo-focus-slot-v1.mjs
+      - node eval/scripts/check-vivo-focus-slot-v1.mjs --check
   eval:source-relations:report:
     desc: Capture pinned full-draft and saved-pair relation warnings without inference
     cmds:

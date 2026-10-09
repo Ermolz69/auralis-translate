@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "experiment": "vivo-focus-slot-v1-7b-paired-2026-10-10",
+  "reviewer_provenance": "AI source-aware triage of pinned Chinese source and both saved Russian replies; no independent human review",
+  "split": "known_natural_and_authored_development_not_holdout",
+  "case_reviews": [
+    {
+      "case_id": "natural_60",
+      "focus_id": 60,
+      "batch_fact": "current_9400_generation_preserved",
+      "focus_fact": "current_9400_generation_preserved",
+      "focus_language": "awkward_fragment",
+      "decision": "no_fact_gain"
+    },
+    {
+      "case_id": "natural_276",
+      "focus_id": 276,
+      "batch_fact": "major_wrong_36_month_anchor",
+      "focus_fact": "major_wrong_36_month_anchor",
+      "decision": "unrepaired"
+    },
+    {
+      "case_id": "natural_280",
+      "focus_id": 280,
+      "batch_fact": "major_money_for_people_team",
+      "focus_fact": "major_money_for_people_team",
+      "decision": "unrepaired"
+    },
+    {
+      "case_id": "natural_328",
+      "focus_id": 328,
+      "batch_fact": "major_late_evening_for_after_midnight",
+      "focus_fact": "after_midnight_hour_preserved",
+      "focus_language": "ungrammatical_hour_phrase",
+      "decision": "fact_improved_language_review_required"
+    },
+    {
+      "case_id": "natural_466",
+      "focus_id": 466,
+      "batch_fact": "major_present_availability_for_future_hope",
+      "focus_fact": "major_present_availability_for_future_hope",
+      "decision": "unrepaired_diagnostic_false_negative"
+    },
+    {
+      "case_id": "explicit_first_generation",
+      "focus_id": 1022,
+      "batch_fact": "explicit_first_generation_preserved",
+      "focus_fact": "explicit_first_generation_preserved",
+      "decision": "control_preserved"
+    },
+    {
+      "case_id": "thirty_six_months_after_start",
+      "focus_id": 1027,
+      "batch_fact": "explicit_after_start_preserved",
+      "focus_fact": "explicit_after_start_preserved",
+      "decision": "control_preserved"
+    },
+    {
+      "case_id": "money_and_team_both_explicit",
+      "focus_id": 1032,
+      "batch_fact": "money_and_team_preserved",
+      "focus_fact": "money_and_team_preserved",
+      "decision": "control_preserved"
+    },
+    {
+      "case_id": "eleven_twelve_at_night",
+      "focus_id": 1033,
+      "batch_fact": "explicit_late_evening_preserved",
+      "focus_fact": "explicit_late_evening_preserved",
+      "decision": "control_preserved"
+    },
+    {
+      "case_id": "products_already_available",
+      "focus_id": 1038,
+      "batch_fact": "explicit_present_availability_preserved",
+      "focus_fact": "explicit_present_availability_preserved",
+      "decision": "control_preserved"
+    }
+  ],
+  "summary": {
+    "known_relation_errors_repaired": 0,
+    "required_relation_repairs_for_shortlist": 2,
+    "clock_fact_improved": 1,
+    "authored_controls_preserved": 5,
+    "new_focus_major_fact_errors": 0,
+    "focus_language_issues": 2,
+    "human_bilingual_reviews": 0,
+    "focus_candidate_shortlisted": false,
+    "product_profile_changed": false
+  }
+}

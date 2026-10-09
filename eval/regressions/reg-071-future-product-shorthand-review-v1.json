@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "id": "REG-071",
+  "status": "evaluation_diagnostic_false_negative_confirmed",
+  "severity": "major_review_coverage",
+  "split": "known_natural_development_not_holdout",
+  "source_family": "youtube_geekerwan_vivo_original_platform",
+  "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "focus_machine_report_sha256": "d779f08043e3410f78f25613ed7bf3ed1ef6c15d75019ed3494b9860e6dd2b75",
+  "v1_relation_report_sha256": "86900f84bc40afc63c46796bf4375e2d9096c13497a301c3dbda7d73ce3763b8",
+  "expected_invariant": "When immediately preceding Chinese context expresses expectation and the current cue describes better products that could be brought later, an explicit Russian statement that better products already exist needs review even without an owner phrase.",
+  "minimal_reproducer": {
+    "focus_cue": 466,
+    "preceding_source_cue": 465,
+    "focus_request_sha256": "9f3baba83e5f24c4f988da435b05fc4d8bd1415ba9d6d4fd0ca436611029fed3",
+    "focus_raw_http_sha256": "a367e7d8cc333987ab309a37baffc284adac9d59b0ecb5bdb2594091ce920e95",
+    "focus_text_sha256": "3b1c3d05d4c2631a8e777cb9b968a7329c970b9d26a448d588546763c9b492a1",
+    "v1_warning": false,
+    "ai_source_aware_judgment": "present_availability_for_future_hope"
+  },
+  "related_controls": [
+    {
+      "id": "bare_good_products_exist",
+      "source_lines": ["期待今后的合作。", "更好的产品能够带给大家。"],
+      "target": "Есть хорошие продукты для всех.",
+      "expected": "Review the present-existence assertion; the source expresses future hope."
+    },
+    {
+      "id": "bare_better_quality_products_exist",
+      "source_lines": ["希望后续继续合作。", "有更好的产品能够带给大家。"],
+      "target": "Есть более качественные продукты для всех.",
+      "expected": "Review the present-existence assertion without requiring an owner phrase."
+    }
+  ],
+  "negative_controls": [
+    {
+      "id": "future_hope_target",
+      "source_lines": ["期待后续合作。", "更好的产品能够带给大家。"],
+      "target": "Есть надежда, что появятся лучшие продукты.",
+      "expected": "No warning for explicit future hope."
+    },
+    {
+      "id": "explicit_present_source",
+      "source_lines": ["我们已经准备好了。", "更好的产品已经上市了。"],
+      "target": "Есть лучшие продукты в продаже.",
+      "expected": "No future-expectation warning when source asserts current availability."
+    },
+    {
+      "id": "negated_availability",
+      "source_lines": ["期待后续合作。", "有更好的产品能够带给大家。"],
+      "target": "Нет, лучших продуктов пока нет.",
+      "expected": "No warning for explicitly negated present availability."
+    }
+  ],
+  "human_review": "missing",
+  "product_status": "v8_unchanged_diagnostic_only"
+}
