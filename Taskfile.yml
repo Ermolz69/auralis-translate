@@ -1734,6 +1734,23 @@ tasks:
       - node --check eval/scripts/vivo-scene-post-edit-v1.mjs
       - node --check eval/scripts/probe-vivo-scene-post-edit-v1.mjs
       - node --test --test-isolation=none eval/scripts/tests/vivo-scene-post-edit-v1.test.mjs
+  eval:vivo:blindspot:unit:
+    desc: Verify source-only stratified Vivo long-file window selection
+    cmds:
+      - node --check eval/scripts/vivo-blindspot-selector-v1.mjs
+      - node --test --test-isolation=none eval/scripts/tests/vivo-blindspot-selector-v1.test.mjs
+  eval:vivo:blindspot:freeze:
+    desc: Freeze 15 source-only Vivo review windows before reading draft text
+    cmds:
+      - task: eval:vivo:blindspot:unit
+      - node --check eval/scripts/freeze-vivo-blindspot-v1.mjs
+      - node eval/scripts/freeze-vivo-blindspot-v1.mjs --freeze
+  eval:vivo:blindspot:selection:check:
+    desc: Recompute the frozen Chinese-only 45-cue selection
+    cmds:
+      - task: eval:vivo:blindspot:unit
+      - node --check eval/scripts/freeze-vivo-blindspot-v1.mjs
+      - node eval/scripts/freeze-vivo-blindspot-v1.mjs --check
   eval:vivo:post-edit:freeze:
     desc: Freeze ten source-and-draft revision request identities before inference
     cmds:
