@@ -1689,6 +1689,27 @@ tasks:
     cmds:
       - task: eval:source-relations:cross-source:unit
       - node eval/scripts/check-cross-source-relation-screen.mjs --check
+  eval:reg040:count-category:unit:
+    desc: Verify authored number/category swap and conservative abstention controls
+    cmds:
+      - node --check eval/scripts/count-category-review-v1.mjs
+      - node --check eval/scripts/check-reg040-count-category-review.mjs
+      - node --test --test-isolation=none eval/scripts/tests/count-category-review-v1.test.mjs
+  eval:reg040:count-category:report:
+    desc: Replay the frozen count/category warning against two retained restaurant drafts
+    cmds:
+      - task: eval:reg040:count-category:unit
+      - node eval/scripts/check-reg040-count-category-review.mjs --capture
+  eval:reg040:count-category:preflight:
+    desc: Verify pinned restaurant asset hashes, cue IDs, timing and known reproducer
+    cmds:
+      - task: eval:reg040:count-category:unit
+      - node eval/scripts/check-reg040-count-category-review.mjs --preflight
+  eval:reg040:count-category:check:
+    desc: Rehash source, drafts, controls and independently recompute REG-040 warnings
+    cmds:
+      - task: eval:reg040:count-category:unit
+      - node eval/scripts/check-reg040-count-category-review.mjs --check
   eval:focus-slot:unit:
     desc: Verify single target isolation preserves the Chinese source inventory
     cmds:
