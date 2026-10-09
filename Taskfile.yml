@@ -1577,6 +1577,21 @@ tasks:
     cmds:
       - node --check eval/scripts/build-regression-catalog-v47.mjs
       - node eval/scripts/build-regression-catalog-v47.mjs
+  eval:regression:reg066:seams:freeze:
+    desc: Freeze same-source Vivo cue-seam and negative-control request identities
+    cmds:
+      - node --check eval/scripts/probe-reg066-natural-seams.mjs
+      - node eval/scripts/probe-reg066-natural-seams.mjs --freeze
+  eval:regression:reg066:seams:preflight:
+    desc: Check frozen source, model, prompt and 30-request seam screen without inference
+    cmds:
+      - node --check eval/scripts/probe-reg066-natural-seams.mjs
+      - node eval/scripts/probe-reg066-natural-seams.mjs --preflight
+  eval:regression:reg066:seams:probe:
+    desc: Run bounded 1.8B/7B original-versus-shifted natural cue-seam screen
+    cmds:
+      - task: eval:regression:reg066:seams:preflight
+      - node eval/scripts/probe-reg066-natural-seams.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:

@@ -1,0 +1,594 @@
+{
+  "schema_version": 1,
+  "experiment": "REG-066-natural-seams-two-model-2026-10-09-v1",
+  "split": "known_natural_development_not_holdout",
+  "pinned": {
+    "source": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+    "original": "84a737e1cc8c7b468ea66718f2507882929344f259d7824d9071953d24c1a5b5",
+    "prior_journal": "7ba723de6d16b771e7e3046e96df209025eace21c8a2c4d6a8316bf395d889ba",
+    "pack": "33b74c9a337acd931b87a4f101e54070c95a5ed69a40f04ab342768da24b061e",
+    "runtime": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+    "prompt_prefix": "1b4a2ae96e2526a2d096d41cd94215428d87e30db7ab614a222e65b6baac8ebb"
+  },
+  "limits": {
+    "natural_focus_cues": [
+      60,
+      276,
+      280,
+      328,
+      466
+    ],
+    "natural_arms": [
+      "original",
+      "shifted"
+    ],
+    "negative_controls": 5,
+    "chats": 30,
+    "preflights": 60,
+    "server_starts": 2,
+    "seed": 101,
+    "retries": 0,
+    "max_total_tokens": 100000,
+    "context_tokens": 2048,
+    "response_tokens": 1024,
+    "safety_tokens": 64,
+    "per_request_ms": 120000,
+    "per_preflight_ms": 30000,
+    "readiness_ms": 180000,
+    "max_wall_ms": 720000
+  },
+  "models": [
+    {
+      "id": "1_8b",
+      "sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+      "manifest_sha256": "1803aeb68428e1b138a17ed72b01abe1cc5fbc5845b5bca66a402b8936b1081f",
+      "alias": "auralis-hy-mt2-1.8b-q4"
+    },
+    {
+      "id": "7b",
+      "sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+      "manifest_sha256": "c287c53efbb4ce78471b64648ea3dd2f521363df0e168b7a61df1fdd6ae0479a",
+      "alias": "auralis-hy-mt2-7b-q4"
+    }
+  ],
+  "requests": [
+    {
+      "model": "1_8b",
+      "case_id": "natural_60",
+      "kind": "natural",
+      "variant": "original",
+      "focus": 60,
+      "focus_segment_ids": [
+        60
+      ],
+      "source_ids": [
+        57,
+        58,
+        59,
+        60
+      ],
+      "prompt_sha256": "1c99152b5e3982110ebbfb3b249115756d28f4c87adbff0094b414e24ff1be35",
+      "request_sha256": "e4b5d9f59dc9835aa9bbd6d8e80151e4181d68529502dc731906a7120eefeee6"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "natural_60",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus": 60,
+      "focus_segment_ids": [
+        60
+      ],
+      "source_ids": [
+        58,
+        59,
+        60,
+        61
+      ],
+      "prompt_sha256": "84e16f838b183048b07cc716613b9fe23dfabda32ecda37e63613959cbb4b7d3",
+      "request_sha256": "ccd221a8c7a79c74266b056b4fb3aefa93c22eea9a8bcd6d52f483528ca05fcc"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "natural_276",
+      "kind": "natural",
+      "variant": "original",
+      "focus": 276,
+      "focus_segment_ids": [
+        276
+      ],
+      "source_ids": [
+        273,
+        274,
+        275,
+        276
+      ],
+      "prompt_sha256": "4123471bd92c703e60034391cea4bed3bac8bfba2971666affeafa13be6faee1",
+      "request_sha256": "78ba62ebc8f97d7e6c364dd7150df6dbc90cdd4d5595a9cb804d266465be7729"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "natural_276",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus": 276,
+      "focus_segment_ids": [
+        276
+      ],
+      "source_ids": [
+        274,
+        275,
+        276,
+        277
+      ],
+      "prompt_sha256": "91275ae676e7994ea635a36e9c2a7a690f204d1df37e2073bd3adf9736ed53a2",
+      "request_sha256": "435c3fdaf89416386b1ae70216d4187023a12cf555c9be93b4b3b358429f9c93"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "natural_280",
+      "kind": "natural",
+      "variant": "original",
+      "focus": 280,
+      "focus_segment_ids": [
+        280
+      ],
+      "source_ids": [
+        277,
+        278,
+        279,
+        280
+      ],
+      "prompt_sha256": "89df4e58c5879c18919986436fac8d319490b9bb51c92797fe2e015f5476e195",
+      "request_sha256": "349a33846c1593650ccddbabaf5548915777cf3e1350099548a3d51a62529803"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "natural_280",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus": 280,
+      "focus_segment_ids": [
+        280
+      ],
+      "source_ids": [
+        278,
+        279,
+        280,
+        281
+      ],
+      "prompt_sha256": "da420c1b3e0c8410517370d90f93b913c943b274851c09c6d56114891f38ed10",
+      "request_sha256": "cfc04a55ff2c2aa796181fc56ac1a9f3c93d4e5506c4925478a1944efeb16c5f"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "natural_328",
+      "kind": "natural",
+      "variant": "original",
+      "focus": 328,
+      "focus_segment_ids": [
+        328
+      ],
+      "source_ids": [
+        325,
+        326,
+        327,
+        328
+      ],
+      "prompt_sha256": "ea30499becce831ba3219355eff362a19a7aa42b4e2ae6281e2da7219d1d5486",
+      "request_sha256": "8021e00b41c8410a26c559fc6965dea6e1ef4d446c7e51ed1782d70e663d2e5f"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "natural_328",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus": 328,
+      "focus_segment_ids": [
+        328
+      ],
+      "source_ids": [
+        326,
+        327,
+        328,
+        329
+      ],
+      "prompt_sha256": "570a04ec1eccb403cff41bb1ac59465fbff311544e92f6bef4d6855ed05fd896",
+      "request_sha256": "1ce0e65e3ef7b06a20fee1a78511054272a2c0c6bad6eddd2f14e35ecb2a803b"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "natural_466",
+      "kind": "natural",
+      "variant": "original",
+      "focus": 466,
+      "focus_segment_ids": [
+        466
+      ],
+      "source_ids": [
+        465,
+        466,
+        467
+      ],
+      "prompt_sha256": "717f6730250b8bf71906253b2fe86e4a9b64345bdfa4969a1ae92fec9bf4cf37",
+      "request_sha256": "e518dfb0ea9618b5e1fc548ec9f9baa2a4ba0eb9d0c9b8e3ac5f7e1dc76091e4"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "natural_466",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus": 466,
+      "focus_segment_ids": [
+        466
+      ],
+      "source_ids": [
+        464,
+        465,
+        466,
+        467
+      ],
+      "prompt_sha256": "77c1c72fb05d0afa1724492ac58671098ad0d68320cf828bbae0bfe72277c81a",
+      "request_sha256": "6626705b4a4ca83df7e5582a821462096a45fcc972a705c324a52fc65595e317"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "explicit_first_generation",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus": null,
+      "focus_segment_ids": [
+        1022
+      ],
+      "source_ids": [
+        1021,
+        1022,
+        1023,
+        1024
+      ],
+      "prompt_sha256": "489c0b8c2f482f66878aaf5f43aa25bd27d5a416bd603c63f95bc89e9b86ad27",
+      "request_sha256": "9acd357b6776555d7b2081c58a0995157f2159fe9b2885a77881b2d96ee41bea"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "thirty_six_months_after_start",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus": null,
+      "focus_segment_ids": [
+        1027
+      ],
+      "source_ids": [
+        1025,
+        1026,
+        1027,
+        1028
+      ],
+      "prompt_sha256": "d56506df5c623d858965914108473f3eafb1d358987c3653e213cfa262c2a0a4",
+      "request_sha256": "ae1b6054b565e7deda84119605d2b3d89f60ba704ab67fc0ce0a37b71ae496eb"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "money_and_team_both_explicit",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus": null,
+      "focus_segment_ids": [
+        1032
+      ],
+      "source_ids": [
+        1029,
+        1030,
+        1031,
+        1032
+      ],
+      "prompt_sha256": "f7f9f616360286919512b3486a99a6c904ca51f85b3c74d64e30100a580c7174",
+      "request_sha256": "016b106b92e9c0bdd63b9515c941c3ce76e1ee31fd570b9b0b3f7ed7aee0b012"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "eleven_twelve_at_night",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus": null,
+      "focus_segment_ids": [
+        1033
+      ],
+      "source_ids": [
+        1033,
+        1034,
+        1035,
+        1036
+      ],
+      "prompt_sha256": "82e9ac38250b606ff18de8216e14599b0a4cc0ae1d8b6aa7ad2bcb469eacb665",
+      "request_sha256": "7482b5e1139002db3fda4ad157753d91ad2e96f4067c670652467fc1b2ea0344"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "products_already_available",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus": null,
+      "focus_segment_ids": [
+        1038
+      ],
+      "source_ids": [
+        1037,
+        1038,
+        1039,
+        1040
+      ],
+      "prompt_sha256": "3f99ed31b541a19d6cda8e1ca708e59f7b27609c370de7b07d91b76899d1ea1c",
+      "request_sha256": "aeaaf600bcf266689c7c675aee51c6b086e66b8f6eb5409af2a38dfea55823bd"
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_60",
+      "kind": "natural",
+      "variant": "original",
+      "focus": 60,
+      "focus_segment_ids": [
+        60
+      ],
+      "source_ids": [
+        57,
+        58,
+        59,
+        60
+      ],
+      "prompt_sha256": "1c99152b5e3982110ebbfb3b249115756d28f4c87adbff0094b414e24ff1be35",
+      "request_sha256": "dcac5975f2ff3dfe024a2840a08aac48cc0dac0fc981edd225d133255d9c592a"
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_60",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus": 60,
+      "focus_segment_ids": [
+        60
+      ],
+      "source_ids": [
+        58,
+        59,
+        60,
+        61
+      ],
+      "prompt_sha256": "84e16f838b183048b07cc716613b9fe23dfabda32ecda37e63613959cbb4b7d3",
+      "request_sha256": "925d40e927f79442ab3587f5b360566d8e20594b9c11878458c10ef86abb1656"
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_276",
+      "kind": "natural",
+      "variant": "original",
+      "focus": 276,
+      "focus_segment_ids": [
+        276
+      ],
+      "source_ids": [
+        273,
+        274,
+        275,
+        276
+      ],
+      "prompt_sha256": "4123471bd92c703e60034391cea4bed3bac8bfba2971666affeafa13be6faee1",
+      "request_sha256": "988881505a2aa0983fc4495092cc3caa5af403fbb4cc0177d50606cec7f97980"
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_276",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus": 276,
+      "focus_segment_ids": [
+        276
+      ],
+      "source_ids": [
+        274,
+        275,
+        276,
+        277
+      ],
+      "prompt_sha256": "91275ae676e7994ea635a36e9c2a7a690f204d1df37e2073bd3adf9736ed53a2",
+      "request_sha256": "59907aab47fe19a7f215fd39c492a1f284944d8f57fd91df05490006e5e17e18"
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_280",
+      "kind": "natural",
+      "variant": "original",
+      "focus": 280,
+      "focus_segment_ids": [
+        280
+      ],
+      "source_ids": [
+        277,
+        278,
+        279,
+        280
+      ],
+      "prompt_sha256": "89df4e58c5879c18919986436fac8d319490b9bb51c92797fe2e015f5476e195",
+      "request_sha256": "1513478998e22999c0ecfa67c8497e6f057a81f6fb132f7a5818d29c0cd8412c"
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_280",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus": 280,
+      "focus_segment_ids": [
+        280
+      ],
+      "source_ids": [
+        278,
+        279,
+        280,
+        281
+      ],
+      "prompt_sha256": "da420c1b3e0c8410517370d90f93b913c943b274851c09c6d56114891f38ed10",
+      "request_sha256": "0753d308281987b39ad293451d3d09ee6c9e0ed0447c67e572e7c71adbc32c32"
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_328",
+      "kind": "natural",
+      "variant": "original",
+      "focus": 328,
+      "focus_segment_ids": [
+        328
+      ],
+      "source_ids": [
+        325,
+        326,
+        327,
+        328
+      ],
+      "prompt_sha256": "ea30499becce831ba3219355eff362a19a7aa42b4e2ae6281e2da7219d1d5486",
+      "request_sha256": "9ea3696c8965605918a5653247453bc9bfcbf8e0b665962a1fda495f2585b1d9"
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_328",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus": 328,
+      "focus_segment_ids": [
+        328
+      ],
+      "source_ids": [
+        326,
+        327,
+        328,
+        329
+      ],
+      "prompt_sha256": "570a04ec1eccb403cff41bb1ac59465fbff311544e92f6bef4d6855ed05fd896",
+      "request_sha256": "31f41b8f08616463d307cbf8361f8807e422df3f82503082f1d327f2b9f7f224"
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_466",
+      "kind": "natural",
+      "variant": "original",
+      "focus": 466,
+      "focus_segment_ids": [
+        466
+      ],
+      "source_ids": [
+        465,
+        466,
+        467
+      ],
+      "prompt_sha256": "717f6730250b8bf71906253b2fe86e4a9b64345bdfa4969a1ae92fec9bf4cf37",
+      "request_sha256": "e98fdf09043524ae485c52791e555848d6ad927686b4f7c1e19229959e1d80ca"
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_466",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus": 466,
+      "focus_segment_ids": [
+        466
+      ],
+      "source_ids": [
+        464,
+        465,
+        466,
+        467
+      ],
+      "prompt_sha256": "77c1c72fb05d0afa1724492ac58671098ad0d68320cf828bbae0bfe72277c81a",
+      "request_sha256": "7a2401a632d9e3a95e5b49b5e3675a531bdb143a0de26edfce369b491b9bdd96"
+    },
+    {
+      "model": "7b",
+      "case_id": "explicit_first_generation",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus": null,
+      "focus_segment_ids": [
+        1022
+      ],
+      "source_ids": [
+        1021,
+        1022,
+        1023,
+        1024
+      ],
+      "prompt_sha256": "489c0b8c2f482f66878aaf5f43aa25bd27d5a416bd603c63f95bc89e9b86ad27",
+      "request_sha256": "8f42bf324f5b0bff2fff4d5e28088474b6391fea0cecccd803543e57e7ff49e4"
+    },
+    {
+      "model": "7b",
+      "case_id": "thirty_six_months_after_start",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus": null,
+      "focus_segment_ids": [
+        1027
+      ],
+      "source_ids": [
+        1025,
+        1026,
+        1027,
+        1028
+      ],
+      "prompt_sha256": "d56506df5c623d858965914108473f3eafb1d358987c3653e213cfa262c2a0a4",
+      "request_sha256": "78f07ac9d7526339cca7835a2deb9eb0a41621231734257c1f3813d51e565482"
+    },
+    {
+      "model": "7b",
+      "case_id": "money_and_team_both_explicit",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus": null,
+      "focus_segment_ids": [
+        1032
+      ],
+      "source_ids": [
+        1029,
+        1030,
+        1031,
+        1032
+      ],
+      "prompt_sha256": "f7f9f616360286919512b3486a99a6c904ca51f85b3c74d64e30100a580c7174",
+      "request_sha256": "1d23146932f192a04b987c5294790bd784a26922e519eaaa257a05caf60efa35"
+    },
+    {
+      "model": "7b",
+      "case_id": "eleven_twelve_at_night",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus": null,
+      "focus_segment_ids": [
+        1033
+      ],
+      "source_ids": [
+        1033,
+        1034,
+        1035,
+        1036
+      ],
+      "prompt_sha256": "82e9ac38250b606ff18de8216e14599b0a4cc0ae1d8b6aa7ad2bcb469eacb665",
+      "request_sha256": "9a7fde7849d9f4c564db172e46c8e2b142384574952a2291e2e94659484b1173"
+    },
+    {
+      "model": "7b",
+      "case_id": "products_already_available",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus": null,
+      "focus_segment_ids": [
+        1038
+      ],
+      "source_ids": [
+        1037,
+        1038,
+        1039,
+        1040
+      ],
+      "prompt_sha256": "3f99ed31b541a19d6cda8e1ca708e59f7b27609c370de7b07d91b76899d1ea1c",
+      "request_sha256": "0f9206c2c03e3fb2e08e7834b8e10c3563541bdde18378c43feab21fe112f4bb"
+    }
+  ]
+}
