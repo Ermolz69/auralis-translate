@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "review_type": "source_aware_ai_triage_not_human_rating",
+  "machine_report_sha256": "91399791c61f9daa8fc3f6e1adc9457871f86a7ea5641179524209b7f3dbb6ef",
+  "source_split": "known_natural_development_not_holdout",
+  "human_bilingual_reviews": 0,
+  "human_audio_listeners": 0,
+  "assessment": [
+    {
+      "focus_cue": 60,
+      "model": "1_8b",
+      "original": "The 9400 generation is retained without a foreign word.",
+      "shifted": "The 9400 fact survives, but the Russian text contains the unlicensed French word génération.",
+      "decision": "shift_rejected_new_language_error"
+    },
+    {
+      "focus_cue": 60,
+      "model": "7b",
+      "original": "The 9400 generation is retained.",
+      "shifted": "The 9400 generation is retained, with no demonstrated improvement.",
+      "decision": "no_demonstrated_gain"
+    },
+    {
+      "focus_cue": 276,
+      "model": "1_8b",
+      "original": "The 36-month relation to joint planning is unclear.",
+      "shifted": "The 36-month relation remains unclear; the Russian says 36 months forward from the earliest time.",
+      "decision": "needs_review_in_both"
+    },
+    {
+      "focus_cue": 276,
+      "model": "7b",
+      "original": "Invents a period before an earliest stage.",
+      "shifted": "Repeats a period before an earliest stage despite placing joint planning in the target group.",
+      "decision": "major_fact_error_in_both"
+    },
+    {
+      "focus_cue": 280,
+      "model": "1_8b",
+      "original": "Invested is left without the following thousand-person team in the target group.",
+      "shifted": "The following target names a thousand-person team, but the investment and team are not grammatically joined; Vivoo is a new name distortion.",
+      "decision": "needs_review_in_both"
+    },
+    {
+      "focus_cue": 280,
+      "model": "7b",
+      "original": "Inserts financial investment where the source names a jointly committed development team.",
+      "shifted": "Still inserts financial investment, then leaves the thousand-person team as a detached fragment.",
+      "decision": "major_fact_error_in_both"
+    },
+    {
+      "focus_cue": 328,
+      "model": "1_8b",
+      "original": "Keeps one or two in the morning but has Russian grammar errors.",
+      "shifted": "Keeps one or two after a midnight context, with worse Russian phrasing.",
+      "decision": "fact_retained_but_russian_needs_review"
+    },
+    {
+      "focus_cue": 328,
+      "model": "7b",
+      "original": "Changes one or two after midnight into eleven or twelve at night.",
+      "shifted": "Restores one or two at night for this single response.",
+      "decision": "one_observed_fact_repair_not_a_rate"
+    },
+    {
+      "focus_cue": 466,
+      "model": "1_8b",
+      "original": "Turns a future hope into products already available.",
+      "shifted": "The four-target reply omits cue 467 and has malformed Russian text at cue 466; validation rejects the entire reply.",
+      "decision": "major_fact_error_then_invalid_shift"
+    },
+    {
+      "focus_cue": 466,
+      "model": "7b",
+      "original": "Turns a future hope into products already available.",
+      "shifted": "The four-target reply omits cue 467; validation rejects the entire reply.",
+      "decision": "major_fact_error_then_invalid_shift"
+    }
+  ],
+  "negative_controls": {
+    "structurally_valid": "10/10",
+    "first_generation": "explicit claim retained in both models",
+    "thirty_six_months_after_start": "after-start relation retained in both models",
+    "money_and_people": "both quantities retained in both models",
+    "eleven_twelve_at_night": "not forced to morning; Russian clock wording needs review",
+    "products_already_available": "present availability retained in both models",
+    "new_major_fact_error_observed": false
+  },
+  "summary": {
+    "natural_chats": 20,
+    "negative_chats": 10,
+    "structurally_valid": 28,
+    "structurally_invalid": 2,
+    "observed_7b_time_repairs": 1,
+    "new_mixed_script_observations": 1,
+    "new_tail_id_omissions": 2,
+    "shifted_candidate_promoted": false,
+    "full_file_quality_established": false,
+    "release_gates_closed": 0
+  },
+  "limitations": "One seed and one reply per arm, AI judgment only, source rights and human speech alignment open; the differences do not prove a causal effect or an adequacy rate."
+}

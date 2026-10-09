@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "id": "REG-068",
+  "status": "observed_unfixed",
+  "severity": "major_language",
+  "split": "known_natural_development_not_holdout",
+  "source_family": "youtube_geekerwan_vivo_original_platform",
+  "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "frozen_request_sha256": "3447ad2350ec8975fd2b20444b498feadd3652dabc7a86e3185859b6b8bb0322",
+  "machine_report_sha256": "91399791c61f9daa8fc3f6e1adc9457871f86a7ea5641179524209b7f3dbb6ef",
+  "expected_invariant": "Translate a Chinese reference to the 9400 generation into Russian without introducing an unlicensed French common word; preserve legitimate source proper names and quoted foreign words.",
+  "minimal_reproducer": {
+    "focus_cue": 60,
+    "model": "1_8b",
+    "shifted_target_ids": [58, 59, 60, 61],
+    "request_sha256": "ccd221a8c7a79c74266b056b4fb3aefa93c22eea9a8bcd6d52f483528ca05fcc",
+    "raw_http_sha256": "336cd3db409abe59f014bd8566f1886b9e1b76f58f3ed90ad6484ad9f79716f8",
+    "raw_candidate_sha256": "019381e79c1e51549e3041b6f68a6c951c71275ce1e24748196f2196350193ce",
+    "observed_unlicensed_word": "génération",
+    "original_target_ids": [57, 58, 59, 60],
+    "original_outcome": "no_french_common_word"
+  },
+  "related_controls": [
+    {
+      "id": "9400_current_model_near_batch_end",
+      "source_lines": ["这一代天玑9300已经完成。", "性能和能效有所改善。", "今年的9400这一代还在优化。", "我们继续看其他领域。"],
+      "expected": "Keep 9300 and 9400 and translate the Chinese generation reference into Russian only.",
+      "outcome": "pending_model_screen"
+    },
+    {
+      "id": "9400_digit_one_speech_variant",
+      "source_lines": ["我们正在讨论性能。", "去年是9300。", "在今年的9400这1代。", "还会持续改进。"],
+      "expected": "Preserve 9400 and the spoken digit-one generation meaning without a French common word.",
+      "outcome": "pending_model_screen"
+    }
+  ],
+  "negative_controls": [
+    {
+      "id": "foreign_brand_licensed",
+      "source_lines": ["MediaTek和vivo继续合作。", "这代9400正在优化。"],
+      "expected": "The source proper names may remain Latin-script; the Chinese common noun for generation is translated.",
+      "outcome": "pending_model_screen"
+    },
+    {
+      "id": "quoted_french_word_licensed",
+      "source_lines": ["标题里引用了法语单词génération。", "请保留引号里的原文。"],
+      "expected": "A French word explicitly present and quoted in the source may be preserved; do not treat this as contamination.",
+      "outcome": "pending_model_screen"
+    }
+  ],
+  "human_review": "missing",
+  "product_status": "v8_unchanged_shift_rejected"
+}

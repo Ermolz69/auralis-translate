@@ -1,0 +1,1008 @@
+{
+  "schema_version": 1,
+  "experiment": "REG-066-natural-seams-two-model-2026-10-09-v1",
+  "split": "known_natural_development_not_holdout",
+  "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "raw_private_report_sha256": "230c09a7b6aec5c91120f022ee5ed1bd74a20f12269b5db46e0da798c258dc6b",
+  "raw_private_journal_sha256": "fcea60a832f1a7f1d37b2f97e5ce048642f9825d11227a24fadbac49e10a0e2a",
+  "freeze_sha256": "3447ad2350ec8975fd2b20444b498feadd3652dabc7a86e3185859b6b8bb0322",
+  "harness_sha256": "81407682842b2a73aed3bc7c306f529910e26390f6a36755518a7fe11ac7335e",
+  "git_head_at_inference": "8e47352213ce3121b4e19d30a2970c68f299c995",
+  "limits": {
+    "natural_focus_cues": [
+      60,
+      276,
+      280,
+      328,
+      466
+    ],
+    "natural_arms": [
+      "original",
+      "shifted"
+    ],
+    "negative_controls": 5,
+    "chats": 30,
+    "preflights": 60,
+    "server_starts": 2,
+    "seed": 101,
+    "retries": 0,
+    "max_total_tokens": 100000,
+    "context_tokens": 2048,
+    "response_tokens": 1024,
+    "safety_tokens": 64,
+    "per_request_ms": 120000,
+    "per_preflight_ms": 30000,
+    "readiness_ms": 180000,
+    "max_wall_ms": 720000
+  },
+  "status": "complete_with_invalid_responses_unreviewed",
+  "wall_elapsed_ms": 119497,
+  "chat_requests": 30,
+  "template_token_preflights": 60,
+  "structurally_valid": 28,
+  "structurally_invalid": 2,
+  "total_prompt_completion_tokens": 16757,
+  "resources": {
+    "1_8b": {
+      "max_sampled_working_set_bytes": 1588445184,
+      "max_sampled_device_mib": 4045,
+      "limitations": "Sampled working set/private memory of tracked processes; device-wide GPU use includes other applications. Not an isolated peak or release hardware gate."
+    },
+    "7b": {
+      "max_sampled_working_set_bytes": 5062586368,
+      "max_sampled_device_mib": 7359,
+      "limitations": "Sampled working set/private memory of tracked processes; device-wide GPU use includes other applications. Not an isolated peak or release hardware gate."
+    }
+  },
+  "observations": [
+    {
+      "model": "1_8b",
+      "case_id": "natural_60",
+      "kind": "natural",
+      "variant": "original",
+      "focus_cue": 60,
+      "focus_segment_ids": [
+        60
+      ],
+      "target_ids": [
+        57,
+        58,
+        59,
+        60
+      ],
+      "request_sha256": "e4b5d9f59dc9835aa9bbd6d8e80151e4181d68529502dc731906a7120eefeee6",
+      "prompt_sha256": "1c99152b5e3982110ebbfb3b249115756d28f4c87adbff0094b414e24ff1be35",
+      "raw_http_sha256": "776efdf06049f7d1c4b4092acb3f1c4c8cc835d2d7cceb8df3df705860f66dc5",
+      "raw_candidate_sha256": "77c28d8c2f5b3f49e4bb9b39ca16a5fa858f3cf70b475427d31523419000791a",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        57,
+        58,
+        59,
+        60
+      ],
+      "translations_sha256": "e0043ee55a45a69a94734d88bd7ea4d7039705e3972d12f9efee41c20382193d",
+      "validation_error": null,
+      "prompt_tokens": 438,
+      "completion_tokens": 129,
+      "chat_elapsed_ms": 1425
+    },
+    {
+      "model": "1_8b",
+      "case_id": "natural_60",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus_cue": 60,
+      "focus_segment_ids": [
+        60
+      ],
+      "target_ids": [
+        58,
+        59,
+        60,
+        61
+      ],
+      "request_sha256": "ccd221a8c7a79c74266b056b4fb3aefa93c22eea9a8bcd6d52f483528ca05fcc",
+      "prompt_sha256": "84e16f838b183048b07cc716613b9fe23dfabda32ecda37e63613959cbb4b7d3",
+      "raw_http_sha256": "336cd3db409abe59f014bd8566f1886b9e1b76f58f3ed90ad6484ad9f79716f8",
+      "raw_candidate_sha256": "019381e79c1e51549e3041b6f68a6c951c71275ce1e24748196f2196350193ce",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        58,
+        59,
+        60,
+        61
+      ],
+      "translations_sha256": "947228706f3af1a70556e743e037c31fb010589c49697563d4a6122e00d457a3",
+      "validation_error": null,
+      "prompt_tokens": 441,
+      "completion_tokens": 128,
+      "chat_elapsed_ms": 1364
+    },
+    {
+      "model": "1_8b",
+      "case_id": "natural_276",
+      "kind": "natural",
+      "variant": "original",
+      "focus_cue": 276,
+      "focus_segment_ids": [
+        276
+      ],
+      "target_ids": [
+        273,
+        274,
+        275,
+        276
+      ],
+      "request_sha256": "78ba62ebc8f97d7e6c364dd7150df6dbc90cdd4d5595a9cb804d266465be7729",
+      "prompt_sha256": "4123471bd92c703e60034391cea4bed3bac8bfba2971666affeafa13be6faee1",
+      "raw_http_sha256": "9e3861f6696674a4e76f3a53ca74548579dc652c3b9ca0153a450c25bfce4023",
+      "raw_candidate_sha256": "39efc63ee1a531b3adc1c961da883df07169ca96764e707fe91f4c20b71c93e4",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        273,
+        274,
+        275,
+        276
+      ],
+      "translations_sha256": "cdd1d3c5d4e664e7ce13b064b1ce9253b96d9cf67b0c111876280e9f04be5eae",
+      "validation_error": null,
+      "prompt_tokens": 452,
+      "completion_tokens": 175,
+      "chat_elapsed_ms": 1787
+    },
+    {
+      "model": "1_8b",
+      "case_id": "natural_276",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus_cue": 276,
+      "focus_segment_ids": [
+        276
+      ],
+      "target_ids": [
+        274,
+        275,
+        276,
+        277
+      ],
+      "request_sha256": "435c3fdaf89416386b1ae70216d4187023a12cf555c9be93b4b3b358429f9c93",
+      "prompt_sha256": "91275ae676e7994ea635a36e9c2a7a690f204d1df37e2073bd3adf9736ed53a2",
+      "raw_http_sha256": "1e39284b054c184e173871a4f12818f85bb223faba9af7dda0036e26db793b77",
+      "raw_candidate_sha256": "951f03e90c4f50319745bdc37454c7f570a59b8af0751d76680aa68125982ae1",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        274,
+        275,
+        276,
+        277
+      ],
+      "translations_sha256": "e1868977a58a82ff0e1d474be1da8a448f8a66795e9b54681136c01952736233",
+      "validation_error": null,
+      "prompt_tokens": 453,
+      "completion_tokens": 140,
+      "chat_elapsed_ms": 1524
+    },
+    {
+      "model": "1_8b",
+      "case_id": "natural_280",
+      "kind": "natural",
+      "variant": "original",
+      "focus_cue": 280,
+      "focus_segment_ids": [
+        280
+      ],
+      "target_ids": [
+        277,
+        278,
+        279,
+        280
+      ],
+      "request_sha256": "349a33846c1593650ccddbabaf5548915777cf3e1350099548a3d51a62529803",
+      "prompt_sha256": "89df4e58c5879c18919986436fac8d319490b9bb51c92797fe2e015f5476e195",
+      "raw_http_sha256": "717e307c524c3c3e86ec47bb0c5f0471f19e447956b7cb205b9a8c540ef869ae",
+      "raw_candidate_sha256": "1a0316fbc0cf18941b1718a11dc80720e46d0226e38b355d79db7b446e82559a",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        277,
+        278,
+        279,
+        280
+      ],
+      "translations_sha256": "d9d3d82337259f538bb797fcda0e1a962bf33ba4931df4d0962738ea5190701f",
+      "validation_error": null,
+      "prompt_tokens": 446,
+      "completion_tokens": 133,
+      "chat_elapsed_ms": 1422
+    },
+    {
+      "model": "1_8b",
+      "case_id": "natural_280",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus_cue": 280,
+      "focus_segment_ids": [
+        280
+      ],
+      "target_ids": [
+        278,
+        279,
+        280,
+        281
+      ],
+      "request_sha256": "cfc04a55ff2c2aa796181fc56ac1a9f3c93d4e5506c4925478a1944efeb16c5f",
+      "prompt_sha256": "da420c1b3e0c8410517370d90f93b913c943b274851c09c6d56114891f38ed10",
+      "raw_http_sha256": "d05650dc59c24e6e8e052df7f5c153407e88a29f988ee5fbc754478933ee75cf",
+      "raw_candidate_sha256": "6f5ff79374e57e852944d44f7a2fca2f6456c9cc1c845080bf34be721f1a3a7a",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        278,
+        279,
+        280,
+        281
+      ],
+      "translations_sha256": "41d79a7458404f756a7ca9f3979bcd56907d9e5921f7f7e7179de1efea203e52",
+      "validation_error": null,
+      "prompt_tokens": 447,
+      "completion_tokens": 139,
+      "chat_elapsed_ms": 1489
+    },
+    {
+      "model": "1_8b",
+      "case_id": "natural_328",
+      "kind": "natural",
+      "variant": "original",
+      "focus_cue": 328,
+      "focus_segment_ids": [
+        328
+      ],
+      "target_ids": [
+        325,
+        326,
+        327,
+        328
+      ],
+      "request_sha256": "8021e00b41c8410a26c559fc6965dea6e1ef4d446c7e51ed1782d70e663d2e5f",
+      "prompt_sha256": "ea30499becce831ba3219355eff362a19a7aa42b4e2ae6281e2da7219d1d5486",
+      "raw_http_sha256": "c321438c95de13efefe81dc1ac74030c9bd6af26092e5eec3441ab0ad213fcc4",
+      "raw_candidate_sha256": "16c2ff818bf8923c77f28189491c4ad93be5db4a7a47e50f37269aaa34d2f04b",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        325,
+        326,
+        327,
+        328
+      ],
+      "translations_sha256": "dc34687bc0f14ec4ea0224f1f89e239fc35e8b059bbb76d43a8f31276f5bf66a",
+      "validation_error": null,
+      "prompt_tokens": 459,
+      "completion_tokens": 136,
+      "chat_elapsed_ms": 1479
+    },
+    {
+      "model": "1_8b",
+      "case_id": "natural_328",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus_cue": 328,
+      "focus_segment_ids": [
+        328
+      ],
+      "target_ids": [
+        326,
+        327,
+        328,
+        329
+      ],
+      "request_sha256": "1ce0e65e3ef7b06a20fee1a78511054272a2c0c6bad6eddd2f14e35ecb2a803b",
+      "prompt_sha256": "570a04ec1eccb403cff41bb1ac59465fbff311544e92f6bef4d6855ed05fd896",
+      "raw_http_sha256": "6200bd5f451657910a1154e83ae8aac3e95ca361643c4f71d7252b576699fb0e",
+      "raw_candidate_sha256": "06dd80fe8093b271c64fca04f9e57189a94add23015dbc87096b225e947d82c9",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        326,
+        327,
+        328,
+        329
+      ],
+      "translations_sha256": "9bff83f84e84281c85e04c1505c02967625ee8e99ea8dba7993fb789493d92c8",
+      "validation_error": null,
+      "prompt_tokens": 458,
+      "completion_tokens": 144,
+      "chat_elapsed_ms": 1491
+    },
+    {
+      "model": "1_8b",
+      "case_id": "natural_466",
+      "kind": "natural",
+      "variant": "original",
+      "focus_cue": 466,
+      "focus_segment_ids": [
+        466
+      ],
+      "target_ids": [
+        465,
+        466,
+        467
+      ],
+      "request_sha256": "e518dfb0ea9618b5e1fc548ec9f9baa2a4ba0eb9d0c9b8e3ac5f7e1dc76091e4",
+      "prompt_sha256": "717f6730250b8bf71906253b2fe86e4a9b64345bdfa4969a1ae92fec9bf4cf37",
+      "raw_http_sha256": "9e12261d507c9f0d8b446ff6760f7f6ccce87833c78cc22a18e3e080a93ee2f1",
+      "raw_candidate_sha256": "a94001bdbdf244af2c731b060c30ae50780a425dc86f4e3d41426a1df2fe1e33",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        465,
+        466,
+        467
+      ],
+      "translations_sha256": "bb87aa8a02597ae3c23dcf4948fb9cba7c120b6a3220c4264bd33ec83b5f2d74",
+      "validation_error": null,
+      "prompt_tokens": 344,
+      "completion_tokens": 94,
+      "chat_elapsed_ms": 1033
+    },
+    {
+      "model": "1_8b",
+      "case_id": "natural_466",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus_cue": 466,
+      "focus_segment_ids": [
+        466
+      ],
+      "target_ids": [
+        464,
+        465,
+        466,
+        467
+      ],
+      "request_sha256": "6626705b4a4ca83df7e5582a821462096a45fcc972a705c324a52fc65595e317",
+      "prompt_sha256": "77c1c72fb05d0afa1724492ac58671098ad0d68320cf828bbae0bfe72277c81a",
+      "raw_http_sha256": "9cd1c4513ba389f8ac8357a027ae15c500f28ab07308eb50b5d2c02f970b7eb7",
+      "raw_candidate_sha256": "dc48edeb1d6f8602350d77ce12f4ac608eb686a9b9f1608d58c8a8824f6816cb",
+      "status": "invalid_unreviewed",
+      "translated_ids": null,
+      "translations_sha256": null,
+      "validation_error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    464,\n    465,\n    466,\n-   467\n  ]\n",
+      "prompt_tokens": 397,
+      "completion_tokens": 97,
+      "chat_elapsed_ms": 1194
+    },
+    {
+      "model": "1_8b",
+      "case_id": "explicit_first_generation",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus_cue": null,
+      "focus_segment_ids": [
+        1022
+      ],
+      "target_ids": [
+        1021,
+        1022,
+        1023,
+        1024
+      ],
+      "request_sha256": "9acd357b6776555d7b2081c58a0995157f2159fe9b2885a77881b2d96ee41bea",
+      "prompt_sha256": "489c0b8c2f482f66878aaf5f43aa25bd27d5a416bd603c63f95bc89e9b86ad27",
+      "raw_http_sha256": "1ec872e706ce6ec5dee6aa63f124864cf92bdccfe1bf0414cc5edaef716832e7",
+      "raw_candidate_sha256": "87ecd013a923cdef08755f0f378951ce2bb2a36633993d64de472305691596bc",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        1021,
+        1022,
+        1023,
+        1024
+      ],
+      "translations_sha256": "0f152f28bf0b5486a6bb22eaba101d26c8e4b8bf8e5984c90258fe67ea72b714",
+      "validation_error": null,
+      "prompt_tokens": 358,
+      "completion_tokens": 112,
+      "chat_elapsed_ms": 1161
+    },
+    {
+      "model": "1_8b",
+      "case_id": "thirty_six_months_after_start",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus_cue": null,
+      "focus_segment_ids": [
+        1027
+      ],
+      "target_ids": [
+        1025,
+        1026,
+        1027,
+        1028
+      ],
+      "request_sha256": "ae1b6054b565e7deda84119605d2b3d89f60ba704ab67fc0ce0a37b71ae496eb",
+      "prompt_sha256": "d56506df5c623d858965914108473f3eafb1d358987c3653e213cfa262c2a0a4",
+      "raw_http_sha256": "df128bdf2e90ad58851b4f6df1c512f560062e5d784d7a035f79711382be5c52",
+      "raw_candidate_sha256": "c319a5ebda5b6e8f8e763fafe956e6f1833ac4ed0e1cd76e5f7ed3e3a797bd97",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        1025,
+        1026,
+        1027,
+        1028
+      ],
+      "translations_sha256": "b6d0254846fd5d85c6cbc2af426fef8ac0eb69dfd2f99fdf61b07f302d260311",
+      "validation_error": null,
+      "prompt_tokens": 370,
+      "completion_tokens": 131,
+      "chat_elapsed_ms": 1292
+    },
+    {
+      "model": "1_8b",
+      "case_id": "money_and_team_both_explicit",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus_cue": null,
+      "focus_segment_ids": [
+        1032
+      ],
+      "target_ids": [
+        1029,
+        1030,
+        1031,
+        1032
+      ],
+      "request_sha256": "016b106b92e9c0bdd63b9515c941c3ce76e1ee31fd570b9b0b3f7ed7aee0b012",
+      "prompt_sha256": "f7f9f616360286919512b3486a99a6c904ca51f85b3c74d64e30100a580c7174",
+      "raw_http_sha256": "f96fde56b5ba689af309e75b43e003593601e3a1c3f066efe10d9cfcf54faf7a",
+      "raw_candidate_sha256": "5eeea86c5f22fd13c0a3d3982ddce8a0219e9bb16b2a1ef00e03c470a81951cd",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        1029,
+        1030,
+        1031,
+        1032
+      ],
+      "translations_sha256": "dcc6ceb0ac2c09d8b5373d437a65e22b87235feec58d7692f98b36aa2878e584",
+      "validation_error": null,
+      "prompt_tokens": 378,
+      "completion_tokens": 128,
+      "chat_elapsed_ms": 1276
+    },
+    {
+      "model": "1_8b",
+      "case_id": "eleven_twelve_at_night",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus_cue": null,
+      "focus_segment_ids": [
+        1033
+      ],
+      "target_ids": [
+        1033,
+        1034,
+        1035,
+        1036
+      ],
+      "request_sha256": "7482b5e1139002db3fda4ad157753d91ad2e96f4067c670652467fc1b2ea0344",
+      "prompt_sha256": "82e9ac38250b606ff18de8216e14599b0a4cc0ae1d8b6aa7ad2bcb469eacb665",
+      "raw_http_sha256": "db9ac343bb1792b7e4e24f7ce3c178fb786a316f4531462bf62c2c27ccf6394f",
+      "raw_candidate_sha256": "08a9919986d9328c1ee705f4ef6c1ffd5cf043fceb7022c74d89ba682016bd2d",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        1033,
+        1034,
+        1035,
+        1036
+      ],
+      "translations_sha256": "7f685b2cf5115a4ff3693ee7adcf113bbde6c6714774d4926b314826bef3ae51",
+      "validation_error": null,
+      "prompt_tokens": 362,
+      "completion_tokens": 122,
+      "chat_elapsed_ms": 1224
+    },
+    {
+      "model": "1_8b",
+      "case_id": "products_already_available",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus_cue": null,
+      "focus_segment_ids": [
+        1038
+      ],
+      "target_ids": [
+        1037,
+        1038,
+        1039,
+        1040
+      ],
+      "request_sha256": "aeaaf600bcf266689c7c675aee51c6b086e66b8f6eb5409af2a38dfea55823bd",
+      "prompt_sha256": "3f99ed31b541a19d6cda8e1ca708e59f7b27609c370de7b07d91b76899d1ea1c",
+      "raw_http_sha256": "cce8bb54f881c18b44bfdc8bc185754d754af7ac5fdec5145c88406ab436521a",
+      "raw_candidate_sha256": "455d184022f92ee3199b87018c07d834903d51f36dc3d939c234f0aaa614e68e",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        1037,
+        1038,
+        1039,
+        1040
+      ],
+      "translations_sha256": "9b9d92bef6fff1868c7575317212351152602e94070d954adc1c5c67efc792ba",
+      "validation_error": null,
+      "prompt_tokens": 358,
+      "completion_tokens": 111,
+      "chat_elapsed_ms": 1278
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_60",
+      "kind": "natural",
+      "variant": "original",
+      "focus_cue": 60,
+      "focus_segment_ids": [
+        60
+      ],
+      "target_ids": [
+        57,
+        58,
+        59,
+        60
+      ],
+      "request_sha256": "dcac5975f2ff3dfe024a2840a08aac48cc0dac0fc981edd225d133255d9c592a",
+      "prompt_sha256": "1c99152b5e3982110ebbfb3b249115756d28f4c87adbff0094b414e24ff1be35",
+      "raw_http_sha256": "fa28a2ffef08e540b41aa5675c698a121acc86fe86131e908a96ffb83c782dfd",
+      "raw_candidate_sha256": "4b8782976a99f131b6d4d64612f8cddac9006d242138d306b868cbda4e962975",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        57,
+        58,
+        59,
+        60
+      ],
+      "translations_sha256": "00a927d47571dd3b3362ddbf6530517874ac5106ea39d823add771601caf5c90",
+      "validation_error": null,
+      "prompt_tokens": 465,
+      "completion_tokens": 152,
+      "chat_elapsed_ms": 5795
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_60",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus_cue": 60,
+      "focus_segment_ids": [
+        60
+      ],
+      "target_ids": [
+        58,
+        59,
+        60,
+        61
+      ],
+      "request_sha256": "925d40e927f79442ab3587f5b360566d8e20594b9c11878458c10ef86abb1656",
+      "prompt_sha256": "84e16f838b183048b07cc716613b9fe23dfabda32ecda37e63613959cbb4b7d3",
+      "raw_http_sha256": "117896f6b4433a382c64a73134ceb099a9b6b88f0dde09444c0cdd1739cef21f",
+      "raw_candidate_sha256": "b0c2169be9a0caa88e41beb0fa206d8abc57162d477c51e44d7b55490fb4345a",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        58,
+        59,
+        60,
+        61
+      ],
+      "translations_sha256": "445719b6342a3926ab5a6103973df5e751328e46da2ab1c654670a6515ff3d74",
+      "validation_error": null,
+      "prompt_tokens": 469,
+      "completion_tokens": 152,
+      "chat_elapsed_ms": 5718
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_276",
+      "kind": "natural",
+      "variant": "original",
+      "focus_cue": 276,
+      "focus_segment_ids": [
+        276
+      ],
+      "target_ids": [
+        273,
+        274,
+        275,
+        276
+      ],
+      "request_sha256": "988881505a2aa0983fc4495092cc3caa5af403fbb4cc0177d50606cec7f97980",
+      "prompt_sha256": "4123471bd92c703e60034391cea4bed3bac8bfba2971666affeafa13be6faee1",
+      "raw_http_sha256": "edc226b21d2df5099d86a496452788101cdbdb4a0640211ff37c098fc44049c9",
+      "raw_candidate_sha256": "9e3321b7c3fa93c1c2e8295a9c2ee7b931e14425a84473ebceb02492bfeb12a6",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        273,
+        274,
+        275,
+        276
+      ],
+      "translations_sha256": "2fe8d02141160cbab0d2a9beb8b54e912de6a74e6c6d9fabe104c97fe8256ce3",
+      "validation_error": null,
+      "prompt_tokens": 479,
+      "completion_tokens": 176,
+      "chat_elapsed_ms": 6438
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_276",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus_cue": 276,
+      "focus_segment_ids": [
+        276
+      ],
+      "target_ids": [
+        274,
+        275,
+        276,
+        277
+      ],
+      "request_sha256": "59907aab47fe19a7f215fd39c492a1f284944d8f57fd91df05490006e5e17e18",
+      "prompt_sha256": "91275ae676e7994ea635a36e9c2a7a690f204d1df37e2073bd3adf9736ed53a2",
+      "raw_http_sha256": "468dce3e22e3b0752d5bfc42dcd033fa55cc8e380b98fa24f04bb4a6d9b99aca",
+      "raw_candidate_sha256": "9d9efbb4acb8ec23675314fc7309d6140c42171fc3cfde4daab69a198e61f2f4",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        274,
+        275,
+        276,
+        277
+      ],
+      "translations_sha256": "695cea697d9a01488232b99fdc8dbb1bc941610b4e621cd6b0e6e3f74d8706f3",
+      "validation_error": null,
+      "prompt_tokens": 481,
+      "completion_tokens": 166,
+      "chat_elapsed_ms": 6207
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_280",
+      "kind": "natural",
+      "variant": "original",
+      "focus_cue": 280,
+      "focus_segment_ids": [
+        280
+      ],
+      "target_ids": [
+        277,
+        278,
+        279,
+        280
+      ],
+      "request_sha256": "1513478998e22999c0ecfa67c8497e6f057a81f6fb132f7a5818d29c0cd8412c",
+      "prompt_sha256": "89df4e58c5879c18919986436fac8d319490b9bb51c92797fe2e015f5476e195",
+      "raw_http_sha256": "d2e8d1043ede6fa1bf5505a9e3134e740171ce3293aa42efdf2c9686df33b6cd",
+      "raw_candidate_sha256": "167976e19999c0e63681d34342d414e9f96967423d3fc509a2b2b150c9d8294d",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        277,
+        278,
+        279,
+        280
+      ],
+      "translations_sha256": "74268129de9d8671c61654add00fabedd52b9185ad58e1eb9953301d3322f01c",
+      "validation_error": null,
+      "prompt_tokens": 472,
+      "completion_tokens": 157,
+      "chat_elapsed_ms": 6073
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_280",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus_cue": 280,
+      "focus_segment_ids": [
+        280
+      ],
+      "target_ids": [
+        278,
+        279,
+        280,
+        281
+      ],
+      "request_sha256": "0753d308281987b39ad293451d3d09ee6c9e0ed0447c67e572e7c71adbc32c32",
+      "prompt_sha256": "da420c1b3e0c8410517370d90f93b913c943b274851c09c6d56114891f38ed10",
+      "raw_http_sha256": "71ca9f567b5eb98a5913c82e0a7b6f1a55d2a21d5b757d5f56fcbf7ebff7586a",
+      "raw_candidate_sha256": "e5e52058d5b29e34849935715b6a80a95c5c49b977c42622f19dcc563639bf0a",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        278,
+        279,
+        280,
+        281
+      ],
+      "translations_sha256": "92e2dcce1dd1033bd2a88becaf0ee9f9d62a3233361c7fbc82f550f31a5d92a4",
+      "validation_error": null,
+      "prompt_tokens": 472,
+      "completion_tokens": 177,
+      "chat_elapsed_ms": 7364
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_328",
+      "kind": "natural",
+      "variant": "original",
+      "focus_cue": 328,
+      "focus_segment_ids": [
+        328
+      ],
+      "target_ids": [
+        325,
+        326,
+        327,
+        328
+      ],
+      "request_sha256": "9ea3696c8965605918a5653247453bc9bfcbf8e0b665962a1fda495f2585b1d9",
+      "prompt_sha256": "ea30499becce831ba3219355eff362a19a7aa42b4e2ae6281e2da7219d1d5486",
+      "raw_http_sha256": "f395ac68da21cd06e7fbbf85ab9df53c90a912083a2cdd4a6f565a5751684255",
+      "raw_candidate_sha256": "de9b6f94b3e1234a7bc1e1276c8c3ba6765741153c614ba11cf54d0d5facec2e",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        325,
+        326,
+        327,
+        328
+      ],
+      "translations_sha256": "d0e7d15deefd887d792ef8c3d0cc07c5b9d5200dae39e22f32cacfd28004ecd7",
+      "validation_error": null,
+      "prompt_tokens": 483,
+      "completion_tokens": 172,
+      "chat_elapsed_ms": 6920
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_328",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus_cue": 328,
+      "focus_segment_ids": [
+        328
+      ],
+      "target_ids": [
+        326,
+        327,
+        328,
+        329
+      ],
+      "request_sha256": "31f41b8f08616463d307cbf8361f8807e422df3f82503082f1d327f2b9f7f224",
+      "prompt_sha256": "570a04ec1eccb403cff41bb1ac59465fbff311544e92f6bef4d6855ed05fd896",
+      "raw_http_sha256": "bc6c1870705d68301cc1878cfd303401fc52b3a5dca6001a39b0dcbd33560347",
+      "raw_candidate_sha256": "afb1d8b7a4288294ad50b28f0432c02fb4576445bba5b9b33d244210f35711dc",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        326,
+        327,
+        328,
+        329
+      ],
+      "translations_sha256": "9bae9d64674a573b93cb0778cc2ac8389cb3c4f96d087b5de0d40fed65b3250d",
+      "validation_error": null,
+      "prompt_tokens": 481,
+      "completion_tokens": 182,
+      "chat_elapsed_ms": 6874
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_466",
+      "kind": "natural",
+      "variant": "original",
+      "focus_cue": 466,
+      "focus_segment_ids": [
+        466
+      ],
+      "target_ids": [
+        465,
+        466,
+        467
+      ],
+      "request_sha256": "e98fdf09043524ae485c52791e555848d6ad927686b4f7c1e19229959e1d80ca",
+      "prompt_sha256": "717f6730250b8bf71906253b2fe86e4a9b64345bdfa4969a1ae92fec9bf4cf37",
+      "raw_http_sha256": "3ea9e224e6441408883bcf2f11877d89d17f5b2a4884a489c1b601c5dc095b00",
+      "raw_candidate_sha256": "67a006891a874d28a66846bd7fb371293778875c6a5f6e8f2ca00a3359d0ff79",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        465,
+        466,
+        467
+      ],
+      "translations_sha256": "08ea19b590aa53fc80de1a2f35a9381244fa2c505f5827041428884a206640b4",
+      "validation_error": null,
+      "prompt_tokens": 361,
+      "completion_tokens": 117,
+      "chat_elapsed_ms": 4376
+    },
+    {
+      "model": "7b",
+      "case_id": "natural_466",
+      "kind": "natural",
+      "variant": "shifted",
+      "focus_cue": 466,
+      "focus_segment_ids": [
+        466
+      ],
+      "target_ids": [
+        464,
+        465,
+        466,
+        467
+      ],
+      "request_sha256": "7a2401a632d9e3a95e5b49b5e3675a531bdb143a0de26edfce369b491b9bdd96",
+      "prompt_sha256": "77c1c72fb05d0afa1724492ac58671098ad0d68320cf828bbae0bfe72277c81a",
+      "raw_http_sha256": "6956f67c8eee364713f7bd34b09ccbd5e073d577da0164d621ba823e60ef95f8",
+      "raw_candidate_sha256": "1d5c9f445fccf4014bee270b2294216bd52c6e94218893e221a0fc3cca4af053",
+      "status": "invalid_unreviewed",
+      "translated_ids": null,
+      "translations_sha256": null,
+      "validation_error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    464,\n    465,\n    466,\n-   467\n  ]\n",
+      "prompt_tokens": 418,
+      "completion_tokens": 116,
+      "chat_elapsed_ms": 4241
+    },
+    {
+      "model": "7b",
+      "case_id": "explicit_first_generation",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus_cue": null,
+      "focus_segment_ids": [
+        1022
+      ],
+      "target_ids": [
+        1021,
+        1022,
+        1023,
+        1024
+      ],
+      "request_sha256": "8f42bf324f5b0bff2fff4d5e28088474b6391fea0cecccd803543e57e7ff49e4",
+      "prompt_sha256": "489c0b8c2f482f66878aaf5f43aa25bd27d5a416bd603c63f95bc89e9b86ad27",
+      "raw_http_sha256": "c4ee7f2061e6da2db25b2523d4014c524f20ed14fd7ddf814907716470196bee",
+      "raw_candidate_sha256": "38aeb0f754727e894c9988bd90c2a879d18829497833673beadbba944ec453d6",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        1021,
+        1022,
+        1023,
+        1024
+      ],
+      "translations_sha256": "40b9c7ebea6730c18500da6118cd9355ff8effc0c4ed02597c6ea5e427fda213",
+      "validation_error": null,
+      "prompt_tokens": 366,
+      "completion_tokens": 125,
+      "chat_elapsed_ms": 4416
+    },
+    {
+      "model": "7b",
+      "case_id": "thirty_six_months_after_start",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus_cue": null,
+      "focus_segment_ids": [
+        1027
+      ],
+      "target_ids": [
+        1025,
+        1026,
+        1027,
+        1028
+      ],
+      "request_sha256": "78f07ac9d7526339cca7835a2deb9eb0a41621231734257c1f3813d51e565482",
+      "prompt_sha256": "d56506df5c623d858965914108473f3eafb1d358987c3653e213cfa262c2a0a4",
+      "raw_http_sha256": "4e85561287c5a8db60ac18c4a11f43d6c919ff2025d2f2bc0457064ad3196944",
+      "raw_candidate_sha256": "1bba69de3c1dc0c7bf94a6105fb2d3f426fbad30931921d0d6aa014ea6a0ffbc",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        1025,
+        1026,
+        1027,
+        1028
+      ],
+      "translations_sha256": "3943c68e0f05e7343a4ffcfc499e3cc8e701a2434e16b006d29d4d13e1b961b5",
+      "validation_error": null,
+      "prompt_tokens": 374,
+      "completion_tokens": 156,
+      "chat_elapsed_ms": 5538
+    },
+    {
+      "model": "7b",
+      "case_id": "money_and_team_both_explicit",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus_cue": null,
+      "focus_segment_ids": [
+        1032
+      ],
+      "target_ids": [
+        1029,
+        1030,
+        1031,
+        1032
+      ],
+      "request_sha256": "1d23146932f192a04b987c5294790bd784a26922e519eaaa257a05caf60efa35",
+      "prompt_sha256": "f7f9f616360286919512b3486a99a6c904ca51f85b3c74d64e30100a580c7174",
+      "raw_http_sha256": "19683f0edfe6c147332cbfd8f39e15abcd474ca8b7dcdc5ba336a9dfbad23a1f",
+      "raw_candidate_sha256": "0253eaf6f1b90afd4708c79e7facad0ff613d11e6601bbcee76e6f85436a622a",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        1029,
+        1030,
+        1031,
+        1032
+      ],
+      "translations_sha256": "24f2cb6ab0ff4db1cecc27f51b06b39ec0fe2f95744068042cdef6b2e98f3908",
+      "validation_error": null,
+      "prompt_tokens": 378,
+      "completion_tokens": 149,
+      "chat_elapsed_ms": 5172
+    },
+    {
+      "model": "7b",
+      "case_id": "eleven_twelve_at_night",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus_cue": null,
+      "focus_segment_ids": [
+        1033
+      ],
+      "target_ids": [
+        1033,
+        1034,
+        1035,
+        1036
+      ],
+      "request_sha256": "9a7fde7849d9f4c564db172e46c8e2b142384574952a2291e2e94659484b1173",
+      "prompt_sha256": "82e9ac38250b606ff18de8216e14599b0a4cc0ae1d8b6aa7ad2bcb469eacb665",
+      "raw_http_sha256": "ceb80a3f673e7b3ae6d1c8c0a742990e73129dcb8a19b5bc5e23eefa874e4a6d",
+      "raw_candidate_sha256": "fc1bb381fdbd22f10e4c5761cd2fadac46be74c35ccc822f9851fbcdd5313292",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        1033,
+        1034,
+        1035,
+        1036
+      ],
+      "translations_sha256": "459332863559bb34a1737bcaad4a34b47f48a385f5c903f678dcd97e93d6d5f6",
+      "validation_error": null,
+      "prompt_tokens": 364,
+      "completion_tokens": 133,
+      "chat_elapsed_ms": 4587
+    },
+    {
+      "model": "7b",
+      "case_id": "products_already_available",
+      "kind": "negative",
+      "variant": "unchanged",
+      "focus_cue": null,
+      "focus_segment_ids": [
+        1038
+      ],
+      "target_ids": [
+        1037,
+        1038,
+        1039,
+        1040
+      ],
+      "request_sha256": "0f9206c2c03e3fb2e08e7834b8e10c3563541bdde18378c43feab21fe112f4bb",
+      "prompt_sha256": "3f99ed31b541a19d6cda8e1ca708e59f7b27609c370de7b07d91b76899d1ea1c",
+      "raw_http_sha256": "ec3dc4bd37d2b34a99f9bdf85e3985601a4c84c0f1db7c0a5a6f5455250b5d03",
+      "raw_candidate_sha256": "74c7762ad08cd166574a8535ef2779415f5f55148339f77e1e290a8651815c3d",
+      "status": "valid_unreviewed",
+      "translated_ids": [
+        1037,
+        1038,
+        1039,
+        1040
+      ],
+      "translations_sha256": "e983eb7ea08809a81719ced843f957713568befa25e141998741e92f9ff6bdd2",
+      "validation_error": null,
+      "prompt_tokens": 360,
+      "completion_tokens": 124,
+      "chat_elapsed_ms": 4316
+    }
+  ],
+  "language_review_state": "ai_triage_pending",
+  "human_bilingual_reviews": 0,
+  "release_admission": false
+}

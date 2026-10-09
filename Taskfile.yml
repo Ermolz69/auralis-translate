@@ -1511,9 +1511,10 @@ tasks:
       - node eval/scripts/build-regression-catalog-v45.mjs
       - node eval/scripts/build-regression-catalog-v46.mjs
       - node eval/scripts/build-regression-catalog-v47.mjs
+      - node eval/scripts/build-regression-catalog-v48.mjs
       - task: eval:regression:reg060:check
   eval:regression:catalog:recent:check:
-    desc: Verify REG-061 through REG-066 and the observed authored control outcome
+    desc: Verify recent regressions through REG-068 and both observed Vivo screens
     cmds:
       - node eval/scripts/check-regression-catalog-v41.mjs
       - node eval/scripts/check-regression-catalog-v42.mjs
@@ -1522,6 +1523,7 @@ tasks:
       - node eval/scripts/build-regression-catalog-v45.mjs
       - node eval/scripts/build-regression-catalog-v46.mjs
       - node eval/scripts/build-regression-catalog-v47.mjs
+      - node eval/scripts/build-regression-catalog-v48.mjs
   eval:regression:reg065:catalog:write:
     desc: Add the exact Vivo terminal-line-break failure after preserving catalog v44
     cmds:
@@ -1592,6 +1594,27 @@ tasks:
     cmds:
       - task: eval:regression:reg066:seams:preflight
       - node eval/scripts/probe-reg066-natural-seams.mjs
+  eval:regression:reg066:seams:report:
+    desc: Capture source-free natural-seam observations after rehashing raw evidence
+    cmds:
+      - node --check eval/scripts/check-reg066-natural-seams.mjs
+      - node eval/scripts/check-reg066-natural-seams.mjs --capture
+  eval:regression:reg066:seams:check:
+    desc: Verify exact 30-chat raw seam evidence, paired requests and failed outputs
+    cmds:
+      - node --check eval/scripts/check-reg066-natural-seams.mjs
+      - node eval/scripts/check-reg066-natural-seams.mjs
+  eval:regression:reg067068:catalog:write:
+    desc: Preserve exact tail-ID and mixed-script failures with new control cases
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v48.mjs
+      - node eval/scripts/build-regression-catalog-v48.mjs --write
+  eval:regression:reg067068:check:
+    desc: Verify raw REG-067/068 reproductions and catalog v48 without inference
+    cmds:
+      - task: eval:regression:reg066:seams:check
+      - node --check eval/scripts/build-regression-catalog-v48.mjs
+      - node eval/scripts/build-regression-catalog-v48.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:

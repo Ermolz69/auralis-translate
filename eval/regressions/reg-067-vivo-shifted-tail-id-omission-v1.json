@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "id": "REG-067",
+  "status": "observed_unfixed",
+  "severity": "major_reliability",
+  "split": "known_natural_development_not_holdout",
+  "source_family": "youtube_geekerwan_vivo_original_platform",
+  "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "frozen_request_sha256": "3447ad2350ec8975fd2b20444b498feadd3652dabc7a86e3185859b6b8bb0322",
+  "machine_report_sha256": "91399791c61f9daa8fc3f6e1adc9457871f86a7ea5641179524209b7f3dbb6ef",
+  "expected_invariant": "A four-target reply at the end of the file must include every original cue ID in order, including the final thank-you cue; an incomplete reply cannot become a checkpoint.",
+  "minimal_reproducer": {
+    "target_ids": [464, 465, 466, 467],
+    "context_id": 463,
+    "expected_reply_ids": [464, 465, 466, 467],
+    "observed_reply_ids": [464, 465, 466],
+    "models": [
+      {
+        "id": "1_8b",
+        "request_sha256": "6626705b4a4ca83df7e5582a821462096a45fcc972a705c324a52fc65595e317",
+        "raw_http_sha256": "9cd1c4513ba389f8ac8357a027ae15c500f28ab07308eb50b5d2c02f970b7eb7"
+      },
+      {
+        "id": "7b",
+        "request_sha256": "7a2401a632d9e3a95e5b49b5e3675a531bdb143a0de26edfce369b491b9bdd96",
+        "raw_http_sha256": "6956f67c8eee364713f7bd34b09ccbd5e073d577da0164d621ba823e60ef95f8"
+      }
+    ]
+  },
+  "related_controls": [
+    {
+      "id": "four_slot_future_then_repeated_thanks",
+      "source_lines": ["谢谢，我们继续合作。", "期待下一阶段带来更好的成果。", "好，感谢大家。", "谢谢，谢谢。"],
+      "expected": "Return all four IDs; keep the future expectation and both final thank-you cues.",
+      "outcome": "pending_model_screen"
+    },
+    {
+      "id": "four_slot_ok_and_tail_thanks",
+      "source_lines": ["好的，OK。", "我们期待继续合作。", "以后希望有更好的产品。", "好好，谢谢。"],
+      "expected": "Return all four IDs; the final thanks is not absorbed by the preceding future-product cue.",
+      "outcome": "pending_model_screen"
+    }
+  ],
+  "negative_controls": [
+    {
+      "id": "original_three_slot_tail",
+      "source_cue_ids": [465, 466, 467],
+      "expected": "The original three-target end group remains structurally valid without any source or target rewriting.",
+      "outcome": "observed_both_models_valid_in_seam_screen"
+    },
+    {
+      "id": "four_distinct_complete_cues",
+      "source_lines": ["今天开始讨论。", "明天继续测试。", "后天给出结论。", "谢谢大家。"],
+      "expected": "Return all four IDs; an ordinary final cue must not be dropped.",
+      "outcome": "pending_model_screen"
+    }
+  ],
+  "human_review": "missing",
+  "product_status": "v8_unchanged_shift_rejected"
+}
