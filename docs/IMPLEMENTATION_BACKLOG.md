@@ -107,6 +107,13 @@ have broad topic overlap with the corresponding SRT cues, with several
 explicit recognition errors. Mandarin was forced rather than independently
 detected; no person listened or mapped speakers. `DATA-03` stays in progress
 with zero newly eligible cues. This diagnostic does not activate `ASR-01`.
+The consolidated [18:36 scene selection and three-point speech screen](../eval/experiments/2026-10-09-youtube-chinese-scene-selection-result.md)
+rechecked the retained caption, media and audio hashes and identifies the
+specific cue/time agreements and ASR errors. The Commons video page still
+awaits license review, and the regular Chinese track's authorship and rights
+are unresolved. This pair is suitable only for private `needs_review`
+development diagnostics until source listening and rights are established;
+the scene selection itself does not admit any cues or close G3–G5/A1–A6.
 
 The [original-platform Vivo v8 long-file screen](../eval/experiments/2026-10-09-vivo-original-v8-long-result.md)
 adds partial `CTX-02`/`LONG-01`/`LONG-02`/`LONG-04`/`EVAL-04`/`DECIDE-01`
