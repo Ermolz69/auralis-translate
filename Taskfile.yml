@@ -2385,6 +2385,16 @@ tasks:
     cmds:
       - node --check eval/scripts/export-v8-vivo-original-offline.mjs
       - node eval/scripts/export-v8-vivo-original-offline.mjs
+  eval:regression:reg065:recovery:preflight:
+    desc: Verify pinned REG-065 binary, model, original failed Vivo state and one-copy budget
+    cmds:
+      - node --check eval/scripts/probe-reg065-vivo-copy-recovery.mjs
+      - node eval/scripts/probe-reg065-vivo-copy-recovery.mjs --preflight
+  eval:regression:reg065:recovery:probe:
+    desc: Resume the failed 1.8B Vivo run once in an isolated copy with the REG-065 binary
+    cmds:
+      - task: eval:regression:reg065:recovery:preflight
+      - node eval/scripts/probe-reg065-vivo-copy-recovery.mjs
   eval:long:v8:asus:preflight:
     desc: Verify pinned natural 268-cue source, paired media, two v8 profiles, models and CLI
     env:
