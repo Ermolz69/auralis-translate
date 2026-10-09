@@ -75,6 +75,7 @@ assert(current.includes('2026-10-09-reg066-natural-seams-result.md'));
 assert(current.includes('catalog-v48.json'));
 assert(current.includes('2026-10-09-vivo-original-v8-long-result.md'));
 assert(current.includes('2026-10-09-youtube-chinese-scene-selection-result.md'));
+assert(current.includes('2026-10-10-youtube-vivo-source-recheck.md'));
 assert(html.includes('id="source-name-registry"'));
 assert(current.includes('2026-10-09-release-05-audit-attempt-v15.md'));
 assert(current.includes('https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'));
