@@ -114,6 +114,11 @@ awaits license review, and the regular Chinese track's authorship and rights
 are unresolved. This pair is suitable only for private `needs_review`
 development diagnostics until source listening and rights are established;
 the scene selection itself does not admit any cues or close G3–G5/A1–A6.
+The [10 October source recheck](../eval/experiments/2026-10-10-youtube-vivo-source-recheck.md)
+reran both pinned private caption and three-window ASR checks successfully.
+The creator's separate Bilibili post adds a no-repost notice to the open
+cross-platform rights review; the YouTube CC metadata and Chinese-caption
+authorship remain distinct facts. No source or release gate was promoted.
 
 The [original-platform Vivo v8 long-file screen](../eval/experiments/2026-10-09-vivo-original-v8-long-result.md)
 adds partial `CTX-02`/`LONG-01`/`LONG-02`/`LONG-04`/`EVAL-04`/`DECIDE-01`
