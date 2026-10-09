@@ -376,6 +376,18 @@ export async function loadCurrentReport(root) {
   assert.equal(relationCross.warning_count, 0);
   assert.equal(relationCross.warning_precision, null);
   assert.equal(relationCross.release_admitted, false);
+  const countCategoryRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-reg040-count-category-review-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(countCategoryRaw).digest('hex'),
+    'cf4967f718ee1d0b1dd4bd940ed315e26ef64421a777ea1680fa8d2e2c11d960');
+  const countCategory = JSON.parse(countCategoryRaw);
+  assert.equal(countCategory.source_cues, 263);
+  assert.equal(countCategory.source_target_pairs, 526);
+  assert.equal(countCategory.control_count, 18);
+  assert.deepEqual(countCategory.arms[0].warnings,
+    [{ cue_id: 35, kind: 'count_category_swap' }]);
+  assert.deepEqual(countCategory.arms[1].warnings, []);
+  assert.equal(countCategory.product_rule_admitted, false);
   const catalogV50Raw = await fs.readFile(path.join(root,
     'eval/regressions/catalog-v50.json'), 'utf8');
   assert.equal(createHash('sha256').update(catalogV50Raw).digest('hex'),
@@ -580,6 +592,17 @@ export async function loadCurrentReport(root) {
       human_bilingual_reviews: relationCross.human_bilingual_reviews,
       release_admitted: relationCross.release_admitted,
       report_sha256: createHash('sha256').update(relationCrossRaw).digest('hex') },
+    reg040_count_category: { source_cues: countCategory.source_cues,
+      source_target_pairs: countCategory.source_target_pairs,
+      authored_controls: countCategory.control_count,
+      source_relations: countCategory.arms[0].source_relation_cue_ids.length,
+      one_b_warnings: countCategory.arms[0].warnings.length,
+      seven_b_warnings: countCategory.arms[1].warnings.length,
+      seven_b_target_relations: countCategory.arms[1].target_relation_cue_ids.length,
+      model_requests: countCategory.model_requests,
+      human_bilingual_reviews: countCategory.arms[0].human_bilingual_reviews,
+      product_rule_admitted: countCategory.product_rule_admitted,
+      report_sha256: createHash('sha256').update(countCategoryRaw).digest('hex') },
     youtube_v8_long: { source_cues: vivoV8.source_cues,
       small_prefix_cues: vivoV8.arms[0].covered_prefix_cues,
       large_complete_cues: vivoV8.arms[1].covered_prefix_cues,
