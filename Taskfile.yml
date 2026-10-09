@@ -1716,6 +1716,27 @@ tasks:
       - node --check eval/scripts/focus-slot-v1.mjs
       - node --check eval/scripts/probe-vivo-focus-slot-v1.mjs
       - node --test --test-isolation=none eval/scripts/tests/focus-slot-v1.test.mjs
+  eval:vivo:post-edit:unit:
+    desc: Verify scene-level post-edit source inventory and untrusted candidate rejection
+    cmds:
+      - node --check eval/scripts/vivo-scene-post-edit-v1.mjs
+      - node --check eval/scripts/probe-vivo-scene-post-edit-v1.mjs
+      - node --test --test-isolation=none eval/scripts/tests/vivo-scene-post-edit-v1.test.mjs
+  eval:vivo:post-edit:freeze:
+    desc: Freeze ten source-and-draft revision request identities before inference
+    cmds:
+      - task: eval:vivo:post-edit:unit
+      - node eval/scripts/probe-vivo-scene-post-edit-v1.mjs --freeze
+  eval:vivo:post-edit:preflight:
+    desc: Rehash full Chinese source, Russian draft, controls, model and requests
+    cmds:
+      - task: eval:vivo:post-edit:unit
+      - node eval/scripts/probe-vivo-scene-post-edit-v1.mjs --preflight
+  eval:vivo:post-edit:probe:
+    desc: Run one frozen ten-chat 7B scene post-edit comparison
+    cmds:
+      - task: eval:vivo:post-edit:preflight
+      - node eval/scripts/probe-vivo-scene-post-edit-v1.mjs --probe
   eval:focus-slot:freeze:
     desc: Freeze bounded 7B batch versus one-target requests before inference
     cmds:
