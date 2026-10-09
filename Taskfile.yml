@@ -1642,6 +1642,29 @@ tasks:
     cmds:
       - node --check eval/scripts/source-relation-review-v1.mjs
       - node --test --test-isolation=none eval/scripts/tests/source-relation-review-v1.test.mjs
+  eval:focus-slot:unit:
+    desc: Verify single target isolation preserves the Chinese source inventory
+    cmds:
+      - node --check eval/scripts/focus-slot-v1.mjs
+      - node --check eval/scripts/probe-vivo-focus-slot-v1.mjs
+      - node --test --test-isolation=none eval/scripts/tests/focus-slot-v1.test.mjs
+  eval:focus-slot:freeze:
+    desc: Freeze bounded 7B batch versus one-target requests before inference
+    cmds:
+      - task: eval:focus-slot:unit
+      - node --check eval/scripts/probe-vivo-focus-slot-v1.mjs
+      - node eval/scripts/probe-vivo-focus-slot-v1.mjs --freeze
+  eval:focus-slot:preflight:
+    desc: Rebuild exact focus-slot request identities without model calls
+    cmds:
+      - task: eval:focus-slot:unit
+      - node --check eval/scripts/probe-vivo-focus-slot-v1.mjs
+      - node eval/scripts/probe-vivo-focus-slot-v1.mjs --preflight
+  eval:focus-slot:probe:
+    desc: Run the frozen 20-chat local 7B focus-slot comparison
+    cmds:
+      - task: eval:focus-slot:preflight
+      - node eval/scripts/probe-vivo-focus-slot-v1.mjs --probe
   eval:source-relations:report:
     desc: Capture pinned full-draft and saved-pair relation warnings without inference
     cmds:
