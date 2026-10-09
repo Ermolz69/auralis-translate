@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "REG-040-count-category-authored-development-v1",
+  "provenance": "Authored Chinese source and proposed Russian candidates by Ulya (AI), no human adjudication",
+  "split": "exposed_development_not_holdout",
+  "cases": [
+    {"id": "known_swap", "source": "我们有三十道点心，八道甜品。", "target": "У нас тридцать десертов и восемь закусок.", "warn": true},
+    {"id": "known_correct", "source": "我们有三十道点心，八道甜品。", "target": "У нас тридцать закусок и восемь десертов.", "warn": false},
+    {"id": "reversed_source_correct", "source": "我们有三十道甜品，八道点心。", "target": "У нас тридцать десертов и восемь закусок.", "warn": false},
+    {"id": "reversed_source_swapped", "source": "我们有三十道甜品，八道点心。", "target": "У нас тридцать закусок и восемь десертов.", "warn": true},
+    {"id": "digits_swapped", "source": "现在有30道点心、8道甜品。", "target": "Сейчас есть 30 десертов и 8 закусок.", "warn": true},
+    {"id": "dim_sum_alias_correct", "source": "有三十道点心，八道甜品。", "target": "Есть тридцать димсамов и восемь десертов.", "warn": false},
+    {"id": "generic_paraphrase_abstain", "source": "有三十道点心，八道甜品。", "target": "Есть тридцать блюд из теста и восемь десертов.", "warn": false},
+    {"id": "negated_target_swap_abstain", "source": "有三十道点心，八道甜品。", "target": "Не тридцать десертов, а тридцать закусок и восемь десертов.", "warn": false},
+    {"id": "unrelated_people_count", "source": "有三十名员工，八道甜品。", "target": "Есть тридцать сотрудников и восемь десертов.", "warn": false},
+    {"id": "partial_target_abstain", "source": "有三十道点心，八道甜品。", "target": "Есть тридцать десертов.", "warn": false},
+    {"id": "target_order_reversed_correct", "source": "有三十道点心，八道甜品。", "target": "Есть восемь десертов и тридцать закусок.", "warn": false},
+    {"id": "target_order_reversed_swap", "source": "有三十道点心，八道甜品。", "target": "Есть восемь закусок и тридцать десертов.", "warn": true},
+    {"id": "different_numbers_swapped", "source": "有十二道点心，五道甜品。", "target": "Есть двенадцать десертов и пять закусок.", "warn": true},
+    {"id": "different_numbers_correct", "source": "有十二道点心，五道甜品。", "target": "Есть двенадцать закусок и пять десертов.", "warn": false},
+    {"id": "same_category_source_abstain", "source": "有三十道点心，八道点心。", "target": "Есть тридцать закусок и восемь десертов.", "warn": false},
+    {"id": "negated_source_abstain", "source": "没有三十道点心，只有八道甜品。", "target": "Есть тридцать десертов и восемь закусок.", "warn": false},
+    {"id": "single_category_source_abstain", "source": "有三十道点心。", "target": "Есть тридцать десертов и восемь закусок.", "warn": false},
+    {"id": "unsupported_english_abstain", "source": "有三十道点心，八道甜品。", "target": "There are thirty desserts and eight snacks.", "warn": false}
+  ]
+}
