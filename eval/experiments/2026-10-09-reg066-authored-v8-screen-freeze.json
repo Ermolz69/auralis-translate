@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "experiment": "REG-066-authored-v8-two-model-2026-10-09-v1",
+  "split": "known_authored_development_not_holdout",
+  "pinned": {
+    "pack": "33b74c9a337acd931b87a4f101e54070c95a5ed69a40f04ab342768da24b061e",
+    "catalog": "93933952cae2533230e67ee040caad98dd97e12d8ac13839ae5b9af3bcaa83cd",
+    "old_report": "84a737e1cc8c7b468ea66718f2507882929344f259d7824d9071953d24c1a5b5",
+    "runtime": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+    "prompt_prefix": "1b4a2ae96e2526a2d096d41cd94215428d87e30db7ab614a222e65b6baac8ebb"
+  },
+  "limits": {
+    "cases": 10,
+    "chats": 20,
+    "preflights": 40,
+    "server_starts": 2,
+    "seed": 101,
+    "retries": 0,
+    "max_total_tokens": 100000,
+    "context_tokens": 2048,
+    "response_tokens": 1024,
+    "safety_tokens": 64,
+    "per_request_ms": 120000,
+    "per_preflight_ms": 30000,
+    "readiness_ms": 180000,
+    "max_wall_ms": 720000
+  },
+  "models": [
+    {
+      "id": "1_8b",
+      "sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+      "manifest_sha256": "1803aeb68428e1b138a17ed72b01abe1cc5fbc5845b5bca66a402b8936b1081f",
+      "alias": "auralis-hy-mt2-1.8b-q4"
+    },
+    {
+      "id": "7b",
+      "sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+      "manifest_sha256": "c287c53efbb4ce78471b64648ea3dd2f521363df0e168b7a61df1fdd6ae0479a",
+      "alias": "auralis-hy-mt2-7b-q4"
+    }
+  ],
+  "requests": [
+    {
+      "model": "1_8b",
+      "case_id": "9400_current_generation",
+      "kind": "related",
+      "focus_segment_ids": [
+        1001
+      ],
+      "prompt_sha256": "01f75849c414865804a7b9728db8635ccfe2176a62911636edcf7702b3db6997",
+      "request_sha256": "19ce18973ce6e71218ec71037a835f22f965824d7d4f26a8c3f4b14ed75976f2"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "thirty_six_months_before_launch",
+      "kind": "related",
+      "focus_segment_ids": [
+        1006
+      ],
+      "prompt_sha256": "b053af898d3a5e8c8a1b471bcede17de0b226dfe13f95e34919158277e0941c3",
+      "request_sha256": "e3c52e664c5796a2eceab1f061a16bc4af85e39db2669aa989839c050d56f168"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "joint_team_spans_cues",
+      "kind": "related",
+      "focus_segment_ids": [
+        1010,
+        1011
+      ],
+      "prompt_sha256": "eff4799f65f0b45aefc89cae226051c54f4424216eaae48af201a22cdb724c33",
+      "request_sha256": "bac62bf6d4757ef6fea27972a28b798983817c34f7626c6e96f739ebdc150ce4"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "work_until_two_three",
+      "kind": "related",
+      "focus_segment_ids": [
+        1016
+      ],
+      "prompt_sha256": "d0dbea255db6ab5c46fd409419494d0aef30b96e537b4483793269531a2f9c85",
+      "request_sha256": "3536d4e725ce826de150d0d301466cd06bff0ec90b0cd3e2fea59876a27533c8"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "future_products_after_cooperation",
+      "kind": "related",
+      "focus_segment_ids": [
+        1017
+      ],
+      "prompt_sha256": "ca48e19ffbfdd90044be5d2da181391f92453e50b55b96efc2eab0e0b45d23e7",
+      "request_sha256": "911d5cf8856517675726718f2ecaea686a30c4c461385a141a740fc053efb1ce"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "explicit_first_generation",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1022
+      ],
+      "prompt_sha256": "489c0b8c2f482f66878aaf5f43aa25bd27d5a416bd603c63f95bc89e9b86ad27",
+      "request_sha256": "9acd357b6776555d7b2081c58a0995157f2159fe9b2885a77881b2d96ee41bea"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "thirty_six_months_after_start",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1027
+      ],
+      "prompt_sha256": "d56506df5c623d858965914108473f3eafb1d358987c3653e213cfa262c2a0a4",
+      "request_sha256": "ae1b6054b565e7deda84119605d2b3d89f60ba704ab67fc0ce0a37b71ae496eb"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "money_and_team_both_explicit",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1032
+      ],
+      "prompt_sha256": "f7f9f616360286919512b3486a99a6c904ca51f85b3c74d64e30100a580c7174",
+      "request_sha256": "016b106b92e9c0bdd63b9515c941c3ce76e1ee31fd570b9b0b3f7ed7aee0b012"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "eleven_twelve_at_night",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1033
+      ],
+      "prompt_sha256": "82e9ac38250b606ff18de8216e14599b0a4cc0ae1d8b6aa7ad2bcb469eacb665",
+      "request_sha256": "7482b5e1139002db3fda4ad157753d91ad2e96f4067c670652467fc1b2ea0344"
+    },
+    {
+      "model": "1_8b",
+      "case_id": "products_already_available",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1038
+      ],
+      "prompt_sha256": "3f99ed31b541a19d6cda8e1ca708e59f7b27609c370de7b07d91b76899d1ea1c",
+      "request_sha256": "aeaaf600bcf266689c7c675aee51c6b086e66b8f6eb5409af2a38dfea55823bd"
+    },
+    {
+      "model": "7b",
+      "case_id": "9400_current_generation",
+      "kind": "related",
+      "focus_segment_ids": [
+        1001
+      ],
+      "prompt_sha256": "01f75849c414865804a7b9728db8635ccfe2176a62911636edcf7702b3db6997",
+      "request_sha256": "60259560515a910d1aaf3a8e0c328eb225d510b0ce7797f15dc077d46a22ceb8"
+    },
+    {
+      "model": "7b",
+      "case_id": "thirty_six_months_before_launch",
+      "kind": "related",
+      "focus_segment_ids": [
+        1006
+      ],
+      "prompt_sha256": "b053af898d3a5e8c8a1b471bcede17de0b226dfe13f95e34919158277e0941c3",
+      "request_sha256": "6cf4747c4d53d56262f06f29f06297608a2a75f276e234f4f1b138b689196931"
+    },
+    {
+      "model": "7b",
+      "case_id": "joint_team_spans_cues",
+      "kind": "related",
+      "focus_segment_ids": [
+        1010,
+        1011
+      ],
+      "prompt_sha256": "eff4799f65f0b45aefc89cae226051c54f4424216eaae48af201a22cdb724c33",
+      "request_sha256": "33b2e8d525720d507fc070ec24d44d460011ee4d326117607f68688182a54588"
+    },
+    {
+      "model": "7b",
+      "case_id": "work_until_two_three",
+      "kind": "related",
+      "focus_segment_ids": [
+        1016
+      ],
+      "prompt_sha256": "d0dbea255db6ab5c46fd409419494d0aef30b96e537b4483793269531a2f9c85",
+      "request_sha256": "87d6163b8faade84c8e7c1c53757e71348d0f2fd9c14e6b8df695c283a9b6ec3"
+    },
+    {
+      "model": "7b",
+      "case_id": "future_products_after_cooperation",
+      "kind": "related",
+      "focus_segment_ids": [
+        1017
+      ],
+      "prompt_sha256": "ca48e19ffbfdd90044be5d2da181391f92453e50b55b96efc2eab0e0b45d23e7",
+      "request_sha256": "4f5368dbedd5c0af483423f741919aff0b826c622f40fbf2c5499758cfed27fb"
+    },
+    {
+      "model": "7b",
+      "case_id": "explicit_first_generation",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1022
+      ],
+      "prompt_sha256": "489c0b8c2f482f66878aaf5f43aa25bd27d5a416bd603c63f95bc89e9b86ad27",
+      "request_sha256": "8f42bf324f5b0bff2fff4d5e28088474b6391fea0cecccd803543e57e7ff49e4"
+    },
+    {
+      "model": "7b",
+      "case_id": "thirty_six_months_after_start",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1027
+      ],
+      "prompt_sha256": "d56506df5c623d858965914108473f3eafb1d358987c3653e213cfa262c2a0a4",
+      "request_sha256": "78f07ac9d7526339cca7835a2deb9eb0a41621231734257c1f3813d51e565482"
+    },
+    {
+      "model": "7b",
+      "case_id": "money_and_team_both_explicit",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1032
+      ],
+      "prompt_sha256": "f7f9f616360286919512b3486a99a6c904ca51f85b3c74d64e30100a580c7174",
+      "request_sha256": "1d23146932f192a04b987c5294790bd784a26922e519eaaa257a05caf60efa35"
+    },
+    {
+      "model": "7b",
+      "case_id": "eleven_twelve_at_night",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1033
+      ],
+      "prompt_sha256": "82e9ac38250b606ff18de8216e14599b0a4cc0ae1d8b6aa7ad2bcb469eacb665",
+      "request_sha256": "9a7fde7849d9f4c564db172e46c8e2b142384574952a2291e2e94659484b1173"
+    },
+    {
+      "model": "7b",
+      "case_id": "products_already_available",
+      "kind": "negative",
+      "focus_segment_ids": [
+        1038
+      ],
+      "prompt_sha256": "3f99ed31b541a19d6cda8e1ca708e59f7b27609c370de7b07d91b76899d1ea1c",
+      "request_sha256": "0f9206c2c03e3fb2e08e7834b8e10c3563541bdde18378c43feab21fe112f4bb"
+    }
+  ]
+}

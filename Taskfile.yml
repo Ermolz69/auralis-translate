@@ -1540,6 +1540,21 @@ tasks:
     cmds:
       - node --check eval/scripts/build-regression-catalog-v46.mjs
       - node eval/scripts/build-regression-catalog-v46.mjs
+  eval:regression:reg066:screen:freeze:
+    desc: Freeze the 20 authored v8 request identities before any model call
+    cmds:
+      - node --check eval/scripts/probe-reg066-authored-v8-screen.mjs
+      - node eval/scripts/probe-reg066-authored-v8-screen.mjs --freeze
+  eval:regression:reg066:screen:preflight:
+    desc: Verify paired v8 model, runtime, prompt and authored-control identities
+    cmds:
+      - node --check eval/scripts/probe-reg066-authored-v8-screen.mjs
+      - node eval/scripts/probe-reg066-authored-v8-screen.mjs --preflight
+  eval:regression:reg066:screen:probe:
+    desc: Run one bounded ten-case 1.8B/7B authored fact screen with real model calls
+    cmds:
+      - task: eval:regression:reg066:screen:preflight
+      - node eval/scripts/probe-reg066-authored-v8-screen.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:
