@@ -1800,6 +1800,27 @@ tasks:
     cmds:
       - task: eval:vivo:quantity:preflight
       - node eval/scripts/check-vivo-quantity-feature-v1.mjs --check
+  eval:vivo:quantity:v2:unit:
+    desc: Verify REG-074 controls for a stricter future source sampler
+    cmds:
+      - node --check eval/scripts/source-quantity-feature-v2.mjs
+      - node --check eval/scripts/check-vivo-quantity-feature-v2.mjs
+      - node --test --test-isolation=none eval/scripts/tests/source-quantity-feature-v2.test.mjs
+  eval:vivo:quantity:v2:preflight:
+    desc: Verify original source, rejected v1 report and pinned false positives
+    cmds:
+      - task: eval:vivo:quantity:v2:unit
+      - node eval/scripts/check-vivo-quantity-feature-v2.mjs --preflight
+  eval:vivo:quantity:v2:report:
+    desc: Capture one source-only v2 replay without replacing v1
+    cmds:
+      - task: eval:vivo:quantity:v2:preflight
+      - node eval/scripts/check-vivo-quantity-feature-v2.mjs --capture
+  eval:vivo:quantity:v2:check:
+    desc: Recompute the retained v2 feature scan from the same Chinese bytes
+    cmds:
+      - task: eval:vivo:quantity:v2:preflight
+      - node eval/scripts/check-vivo-quantity-feature-v2.mjs --check
   eval:vivo:post-edit:freeze:
     desc: Freeze ten source-and-draft revision request identities before inference
     cmds:
