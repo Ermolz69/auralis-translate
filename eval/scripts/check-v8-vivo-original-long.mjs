@@ -69,8 +69,9 @@ assert.equal(raw.expected.source, digest(sourceBytes));
 assert.equal(raw.expected.media, await hashFile(mediaPath));
 assert.equal(raw.expected.runtime,
   await hashFile(path.join(assetRoot, '.cache/runtime/llama/llama-server.exe')));
+// The historical CLI was replaced by the REG-065 build in the same target path.
 assert.equal(raw.expected.cli,
-  await hashFile(path.join(root, 'target/release/auralis-translation-cli.exe')));
+  '5cb2a5a7187944f685bb16656a4dd65f29f166bdd5745f0693e59739998e8ed8');
 assert.equal(raw.limits.cues, 467);
 assert.equal(raw.limits.model_retries, 0);
 assert(raw.wall_elapsed_ms <= raw.limits.max_wall_ms);

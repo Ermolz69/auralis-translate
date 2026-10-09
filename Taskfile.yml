@@ -1509,15 +1509,17 @@ tasks:
       - node eval/scripts/check-regression-catalog-v43.mjs
       - node eval/scripts/check-regression-catalog-v44.mjs
       - node eval/scripts/build-regression-catalog-v45.mjs
+      - node eval/scripts/build-regression-catalog-v46.mjs
       - task: eval:regression:reg060:check
   eval:regression:catalog:recent:check:
-    desc: Verify REG-061 through REG-065 and the retained bounded outcomes
+    desc: Verify REG-061 through REG-066 and the retained bounded outcomes
     cmds:
       - node eval/scripts/check-regression-catalog-v41.mjs
       - node eval/scripts/check-regression-catalog-v42.mjs
       - node eval/scripts/check-regression-catalog-v43.mjs
       - node eval/scripts/check-regression-catalog-v44.mjs
       - node eval/scripts/build-regression-catalog-v45.mjs
+      - node eval/scripts/build-regression-catalog-v46.mjs
   eval:regression:reg065:catalog:write:
     desc: Add the exact Vivo terminal-line-break failure after preserving catalog v44
     cmds:
@@ -1528,6 +1530,16 @@ tasks:
     cmds:
       - node --check eval/scripts/build-regression-catalog-v45.mjs
       - node eval/scripts/build-regression-catalog-v45.mjs
+  eval:regression:reg066:catalog:write:
+    desc: Preserve REG-065 recovery and the paired Vivo fact-risk controls in catalog v46
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v46.mjs
+      - node eval/scripts/build-regression-catalog-v46.mjs --write
+  eval:regression:reg066:check:
+    desc: Verify exact paired raw Vivo responses and ten new pending controls without inference
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v46.mjs
+      - node eval/scripts/build-regression-catalog-v46.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:
@@ -2395,6 +2407,16 @@ tasks:
     cmds:
       - task: eval:regression:reg065:recovery:preflight
       - node eval/scripts/probe-reg065-vivo-copy-recovery.mjs
+  eval:regression:reg065:recovery:report:
+    desc: Capture the verified source-free REG-065 recovery report
+    cmds:
+      - node --check eval/scripts/check-reg065-vivo-copy-recovery.mjs
+      - node eval/scripts/check-reg065-vivo-copy-recovery.mjs --capture
+  eval:regression:reg065:recovery:check:
+    desc: Rehash REG-065 raw replies, copied state, source mapping and full output
+    cmds:
+      - node --check eval/scripts/check-reg065-vivo-copy-recovery.mjs
+      - node eval/scripts/check-reg065-vivo-copy-recovery.mjs
   eval:long:v8:asus:preflight:
     desc: Verify pinned natural 268-cue source, paired media, two v8 profiles, models and CLI
     env:

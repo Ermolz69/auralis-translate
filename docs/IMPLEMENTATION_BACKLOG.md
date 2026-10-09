@@ -898,3 +898,27 @@ natural long-file quality, G3-G5 and RELEASE-05 remain open.
 The next bounded `EVAL-04`/`CTX-03` source-fact screen and independent `DATA-03`
 natural-source admission are specified in the
 [execution prompts](GOAL_FIX_PROMPTS.md#next-executable-assignments-after-both-rejections).
+
+## 9 October original Vivo long-file and REG-065 recovery
+
+The [frozen original-platform comparison](../eval/experiments/2026-10-09-vivo-original-v8-long-result.md)
+uses one matched 467-cue Chinese SRT and video. V8/7B generated one complete
+`needs_review` SRT; v8/1.8B stopped safely after 112 cues on terminal line
+breaks in four target fields. [REG-065](../eval/regressions/reg-065-vivo-v8-terminal-line-break-v1.json)
+retains that exact raw failure and nine related/negative controls. The narrow
+provider normalization and [single copy-only recovery](../eval/experiments/2026-10-09-vivo-reg065-copy-recovery-result.md)
+produced a 467/467-cue 1.8B SRT with 117 durable batches and the original
+failed state unchanged. The fresh model reply at the old failure point lacked
+the line break, so only deterministic controls isolate the parser fix.
+
+These records add partial `CTX-02`, `LONG-01/02/04` and `EVAL-04` evidence.
+`LONG-04` remains planned: this is one copy, one source and no independent
+language or speaker review. AI source-aware triage finds recurrent fact errors
+in both complete drafts; neither is promoted. [REG-066 and catalog v46](../eval/regressions/catalog-v46.json)
+pin five paired request/response reproducers plus five related and five
+negative authored controls for the next bounded model screen; those controls
+have not yet been run. `DATA-03`, `CTX-03`, `DECIDE-01`,
+G3–G5, voice acceptance and `RELEASE-05` remain open. The next bounded task is
+a same-source fact-preservation screen with fresh related and negative
+controls, followed by an independently reviewed full candidate if a reviewer
+becomes available. The owner has ruled out volunteer outreach.

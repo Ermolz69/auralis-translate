@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "id": "REG-066",
+  "status": "ai_triaged_unfixed",
+  "severity": "major",
+  "split": "known_natural_development_not_holdout",
+  "source_family": "youtube_geekerwan_vivo_original_platform",
+  "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "large_original_report_sha256": "84a737e1cc8c7b468ea66718f2507882929344f259d7824d9071953d24c1a5b5",
+  "small_recovery_report_sha256": "b2cee86b74b0e60a9316c3ef27d0a599113972a6862fbae9d7560583952cf54b",
+  "model_response_reproducers": [
+    {
+      "focus_cue": 60,
+      "batch_first_cue": 57,
+      "expected_fact": "This year's 9400 generation; no French word is licensed in Russian output.",
+      "small_request_sha256": "6932274c9bde4d48487f4e8c401896fce64df31c06cc1776ec7f00ab104bfe09",
+      "small_raw_response_sha256": "473f3396b6867e11d66ccebc56e861385ec9fa4103f4bc7328d2b4e9c8ee83c5",
+      "large_request_sha256": "240365ebc6528a97247a7d4240d701d771a0b730007e44147fca9c18eb40a436",
+      "large_raw_response_sha256": "1507233323ec51243328555d807bea2f4b611cdaea655f9cd7f9550d51fc8818"
+    },
+    {
+      "focus_cue": 276,
+      "batch_first_cue": 273,
+      "expected_fact": "Joint planning begins as early as 36 months in advance and extends into later system-level collaboration.",
+      "small_request_sha256": "d41581924aaccfeefc3aacf50df723e2af5ad77f8146b80ac40d5301d41a9ee3",
+      "small_raw_response_sha256": "674cbd02d2fe44fea154d1d4426d024aff0fb5595796e6a97eee25680a5d7ca2",
+      "large_request_sha256": "7f5912172bbfb157cefe7e01d78b4a8315468dedb3408135ccb7b0f3a4707ca0",
+      "large_raw_response_sha256": "4f738d9273a27521e52f4839cdaf595031ec1802066db19216c16d527a1c9a94"
+    },
+    {
+      "focus_cue": 280,
+      "batch_first_cue": 277,
+      "expected_fact": "Vivo and MediaTek jointly committed an elite development team of more than one thousand people, continuing across cue 281.",
+      "small_request_sha256": "5153f6db08516e7b6087bfda6edd6f90c047cff83a7fb81f71642f0851db7c8e",
+      "small_raw_response_sha256": "4546fce7d94cb06b9020eaefcd4a9eac107be43f61da9da63b4080f1a840f43f",
+      "large_request_sha256": "479d15df19a4ec2d38285a41ff85a9a93161ba08b2862d6d2df821b941c0aab0",
+      "large_raw_response_sha256": "61c9efe6137f4adebaaca3e66ef9c6424baa0133d81ff9a77e7c1fbf68e0eed9"
+    },
+    {
+      "focus_cue": 328,
+      "batch_first_cue": 325,
+      "expected_fact": "The team often worked until one or two in the morning, not eleven or twelve at night.",
+      "small_request_sha256": "bac8f3b029b4753609799c4adb56e167b12c936767a9dbbaf3cee5292cb2f8c2",
+      "small_raw_response_sha256": "bdd021c77757652e0daf352f748d83634dbf83ac845ec43b3b990ef20c06f3bc",
+      "large_request_sha256": "6784a402bb391d44731bfa1115b30da2d62cff2e05659805644de84c722f991a",
+      "large_raw_response_sha256": "7e25df959e6155ed14db7fffd3999ad2adcf022013cb5eb5eebccd10f3efa917"
+    },
+    {
+      "focus_cue": 466,
+      "batch_first_cue": 465,
+      "expected_fact": "The speaker hopes further cooperation will bring better products in the future, not that they are already available.",
+      "small_request_sha256": "2735fe11fa08a0a9c19aa7abb784b69e5ddbdb78a90fb2ef43c9daa133af5e0a",
+      "small_raw_response_sha256": "90f4163399df2c0a341432f1fe2f6e5ed1f022dd17bae27849daa5e3ddb52180",
+      "large_request_sha256": "f2220f0d9a958a7d179f4bd69da746b9b7be83634e73b2ca674bc5cbaa6aafc2",
+      "large_raw_response_sha256": "5b23b09e101ce5b0a6f088777df13c0c62b0b0970f19ac28153af02c40f073f9"
+    }
+  ],
+  "related_controls": [
+    { "id": "9400_current_generation", "source": "今年这一代9400继续改进了功耗。", "expected": "Keep 9400 as this year's generation; do not add an ordinal or foreign-language word.", "outcome": "pending_model_screen" },
+    { "id": "thirty_six_months_before_launch", "source": "我们提前三十六个月开始规划，后来才进入软硬件联合开发。", "expected": "Planning began 36 months in advance of the later development, not before an imaginary earliest stage.", "outcome": "pending_model_screen" },
+    { "id": "joint_team_spans_cues", "source_lines": ["两家公司共同投入了一支", "超过一千人的开发团队。"], "expected": "A jointly committed development team has over one thousand people; do not substitute money.", "outcome": "pending_model_screen" },
+    { "id": "work_until_two_three", "source": "我们经常工作到凌晨两三点。", "expected": "Keep 02:00–03:00 in the morning.", "outcome": "pending_model_screen" },
+    { "id": "future_products_after_cooperation", "source": "希望接下来的合作能给大家带来更好的产品。", "expected": "Future hope, with no assertion that the better products already exist.", "outcome": "pending_model_screen" }
+  ],
+  "negative_controls": [
+    { "id": "explicit_first_generation", "source": "这是第一代9400系列产品。", "expected": "An explicit first-generation claim may be translated.", "outcome": "pending_model_screen" },
+    { "id": "thirty_six_months_after_start", "source": "项目启动三十六个月之后，我们才开始联合开发。", "expected": "This explicitly says 36 months after the project began.", "outcome": "pending_model_screen" },
+    { "id": "money_and_team_both_explicit", "source": "我们投入了一千万元，也组建了一支一千人的团队。", "expected": "Both ten million yuan and a one-thousand-person team must survive.", "outcome": "pending_model_screen" },
+    { "id": "eleven_twelve_at_night", "source": "我们工作到晚上十一二点。", "expected": "Keep 23:00–00:00; do not force 01:00–02:00.", "outcome": "pending_model_screen" },
+    { "id": "products_already_available", "source": "更好的产品现在已经上市了。", "expected": "Present availability is explicit here.", "outcome": "pending_model_screen" }
+  ],
+  "human_review": "missing",
+  "release_gate": "open"
+}

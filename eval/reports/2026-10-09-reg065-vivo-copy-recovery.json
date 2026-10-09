@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "experiment": "REG-065-vivo-v8-1.8b-copy-recovery-2026-10-09-v1",
+  "task_ids": [
+    "LONG-02",
+    "LONG-04",
+    "EVAL-04"
+  ],
+  "split": "known_natural_development_not_holdout",
+  "source_url": "https://www.youtube.com/watch?v=_G4e2p1p-is",
+  "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "source_cues": 467,
+  "original_report_sha256": "84a737e1cc8c7b468ea66718f2507882929344f259d7824d9071953d24c1a5b5",
+  "original_db_sha256": "9b631a1edf5e9e3fa6e1b660a35c414d8b34b2f35f522ea2def4a8d4705666b1",
+  "private_report_sha256": "b2cee86b74b0e60a9316c3ef27d0a599113972a6862fbae9d7560583952cf54b",
+  "code_commit": "4002aec0b27f4b3e72b27659741e3108b28c4414",
+  "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+  "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "cli_sha256": "0a5620b6f2b733dafe5a6d5c58771a6bfffc8f6f2069d01ce8d93d66ab04213f",
+  "harness_sha256": "2cd7e6786a9be1763d52252ce2dba87a1fe46cd3bcc8ebfe9599b1992b97b9c4",
+  "status": "completed",
+  "old_checkpoints": 28,
+  "total_checkpoints": 117,
+  "new_chat_requests": 89,
+  "new_preflight_requests": 178,
+  "new_prompt_tokens": 39391,
+  "new_completion_tokens": 12901,
+  "cli_elapsed_ms": 180718,
+  "wall_elapsed_ms": 183426,
+  "output_sha256": "32d96fe75eb0f5c90a67e2f6606d3d6ace27f79e67352a12b065efe91a08d3fc",
+  "review_state": "needs_review",
+  "human_bilingual_reviews": 0,
+  "accepted_language_quality": false,
+  "source_admission": "inspected_candidate_zero_eligible",
+  "resource_observation": {
+    "samples": 37,
+    "max_tracked_working_set_bytes": 1589817344,
+    "max_whole_device_gpu_mib": 4257,
+    "limitation": "Sampled working set/private memory of tracked processes; device-wide GPU use includes other applications. Not an isolated peak or release hardware gate."
+  },
+  "release_gate": "open"
+}
