@@ -133,3 +133,9 @@ heard speech and cue alignment separately from machine timing containment;
 do not promote the candidate while caption/audio rights and human review
 remain unknown. The current ASUS original has a major duration discrepancy
 and is excluded from this matched-version path.
+
+The [three-window local ASR diagnostic](../eval/experiments/2026-10-09-vivo-audio-asr-triage-result.md)
+shows broad topic overlap and retained recognition mistakes. It covers
+only 36 seconds, with Mandarin forced and no human listener. Do not turn
+this into a source-alignment or release score; use its uncertain words and
+unsampled speaker boundaries to prioritize the next source-audio review.

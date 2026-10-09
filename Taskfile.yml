@@ -492,6 +492,16 @@ tasks:
     cmds:
       - task: eval:data:youtube:vivo:asr:preflight
       - node eval/scripts/run-youtube-vivo-asr.mjs
+  eval:data:youtube:vivo:asr:report:
+    desc: Capture a redacted summary of the private three-window ASR diagnostic
+    cmds:
+      - node --check eval/scripts/check-youtube-vivo-audio-asr.mjs
+      - node eval/scripts/check-youtube-vivo-audio-asr.mjs --capture
+  eval:data:youtube:vivo:asr:check:
+    desc: Rehash local ASR, model and audio evidence without new inference
+    cmds:
+      - node --check eval/scripts/check-youtube-vivo-audio-asr.mjs
+      - node eval/scripts/check-youtube-vivo-audio-asr.mjs
   eval:data:youtube:kirin:license:inventory:
     desc: Retain one bounded YouTube metadata response without downloading captions or media
     env:

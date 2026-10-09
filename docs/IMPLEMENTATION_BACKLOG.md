@@ -100,6 +100,14 @@ than its archived media and cannot be paired with that copy. No new source
 or cue was admitted; the inventory still has 12 tracks, 11 media groups,
 3,280 inspected cue slots and zero eligible cues.
 
+The separately bounded [local source-audio ASR triage](../eval/experiments/2026-10-09-vivo-audio-asr-triage-result.md)
+compares 36 seconds at the beginning, middle and end of the matched Vivo
+video without supplying captions to the model. All three raw transcripts
+have broad topic overlap with the corresponding SRT cues, with several
+explicit recognition errors. Mandarin was forced rather than independently
+detected; no person listened or mapped speakers. `DATA-03` stays in progress
+with zero newly eligible cues. This diagnostic does not activate `ASR-01`.
+
 The [matched natural-caption model screen](../eval/experiments/2026-09-29-mingfay-natural-model-screen-results.md)
 adds partial `CTX-02` and `EVAL-04` evidence: both v5 scene profiles
 completed the same 16 exact source cues and durable journals, but 1.8B had

@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "experiment": "DATA-03-vivo-audio-asr-three-windows-2026-10-09-v1",
+  "original_srt_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "audio_sha256": {
+    "start": "1774c0fe3449dd594af58cf4ebf8f037cc0df0b0812f6727e7338c71d680e402",
+    "middle": "851cf0e806a10b0b1e85eefe39229fc4eb7c551a3f331693730afd4ac9c837d3",
+    "end": "1259b66490f21ef5a43d88feacbb5238a64cfbb220eb512e260d896b47d0c970"
+  },
+  "install_report_sha256": "a5057897264a7c57d1baeeae1d61cddb4f0eefc5290e5bc282d4a97bfb8caa74",
+  "process_report_sha256": "360daf4b61ec109766b42b575107d4621e8b802f6c03bfc69c26f870330476fc",
+  "private_raw_report_sha256": "43ed4372bfa06919cd4e84b8b725236917fdbc5613ef9521c28ae2e113e680eb",
+  "model_repo": "Systran/faster-whisper-base",
+  "model_revision": "ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+  "model_files": {
+    "config.json": {
+      "bytes": 2309,
+      "sha256": "56a6d8110d311f19c8f0471e562832c7527f146b567275bfca59fcf7c184da9a"
+    },
+    "model.bin": {
+      "bytes": 145217532,
+      "sha256": "d01c3014881c9c6f3133c182f3d2887eb6ca1c789a7538c5c007196857a0a6a9"
+    },
+    "tokenizer.json": {
+      "bytes": 2203239,
+      "sha256": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab"
+    },
+    "vocabulary.txt": {
+      "bytes": 459861,
+      "sha256": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+    }
+  },
+  "package_versions": {
+    "faster-whisper": "1.2.1",
+    "ctranslate2": "4.8.2",
+    "av": "17.1.0",
+    "huggingface-hub": "2.2.0",
+    "tokenizers": "0.23.3"
+  },
+  "compute": "cpu_int8",
+  "language_setting": "zh_forced_not_independently_detected",
+  "beam_size": 5,
+  "total_asr_audio_seconds": 36,
+  "total_elapsed_seconds": 11.126,
+  "windows": [
+    {
+      "label": "start",
+      "source_start_seconds": 0,
+      "overlapping_cue_ids": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "asr_segments": 4,
+      "elapsed_seconds": 1.356
+    },
+    {
+      "label": "middle",
+      "source_start_seconds": 563,
+      "overlapping_cue_ids": [
+        233,
+        234,
+        235,
+        236,
+        237,
+        238
+      ],
+      "asr_segments": 6,
+      "elapsed_seconds": 1.465
+    },
+    {
+      "label": "end",
+      "source_start_seconds": 1102,
+      "overlapping_cue_ids": [
+        461,
+        462,
+        463,
+        464,
+        465,
+        466,
+        467
+      ],
+      "asr_segments": 11,
+      "elapsed_seconds": 1.283
+    }
+  ],
+  "ai_source_comparison": {
+    "start": "topic_overlap_with_dongguan_asr_error_and_partial_final_cue",
+    "middle": "topic_overlap_with_mediatek_and_disagreement_asr_errors",
+    "end": "topic_overlap_with_gratitude_and_future_cooperation_asr_errors",
+    "conclusion": "three_sampled_windows_plausibly_align_not_verified_full_media"
+  },
+  "reviewer": {
+    "kind": "ai",
+    "human_listeners": 0,
+    "source_speech_alignment_verified": false,
+    "speaker_mapping_verified": false
+  },
+  "source_admission": "inspected_candidate_zero_eligible"
+}
