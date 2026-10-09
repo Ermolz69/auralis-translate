@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "experiment": "VIVO-TECHNICAL-SENSES-2026-10-10-v2",
+  "machine_report_sha256": "2c962bb859e2ffa585853e13370d0eda8bdc597d7ae02d952201fc68df003043",
+  "provenance": "Source-aware AI review of all retained paired raw Chinese requests and Russian responses; no independent Chinese-Russian reviewer",
+  "case_reviews": [
+    {"case_id":"natural_multicore","baseline":"major_technical_term_error","candidate":"core_fact_repaired_russian_grammar_needs_review","finding":"Baseline changes multiple CPU cores to multiple processors; candidate retains cores but inherits awkward agent grammar.","new_major_error":false},
+    {"case_id":"natural_all_big_core","baseline":"major_technical_term_error","candidate":"architecture_fact_repaired_actor_implicit","finding":"Candidate restores the all-big-core CPU architecture; the explicit source we is no longer explicit and scene wording needs review.","new_major_error":false},
+    {"case_id":"natural_process","baseline":"source_fact_preserved","candidate":"source_fact_preserved_wordy","finding":"Both preserve semiconductor process technology; candidate expands it into an awkward singular-chip phrase without a new major fact change.","new_major_error":false},
+    {"case_id":"multicore_performance","baseline":"major_technical_term_error","candidate":"core_fact_preserved","finding":"Baseline uses multi-processor performance; candidate names CPU cores within the chip.","new_major_error":false},
+    {"case_id":"all_big_core_cost","baseline":"terminology_needs_review","candidate":"architecture_and_cost_preserved","finding":"Candidate retains all-big-core architecture and its area-cost tradeoff, though the Russian term remains long.","new_major_error":false},
+    {"case_id":"advanced_process_node","baseline":"source_fact_preserved","candidate":"source_fact_preserved_wordy","finding":"Both retain advanced process technology and efficiency; candidate is more verbose.","new_major_error":false},
+    {"case_id":"multiple_chip_count","baseline":"major_negated_term_error","candidate":"same_major_negated_term_error","finding":"Both preserve three distinct chips but deny multi-processor operation rather than the source denial of multi-core architecture; candidate request is byte-identical to baseline.","new_major_error":false},
+    {"case_id":"small_and_big_cores","baseline":"source_fact_preserved","candidate":"source_fact_preserved","finding":"Both retain the negation of an all-big-core design and the mixed big/little architecture; requests are identical.","new_major_error":false},
+    {"case_id":"advanced_processors","baseline":"source_fact_preserved","candidate":"source_fact_preserved","finding":"Both retain advanced processors and negate a manufacturing-process improvement; requests are identical.","new_major_error":false},
+    {"case_id":"scene_guides_imaging","baseline":"source_fact_preserved","candidate":"source_fact_preserved","finding":"Both retain user-imaging scenarios before planning; the term note is absent and requests are identical.","new_major_error":false},
+    {"case_id":"continually_develop_process","baseline":"source_fact_preserved","candidate":"source_fact_preserved_wordy","finding":"Both preserve continuing process development; candidate is less concise.","new_major_error":false},
+    {"case_id":"continuation_with_chip_subject","baseline":"source_fact_preserved","candidate":"source_fact_preserved_wordy","finding":"Both retain continuing process improvement by the chip company.","new_major_error":false},
+    {"case_id":"do_not_develop_process","baseline":"source_fact_preserved","candidate":"source_fact_preserved","finding":"Both preserve the negation of process development; requests are identical.","new_major_error":false},
+    {"case_id":"no_process_work","baseline":"source_fact_preserved","candidate":"source_fact_preserved","finding":"Both preserve absence of advanced process development; requests are identical.","new_major_error":false}
+  ],
+  "summary": {
+    "paired_cases_reviewed_ai_only": 14,
+    "natural_technical_fact_repairs": 2,
+    "natural_technical_fact_cases": 3,
+    "related_positive_fact_preserved_candidate": 5,
+    "negative_and_absence_fact_preserved_candidate": 5,
+    "negative_and_absence_cases": 6,
+    "shared_major_control_errors": 1,
+    "new_major_candidate_errors": 0,
+    "candidate_shortlisted": false,
+    "candidate_rejection_reason": "negated_multicore_control_failed_in_both_arms",
+    "human_bilingual_reviews": 0,
+    "language_quality_score": null,
+    "full_file_quality_accepted": false,
+    "product_profile_changed": false
+  }
+}

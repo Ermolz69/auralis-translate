@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "REG-076",
+  "status": "observed_shared_model_error_ai_review_only",
+  "severity": "major_technical_term",
+  "split": "authored_exposed_development_not_holdout",
+  "source_family": "reg073_authored_semiconductor_contrast",
+  "profile_scope": "Hy-MT2 7B Q4_K_M v8 and rejected provisional technical-sense v2",
+  "machine_report_sha256": "2c962bb859e2ffa585853e13370d0eda8bdc597d7ae02d952201fc68df003043",
+  "expected_invariant": "When the source contrasts three distinct chips with a denial of multi-core architecture, preserve both the chip count and the negated multi-core concept; do not replace it with a denial of multi-processor operation.",
+  "minimal_reproducer": {
+    "case_id": "multiple_chip_count",
+    "source_text_sha256": "b8b34c029f4976b7e7eec4371807b03e9647b2e6b387924542777ece40700e75",
+    "source_inventory_sha256": "4df2cb8a9f7f0e85e3cea16f8008e6e6403446006b5f801747b4112043acac03",
+    "baseline_request_sha256": "1221f6b521da8b333270b80e32f5215e64e68c12a7e71df476ef4bf43fbe6496",
+    "candidate_request_sha256": "1221f6b521da8b333270b80e32f5215e64e68c12a7e71df476ef4bf43fbe6496",
+    "baseline_raw_http_sha256": "b98f56e9290cf43301e8337ced68b59b77af708911f8ab9dcd18881f372c09f1",
+    "candidate_raw_http_sha256": "68a52d323ab37ab482a8dbc3e844d8d9eb4427e18ecc9b45a13296862cd46bd2",
+    "accepted_text_sha256_both": "fc4670d485fe285a92a137409e5d50df4949e4f51021e377e3563ad166435a22",
+    "ai_source_aware_judgment": "both arms preserve three separate chips but change negated multi-core to negated multi-processor"
+  },
+  "related_controls": [
+    {"id":"not_multicore_but_separate_chips","source_lines":["这里有两颗独立芯片，不是一个多核芯片。"],"expected_fact":"Preserve two independent chips and explicit denial of one multi-core chip.","outcome":"pending_model_screen"},
+    {"id":"multicore_inside_each_chip","source_lines":["两颗芯片各自都是多核，但不是多处理器系统。"],"expected_fact":"Preserve two chips, multi-core within each, and the separate multi-processor negation.","outcome":"pending_model_screen"},
+    {"id":"not_more_processors","source_lines":["我们增加的是CPU核心，不是处理器数量。"],"expected_fact":"Preserve added CPU cores and explicit denial of processor-count increase.","outcome":"pending_model_screen"}
+  ],
+  "negative_controls": [
+    {"id":"actual_multiple_processors","source_lines":["系统确实有多个处理器，但每个处理器只有单核。"],"expected_fact":"Preserve actual multiple processors and single-core design.","outcome":"pending_model_screen"},
+    {"id":"single_multicore_chip","source_lines":["这不是多处理器系统，而是一颗多核芯片。"],"expected_fact":"Negate multiple processors but retain one multi-core chip.","outcome":"pending_model_screen"},
+    {"id":"three_chips_without_core_claim","source_lines":["我们只讨论三颗独立芯片，没有说明核心数量。"],"expected_fact":"Preserve three chips without inventing a core count or architecture.","outcome":"pending_model_screen"}
+  ],
+  "control_model_runs": 0,
+  "human_review": "missing",
+  "product_status": "v8_unchanged_candidate_rejected"
+}

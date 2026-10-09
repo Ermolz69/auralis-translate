@@ -1530,6 +1530,7 @@ tasks:
       - node eval/scripts/build-regression-catalog-v51.mjs
       - node eval/scripts/build-regression-catalog-v52.mjs
       - node eval/scripts/build-regression-catalog-v53.mjs
+      - node eval/scripts/build-regression-catalog-v54.mjs
   eval:regression:catalog:portable:check:
     desc: Verify recent public catalog evidence in a clean checkout without private source files
     cmds:
@@ -1544,6 +1545,17 @@ tasks:
       - node eval/scripts/build-regression-catalog-v51.mjs
       - node eval/scripts/build-regression-catalog-v52.mjs
       - node eval/scripts/build-regression-catalog-v53.mjs
+      - node eval/scripts/build-regression-catalog-v54.mjs
+  eval:regression:catalog:v54:write:
+    desc: Append REG-075/076 technical-sense failures without rewriting v53
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v54.mjs
+      - node eval/scripts/build-regression-catalog-v54.mjs --write
+  eval:regression:catalog:v54:check:
+    desc: Verify the preflight false abstention and paired negated-core failure
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v54.mjs
+      - node eval/scripts/build-regression-catalog-v54.mjs
   eval:regression:catalog:v53:write:
     desc: Append source numeric sampler false positives without rewriting v52
     cmds:
@@ -1875,6 +1887,16 @@ tasks:
     cmds:
       - task: eval:vivo:technical-senses:v2:preflight
       - node eval/scripts/probe-vivo-technical-senses-v2.mjs --probe
+  eval:vivo:technical-senses:v2:report:
+    desc: Capture source-free paired real-model evidence from the retained raw attempt
+    cmds:
+      - node --check eval/scripts/check-vivo-technical-senses-v2.mjs
+      - node eval/scripts/check-vivo-technical-senses-v2.mjs --capture
+  eval:vivo:technical-senses:v2:check:
+    desc: Recompute the public paired report from every retained raw response
+    cmds:
+      - node --check eval/scripts/check-vivo-technical-senses-v2.mjs
+      - node eval/scripts/check-vivo-technical-senses-v2.mjs --check
   eval:vivo:post-edit:freeze:
     desc: Freeze ten source-and-draft revision request identities before inference
     cmds:
