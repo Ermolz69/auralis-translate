@@ -28,3 +28,25 @@ alignment check and scene admission require separate pinned follow-up plans.
 Keep media, subtitle and audio rights independent; a Commons CC label or
 YouTube video license field alone does not decide all rights. This screen
 makes no model/TTS call and cannot approve a development or holdout source.
+
+## Frozen original-platform caption request
+
+The successful metadata response reports a regular `zh-CN` SRT track and no
+YouTube automatic captions. It reports the creator's CC Attribution reuse
+option and 1,116-second duration, 430 ms longer than the measured private
+Commons media. Raw metadata SHA-256 is
+`66624027735c409eb650ab218560836e630653855e90c858bf832ab3886ba329`;
+the retained private metadata report SHA-256 is
+`ffc44b2cb5e75ab799102fd211645e870eb0df29e4303984028afb79b2f469d5`.
+This agreement permits a caption-version check, not speech alignment.
+
+Identity: `DATA-03-youtube-geekerwan-vivo-original-caption-2026-10-09-v1`.
+From the hash-pinned metadata, request exactly one `zh-CN` `srt` URL at
+`www.youtube.com/api/timedtext`, checking the video ID, language and format.
+Use a single HTTPS GET, zero redirects or retries, 60-second timeout and
+1-MiB response cap. Retain exact bytes and failure response privately. Run
+`task eval:data:youtube:vivo:caption:preflight` first, then its acquisition
+task once. Compare the response with archived Commons SRT revision
+`979826861`; a difference means distinct versions until all cue timing/text
+is checked. This request does not acquire media, approve caption authorship
+or establish audio alignment.
