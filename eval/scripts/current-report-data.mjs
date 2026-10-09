@@ -418,6 +418,16 @@ export async function loadCurrentReport(root) {
   assert.equal(vivoEdge.human_audio_listeners, 0);
   assert.equal(vivoEdge.approved_trim, false);
   assert.equal(vivoEdge.audio_gates_admitted, false);
+  const vivoVoiceRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-vivo-sapi-voice-contrast-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(vivoVoiceRaw).digest('hex'),
+    '24cbef54cf06bab3e1594ae60d945aa6fd7fa66e63de4eda05d36160f7923c86');
+  const vivoVoice = JSON.parse(vivoVoiceRaw);
+  assert.equal(vivoVoice.source_sha256, vivoSource.original_srt_sha256);
+  assert.equal(vivoVoice.real_wav_count, 108);
+  assert.equal(vivoVoice.voices['Microsoft Pavel'].eligible_for_full_technical_screen, false);
+  assert.equal(vivoVoice.human_audio_listeners, 0);
+  assert.equal(vivoVoice.audio_gates_admitted, false);
   return {
     name_registry:nameRegistry.summary,
     target_terms:targetTerms.summary,
@@ -478,6 +488,21 @@ export async function loadCurrentReport(root) {
       approved_trim: vivoEdge.approved_trim,
       audio_gates_admitted: vivoEdge.audio_gates_admitted,
       report_sha256: createHash('sha256').update(vivoEdgeRaw).digest('hex') },
+    vivo_voice_contrast: { selected_cues: vivoVoice.selected_cue_ids.length,
+      repetitions_per_voice: vivoVoice.repetitions_per_voice,
+      real_wav_count: vivoVoice.real_wav_count,
+      clipped_samples: vivoVoice.clipped_samples,
+      desktop_sum_median_ms: vivoVoice.voices['Microsoft Irina Desktop'].sum_median_duration_ms,
+      pavel_sum_median_ms: vivoVoice.voices['Microsoft Pavel'].sum_median_duration_ms,
+      pavel_shorter_cues: vivoVoice.voices['Microsoft Pavel'].shorter_cues,
+      pavel_paired_median_ratio: vivoVoice.voices['Microsoft Pavel'].paired_median_ratio,
+      pavel_fits_at_1_5x: vivoVoice.voices['Microsoft Pavel'].fit_at_most_1_5_cues,
+      screen_ratio_limit: vivoVoice.screen_ratio_limit,
+      alternative_advanced: Object.entries(vivoVoice.voices).some(([name, voice]) =>
+        name !== 'Microsoft Irina Desktop' && voice.eligible_for_full_technical_screen),
+      human_audio_listeners: vivoVoice.human_audio_listeners,
+      audio_gates_admitted: vivoVoice.audio_gates_admitted,
+      report_sha256: createHash('sha256').update(vivoVoiceRaw).digest('hex') },
     source_fact_hints: { chats: facts.chat_requests,
       preflights: facts.template_token_preflights,
       exact_abstentions: facts.identical_no_hint_pairs,
