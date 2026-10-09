@@ -124,3 +124,12 @@ These assignments can run independently after the integrated evidence is
 published. No volunteer outreach is authorized. Human Chinese-Russian review,
 the owner-deferred desktop stage, clean Windows install and real Auralis media
 listening remain separate requirements of the full Goal.
+
+The 9 October [Vivo YouTube source screen](../eval/experiments/2026-10-09-youtube-manual-chinese-source-result.md)
+identifies a regular Chinese caption track with 467 text-identical cues on
+matching 18:36 media. Continue `DATA-03` with a private start/middle/end and
+speaker-boundary listening packet for this exact hash-pinned version. Record
+heard speech and cue alignment separately from machine timing containment;
+do not promote the candidate while caption/audio rights and human review
+remain unknown. The current ASUS original has a major duration discrepancy
+and is excluded from this matched-version path.

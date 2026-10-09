@@ -1,6 +1,6 @@
 # Tracked implementation backlog
 
-Updated: 2026-10-03. Canonical task state for the
+Updated: 2026-10-09. Canonical task state for the
 [delivery plan](DELIVERY_PLAN.md). This replaces the temporary S0–S9 work queue;
 their product/format acceptance criteria remain applicable. Historical evidence
 is in [implementation status](IMPLEMENTATION_STATUS.md).
@@ -88,6 +88,17 @@ development decision; independent approval and natural-file quality stay open.
 | ASR-01 | Transcript creation/alignment without source subtitles | deferred | VOICE-01 | Separate Auralis real ASR contract and recognition/alignment evaluation; not needed for subtitle pilot |
 
 | LANGUAGE-01 | Separate Japanese admission and release evidence | deferred | RELEASE-04 | Japanese scenes, names, context, reviewers and independent G1–G9; no Chinese transfer claim |
+
+The 9 October [YouTube source-version screen](../eval/experiments/2026-10-09-youtube-manual-chinese-source-result.md)
+advances `DATA-03` without changing its `in_progress` state. The Geekerwan
+Vivo interview has an original-platform regular Chinese SRT, 467 cue texts
+identical to the retained 18:36 copy and only eight timing rows differing by
+one millisecond. Its creator/video license field reports CC Attribution;
+caption authorship, separate audio rights, actual speech alignment and
+human review remain open. The current ASUS original is 492,777 ms longer
+than its archived media and cannot be paired with that copy. No new source
+or cue was admitted; the inventory still has 12 tracks, 11 media groups,
+3,280 inspected cue slots and zero eligible cues.
 
 The [matched natural-caption model screen](../eval/experiments/2026-09-29-mingfay-natural-model-screen-results.md)
 adds partial `CTX-02` and `EVAL-04` evidence: both v5 scene profiles

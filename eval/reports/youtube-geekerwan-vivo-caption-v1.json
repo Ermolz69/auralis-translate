@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "experiment": "DATA-03-youtube-geekerwan-vivo-original-caption-2026-10-09-v1",
+  "video_id": "_G4e2p1p-is",
+  "youtube_url": "https://www.youtube.com/watch?v=_G4e2p1p-is",
+  "creator_channel_id": "UCeUJO1H3TEXu2syfAAPjYKQ",
+  "upload_date": "20250104",
+  "youtube_video_license_field": "Creative Commons Attribution license (reuse allowed)",
+  "regular_chinese_srt_advertised": true,
+  "youtube_auto_captions_advertised": false,
+  "caption_authorship_verified": false,
+  "metadata_sha256": "66624027735c409eb650ab218560836e630653855e90c858bf832ab3886ba329",
+  "metadata_duration_ms": 1116000,
+  "retained_media_sha256": "7ad0484b31a6788c31632616649c51e6aaf6cdcdd7d90083d88e1d5ee66e1507",
+  "retained_media_duration_ms": 1115570,
+  "original_srt_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "original_srt_bytes": 33577,
+  "archived_srt_sha256": "8c41e66f52000a5b67ab27bfc319accd11d89290b60e50fc5c60f4ee8230a000",
+  "cue_count": 467,
+  "text_identical_cues": 467,
+  "timing_differences": [
+    {
+      "cue_id": 1,
+      "start_delta_ms": 0,
+      "end_delta_ms": 1
+    },
+    {
+      "cue_id": 2,
+      "start_delta_ms": 1,
+      "end_delta_ms": 0
+    },
+    {
+      "cue_id": 210,
+      "start_delta_ms": 0,
+      "end_delta_ms": 1
+    },
+    {
+      "cue_id": 211,
+      "start_delta_ms": 1,
+      "end_delta_ms": 1
+    },
+    {
+      "cue_id": 212,
+      "start_delta_ms": 1,
+      "end_delta_ms": 1
+    },
+    {
+      "cue_id": 213,
+      "start_delta_ms": 1,
+      "end_delta_ms": 1
+    },
+    {
+      "cue_id": 432,
+      "start_delta_ms": 0,
+      "end_delta_ms": 1
+    },
+    {
+      "cue_id": 433,
+      "start_delta_ms": 1,
+      "end_delta_ms": 1
+    }
+  ],
+  "first_cue": {
+    "start_ms": 100,
+    "end_ms": 4004
+  },
+  "last_cue": {
+    "start_ms": 1113195,
+    "end_ms": 1114463
+  },
+  "cues_past_retained_media": 0,
+  "rights": {
+    "video": "metadata_cc_attribution_unreviewed",
+    "subtitles": "unknown",
+    "audio": "unknown"
+  },
+  "speech_alignment": "not_listened",
+  "source_admission": "inspected_candidate_zero_eligible"
+}

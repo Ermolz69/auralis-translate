@@ -192,3 +192,11 @@ eligible cues; a new [v2 overlap report](../../eval/reports/source-caption-overl
 checks 65 cross-group pairs without changing the retained v1 report. The
 lesson series is one source group, and this short clip cannot satisfy a
 10–20-minute audio scene gate.
+
+The [9 October YouTube source-version check](../../eval/experiments/2026-10-09-youtube-manual-chinese-source-result.md)
+adds the exact creator video URL to the existing Vivo Commons inventory
+record. Its current original-platform `zh-CN` SRT has the same 467 cue texts
+and at most one millisecond of timing variation against the retained
+18:36 copy. The archived candidate hash and zero-eligible state are unchanged.
+Neither regular-track metadata nor time containment verifies actual speech,
+caption authorship, audio rights or a reviewed Russian reference.
