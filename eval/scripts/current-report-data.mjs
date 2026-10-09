@@ -219,6 +219,18 @@ export async function loadCurrentReport(root) {
   assert.equal(vivoSource.cues_past_retained_media, 0);
   assert.equal(vivoSource.speech_alignment, 'not_listened');
   assert.equal(vivoSource.source_admission, 'inspected_candidate_zero_eligible');
+  const vivoAsrRaw = await fs.readFile(path.join(root,
+    'eval/reports/youtube-geekerwan-vivo-audio-asr-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(vivoAsrRaw).digest('hex'),
+    '1df903c97638cfd492728ea7a21931ca8e519ffbd50236c58dcafe90b24c51d4');
+  const vivoAsr = JSON.parse(vivoAsrRaw);
+  assert.equal(vivoAsr.original_srt_sha256, vivoSource.original_srt_sha256);
+  assert.equal(vivoAsr.windows.length, 3);
+  assert.equal(vivoAsr.total_asr_audio_seconds, 36);
+  assert.equal(vivoAsr.language_setting, 'zh_forced_not_independently_detected');
+  assert.equal(vivoAsr.reviewer.human_listeners, 0);
+  assert.equal(vivoAsr.reviewer.source_speech_alignment_verified, false);
+  assert.equal(vivoAsr.source_admission, 'inspected_candidate_zero_eligible');
   return {
     name_registry:nameRegistry.summary,
     target_terms:targetTerms.summary,
@@ -240,6 +252,14 @@ export async function loadCurrentReport(root) {
       speech_alignment: vivoSource.speech_alignment,
       source_admission: vivoSource.source_admission,
       report_sha256: createHash('sha256').update(vivoSourceRaw).digest('hex') },
+    youtube_asr: { windows: vivoAsr.windows.length,
+      audio_seconds: vivoAsr.total_asr_audio_seconds,
+      elapsed_seconds: vivoAsr.total_elapsed_seconds,
+      language_setting: vivoAsr.language_setting,
+      source_comparison: vivoAsr.ai_source_comparison.conclusion,
+      human_listeners: vivoAsr.reviewer.human_listeners,
+      source_speech_alignment_verified: vivoAsr.reviewer.source_speech_alignment_verified,
+      report_sha256: createHash('sha256').update(vivoAsrRaw).digest('hex') },
     lesson_source: { cues: sources.lesson_cues,
       caption_sha256: sources.lesson_sha256,
       media_duration_ms: sources.lesson_media_duration_ms,

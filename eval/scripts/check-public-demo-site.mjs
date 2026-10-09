@@ -65,6 +65,7 @@ assert(current.includes('href="./history.html"'), 'Current state must link to hi
 assert(current.includes('id="name-registry-current"'));
 assert(current.includes('id="youtube-vivo-source"'));
 assert(current.includes('2026-10-09-youtube-manual-chinese-source-result.md'));
+assert(current.includes('2026-10-09-vivo-audio-asr-triage-result.md'));
 assert(html.includes('id="source-name-registry"'));
 assert(current.includes('2026-10-03-release-05-audit-attempt-v10.md'));
 assert(current.includes('https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'));
@@ -82,6 +83,10 @@ assert.equal(currentData.youtube_source.text_identical_cues, 467);
 assert.equal(currentData.youtube_source.timing_difference_rows, 8);
 assert.equal(currentData.youtube_source.cues_past_retained_media, 0);
 assert.equal(currentData.youtube_source.speech_alignment, 'not_listened');
+assert.equal(currentData.youtube_asr.windows, 3);
+assert.equal(currentData.youtube_asr.audio_seconds, 36);
+assert.equal(currentData.youtube_asr.human_listeners, 0);
+assert.equal(currentData.youtube_asr.source_speech_alignment_verified, false);
 assert.equal(currentData.name_registry.long_file_run,false);
 assert.equal(currentData.name_registry.admission.new_chat_calls,0);
 assert.equal(currentData.name_registry.admission.proposal_rejections,33);
