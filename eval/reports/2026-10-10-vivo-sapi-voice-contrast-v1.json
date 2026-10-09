@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "experiment": "VOICE-VIVO-VOICE-CONTRAST-2026-10-10-v1",
+  "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "russian_draft_sha256": "4451868ea3e7cbb3ed81f3d24b5f85bc61a749168b213c54c88ae552208c4831",
+  "runtime_sha256": "362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139",
+  "private_report_sha256": "b27f9c05e77c808fde5152f2dd2fc0e925ed8b497d93c271b32f187e10342e65",
+  "private_analysis_sha256": "aa9a1ad8715be10d0e694f88432daef8a610e14299d1ef207ee977a96832b836",
+  "source_cues": 467,
+  "selected_cue_ids": [1, 11, 15, 114, 233, 262, 276, 280, 328, 415, 466, 467],
+  "repetitions_per_voice": 3,
+  "real_wav_count": 108,
+  "sample_rate_hz": 22050,
+  "clipped_samples": 0,
+  "elapsed_ms": 71260,
+  "voices": {
+    "Microsoft Irina Desktop": {"sum_median_duration_ms": 69242, "fit_at_most_1_5_cues": 0},
+    "Microsoft Pavel": {"sum_median_duration_ms": 61375, "fit_at_most_1_5_cues": 1, "shorter_cues": 12, "paired_median_ratio": 0.886254642327839, "eligible_for_full_technical_screen": false},
+    "Microsoft Irina": {"sum_median_duration_ms": 69242, "fit_at_most_1_5_cues": 0, "shorter_cues": 0, "paired_median_ratio": 1, "eligible_for_full_technical_screen": false}
+  },
+  "screen_ratio_limit": 0.85,
+  "human_audio_listeners": 0,
+  "approved_spoken_script": false,
+  "audio_gates_admitted": false
+}

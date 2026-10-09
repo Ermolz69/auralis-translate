@@ -234,8 +234,17 @@ The [467-WAV edge-silence screen](../eval/experiments/2026-10-10-vivo-edge-silen
 rehashed all retained WAVs at three frozen peak thresholds. Even the broadest
 potential edge removal, 432,905 ms, leaves a 187,273-ms ideal 1.5× deficit
 before speaker pauses. No audio was actually trimmed or listened to. Edge-only
-trimming is rejected for this draft and Irina voice; a bounded alternative
-real-voice comparison is the next independent audio screen. A3 stays open.
+trimming is rejected for this draft and Irina voice; the bounded alternative
+real-voice comparison below followed. A3 stays open.
+
+The [same-text 108-WAV SAPI voice comparison](../eval/experiments/2026-10-10-vivo-sapi-voice-contrast-result.md)
+followed that frozen step on 12 exposed Vivo cues, with three repetitions
+for each of Irina Desktop, Pavel and Irina. Pavel was shorter on 12/12,
+but the paired median duration ratio 0.886 missed the <=0.85 advancement
+limit; Irina matched the baseline duration. No alternative advances to
+another 467-cue run. No human listening or reviewed script exists, so
+`VOICE-02`/`VOICE-03` and A1–A6 remain open. The [v21 RELEASE-05 self-audit](../eval/experiments/2026-10-10-release-05-audit-attempt-v21.md)
+retains the source-rights, independent-language, fit and clean-install gaps.
 
 The [Vivo 467-cue copied-state run](../eval/experiments/2026-09-30-commons-vivo-full-7b-resume-result.md)
 adds partial `DATA-03`/`CTX-02`/`LONG-04`/`EVAL-04` evidence: a first real 7B
