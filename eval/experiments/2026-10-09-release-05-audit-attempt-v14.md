@@ -43,6 +43,15 @@ quantization still requires measured justification.
 `task site:check` must be rerun after this documentation change. The
 GitHub Pages live-byte check must be repeated after publication.
 
+The clean publication checkout cannot run the full recent catalog chain:
+v45/v46 deliberately read old private raw journals that are retained only
+in the evaluation checkout. The first clean attempt stopped at missing
+v45 private `report.json`; it did not indicate a changed or failed result.
+`task eval:regression:catalog:portable:check` passed v41–v44 and v47–v49
+using committed evidence, while the full recent check passed in the
+evaluation checkout with its private inputs. This portable check does not
+substitute for rehashing private historical journals.
+
 **RELEASE-05 remains failed/open.** Keep production v8, both full drafts,
 the original source and all failed raw replies unchanged. Next bound a
 source-derived post-answer fact diagnostic or fail-closed review experiment

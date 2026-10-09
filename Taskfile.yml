@@ -1526,6 +1526,16 @@ tasks:
       - node eval/scripts/build-regression-catalog-v47.mjs
       - node eval/scripts/build-regression-catalog-v48.mjs
       - node eval/scripts/build-regression-catalog-v49.mjs
+  eval:regression:catalog:portable:check:
+    desc: Verify recent public catalog evidence in a clean checkout without private source files
+    cmds:
+      - node eval/scripts/check-regression-catalog-v41.mjs
+      - node eval/scripts/check-regression-catalog-v42.mjs
+      - node eval/scripts/check-regression-catalog-v43.mjs
+      - node eval/scripts/check-regression-catalog-v44.mjs
+      - node eval/scripts/build-regression-catalog-v47.mjs
+      - node eval/scripts/build-regression-catalog-v48.mjs
+      - node eval/scripts/build-regression-catalog-v49.mjs
   eval:regression:reg065:catalog:write:
     desc: Add the exact Vivo terminal-line-break failure after preserving catalog v44
     cmds:
