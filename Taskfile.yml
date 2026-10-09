@@ -1615,6 +1615,28 @@ tasks:
       - task: eval:regression:reg066:seams:check
       - node --check eval/scripts/build-regression-catalog-v48.mjs
       - node eval/scripts/build-regression-catalog-v48.mjs
+  eval:source-facts:unit:
+    desc: Verify source-derived fact-hint extraction, scope and byte-identical abstention
+    cmds:
+      - node --check eval/scripts/source-fact-hints-v1.mjs
+      - node --test --test-isolation=none eval/scripts/tests/source-fact-hints-v1.test.mjs
+  eval:source-facts:freeze:
+    desc: Freeze 36 paired 7B requests and source-fact extractor identity before inference
+    cmds:
+      - task: eval:source-facts:unit
+      - node --check eval/scripts/probe-source-fact-hints-v1.mjs
+      - node eval/scripts/probe-source-fact-hints-v1.mjs --freeze
+  eval:source-facts:preflight:
+    desc: Rebuild exact paired requests, model and runtime hashes without inference
+    cmds:
+      - task: eval:source-facts:unit
+      - node --check eval/scripts/probe-source-fact-hints-v1.mjs
+      - node eval/scripts/probe-source-fact-hints-v1.mjs --preflight
+  eval:source-facts:probe:
+    desc: Run bounded same-source v8 versus source-fact-hints 7B comparison
+    cmds:
+      - task: eval:source-facts:preflight
+      - node eval/scripts/probe-source-fact-hints-v1.mjs
   eval:regression:asus:v6:private:check:
     desc: Verify REG-031–033 against exact private ASUS v6 raw and accepted review windows
     cmds:
