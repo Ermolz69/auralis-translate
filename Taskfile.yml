@@ -1833,6 +1833,27 @@ tasks:
     cmds:
       - task: eval:vivo:quantity:v2:preflight
       - node eval/scripts/check-vivo-quantity-feature-v2.mjs --check
+  eval:vivo:technical-senses:unit:
+    desc: Verify target-only provisional term notes and strict reply decoding
+    cmds:
+      - node --check eval/scripts/vivo-technical-senses-v1.mjs
+      - node --check eval/scripts/probe-vivo-technical-senses-v1.mjs
+      - node --test --test-isolation=none eval/scripts/tests/vivo-technical-senses-v1.test.mjs
+  eval:vivo:technical-senses:freeze:
+    desc: Freeze ten paired v8/technical-sense requests before inference
+    cmds:
+      - task: eval:vivo:technical-senses:unit
+      - node eval/scripts/probe-vivo-technical-senses-v1.mjs --freeze
+  eval:vivo:technical-senses:preflight:
+    desc: Verify model, runtime, source and frozen technical-sense requests
+    cmds:
+      - task: eval:vivo:technical-senses:unit
+      - node eval/scripts/probe-vivo-technical-senses-v1.mjs --preflight
+  eval:vivo:technical-senses:probe:
+    desc: Run one bounded paired technical-sense screen on the local 7B model
+    cmds:
+      - task: eval:vivo:technical-senses:preflight
+      - node eval/scripts/probe-vivo-technical-senses-v1.mjs --probe
   eval:vivo:post-edit:freeze:
     desc: Freeze ten source-and-draft revision request identities before inference
     cmds:
