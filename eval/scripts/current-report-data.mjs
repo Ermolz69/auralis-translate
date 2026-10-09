@@ -332,12 +332,28 @@ export async function loadCurrentReport(root) {
   assert.equal(clock.paired_natural_328.candidate.warning.cue_id, 328);
   assert.equal(clock.model_requests, 0);
   assert.equal(clock.human_bilingual_reviews, 0);
+  const vivoAudioRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-vivo-real-sapi-technical.json'), 'utf8');
+  assert.equal(createHash('sha256').update(vivoAudioRaw).digest('hex'),
+    '4ee168db1054927a3bb91eec98021cfe3862b5d1d6beca0d67f38432e3d0e8f0');
+  const vivoAudio = JSON.parse(vivoAudioRaw);
+  assert.equal(vivoAudio.status, 'technical_media_complete_quality_rejected');
+  assert.equal(vivoAudio.source.original_srt_sha256, vivoSource.original_srt_sha256);
+  assert.equal(vivoAudio.source.russian_draft_sha256, vivoV8.arms[1].output_sha256);
+  assert.equal(vivoAudio.tts.generated_cues, vivoSource.cue_count);
+  assert.equal(vivoAudio.tts.overrun_cues, 465);
+  assert.equal(vivoAudio.tts.overlapping_starts, 464);
+  assert.equal(vivoAudio.fit.at_most_tempo['1.5'], 50);
+  assert.equal(vivoAudio.media.playback_status, 'player_process_completed');
+  assert.equal(vivoAudio.media.video_tail_gap_ms, 1258);
+  assert.equal(vivoAudio.review.human_audio_listeners, 0);
+  assert.equal(vivoAudio.review.audio_gates_admitted, false);
   return {
     name_registry:nameRegistry.summary,
     target_terms:targetTerms.summary,
     occurrence_terms:occurrenceTerms.summary,
     schema_version: 1,
-    as_of: '2026-10-09',
+    as_of: '2026-10-10',
     release_decision: 'not_accepted',
     sources: { candidates: sources.source_count, media_groups: sources.media_groups,
       inspected_cues: sources.inspected_cues,
@@ -361,6 +377,17 @@ export async function loadCurrentReport(root) {
       human_listeners: vivoAsr.reviewer.human_listeners,
       source_speech_alignment_verified: vivoAsr.reviewer.source_speech_alignment_verified,
       report_sha256: createHash('sha256').update(vivoAsrRaw).digest('hex') },
+    vivo_technical_audio: { generated_cues: vivoAudio.tts.generated_cues,
+      overrun_cues: vivoAudio.tts.overrun_cues,
+      overlapping_starts: vivoAudio.tts.overlapping_starts,
+      fit_at_most_1_5: vivoAudio.fit.at_most_tempo['1.5'],
+      median_required_tempo: vivoAudio.fit.median_required_tempo,
+      media_output_bytes: vivoAudio.media.output_bytes,
+      video_tail_gap_ms: vivoAudio.media.video_tail_gap_ms,
+      playback_status: vivoAudio.media.playback_status,
+      human_audio_listeners: vivoAudio.review.human_audio_listeners,
+      audio_gates_admitted: vivoAudio.review.audio_gates_admitted,
+      report_sha256: createHash('sha256').update(vivoAudioRaw).digest('hex') },
     source_fact_hints: { chats: facts.chat_requests,
       preflights: facts.template_token_preflights,
       exact_abstentions: facts.identical_no_hint_pairs,
