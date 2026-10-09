@@ -1153,3 +1153,19 @@ zero bilingual human reviews. v2 may guide a future *new-source* sample,
 but cross-source precision/recall, translation facts and G3–G5 remain
 unproven. The [v26 RELEASE-05 self-audit](../eval/experiments/2026-10-10-release-05-audit-attempt-v26.md)
 retains the same blocked release gates.
+
+The [bounded Vivo technical-sense screen](../eval/experiments/2026-10-10-vivo-technical-senses-v2-result.md)
+adds direct 7B model evidence for `CTX-03`/`EVAL-04`: 28 matched real
+answers on three exposed natural term cases and eleven authored controls,
+with 56 preflights and 8,119 total tokens. Source-scoped provisional
+definitions repaired two natural CPU-architecture meanings, but the
+negated multi-core versus multi-processor control failed in both arms.
+The v1 [REG-075](../eval/regressions/reg-075-continuation-not-negation-v1.json)
+preflight false abstention was retained with zero model calls; the
+separately frozen v2 fixed that scope error before inference. The new
+[REG-076/catalog v54](../eval/regressions/catalog-v54.json) pins the
+shared semantic failure and six unrun contrast controls. Candidate
+shortlisting/full-file advancement was rejected; product v8 and both
+full-file SRTs remain unchanged. Source-aware judgments are AI-only,
+not a G3–G5 quality score. The [v27 RELEASE-05 self-audit](../eval/experiments/2026-10-10-release-05-audit-attempt-v27.md)
+keeps translation, audio, rights and clean-install gates open.
