@@ -536,6 +536,22 @@ export async function loadCurrentReport(root) {
   assert.equal(vivoRate.advanced_to_private_audition_only, true);
   assert.equal(vivoRate.human_audio_listeners, 0);
   assert.equal(vivoRate.audio_gates_admitted, false);
+  const vivoAuditionRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-vivo-rate-audition-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(vivoAuditionRaw).digest('hex'),
+    '22c10be7bd34b693a3210f6748d06c9df40034e66033e8551e06e7fcded5b96f');
+  const vivoAudition = JSON.parse(vivoAuditionRaw);
+  assert.equal(vivoAudition.source_srt_sha256, vivoRate.source_srt_sha256);
+  assert.equal(vivoAudition.russian_draft_sha256, vivoRate.russian_draft_sha256);
+  assert.equal(vivoAudition.tts_report_sha256, vivoRate.tts_report_sha256);
+  assert.equal(vivoAudition.tts_analysis_sha256, vivoRate.analysis_sha256);
+  assert.deepEqual(vivoAudition.cue_ids, [1, 233, 466]);
+  assert.deepEqual(vivoAudition.sapi_rates, [0, 5, 10]);
+  assert.equal(vivoAudition.copied_real_wav_count, 9);
+  assert.equal(vivoAudition.decoded_and_byte_matched_wav_count, 9);
+  assert.equal(vivoAudition.new_tts_requests, 0);
+  assert.equal(vivoAudition.human_audio_listeners, 0);
+  assert.equal(vivoAudition.audio_gates_admitted, false);
   return {
     name_registry:nameRegistry.summary,
     target_terms:targetTerms.summary,
@@ -627,6 +643,12 @@ export async function loadCurrentReport(root) {
       human_audio_listeners: vivoRate.human_audio_listeners,
       audio_gates_admitted: vivoRate.audio_gates_admitted,
       report_sha256: createHash('sha256').update(vivoRateRaw).digest('hex') },
+    vivo_rate_audition: { selected_cues: vivoAudition.cue_ids.length,
+      copied_real_wavs: vivoAudition.copied_real_wav_count,
+      human_audio_listeners: vivoAudition.human_audio_listeners,
+      new_tts_requests: vivoAudition.new_tts_requests,
+      audio_gates_admitted: vivoAudition.audio_gates_admitted,
+      report_sha256: createHash('sha256').update(vivoAuditionRaw).digest('hex') },
     source_fact_hints: { chats: facts.chat_requests,
       preflights: facts.template_token_preflights,
       exact_abstentions: facts.identical_no_hint_pairs,
