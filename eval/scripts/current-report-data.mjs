@@ -231,6 +231,20 @@ export async function loadCurrentReport(root) {
   assert.equal(vivoAsr.reviewer.human_listeners, 0);
   assert.equal(vivoAsr.reviewer.source_speech_alignment_verified, false);
   assert.equal(vivoAsr.source_admission, 'inspected_candidate_zero_eligible');
+  const vivoV8Raw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-09-v8-vivo-original-long.json'), 'utf8');
+  assert.equal(createHash('sha256').update(vivoV8Raw).digest('hex'),
+    'd83a4f518065cacd3de54d2de3716d5a488b4aa23e0c96a4bc31053f8c2ab089');
+  const vivoV8 = JSON.parse(vivoV8Raw);
+  assert.equal(vivoV8.source_sha256, vivoSource.original_srt_sha256);
+  assert.deepEqual(vivoV8.arms.map(arm => arm.id), ['1_8b', '7b']);
+  assert.equal(vivoV8.arms[0].covered_prefix_cues, 112);
+  assert.equal(vivoV8.arms[0].published_results, 0);
+  assert.equal(vivoV8.arms[1].covered_prefix_cues, 467);
+  assert.equal(vivoV8.arms[1].review_state, 'needs_review');
+  assert.equal(vivoV8.offline_export.output_sha256, vivoV8.arms[1].output_sha256);
+  assert.equal(vivoV8.human_bilingual_reviews, 0);
+  assert.equal(vivoV8.accepted_language_quality, false);
   return {
     name_registry:nameRegistry.summary,
     target_terms:targetTerms.summary,
@@ -260,6 +274,15 @@ export async function loadCurrentReport(root) {
       human_listeners: vivoAsr.reviewer.human_listeners,
       source_speech_alignment_verified: vivoAsr.reviewer.source_speech_alignment_verified,
       report_sha256: createHash('sha256').update(vivoAsrRaw).digest('hex') },
+    youtube_v8_long: { source_cues: vivoV8.source_cues,
+      small_prefix_cues: vivoV8.arms[0].covered_prefix_cues,
+      large_complete_cues: vivoV8.arms[1].covered_prefix_cues,
+      large_review_state: vivoV8.arms[1].review_state,
+      offline_reexport_identical: vivoV8.offline_export.output_sha256 ===
+        vivoV8.arms[1].output_sha256,
+      human_bilingual_reviews: vivoV8.human_bilingual_reviews,
+      accepted_language_quality: vivoV8.accepted_language_quality,
+      report_sha256: createHash('sha256').update(vivoV8Raw).digest('hex') },
     lesson_source: { cues: sources.lesson_cues,
       caption_sha256: sources.lesson_sha256,
       media_duration_ms: sources.lesson_media_duration_ms,
