@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "REG-074",
+  "status": "v1_rejected_v2_pending",
+  "severity": "sampling_false_positive",
+  "split": "source_only_open_development_not_holdout",
+  "source_family": "youtube_geekerwan_vivo_original_platform",
+  "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "v1_report_sha256": "f13d6efcd08e0a166055551050d110a2b8b81c9f42e62b12d210a764477d64ec",
+  "minimal_reproducers": [
+    {"cue_id":85,"source_text_sha256":"e6c4d5ee4cb60e0fc2f5772b39301ed66d5074e88cc2d3248bfa9a82422be348","source_feature":"ordinal_discussion_labels","v1_match":true,"expected_v2_match":false},
+    {"cue_id":236,"source_text_sha256":"ddd66817d1ed86584bd4398c9b41a75def4c06ce10c0b725d5da507f2d6b543a","source_feature":"idiomatic_one_point","v1_match":true,"expected_v2_match":false},
+    {"cue_id":283,"source_text_sha256":"2e343eeb8cf2681cda0f428f3c97da10f35e30f2f4e28c1a90be4d83683ed679","source_feature":"idiomatic_one_point","v1_match":true,"expected_v2_match":false},
+    {"cue_id":306,"source_text_sha256":"1534aafeade9ada5416dc0e7711583c3274824c6774c68f057e2591704fa12e2","source_feature":"idiomatic_one_point","v1_match":true,"expected_v2_match":false},
+    {"cue_id":415,"source_text_sha256":"0d66dc4149fe35384b11db39d82fc199d1c946ea3e140cd1ecbb2b2ec7426a5f","source_feature":"adjacent_chip_model_labels","v1_match":true,"expected_v2_match":false}
+  ],
+  "related_controls": [
+    {"id":"two_discussion_points","source_line":"第一个是成本，第二个是性能。","expected_match":false},
+    {"id":"only_a_little_narrower","source_line":"这个方案还窄一点。","expected_match":false},
+    {"id":"important_point","source_line":"这里有很重要的一点。","expected_match":false},
+    {"id":"one_small_improvement","source_line":"速度快了一点。","expected_match":false},
+    {"id":"adjacent_model_names","source_line":"从天玑9300 到天玑9400。","expected_match":false}
+  ],
+  "negative_controls": [
+    {"id":"actual_two_products","source_line":"我们推出两款产品。","expected_match":true},
+    {"id":"explicit_one_oclock","source_line":"凌晨一点结束讨论。","expected_match":true},
+    {"id":"thirty_six_months","source_line":"提前30到36个月开始规划。","expected_match":true},
+    {"id":"two_to_three_years","source_line":"产品要在2到3年后发布。","expected_match":true},
+    {"id":"four_nanometer","source_line":"芯片采用4纳米制程。","expected_match":true}
+  ],
+  "human_review": "missing",
+  "product_status": "v8_unchanged"
+}
