@@ -967,3 +967,26 @@ pending. The blanket shift is rejected and v8 unchanged. `CTX-03`,
 RELEASE-05 remain open. The [v13 self-audit](../eval/experiments/2026-10-09-release-05-audit-attempt-v13.md)
 records the unchanged audio and installation gates. Next experiment may
 test only source-derived typed facts with a frozen no-new-major-error rule.
+
+## Source-derived fact-hint screen
+
+The [predeclared 36-chat 7B comparison](../eval/experiments/2026-10-09-source-fact-hints-v1-result.md)
+tested the unchanged v8 request against target-scoped Chinese fact hints on
+five natural fact windows, old negative cases and REG-067/068 controls.
+All 72 template/tokenizer preflights passed; five no-hint candidate requests
+were byte-identical to v8. One authored 9400 control improved, but natural
+cue 328 changed a correct after-midnight 01:00–02:00 into 11:00–12:00 at
+night, while cue 276 added JSON wrapper fragments to target strings. The
+existing provider rejects the latter before checkpoint; exact syntax tests
+passed under v7 and v8. The earlier 36-month and team errors remain.
+[REG-069/070 and catalog v49](../eval/regressions/catalog-v49.json) retain
+the failed raw identities, deterministic containment and new related and
+negative controls. The candidate is rejected, the extractor remains in
+`eval/`, and product v8 and both long-file drafts are unchanged. This
+adds partial `EVAL-04`/`CTX-03` development evidence without completing
+either task or advancing `DECIDE-01`, G3–G5 or `LONG-04`. The
+[v14 RELEASE-05 self-audit](../eval/experiments/2026-10-09-release-05-audit-attempt-v14.md)
+keeps all final language, installation and audio gates open. Next investigate
+source-derived post-answer warnings or fail-closed review with a new bounded
+screen; do not repeat prompt-hint tuning against the same known controls as
+though they were an independent holdout.

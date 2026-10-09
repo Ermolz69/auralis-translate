@@ -295,6 +295,30 @@ export async function loadCurrentReport(root) {
   assert.equal(seamsReview.summary.new_mixed_script_observations, 1);
   assert.equal(seamsReview.summary.new_tail_id_omissions, 2);
   assert.equal(seamsReview.summary.shifted_candidate_promoted, false);
+  const factsRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-09-source-fact-hints-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(factsRaw).digest('hex'),
+    'fd7a661edd0aa09cafba16fddeda1d598ad8973abd8da3f6e4a4cba02dea6b96');
+  const facts = JSON.parse(factsRaw);
+  const factsReviewRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-09-source-fact-hints-v1-ai-review.json'), 'utf8');
+  assert.equal(createHash('sha256').update(factsReviewRaw).digest('hex'),
+    '6879f07f4d7b1343d9fe9e85abd2857449b6ea17d68f165013484fd3df6af90b');
+  const factsReview = JSON.parse(factsReviewRaw);
+  assert.equal(factsReview.machine_report_sha256,
+    createHash('sha256').update(factsRaw).digest('hex'));
+  assert.equal(facts.chat_requests, 36);
+  assert.equal(facts.template_token_preflights, 72);
+  assert.equal(facts.identical_no_hint_pairs, 5);
+  assert.equal(facts.json_structure_leak_count, 1);
+  assert.equal(factsReview.summary.new_natural_major_fact_errors, 1);
+  assert.equal(factsReview.summary.candidate_promoted, false);
+  const factsCatalogRaw = await fs.readFile(path.join(root,
+    'eval/regressions/catalog-v49.json'), 'utf8');
+  assert.equal(createHash('sha256').update(factsCatalogRaw).digest('hex'),
+    '48799628072487c3924f99835944c76cb8da2af1f13840cacca6f8df6851ff97');
+  assert.deepEqual(JSON.parse(factsCatalogRaw).entries.slice(-2).map(row => row.id),
+    ['REG-069', 'REG-070']);
   return {
     name_registry:nameRegistry.summary,
     target_terms:targetTerms.summary,
@@ -324,6 +348,18 @@ export async function loadCurrentReport(root) {
       human_listeners: vivoAsr.reviewer.human_listeners,
       source_speech_alignment_verified: vivoAsr.reviewer.source_speech_alignment_verified,
       report_sha256: createHash('sha256').update(vivoAsrRaw).digest('hex') },
+    source_fact_hints: { chats: facts.chat_requests,
+      preflights: facts.template_token_preflights,
+      exact_abstentions: facts.identical_no_hint_pairs,
+      prompt_tokens_baseline: facts.arm_usage.baseline.prompt_tokens,
+      prompt_tokens_candidate: facts.arm_usage.candidate.prompt_tokens,
+      new_major_fact_errors: factsReview.summary.new_natural_major_fact_errors,
+      decoder_rejections: factsReview.summary.new_natural_product_decoder_rejections,
+      human_bilingual_reviews: facts.human_bilingual_reviews,
+      candidate_promoted: factsReview.summary.candidate_promoted,
+      machine_report_sha256: createHash('sha256').update(factsRaw).digest('hex'),
+      ai_review_sha256: createHash('sha256').update(factsReviewRaw).digest('hex'),
+      catalog_sha256: createHash('sha256').update(factsCatalogRaw).digest('hex') },
     youtube_v8_long: { source_cues: vivoV8.source_cues,
       small_prefix_cues: vivoV8.arms[0].covered_prefix_cues,
       large_complete_cues: vivoV8.arms[1].covered_prefix_cues,
