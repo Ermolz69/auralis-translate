@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "experiment": "VIVO-STRATIFIED-BLINDSPOT-2026-10-10-v1",
+  "provenance": "Source-aware AI triage of a frozen Chinese-only purposive sample and two retained Russian drafts; no independent Chinese-Russian reviewer or listening",
+  "window_reviews": [
+    {"start":8,"third":"beginning","kind":"anchor","verdict":"minor","clear_major_arms":[],"finding":"At cue 10 the 1.8B draft replaces a simple greeting with an unrelated address; the 7B greeting retains the function.","needs_review":true},
+    {"start":19,"third":"beginning","kind":"numeric","verdict":"clear_major","clear_major_arms":["oneB"],"finding":"At cue 20 the 1.8B draft changes an ascent toward the premium segment into a path toward high prices. The 7B draft retains a general rise. Exact brand rendering in cue 19 still needs term review.","needs_review":true},
+    {"start":99,"third":"beginning","kind":"negation","verdict":"no_issue_seen","clear_major_arms":[],"finding":"The sampled flagship-image difficulty and industry precedent remain broadly connected across both drafts; this narrow read found no clear major fact error.","needs_review":false},
+    {"start":81,"third":"beginning","kind":"entity","verdict":"minor","clear_major_arms":[],"finding":"The 1.8B wording of early chip positioning is awkward and drifts toward placement; 7B keeps the planning relation more clearly. No independently approved terminology exists.","needs_review":true},
+    {"start":35,"third":"beginning","kind":"batch_seam","verdict":"minor","clear_major_arms":[],"finding":"The 1.8B high-end goal is vague and the 7B description of an earlier attempt is unnatural; the scene still broadly concerns prior technical efforts.","needs_review":true},
+    {"start":232,"third":"middle","kind":"anchor","verdict":"clear_major","clear_major_arms":["oneB","sevenB"],"finding":"At cue 232 both drafts lose the specific all-big-core architecture: 1.8B describes an unspecified full core and 7B substitutes generic powerful technologies. Cost and area tradeoffs in later cues remain visible.","needs_review":true},
+    {"start":267,"third":"middle","kind":"numeric","verdict":"minor","clear_major_arms":[],"finding":"The 1.8B consumer-address noun is malformed Russian; no clear source-fact failure is established here. The selector's numeric match came from a generic Chinese 'one' expression, not a measured quantity.","needs_review":true},
+    {"start":184,"third":"middle","kind":"negation","verdict":"minor","clear_major_arms":[],"finding":"The 1.8B line makes the big cores themselves the thinker; 7B better conveys that performance is expected to be fine. The following energy-efficiency concern is awkward in both and requires source-audio/term review.","needs_review":true},
+    {"start":270,"third":"middle","kind":"entity","verdict":"no_issue_seen","clear_major_arms":[],"finding":"Both drafts broadly retain Vivo's required SoC, chip-layer and OS knowledge; 1.8B remains fragmented across cue boundaries.","needs_review":false},
+    {"start":171,"third":"middle","kind":"batch_seam","verdict":"clear_major","clear_major_arms":["oneB","sevenB"],"finding":"At cue 172 the source explicitly says multi-core capability. 1.8B changes this to multi-chip capability and 7B to multi-processor performance; the same core architecture is not preserved.","needs_review":true},
+    {"start":450,"third":"end","kind":"anchor","verdict":"minor","clear_major_arms":[],"finding":"The 1.8B intelligent-assistant phrase and grammatical gender for vision are defective. The 7B draft retains the English source word vision; whether to translate this code-switch needs terminology review.","needs_review":true},
+    {"start":455,"third":"end","kind":"numeric","verdict":"clear_major","clear_major_arms":["oneB"],"finding":"At cue 457 the 1.8B draft imports the following conversation-with-colleagues statement and repeats it at cue 458. The 7B draft leaves the introductory fragment for the next cue. A neighboring 1.8B niche label is malformed. The selector's numeric match was a generic 'one' expression.","needs_review":true},
+    {"start":391,"third":"end","kind":"negation","verdict":"clear_major","clear_major_arms":["oneB"],"finding":"At cue 393 the 1.8B draft replaces advanced chip manufacturing processes with advanced processors. The 7B draft refers to process technology.","needs_review":true},
+    {"start":334,"third":"end","kind":"entity","verdict":"clear_major","clear_major_arms":["oneB"],"finding":"At cue 334 the 1.8B draft turns scenario-led imaging planning into staging a scene for dramatic effect; 7B retains early user-scenario planning. The X200 lead time in cue 336 remains 2–3 years in both.","needs_review":true},
+    {"start":387,"third":"end","kind":"batch_seam","verdict":"uncertain","clear_major_arms":[],"finding":"The source lists performance, games, imaging and AI; both drafts use a Russian video term for imaging. Without approved scene terminology, classify the distinction as uncertain rather than a measured major error.","needs_review":true}
+  ],
+  "summary": {
+    "reviewed_windows": 15,
+    "unique_source_cues": 45,
+    "paired_draft_cues": 90,
+    "clear_major_windows_ai_only": 6,
+    "clear_major_one_b_windows_ai_only": 6,
+    "clear_major_seven_b_windows_ai_only": 2,
+    "minor_windows_ai_only": 6,
+    "uncertain_windows": 1,
+    "no_issue_seen_windows": 2,
+    "quality_rate": null,
+    "model_winner": null,
+    "human_bilingual_reviews": 0,
+    "approved_spoken_script": false,
+    "full_file_quality_accepted": false
+  }
+}

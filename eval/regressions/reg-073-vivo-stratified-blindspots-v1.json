@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "id": "REG-073",
+  "status": "ai_source_aware_triage_needs_independent_review",
+  "severity": "major_fact_or_scene",
+  "split": "source_only_selected_exposed_development_not_holdout",
+  "source_family": "youtube_geekerwan_vivo_original_platform",
+  "profile_scope": "retained Hy-MT2 1.8B and 7B Q4_K_M v8 full-file drafts",
+  "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "draft_sha256": {
+    "oneB": "32d96fe75eb0f5c90a67e2f6606d3d6ace27f79e67352a12b065efe91a08d3fc",
+    "sevenB": "4451868ea3e7cbb3ed81f3d24b5f85bc61a749168b213c54c88ae552208c4831"
+  },
+  "machine_report_sha256": "94ed2dce1bf48b4eef4b71fa34c12cbd50ad60834599dcdfba6741e02ec4b396",
+  "ai_review_sha256": "2c8e7bc4088b9e0d584173b605a2f352154f868e5c3b49f43988684f278eb77e",
+  "minimal_reproducers": [
+    {
+      "id": "premium_ascent_not_high_prices", "cue_ids": [20],
+      "source_text_sha256": ["ab15940189fb9ca0541a651d834fbe2bd8f2a0f1c1de9267c43c49f25b58f0d6"],
+      "oneB_text_sha256": ["bc15ae8204b9c01bd7d8ef676d407e47df8c2d148a07282ad7c02cc423ab574f"],
+      "sevenB_text_sha256": ["2205beaa29a4bfab777dcab88903138d86630c808a995875bb62994f14ca14f5"],
+      "ai_affected_arms": ["oneB"],
+      "expected_invariant": "Preserve the scene's ascent toward a premium product segment; do not substitute rising prices."
+    },
+    {
+      "id": "multicore_not_multichip", "cue_ids": [172],
+      "source_text_sha256": ["53086371a0283351ca652566ed5f627a7291110b43d1fb3247a841722db52946"],
+      "oneB_text_sha256": ["d61186106286574abfe23441896ce939d77a58a8c84e192d4238d710aebc58cd"],
+      "sevenB_text_sha256": ["d9bb39f92d4133dc3efd84a93809a7ed10367349d76710bb94b988bae7c25066"],
+      "ai_affected_arms": ["oneB", "sevenB"],
+      "expected_invariant": "Preserve multi-core capability, without replacing CPU cores with multiple chips or processors."
+    },
+    {
+      "id": "all_big_core_architecture", "cue_ids": [232],
+      "source_text_sha256": ["ca912f0f835e8f3ae5a1c56628ea9061331c0f577608af3e12be6b6f9870f838"],
+      "oneB_text_sha256": ["f19d6fa1fe9b57c392afefd885c706501988528cb4e6d31ebef7b6563d2d0272"],
+      "sevenB_text_sha256": ["3712939ffdc678ed77277b3f6c41f5851e86c99bb8c7b4f02881f3933ed26ca8"],
+      "ai_affected_arms": ["oneB", "sevenB"],
+      "expected_invariant": "Preserve the specific all-big-core CPU design, not an unspecified full core or generic technology."
+    },
+    {
+      "id": "scene_led_planning", "cue_ids": [334],
+      "source_text_sha256": ["18798ab0a6270f8d5934621630c3b53004de384b51eeac2fe8202dfe3ec6f7a6"],
+      "oneB_text_sha256": ["3e637860f4e6bbf41f1d3d75f9ab92f733630d6909a54c754df94ecd78448972"],
+      "sevenB_text_sha256": ["26caccd57fdbf6db6ffb38947c3450b4066db41968c5e8005b002f4ee6ba391c"],
+      "ai_affected_arms": ["oneB"],
+      "expected_invariant": "Preserve early user-scenario-led planning; do not replace it with staging a scene for dramatic effect."
+    },
+    {
+      "id": "advanced_manufacturing_process", "cue_ids": [393],
+      "source_text_sha256": ["6a7e7480ad824df5104534cb58353520deb889f6f155a27720e949b5e2cb78ff"],
+      "oneB_text_sha256": ["4b5fec05ba88555436dbbee6d639ca6b35d36cb74b707d1a0a55d727e532a14e"],
+      "sevenB_text_sha256": ["9a7fa4462e89ada87dfe4b9cf0739637396ddd475526b2095c0928a63de484df"],
+      "ai_affected_arms": ["oneB"],
+      "expected_invariant": "Preserve advanced semiconductor process technology; do not substitute advanced processors."
+    },
+    {
+      "id": "next_cue_not_duplicated", "cue_ids": [457, 458],
+      "source_text_sha256": ["3652d7c656c7aa83b96f75a870f708d35fe5cd8eb1039259111674d4bf6aa9e6", "89e45f7d07f8acf3afecba739e1376a20856bcbdd1f836ddf135080fd341f473"],
+      "oneB_text_sha256": ["0789699f6cfeda5757214d322ec0e24180e524cff8dc087c4067d193112829e2", "0789699f6cfeda5757214d322ec0e24180e524cff8dc087c4067d193112829e2"],
+      "sevenB_text_sha256": ["c04beeb1d0939a39b20b33b9e86b0b9e8b4438db290c0f94e9e013c092e479a9", "41525a1cf8928e583ce50bb9d12d7804739d21ac7d376fe54b0a56d4a402df77"],
+      "ai_affected_arms": ["oneB"],
+      "expected_invariant": "Do not anticipate the next cue's conversation statement and repeat the same Russian sentence at both cue positions."
+    }
+  ],
+  "related_controls": [
+    {"id":"premium_market_ascent","family":"premium_ascent_not_high_prices","source_lines":["这款手机开始冲击高端市场。"],"expected_fact":"Premium market positioning, not a price increase."},
+    {"id":"multicore_performance","family":"multicore_not_multichip","source_lines":["这颗芯片需要更强的多核性能。"],"expected_fact":"Many CPU cores within this chip, not many separate chips."},
+    {"id":"all_big_core_cost","family":"all_big_core_architecture","source_lines":["全大核架构提高了性能，也增加了面积成本。"],"expected_fact":"All-big-core architecture and area cost both remain."},
+    {"id":"scene_guides_imaging","family":"scene_led_planning","source_lines":["我们先研究用户拍照的场景，再决定影像方案。"],"expected_fact":"Use-case research guides imaging planning."},
+    {"id":"advanced_process_node","family":"advanced_manufacturing_process","source_lines":["我们会继续研发先进制程，让芯片能效更好。"],"expected_fact":"Advanced manufacturing process, not a count or type of processor."},
+    {"id":"intro_then_conversation","family":"next_cue_not_duplicated","source_lines":["今天我们来到这里，","和工程师认真聊了芯片设计。"],"expected_fact":"The conversation statement appears once, in the second cue."}
+  ],
+  "negative_controls": [
+    {"id":"actual_price_rise","family":"premium_ascent_not_high_prices","source_lines":["原材料变贵了，售价也一路冲高。"],"expected_fact":"The selling price actually rises; do not force a premium-market reading."},
+    {"id":"multiple_chip_count","family":"multicore_not_multichip","source_lines":["设备里有三颗不同的芯片，不是在说多核。"],"expected_fact":"Preserve three chips and the explicit denial of a multi-core reading."},
+    {"id":"small_and_big_cores","family":"all_big_core_architecture","source_lines":["这次不是全大核，而是大小核混合设计。"],"expected_fact":"Mixed big/little cores, with the all-big-core design negated."},
+    {"id":"dramatic_scene_directing","family":"scene_led_planning","source_lines":["导演提前布置了戏剧场景，没有讨论产品规划。"],"expected_fact":"Actual dramatic scene staging, not product planning."},
+    {"id":"advanced_processors","family":"advanced_manufacturing_process","source_lines":["我们正在开发更先进的处理器，不是改进制造制程。"],"expected_fact":"Advanced processors, with manufacturing-process improvement negated."},
+    {"id":"deliberate_repeat","family":"next_cue_not_duplicated","source_lines":["我又和他们聊了一遍。","是的，我又和他们聊了一遍。"],"expected_fact":"Preserve deliberate repetition when it exists in the source."}
+  ],
+  "control_model_runs": 0,
+  "human_review": "missing",
+  "product_status": "v8_unchanged_no_quality_admission"
+}

@@ -1528,6 +1528,7 @@ tasks:
       - node eval/scripts/build-regression-catalog-v49.mjs
       - node eval/scripts/build-regression-catalog-v50.mjs
       - node eval/scripts/build-regression-catalog-v51.mjs
+      - node eval/scripts/build-regression-catalog-v52.mjs
   eval:regression:catalog:portable:check:
     desc: Verify recent public catalog evidence in a clean checkout without private source files
     cmds:
@@ -1540,6 +1541,17 @@ tasks:
       - node eval/scripts/build-regression-catalog-v49.mjs
       - node eval/scripts/build-regression-catalog-v50.mjs
       - node eval/scripts/build-regression-catalog-v51.mjs
+      - node eval/scripts/build-regression-catalog-v52.mjs
+  eval:regression:catalog:v52:write:
+    desc: Append six source-aware Vivo blind spots without rewriting v51
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v52.mjs
+      - node eval/scripts/build-regression-catalog-v52.mjs --write
+  eval:regression:catalog:v52:check:
+    desc: Verify pinned Vivo reproducers and twelve pending controls
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v52.mjs
+      - node eval/scripts/build-regression-catalog-v52.mjs
   eval:regression:catalog:v51:write:
     desc: Append REG-072 scene post-edit time displacement without rewriting v50
     cmds:
