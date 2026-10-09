@@ -1097,3 +1097,14 @@ needs another source-derived fact relation with related negatives,
 measured trigger coverage and source-aware assessment of every warning.
 The [v22 RELEASE-05 self-audit](../eval/experiments/2026-10-10-release-05-audit-attempt-v22.md)
 retains all human, rights, fit and installation gaps.
+
+The [precommitted REG-040 count/category replay](../eval/experiments/2026-10-10-reg040-count-category-review-result.md)
+adds an `EVAL-04`/`CTX-03` evaluation-only warning scoped to explicit
+Chinese `点心`/`甜品` quantity pairs. Its 18 related and negative controls
+passed; one bounded replay checked 526 aligned pairs on two saved restaurant
+drafts and warned on the known 1.8B cue-35 reversal. The 7B cue-35 paraphrase
+was outside the lexical rule, and only one of 263 source cues exposed this
+relation. There is no measured natural precision/recall or independent
+language review; the warning stays out of product v8. The
+[v23 RELEASE-05 self-audit](../eval/experiments/2026-10-10-release-05-audit-attempt-v23.md)
+keeps G3–G5, audio, rights, clean-install and final release gates open.

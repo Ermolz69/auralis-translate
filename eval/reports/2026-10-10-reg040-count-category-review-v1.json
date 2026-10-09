@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "experiment": "REG-040-COUNT-CATEGORY-2026-10-10-v1",
+  "split": "exposed_natural_development_not_holdout",
+  "source_sha256": "4777e11caa115e893f2328c2a33c25a76c7391ace8ecf0ac4b9436635fc27964",
+  "source_cues": 263,
+  "control_sha256": "3266febf06462eddbd9b605d18c2cd8675f4dd688f473a11f3cad8e391851ce4",
+  "control_count": 18,
+  "rule_sha256": "f840c0adbb84f77823686b5df7a04d91954426dd31b425dfc789a7b5c8717a77",
+  "regression_sha256": "d46eb7e8020f5ddcf30b99f21bd16fd01ca8e96daf2302057db55e6776890918",
+  "arms": [
+    {
+      "id": "1_8b_v6",
+      "draft_sha256": "042c0ffffd67a4ea6f562645655ffe9db823866d7505b4ed64708e0ff829df4d",
+      "cue_count": 263,
+      "source_relation_cue_ids": [
+        35
+      ],
+      "target_relation_cue_ids": [
+        35
+      ],
+      "warnings": [
+        {
+          "cue_id": 35,
+          "kind": "count_category_swap"
+        }
+      ],
+      "warning_precision": null,
+      "human_bilingual_reviews": 0
+    },
+    {
+      "id": "7b_v6",
+      "draft_sha256": "45f140e201f5a6228a0754e48d1e2b4153a392a7869dc279768339882fa53511",
+      "cue_count": 263,
+      "source_relation_cue_ids": [
+        35
+      ],
+      "target_relation_cue_ids": [],
+      "warnings": [],
+      "warning_precision": null,
+      "human_bilingual_reviews": 0
+    }
+  ],
+  "source_target_pairs": 526,
+  "model_requests": 0,
+  "asr_requests": 0,
+  "tts_requests": 0,
+  "product_rule_admitted": false,
+  "language_quality_accepted": false
+}
