@@ -69,7 +69,7 @@ assert(current.includes('2026-10-09-vivo-original-v8-long-result.md'));
 assert(current.includes('2026-10-09-youtube-manual-chinese-source-result.md'));
 assert(current.includes('2026-10-09-vivo-audio-asr-triage-result.md'));
 assert(html.includes('id="source-name-registry"'));
-assert(current.includes('2026-10-03-release-05-audit-attempt-v10.md'));
+assert(current.includes('2026-10-09-release-05-audit-attempt-v11.md'));
 assert(current.includes('https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'));
 assert(current.includes('<title>Auralis Translate — текущее состояние</title>'));
 assert(!current.includes('id="report-data"'), 'Historical benchmark data belongs only in history');
@@ -282,6 +282,7 @@ assert(current.includes('Русскую разборчивость и естес
 assert(current.includes('ИИ-проверки помогают отбирать ошибки, но не дают человеческой оценки'));
 assert(current.includes('2026-10-09-vivo-original-v8-long-result.md'));
 assert(current.includes('2026-10-09-vivo-reg065-copy-recovery-result.md'));
+assert(current.includes('2026-10-09-release-05-audit-attempt-v11.md'));
 assert(current.includes('Два полных черновика по 467 реплик'));
 assert.equal((current.match(/id="results"/g) ?? []).length, 1);
 assert.equal((current.match(/id="youtube-vivo-v8-long"/g) ?? []).length, 1);

@@ -922,3 +922,6 @@ G3–G5, voice acceptance and `RELEASE-05` remain open. The next bounded task is
 a same-source fact-preservation screen with fresh related and negative
 controls, followed by an independently reviewed full candidate if a reviewer
 becomes available. The owner has ruled out volunteer outreach.
+The [RELEASE-05 v11 interim self-audit](../eval/experiments/2026-10-09-release-05-audit-attempt-v11.md)
+records all G1–G9 and A1–A6 decisions as partial or open; it does not certify
+a final candidate.
