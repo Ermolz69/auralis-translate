@@ -409,6 +409,21 @@ tasks:
       - node --test-isolation=none --test eval/scripts/tests/bounded-process-capture.test.mjs
       - node --check eval/scripts/inventory-youtube-geekerwan-kirin-license.mjs
       - node eval/scripts/inventory-youtube-geekerwan-kirin-license.mjs --preflight
+  eval:data:youtube:asus:license:preflight:
+    desc: Verify pinned one-attempt ASUS original-platform metadata screen
+    env:
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - node --test-isolation=none --test eval/scripts/tests/bounded-process-capture.test.mjs
+      - node --check eval/scripts/inventory-youtube-geekerwan-asus-license.mjs
+      - node eval/scripts/inventory-youtube-geekerwan-asus-license.mjs --preflight
+  eval:data:youtube:asus:license:inventory:
+    desc: Retain one bounded ASUS metadata response without downloading captions or media
+    env:
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - task: eval:data:youtube:asus:license:preflight
+      - node eval/scripts/inventory-youtube-geekerwan-asus-license.mjs
   eval:data:youtube:kirin:license:inventory:
     desc: Retain one bounded YouTube metadata response without downloading captions or media
     env:
