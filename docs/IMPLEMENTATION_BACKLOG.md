@@ -1139,3 +1139,17 @@ windows cannot yield a quality rate or model winner. The
 [v25 RELEASE-05 self-audit](../eval/experiments/2026-10-10-release-05-audit-attempt-v25.md)
 keeps human language assessment, source-rights/alignment, script approval,
 audio fit/listening and clean installation open; v8 remains `needs_review`.
+
+The [source-only quantity feature v1 failure](../eval/experiments/2026-10-10-source-quantity-feature-v1-result.md)
+and [bounded v2 replay](../eval/experiments/2026-10-10-source-quantity-feature-v2-result.md)
+improve future `EVAL-04`/`LONG-04` sampling without changing the frozen
+REG-073 selection. The v1 classifier marked 20/467 Chinese cues, including
+five idiom, ordinal and chip-model false positives. Precommitted
+[REG-074/catalog v53](../eval/regressions/catalog-v53.json) pins the
+minimal source hashes and ten authored controls. One v2 source-only
+replay removed exactly those five IDs, added none, and passed the controls;
+15 cues remain marked. There were zero translation/model/audio calls and
+zero bilingual human reviews. v2 may guide a future *new-source* sample,
+but cross-source precision/recall, translation facts and G3–G5 remain
+unproven. The [v26 RELEASE-05 self-audit](../eval/experiments/2026-10-10-release-05-audit-attempt-v26.md)
+retains the same blocked release gates.

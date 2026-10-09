@@ -425,6 +425,25 @@ export async function loadCurrentReport(root) {
   assert.equal(blindspot.source_target_pairs, 90);
   assert.equal(blindspotReview.summary.clear_major_windows_ai_only, 6);
   assert.equal(blindspotReview.summary.human_bilingual_reviews, 0);
+  const quantityV1Raw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-vivo-source-quantity-feature-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(quantityV1Raw).digest('hex'),
+    'f13d6efcd08e0a166055551050d110a2b8b81c9f42e62b12d210a764477d64ec');
+  const quantityV1 = JSON.parse(quantityV1Raw);
+  const quantityV2Raw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-vivo-source-quantity-feature-v2.json'), 'utf8');
+  assert.equal(createHash('sha256').update(quantityV2Raw).digest('hex'),
+    '4fa3ca708ddce06e63f496610669930050ab09440ae8296318b70b2b7bfa51ad');
+  const quantityV2 = JSON.parse(quantityV2Raw);
+  const catalogV53Raw = await fs.readFile(path.join(root,
+    'eval/regressions/catalog-v53.json'), 'utf8');
+  assert.equal(createHash('sha256').update(catalogV53Raw).digest('hex'),
+    '4bfc790f8f4bef116381631f8d95316e62bcc5d5d50ae36e6abf2475ce192378');
+  assert.equal(JSON.parse(catalogV53Raw).entries.at(-1).id, 'REG-074');
+  assert.equal(quantityV2.v1_report_sha256,
+    createHash('sha256').update(quantityV1Raw).digest('hex'));
+  assert.deepEqual(quantityV2.removed_ids, [85, 236, 283, 306, 415]);
+  assert.deepEqual(quantityV2.added_ids, []);
   const vivoAudioRaw = await fs.readFile(path.join(root,
     'eval/reports/2026-10-10-vivo-real-sapi-technical.json'), 'utf8');
   assert.equal(createHash('sha256').update(vivoAudioRaw).digest('hex'),
@@ -635,6 +654,16 @@ export async function loadCurrentReport(root) {
       human_bilingual_reviews: countCategory.arms[0].human_bilingual_reviews,
       product_rule_admitted: countCategory.product_rule_admitted,
       report_sha256: createHash('sha256').update(countCategoryRaw).digest('hex') },
+    vivo_source_quantity: { source_cues: quantityV2.source_cues,
+      v1_matched_cues: quantityV1.matched_cues,
+      v2_matched_cues: quantityV2.v2_matched_cues,
+      known_false_positives_removed: quantityV2.removed_ids.length,
+      added_ids: quantityV2.added_ids.length,
+      model_requests: quantityV2.model_requests,
+      human_bilingual_reviews: quantityV2.human_bilingual_reviews,
+      v1_report_sha256: createHash('sha256').update(quantityV1Raw).digest('hex'),
+      v2_report_sha256: createHash('sha256').update(quantityV2Raw).digest('hex'),
+      catalog_sha256: createHash('sha256').update(catalogV53Raw).digest('hex') },
     vivo_blindspot: { selected_windows: blindspot.selected_windows,
       unique_source_cues: blindspot.unique_source_cues,
       source_target_pairs: blindspot.source_target_pairs,
