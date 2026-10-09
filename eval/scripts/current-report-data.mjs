@@ -385,6 +385,21 @@ export async function loadCurrentReport(root) {
   assert.equal(vivoAudio.media.video_tail_gap_ms, 1258);
   assert.equal(vivoAudio.review.human_audio_listeners, 0);
   assert.equal(vivoAudio.review.audio_gates_admitted, false);
+  const vivoGroupRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-vivo-group-fit-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(vivoGroupRaw).digest('hex'),
+    'a6f47b89268f6658ff9432262cb2a9bc9afababf71d24e2fdc0e0263537ad05d');
+  const vivoGroup = JSON.parse(vivoGroupRaw);
+  assert.equal(vivoGroup.status, 'grouping_only_rejected');
+  assert.equal(vivoGroup.cue_count, vivoAudio.tts.generated_cues);
+  assert.equal(vivoGroup.tts_report_sha256, vivoAudio.tts.report_sha256);
+  assert.equal(vivoGroup.total_wav_ms, 2291610);
+  assert.equal(vivoGroup.source_span_ms, 1114363);
+  assert.equal(vivoGroup.duration_reduction_needed_for_1_5x_ms, 620178);
+  assert.equal(vivoGroup.at_most_1_5_cues_by_group_size['467'], 0);
+  assert.equal(vivoGroup.new_tts_requests, 0);
+  assert.equal(vivoGroup.human_audio_listeners, 0);
+  assert.equal(vivoGroup.audio_gates_admitted, false);
   return {
     name_registry:nameRegistry.summary,
     target_terms:targetTerms.summary,
@@ -425,6 +440,16 @@ export async function loadCurrentReport(root) {
       human_audio_listeners: vivoAudio.review.human_audio_listeners,
       audio_gates_admitted: vivoAudio.review.audio_gates_admitted,
       report_sha256: createHash('sha256').update(vivoAudioRaw).digest('hex') },
+    vivo_group_fit: { cue_count: vivoGroup.cue_count,
+      total_wav_ms: vivoGroup.total_wav_ms,
+      source_span_ms: vivoGroup.source_span_ms,
+      ideal_whole_file_tempo: vivoGroup.ideal_whole_file_tempo,
+      needed_reduction_ms: vivoGroup.duration_reduction_needed_for_1_5x_ms,
+      at_most_1_5_whole_file: vivoGroup.at_most_1_5_cues_by_group_size['467'],
+      new_tts_requests: vivoGroup.new_tts_requests,
+      human_audio_listeners: vivoGroup.human_audio_listeners,
+      audio_gates_admitted: vivoGroup.audio_gates_admitted,
+      report_sha256: createHash('sha256').update(vivoGroupRaw).digest('hex') },
     source_fact_hints: { chats: facts.chat_requests,
       preflights: facts.template_token_preflights,
       exact_abstentions: facts.identical_no_hint_pairs,
