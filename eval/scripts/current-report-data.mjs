@@ -319,6 +319,19 @@ export async function loadCurrentReport(root) {
     '48799628072487c3924f99835944c76cb8da2af1f13840cacca6f8df6851ff97');
   assert.deepEqual(JSON.parse(factsCatalogRaw).entries.slice(-2).map(row => row.id),
     ['REG-069', 'REG-070']);
+  const clockRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-09-source-clock-review-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(clockRaw).digest('hex'),
+    '403f27b26e9b9f7562b44079ae509075d13e96d0fe6121a8e0a42c1ba6d955cd');
+  const clock = JSON.parse(clockRaw);
+  assert.equal(clock.source_cues, 467);
+  assert.equal(clock.recognized_source_clocks.length, 1);
+  assert.equal(clock.full_draft_warnings.length, 1);
+  assert.equal(clock.full_draft_warnings[0].cue_id, 328);
+  assert.equal(clock.paired_natural_328.baseline.warning, null);
+  assert.equal(clock.paired_natural_328.candidate.warning.cue_id, 328);
+  assert.equal(clock.model_requests, 0);
+  assert.equal(clock.human_bilingual_reviews, 0);
   return {
     name_registry:nameRegistry.summary,
     target_terms:targetTerms.summary,
@@ -360,6 +373,15 @@ export async function loadCurrentReport(root) {
       machine_report_sha256: createHash('sha256').update(factsRaw).digest('hex'),
       ai_review_sha256: createHash('sha256').update(factsReviewRaw).digest('hex'),
       catalog_sha256: createHash('sha256').update(factsCatalogRaw).digest('hex') },
+    source_clock_review: { scanned_cues: clock.source_cues,
+      recognized: clock.recognized_source_clocks.length,
+      full_warnings: clock.full_draft_warnings.length,
+      baseline_warning: clock.paired_natural_328.baseline.warning !== null,
+      rejected_candidate_warning:
+        clock.paired_natural_328.candidate.warning !== null,
+      model_requests: clock.model_requests,
+      human_bilingual_reviews: clock.human_bilingual_reviews,
+      report_sha256: createHash('sha256').update(clockRaw).digest('hex') },
     youtube_v8_long: { source_cues: vivoV8.source_cues,
       small_prefix_cues: vivoV8.arms[0].covered_prefix_cues,
       large_complete_cues: vivoV8.arms[1].covered_prefix_cues,

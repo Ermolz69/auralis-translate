@@ -990,3 +990,19 @@ keeps all final language, installation and audio gates open. Next investigate
 source-derived post-answer warnings or fail-closed review with a new bounded
 screen; do not repeat prompt-hint tuning against the same known controls as
 though they were an independent holdout.
+
+## Source clock review after model output
+
+The [frozen offline replay](../eval/experiments/2026-10-09-source-clock-review-v1-result.md)
+adds one evaluation-only source-derived warning for `REG-070`. It rehashed
+the unchanged 467-cue source and v8 draft plus the prior 36-chat journal,
+with zero new model calls. The rule recognized only cue 328 in the full
+file and flagged its wrong late-evening rendering; it also flagged the
+rejected hint candidate while abstaining on the prior correct-hour
+baseline. Related and negative authored controls passed. This is partial
+`EVAL-04` evidence, not a product policy or a measure of overall quality:
+the known 36-month, team and future-modality errors remain outside its
+scope. A second source family, measured false positives, approved terms,
+human review and all final language/audio gates remain open. The
+[v15 self-audit](../eval/experiments/2026-10-09-release-05-audit-attempt-v15.md)
+retains the rejection of `RELEASE-05`.
