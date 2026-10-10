@@ -1,6 +1,21 @@
 version: "3"
 
 tasks:
+  eval:model:qwen3:acquire:preflight:
+    desc: Verify the pinned official Qwen3 8B Q4 acquisition contract without network use
+    cmds:
+      - node --check eval/scripts/acquire-qwen3-8b-eval.mjs
+      - node eval/scripts/acquire-qwen3-8b-eval.mjs --preflight
+  eval:model:qwen3:acquire:head:
+    desc: Check the pinned official Qwen3 weight headers without downloading it
+    cmds:
+      - task: eval:model:qwen3:acquire:preflight
+      - node eval/scripts/acquire-qwen3-8b-eval.mjs --head
+  eval:model:qwen3:acquire:
+    desc: Download one pinned Qwen3 8B Q4 weight into ignored private storage
+    cmds:
+      - task: eval:model:qwen3:acquire:preflight
+      - node eval/scripts/acquire-qwen3-8b-eval.mjs --acquire
   eval:name-action:trace:
     desc: Trace all nine frozen NAME-01 regressions without inference or mutation
     cmds:
