@@ -533,6 +533,29 @@ export async function loadCurrentReport(root) {
   assert.equal(qwenReview.decision,
     'reject_candidate_before_cross_source_or_full_file');
   assert.equal(qwenReview.human_bilingual_reviews, 0);
+  const asusRelationsRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-asus-source-relations-v3.json'), 'utf8');
+  assert.equal(createHash('sha256').update(asusRelationsRaw).digest('hex'),
+    '8d3eb1020f660fb3c72aa4cc369cc8ca57b394e2089f63e3d7715686f4db8468');
+  const asusRelations = JSON.parse(asusRelationsRaw);
+  const asusRelationsReviewRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-asus-source-relations-v3-ai-review.json'), 'utf8');
+  assert.equal(createHash('sha256').update(asusRelationsReviewRaw).digest('hex'),
+    '4855a22304ee3caf88e62c6e26ba38034c440daadcc1455589db5d2259f3dead');
+  const asusRelationsReview = JSON.parse(asusRelationsReviewRaw);
+  const catalogV58Raw = await fs.readFile(path.join(root,
+    'eval/regressions/catalog-v58.json'), 'utf8');
+  assert.equal(createHash('sha256').update(catalogV58Raw).digest('hex'),
+    '5a0e1f9fcbfb194e37e1ed65620a1b33ecf268cae47dfa5b42e7cce36f31cfed');
+  assert.equal(JSON.parse(catalogV58Raw).entries.at(-1).id, 'REG-083');
+  assert.equal(asusRelations.observations.source_cues, 268);
+  assert.equal(asusRelations.observations.recognized_new_fact_count, 3);
+  assert.equal(asusRelations.observations.warning_count, 0);
+  assert.equal(asusRelationsReview.machine_report_sha256,
+    createHash('sha256').update(asusRelationsRaw).digest('hex'));
+  assert.equal(asusRelationsReview.cases[0].ai_judgment,
+    'major_technical_term_substitution');
+  assert.equal(asusRelationsReview.human_bilingual_reviews, 0);
   const vivoAudioRaw = await fs.readFile(path.join(root,
     'eval/reports/2026-10-10-vivo-real-sapi-technical.json'), 'utf8');
   assert.equal(createHash('sha256').update(vivoAudioRaw).digest('hex'),
@@ -892,6 +915,17 @@ export async function loadCurrentReport(root) {
       human_bilingual_reviews: qwenReview.human_bilingual_reviews,
       candidate_shortlisted: false,
       catalog_sha256: createHash('sha256').update(catalogV57Raw).digest('hex') },
+    asus_source_relations_v3: {
+      source_cues: asusRelations.observations.source_cues,
+      aligned_pairs: asusRelations.observations.aligned_source_target_pairs,
+      recognized_facts: asusRelations.observations.recognized_new_fact_count,
+      warnings: asusRelations.observations.warning_count,
+      ai_major_misses:
+        asusRelationsReview.ai_identified_major_errors_in_three_selected_cues,
+      human_reviews: asusRelationsReview.human_bilingual_reviews,
+      product_admitted: asusRelations.observations.product_rule_admitted,
+      report_sha256: createHash('sha256').update(asusRelationsRaw).digest('hex'),
+      catalog_sha256: createHash('sha256').update(catalogV58Raw).digest('hex') },
     vivo_source_quantity: { source_cues: quantityV2.source_cues,
       v1_matched_cues: quantityV1.matched_cues,
       v2_matched_cues: quantityV2.v2_matched_cues,
