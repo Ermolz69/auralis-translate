@@ -1,6 +1,33 @@
 version: "3"
 
 tasks:
+  eval:official-reference:freeze:
+    desc: Freeze ten source-only requests from the pinned official Chinese–Russian PDF
+    requires:
+      vars: [MODEL_ROOT]
+    env:
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+    cmds:
+      - node --check eval/scripts/probe-official-reference-v1.mjs
+      - node eval/scripts/probe-official-reference-v1.mjs --freeze
+  eval:official-reference:preflight:
+    desc: Rehash the private PDF, source cases, model and exact frozen requests
+    requires:
+      vars: [MODEL_ROOT]
+    env:
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+    cmds:
+      - node --check eval/scripts/probe-official-reference-v1.mjs
+      - node eval/scripts/probe-official-reference-v1.mjs --preflight
+  eval:official-reference:probe:
+    desc: Run one bounded v8 translation screen without Russian references in prompts
+    requires:
+      vars: [MODEL_ROOT]
+    env:
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+    cmds:
+      - task: eval:official-reference:preflight
+      - node eval/scripts/probe-official-reference-v1.mjs --probe
   eval:model:qwen3:acquire:preflight:
     desc: Verify the pinned official Qwen3 8B Q4 acquisition contract without network use
     cmds:
