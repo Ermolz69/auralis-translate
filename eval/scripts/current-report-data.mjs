@@ -751,6 +751,20 @@ export async function loadCurrentReport(root) {
   assert.equal(officialReference.complete_answers, 6);
   assert.equal(officialReference.human_model_output_reviews, 0);
   assert.equal(officialReference.previous_policy_answer_byte_identical, true);
+  const temporalControlsRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-reg085-temporal-controls-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(temporalControlsRaw).digest('hex'),
+    'f3b72032716dee53dd72bb5212168efa5157551797f6cd1585243e1a42c65728');
+  const temporalControls = JSON.parse(temporalControlsRaw);
+  const temporalReviewRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-reg085-temporal-controls-v1-ai-review.json'), 'utf8');
+  assert.equal(createHash('sha256').update(temporalReviewRaw).digest('hex'),
+    '2cefc5d00a73a215cb11c0d517377d4f74bf77274bfa0007f2501cadaf76099e');
+  const temporalReview = JSON.parse(temporalReviewRaw);
+  assert.equal(temporalControls.complete_answers, 6);
+  assert.equal(temporalReview.clear_temporal_matches_ai_only, 5);
+  assert.equal(temporalReview.uncertain_cases, 1);
+  assert.equal(temporalReview.human_reviews_of_model_output, 0);
   return {
     name_registry:nameRegistry.summary,
     target_terms:targetTerms.summary,
@@ -768,6 +782,17 @@ export async function loadCurrentReport(root) {
       previous_policy_answer_byte_identical:
         officialReference.previous_policy_answer_byte_identical,
       report_sha256: createHash('sha256').update(officialReferenceRaw).digest('hex') },
+    temporal_controls: {
+      complete_answers: temporalControls.complete_answers,
+      preflights: temporalControls.preflights,
+      reported_total_tokens: temporalControls.reported_total_tokens,
+      wall_ms: temporalControls.wall_ms,
+      clear_temporal_matches_ai_only:
+        temporalReview.clear_temporal_matches_ai_only,
+      uncertain_cases: temporalReview.uncertain_cases,
+      human_model_output_reviews:
+        temporalReview.human_reviews_of_model_output,
+      report_sha256: createHash('sha256').update(temporalControlsRaw).digest('hex') },
     sources: { candidates: sources.source_count, media_groups: sources.media_groups,
       inspected_cues: sources.inspected_cues,
       eligible_cues: sources.eligible_cues },

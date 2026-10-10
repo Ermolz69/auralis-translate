@@ -65,6 +65,9 @@ assert(current.includes('href="./history.html"'), 'Current state must link to hi
 assert(current.includes('id="official-reference"'));
 assert(current.includes('2026-10-10-official-zh-ru-reference-v2-result.md'));
 assert(current.includes('REG-085'));
+assert(current.includes('id="reg085-controls"'));
+assert(current.includes('2026-10-10-reg085-temporal-controls-v1-result.md'));
+assert(current.includes('catalog-v62.json'));
 assert(current.includes('id="asus-hall-v4"'));
 assert(current.includes('2026-10-10-reg083-hall-referent-v4-result.md'));
 assert(!current.includes('id="asus-source-relations"'));
@@ -133,7 +136,7 @@ assert(current.includes('2026-10-10-vivo-restored-source-asr-link-v1-result.md')
 assert(current.includes('восстановил YouTube SRT побайтово'));
 assert(current.includes('исправление проверено только офлайн'));
 assert(current.includes('полное ASR (499 сегментов) заново связано'));
-assert(current.includes('Запустить заранее ограниченные шесть контролей REG-085'));
+assert(current.includes('шесть авторских контролей уже выполнены'));
 assert(current.includes('Озвучка остановлена по решению владельца'));
 assert(html.includes('id="source-name-registry"'));
 assert(current.includes('2026-10-10-release-05-audit-attempt-v32.md'));
@@ -464,6 +467,9 @@ assert(current.includes('2026-10-10-translation-only-scope-v2.md'));
 assert.equal(currentData.official_reference.source_cases, 6);
 assert.equal(currentData.official_reference.complete_answers, 6);
 assert.equal(currentData.official_reference.human_model_output_reviews, 0);
+assert.equal(currentData.temporal_controls.complete_answers, 6);
+assert.equal(currentData.temporal_controls.clear_temporal_matches_ai_only, 5);
+assert.equal(currentData.temporal_controls.uncertain_cases, 1);
 assert.equal(currentData.release_decision, 'not_accepted');
 assert.equal(currentData.sources.eligible_cues, 0);
 assert.equal(currentData.sources.candidates, 12);

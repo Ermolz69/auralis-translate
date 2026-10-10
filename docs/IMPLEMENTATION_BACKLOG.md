@@ -1376,3 +1376,12 @@ exposed development material, not natural subtitle holdout evidence.
 Next: run bounded REG-085 controls and identify source-matched professional
 Chinese/Russian subtitle tracks on distinct videos before defining the
 reference-based G3–G5 protocol or changing the product.
+
+The [single bounded REG-085 control screen](../eval/experiments/2026-10-10-reg085-temporal-controls-v1-result.md)
+then ran all six authored cases on unchanged 7B/v8. All replies were
+structurally valid; a separately labeled AI reading found five clear
+temporal matches and one uncertain heading-only formulation. The original
+official-reference defect remains. [Catalog v62](../eval/regressions/catalog-v62.json)
+links the immutable prior v61 state to the new raw hashes and retains zero
+human output ratings. The next dependency is a same-video Chinese/Russian
+subtitle pair from an identifiable publisher; no candidate is admitted yet.
