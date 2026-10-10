@@ -2039,6 +2039,52 @@ tasks:
       - task: eval:reg077:v4:review:check
       - node --check eval/scripts/check-reg077-v4-regressions.mjs
       - node eval/scripts/check-reg077-v4-regressions.mjs
+  eval:chip-core-warning:v1:unit:
+    desc: Check conservative source referent and Russian one-core warning scope
+    cmds:
+      - node --check eval/scripts/chip-core-warning-v1.mjs
+      - node --check eval/scripts/check-chip-core-warning-v1.mjs
+      - node --test --test-isolation=none eval/scripts/tests/chip-core-warning-v1.test.mjs
+  eval:chip-core-warning:v1:freeze:
+    desc: Freeze pinned full-draft and REG-077 warning screen identities
+    requires:
+      vars: [VIVO_ROOT, OTHER_ROOT]
+    env:
+      AURALIS_VIVO_ASSET_ROOT: '{{.VIVO_ROOT}}'
+      AURALIS_OTHER_ASSET_ROOT: '{{.OTHER_ROOT}}'
+    cmds:
+      - task: eval:chip-core-warning:v1:unit
+      - node eval/scripts/check-chip-core-warning-v1.mjs --freeze
+  eval:chip-core-warning:v1:preflight:
+    desc: Rehash all private inputs against the committed warning freeze
+    requires:
+      vars: [VIVO_ROOT, OTHER_ROOT]
+    env:
+      AURALIS_VIVO_ASSET_ROOT: '{{.VIVO_ROOT}}'
+      AURALIS_OTHER_ASSET_ROOT: '{{.OTHER_ROOT}}'
+    cmds:
+      - task: eval:chip-core-warning:v1:unit
+      - node eval/scripts/check-chip-core-warning-v1.mjs --preflight
+  eval:chip-core-warning:v1:report:
+    desc: Capture one source-free offline warning screen over 1,920 pairs
+    requires:
+      vars: [VIVO_ROOT, OTHER_ROOT]
+    env:
+      AURALIS_VIVO_ASSET_ROOT: '{{.VIVO_ROOT}}'
+      AURALIS_OTHER_ASSET_ROOT: '{{.OTHER_ROOT}}'
+    cmds:
+      - task: eval:chip-core-warning:v1:preflight
+      - node eval/scripts/check-chip-core-warning-v1.mjs --capture
+  eval:chip-core-warning:v1:check:
+    desc: Recompute the warning screen and verify every pinned source/draft pair
+    requires:
+      vars: [VIVO_ROOT, OTHER_ROOT]
+    env:
+      AURALIS_VIVO_ASSET_ROOT: '{{.VIVO_ROOT}}'
+      AURALIS_OTHER_ASSET_ROOT: '{{.OTHER_ROOT}}'
+    cmds:
+      - task: eval:chip-core-warning:v1:unit
+      - node eval/scripts/check-chip-core-warning-v1.mjs --check
   eval:vivo:post-edit:freeze:
     desc: Freeze ten source-and-draft revision request identities before inference
     cmds:
