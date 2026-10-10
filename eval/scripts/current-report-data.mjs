@@ -511,6 +511,28 @@ export async function loadCurrentReport(root) {
   assert(chipCoreWarning.source_groups.every(group =>
     group.source_trigger_cue_ids.length === 0 &&
     group.drafts.every(draft => draft.warning_count === 0)));
+  const qwenRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-qwen3-8b-local-screen-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(qwenRaw).digest('hex'),
+    'b7928d632474da5e7da2c9272aacc050c444dd4bf17343141df871dce93889c5');
+  const qwen = JSON.parse(qwenRaw);
+  const qwenReviewRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-qwen3-8b-local-screen-ai-review.json'), 'utf8');
+  assert.equal(createHash('sha256').update(qwenReviewRaw).digest('hex'),
+    '392092dfdfa2f19d8b4fa2c56b3a960c604453e3f2000bd3db4be82410094b84');
+  const qwenReview = JSON.parse(qwenReviewRaw);
+  const catalogV57Raw = await fs.readFile(path.join(root,
+    'eval/regressions/catalog-v57.json'), 'utf8');
+  assert.equal(createHash('sha256').update(catalogV57Raw).digest('hex'),
+    '8ec4426556630e447a78c151c5619556f6701acd635ae7ee0a7d6f6ba4add146');
+  assert.equal(JSON.parse(catalogV57Raw).entries.at(-1).id, 'REG-082');
+  assert.equal(qwen.request_count, 36);
+  assert.equal(qwen.failure_count, 0);
+  assert.equal(qwenReview.machine_report_sha256,
+    createHash('sha256').update(qwenRaw).digest('hex'));
+  assert.equal(qwenReview.decision,
+    'reject_candidate_before_cross_source_or_full_file');
+  assert.equal(qwenReview.human_bilingual_reviews, 0);
   const vivoAudioRaw = await fs.readFile(path.join(root,
     'eval/reports/2026-10-10-vivo-real-sapi-technical.json'), 'utf8');
   assert.equal(createHash('sha256').update(vivoAudioRaw).digest('hex'),
@@ -854,6 +876,22 @@ export async function loadCurrentReport(root) {
       human_bilingual_reviews: chipCoreWarning.summary.human_bilingual_reviews,
       product_rule_admitted: chipCoreWarning.summary.product_rule_admitted,
       report_sha256: createHash('sha256').update(chipCoreWarningRaw).digest('hex') },
+    qwen3_screen: { chats: qwen.request_count,
+      preflights: qwen.preflight_count,
+      tokens: qwen.total_tokens,
+      candidate_chip_core_fact_passes:
+        qwenReview.cases[3].candidate_fact_passes +
+        qwenReview.cases[4].candidate_fact_passes,
+      chip_core_contrast_cells: 6,
+      all_big_core_candidate_fact_passes:
+        qwenReview.cases[1].candidate_fact_passes,
+      all_big_core_cells: 3,
+      candidate_grammar_issue_cells:
+        qwenReview.cases[3].candidate_language_issue_cells +
+        qwenReview.cases[5].candidate_language_issue_cells,
+      human_bilingual_reviews: qwenReview.human_bilingual_reviews,
+      candidate_shortlisted: false,
+      catalog_sha256: createHash('sha256').update(catalogV57Raw).digest('hex') },
     vivo_source_quantity: { source_cues: quantityV2.source_cues,
       v1_matched_cues: quantityV1.matched_cues,
       v2_matched_cues: quantityV2.v2_matched_cues,
