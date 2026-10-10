@@ -480,6 +480,24 @@ export async function loadCurrentReport(root) {
   assert.equal(reg076V3.chats, 120);
   assert.equal(reg076V3Review.summary.candidate_shortlisted, false);
   assert.equal(reg076V3Review.summary.human_bilingual_reviews, 0);
+  const reg077V4Raw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-reg077-v4.json'), 'utf8');
+  assert.equal(createHash('sha256').update(reg077V4Raw).digest('hex'),
+    '1cd09c57dcad44e7eadcc1357faaa6cb1d901a620a129fdc845ed6bb6e17e8ae');
+  const reg077V4 = JSON.parse(reg077V4Raw);
+  const reg077V4ReviewRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-reg077-v4-ai-review.json'), 'utf8');
+  assert.equal(createHash('sha256').update(reg077V4ReviewRaw).digest('hex'),
+    '299ef270b466f79f66e3a720c006026e28c4ff8679e08a7ed978d087cb09206d');
+  const reg077V4Review = JSON.parse(reg077V4ReviewRaw);
+  const catalogV56Raw = await fs.readFile(path.join(root,
+    'eval/regressions/catalog-v56.json'), 'utf8');
+  assert.equal(createHash('sha256').update(catalogV56Raw).digest('hex'),
+    'a5273bd232c9d327a37d0c5a1d18cdf976fcc02c46afb0aa9c6f9e9ef4cd0245');
+  assert.equal(JSON.parse(catalogV56Raw).entries.at(-1).id, 'REG-080');
+  assert.equal(reg077V4.chats, 192);
+  assert.equal(reg077V4Review.summary.candidate_shortlisted, false);
+  assert.equal(reg077V4Review.summary.human_bilingual_reviews, 0);
   const vivoAudioRaw = await fs.readFile(path.join(root,
     'eval/reports/2026-10-10-vivo-real-sapi-technical.json'), 'utf8');
   assert.equal(createHash('sha256').update(vivoAudioRaw).digest('hex'),
@@ -780,6 +798,31 @@ export async function loadCurrentReport(root) {
       machine_report_sha256: createHash('sha256').update(reg076V3Raw).digest('hex'),
       ai_review_sha256: createHash('sha256').update(reg076V3ReviewRaw).digest('hex'),
       catalog_sha256: createHash('sha256').update(catalogV55Raw).digest('hex') },
+    reg077_v4: { chats: reg077V4.chats,
+      preflights: reg077V4.preflights,
+      total_tokens: reg077V4.total_tokens,
+      wall_elapsed_ms: reg077V4.wall_elapsed_ms,
+      identical_prior_requests_and_outputs:
+        reg077V4.identical_prior_requests_and_outputs,
+      baseline_major_fact_errors:
+        reg077V4Review.summary.baseline_major_fact_errors_selected_set,
+      candidate_major_fact_errors:
+        reg077V4Review.summary.candidate_major_fact_errors_selected_set,
+      targeted_fact_passes:
+        reg077V4Review.summary.targeted_relation_card_fact_passes,
+      targeted_cells: reg077V4Review.summary.targeted_relation_card_cells,
+      candidate_new_control_fact_passes:
+        reg077V4Review.summary.candidate_new_control_fact_passes,
+      candidate_new_control_cells:
+        reg077V4Review.summary.candidate_new_control_cells,
+      shared_grammar_error_cells:
+        reg077V4Review.summary.shared_grammar_error_cells,
+      candidate_shortlisted: reg077V4Review.summary.candidate_shortlisted,
+      human_bilingual_reviews:
+        reg077V4Review.summary.human_bilingual_reviews,
+      machine_report_sha256: createHash('sha256').update(reg077V4Raw).digest('hex'),
+      ai_review_sha256: createHash('sha256').update(reg077V4ReviewRaw).digest('hex'),
+      catalog_sha256: createHash('sha256').update(catalogV56Raw).digest('hex') },
     vivo_source_quantity: { source_cues: quantityV2.source_cues,
       v1_matched_cues: quantityV1.matched_cues,
       v2_matched_cues: quantityV2.v2_matched_cues,

@@ -1205,3 +1205,20 @@ self-audit](../eval/experiments/2026-10-10-release-05-audit-attempt-v30.md)
 keeps G3–G9, A1–A6 and release acceptance open. Next: diagnose the
 chip/core/processor referent with those controls in a separately frozen,
 budgeted comparison before any long-file or voice-script advancement.
+
+The [REG-077 v4 source-relation-card screen](../eval/experiments/2026-10-10-reg-077-referent-v4-result.md)
+performed that one frozen comparison: 192 real 7B replies, 384 preflights,
+52,206 tokens, 96 matched source/seed pairs and zero human ratings. A
+target-only card exposed the exact separate-chip/single-multi-core contrast
+in six candidate cells; **all six still changed the denied multi-core
+chip into a multi-processor chip**. The remaining 117 prior request/output
+cells were byte-identical to v3. New one-core controls expanded the
+shared Russian agreement defect by twelve cells. The candidate fails its
+frozen advancement rule; v8 and both full-file drafts remain unchanged.
+[REG-079/080 and catalog v56](../eval/regressions/catalog-v56.json)
+retain three minimal reproductions and twelve additional unrun controls.
+The [v31 RELEASE-05 self-audit](../eval/experiments/2026-10-10-release-05-audit-attempt-v31.md)
+keeps G3–G9/A1–A6 open. The next quality task is a conservative
+source-aware warning/adjudication path with measured cross-source false
+positives and grammar controls, rather than another unmeasured prompt
+variant or a full-file run on this rejected candidate.
