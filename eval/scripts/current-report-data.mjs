@@ -245,6 +245,19 @@ export async function loadCurrentReport(root) {
   assert.equal(vivoFullAsr.alignment_interpretation.low_recall_is_caption_error, false);
   assert.equal(vivoFullAsr.review.human_listeners, 0);
   assert.equal(vivoFullAsr.review.source_speech_alignment_verified, false);
+  const vivoOpenccRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-vivo-opencc-recall-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(vivoOpenccRaw).digest('hex'),
+    '48e202733c4a67de582ff7b05cf6c43a737e91b3bcd2e8a5645a3c2da8fc1c95');
+  const vivoOpencc = JSON.parse(vivoOpenccRaw);
+  assert.equal(vivoOpencc.source_sha256, vivoSource.original_srt_sha256);
+  assert.equal(vivoOpencc.baseline_report_sha256,
+    createHash('sha256').update(vivoFullAsrRaw).digest('hex'));
+  assert.equal(vivoOpencc.asr_segments, vivoFullAsr.segment_count);
+  assert.equal(vivoOpencc.temporal_overlap_cues, 467);
+  assert.equal(vivoOpencc.raw_low_recall_cues, 30);
+  assert.equal(vivoOpencc.normalized_low_recall_cues, 5);
+  assert.equal(vivoOpencc.review.human_listeners, 0);
   const vivoV8Raw = await fs.readFile(path.join(root,
     'eval/reports/2026-10-09-v8-vivo-original-long.json'), 'utf8');
   assert.equal(createHash('sha256').update(vivoV8Raw).digest('hex'),
@@ -698,6 +711,12 @@ export async function loadCurrentReport(root) {
         vivoFullAsr.alignment_interpretation.low_recall_is_caption_error,
       human_listeners: vivoFullAsr.review.human_listeners,
       source_admission: vivoFullAsr.review.source_admission },
+    youtube_opencc: { changed_segments: vivoOpencc.changed_segments,
+      raw_low_recall_cues: vivoOpencc.raw_low_recall_cues,
+      normalized_low_recall_cues: vivoOpencc.normalized_low_recall_cues,
+      improved_cues: vivoOpencc.improved_cues,
+      worsened_cues: vivoOpencc.worsened_cues,
+      human_listeners: vivoOpencc.review.human_listeners },
     vivo_technical_audio: { generated_cues: vivoAudio.tts.generated_cues,
       overrun_cues: vivoAudio.tts.overrun_cues,
       overlapping_starts: vivoAudio.tts.overlapping_starts,
