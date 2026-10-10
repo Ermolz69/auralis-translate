@@ -3803,6 +3803,11 @@ tasks:
     cmds:
       - node --check eval/scripts/capture-sqlite-writer-fault.mjs
       - node eval/scripts/capture-sqlite-writer-fault.mjs
+  eval:sqlite:writer-fault:check:
+    desc: Verify the pinned public writer-fault process report and source hash
+    cmds:
+      - node --check eval/scripts/check-sqlite-writer-fault-report.mjs
+      - node eval/scripts/check-sqlite-writer-fault-report.mjs
   test:retry-policy:
     desc: Verify transient-only retries through the provider, core and durable CLI
     cmds:

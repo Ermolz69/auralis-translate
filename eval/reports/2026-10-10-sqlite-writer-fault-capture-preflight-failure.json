@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "experiment": "LONG-05-sqlite-writer-fault-capture-2026-10-10-v1",
+  "stage": "preflight_before_test",
+  "command": "task eval:sqlite:writer-fault:capture",
+  "execution_environment": "default_sandbox",
+  "observed_error": "AssertionError: null !== 0 at capture-sqlite-writer-fault.mjs:25",
+  "failed_child_command": "git status --porcelain",
+  "child_exit_status": null,
+  "child_error_detail": null,
+  "child_error_detail_reason": "preflight_assertion_did_not_log_spawn_error",
+  "sqlite_test_invocations": 0,
+  "timestamp_utc": null,
+  "timestamp_reason": "preflight_was_not_instrumented_before_git_call",
+  "outcome": "failed_before_fault_injection",
+  "disposition": "same_committed_script_passed_once_with_elevated_child_process_access"
+}
