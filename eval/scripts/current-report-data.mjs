@@ -231,6 +231,20 @@ export async function loadCurrentReport(root) {
   assert.equal(vivoAsr.reviewer.human_listeners, 0);
   assert.equal(vivoAsr.reviewer.source_speech_alignment_verified, false);
   assert.equal(vivoAsr.source_admission, 'inspected_candidate_zero_eligible');
+  const vivoFullAsrRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-vivo-full-audio-asr-v2.json'), 'utf8');
+  assert.equal(createHash('sha256').update(vivoFullAsrRaw).digest('hex'),
+    'e378afc97915eeef133c3df79eb828742c25c35c3472b92bc4e9cd12783d10df');
+  const vivoFullAsr = JSON.parse(vivoFullAsrRaw);
+  assert.equal(vivoFullAsr.source_sha256, vivoSource.original_srt_sha256);
+  assert.equal(vivoFullAsr.media_sha256, vivoSource.retained_media_sha256);
+  assert.equal(vivoFullAsr.segment_count, 499);
+  assert.equal(vivoFullAsr.alignment.cue_count, 467);
+  assert.equal(vivoFullAsr.alignment.cues_with_asr_overlap, 467);
+  assert.equal(vivoFullAsr.alignment.low_recall_cues, 30);
+  assert.equal(vivoFullAsr.alignment_interpretation.low_recall_is_caption_error, false);
+  assert.equal(vivoFullAsr.review.human_listeners, 0);
+  assert.equal(vivoFullAsr.review.source_speech_alignment_verified, false);
   const vivoV8Raw = await fs.readFile(path.join(root,
     'eval/reports/2026-10-09-v8-vivo-original-long.json'), 'utf8');
   assert.equal(createHash('sha256').update(vivoV8Raw).digest('hex'),
@@ -675,6 +689,15 @@ export async function loadCurrentReport(root) {
       human_listeners: vivoAsr.reviewer.human_listeners,
       source_speech_alignment_verified: vivoAsr.reviewer.source_speech_alignment_verified,
       report_sha256: createHash('sha256').update(vivoAsrRaw).digest('hex') },
+    youtube_full_asr: { segments: vivoFullAsr.segment_count,
+      elapsed_seconds: vivoFullAsr.elapsed_seconds,
+      cue_count: vivoFullAsr.alignment.cue_count,
+      temporal_overlap_cues: vivoFullAsr.alignment.cues_with_asr_overlap,
+      raw_low_recall_cues: vivoFullAsr.alignment.low_recall_cues,
+      raw_low_recall_is_caption_error:
+        vivoFullAsr.alignment_interpretation.low_recall_is_caption_error,
+      human_listeners: vivoFullAsr.review.human_listeners,
+      source_admission: vivoFullAsr.review.source_admission },
     vivo_technical_audio: { generated_cues: vivoAudio.tts.generated_cues,
       overrun_cues: vivoAudio.tts.overrun_cues,
       overlapping_starts: vivoAudio.tts.overlapping_starts,
