@@ -34,6 +34,16 @@ which gates/evidence are invalidated and obtain a decision for material user-fac
 scope changes. Keep original media/results and unrelated working-tree changes.
 Do not reopen completed baseline tasks to disguise a different acceptance target.
 
+The owner's [10 October translator-only scope v2](../eval/experiments/2026-10-10-translation-only-scope-v2.md)
+supersedes the active audio work in scope v1. A1–A6 remain unpassed historical
+audio gates and are not part of the current translator assignment. Published
+professional Chinese–Russian translations are the chosen alternative source
+of reference evidence because no recruited bilingual auditor is available.
+They do not automatically constitute independent ratings of our outputs or
+approved terminology. G3–G5 stay open until a prospective, source-matched
+reference protocol and eligible subtitle evidence justify a versioned
+acceptance decision; the six-case written-policy screen is development only.
+
 ## Translation gate bindings
 
 Use the [product plan](PRODUCT_PLAN.md) for authoritative G1–G9 definitions.

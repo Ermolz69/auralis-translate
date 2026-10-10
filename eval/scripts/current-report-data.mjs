@@ -742,6 +742,15 @@ export async function loadCurrentReport(root) {
   assert.equal(vivoAudition.new_tts_requests, 0);
   assert.equal(vivoAudition.human_audio_listeners, 0);
   assert.equal(vivoAudition.audio_gates_admitted, false);
+  const officialReferenceRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-official-reference-v2.json'), 'utf8');
+  assert.equal(createHash('sha256').update(officialReferenceRaw).digest('hex'),
+    '3ae81fcf37ed49579c7c47be4f2184b9d355547e108b6b88295d12ec71f83859');
+  const officialReference = JSON.parse(officialReferenceRaw);
+  assert.equal(officialReference.source_cases, 6);
+  assert.equal(officialReference.complete_answers, 6);
+  assert.equal(officialReference.human_model_output_reviews, 0);
+  assert.equal(officialReference.previous_policy_answer_byte_identical, true);
   return {
     name_registry:nameRegistry.summary,
     target_terms:targetTerms.summary,
@@ -749,6 +758,16 @@ export async function loadCurrentReport(root) {
     schema_version: 1,
     as_of: '2026-10-10',
     release_decision: 'not_accepted',
+    official_reference: {
+      source_cases: officialReference.source_cases,
+      complete_answers: officialReference.complete_answers,
+      preflights: officialReference.preflights,
+      reported_total_tokens: officialReference.reported_total_tokens,
+      wall_ms: officialReference.wall_ms,
+      human_model_output_reviews: officialReference.human_model_output_reviews,
+      previous_policy_answer_byte_identical:
+        officialReference.previous_policy_answer_byte_identical,
+      report_sha256: createHash('sha256').update(officialReferenceRaw).digest('hex') },
     sources: { candidates: sources.source_count, media_groups: sources.media_groups,
       inspected_cues: sources.inspected_cues,
       eligible_cues: sources.eligible_cues },

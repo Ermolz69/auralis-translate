@@ -39,7 +39,7 @@ development decision; independent approval and natural-file quality stay open.
 | BASE-03 | Matched 1.8B/7B development comparison | done | BASE-01 | 240 real requests, AI editorial review and [experiment](../eval/experiments/2026-09-27-model-size-comparison.md) |
 | PLAN-01 | Delivery plan, canonical progress and agent rules | done | BASE-03 | Documents/generated task progress; plan/docs/site and browser DOM checks passed; [acceptance record](../eval/experiments/2026-09-28-delivery-plan.md) tracks publication |
 | PLAN-02 | Audit planning gaps and define goal completion | done | PLAN-01 | Release/regression/goal contracts, 49-task dependencies, six document identities and checked progress; [audit record](../eval/experiments/2026-09-28-goal-plan-audit.md) |
-| PLAN-03 | Freeze finite execution scope and gate bindings | done | PLAN-02 | [Scope v1](../eval/experiments/2026-09-28-goal-scope-v1.md): required/optional/excluded IDs, resources, gate bindings and external prerequisites; deferred UI remains required |
+| PLAN-03 | Freeze finite execution scope and gate bindings | done | PLAN-02 | [Scope v1](../eval/experiments/2026-09-28-goal-scope-v1.md) records the original full translation/audio target. The owner's [translator-only scope v2](../eval/experiments/2026-10-10-translation-only-scope-v2.md) removes new Auralis/voice work from this assignment and directs published-reference evaluation; desktop remains deferred, and no unfinished gate is marked passed. |
 | DATA-01 | Source rights, provenance, scene and split schema | done | BASE-03 | [Inventory v1](reference/source-inventory-v1.md), authored [checked example](../eval/corpora/source-inventory-example-v1.json), seven semantic tests and fixture SHA; real source admission remains open |
 | DATA-02 | Sixty context contrast cases | done | DATA-01, CTX-01 | [Corpus acceptance](../eval/experiments/2026-09-28-context-contrasts-v1.md): 60 targets, 240 paired scenarios, frozen IDs/hash and source-only request projection; AI-authored development data, no human score |
 | DATA-03 | Licensed development subtitle scenes | in_progress | DATA-01 | Four [initial Commons candidates](../eval/experiments/2026-09-29-commons-candidate-parser-recheck.md) retained 488 inspected cues. The [Mingfay Mandarin derivative](../eval/experiments/2026-09-29-youtube-mingfay-caption-candidate.md) added 230; its [media GET failed at HTTP 403](../eval/experiments/2026-09-29-mingfay-media-download-failure.md) and the [same-source 1.8B/7B screen](../eval/experiments/2026-09-29-mingfay-natural-model-screen-results.md) remains private and unreviewed. The [93-cue Ying run](../eval/experiments/2026-09-30-commons-ying-guarded-full-result.md) was structurally complete but had major source-fact and polarity defects. The [20:30 train video](../eval/experiments/2026-09-30-commons-train-240p-stream-result.md) now has a verified 240p VP9/Opus copy, without verified Chinese speech. The [18:36 Vivo/MediaTek interview](../eval/experiments/2026-09-30-geekerwan-vivo-caption-result.md) adds 467 strict Chinese cues and potential multiple speakers; its [matched 240p video and three decoded source-audio samples](../eval/experiments/2026-09-30-commons-vivo-media-samples-result.md) await actual listening and cue alignment. Two [further 14:42/12:42 Geekerwan candidates](../eval/experiments/2026-09-30-geekerwan-two-scene-captions-result.md) add 268/304 strictly parsed Chinese cues; their [matched 240p videos and six measured but unlistened audio samples](../eval/experiments/2026-09-30-geekerwan-two-scene-media-result.md) are private. The [Kirin original-platform metadata check](../eval/experiments/2026-10-02-youtube-geekerwan-kirin-license-result.md) found an advertised Chinese SRT and a 90,182 ms duration discrepancy from the retained Commons media; rights and alignment remain unverified. A hash-pinned private review packet now links all nine Geekerwan audio windows to overlapping source cues; its human review count is zero. The [restaurant stream derivative](../eval/experiments/2026-10-01-sethlui-stream-derivative-result.md) adds 263 strictly parsed cues after measured media-duration containment; eight late original cues remain excluded. [Three cue-linked audio windows](../eval/experiments/2026-10-01-sethlui-audio-windows-result.md) decoded, with zero human listeners and unresolved speech/rights. The [current original-platform Kirin SRT](../eval/experiments/2026-10-02-kirin-original-caption-and-media-result.md) adds 343 strict cues, 39 beyond the older media; bounded original-video requests returned HTTP 302 then 403 with no media retained. The [cross-inventory correction](../eval/experiments/2026-10-02-cross-inventory-leakage-guard-result.md) found Ying twice in the historical count; the then-current set had 11 candidate tracks, 10 media groups, 3,243 inspected cue slots and **zero eligible** cues. The [Chinese Wikipedia lesson source screen](../eval/experiments/2026-10-02-commons-wikipedia-lesson-source-result.md) adds a matched 3:59 Commons OGV and 37 mapped strict-SRT cues, bringing the current set to **12 tracks, 11 media groups, 3,280 inspected cue slots and zero eligible cues**; original timing, private media and unreviewed status are retained. Historical 12/3,336 observations remain preserved. A [two-source VOA Mandarin metadata screen](../eval/experiments/2026-10-02-voa-mandarin-caption-inventory-result.md) found no original or automatic Chinese subtitle tracks on either 20:05/10:56 original video and added zero eligible cues; the sandbox child-process failure is retained. Rights, speech alignment, scene/speaker boundaries, independent references and approximately 200 eligible development cues remain open; historical Commons/Amara provenance findings remain linked above. |
@@ -1344,3 +1344,35 @@ thirds are in the source-free paired report. This fixes the known script-bias
 in the automated review queue, not word accuracy, rights or speaker mapping.
 No second ASR call or new model result occurred; `DATA-03` admission,
 G3–G5/A1–A6 and RELEASE-05 remain open.
+
+## 10 October translator-only scope and official parallel references
+
+The owner-directed [PLAN-03 scope v2](../eval/experiments/2026-10-10-translation-only-scope-v2.md)
+limits current work to the translator. Do not start new Auralis, TTS, voice or
+media work. Earlier voice measurements and the rejected robotic SAPI audition
+remain historical; A1–A6 are outside this active assignment rather than done.
+The owner cannot supply a bilingual auditor or volunteers and instead requests
+published Chinese–Russian translations as comparison references. This changes
+the evidence route, not the measured G3–G5 outcome. The existing release
+thresholds remain open until a prospectively frozen reference-based protocol
+and eligible subtitle corpus support an honest decision.
+
+The [official bilingual report v1](../eval/experiments/2026-10-10-official-zh-ru-reference-v1-result.md)
+ran ten source-only Hy-MT2 7B/v8 requests, retaining all raw replies,
+tokens and resources. Its initial semantic reading was rejected when three
+Chinese excerpts proved to omit modality context. The separately frozen
+[v2 follow-up](../eval/experiments/2026-10-10-official-zh-ru-reference-v2-result.md)
+restored complete proposal clauses and a retrospective heading, added two
+completed-action controls, and retained six real replies. The
+[source-free machine report](../eval/reports/2026-10-10-official-reference-v2.json)
+records 6/6 structurally valid answers and 2,202 reported tokens. The
+[separate AI review](../eval/reports/2026-10-10-official-reference-v2-ai-review.json)
+found one high-confidence retrospective-to-prescriptive drift and one
+uncertain nuance against the published professional reference; zero people
+reviewed model outputs. [REG-085 and catalog v61](../eval/regressions/catalog-v61.json)
+retain the minimal drift and six unrun related/negative controls. Product v8
+and every subtitle result are unchanged. These formal-policy sentences are
+exposed development material, not natural subtitle holdout evidence.
+Next: run bounded REG-085 controls and identify source-matched professional
+Chinese/Russian subtitle tracks on distinct videos before defining the
+reference-based G3–G5 protocol or changing the product.
