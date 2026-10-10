@@ -69,6 +69,16 @@ assert.equal(source.cases.length, limits.cases);
 assert(!/[А-Яа-яЁё]/u.test(JSON.stringify(source)),
   'Chinese-only selection contains Cyrillic reference text');
 assert.equal(new Set(source.cases.map(row => row.id)).size, limits.cases);
+if (version === 'v2') {
+  const byId = Object.fromEntries(source.cases.map(row => [row.id, row]));
+  assert(byId.policy_stability.context.includes('2025年工作回顾'));
+  assert(byId.research_growth.source.includes('提出'));
+  assert(byId.carbon_target.source.includes('提出'));
+  for (const id of ['completed_economy', 'completed_innovation']) {
+    assert(byId[id].context.includes('2025年工作回顾'));
+    assert(/实现|取得/u.test(byId[id].source));
+  }
+}
 const manifest = JSON.parse(await fs.readFile(manifestPath, 'utf8'));
 assert.equal(manifest.prompt_version, 8);
 assert.equal(manifest.model_file_sha256, expected.model);

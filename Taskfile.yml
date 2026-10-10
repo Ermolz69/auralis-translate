@@ -58,6 +58,33 @@ tasks:
     cmds:
       - task: eval:official-reference:v2:preflight
       - node eval/scripts/probe-official-reference-v1.mjs --probe
+  eval:official-reference:v2:report:
+    desc: Capture source-free v1/v2 raw-response comparison and resource evidence
+    cmds:
+      - node --check eval/scripts/check-official-reference-v2.mjs
+      - node eval/scripts/check-official-reference-v2.mjs --capture
+  eval:official-reference:v2:check:
+    desc: Rehash the PDF, private reference, frozen requests and all raw v2 replies
+    cmds:
+      - node --check eval/scripts/check-official-reference-v2.mjs
+      - node eval/scripts/check-official-reference-v2.mjs --check
+  eval:regression:reg085:check:
+    desc: Verify the published-reference retrospective error and six new controls
+    cmds:
+      - task: eval:official-reference:v2:check
+      - node --check eval/scripts/check-reg085-official-temporal.mjs
+      - node eval/scripts/check-reg085-official-temporal.mjs
+  eval:regression:catalog:v61:build:
+    desc: Add REG-085 to a portable new development regression catalog
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v61.mjs
+      - node eval/scripts/build-regression-catalog-v61.mjs --write
+  eval:regression:catalog:v61:check:
+    desc: Verify catalog v61 and its pinned official-reference evidence
+    cmds:
+      - task: eval:regression:reg085:check
+      - node --check eval/scripts/build-regression-catalog-v61.mjs
+      - node eval/scripts/build-regression-catalog-v61.mjs
   eval:model:qwen3:acquire:preflight:
     desc: Verify the pinned official Qwen3 8B Q4 acquisition contract without network use
     cmds:
@@ -1850,6 +1877,7 @@ tasks:
       - node eval/scripts/build-regression-catalog-v58.mjs
       - node eval/scripts/build-regression-catalog-v59.mjs
       - node eval/scripts/build-regression-catalog-v60.mjs
+      - node eval/scripts/build-regression-catalog-v61.mjs
   eval:regression:catalog:v60:write:
     desc: Preserve v59 and append REG-084 caption fetch process failure
     cmds:

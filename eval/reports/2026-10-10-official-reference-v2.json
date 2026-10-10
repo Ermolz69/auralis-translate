@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "experiment": "OFFICIAL-ZH-RU-REFERENCE-2026-v2",
+  "split": "published_parallel_exposed_development_not_holdout",
+  "outcome": "technical_complete_ai_review_pending",
+  "pinned": {
+    "v1_journal": "6a8997c45c0a1817ef88c0d89a21d469acb7ab93cca581c2b48d631372293b49",
+    "v1_report": "4f9cfc9d5a418007367b33eb4d8c1e5c481603a28020efa17c8a0b8edc844562",
+    "v2_journal": "ab9b33335feead4def7c48037ccddf72213177ad2d8680d356d2ab2a63244748",
+    "v2_report": "d0080ae186385f34651ad540f2481bd837546f421de835ba9a7a40c35048fbaf",
+    "reference_pairs": "f3d2b1e4454c2869bf0d81d0f5babe17bce6e266ebc6bb50122d1df3754759f1",
+    "source": "026b7189bea819b0b4ccdcde8480cb1da4483305207ac5c5f6e4554ead2e00fa",
+    "pdf": "dc029d7ebc4b43d599348943dca8229108df81d3c932df2ccbb72df43da82ea8",
+    "freeze": "cae2a4ad7cbc314d00aa021051b21aae1f5b04c2e1129627ff78aabc81c66629"
+  },
+  "raw_attempt_git_head": "0ec20439df0a40e3f3d1fb3b257747a48794a5d6",
+  "source_cases": 6,
+  "complete_answers": 6,
+  "preflights": 12,
+  "reported_total_tokens": 2202,
+  "wall_ms": 33797,
+  "chat_elapsed_ms": 13659,
+  "peak_sampled_process_working_set_bytes": 5059604480,
+  "cases": [
+    {
+      "id": "policy_stability",
+      "page": 1,
+      "source_sha256": "9db684a2e6df856eae70b1cc82f52528f19e47244e23ce850c449bc474ecfb77",
+      "request_sha256": "397075a48258b31e6d6d2e92973c294348004450c1fc43a9862fc0533270f510",
+      "accepted_text_sha256": "5569c773c7274a5e77a946e127d7365e6da8674ce986f2a2c73359003e5324a0",
+      "reported_tokens": 331,
+      "chat_elapsed_ms": 1986
+    },
+    {
+      "id": "indicator_count",
+      "page": 3,
+      "source_sha256": "143bc4120083e1c6309a1add0283609b4965ba9d842dfc9a7d211b80362a9fc6",
+      "request_sha256": "de40e5a066dd3fb5b68c8f2106fb12411fd684b7ddde6e819b89c1fc5838739c",
+      "accepted_text_sha256": "db3c683d737226aef304de94e74a7551fe70b8da761943389ce98c65650f23d6",
+      "reported_tokens": 332,
+      "chat_elapsed_ms": 2006
+    },
+    {
+      "id": "research_growth",
+      "page": 4,
+      "source_sha256": "4c231b6e2f7965e91a7021e9ac44dc7a14d62f50571ee2bd67b0b5c282ff8d38",
+      "request_sha256": "04030c9d727f4714da8841f75a269a2a9c32d0e397e4c217b9f3e734ba2cf3d7",
+      "accepted_text_sha256": "f69e57286cc4dadd1d4756cd95ff24a513e5de887e156c60b4e6c1eed5a436a8",
+      "reported_tokens": 494,
+      "chat_elapsed_ms": 4142
+    },
+    {
+      "id": "carbon_target",
+      "page": 5,
+      "source_sha256": "dc0a56fa487e022ff93ee5efa7cd950aad64600414df5e97bab0acf861d8cf14",
+      "request_sha256": "f1a6792f9e1c1f64082a1f1ce62340c3bd6f90f75478203fea4498dc9825db14",
+      "accepted_text_sha256": "9761f1b5b07b28d09e8b689c7641a8b8baf06d1689981692123b5d8fcfdd4ecb",
+      "reported_tokens": 469,
+      "chat_elapsed_ms": 3586
+    },
+    {
+      "id": "completed_economy",
+      "page": 2,
+      "source_sha256": "a359b154ded232fe71b9b9d373ce6ad216b26b961a6782750dad131a405ef077",
+      "request_sha256": "7333d4cc5b6b4f6c10fdc8d07b1f6b0be1d3fab4449bc64f331b44de12bad805",
+      "accepted_text_sha256": "eb2b8a12be6f12c8a0a26595fc240c82f53fc02eff508dea174dcd565aaa886b",
+      "reported_tokens": 281,
+      "chat_elapsed_ms": 873
+    },
+    {
+      "id": "completed_innovation",
+      "page": 2,
+      "source_sha256": "1fd344331f9b1249425587f8341ac1411fff4cb2aee1c1a656edf12d24fa87dd",
+      "request_sha256": "71190c5771964fc27fd0b2aa848c596eb5687e82a5bd3fb3a3912144fd951f5b",
+      "accepted_text_sha256": "75308bc8acedddeaa84cad497f243df1e543a5ae5454e615086a4a2be09c305c",
+      "reported_tokens": 295,
+      "chat_elapsed_ms": 1066
+    }
+  ],
+  "previous_policy_answer_byte_identical": true,
+  "published_reference_pairs": 6,
+  "human_model_output_reviews": 0,
+  "model_calls_in_this_checker": 0
+}

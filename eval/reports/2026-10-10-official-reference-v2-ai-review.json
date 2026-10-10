@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "experiment": "OFFICIAL-ZH-RU-REFERENCE-2026-v2",
+  "review_type": "AI_source_aware_comparison_against_published_human_translation",
+  "machine_report_sha256": "3ae81fcf37ed49579c7c47be4f2184b9d355547e108b6b88295d12ec71f83859",
+  "published_reference_pdf_sha256": "dc029d7ebc4b43d599348943dca8229108df81d3c932df2ccbb72df43da82ea8",
+  "human_reviews_of_model_output": 0,
+  "source_cues_reviewed": 6,
+  "case_reviews": [
+    {
+      "id": "policy_stability",
+      "assessment": "major_temporal_status_error_ai_high_confidence",
+      "expected_fact": "The 2025 review reports that the policy was conducted and the economy stabilized.",
+      "observed_issue": "The model states that the policy should be conducted, changing a retrospective action into a prescription. The published Russian rendering uses past action. V1 and v2 model answers are byte-identical despite the added retrospective heading."
+    },
+    {
+      "id": "indicator_count",
+      "assessment": "uncertain_temporal_nuance_requires_review",
+      "expected_fact": "The draft plan proposes twenty indicators to detail party goals.",
+      "observed_issue": "The model includes proposed indicators but also says the goals are implemented through them; the published rendering presents a proposal. The degree of factual distortion is uncertain."
+    },
+    {
+      "id": "research_growth",
+      "assessment": "core_facts_present_with_terminology_nuance",
+      "expected_fact": "Three innovation indicators are proposed; expected annual R&D spending growth exceeds seven percent.",
+      "observed_issue": "Full Chinese context yields proposed indicators and more than seven percent, unlike the fragmentary v1 request. The model's established-requirement wording is more categorical than the published expectation."
+    },
+    {
+      "id": "carbon_target",
+      "assessment": "core_facts_present",
+      "expected_fact": "Five green indicators include a planned cumulative seventeen percent reduction in CO2 intensity per unit GDP.",
+      "observed_issue": "Full Chinese context yields a planned seventeen percent per-GDP reduction, unlike the fragmentary v1 request. The wording is less idiomatic than the published reference but preserves the core target."
+    },
+    {
+      "id": "completed_economy",
+      "assessment": "core_facts_present",
+      "expected_fact": "The retrospective states that the economy reached a new level.",
+      "observed_issue": "The model keeps the achievement as completed, though its added growth wording may need style review."
+    },
+    {
+      "id": "completed_innovation",
+      "assessment": "core_facts_present",
+      "expected_fact": "The retrospective states that science, technology and industrial innovation achieved new breakthroughs.",
+      "observed_issue": "The model keeps the achievements as completed."
+    }
+  ],
+  "ai_major_errors": 1,
+  "uncertain_cases": 1,
+  "human_quality_gate_passed": false,
+  "general_subtitle_quality_gate_passed": false
+}
