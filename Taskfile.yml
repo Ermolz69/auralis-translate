@@ -1906,6 +1906,44 @@ tasks:
       - task: eval:source-relations:v2:unit
       - node --check eval/scripts/source-relation-review-v3.mjs
       - node --test --test-isolation=none eval/scripts/tests/source-relation-review-v3.test.mjs
+  eval:source-relations:v4:unit:
+    desc: Verify REG-083 Hall-stick source scope and Russian referent controls
+    cmds:
+      - task: eval:source-relations:v3:unit
+      - node --check eval/scripts/source-relation-review-v4.mjs
+      - node --test --test-isolation=none eval/scripts/tests/source-relation-review-v4.test.mjs
+  eval:source-relations:v4:preflight:
+    desc: Rehash the exposed ASUS pair and select Hall-stick cues from source only
+    requires:
+      vars: [SOURCE_ROOT, DRAFT_ROOT]
+    env:
+      AURALIS_EVAL_SOURCE_ROOT: '{{.SOURCE_ROOT}}'
+      AURALIS_EVAL_DRAFT_ROOT: '{{.DRAFT_ROOT}}'
+    cmds:
+      - task: eval:source-relations:v4:unit
+      - node --check eval/scripts/check-reg083-hall-v4.mjs
+      - node eval/scripts/check-reg083-hall-v4.mjs --preflight
+  eval:source-relations:v4:probe:
+    desc: Replay one pinned ASUS draft with the v3 and v4 warning rules
+    requires:
+      vars: [SOURCE_ROOT, DRAFT_ROOT]
+    env:
+      AURALIS_EVAL_SOURCE_ROOT: '{{.SOURCE_ROOT}}'
+      AURALIS_EVAL_DRAFT_ROOT: '{{.DRAFT_ROOT}}'
+    cmds:
+      - task: eval:source-relations:v4:preflight
+      - node eval/scripts/check-reg083-hall-v4.mjs --capture
+  eval:source-relations:v4:check:
+    desc: Recompute the pinned REG-083 v4 replay from private read-only inputs
+    requires:
+      vars: [SOURCE_ROOT, DRAFT_ROOT]
+    env:
+      AURALIS_EVAL_SOURCE_ROOT: '{{.SOURCE_ROOT}}'
+      AURALIS_EVAL_DRAFT_ROOT: '{{.DRAFT_ROOT}}'
+    cmds:
+      - task: eval:source-relations:v4:unit
+      - node --check eval/scripts/check-reg083-hall-v4.mjs
+      - node eval/scripts/check-reg083-hall-v4.mjs --check
   eval:source-relations:v3:preflight:
     desc: Rehash the ASUS source and draft and verify three source-only trigger cues
     requires:
