@@ -147,6 +147,14 @@ text review cannot decide whether the short thanks mismatch is ASR or
 caption error. The old three-window raw remains absent, but this distinct
 full-audio raw is hash-verified. Human listening, speaker mapping and rights
 remain open, so `DATA-03` adds no eligible cues and G3–G5/A1–A6 stay open.
+The [original-source rights review](../eval/experiments/2026-10-10-vivo-original-source-rights-review.md)
+pins the restored YouTube SRT/video hashes and primary rights pages. The
+Commons file identifies Geekerwan, the original YouTube source and CC BY 3.0,
+but explicitly marks its external license **not reviewed**. The Commons
+TimedText page shows all 467 Chinese cues; its generic text-license footer
+does not establish the original caption author. The creator's YouTube CC
+field and separate Bilibili notice remain distinct observations. No public
+dub, source admission, human speech verification or gate status changes.
 
 The [original-platform Vivo v8 long-file screen](../eval/experiments/2026-10-09-vivo-original-v8-long-result.md)
 adds partial `CTX-02`/`LONG-01`/`LONG-02`/`LONG-04`/`EVAL-04`/`DECIDE-01`
