@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "experiment": "REG-085-TEMPORAL-CONTROLS-v1",
+  "review_type": "AI_source_aware_authored_development_controls_no_professional_reference_for_these_six",
+  "machine_report_sha256": "f3b72032716dee53dd72bb5212168efa5157551797f6cd1585243e1a42c65728",
+  "human_reviews_of_model_output": 0,
+  "case_reviews": [
+    {
+      "id": "past_heading_same_action",
+      "accepted_model_text": "Во-первых, была реализована активная макроэкономическая политика, что способствовало стабилизации экономической деятельности.",
+      "ai_assessment": "clear_past_action_preserved",
+      "reason": "The source contains 了 and a retrospective heading; the answer uses a completed action."
+    },
+    {
+      "id": "past_without_heading",
+      "accepted_model_text": "В прошлом году мы проводили активную макроэкономическую политику.",
+      "ai_assessment": "clear_past_action_preserved",
+      "reason": "The source says last year and the answer remains in the past."
+    },
+    {
+      "id": "past_multicue_action",
+      "accepted_model_text": "Первой мерой является применение активной макроэкономической политики.",
+      "ai_assessment": "retrospective_status_uncertain",
+      "reason": "The section heading is retrospective, but the source line uses a copular formulation without an explicit completion marker. The answer says является; its severity cannot be settled from this authored line alone."
+    },
+    {
+      "id": "future_heading_same_action",
+      "accepted_model_text": "Во-первых, необходимо проводить активную макроэкономическую политику для стабилизации экономической деятельности.",
+      "ai_assessment": "future_task_preserved",
+      "reason": "A future-task heading is not changed into a past accomplishment."
+    },
+    {
+      "id": "explicit_future_action",
+      "accepted_model_text": "В следующем году будут применяться более активные макроэкономические меры.",
+      "ai_assessment": "explicit_future_preserved",
+      "reason": "The source explicitly says next year and the answer retains the future timing."
+    },
+    {
+      "id": "irrelevant_heading",
+      "accepted_model_text": "Применять активную макроэкономическую политику.",
+      "ai_assessment": "no_invented_past_action",
+      "reason": "An unrelated heading does not make the unmarked source into a past accomplishment."
+    }
+  ],
+  "clear_temporal_matches_ai_only": 5,
+  "uncertain_cases": 1,
+  "confirmed_new_major_errors": 0,
+  "existing_official_pdf_error_resolved": false,
+  "product_candidate_admitted": false
+}

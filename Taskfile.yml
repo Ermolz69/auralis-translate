@@ -98,6 +98,16 @@ tasks:
     cmds:
       - task: eval:regression:reg085:preflight
       - node eval/scripts/probe-official-reference-v1.mjs --probe
+  eval:regression:reg085:report:
+    desc: Capture source-free identities and resources from the retained six raw replies
+    cmds:
+      - node --check eval/scripts/check-reg085-temporal-screen.mjs
+      - node eval/scripts/check-reg085-temporal-screen.mjs --capture
+  eval:regression:reg085:screen:check:
+    desc: Verify frozen REG-085 controls, raw answers and source-free report
+    cmds:
+      - node --check eval/scripts/check-reg085-temporal-screen.mjs
+      - node eval/scripts/check-reg085-temporal-screen.mjs --check
   eval:regression:reg085:check:
     desc: Verify the published-reference retrospective error and six new controls
     cmds:
@@ -115,6 +125,17 @@ tasks:
       - task: eval:regression:reg085:check
       - node --check eval/scripts/build-regression-catalog-v61.mjs
       - node eval/scripts/build-regression-catalog-v61.mjs
+  eval:regression:catalog:v62:build:
+    desc: Retain observed REG-085 temporal controls without rewriting v61
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v62.mjs
+      - node eval/scripts/build-regression-catalog-v62.mjs --write
+  eval:regression:catalog:v62:check:
+    desc: Verify raw temporal screen and the portable latest regression catalog
+    cmds:
+      - task: eval:regression:reg085:screen:check
+      - node --check eval/scripts/build-regression-catalog-v62.mjs
+      - node eval/scripts/build-regression-catalog-v62.mjs
   eval:model:qwen3:acquire:preflight:
     desc: Verify the pinned official Qwen3 8B Q4 acquisition contract without network use
     cmds:
@@ -1908,6 +1929,7 @@ tasks:
       - node eval/scripts/build-regression-catalog-v59.mjs
       - node eval/scripts/build-regression-catalog-v60.mjs
       - node eval/scripts/build-regression-catalog-v61.mjs
+      - node eval/scripts/build-regression-catalog-v62.mjs
   eval:regression:catalog:v60:write:
     desc: Preserve v59 and append REG-084 caption fetch process failure
     cmds:
