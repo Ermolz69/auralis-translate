@@ -4026,6 +4026,17 @@ tasks:
     desc: Verify local one-command input and model refusal before server startup
     cmds:
       - cargo test --offline -p auralis-translation-cli --test local_runtime
+  eval:cli:local:e2e:
+    desc: Run local-only checked-model SRT and WebVTT CLI round trips; never used by CI
+    requires:
+      vars: [SERVER_EXE, MODEL_FILE]
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.SERVER_EXE}}'
+      AURALIS_TEST_GGUF: '{{.MODEL_FILE}}'
+    cmds:
+      - task: build:release
+      - node --check eval/scripts/cli-local-e2e.mjs
+      - node eval/scripts/cli-local-e2e.mjs
   test:cli:packages:
     desc: Verify separate model installation through machine requests, receipts, partial failures and legacy output
     cmds:

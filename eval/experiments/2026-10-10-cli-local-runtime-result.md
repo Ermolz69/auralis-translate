@@ -55,6 +55,22 @@ each completed command, no `llama-server` or CLI process remained. No staging
 
 ## Checks and limits
 
+The repeatable local-only `task eval:cli:local:e2e` check was added after the
+initial manual acceptance. On the same checked 1.8B model and runtime it passed
+both SRT and strict WebVTT full CLI round trips. Source SHA-256 values were
+`e28a722eb38da1a1f3ebb2c941e78697e835ad7cd7d2d2949794f2028dc2746b`
+and `5c89f87be30c903460f70d73d458c84e0cfa02eb83120e23adbc367c2c961bbc`;
+separate outputs were
+`8dffe24484126ef828a48c66b4f8692dca3a7103aeff069c4679693ba4499826`
+and `308b16c249b8621638330441e72575b9d806aa9326575c2ac453d12fd09dc07f`.
+Each result was exported again from the durable run with deliberately absent
+runtime/model paths and byte-identical output. Occupied-output refusal and
+unchanged source bytes passed for both formats. The successful temporary run
+directory was removed. An initial sandboxed harness attempt failed with
+`spawnSync EPERM` before inference; its single temporary source file was
+removed after the authorized local rerun passed. This check is deliberately
+absent from CI and does not assess translation quality.
+
 - `task build`, `task build:release`, `task fmt`, `task lint`,
   `task test:cli:local` (3/3), `task test:cli:protocol` (7/7),
   `task docs:check`, `task plan:check`, `task site:build` and

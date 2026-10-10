@@ -39,6 +39,12 @@ exits. For a previously validated run, `resume-local` exports without launching
 the server and does not require the runtime paths to exist. These positional
 commands are not yet `--request` variants.
 
+The opt-in development-host check is `task eval:cli:local:e2e
+SERVER_EXE=... MODEL_FILE=...`. It runs the checked model once per format in
+temporary storage, then checks source bytes, cue identity and timing, occupied
+output refusal, and byte-identical offline export. It is local-only and is not
+part of CI or a language-quality release gate.
+
 The separately versioned [name registry experiment](../architecture/016-source-name-registry.md)
 adds positional `translate-v8-names SOURCE STATE_DIR PROFILE SCENE_MAP PROPOSALS
 SERVER_URL OUTPUT`, `name-registry STATE_DIR TRANSLATION_ID`, and
