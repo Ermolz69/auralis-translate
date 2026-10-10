@@ -26,8 +26,9 @@ G3–G5, G8 or G9.
   `dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699`.
   Local `llama-server.exe` SHA-256
   `6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4`,
-  version `0.4.1-dev`, build `10977`, commit `0ecb159c9`. The model/runtime
-  manifest and tokenizer identity remain bound by the checked package manifest.
+  version `0.4.1-dev`, build `10977`, commit `0ecb159c9`. The checked package
+  manifest pins model bytes, runtime build and prompt settings; this run did
+  not independently fingerprint tokenizer metadata.
 - The native debug build finished in 2m 05s. The full invocation exited zero
   with `Native Tauri history export E2E passed`; the harness removed its owned
   sandbox. No `auralis-app` or `llama-server` process remained afterward.
