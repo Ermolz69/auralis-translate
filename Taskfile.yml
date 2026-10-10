@@ -532,6 +532,72 @@ tasks:
       - task inspect -- .cache/eval/youtube-geekerwan-vivo-original-caption/attempt-LQWxgw/source.zh.srt
       - node --check eval/scripts/check-youtube-geekerwan-vivo-caption.mjs
       - node eval/scripts/check-youtube-geekerwan-vivo-caption.mjs
+  eval:data:youtube:vivo:restore:test:
+    desc: Test exact-byte and changed-version caption comparison without network access
+    cmds:
+      - node --check eval/scripts/youtube-vivo-source-version.mjs
+      - node --test --test-isolation=none eval/scripts/tests/youtube-vivo-source-version.test.mjs
+  eval:data:youtube:vivo:restore:preflight:
+    desc: Verify frozen source and one metadata/caption request budget
+    requires:
+      vars: [SOURCE_ROOT]
+    env:
+      AURALIS_SOURCE_ROOT: '{{.SOURCE_ROOT}}'
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - task: eval:data:youtube:vivo:restore:test
+      - node --check eval/scripts/restore-youtube-vivo-caption-v2.mjs
+      - node eval/scripts/restore-youtube-vivo-caption-v2.mjs --preflight
+  eval:data:youtube:vivo:restore:metadata:
+    desc: Capture one new original-platform metadata response, retaining failures
+    requires:
+      vars: [SOURCE_ROOT]
+    env:
+      AURALIS_SOURCE_ROOT: '{{.SOURCE_ROOT}}'
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - task: eval:data:youtube:vivo:restore:preflight
+        vars: { SOURCE_ROOT: '{{.SOURCE_ROOT}}' }
+      - node eval/scripts/restore-youtube-vivo-caption-v2.mjs --metadata
+  eval:data:youtube:vivo:restore:caption:preflight:
+    desc: Verify the one current regular zh-CN SRT request from retained metadata
+    requires:
+      vars: [SOURCE_ROOT]
+    env:
+      AURALIS_SOURCE_ROOT: '{{.SOURCE_ROOT}}'
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - node eval/scripts/restore-youtube-vivo-caption-v2.mjs --caption-preflight
+  eval:data:youtube:vivo:restore:caption:
+    desc: Capture one current Chinese SRT response privately, retaining failures
+    requires:
+      vars: [SOURCE_ROOT]
+    env:
+      AURALIS_SOURCE_ROOT: '{{.SOURCE_ROOT}}'
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - task: eval:data:youtube:vivo:restore:caption:preflight
+        vars: { SOURCE_ROOT: '{{.SOURCE_ROOT}}' }
+      - node eval/scripts/restore-youtube-vivo-caption-v2.mjs --caption
+  eval:data:youtube:vivo:restore:report:
+    desc: Save the one-source retention outcome without publishing caption text
+    requires:
+      vars: [SOURCE_ROOT]
+    env:
+      AURALIS_SOURCE_ROOT: '{{.SOURCE_ROOT}}'
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - node eval/scripts/restore-youtube-vivo-caption-v2.mjs --report
+  eval:data:youtube:vivo:restore:check:
+    desc: Recompute the current YouTube caption retention report from private inputs
+    requires:
+      vars: [SOURCE_ROOT]
+    env:
+      AURALIS_SOURCE_ROOT: '{{.SOURCE_ROOT}}'
+      AURALIS_TEST_YTDLP: 'C:/Users/Ermolz/AppData/Local/Programs/yt-dlp/yt-dlp.exe'
+    cmds:
+      - task: eval:data:youtube:vivo:restore:test
+      - node eval/scripts/restore-youtube-vivo-caption-v2.mjs --check
   eval:data:youtube:vivo:asr:preflight:
     desc: Verify pinned private audio windows and limits for local ASR triage
     cmds:
