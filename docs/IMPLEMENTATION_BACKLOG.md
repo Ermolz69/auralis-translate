@@ -127,6 +127,17 @@ the current primary/publication checkouts, so their old private checks did
 not rerun; the earlier public reports remain historical evidence. Reacquire
 under a separately frozen identity before claiming repeatability of those
 two checks. Exact Chinese speech alignment and separate rights remain open.
+The separately frozen [v2 YouTube caption recovery](../eval/experiments/2026-10-10-youtube-vivo-caption-restoration-v2-result.md)
+completed one current metadata request and one SRT GET in an isolated
+worktree. The 33,577-byte response is byte-identical to the published v1
+YouTube SRT hash, with 467/467 Commons texts and the same eight <=1-ms
+timing differences. The new private attempt restores these caption bytes
+without rewriting the missing v1 attempt; historical checks hardcoded to
+that path still cannot be claimed as freshly rerun. [REG-084 and catalog
+v60](../eval/regressions/catalog-v60.json) retain the post-persistence
+Windows exit-9 failure and its offline correction. The old ASR raw JSON,
+source-language listening, caption/audio rights and source admission remain
+open; `DATA-03` stays `in_progress` with zero eligible cues.
 
 The [original-platform Vivo v8 long-file screen](../eval/experiments/2026-10-09-vivo-original-v8-long-result.md)
 adds partial `CTX-02`/`LONG-01`/`LONG-02`/`LONG-04`/`EVAL-04`/`DECIDE-01`

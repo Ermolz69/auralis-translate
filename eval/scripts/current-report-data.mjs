@@ -219,6 +219,20 @@ export async function loadCurrentReport(root) {
   assert.equal(vivoSource.cues_past_retained_media, 0);
   assert.equal(vivoSource.speech_alignment, 'not_listened');
   assert.equal(vivoSource.source_admission, 'inspected_candidate_zero_eligible');
+  const vivoRestorationRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-youtube-vivo-caption-restoration-v2.json'), 'utf8');
+  assert.equal(createHash('sha256').update(vivoRestorationRaw).digest('hex'),
+    'f11fbd64c634f1c814087ed5790258912d0e5b0aec54b62213a596f1f4012834');
+  const vivoRestoration = JSON.parse(vivoRestorationRaw);
+  assert.equal(vivoRestoration.status, 'restored_exact_previous_youtube_bytes');
+  assert.equal(vivoRestoration.caption_http_status, 200);
+  assert.equal(vivoRestoration.caption_response_bytes, 33577);
+  assert.equal(vivoRestoration.comparison.previous_youtube_byte_identical, true);
+  assert.equal(vivoRestoration.comparison.candidate_cues, 467);
+  assert.equal(vivoRestoration.comparison.commons_text_identical, true);
+  assert.equal(vivoRestoration.comparison.timing_differences.length, 8);
+  assert.equal(vivoRestoration.human_speech_reviews, 0);
+  assert.equal(vivoRestoration.source_admitted, false);
   const vivoAsrRaw = await fs.readFile(path.join(root,
     'eval/reports/youtube-geekerwan-vivo-audio-asr-v1.json'), 'utf8');
   assert.equal(createHash('sha256').update(vivoAsrRaw).digest('hex'),
@@ -611,6 +625,11 @@ export async function loadCurrentReport(root) {
   assert.equal(catalogV59.schema_version, 59);
   assert.equal(catalogV59.entries.at(-1).id, 'REG-083');
   assert.equal(catalogV59.entries.at(-1).product_rule_admitted, false);
+  const catalogV60Raw = await fs.readFile(path.join(root,
+    'eval/regressions/catalog-v60.json'), 'utf8');
+  assert.equal(createHash('sha256').update(catalogV60Raw).digest('hex'),
+    'e64b5aef5624e2e8079092e38200c13f5cf7c40e0f9ae3bc352711a9a006f48e');
+  assert.equal(JSON.parse(catalogV60Raw).entries.at(-1).id, 'REG-084');
   const vivoAudioRaw = await fs.readFile(path.join(root,
     'eval/reports/2026-10-10-vivo-real-sapi-technical.json'), 'utf8');
   assert.equal(createHash('sha256').update(vivoAudioRaw).digest('hex'),
@@ -722,6 +741,13 @@ export async function loadCurrentReport(root) {
       speech_alignment: vivoSource.speech_alignment,
       source_admission: vivoSource.source_admission,
       report_sha256: createHash('sha256').update(vivoSourceRaw).digest('hex') },
+    youtube_restoration: { status: vivoRestoration.status,
+      cue_count: vivoRestoration.comparison.candidate_cues,
+      byte_identical: vivoRestoration.comparison.previous_youtube_byte_identical,
+      timing_difference_rows: vivoRestoration.comparison.timing_differences.length,
+      human_speech_reviews: vivoRestoration.human_speech_reviews,
+      source_admitted: vivoRestoration.source_admitted,
+      report_sha256: createHash('sha256').update(vivoRestorationRaw).digest('hex') },
     youtube_asr: { windows: vivoAsr.windows.length,
       audio_seconds: vivoAsr.total_asr_audio_seconds,
       elapsed_seconds: vivoAsr.total_elapsed_seconds,
