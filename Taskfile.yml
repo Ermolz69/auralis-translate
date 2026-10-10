@@ -1592,6 +1592,7 @@ tasks:
       - node eval/scripts/build-regression-catalog-v55.mjs
       - node eval/scripts/build-regression-catalog-v56.mjs
       - node eval/scripts/build-regression-catalog-v57.mjs
+      - node eval/scripts/build-regression-catalog-v58.mjs
   eval:regression:catalog:portable:check:
     desc: Verify recent public catalog evidence in a clean checkout without private source files
     cmds:
@@ -1609,6 +1610,8 @@ tasks:
       - node eval/scripts/build-regression-catalog-v54.mjs
       - node eval/scripts/build-regression-catalog-v55.mjs
       - node eval/scripts/build-regression-catalog-v56.mjs
+      - node eval/scripts/build-regression-catalog-v57.mjs
+      - node eval/scripts/build-regression-catalog-v58.mjs
   eval:regression:catalog:v56:write:
     desc: Append observed REG-079/080 failures and related controls without rewriting v55
     cmds:
@@ -1860,6 +1863,39 @@ tasks:
       - task: eval:source-relations:v3:unit
       - node --check eval/scripts/check-asus-source-relations-v3.mjs
       - node eval/scripts/check-asus-source-relations-v3.mjs --check
+  eval:regression:reg083:check:
+    desc: Verify the retained ASUS Hall-stick miss and six new controls
+    requires:
+      vars: [SOURCE_ROOT, DRAFT_ROOT]
+    env:
+      AURALIS_EVAL_SOURCE_ROOT: '{{.SOURCE_ROOT}}'
+      AURALIS_EVAL_DRAFT_ROOT: '{{.DRAFT_ROOT}}'
+    cmds:
+      - task: eval:source-relations:v3:check
+      - node --check eval/scripts/check-reg083-asus-hall.mjs
+      - node eval/scripts/check-reg083-asus-hall.mjs
+  eval:regression:catalog:v58:write:
+    desc: Append the observed ASUS Hall-stick substitution after checked v3 evidence
+    requires:
+      vars: [SOURCE_ROOT, DRAFT_ROOT]
+    env:
+      AURALIS_EVAL_SOURCE_ROOT: '{{.SOURCE_ROOT}}'
+      AURALIS_EVAL_DRAFT_ROOT: '{{.DRAFT_ROOT}}'
+    cmds:
+      - task: eval:regression:reg083:check
+      - node --check eval/scripts/build-regression-catalog-v58.mjs
+      - node eval/scripts/build-regression-catalog-v58.mjs --write
+  eval:regression:catalog:v58:check:
+    desc: Verify the portable v57 to v58 catalog and private REG-083 reproducer
+    requires:
+      vars: [SOURCE_ROOT, DRAFT_ROOT]
+    env:
+      AURALIS_EVAL_SOURCE_ROOT: '{{.SOURCE_ROOT}}'
+      AURALIS_EVAL_DRAFT_ROOT: '{{.DRAFT_ROOT}}'
+    cmds:
+      - task: eval:regression:reg083:check
+      - node --check eval/scripts/build-regression-catalog-v58.mjs
+      - node eval/scripts/build-regression-catalog-v58.mjs
   eval:reg040:count-category:unit:
     desc: Verify authored number/category swap and conservative abstention controls
     cmds:

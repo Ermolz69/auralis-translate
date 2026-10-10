@@ -1256,3 +1256,19 @@ bilingual review, G3–G5, A1–A6 and `RELEASE-05` remain open. The next
 independent quality task is source-only cross-source fact-relation coverage
 and false-warning measurement; a model replacement would require a separately
 frozen candidate with no new major errors before any long-file pilot.
+
+The [frozen ASUS source-relation v3 screen](../eval/experiments/2026-10-10-asus-source-relations-v3-result.md)
+adds partial `EVAL-04`/`CTX-03` evidence on a distinct exposed 268-cue
+Chinese source and its retained 7B/v8 draft. The source-only rule recognized
+three preselected facts with exact source/target cue and timing alignment,
+but emitted zero warnings. AI triage of those three cues found a major
+Hall-stick technical substitution at cue 24 that the narrow rule missed;
+BIOS absence and the not-yet-announced price were retained at the fact
+level. [REG-083 and catalog v58](../eval/regressions/catalog-v58.json)
+retain the minimal missed error plus six unrun related/negative controls.
+Zero warnings do not measure natural warning precision; human reviews remain
+zero. The v3 rule remains evaluation-only, product v8 and previous accepted
+results are unchanged, and `CTX-03`/`EVAL-04`/G3–G5/RELEASE-05 remain open.
+The next bounded screen should test a separately frozen Hall-term preservation
+signal on new related/negative controls and a distinct natural source before
+any product warning admission.

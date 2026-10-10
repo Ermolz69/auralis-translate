@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "experiment": "ASUS-SOURCE-RELATIONS-2026-10-10-v3",
+  "reviewer_kind": "ai_source_aware_not_independent_human",
+  "human_bilingual_reviews": 0,
+  "machine_report_sha256": "8d3eb1020f660fb3c72aa4cc369cc8ca57b394e2089f63e3d7715686f4db8468",
+  "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+  "retained_draft_sha256": "746495ba8bfc9c7c3cee0b5021fea87c10605b1d8e07be6dc316907138ea48ee",
+  "reviewed_cue_ids": [24, 226, 253],
+  "neighbor_context_inspected": [[23, 24, 25], [225, 226, 227], [252, 253, 254]],
+  "cases": [
+    {
+      "cue_id": 24,
+      "source_text_sha256": "dcdebe3fdfdfe450573e2563ff235e46ea5697c61aae6023128dc38c37ee95e9",
+      "accepted_text_sha256": "04c9824ce971277aa2a4919434759ca1fe25064f1668e1bbd26a0aa6f866e9e1",
+      "source_fact": "The handheld does not use Hall-effect joysticks.",
+      "ai_judgment": "major_technical_term_substitution",
+      "observation": "The Russian line retains a negative construction but replaces the Hall-effect stick with a galvanometric control lever. The Hall sensor technology and stick referent are lost.",
+      "v3_warning_count": 0,
+      "human_adjudication": "needed"
+    },
+    {
+      "cue_id": 226,
+      "source_text_sha256": "20fbebd34125b09e3b82b837e6a673b54083300e11f4e257745fc8cab0ad12e2",
+      "accepted_text_sha256": "1ca3c997061066f47867f2df7f0462d817b68273a5bee540b686d8bb64821084",
+      "source_fact": "BIOS does not offer a core-disable or hyperthreading-disable option.",
+      "ai_judgment": "negative_and_options_preserved_term_needs_review",
+      "observation": "The Russian line preserves absence of BIOS options. Its word for hyperthreading is a literal calque requiring technical-language review.",
+      "v3_warning_count": 0,
+      "human_adjudication": "needed"
+    },
+    {
+      "cue_id": 253,
+      "source_text_sha256": "8ff980ce20f0b855bea147c68116b93d8fd56a6130c6e240f6688b2f2e5f14d9",
+      "accepted_text_sha256": "fb6973bbb2bb0f784bbd411e8595b6001b13c155f715a678f20688b8a9922535",
+      "source_fact": "At review time, the price has not yet been announced.",
+      "ai_judgment": "temporal_price_fact_preserved",
+      "observation": "The Russian line keeps the current-time and not-yet-announced meaning.",
+      "v3_warning_count": 0,
+      "human_adjudication": "needed"
+    }
+  ],
+  "ai_identified_major_errors_in_three_selected_cues": 1,
+  "v3_hits_on_ai_identified_error": 0,
+  "independent_precision": null,
+  "independent_recall": null,
+  "product_admission": false,
+  "technical_term_cross_check": "https://support.thrustmaster.cn/zh/product/t16000mfcs-zh/"
+}

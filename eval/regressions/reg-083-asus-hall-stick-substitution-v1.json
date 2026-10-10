@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "id": "REG-083",
+  "status": "observed_ai_source_aware_development_not_human_adjudicated",
+  "severity": "major_technical_term_substitution",
+  "split": "known_asus_natural_development_not_holdout",
+  "source_family": "geekerwan_asus_archived_chinese_subtitle",
+  "profile_scope": "retained Hy-MT2 7B Q4 v8 full-draft result; product profile unchanged",
+  "machine_report_sha256": "8d3eb1020f660fb3c72aa4cc369cc8ca57b394e2089f63e3d7715686f4db8468",
+  "ai_review_sha256": "4855a22304ee3caf88e62c6e26ba38034c440daadcc1455589db5d2259f3dead",
+  "expected_invariant": "A denial that the handheld has Hall-effect joysticks must retain both the joystick referent and Hall-effect technology; a galvanometric lever is a different device description.",
+  "minimal_reproducer": {
+    "cue_id": 24,
+    "source_srt_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+    "source_text_sha256": "dcdebe3fdfdfe450573e2563ff235e46ea5697c61aae6023128dc38c37ee95e9",
+    "retained_draft_sha256": "746495ba8bfc9c7c3cee0b5021fea87c10605b1d8e07be6dc316907138ea48ee",
+    "accepted_text_sha256": "04c9824ce971277aa2a4919434759ca1fe25064f1668e1bbd26a0aa6f866e9e1",
+    "neighbor_cue_ids": [23, 25],
+    "ai_finding": "The source denies Hall-effect sticks; the saved Russian line denies a galvanometric control lever and loses Hall technology.",
+    "v3_warning_count": 0
+  },
+  "related_controls": [
+    {"id":"hall_sticks_not_used","source_line":"这台掌机没有采用霍尔摇杆。","expected_fact":"No Hall-effect joysticks; preserve the stick and Hall sensor referents."},
+    {"id":"left_right_not_hall","source_line":"左右两个摇杆都不是霍尔式的。","expected_fact":"Neither left nor right stick is Hall-effect."},
+    {"id":"sticks_not_hall_triggers_hall","source_line":"摇杆不是霍尔摇杆，但扳机使用霍尔传感器。","expected_fact":"Sticks lack Hall sensing while triggers have it; keep component scope."}
+  ],
+  "negative_controls": [
+    {"id":"hall_sticks_present","source_line":"这款手柄使用霍尔摇杆。","expected_fact":"Hall-effect sticks are present; do not force a denial."},
+    {"id":"only_hall_triggers","source_line":"扳机使用霍尔传感器，摇杆采用普通结构。","expected_fact":"Hall applies to triggers, not automatically to sticks."},
+    {"id":"stick_calibration_only","source_line":"这台机器的摇杆需要校准。","expected_fact":"Stick calibration, with no Hall-sensor claim."}
+  ],
+  "control_model_runs": 0,
+  "product_status": "v8_unchanged_existing_draft_needs_review"
+}
