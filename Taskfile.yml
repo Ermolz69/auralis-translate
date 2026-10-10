@@ -3798,6 +3798,11 @@ tasks:
     desc: Verify atomic Translate SQLite checkpoints and exact resume after one owned writer lock
     cmds:
       - cargo test --offline -p auralis-translation-sqlite --test sqlite_writer_fault
+  eval:sqlite:writer-fault:capture:
+    desc: Capture one committed, bounded SQLite writer-fault test with raw logs and timing
+    cmds:
+      - node --check eval/scripts/capture-sqlite-writer-fault.mjs
+      - node eval/scripts/capture-sqlite-writer-fault.mjs
   test:retry-policy:
     desc: Verify transient-only retries through the provider, core and durable CLI
     cmds:
