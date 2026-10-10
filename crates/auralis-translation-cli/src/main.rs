@@ -14,6 +14,7 @@ mod experimental_command;
 mod glossary_input;
 mod inspect_command;
 mod loaded_run;
+mod local_model_server;
 mod managed_glossary;
 mod manual_command;
 mod manual_manifest;
@@ -96,8 +97,11 @@ fn main() -> ExitCode {
                     | "pause"
                     | "translate"
                     | "translate-vtt"
+                    | "translate-local"
+                    | "translate-vtt-local"
                     | "translate-glossary"
                     | "resume"
+                    | "resume-local"
                     | "edit"
                     | "fetch-release"
                     | "fetch-asset"

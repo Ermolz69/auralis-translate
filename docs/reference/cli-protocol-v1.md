@@ -24,8 +24,18 @@ Machine mode supports `inspect`, `inspect-vtt`, `doctor`, `status`, `diagnostics
 `pause`, `translate`, `translate-vtt`, `translate-glossary`, `resume`, `edit`,
 `fetch-release`, `fetch-asset`, `install-offline` and `install-online`.
 Other development commands return a usage error in machine mode instead of
-mixing text with structured output. A CLI-owned translation runtime remains
-separate work.
+mixing text with structured output.
+
+The local positional commands `translate-local`, `translate-vtt-local` and
+`resume-local` launch and stop their own checked llama.cpp server. They accept
+`SOURCE STATE_DIR PROFILE SERVER_EXE MODEL_FILE GPU_LAYERS OUTPUT` for a new
+run, or `STATE_DIR RUN_ID PROFILE SERVER_EXE MODEL_FILE GPU_LAYERS OUTPUT`
+for resume. The same durable translation implementation and JSON/JSONL result
+records are used as by `translate` and `resume`. The model and runtime must
+already be present locally; the command never downloads either. The CLI verifies
+the model digest and server build against the checked profile before inference.
+On Windows the child runs in an owned Job Object and is terminated when the CLI
+exits. These positional commands are not yet `--request` variants.
 
 The separately versioned [name registry experiment](../architecture/016-source-name-registry.md)
 adds positional `translate-v8-names SOURCE STATE_DIR PROFILE SCENE_MAP PROPOSALS

@@ -2,7 +2,8 @@ use crate::{
     asset_download_command, audit_terms_command, diagnostics_command, doctor_command,
     document_run_plan::DocumentRunPlan,
     durable_resume, durable_start, edit_command, experimental_command, inspect_command,
-    manual_command, offline_install_command, online_install_command, pause_command,
+    local_model_server, manual_command, offline_install_command, online_install_command,
+    pause_command,
     reporting::{CliFailure, CommandOutput, ErrorCode},
     start_input::StartInput,
     status_command, vtt_inspect_command, vtt_manual_command,
@@ -86,6 +87,55 @@ pub(crate) fn dispatch(
         [command, source, profile, endpoint, output] if command == "translate-vtt-experimental" => {
             experimental_command::run_vtt(source, profile, endpoint, output)
         }
+        [
+            command,
+            source,
+            state_dir,
+            profile,
+            executable,
+            model,
+            gpu_layers,
+            output,
+        ] if command == "translate-local" || command == "translate-vtt-local" => {
+            local_model_server::translate(
+                local_model_server::LocalTranslationInput {
+                    source,
+                    state_dir,
+                    profile_path: profile,
+                    executable,
+                    model_file: model,
+                    gpu_layers,
+                    output,
+                    format: if command == "translate-local" {
+                        DocumentRunPlan::SRT_FORMAT
+                    } else {
+                        DocumentRunPlan::VTT_FORMAT
+                    },
+                },
+                reporter,
+            )
+        }
+        [
+            command,
+            state_dir,
+            run_id,
+            profile,
+            executable,
+            model,
+            gpu_layers,
+            output,
+        ] if command == "resume-local" => local_model_server::resume(
+            local_model_server::LocalResumeInput {
+                state_dir,
+                run_id,
+                profile_path: profile,
+                executable,
+                model_file: model,
+                gpu_layers,
+                output,
+            },
+            reporter,
+        ),
         [command, source, state_dir, profile, endpoint, output] if command == "translate" => {
             durable_start::run(
                 StartInput {

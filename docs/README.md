@@ -6,6 +6,13 @@ The detailed [version 2.0 plan](../AURALIS_SUBTITLE_TRANSLATION_PLAN.md) remains
 
 Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before implementation work.
 
+For an already available checked model and llama.cpp runtime, the standalone
+CLI now has [local one-command entrypoints](reference/cli-protocol-v1.md):
+`translate-local`, `translate-vtt-local` and `resume-local`. These own the
+loopback server process for one run; Auralis continues to link the same Rust
+translation crates directly. Their [bounded native acceptance](../eval/experiments/2026-10-10-cli-local-runtime-plan.md)
+is tracked separately from translation quality and clean installation.
+
 ## Start here
 
 The [delivery plan](DELIVERY_PLAN.md), [canonical backlog](IMPLEMENTATION_BACKLOG.md)

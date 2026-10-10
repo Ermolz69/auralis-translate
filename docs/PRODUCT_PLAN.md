@@ -143,6 +143,12 @@ clean-machine and quality gates.
 
 The CLI uses the same core, validators, profiles and formats as Auralis. Commands include `inspect`, `doctor`, `translate` and `resume`, with explicit JSON input/output and JSONL progress modes defined by [machine protocol v1](reference/cli-protocol-v1.md). In machine mode human diagnostics go to stderr and stdout contains only versioned records. Stable exit codes distinguish success, review required, invalid input, runtime failure, cancellation and persistence/conflict outcomes. The unflagged development interface retains its existing 0/1 behavior for current local tooling; it is not the new machine contract. A completed file is written through a temporary file and atomic replacement only after validation; an existing output is not overwritten without an explicit option. The original is never overwritten by default.
 
+For local one-command use, the CLI may also own a checked model-server child
+for the duration of a translation or resume. This is a separate process
+supervision entrypoint around the same durable core, not an Auralis subprocess
+integration. Explicit local model/runtime paths and a checked profile remain
+required; no implicit download or model selection occurs.
+
 A release manifest pins model ID/revision/filename/size/SHA-256, licence/NOTICE, runtime build/backend/checksum, tokenizer/template/prompt, decoding, supported languages/platforms and linked evaluation evidence. Download to a temporary file, support safe resume, verify checksum and atomically install; incomplete weights are not selectable. Updates create a new profile version and do not rewrite old translations. After initial installation the selected local profile must pass an offline smoke test on its declared OS.
 
 ## 15. Evaluation and release gates
