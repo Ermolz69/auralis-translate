@@ -151,7 +151,7 @@ A release manifest pins model ID/revision/filename/size/SHA-256, licence/NOTICE,
 
 The application installer and Auralis GitHub release never include third-party model weights. The user explicitly chooses **Download and install** in the application; pinned upstream assets then enter application-data storage and are verified before selection. Separately supplied assets can be used through the offline installer. Neither path changes the product's source files or uploads weights to our own release. Test corpora, generated fixtures, comparisons, and SQLite test state remain development artifacts outside production bundles.
 
-The proposed Chinese corpus is roughly 20–30 scenes and 500 cues, with about 200 for development and 300 held out by source video/scene. Japanese requires a comparable separate corpus. Include dialogue, names/terminology, idioms, negation, numbers, split sentences, speaker changes, overlaps, simplified/traditional Chinese, manual/ASR-origin text, Latin text, complex line breaks and protected elements. Keep a provenance and usage-rights manifest; do not commit unlicensed full third-party subtitles. A reviewer must understand both the source language and Russian. Automated judges and back-translation can triage examples but cannot close the semantic gate.
+The proposed Chinese corpus is roughly 20–30 scenes and 500 cues, with about 200 for development and 300 held out by source video/scene. Japanese requires a comparable separate corpus. Include dialogue, names/terminology, idioms, negation, numbers, split sentences, speaker changes, overlaps, simplified/traditional Chinese, manual/ASR-origin text, Latin text, complex line breaks and protected elements. Keep a provenance and usage-rights manifest; do not commit unlicensed full third-party subtitles. The owner's current Chinese translator scope uses the [published-reference protocol v2](evaluation/011-published-reference-review-v2.md), with source-matched professional Chinese/Russian texts and explicitly labelled AI assessment. Automated judges and back-translation alone cannot close the semantic gate.
 
 Measure meaning, Russian fluency, terminology, cue-time alignment, structural validity and retry rate, readability, cold start/full-file/p50/p95 time, RAM/VRAM and cancellation/recovery. Compare candidates on the same scenes with their correct templates. The proposed release goals, not measured facts, are:
 
@@ -159,9 +159,9 @@ Measure meaning, Russian fluency, terminology, cue-time alignment, structural va
 | ------------------ | ------------------------------------------------------------------------------------------------------ |
 | G1 structure       | 100% of published strict outputs preserve IDs/order/external timing/protected ranges.                  |
 | G2 no silent loss  | Every source segment has an explicit outcome; no hidden original-text fallback.                        |
-| G3 meaning         | At least 95% of holdout cues receive adequacy ≥ 4/5 from source-aware review.                          |
-| G4 critical errors | No unresolved critical error in the release holdout; this does not promise zero errors on every video. |
-| G5 terms           | At least 98% of applicable approved glossary terms are respected with Russian inflection considered.   |
+| G3 meaning         | At least 95% of frozen eligible holdout cues have source/reference-supported adequacy ≥ 4/5; AI provenance, uncertainty and full denominator are disclosed. |
+| G4 critical errors | No unresolved *detected* critical error in the release holdout; detection limits are disclosed.        |
+| G5 terms           | At least 98% of applicable pre-frozen source-grounded terms are respected with Russian inflection considered. |
 | G6 resources       | Measured SLA on the declared hardware; numeric limits chosen after initial benchmarks.                 |
 | G7 durability      | Crash/resume preserves checkpoints and edits without duplicate accepted blocks.                        |
 | G8 export          | Output reparses, opens in the target consumer and meets its declared format subset.                    |
@@ -173,13 +173,13 @@ An earlier idea of translating representative subtitles for a 30-minute video wi
 
 Test byte-identical parse/render without translation; protected-range and timing preservation; BOM/LF/CRLF, duplicate labels, empty/multiline cues, Unicode and overlaps; damaged inputs and unsupported markup; missing/extra/duplicate IDs, invalid JSON, truncation and placeholder damage; injection of block delimiters or tags; token budgets; cache invalidation after context/glossary/model changes; pause, cancellation, timeout, OOM, runtime/host crash and disk errors; source/edit conflicts; native real-model smoke and a long file with bounded memory. Parser property/fuzz testing is valuable because input is external and format preservation is central.
 
-CI without weights checks formatting, lint, build, unit/integration and structural fixtures. A separate pinned-model workflow runs real inference and regression corpus checks. Store bilingual human evaluation as evidence rather than calling a green build a language-quality result.
+CI without weights checks formatting, lint, build, unit/integration and structural fixtures. A separate pinned-model workflow runs real inference and regression corpus checks. Store source/reference assessment and its provenance as evidence rather than calling a green build a language-quality result.
 
 ## 17. Implementation sequence and completion
 
 The [temporary stages](IMPLEMENTATION_STAGES.md) start with inspect/extract, separate-file rendering with supplied text, and an early real-model call. Durable SQLite, CLI, Auralis integration, Chinese release and Japanese release follow. Each stage has an observable gate. The broader original 00–12 mapping is in that document.
 
-The product is ready for an advertised profile only when the independent module and integrated Auralis user path both work; a real model has passed language review; the declared SRT/VTT subsets preserve structure; text-only input is either explicitly out of scope or independently validated; pause/crash/resume and edit conflicts are safe; source and result/provenance remain available; and a clean declared OS/hardware configuration passes offline smoke, long-file and performance checks. A beautiful isolated model output does not close these gates.
+The product is ready for an advertised profile only when the selected delivery path works; a real model has passed the current source/reference language gate; the declared SRT/VTT subsets preserve structure; text-only input is either explicitly out of scope or independently validated; pause/crash/resume and edit conflicts are safe; source and result/provenance remain available; and a clean declared OS/hardware configuration passes offline smoke, long-file and performance checks. A beautiful isolated model output does not close these gates. The integrated Auralis path remains a separate future milestone under the owner's translator-only direction.
 
 ## 18. Risks and later extensions
 

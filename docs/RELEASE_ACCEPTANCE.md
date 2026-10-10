@@ -25,24 +25,24 @@ Desktop UI remains owner-deferred. CLI/context/data work proceeds autonomously.
 If the chosen full release requires deferred UI, identify the concrete final
 slice and obtain the owner's scheduling decision then; do not claim the full
 desktop release while substituting a CLI result. A finite CLI milestone may be
-reported separately but cannot close a broader goal. An unavailable human reviewer,
-licensed natural source, clean installation target or necessary compute is a real
-external prerequisite, not a reason to invent evidence or lower a gate.
+reported separately but cannot close a broader goal. Missing source-matched
+references, licensed natural sources, a clean installation target or necessary
+compute are real prerequisites, not reasons to invent evidence or lower a gate.
 
 When scope changes, preserve the old scope record, explain the reason, identify
 which gates/evidence are invalidated and obtain a decision for material user-facing
 scope changes. Keep original media/results and unrelated working-tree changes.
 Do not reopen completed baseline tasks to disguise a different acceptance target.
 
-The owner's [10 October translator-only scope v2](../eval/experiments/2026-10-10-translation-only-scope-v2.md)
-supersedes the active audio work in scope v1. A1–A6 remain unpassed historical
-audio gates and are not part of the current translator assignment. Published
-professional Chinese–Russian translations are the chosen alternative source
-of reference evidence because no recruited bilingual auditor is available.
-They do not automatically constitute independent ratings of our outputs or
-approved terminology. G3–G5 stay open until a prospective, source-matched
-reference protocol and eligible subtitle evidence justify a versioned
-acceptance decision; the six-case written-policy screen is development only.
+The owner's [translator-only scope v3](../eval/experiments/2026-10-10-translation-only-scope-v3.md)
+supersedes the active audio work in scope v1 and the reviewer dependency in
+scope v2. A1–A6 remain unpassed historical audio gates and are outside this
+translator assignment. [Published-reference review v2](evaluation/011-published-reference-review-v2.md)
+is the prospective G3–G5 route; no recruited bilingual auditor is required.
+Published professional Chinese–Russian translations are reference material,
+not independent ratings of our outputs or automatically approved terminology.
+G3–G5 stay open until eligible matched subtitle evidence passes that protocol;
+the six-case written-policy screen is development only.
 
 ## Translation gate bindings
 
@@ -55,9 +55,9 @@ regressions but are not sufficient release evidence.
 | --- | --- | --- |
 | G1 structure | 100% supported cue/slot mapping and protected timing/settings/bytes retained; original immutable | RELEASE-02, LONG-05 |
 | G2 coverage | Every source slot has an explicit outcome; a complete artifact contains all accepted translations, no silent omission or partial publication | RELEASE-02, CTX-05 |
-| G3 adequacy | At least 95% eligible independently reviewed holdout cues score at least 4/5; denominator, alternatives and coverage reported | RELEASE-01, DATA-04, DATA-05 |
-| G4 critical errors | Zero unresolved critical holdout errors after source-aware adjudication; inspected-for-tuning holdout retired | RELEASE-01, EVAL-01 |
-| G5 terminology | At least 98% applicable approved-term matches, allowing documented inflection; names/money controls also inspected | RELEASE-01, CTX-03 |
+| G3 adequacy | At least 95% of eligible holdout cues have source/reference-supported adequacy at least 4/5 under protocol v2; every cue assessed or counted as failure, AI basis and uncertainty reported | RELEASE-01, DATA-04, DATA-05 |
+| G4 critical errors | Zero unresolved *detected* critical source-fact errors across the whole holdout and predeclared controls pass; exposed tuning groups retired; residual detection limits stated | RELEASE-01, EVAL-01 |
+| G5 terminology | At least 98% of applicable pre-frozen source-grounded term occurrences match, allowing documented inflection; uncertain applicability fails, names/money controls reported | RELEASE-01, CTX-03 |
 | G6 resources | Numeric SLA frozen after profiling, then passed for the selected hardware/backend, complete sources and measured cancellation/resource release | RELEASE-02, LONG-06 |
 | G7 recovery | Accepted checkpoints/edits persist after the declared fault matrix; resume identity mismatch rejected; no duplicate accepted output | RELEASE-02, LONG-05, HOST-01, HOST-04 |
 | G8 export | Result opens and behaves correctly in declared target consumers; lineage and offline re-export checked | RELEASE-02 |
@@ -119,17 +119,18 @@ reported; sampled listening cannot assert that every utterance was reviewed.
 `RELEASE-05` verifies the final candidate from the committed checkout on the selected
 target, rather than accepting an earlier debug binary or a reused dirty cache.
 Check required task status, identities, executable commands, artifacts, report/data
-agreement, reviewer provenance and target-consumer behavior. Re-run affected checks
+agreement, reference/assessor provenance and target-consumer behavior. Re-run affected checks
 after fixes; no need to repeat expensive unaffected experiments without a reason.
-If independence is unavailable, label the audit self-audit and retain the missing
-independent human language/listening gates; do not invent an external auditor.
+Label any agent-run language audit self-audit and distinguish published reference,
+AI assessment and actual human ratings. The current translator scope does not
+require recruiting an external auditor; historical audio listening is unpassed.
 
 The dossier records:
 
 1. Frozen scope and required/optional/excluded task IDs, with reasons and backlog links.
 2. Candidate model/runtime/profile/tokenizer/context/term and package hashes.
 3. For each gate: target, observed numerator/denominator or timing/resource value,
-   command/fixture/reviewer identity, artifact link and explicit pass/fail/gap.
+   command/fixture/assessor identity, artifact link and explicit pass/fail/gap.
 4. Applicable regression, long-file/fault, migration/rollback and offline-install evidence.
 5. Remaining defects by severity, reviewed dispositions and unsupported combinations.
 6. Release artifact hashes/notices, prior baseline and recovery instructions.
@@ -149,7 +150,7 @@ after all required scope tasks and gates pass, public evidence agrees with the
 candidate and publication is verified. Deferred optional directions may remain
 open with explicit exclusion/decision; required deferred or blocked work may not.
 
-If a reviewer/source/target/authorization is missing, retain a concrete backlog
+If a source/reference/target/authorization is missing, retain a concrete backlog
 blocker, make independent progress and report the exact needed input. Apply the
 available Goal tool's rules for goal-level blocked/paused/complete states; the
 backlog's task states are not a substitute. A token/time limit or inability to

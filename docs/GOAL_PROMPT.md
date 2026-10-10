@@ -1,7 +1,10 @@
 # Reusable delivery goal prompt
 
-Updated: 28 September 2026. This is an execution objective for a later user-started
-Goal. Creating this document does not start that Goal or any implementation task.
+Updated: 10 October 2026. This preserves the original full translation/audio
+objective. The owner's [translator-only scope v3](../eval/experiments/2026-10-10-translation-only-scope-v3.md)
+governs current work; audio is outside that assignment, and the current
+[reference protocol](evaluation/011-published-reference-review-v2.md) requires
+no recruited language reviewer. Creating this document does not start a Goal.
 Use [release acceptance](RELEASE_ACCEPTANCE.md) to distinguish a finite milestone
 from the complete release target. Token budgets are set only if the user specifies one.
 
@@ -48,8 +51,9 @@ and stop criteria. Use actual model outputs and timings; report raw/restored/acc
 results, tokens, resource samples, errors and reviewer provenance. Never insert the
 reference into prompts, tune on sealed holdout, fabricate Google/human review or
 infer exact uninstrumented timings. Retries are bounded and explicit, and an invalid
-or incomplete result is not published. Human reviewers, listening and clean-target
-verification remain real prerequisites. Request necessary missing input while
+or incomplete result is not published. Source-matched published references and
+clean-target verification remain real translation prerequisites; listening is
+an unpassed historical audio gate. Request necessary missing input while
 continuing independent work; do not send messages to others without authorization
 or start paid compute outside an approved budget.
 
@@ -70,8 +74,8 @@ and deployment verified on the live page. Avoid expanding an already sufficient
 goal into unlimited new features.
 
 Complete RELEASE-05's final audit from the committed candidate checkout. The full
-Goal is complete only when all required scoped tasks and G1–G9/A1–A6 pass, actual
-artifacts and independent reviewer coverage match the frozen identities, and
+Goal is complete only when all required scoped tasks and gates pass, actual
+artifacts and declared reference/assessment coverage match frozen identities, and
 published evidence/CI/Pages agree with the release decision. Optional exclusions
 need explicit reasons; required deferred/blocked work remains incomplete. A resource
 limit or missing real check does not satisfy completion. Follow the available Goal
