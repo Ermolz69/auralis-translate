@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "id": "REG-077",
+  "status": "observed_ai_source_aware_development_not_human_adjudicated",
+  "severity": "major_technical_referent",
+  "split": "authored_exposed_development_not_holdout",
+  "source_family": "reg076_authored_semiconductor_contrast",
+  "profile_scope": "unchanged v8 baseline and rejected evaluation-only negated-multicore v3",
+  "machine_report_sha256": "f16cea2e2840d87e3f1230ae9cf85e2fd80901fc3e6bb90df738ce75bc63cecb",
+  "ai_review_sha256": "313760eb3c19d82bf6d4f23c8b95c115e1b3805b0623d1667d837537a642434e",
+  "expected_invariant": "Keep chip count, cores per chip and the exact negated concept distinct; a target-scoped sense note cannot be admitted from one corrected sentence while related contrasts fail.",
+  "minimal_reproducers": [
+    {
+      "case_id": "not_multicore_but_separate_chips",
+      "source_lines": ["这里有两颗独立芯片，不是一个多核芯片。"],
+      "source_text_sha256": "109696cb78b79efcdf8f0dbb224d9836180a0626de02176e8d6b039fc4c35f59",
+      "source_inventory_sha256": "4224aaf00507c2ec68ac434b85162befe360c5faccd665a21f040ec9db135710",
+      "candidate_seed101_request_sha256": "0593b37762df525bd15c5b953ab861a849be5530a9e9d6b934115aec71753570",
+      "candidate_seed101_raw_http_sha256": "81112b3e882bac7ba37019961f5959cacb2510c0bacf403ca664e6a5de1f839b",
+      "candidate_seed101_accepted_text_sha256": "9dc78d4f87b56a2193b6d173ff0c6a94ff7775ca3a38134d5d32128ca1184f87",
+      "ai_finding": "Two independent chips become a denied multi-processor chip with several cores; the exact denial of one multi-core chip is lost in all three candidate seeds.",
+      "candidate_major_errors": 3,
+      "candidate_repeats": 3
+    },
+    {
+      "case_id": "multicore_inside_each_chip",
+      "source_lines": ["两颗芯片各自都是多核，但不是多处理器系统。"],
+      "source_text_sha256": "865efc0ac265b301989cd4ca16d8e98dd6a2b425acafe24e4dc782971e9b7eb9",
+      "source_inventory_sha256": "ce3605010953e48e8b21b3c20f9d48a7abc56d3b12e3833f421ecf9d3f1c3e0b",
+      "seed101_identical_request_sha256": "11e93b55277b1119280cb67783869dfa36ae9ae7b5ada39ab308ded244c2c9ef",
+      "baseline_seed101_accepted_text_sha256": "d59ae60a03590fc5e68f5946617a98c7ad0776692d2ad47967c46e1d6264363e",
+      "candidate_seed101_raw_http_sha256": "9791ee8e01214b6785e03e3bef72f72fd44b2be15809c19446f2c94bcf561e25",
+      "candidate_seed101_accepted_text_sha256": "7a13857b7be8fbc608eb161abc9f5451b5a95ec8a50defb385fe02a35c85f284",
+      "ai_finding": "One candidate sample changes multi-core inside each chip to multi-processor; baseline has the correct concept under the same exact request, so the error is sampling variability rather than exposure to the new note.",
+      "candidate_major_errors": 1,
+      "candidate_repeats": 3
+    }
+  ],
+  "related_controls": [
+    {"id":"three_independent_not_one_multicore","source_lines":["三颗芯片彼此独立，不是一颗多核芯片。"],"expected_fact":"Three independent chips rather than one multi-core chip.","outcome":"pending_model_screen"},
+    {"id":"two_chips_vs_dual_core","source_lines":["两颗独立芯片和一颗双核芯片不是同一个概念。"],"expected_fact":"Two independent chips and one dual-core chip are different concepts.","outcome":"pending_model_screen"},
+    {"id":"one_chip_four_cores_not_four_processors","source_lines":["这里有一颗芯片、四个核心，不是四颗处理器。"],"expected_fact":"One chip with four cores, not four processors.","outcome":"pending_model_screen"}
+  ],
+  "negative_controls": [
+    {"id":"real_dual_processor_single_core","source_lines":["这台设备确实是双处理器系统，每颗处理器只有一个核心。"],"expected_fact":"A real two-processor system with one core in each processor.","outcome":"pending_model_screen"},
+    {"id":"one_eight_core_chip","source_lines":["这是一颗八核芯片，没有第二颗芯片。"],"expected_fact":"One eight-core chip and no second chip.","outcome":"pending_model_screen"},
+    {"id":"two_chips_unknown_core_counts","source_lines":["我们不知道这两颗芯片各自有几个核心。"],"expected_fact":"Two chips exist but their individual core counts are unknown.","outcome":"pending_model_screen"}
+  ],
+  "control_model_runs": 0,
+  "human_review": "missing",
+  "product_status": "v8_unchanged_v3_rejected"
+}

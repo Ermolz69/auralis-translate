@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "REG-078",
+  "status": "observed_ai_language_review_not_human_adjudicated",
+  "severity": "minor_russian_grammar",
+  "split": "authored_exposed_development_not_holdout",
+  "source_family": "reg076_authored_semiconductor_contrast",
+  "profile_scope": "unchanged v8 baseline and rejected evaluation-only negated-multicore v3",
+  "machine_report_sha256": "f16cea2e2840d87e3f1230ae9cf85e2fd80901fc3e6bb90df738ce75bc63cecb",
+  "ai_review_sha256": "313760eb3c19d82bf6d4f23c8b95c115e1b3805b0623d1667d837537a642434e",
+  "expected_invariant": "When the source says one core per processor, preserve that count with grammatical Russian agreement; do not change processor or core counts to repair grammar.",
+  "minimal_reproducer": {
+    "case_id": "actual_multiple_processors",
+    "source_lines": ["系统确实有多个处理器，但每个处理器只有单核。"],
+    "source_text_sha256": "8dca8ca7e18a7238360b9b7ff1362dc674522a79a8c180b2053fad050554bd1a",
+    "source_inventory_sha256": "cc8fbb28cf36e3202e2a9b0eefa754d2d48b002895dba7a519651ae4ba7bd657",
+    "seed101_identical_request_sha256": "f20a0548826a70619a08df4532e2a5093faf393a8f9014174dbb9522e5bf1919",
+    "seed101_accepted_text_sha256_both": "f5efce0b2443397f0af7f04397eea25b767f4287c8e2cec88b3947ac0ad5afab",
+    "ai_finding": "Both arms retain the multiple processors and one core each but use ungrammatical Russian agreement in all six replies.",
+    "grammar_error_cells": 6
+  },
+  "related_controls": [
+    {"id":"each_processor_one_core","source_lines":["每个处理器只有一个核心。"],"expected_fact":"One core per processor with natural Russian agreement.","outcome":"pending_model_screen"},
+    {"id":"one_chip_one_core","source_lines":["这颗芯片只有一个核心。"],"expected_fact":"One chip with one core and natural Russian agreement.","outcome":"pending_model_screen"},
+    {"id":"two_chips_one_core_each","source_lines":["两颗芯片各自只有一个核心。"],"expected_fact":"Two chips with one core each and natural Russian agreement.","outcome":"pending_model_screen"}
+  ],
+  "negative_controls": [
+    {"id":"each_processor_two_cores","source_lines":["每个处理器只有两个核心。"],"expected_fact":"Two cores per processor; do not force the one-core wording.","outcome":"pending_model_screen"},
+    {"id":"one_processor_four_cores","source_lines":["系统只有一个处理器，但它有四个核心。"],"expected_fact":"One processor with four cores.","outcome":"pending_model_screen"},
+    {"id":"multi_processor_unknown_cores","source_lines":["这个系统有多个处理器，但我们没有说明核心数。"],"expected_fact":"Multiple processors with unknown core counts.","outcome":"pending_model_screen"}
+  ],
+  "control_model_runs": 0,
+  "human_review": "missing",
+  "product_status": "v8_unchanged_v3_rejected"
+}

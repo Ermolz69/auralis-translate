@@ -1531,6 +1531,7 @@ tasks:
       - node eval/scripts/build-regression-catalog-v52.mjs
       - node eval/scripts/build-regression-catalog-v53.mjs
       - node eval/scripts/build-regression-catalog-v54.mjs
+      - node eval/scripts/build-regression-catalog-v55.mjs
   eval:regression:catalog:portable:check:
     desc: Verify recent public catalog evidence in a clean checkout without private source files
     cmds:
@@ -1546,6 +1547,18 @@ tasks:
       - node eval/scripts/build-regression-catalog-v52.mjs
       - node eval/scripts/build-regression-catalog-v53.mjs
       - node eval/scripts/build-regression-catalog-v54.mjs
+      - node eval/scripts/build-regression-catalog-v55.mjs
+  eval:regression:catalog:v55:write:
+    desc: Append observed REG-077/078 failures and related controls without rewriting v54
+    cmds:
+      - task: eval:reg076:v3:regressions:check
+      - node --check eval/scripts/build-regression-catalog-v55.mjs
+      - node eval/scripts/build-regression-catalog-v55.mjs --write
+  eval:regression:catalog:v55:check:
+    desc: Verify the pinned 120-reply semantic and grammar regression catalog
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v55.mjs
+      - node eval/scripts/build-regression-catalog-v55.mjs
   eval:regression:catalog:v54:write:
     desc: Append REG-075/076 technical-sense failures without rewriting v53
     cmds:
@@ -1933,6 +1946,28 @@ tasks:
     cmds:
       - task: eval:reg076:v3:preflight
       - node eval/scripts/probe-vivo-technical-senses-v3.mjs --probe
+  eval:reg076:v3:report:
+    desc: Capture source-free hashes and resource evidence from all retained REG-076 replies
+    cmds:
+      - node --check eval/scripts/check-reg076-v3.mjs
+      - node eval/scripts/check-reg076-v3.mjs --capture
+  eval:reg076:v3:check:
+    desc: Independently recompute the 120-cell public REG-076 report from raw replies
+    cmds:
+      - node --check eval/scripts/check-reg076-v3.mjs
+      - node eval/scripts/check-reg076-v3.mjs --check
+  eval:reg076:v3:review:check:
+    desc: Check coverage and AI-only provenance of every paired REG-076 judgment
+    cmds:
+      - task: eval:reg076:v3:check
+      - node --check eval/scripts/check-reg076-v3-review.mjs
+      - node eval/scripts/check-reg076-v3-review.mjs
+  eval:reg076:v3:regressions:check:
+    desc: Reproduce observed REG-077/078 failures and verify twelve new controls
+    cmds:
+      - task: eval:reg076:v3:review:check
+      - node --check eval/scripts/check-reg076-v3-regressions.mjs
+      - node eval/scripts/check-reg076-v3-regressions.mjs
   eval:vivo:post-edit:freeze:
     desc: Freeze ten source-and-draft revision request identities before inference
     cmds:
