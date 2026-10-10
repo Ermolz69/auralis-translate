@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "experiment": "CHIP-CORE-WARNING-2026-10-10-v1",
+  "split": "exposed_development_not_holdout",
+  "rule_sha256": "a016b597ca952b2f53a6c8f59cc86849b7de061df4715559d864f1b6c18d8967",
+  "public_inputs": {
+    "eval/reports/2026-10-10-reg077-v4.json": "1cd09c57dcad44e7eadcc1357faaa6cb1d901a620a129fdc845ed6bb6e17e8ae",
+    "eval/reports/2026-10-10-reg077-v4-ai-review.json": "299ef270b466f79f66e3a720c006026e28c4ff8679e08a7ed978d087cb09206d",
+    "eval/reports/2026-10-10-reg076-v3-ai-review.json": "313760eb3c19d82bf6d4f23c8b95c115e1b3805b0623d1667d837537a642434e"
+  },
+  "private_journal_sha256": "eb246cbe4431f972673b2898c80cfabb93b881f305dc3181ac4c326d9c27d5f0",
+  "input_groups": [
+    {
+      "group": "vivo",
+      "cue_count": 467,
+      "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+      "drafts": [
+        {
+          "id": "7b-v8",
+          "sha256": "4451868ea3e7cbb3ed81f3d24b5f85bc61a749168b213c54c88ae552208c4831"
+        },
+        {
+          "id": "1_8b-v8",
+          "sha256": "32d96fe75eb0f5c90a67e2f6606d3d6ace27f79e67352a12b065efe91a08d3fc"
+        }
+      ]
+    },
+    {
+      "group": "asus",
+      "cue_count": 268,
+      "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+      "drafts": [
+        {
+          "id": "7b-v8",
+          "sha256": "746495ba8bfc9c7c3cee0b5021fea87c10605b1d8e07be6dc316907138ea48ee"
+        }
+      ]
+    },
+    {
+      "group": "sethlui",
+      "cue_count": 263,
+      "source_sha256": "4777e11caa115e893f2328c2a33c25a76c7391ace8ecf0ac4b9436635fc27964",
+      "drafts": [
+        {
+          "id": "1_8b-v6",
+          "sha256": "042c0ffffd67a4ea6f562645655ffe9db823866d7505b4ed64708e0ff829df4d"
+        },
+        {
+          "id": "7b-v6",
+          "sha256": "45f140e201f5a6228a0754e48d1e2b4153a392a7869dc279768339882fa53511"
+        }
+      ]
+    }
+  ],
+  "limits": {
+    "offline_attempts": 1,
+    "model_calls": 0,
+    "asr_calls": 0,
+    "tts_calls": 0,
+    "network_calls": 0,
+    "retries": 0,
+    "selected_reply_cells": 192,
+    "complete_draft_pairs": 1728,
+    "max_pairs": 1920,
+    "max_wall_ms": 20000
+  }
+}
