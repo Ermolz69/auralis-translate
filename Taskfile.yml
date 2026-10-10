@@ -1968,6 +1968,42 @@ tasks:
       - task: eval:reg076:v3:review:check
       - node --check eval/scripts/check-reg076-v3-regressions.mjs
       - node eval/scripts/check-reg076-v3-regressions.mjs
+  eval:reg077:v4:unit:
+    desc: Check exact chip/core relation scope and unchanged prior requests
+    cmds:
+      - node --check eval/scripts/reg077-referent-v4.mjs
+      - node --check eval/scripts/probe-reg077-referent-v4.mjs
+      - node --test --test-isolation=none eval/scripts/tests/reg077-referent-v4.test.mjs
+  eval:reg077:v4:freeze:
+    desc: Freeze 192 paired REG-077 request identities before inference
+    requires:
+      vars: [ASSET_ROOT, MODEL_ROOT]
+    env:
+      AURALIS_EVAL_ASSET_ROOT: '{{.ASSET_ROOT}}'
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+    cmds:
+      - task: eval:reg077:v4:unit
+      - node eval/scripts/probe-reg077-referent-v4.mjs --freeze
+  eval:reg077:v4:preflight:
+    desc: Verify frozen REG-077 requests and exact model/runtime assets
+    requires:
+      vars: [ASSET_ROOT, MODEL_ROOT]
+    env:
+      AURALIS_EVAL_ASSET_ROOT: '{{.ASSET_ROOT}}'
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+    cmds:
+      - task: eval:reg077:v4:unit
+      - node eval/scripts/probe-reg077-referent-v4.mjs --preflight
+  eval:reg077:v4:probe:
+    desc: Run one bounded 7B paired REG-077 screen with three seeds
+    requires:
+      vars: [ASSET_ROOT, MODEL_ROOT]
+    env:
+      AURALIS_EVAL_ASSET_ROOT: '{{.ASSET_ROOT}}'
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+    cmds:
+      - task: eval:reg077:v4:preflight
+      - node eval/scripts/probe-reg077-referent-v4.mjs --probe
   eval:vivo:post-edit:freeze:
     desc: Freeze ten source-and-draft revision request identities before inference
     cmds:
