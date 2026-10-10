@@ -1239,3 +1239,20 @@ freeze positive and related negative controls before viewing targets, and
 measure trigger coverage and adjudicate every warning. Preserve the v8
 baseline and all retained failures; do not advance the long file on this
 warning alone.
+
+The [bounded Qwen3 8B local screen](../eval/experiments/2026-10-10-qwen3-8b-local-screen-result.md)
+adds partial `CTX-02`/`EVAL-04`/`DECIDE-01` evidence on the same version-matched
+Vivo source. An official pinned Q4 weight was acquired once into ignored
+private storage; 36 matched real replies and 72 preflights were structurally
+valid. AI source-aware review found that Qwen3 preserved the two chip/core
+negation contrasts in 6/6 cells where v8 failed, but lost the big-core
+modifier in all three repeats of a natural cue and added Russian agreement
+errors in six authored cells. The predeclared shortlist rule therefore
+rejects Qwen3; no complete file or TTS was run on it. [REG-081/082](../eval/regressions/catalog-v57.json)
+preserve the minimal failures and 12 unrun new related/negative controls.
+This screen does not change the selected v8 profile, accepted results or
+`DATA-03` admission: the Chinese caption rights, source listening, independent
+bilingual review, G3–G5, A1–A6 and `RELEASE-05` remain open. The next
+independent quality task is source-only cross-source fact-relation coverage
+and false-warning measurement; a model replacement would require a separately
+frozen candidate with no new major errors before any long-file pilot.

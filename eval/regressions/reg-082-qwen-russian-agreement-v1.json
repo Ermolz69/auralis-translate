@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "id": "REG-082",
+  "status": "observed_ai_language_review_not_human_adjudicated",
+  "severity": "minor_russian_grammar_repeated",
+  "split": "authored_exposed_development_not_holdout",
+  "source_family": "reg077_authored_semiconductor_contrast",
+  "profile_scope": "official Qwen3 8B Q4_K_M local evaluation configuration; product v8 unchanged",
+  "machine_report_sha256": "b7928d632474da5e7da2c9272aacc050c444dd4bf17343141df871dce93889c5",
+  "ai_review_sha256": "392092dfdfa2f19d8b4fa2c56b3a960c604453e3f2000bd3db4be82410094b84",
+  "expected_invariant": "Preserve the hardware counts with grammatical Russian gender and number agreement for chip, processor and core.",
+  "minimal_reproducers": [
+    {
+      "case_id": "not_multicore_but_separate_chips",
+      "source_text_sha256": "109696cb78b79efcdf8f0dbb224d9836180a0626de02176e8d6b039fc4c35f59",
+      "candidate_seed101_accepted_text_sha256": "140978d203d64ea57c4dff9b1f6bc5da17195e691d1bc6c44db63dd36e6cb13c",
+      "ai_finding": "Factual distinction is retained, but the Russian gender agreement for two chips is wrong in all three seeds."
+    },
+    {
+      "case_id": "real_dual_processor_single_core",
+      "source_text_sha256": "1f711f5dd129d193edd019f4efb559bcadc6112bfdea551b18467b90250115d4",
+      "candidate_seed101_accepted_text_sha256": "21fc1a67ae36cfeabb443683fbffc0303277264c2e50f71a0455cdf159fcf48f",
+      "ai_finding": "The two processors and one core each are preserved, but processor and core agreement is wrong in all three seeds."
+    }
+  ],
+  "related_controls": [
+    {"id":"two_chips_one_core_each","source_line":"两颗芯片各有一个核心。","expected_fact":"Two chips, one core each, with correct Russian agreement."},
+    {"id":"three_processors_two_cores_each","source_line":"这三颗处理器各有两个核心。","expected_fact":"Three processors, two cores each, with correct Russian agreement."},
+    {"id":"other_chip_one_core","source_line":"另一颗芯片只有一个核心。","expected_fact":"Another chip has one core, with correct Russian agreement."}
+  ],
+  "negative_controls": [
+    {"id":"one_chip_two_cores","source_line":"这里有一颗芯片和两个核心。","expected_fact":"One chip and two cores, without forcing the two-chip wording."},
+    {"id":"two_chips_core_count_unknown","source_line":"这里有两个芯片，核心数还不清楚。","expected_fact":"Two chips with unspecified core counts."},
+    {"id":"three_cores_each","source_line":"每颗芯片有三个核心。","expected_fact":"Three cores per chip, with no unsupported chip count."}
+  ],
+  "control_model_runs": 0,
+  "product_status": "v8_unchanged_candidate_rejected"
+}

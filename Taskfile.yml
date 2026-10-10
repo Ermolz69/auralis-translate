@@ -31,6 +31,34 @@ tasks:
     cmds:
       - task: eval:model:qwen3:preflight
       - node eval/scripts/probe-qwen3-8b-local-screen.mjs --probe
+  eval:model:qwen3:report:
+    desc: Capture source-free metrics and raw-response hashes from the retained matched run
+    cmds:
+      - node --check eval/scripts/check-qwen3-8b-local-screen.mjs
+      - node eval/scripts/check-qwen3-8b-local-screen.mjs --capture
+  eval:model:qwen3:check:
+    desc: Replay 36 private raw replies against frozen requests and the public report
+    cmds:
+      - node --check eval/scripts/check-qwen3-8b-local-screen.mjs
+      - node eval/scripts/check-qwen3-8b-local-screen.mjs
+  eval:model:qwen3:regressions:check:
+    desc: Verify Qwen3 major modifier loss and repeated Russian agreement controls
+    cmds:
+      - task: eval:model:qwen3:check
+      - node --check eval/scripts/check-qwen3-8b-regressions.mjs
+      - node eval/scripts/check-qwen3-8b-regressions.mjs
+  eval:regression:catalog:v57:write:
+    desc: Create the versioned REG-081/082 catalog after checked Qwen3 evidence
+    cmds:
+      - task: eval:model:qwen3:regressions:check
+      - node --check eval/scripts/build-regression-catalog-v57.mjs
+      - node eval/scripts/build-regression-catalog-v57.mjs --write
+  eval:regression:catalog:v57:check:
+    desc: Verify the portable v56 to v57 catalog and both new Qwen regressions
+    cmds:
+      - task: eval:model:qwen3:regressions:check
+      - node --check eval/scripts/build-regression-catalog-v57.mjs
+      - node eval/scripts/build-regression-catalog-v57.mjs
   eval:name-action:trace:
     desc: Trace all nine frozen NAME-01 regressions without inference or mutation
     cmds:
@@ -1563,6 +1591,7 @@ tasks:
       - node eval/scripts/build-regression-catalog-v54.mjs
       - node eval/scripts/build-regression-catalog-v55.mjs
       - node eval/scripts/build-regression-catalog-v56.mjs
+      - node eval/scripts/build-regression-catalog-v57.mjs
   eval:regression:catalog:portable:check:
     desc: Verify recent public catalog evidence in a clean checkout without private source files
     cmds:

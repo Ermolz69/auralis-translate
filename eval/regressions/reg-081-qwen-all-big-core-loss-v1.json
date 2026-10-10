@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "REG-081",
+  "status": "observed_ai_source_aware_development_not_human_adjudicated",
+  "severity": "major_technical_modifier_loss",
+  "split": "known_natural_development_not_holdout",
+  "source_family": "youtube_geekerwan_vivo_original_platform",
+  "profile_scope": "official Qwen3 8B Q4_K_M local evaluation configuration; product v8 unchanged",
+  "machine_report_sha256": "b7928d632474da5e7da2c9272aacc050c444dd4bf17343141df871dce93889c5",
+  "ai_review_sha256": "392092dfdfa2f19d8b4fa2c56b3a960c604453e3f2000bd3db4be82410094b84",
+  "expected_invariant": "All-big-core architecture must retain the big-core modifier; a full set of unspecified cores is not the same architecture.",
+  "minimal_reproducer": {
+    "case_id": "natural_all_big_core",
+    "cue_id": 232,
+    "source_text_sha256": "ca912f0f835e8f3ae5a1c56628ea9061331c0f577608af3e12be6b6f9870f838",
+    "candidate_seed101_request_sha256": "64fc6c5f3c75d2129da89026e9bbdef7dea3896a8a1e5e0757909b037233a9e4",
+    "candidate_seed101_raw_http_sha256": "f38272e6b20fcf8710dac5b95ff980d6b4872e5f2ce6cf75a8934d04628f2bb4",
+    "candidate_seed101_accepted_text_sha256": "64a6d1c14fbb7ae516dae32799253d32b6577f8f979965d018c998f09de63b55",
+    "candidate_major_error_cells": 3,
+    "candidate_repeats": 3,
+    "baseline_seed101_preserved_big_core": true
+  },
+  "related_controls": [
+    {"id":"all_big_core_architecture","source_line":"这款芯片采用全大核架构。","expected_fact":"All-big-core architecture, not merely all cores."},
+    {"id":"all_big_core_with_cache","source_line":"下一代平台保持全大核方案，同时增加缓存。","expected_fact":"Retain all-big-core architecture and added cache."},
+    {"id":"all_big_core_power_tradeoff","source_line":"全大核设计提升性能，但也要控制功耗。","expected_fact":"All-big-core design improves performance while power must be managed."}
+  ],
+  "negative_controls": [
+    {"id":"mixed_big_and_small_cores","source_line":"这款芯片有四个核心，但只有两个大核。","expected_fact":"Four cores, only two big cores; do not call it all-big-core."},
+    {"id":"all_cores_active_not_all_big","source_line":"所有核心都在运行，但不是全大核架构。","expected_fact":"All cores active, explicitly not all-big-core architecture."},
+    {"id":"half_big_cores","source_line":"这里的大核只占一半。","expected_fact":"Big cores are only half of the cores."}
+  ],
+  "control_model_runs": 0,
+  "product_status": "v8_unchanged_candidate_rejected"
+}

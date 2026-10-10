@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "experiment": "qwen3-8b-local-screen-2026-10-10-v1",
+  "reviewer_kind": "ai_source_aware_not_independent_human",
+  "human_bilingual_reviews": 0,
+  "human_audio_listeners": 0,
+  "machine_report_sha256": "b7928d632474da5e7da2c9272aacc050c444dd4bf17343141df871dce93889c5",
+  "source_policy": "exposed_development_chinese_source_and_neighbor_context_only",
+  "reference_in_model_requests": false,
+  "cases": [
+    {
+      "case_id": "natural_multicore",
+      "source_cue_id": 172,
+      "source_fact": "Multiple CPU cores, not multiple independent processors.",
+      "candidate_fact_passes": 3,
+      "baseline_fact_passes": 0,
+      "candidate_language_issue_cells": 3,
+      "note": "Qwen retains the multicore concept but makes awkward Russian phrases; v8 substitutes multiprocessor in every seed."
+    },
+    {
+      "case_id": "natural_all_big_core",
+      "source_cue_id": 232,
+      "source_fact": "An all-big-core architecture, including the big-core modifier.",
+      "candidate_fact_passes": 0,
+      "baseline_fact_passes": 1,
+      "candidate_language_issue_cells": 0,
+      "note": "Qwen uses a full set of cores in all seeds and drops big; v8 seed 101 retains large cores while the other two are flawed. This is a new major candidate error relative to one matched baseline cell."
+    },
+    {
+      "case_id": "natural_process",
+      "source_cue_id": 393,
+      "source_fact": "MediaTek continually develops advanced semiconductor manufacturing processes.",
+      "candidate_fact_passes": 3,
+      "baseline_fact_passes": 3,
+      "candidate_language_issue_cells": 0,
+      "note": "Both arms preserve the manufacturing-process sense; Qwen is more generic, while v8 uses the Russian technical term."
+    },
+    {
+      "case_id": "not_multicore_but_separate_chips",
+      "source_fact": "Two separate chips, not one multicore chip.",
+      "candidate_fact_passes": 3,
+      "baseline_fact_passes": 0,
+      "candidate_language_issue_cells": 3,
+      "note": "Qwen preserves the denied multicore referent but says 'две ... чипы'; v8 denies a multiprocessor chip instead."
+    },
+    {
+      "case_id": "three_independent_not_one_multicore",
+      "source_fact": "Three independent chips, not one multicore chip.",
+      "candidate_fact_passes": 3,
+      "baseline_fact_passes": 0,
+      "candidate_language_issue_cells": 0,
+      "note": "Qwen preserves chip count and the denied multicore chip in all three seeds; v8 again substitutes multiprocessor."
+    },
+    {
+      "case_id": "real_dual_processor_single_core",
+      "source_fact": "A real dual-processor system with one core in each processor.",
+      "candidate_fact_passes": 3,
+      "baseline_fact_passes": 3,
+      "candidate_language_issue_cells": 3,
+      "note": "Both arms preserve the hardware counts; Qwen says 'каждая процессор' and 'один ядро', while v8 has grammatical agreement."
+    }
+  ],
+  "candidate_chip_core_referent": "6_of_6_positive_contrast_cells_pass_by_ai_review",
+  "candidate_new_major_errors": "all_big_core_modifier_missing_3_of_3_including_one_correct_v8_pair",
+  "candidate_new_grammar_errors": "at_least_6_of_18_cells_in_two_authored_cases",
+  "decision": "reject_candidate_before_cross_source_or_full_file",
+  "decision_reason": "The predeclared shortlist requires no new major error; Qwen drops the big-core modifier in all three natural-source repeats. Its Russian agreement also regresses on two controls. The observed chip/core repair does not admit the candidate.",
+  "release_quality_claim": false
+}
