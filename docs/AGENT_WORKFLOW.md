@@ -26,7 +26,9 @@ training run is implied by the roadmap.
 Update the contract before changing agreed behavior. Version model/prompt/context/
 terms contracts; keep previous checked profiles reproducible. Keep Translate's
 core free of runtime, database, UI and media dependencies. ASR/TTS implementation
-belongs to Auralis. No desktop UI work during the currently deferred CLI phase.
+belongs to Auralis. Desktop UI remains deferred for the translator-only CLI
+workstream; the separately authorized [desktop goal scope v3](../eval/experiments/2026-10-10-translate-desktop-goal-scope-v3.md)
+permits its defined integration work.
 
 ## 2. Implement and verify the actual claim
 
@@ -106,8 +108,10 @@ an accurate tail estimate; disclose N. Separate cold process and warm runs and
 record unknown OS cache effects. Do not label residual file time as a measured
 database or hashing stage. Sampled memory peaks are approximate lower bounds.
 
-Language scores require human reference/review identity and denominator; AI editorial
-reviews remain labelled AI, model-visible when applicable. Report paired differences
+Language scores require declared reference and assessor provenance and a frozen
+denominator. Under the current [published-reference protocol v2](evaluation/011-published-reference-review-v2.md),
+AI assessments remain labelled AI, model-visible when applicable; they are not
+independent human ratings. Report paired differences
 and all regressions, not only wins. Automated similarity cannot prove source facts.
 Google comparisons record actual observation date/input/output and opaque service
 configuration; never fabricate a Google output or use browser wall time as a
@@ -251,10 +255,10 @@ partial publication. Stop an experiment on its declared resource/time criteria,
 record it and revise the hypothesis before another budgeted comparison.
 
 For `HOST-04` use owned copies, verify restore/identity and protect user databases.
-For `DATA-05` preserve sealed splits and honest reviewer coverage. For `VOICE-07`
+For `DATA-05` preserve sealed splits and honest reference/assessment coverage. For `VOICE-07`
 use real audio and listening rather than mock paths. At `RELEASE-05` verify one
 committed candidate's gate, artifact, identity and public-report agreement. Apply
 the gate map to the selected endpoint and repeat affected checks after final fixes.
-Required deferred work or missing independent review prevents full completion;
+Required deferred work or missing source-grounded quality evidence prevents full completion;
 finish independent tasks and report concrete missing input instead of inventing a
 pass. Scope exclusions must be explicit, and future directions remain in the backlog.

@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "experiment": "OFFICIAL-ZH-RU-REFERENCE-2026-v1",
+  "split": "published_parallel_exposed_development_not_holdout",
+  "expected": {
+    "pdf": "dc029d7ebc4b43d599348943dca8229108df81d3c932df2ccbb72df43da82ea8",
+    "source": "99db71f3c76546e9e8e7aeb8dc6a049adb49a9698dc71fb366786695ce843d52",
+    "baseline": "b9c0951807157c832c42ec1d8d5ab3ec0ebd8498fa2cb01ccf3ce1f2b65e8210",
+    "model": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+    "runtime": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+    "manifest": "c287c53efbb4ce78471b64648ea3dd2f521363df0e168b7a61df1fdd6ae0479a"
+  },
+  "limits": {
+    "cases": 10,
+    "chats": 10,
+    "preflights": 20,
+    "max_total_tokens": 24000,
+    "max_wall_ms": 600000,
+    "readiness_ms": 180000,
+    "per_request_ms": 120000,
+    "per_preflight_ms": 30000,
+    "context_tokens": 2048,
+    "response_tokens": 1024,
+    "safety_tokens": 64,
+    "server_starts": 1,
+    "retries": 0
+  },
+  "model_alias": "auralis-hy-mt2-7b-q4",
+  "prompt_prefix_sha256": "1b4a2ae96e2526a2d096d41cd94215428d87e30db7ab614a222e65b6baac8ebb",
+  "planned": [
+    {
+      "id": "opening_resilience",
+      "page": 1,
+      "target_id": 5001,
+      "source_sha256": "27ea002f0e4841fde24749930c71c16484ce948ba14931e1eb7073a5e9da233f",
+      "request_sha256": "d93a9aa11c76ee9a42e93affe95cb0de82bbeff95698e99996376e7c8d691c46"
+    },
+    {
+      "id": "policy_stability",
+      "page": 1,
+      "target_id": 5002,
+      "source_sha256": "9db684a2e6df856eae70b1cc82f52528f19e47244e23ce850c449bc474ecfb77",
+      "request_sha256": "57210bc5813abc183f82d89b3989bce4b18e2bf0ddd76ee939062bdf418ba2e9"
+    },
+    {
+      "id": "plan_year",
+      "page": 2,
+      "target_id": 5003,
+      "source_sha256": "4eb3b27efd8c28cc06e12469a45dea535345e9b16f65e399cbb5f2f2e2337679",
+      "request_sha256": "165bb112990020fa1bfde46963f7086de6b620aeccc0bf75097155aa396a4365"
+    },
+    {
+      "id": "indicator_count",
+      "page": 3,
+      "target_id": 5004,
+      "source_sha256": "143bc4120083e1c6309a1add0283609b4965ba9d842dfc9a7d211b80362a9fc6",
+      "request_sha256": "460b23d41e5a3b27ad944544681dc7a45a428eedb017d6de1d6e5616cb058317"
+    },
+    {
+      "id": "research_growth",
+      "page": 4,
+      "target_id": 5005,
+      "source_sha256": "93fd1bd560dd316e6229de982cdf1883dafce5f82ef655d685413e1db347f4f4",
+      "request_sha256": "4685d0ed957cebab5944709f733e253bd96f0064856e2f9bb5e665e3e13f1de8"
+    },
+    {
+      "id": "carbon_target",
+      "page": 5,
+      "target_id": 5006,
+      "source_sha256": "74be651a7d58688b2ff12512d9baa8cfeee00c37d23ee3e2c29e81a4672b2228",
+      "request_sha256": "8b03aa0a4f1a05c9203f13212d0f48b288f1fc6347c532c17223886986a3dc10"
+    },
+    {
+      "id": "monetary_policy",
+      "page": 8,
+      "target_id": 5007,
+      "source_sha256": "4c82362b95c669f552ba7c3f7df2682675440a57c3567ea73e6fa477ba626bb1",
+      "request_sha256": "74638d7e7a6613f92f1a2120448be928c5d6ca186efcb62f3ef877c2ad6e1318"
+    },
+    {
+      "id": "smart_economy",
+      "page": 9,
+      "target_id": 5008,
+      "source_sha256": "9b9d36e7ec239568cfbd9eec79b8b4a35b4dca123302623446c2599b144cd5fe",
+      "request_sha256": "c2974e1d36f407d492873734f0b6b2e52acf5b5dfab2cf0e649ad0b22d8fdd07"
+    },
+    {
+      "id": "grain_production",
+      "page": 11,
+      "target_id": 5009,
+      "source_sha256": "2574b774d3d590ad0ac4a155e6e129181e62e0b135bf79850e44c7e45c9acd9e",
+      "request_sha256": "2cae4a2e242427a1745ca0ba21025fbdac8ef0459ceec3142a92d951626eca91"
+    },
+    {
+      "id": "local_debt",
+      "page": 13,
+      "target_id": 5010,
+      "source_sha256": "db5c94c0d2eb4e0c7cc6d754f4106de84b02f19c2fa4075ff148bbc35acdf35f",
+      "request_sha256": "71c33f1b4ce4bd56e3e68802c7063f07b3640170453ce95fbdf91e0a35002a6d"
+    }
+  ]
+}

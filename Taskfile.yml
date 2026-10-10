@@ -1,6 +1,141 @@
 version: "3"
 
 tasks:
+  eval:official-reference:freeze:
+    desc: Freeze ten source-only requests from the pinned official Chinese–Russian PDF
+    requires:
+      vars: [MODEL_ROOT]
+    env:
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+    cmds:
+      - node --check eval/scripts/probe-official-reference-v1.mjs
+      - node eval/scripts/probe-official-reference-v1.mjs --freeze
+  eval:official-reference:preflight:
+    desc: Rehash the private PDF, source cases, model and exact frozen requests
+    requires:
+      vars: [MODEL_ROOT]
+    env:
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+    cmds:
+      - node --check eval/scripts/probe-official-reference-v1.mjs
+      - node eval/scripts/probe-official-reference-v1.mjs --preflight
+  eval:official-reference:probe:
+    desc: Run one bounded v8 translation screen without Russian references in prompts
+    requires:
+      vars: [MODEL_ROOT]
+    env:
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+    cmds:
+      - task: eval:official-reference:preflight
+      - node eval/scripts/probe-official-reference-v1.mjs --probe
+  eval:official-reference:v2:freeze:
+    desc: Freeze six complete Chinese-clause requests and completed-action controls
+    requires:
+      vars: [MODEL_ROOT]
+    env:
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+      AURALIS_OFFICIAL_REFERENCE_VERSION: v2
+    cmds:
+      - node --check eval/scripts/probe-official-reference-v1.mjs
+      - node eval/scripts/probe-official-reference-v1.mjs --freeze
+  eval:official-reference:v2:preflight:
+    desc: Verify v2 source and context identities without reading Russian references
+    requires:
+      vars: [MODEL_ROOT]
+    env:
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+      AURALIS_OFFICIAL_REFERENCE_VERSION: v2
+    cmds:
+      - node --check eval/scripts/probe-official-reference-v1.mjs
+      - node eval/scripts/probe-official-reference-v1.mjs --preflight
+  eval:official-reference:v2:probe:
+    desc: Run one bounded full-clause v8 translation screen with source-only controls
+    requires:
+      vars: [MODEL_ROOT]
+    env:
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+      AURALIS_OFFICIAL_REFERENCE_VERSION: v2
+    cmds:
+      - task: eval:official-reference:v2:preflight
+      - node eval/scripts/probe-official-reference-v1.mjs --probe
+  eval:official-reference:v2:report:
+    desc: Capture source-free v1/v2 raw-response comparison and resource evidence
+    cmds:
+      - node --check eval/scripts/check-official-reference-v2.mjs
+      - node eval/scripts/check-official-reference-v2.mjs --capture
+  eval:official-reference:v2:check:
+    desc: Rehash the PDF, private reference, frozen requests and all raw v2 replies
+    cmds:
+      - node --check eval/scripts/check-official-reference-v2.mjs
+      - node eval/scripts/check-official-reference-v2.mjs --check
+  eval:regression:reg085:freeze:
+    desc: Freeze six Chinese-only temporal controls before v8 inference
+    requires:
+      vars: [MODEL_ROOT]
+    env:
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+      AURALIS_OFFICIAL_REFERENCE_VERSION: v3
+    cmds:
+      - node --check eval/scripts/probe-official-reference-v1.mjs
+      - node eval/scripts/probe-official-reference-v1.mjs --freeze
+  eval:regression:reg085:preflight:
+    desc: Verify the authored control identities and pinned local model
+    requires:
+      vars: [MODEL_ROOT]
+    env:
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+      AURALIS_OFFICIAL_REFERENCE_VERSION: v3
+    cmds:
+      - node --check eval/scripts/probe-official-reference-v1.mjs
+      - node eval/scripts/probe-official-reference-v1.mjs --preflight
+  eval:regression:reg085:probe:
+    desc: Run one bounded six-case temporal-status screen on unchanged v8
+    requires:
+      vars: [MODEL_ROOT]
+    env:
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+      AURALIS_OFFICIAL_REFERENCE_VERSION: v3
+    cmds:
+      - task: eval:regression:reg085:preflight
+      - node eval/scripts/probe-official-reference-v1.mjs --probe
+  eval:regression:reg085:report:
+    desc: Capture source-free identities and resources from the retained six raw replies
+    cmds:
+      - node --check eval/scripts/check-reg085-temporal-screen.mjs
+      - node eval/scripts/check-reg085-temporal-screen.mjs --capture
+  eval:regression:reg085:screen:check:
+    desc: Verify frozen REG-085 controls, raw answers and source-free report
+    cmds:
+      - node --check eval/scripts/check-reg085-temporal-screen.mjs
+      - node eval/scripts/check-reg085-temporal-screen.mjs --check
+  eval:regression:reg085:check:
+    desc: Verify the published-reference retrospective error and six new controls
+    cmds:
+      - task: eval:official-reference:v2:check
+      - node --check eval/scripts/check-reg085-official-temporal.mjs
+      - node eval/scripts/check-reg085-official-temporal.mjs
+  eval:regression:catalog:v61:build:
+    desc: Add REG-085 to a portable new development regression catalog
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v61.mjs
+      - node eval/scripts/build-regression-catalog-v61.mjs --write
+  eval:regression:catalog:v61:check:
+    desc: Verify catalog v61 and its pinned official-reference evidence
+    cmds:
+      - task: eval:regression:reg085:check
+      - node --check eval/scripts/build-regression-catalog-v61.mjs
+      - node eval/scripts/build-regression-catalog-v61.mjs
+  eval:regression:catalog:v62:build:
+    desc: Retain observed REG-085 temporal controls without rewriting v61
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v62.mjs
+      - node eval/scripts/build-regression-catalog-v62.mjs --write
+  eval:regression:catalog:v62:check:
+    desc: Verify raw temporal screen and the portable latest regression catalog
+    cmds:
+      - task: eval:regression:reg085:screen:check
+      - node --check eval/scripts/build-regression-catalog-v62.mjs
+      - node eval/scripts/build-regression-catalog-v62.mjs
   eval:model:qwen3:acquire:preflight:
     desc: Verify the pinned official Qwen3 8B Q4 acquisition contract without network use
     cmds:
@@ -1797,6 +1932,8 @@ tasks:
       - node eval/scripts/build-regression-catalog-v58.mjs
       - node eval/scripts/build-regression-catalog-v59.mjs
       - node eval/scripts/build-regression-catalog-v60.mjs
+      - node eval/scripts/build-regression-catalog-v61.mjs
+      - node eval/scripts/build-regression-catalog-v62.mjs
   eval:regression:catalog:v60:write:
     desc: Preserve v59 and append REG-084 caption fetch process failure
     cmds:

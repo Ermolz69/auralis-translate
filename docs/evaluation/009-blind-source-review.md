@@ -1,6 +1,10 @@
 # Blind source-aware Chinese review v1
 
-Status: `EVAL-01` protocol, 28 September 2026. This freezes scoring before the
+Status: historical `EVAL-01` protocol, 28 September 2026. Its human-review
+execution route was superseded for the owner's translator-only scope by
+[published-reference review v2](011-published-reference-review-v2.md). Keep this
+record and its original outcomes; it does not impose reviewer recruitment on
+current work. This freezes scoring before the
 v5 comparisons and sealed release holdout. No independent reviewer or human
 score is present in this record. The existing model-size commentary was AI
 editorial review with visible identities and cannot be recast as a blind score.

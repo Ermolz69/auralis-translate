@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "REG-085",
+  "status": "observed_ai_source_aware_against_published_translation_not_human_adjudicated",
+  "severity": "major_temporal_status_change",
+  "split": "official_written_development_not_holdout",
+  "source_family": "shanghai_official_2026_government_work_report_parallel_pdf",
+  "profile_scope": "Hy-MT2 7B Q4_K_M v8 source-only synthetic SRT screen; product unchanged",
+  "machine_report_sha256": "3ae81fcf37ed49579c7c47be4f2184b9d355547e108b6b88295d12ec71f83859",
+  "expected_invariant": "A completed 2025 policy action in a retrospective section must stay retrospective; a section heading alone must not turn an actual future task into a past action.",
+  "minimal_reproducer": {
+    "case_id": "policy_stability",
+    "source_pdf_sha256": "dc029d7ebc4b43d599348943dca8229108df81d3c932df2ccbb72df43da82ea8",
+    "context_source_sha256": "e753f5b45b3304b28c2e55e141906c2fc490ea5b907efa4729fd967e98e3138f",
+    "target_source_sha256": "9db684a2e6df856eae70b1cc82f52528f19e47244e23ce850c449bc474ecfb77",
+    "request_sha256": "397075a48258b31e6d6d2e92973c294348004450c1fc43a9862fc0533270f510",
+    "accepted_text_sha256": "5569c773c7274a5e77a946e127d7365e6da8674ce986f2a2c73359003e5324a0",
+    "published_reference_page": 1,
+    "observed_v1_v2_answer_byte_identical": true,
+    "source_meaning": "The 2025 review describes the policy as already implemented.",
+    "ai_finding": "The Russian answer prescribes that the policy should be implemented instead of reporting the past action."
+  },
+  "related_controls": [
+    {"id":"past_heading_same_action","context":"2025年工作回顾","source_line":"一是实施积极的宏观政策，稳定了经济运行。","expected_fact":"The policy was implemented and stabilized the economy."},
+    {"id":"past_without_heading","context":"","source_line":"去年我们实施了积极的宏观政策。","expected_fact":"The policy was implemented last year."},
+    {"id":"past_multicue_action","context":"2025年工作回顾","source_line":"第一项措施是实施积极的宏观政策。","expected_fact":"The measure was part of the completed 2025 review, not a new instruction."}
+  ],
+  "negative_controls": [
+    {"id":"future_heading_same_action","context":"2026年政府工作任务","source_line":"一是实施积极的宏观政策，稳定经济运行。","expected_fact":"A future task to implement policy; do not force past tense."},
+    {"id":"explicit_future_action","context":"2025年工作回顾","source_line":"明年将实施更加积极的宏观政策。","expected_fact":"Explicit next-year future overrides a prior retrospective heading."},
+    {"id":"irrelevant_heading","context":"关于环境保护","source_line":"实施积极的宏观政策。","expected_fact":"Temporal status is not established; do not invent past completion."}
+  ],
+  "control_model_runs": 0,
+  "product_status": "v8_unchanged_official_written_error_not_subtitle_gate"
+}

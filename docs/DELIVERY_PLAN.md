@@ -57,7 +57,13 @@ shows the current decision and generated task progress, with all prior model
 evidence on its separate historical page under the
 [owner-requested layout v2](reference/public-report-layout-v2.md).
 
-## 3. Data and independent review
+## 3. Data and source-matched assessment
+
+Current translator execution follows [scope v3](../eval/experiments/2026-10-10-translation-only-scope-v3.md)
+and [published-reference review v2](evaluation/011-published-reference-review-v2.md).
+The reviewer procedure originally frozen below is historical context, not a
+requirement to recruit anyone for the current work. Preserve old scores and
+failures; do not relabel AI assessments as independent human review.
 
 ### Admission and splits
 
@@ -79,30 +85,32 @@ Keep the existing 40-entry model set as a known regression suite. Its overlappin
 price example is not an extra independent sentence. FLORES sentence evidence is
 auxiliary and cannot substitute for a subtitle scene gate.
 
-Human reviewers must understand Chinese and Russian. Author or correct references
-from source and scene evidence; retain acceptable alternatives and uncertainty.
-Label AI-proposed references and model-visible commentary explicitly. A human
-reference is not a single compulsory wording. Google is a dated machine baseline,
-not a gold reference, and its web UI does not yield comparable local inference
-latency. Select audio/video context only when rights and task needs permit it.
+Use independently published professional Chinese/Russian versions of the same
+work, preferably same-version subtitle tracks. Retain acceptable alternatives
+and uncertainty grounded in Chinese source and scene evidence. Label all
+AI assessments explicitly. A published reference is not a single compulsory
+wording. Google is a dated machine baseline, not a gold reference, and its web
+UI does not yield comparable local inference latency. Select media context only
+when rights and task needs permit it.
 
 ### Review protocol
 
 Blind candidate identities and randomize order for language evaluation. Evaluate
 meaning (1–5), omissions/additions, negation, actors/direction, names, money/units,
 register, grammar, terminology and cue placement. Record critical/major/minor
-severity, source evidence, proposed correction and reviewer/adjudication IDs.
-Use two reviewers for critical or disputed decisions. Keep style preference
-separate from adequacy. Secondary automatic metrics may aid triage but do not
-replace source-aware human review or decide the release gate alone.
+severity, source evidence, proposed correction and assessor IDs. Under protocol
+v2, separately identified AI assessments and deterministic source checks retain
+disagreement/uncertainty as failures; there is no compulsory human assessor.
+Keep style preference separate from adequacy. Secondary automatic metrics may
+aid triage but do not decide the release gate alone.
 
-Review all 300 eligible sealed cues for the initial gate, with per-category
+Assess all 300 eligible sealed cues for the initial gate, with per-category
 denominators. Natural long-file audits use all known risk/boundary cues plus a
 preselected stratified sample of at least 200 cues per file, or every cue if fewer;
 publish the coverage. Sampled audits do not claim whole-file semantic correctness.
 Once a holdout is inspected to tune a fix, retire it to regression and prepare a
 new sealed release set. Store score sheets and candidate-to-model mapping separately
-until adjudication finishes. Store reviewer identity privately if necessary.
+until assessment finishes. Store assessor/model identity with each result.
 
 ## 4. Context experiments and composable policy
 
@@ -337,7 +345,7 @@ Other language, OS, backend and format combinations need their own admission.
 
 Start `DATA-01` and `CTX-01` independently: define the provenance/schema and the
 v5 context/terminology/fidelity contract. Then build the 60-case development suite
-and independent review protocol before implementing/tuning the adapter. Keep
+and prospective reference protocol before implementing/tuning the adapter. Keep
 the existing 420-request public evidence unchanged. Every subsequent slice follows
 the [agent workflow](AGENT_WORKFLOW.md), updates the backlog and publishes measured
 comparison evidence only after the named checks pass.
@@ -347,11 +355,11 @@ comparison evidence only after the named checks pass.
 Before sustained execution, `PLAN-03` freezes required and optional task IDs,
 hardware/format/endpoint scope and resources. The [acceptance map](RELEASE_ACCEPTANCE.md)
 prevents a local CLI milestone from closing a broader desktop/audio objective.
-Required human review, legal natural sources, clean-target checks and owner-deferred
+Source-matched published references, legal natural sources, clean-target checks and owner-deferred
 UI remain concrete external prerequisites; continue independent work while resolving
 them. The current planning request does not activate a Goal or start training.
 
-The audited additions are `DATA-05` for alignment/leakage/reviewer coverage,
+The audited additions are `DATA-05` for alignment/leakage/reference coverage,
 `CTX-05` for typed bounded retries and review outcomes, `EVAL-04` for maintained
 regression/adversarial/property/metamorphic checks, `HOST-04` for safe upgrade and
 rollback, `VOICE-07` for real speech regressions and `RELEASE-05` for a final
