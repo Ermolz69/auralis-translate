@@ -600,6 +600,40 @@ tasks:
     cmds:
       - task: eval:data:youtube:vivo:restore:test
       - node eval/scripts/restore-youtube-vivo-caption-v2.mjs --check
+  eval:data:youtube:vivo:restored-asr:test:
+    desc: Check beginning/middle/end cue selection and absent ASR behavior
+    cmds:
+      - node --check eval/scripts/source-asr-window-score.mjs
+      - node --test --test-isolation=none eval/scripts/tests/source-asr-window-score.test.mjs
+  eval:data:youtube:vivo:restored-asr:preflight:
+    desc: Rehash exact restored SRT, source media and retained full-audio ASR
+    requires:
+      vars: [SOURCE_ROOT]
+    env:
+      AURALIS_SOURCE_ROOT: '{{.SOURCE_ROOT}}'
+    cmds:
+      - task: eval:data:youtube:vivo:restored-asr:test
+      - node --check eval/scripts/link-restored-vivo-asr-v1.mjs
+      - node eval/scripts/link-restored-vivo-asr-v1.mjs --preflight
+  eval:data:youtube:vivo:restored-asr:report:
+    desc: Capture a source-free three-window comparison without new inference
+    requires:
+      vars: [SOURCE_ROOT]
+    env:
+      AURALIS_SOURCE_ROOT: '{{.SOURCE_ROOT}}'
+    cmds:
+      - task: eval:data:youtube:vivo:restored-asr:preflight
+        vars: { SOURCE_ROOT: '{{.SOURCE_ROOT}}' }
+      - node eval/scripts/link-restored-vivo-asr-v1.mjs --report
+  eval:data:youtube:vivo:restored-asr:check:
+    desc: Recompute the three-window source-ASR comparison from pinned raw data
+    requires:
+      vars: [SOURCE_ROOT]
+    env:
+      AURALIS_SOURCE_ROOT: '{{.SOURCE_ROOT}}'
+    cmds:
+      - task: eval:data:youtube:vivo:restored-asr:test
+      - node eval/scripts/link-restored-vivo-asr-v1.mjs --check
   eval:data:youtube:vivo:asr:preflight:
     desc: Verify pinned private audio windows and limits for local ASR triage
     cmds:
