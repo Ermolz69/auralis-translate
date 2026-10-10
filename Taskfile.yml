@@ -16,6 +16,21 @@ tasks:
     cmds:
       - task: eval:model:qwen3:acquire:preflight
       - node eval/scripts/acquire-qwen3-8b-eval.mjs --acquire
+  eval:model:qwen3:freeze:
+    desc: Freeze six source-only cases and 36 exact paired requests before inference
+    cmds:
+      - node --check eval/scripts/probe-qwen3-8b-local-screen.mjs
+      - node eval/scripts/probe-qwen3-8b-local-screen.mjs --freeze
+  eval:model:qwen3:preflight:
+    desc: Rehash the private source, both models, runtime and 36 frozen requests
+    cmds:
+      - node --check eval/scripts/probe-qwen3-8b-local-screen.mjs
+      - node eval/scripts/probe-qwen3-8b-local-screen.mjs --preflight
+  eval:model:qwen3:probe:
+    desc: Run one bounded same-source Qwen3 versus v8 screen and retain every raw reply
+    cmds:
+      - task: eval:model:qwen3:preflight
+      - node eval/scripts/probe-qwen3-8b-local-screen.mjs --probe
   eval:name-action:trace:
     desc: Trace all nine frozen NAME-01 regressions without inference or mutation
     cmds:

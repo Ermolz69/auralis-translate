@@ -28,10 +28,14 @@ inference or change to model selection occurs in acquisition. Do not run a
 second attempt under this identity.
 
 After acquisition, freeze source-only case selection and matched request
-identities before inference: three natural Vivo technical cues, three related
-or negative Chinese controls, three seeds, at most 36 chats (18 per model),
-72 template/tokenizer preflights, one start per model, no retries, 30,000
-combined tokens and ten minutes of inference wall time. Use the original
+identities before inference: natural Vivo cues 172, 232 and 393, the
+`REG-077` minimal contrast `not_multicore_but_separate_chips`, its related
+`three_independent_not_one_multicore` control and the negative
+`real_dual_processor_single_core` control. Use seeds 101/202/303, at most
+36 chats (18 per model), 72 template/tokenizer preflights, one start per
+model, no retries, 30,000 combined tokens and ten minutes of inference wall
+time. Run the candidate server first and the baseline second; this order is
+a confound for timing, so do not claim a performance win from it. Use the original
 Chinese source without a Russian reference in any prompt. Retain every raw
 reply, validation outcome, token count, duration, resource sample and error.
 An AI source-aware review may reject obvious facts or grammar, but it is not
