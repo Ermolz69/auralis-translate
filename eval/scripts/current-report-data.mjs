@@ -498,6 +498,19 @@ export async function loadCurrentReport(root) {
   assert.equal(reg077V4.chats, 192);
   assert.equal(reg077V4Review.summary.candidate_shortlisted, false);
   assert.equal(reg077V4Review.summary.human_bilingual_reviews, 0);
+  const chipCoreWarningRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-chip-core-warning-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(chipCoreWarningRaw).digest('hex'),
+    '35e174e18982cf05a24769e1a42fb7b233f4f2e623ba47e1af68e8891a4a27aa');
+  const chipCoreWarning = JSON.parse(chipCoreWarningRaw);
+  assert.equal(chipCoreWarning.summary.selected_reply_cells, 192);
+  assert.equal(chipCoreWarning.summary.complete_draft_pairs, 1728);
+  assert.equal(chipCoreWarning.summary.semantic_known_error_hits, 13);
+  assert.equal(chipCoreWarning.summary.grammar_known_error_hits, 18);
+  assert.equal(chipCoreWarning.summary.product_rule_admitted, false);
+  assert(chipCoreWarning.source_groups.every(group =>
+    group.source_trigger_cue_ids.length === 0 &&
+    group.drafts.every(draft => draft.warning_count === 0)));
   const vivoAudioRaw = await fs.readFile(path.join(root,
     'eval/reports/2026-10-10-vivo-real-sapi-technical.json'), 'utf8');
   assert.equal(createHash('sha256').update(vivoAudioRaw).digest('hex'),
@@ -823,6 +836,24 @@ export async function loadCurrentReport(root) {
       machine_report_sha256: createHash('sha256').update(reg077V4Raw).digest('hex'),
       ai_review_sha256: createHash('sha256').update(reg077V4ReviewRaw).digest('hex'),
       catalog_sha256: createHash('sha256').update(catalogV56Raw).digest('hex') },
+    chip_core_warning: { selected_reply_cells:
+        chipCoreWarning.summary.selected_reply_cells,
+      complete_draft_pairs: chipCoreWarning.summary.complete_draft_pairs,
+      source_groups: chipCoreWarning.source_groups.length,
+      full_source_cues: chipCoreWarning.source_groups.reduce(
+        (sum, group) => sum + group.source_cues, 0),
+      full_source_triggers: chipCoreWarning.source_groups.reduce(
+        (sum, group) => sum + group.source_trigger_cue_ids.length, 0),
+      full_draft_warnings: chipCoreWarning.source_groups.reduce(
+        (sum, group) => sum + group.drafts.reduce(
+          (count, draft) => count + draft.warning_count, 0), 0),
+      semantic_error_hits: chipCoreWarning.summary.semantic_known_error_hits,
+      semantic_error_cells: chipCoreWarning.summary.semantic_known_error_cells,
+      grammar_error_hits: chipCoreWarning.summary.grammar_known_error_hits,
+      grammar_error_cells: chipCoreWarning.summary.grammar_known_error_cells,
+      human_bilingual_reviews: chipCoreWarning.summary.human_bilingual_reviews,
+      product_rule_admitted: chipCoreWarning.summary.product_rule_admitted,
+      report_sha256: createHash('sha256').update(chipCoreWarningRaw).digest('hex') },
     vivo_source_quantity: { source_cues: quantityV2.source_cues,
       v1_matched_cues: quantityV1.matched_cues,
       v2_matched_cues: quantityV2.v2_matched_cues,

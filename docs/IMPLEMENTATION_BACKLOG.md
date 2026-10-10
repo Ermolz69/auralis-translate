@@ -1222,3 +1222,20 @@ keeps G3–G9/A1–A6 open. The next quality task is a conservative
 source-aware warning/adjudication path with measured cross-source false
 positives and grammar controls, rather than another unmeasured prompt
 variant or a full-file run on this rejected candidate.
+
+The [frozen chip/core warning screen](../eval/experiments/2026-10-10-chip-core-warning-v1-result.md)
+adds partial `EVAL-04`/`CTX-03`/`LONG-04` evidence. One offline replay
+checked 192 exposed v4 replies plus 1,728 aligned pairs across five
+complete Vivo, ASUS and Sethlui drafts, with zero model, ASR or TTS calls.
+The narrow source-aware signal caught all 13 previously AI-marked errors
+of the denied multi-core referent class and all 18 `один ядро` agreement
+errors in the selected replies. The complete drafts had zero matching
+Chinese source triggers and zero warnings, so natural precision and useful
+coverage are unmeasured. Human bilingual reviews remain zero. The rule
+stays in `eval/`; product admission and RELEASE-05 are rejected in the
+[v32 self-audit](../eval/experiments/2026-10-10-release-05-audit-attempt-v32.md).
+Next, derive a source-only fact relation from real cues of a distinct source,
+freeze positive and related negative controls before viewing targets, and
+measure trigger coverage and adjudicate every warning. Preserve the v8
+baseline and all retained failures; do not advance the long file on this
+warning alone.
