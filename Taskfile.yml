@@ -535,6 +535,8 @@ tasks:
   eval:data:youtube:vivo:restore:test:
     desc: Test exact-byte and changed-version caption comparison without network access
     cmds:
+      - node --check eval/scripts/bounded-caption-fetch.mjs
+      - node --test --test-isolation=none eval/scripts/tests/bounded-caption-fetch.test.mjs
       - node --check eval/scripts/youtube-vivo-source-version.mjs
       - node --test --test-isolation=none eval/scripts/tests/youtube-vivo-source-version.test.mjs
   eval:data:youtube:vivo:restore:preflight:
@@ -1735,6 +1737,7 @@ tasks:
       - node eval/scripts/build-regression-catalog-v57.mjs
       - node eval/scripts/build-regression-catalog-v58.mjs
       - node eval/scripts/build-regression-catalog-v59.mjs
+      - node eval/scripts/build-regression-catalog-v60.mjs
   eval:regression:catalog:portable:check:
     desc: Verify recent public catalog evidence in a clean checkout without private source files
     cmds:
@@ -1755,6 +1758,17 @@ tasks:
       - node eval/scripts/build-regression-catalog-v57.mjs
       - node eval/scripts/build-regression-catalog-v58.mjs
       - node eval/scripts/build-regression-catalog-v59.mjs
+      - node eval/scripts/build-regression-catalog-v60.mjs
+  eval:regression:catalog:v60:write:
+    desc: Preserve v59 and append REG-084 caption fetch process failure
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v60.mjs
+      - node eval/scripts/build-regression-catalog-v60.mjs --write
+  eval:regression:catalog:v60:check:
+    desc: Verify portable v60 REG-084 evidence without private caption bytes
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v60.mjs
+      - node eval/scripts/build-regression-catalog-v60.mjs
   eval:regression:catalog:v59:write:
     desc: Preserve v58 and update REG-083 with the bounded v4 diagnostic outcome
     cmds:

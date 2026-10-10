@@ -5,6 +5,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { captureBoundedProcess } from './bounded-process-capture.mjs';
+import { captureBoundedCaption } from './bounded-caption-fetch.mjs';
 import { compareSrtVersions, sha256 } from './youtube-vivo-source-version.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -109,6 +110,7 @@ function trackFrom(metadata) {
   return url;
 }
 
+async function main() {
 const base = await inputs();
 
 if (mode === '--preflight') {
@@ -120,7 +122,7 @@ if (mode === '--preflight') {
     executable_sha256: base.binary_sha256,
     commons_sha256: sha256(base.commons), media_sha256: base.media_sha256,
     metadata_budget: metadataBudget, caption_budget: captionBudget }, null, 2));
-  process.exit(0);
+  return;
 }
 
 if (mode === '--metadata') {
@@ -166,7 +168,7 @@ if (mode === '--metadata') {
     'metadata_accepted_for_caption' : 'metadata_rejected',
   process: report.process, metadata: report.metadata, error: report.error }, null, 2));
   if (!report.accepted_for_caption) process.exitCode = 1;
-  process.exit();
+  return;
 }
 
 async function savedMetadata() {
@@ -194,7 +196,7 @@ if (mode === '--caption-preflight' || mode === '--caption') {
       metadata_sha256: sha256(saved.rawBytes), caption_url_sha256: sha256(Buffer.from(url.href)),
       source_host: url.hostname, source_path: url.pathname,
       caption_budget: captionBudget }, null, 2));
-    process.exit(0);
+    return;
   }
   await fs.mkdir(captionParent, { recursive: true });
   const workspace = await fs.mkdtemp(path.join(captionParent, 'attempt-'));
@@ -209,32 +211,16 @@ if (mode === '--caption-preflight' || mode === '--caption') {
     content_type: null, response_bytes: null, response_sha256: null,
     outcome: 'running', error: null };
   try {
-    const response = await fetch(url, { redirect: 'manual',
-      signal: AbortSignal.timeout(captionBudget.timeout_ms) });
+    const response = await captureBoundedCaption(url, captionBudget);
     report.http_status = response.status;
-    report.content_type = response.headers.get('content-type');
-    const reader = response.body?.getReader();
-    assert(reader, 'Caption response has no body');
-    let received = 0;
-    const chunks = [];
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      received += value.byteLength;
-      if (received > captionBudget.response_bytes) {
-        await reader.cancel();
-        throw new Error('Caption response exceeded the byte budget');
-      }
-      chunks.push(value);
-    }
-    const bytes = Buffer.concat(chunks, received);
-    report.response_bytes = received;
-    report.response_sha256 = sha256(bytes);
+    report.content_type = response.content_type;
+    report.response_bytes = response.bytes.length;
+    report.response_sha256 = sha256(response.bytes);
     await fs.writeFile(path.join(workspace,
       response.status === 200 ? 'source.zh.srt' : 'http-body.bin'),
-    bytes, { flag: 'wx' });
+    response.bytes, { flag: 'wx' });
     assert.equal(response.status, 200, `Caption GET returned HTTP ${response.status}`);
-    assert(received > 0, 'Caption response is empty');
+    assert(response.bytes.length > 0, 'Caption response is empty');
     report.outcome = 'acquired_private_unreviewed';
   } catch (error) {
     report.outcome = 'failed';
@@ -247,7 +233,7 @@ if (mode === '--caption-preflight' || mode === '--caption') {
       `${JSON.stringify(report, null, 2)}\n`, { flag: 'wx' });
     console.log(JSON.stringify({ attempt: workspace, ...report }, null, 2));
   }
-  process.exit();
+  return;
 }
 
 const metadata = await savedMetadata();
@@ -271,6 +257,15 @@ if (metadata.report.accepted_for_caption) {
       try {
         comparison = compareSrtVersions(bytes, base.commons, 1_115_570,
           expected.previous_youtube);
+        if (comparison.previous_youtube_byte_identical) {
+          assert.equal(comparison.candidate_cues, base.prior_report.cue_count);
+          assert.equal(comparison.commons_text_identical, true);
+          assert.deepEqual(comparison.timing_differences,
+            base.prior_report.timing_differences);
+          assert.deepEqual(comparison.first_cue, base.prior_report.first_cue);
+          assert.deepEqual(comparison.last_cue, base.prior_report.last_cue);
+          assert.deepEqual(comparison.cues_past_media, []);
+        }
         status = comparison.previous_youtube_byte_identical ?
           'restored_exact_previous_youtube_bytes' : 'changed_youtube_caption_version';
       } catch (error) {
@@ -313,3 +308,6 @@ if (mode === '--report') {
 console.log(JSON.stringify({ status, comparison,
   metadata_attempt: result.metadata_attempt,
   caption_attempt: result.caption_attempt }, null, 2));
+}
+
+await main();

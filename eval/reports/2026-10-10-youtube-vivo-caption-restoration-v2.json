@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "experiment": "DATA-03-youtube-vivo-caption-restoration-2026-10-10-v2",
+  "video_id": "_G4e2p1p-is",
+  "plan_sha256": "74e3edb130ac5a89895f3f76f5aaae1c7885fd3aac63c51cd00c9bc452373c3e",
+  "prior_report_sha256": "51a8cfacb56437cb9f87ccff4920a57d9df53c0363752af21da7036882beea3c",
+  "commons_sha256": "8c41e66f52000a5b67ab27bfc319accd11d89290b60e50fc5c60f4ee8230a000",
+  "media_sha256": "7ad0484b31a6788c31632616649c51e6aaf6cdcdd7d90083d88e1d5ee66e1507",
+  "previous_youtube_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "metadata_attempt": "attempt-JbY8je",
+  "metadata_attempt_sha256": "d83aa6c5c6876c6ef0073809e4118659677c4f9c9ff45ed028031577c832de0d",
+  "metadata_raw_sha256": "f2e7918717e57c404873b03488d50ad54a8e1ed7015eedbac615a82a7680d6de",
+  "metadata_started_at": "2026-10-10T12:47:37.255Z",
+  "metadata_finished_at": "2026-10-10T12:47:43.329Z",
+  "metadata_elapsed_ms": 6066,
+  "metadata_process": {
+    "exit_code": 0,
+    "signal": null,
+    "timed_out": false,
+    "output_limit_exceeded": false,
+    "stdout_bytes": 75758,
+    "stderr_bytes": 0,
+    "stdout_sha256": "f2e7918717e57c404873b03488d50ad54a8e1ed7015eedbac615a82a7680d6de",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "metadata_accepted_for_caption": true,
+  "metadata_summary": {
+    "title": "采访vivo & MediaTek研发大佬：蓝厂与天玑合作背后的故事",
+    "channel_id": "UCeUJO1H3TEXu2syfAAPjYKQ",
+    "upload_date": "20250104",
+    "duration_seconds": 1116,
+    "license": "Creative Commons Attribution license (reuse allowed)",
+    "regular_zh_cn_srt": true,
+    "automatic_zh_cn_available": false
+  },
+  "caption_attempt": "attempt-LHmA6o",
+  "caption_attempt_sha256": "1259d0b85ae56cbff7e1ecdf49dc4b33a2b44f74a08c88bdec8cb3559371d4f8",
+  "caption_started_at": "2026-10-10T12:47:53.226Z",
+  "caption_finished_at": "2026-10-10T12:47:53.528Z",
+  "caption_elapsed_ms": 300,
+  "caption_http_status": 200,
+  "caption_response_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "caption_response_bytes": 33577,
+  "caption_error": null,
+  "comparison": {
+    "candidate_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+    "candidate_bytes": 33577,
+    "previous_youtube_byte_identical": true,
+    "candidate_cues": 467,
+    "commons_cues": 467,
+    "commons_text_identical": true,
+    "text_difference_ids": [],
+    "timing_differences": [
+      {
+        "cue_id": 1,
+        "start_delta_ms": 0,
+        "end_delta_ms": 1
+      },
+      {
+        "cue_id": 2,
+        "start_delta_ms": 1,
+        "end_delta_ms": 0
+      },
+      {
+        "cue_id": 210,
+        "start_delta_ms": 0,
+        "end_delta_ms": 1
+      },
+      {
+        "cue_id": 211,
+        "start_delta_ms": 1,
+        "end_delta_ms": 1
+      },
+      {
+        "cue_id": 212,
+        "start_delta_ms": 1,
+        "end_delta_ms": 1
+      },
+      {
+        "cue_id": 213,
+        "start_delta_ms": 1,
+        "end_delta_ms": 1
+      },
+      {
+        "cue_id": 432,
+        "start_delta_ms": 0,
+        "end_delta_ms": 1
+      },
+      {
+        "cue_id": 433,
+        "start_delta_ms": 1,
+        "end_delta_ms": 1
+      }
+    ],
+    "cues_past_media": [],
+    "first_cue": {
+      "start_ms": 100,
+      "end_ms": 4004
+    },
+    "last_cue": {
+      "start_ms": 1113195,
+      "end_ms": 1114463
+    }
+  },
+  "comparison_error": null,
+  "status": "restored_exact_previous_youtube_bytes",
+  "human_speech_reviews": 0,
+  "caption_authorship_verified": false,
+  "audio_rights_verified": false,
+  "source_admitted": false,
+  "product_translation_changed": false
+}

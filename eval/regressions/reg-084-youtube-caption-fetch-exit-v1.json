@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "REG-084",
+  "status": "observed_acquisition_exit_9_after_durable_response_fixed_offline",
+  "severity": "major_source_evidence_process_failure",
+  "split": "exposed_vivo_source_infrastructure_not_language_holdout",
+  "source_family": "geekerwan_vivo_original_youtube_caption",
+  "profile_scope": "DATA-03 evaluation acquisition runner only; product v8 unchanged",
+  "expected_invariant": "After a bounded HTTP 200 caption response is fully persisted, the acquisition process must exit zero without aborting active Windows fetch handles; failed requests must retain their attempt records and never silently retry.",
+  "minimal_reproducer": {
+    "task": "task eval:data:youtube:vivo:restore:caption SOURCE_ROOT=E:\\Anything\\Projects\\Commercial\\auralis-translate",
+    "metadata_attempt": "attempt-JbY8je",
+    "caption_attempt": "attempt-LHmA6o",
+    "http_status": 200,
+    "saved_response_bytes": 33577,
+    "saved_response_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+    "observed_process_exit": 9,
+    "observed_stderr": "Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\\win\\async.c, line 76",
+    "cause": "The script called process.exit() immediately after a completed fetch on Windows."
+  },
+  "correction": "Return from the async entry point and allow Node to close fetch handles naturally; retain the one saved network attempt.",
+  "regression_check": "task eval:data:youtube:vivo:restore:check SOURCE_ROOT=E:\\Anything\\Projects\\Commercial\\auralis-translate",
+  "regression_scope": "The corrected runner exits zero while recomputing from the saved HTTP 200 body; another external fetch was deliberately not made, so the exact network cleanup path is not re-observed.",
+  "related_controls": [
+    "bounded caption body returns normally after HTTP 200",
+    "HTTP redirect remains observable without following it",
+    "oversize response is rejected before caption acceptance",
+    "byte-identical SRT and changed timing remain distinct version outcomes",
+    "changed words, missing cues and media-overrun cues remain explicit"
+  ],
+  "network_retries": 0,
+  "product_status": "unchanged; source remains unadmitted"
+}
