@@ -583,6 +583,34 @@ export async function loadCurrentReport(root) {
   assert.equal(asusRelationsReview.cases[0].ai_judgment,
     'major_technical_term_substitution');
   assert.equal(asusRelationsReview.human_bilingual_reviews, 0);
+  const asusHallV4Raw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-reg083-hall-v4.json'), 'utf8');
+  assert.equal(createHash('sha256').update(asusHallV4Raw).digest('hex'),
+    '73fcf6706d96f7284a69598585973fa3cd0676c8ee70869609e65aefc707ddea');
+  const asusHallV4 = JSON.parse(asusHallV4Raw);
+  const asusHallV4ReviewRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-reg083-hall-v4-ai-review.json'), 'utf8');
+  assert.equal(createHash('sha256').update(asusHallV4ReviewRaw).digest('hex'),
+    '0b61204bf1c7a35e78b16f3383f93602e7084ebe78d0233b7534c24a25a797ef');
+  const asusHallV4Review = JSON.parse(asusHallV4ReviewRaw);
+  assert.equal(asusHallV4.observations.source_cues, 268);
+  assert.deepEqual(asusHallV4.observations.source_trigger_ids, [24]);
+  assert.equal(asusHallV4.observations.v3_warning_count, 0);
+  assert.equal(asusHallV4.observations.v4_new_warning_count, 1);
+  assert.equal(asusHallV4.observations.known_reg083_warning, true);
+  assert.equal(asusHallV4.observations.product_rule_admitted, false);
+  assert.equal(asusHallV4Review.machine_report_sha256,
+    createHash('sha256').update(asusHallV4Raw).digest('hex'));
+  assert.deepEqual(asusHallV4Review.warning_ids_reviewed, [24]);
+  assert.equal(asusHallV4Review.human_bilingual_reviews, 0);
+  const catalogV59Raw = await fs.readFile(path.join(root,
+    'eval/regressions/catalog-v59.json'), 'utf8');
+  assert.equal(createHash('sha256').update(catalogV59Raw).digest('hex'),
+    '7ae83cb5ea69ee812bacce9914d452e7faea4dce034a82ba29ecaf6f346b7ad7');
+  const catalogV59 = JSON.parse(catalogV59Raw);
+  assert.equal(catalogV59.schema_version, 59);
+  assert.equal(catalogV59.entries.at(-1).id, 'REG-083');
+  assert.equal(catalogV59.entries.at(-1).product_rule_admitted, false);
   const vivoAudioRaw = await fs.readFile(path.join(root,
     'eval/reports/2026-10-10-vivo-real-sapi-technical.json'), 'utf8');
   assert.equal(createHash('sha256').update(vivoAudioRaw).digest('hex'),
@@ -968,6 +996,15 @@ export async function loadCurrentReport(root) {
       product_admitted: asusRelations.observations.product_rule_admitted,
       report_sha256: createHash('sha256').update(asusRelationsRaw).digest('hex'),
       catalog_sha256: createHash('sha256').update(catalogV58Raw).digest('hex') },
+    asus_hall_v4: {
+      aligned_pairs: asusHallV4.observations.aligned_pairs,
+      source_trigger_count: asusHallV4.observations.source_trigger_ids.length,
+      v3_warnings: asusHallV4.observations.v3_warning_count,
+      v4_warnings: asusHallV4.observations.v4_new_warning_count,
+      known_error_caught: asusHallV4.observations.known_reg083_warning,
+      human_reviews: asusHallV4Review.human_bilingual_reviews,
+      product_admitted: asusHallV4.observations.product_rule_admitted,
+      report_sha256: createHash('sha256').update(asusHallV4Raw).digest('hex') },
     vivo_source_quantity: { source_cues: quantityV2.source_cues,
       v1_matched_cues: quantityV1.matched_cues,
       v2_matched_cues: quantityV2.v2_matched_cues,

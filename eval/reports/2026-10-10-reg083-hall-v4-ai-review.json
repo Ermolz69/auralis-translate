@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "experiment": "REG-083-HALL-REFERENT-2026-10-10-v4",
+  "reviewer_kind": "ai_source_aware_not_independent_human",
+  "machine_report_sha256": "73fcf6706d96f7284a69598585973fa3cd0676c8ee70869609e65aefc707ddea",
+  "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+  "draft_sha256": "746495ba8bfc9c7c3cee0b5021fea87c10605b1d8e07be6dc316907138ea48ee",
+  "warning_ids_reviewed": [24],
+  "source_neighbor_ids_reviewed": [23, 24, 25],
+  "cases": [
+    {
+      "cue_id": 24,
+      "source_text_sha256": "dcdebe3fdfdfe450573e2563ff235e46ea5697c61aae6023128dc38c37ee95e9",
+      "accepted_text_sha256": "04c9824ce971277aa2a4919434759ca1fe25064f1668e1bbd26a0aa6f866e9e1",
+      "machine_warning_kind": "hall_stick_referent_missing",
+      "missing": ["hall"],
+      "ai_judgment": "known_major_technical_referent_substitution_detected",
+      "human_adjudication": "needed"
+    }
+  ],
+  "triggered_natural_source_cues": 1,
+  "untriggered_natural_source_cues": 267,
+  "independent_warning_precision": null,
+  "independent_warning_precision_reason": "one_exposed_known_error_and_no_bilingual_reviewer",
+  "human_bilingual_reviews": 0,
+  "product_admission": false
+}

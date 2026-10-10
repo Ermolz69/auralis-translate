@@ -1273,6 +1273,20 @@ The next bounded screen should test a separately frozen Hall-term preservation
 signal on new related/negative controls and a distinct natural source before
 any product warning admission.
 
+The [REG-083 v4 Hall-stick warning screen](../eval/experiments/2026-10-10-reg083-hall-referent-v4-result.md)
+adds partial `EVAL-04`/`CTX-03` evidence on the same exposed 268-cue ASUS
+source and saved 7B/v8 draft. Ten deterministic controls passed, including
+the six REG-083 related/source-negative phrases; none received a model run.
+The current machine index is [catalog v59](../eval/regressions/catalog-v59.json);
+catalog v58 and its earlier outcome are retained.
+The source-only trigger applied to cue 24 alone. Compared with v3's zero
+warnings, v4 flagged the known technical substitution once and no other
+cue; an AI source-aware review inspected that warning. This is a single
+known-positive diagnostic, not a measured false-warning rate or a language
+quality improvement. V4 stays in `eval/`, v8 and all results stay unchanged.
+A distinct applicable natural source and human review are still required;
+`DATA-03`, `CTX-03`, `EVAL-04`, G3–G5 and RELEASE-05 remain open.
+
 The [single full-audio Vivo ASR screen](../eval/experiments/2026-10-10-vivo-full-audio-asr-result.md)
 extends the earlier 36-second, three-window diagnostic to the matched
 18:35.570 media: 499 offline ASR segments, 94.82 seconds, with temporal

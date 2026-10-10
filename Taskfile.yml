@@ -1668,6 +1668,7 @@ tasks:
       - node eval/scripts/build-regression-catalog-v56.mjs
       - node eval/scripts/build-regression-catalog-v57.mjs
       - node eval/scripts/build-regression-catalog-v58.mjs
+      - node eval/scripts/build-regression-catalog-v59.mjs
   eval:regression:catalog:portable:check:
     desc: Verify recent public catalog evidence in a clean checkout without private source files
     cmds:
@@ -1687,6 +1688,17 @@ tasks:
       - node eval/scripts/build-regression-catalog-v56.mjs
       - node eval/scripts/build-regression-catalog-v57.mjs
       - node eval/scripts/build-regression-catalog-v58.mjs
+      - node eval/scripts/build-regression-catalog-v59.mjs
+  eval:regression:catalog:v59:write:
+    desc: Preserve v58 and update REG-083 with the bounded v4 diagnostic outcome
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v59.mjs
+      - node eval/scripts/build-regression-catalog-v59.mjs --write
+  eval:regression:catalog:v59:check:
+    desc: Verify portable v59 REG-083 evidence without private subtitle files
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v59.mjs
+      - node eval/scripts/build-regression-catalog-v59.mjs
   eval:regression:catalog:v56:write:
     desc: Append observed REG-079/080 failures and related controls without rewriting v55
     cmds:
