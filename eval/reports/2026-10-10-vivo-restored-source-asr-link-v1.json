@@ -1,0 +1,241 @@
+{
+  "schema_version": 1,
+  "experiment": "DATA-03-vivo-restored-source-full-asr-link-2026-10-10-v1",
+  "plan_sha256": "c76df197cabea05f9056da1d9a2839eae1bb8aa85bca3d5226bb81c8135d71b4",
+  "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "media_sha256": "7ad0484b31a6788c31632616649c51e6aaf6cdcdd7d90083d88e1d5ee66e1507",
+  "raw_asr_sha256": "a1f92de3e5d2a84baf070851e8248e6455ad432f1e63241749e543865f10d78e",
+  "converted_asr_sha256": "3001a246c8d2ac66d41e07d2a49a3f47730daf5ec2a8eed41f3376c41d601a6f",
+  "baseline_report_sha256": "e378afc97915eeef133c3df79eb828742c25c35c3472b92bc4e9cd12783d10df",
+  "opencc_report_sha256": "48e202733c4a67de582ff7b05cf6c43a737e91b3bcd2e8a5645a3c2da8fc1c95",
+  "model_repo": "Systran/faster-whisper-base",
+  "model_revision": "ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+  "compute": "cpu_int8",
+  "language_setting": "zh_forced",
+  "asr_segments": 499,
+  "whole_file_cues": 467,
+  "whole_file_temporal_overlap_cues": 467,
+  "raw_low_recall_cues": 30,
+  "normalized_low_recall_cues": 5,
+  "windows": [
+    {
+      "label": "start",
+      "start_ms": 0,
+      "end_ms": 12000,
+      "cue_ids": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "raw_segments": 5,
+      "normalized_segments": 5,
+      "cues_with_raw_asr_overlap": 5,
+      "cues_with_normalized_asr_overlap": 5,
+      "raw_low_recall_ids": [],
+      "normalized_low_recall_ids": [],
+      "rows": [
+        {
+          "id": 1,
+          "raw_segments": 2,
+          "normalized_segments": 2,
+          "source_characters": 20,
+          "raw_recall": 0.95,
+          "normalized_recall": 0.95
+        },
+        {
+          "id": 2,
+          "raw_segments": 3,
+          "normalized_segments": 3,
+          "source_characters": 13,
+          "raw_recall": 1,
+          "normalized_recall": 1
+        },
+        {
+          "id": 3,
+          "raw_segments": 2,
+          "normalized_segments": 2,
+          "source_characters": 8,
+          "raw_recall": 1,
+          "normalized_recall": 1
+        },
+        {
+          "id": 4,
+          "raw_segments": 3,
+          "normalized_segments": 3,
+          "source_characters": 13,
+          "raw_recall": 0.923,
+          "normalized_recall": 0.923
+        },
+        {
+          "id": 5,
+          "raw_segments": 2,
+          "normalized_segments": 2,
+          "source_characters": 22,
+          "raw_recall": 0.955,
+          "normalized_recall": 0.955
+        }
+      ]
+    },
+    {
+      "label": "middle",
+      "start_ms": 563000,
+      "end_ms": 575000,
+      "cue_ids": [
+        233,
+        234,
+        235,
+        236,
+        237,
+        238
+      ],
+      "raw_segments": 6,
+      "normalized_segments": 6,
+      "cues_with_raw_asr_overlap": 6,
+      "cues_with_normalized_asr_overlap": 6,
+      "raw_low_recall_ids": [],
+      "normalized_low_recall_ids": [],
+      "rows": [
+        {
+          "id": 233,
+          "raw_segments": 2,
+          "normalized_segments": 2,
+          "source_characters": 17,
+          "raw_recall": 0.941,
+          "normalized_recall": 0.941
+        },
+        {
+          "id": 234,
+          "raw_segments": 2,
+          "normalized_segments": 2,
+          "source_characters": 9,
+          "raw_recall": 0.667,
+          "normalized_recall": 0.667
+        },
+        {
+          "id": 235,
+          "raw_segments": 3,
+          "normalized_segments": 3,
+          "source_characters": 13,
+          "raw_recall": 0.692,
+          "normalized_recall": 0.692
+        },
+        {
+          "id": 236,
+          "raw_segments": 3,
+          "normalized_segments": 3,
+          "source_characters": 15,
+          "raw_recall": 0.933,
+          "normalized_recall": 0.933
+        },
+        {
+          "id": 237,
+          "raw_segments": 2,
+          "normalized_segments": 2,
+          "source_characters": 10,
+          "raw_recall": 0.8,
+          "normalized_recall": 0.8
+        },
+        {
+          "id": 238,
+          "raw_segments": 2,
+          "normalized_segments": 2,
+          "source_characters": 10,
+          "raw_recall": 1,
+          "normalized_recall": 1
+        }
+      ]
+    },
+    {
+      "label": "end",
+      "start_ms": 1102000,
+      "end_ms": 1114000,
+      "cue_ids": [
+        461,
+        462,
+        463,
+        464,
+        465,
+        466,
+        467
+      ],
+      "raw_segments": 7,
+      "normalized_segments": 7,
+      "cues_with_raw_asr_overlap": 7,
+      "cues_with_normalized_asr_overlap": 7,
+      "raw_low_recall_ids": [
+        461,
+        464
+      ],
+      "normalized_low_recall_ids": [
+        464
+      ],
+      "rows": [
+        {
+          "id": 461,
+          "raw_segments": 2,
+          "normalized_segments": 2,
+          "source_characters": 13,
+          "raw_recall": 0.231,
+          "normalized_recall": 0.538
+        },
+        {
+          "id": 462,
+          "raw_segments": 3,
+          "normalized_segments": 3,
+          "source_characters": 9,
+          "raw_recall": 0.667,
+          "normalized_recall": 1
+        },
+        {
+          "id": 463,
+          "raw_segments": 2,
+          "normalized_segments": 2,
+          "source_characters": 5,
+          "raw_recall": 0.6,
+          "normalized_recall": 0.6
+        },
+        {
+          "id": 464,
+          "raw_segments": 3,
+          "normalized_segments": 3,
+          "source_characters": 6,
+          "raw_recall": 0,
+          "normalized_recall": 0.333
+        },
+        {
+          "id": 465,
+          "raw_segments": 3,
+          "normalized_segments": 3,
+          "source_characters": 14,
+          "raw_recall": 0.786,
+          "normalized_recall": 1
+        },
+        {
+          "id": 466,
+          "raw_segments": 3,
+          "normalized_segments": 3,
+          "source_characters": 12,
+          "raw_recall": 0.667,
+          "normalized_recall": 1
+        },
+        {
+          "id": 467,
+          "raw_segments": 2,
+          "normalized_segments": 2,
+          "source_characters": 4,
+          "raw_recall": 1,
+          "normalized_recall": 1
+        }
+      ]
+    }
+  ],
+  "new_model_requests": 0,
+  "new_audio_decodes": 0,
+  "human_chinese_listeners": 0,
+  "speech_words_verified": false,
+  "speakers_verified": false,
+  "rights_verified": false,
+  "source_admitted": false
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "experiment": "DATA-03-vivo-restored-source-full-asr-link-2026-10-10-v1",
+  "review_kind": "ai_source_aware_text_comparison_not_listening",
+  "machine_report_sha256": "f9c29515bf28937e6d601fe99a8d7a0e3417f72cf389a1457a3f089e4ba8981d",
+  "source_srt_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "raw_asr_sha256": "a1f92de3e5d2a84baf070851e8248e6455ad432f1e63241749e543865f10d78e",
+  "windows": [
+    {
+      "label": "start",
+      "cue_ids": [1, 2, 3, 4, 5],
+      "judgment": "topic_and_clause_order_plausibly_match",
+      "observations": "Both texts cover a visit to Vivo headquarters, phone development and a chance to interview two leaders; the ASR has place/name and word-choice errors."
+    },
+    {
+      "label": "middle",
+      "cue_ids": [233, 234, 235, 236, 237, 238],
+      "judgment": "topic_and_question_order_plausibly_match",
+      "observations": "Both texts discuss cost/area tradeoffs and ask whether the companies disagreed; ASR garbles the company name, tradeoff and disagreement words."
+    },
+    {
+      "label": "end",
+      "cue_ids": [461, 462, 463, 464, 465, 466, 467],
+      "judgment": "closing_topic_plausibly_matches_with_unresolved_short_cue",
+      "observations": "Both texts close with thanks, future cooperation and better products. ASR misrecognizes a short appreciation phrase. Cue 464 has low normalized character recall: the caption contains repeated thanks and an English interjection, while the timed ASR segment contains only one thanks. Without listening this is neither a confirmed caption defect nor confirmed ASR omission."
+    }
+  ],
+  "human_chinese_listeners": 0,
+  "exact_words_verified": false,
+  "speaker_mapping_verified": false,
+  "source_admitted": false
+}
