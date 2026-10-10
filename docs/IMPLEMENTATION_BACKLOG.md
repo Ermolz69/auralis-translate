@@ -1284,3 +1284,13 @@ the single private raw attempt and three deterministic scoring controls are
 retained. `DATA-03` stays `in_progress`: caption/audio rights, human source
 listening, speaker alignment and eligible development cues are unresolved.
 No product ASR feature, translation result or release/audio gate changed.
+
+The [pinned OpenCC follow-up](../eval/experiments/2026-10-10-vivo-opencc-recall-result.md)
+compared the same 467 Vivo cues and one retained 499-segment ASR response
+with one factor changed: official OpenCC 1.4.2 `t2s.json` conversion of ASR
+text. Raw low-recall priorities fell from 30 to 5, with 306 higher, 161
+unchanged and zero lower cue scores; the five remaining IDs and all three
+thirds are in the source-free paired report. This fixes the known script-bias
+in the automated review queue, not word accuracy, rights or speaker mapping.
+No second ASR call or new model result occurred; `DATA-03` admission,
+G3–G5/A1–A6 and RELEASE-05 remain open.

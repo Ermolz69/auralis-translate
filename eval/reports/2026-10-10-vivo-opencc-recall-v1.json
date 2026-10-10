@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "experiment": "DATA-03-vivo-opencc-recall-2026-10-10-v1",
+  "source_sha256": "b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4",
+  "raw_asr_sha256": "a1f92de3e5d2a84baf070851e8248e6455ad432f1e63241749e543865f10d78e",
+  "baseline_report_sha256": "e378afc97915eeef133c3df79eb828742c25c35c3472b92bc4e9cd12783d10df",
+  "private_conversion_sha256": "3001a246c8d2ac66d41e07d2a49a3f47730daf5ec2a8eed41f3376c41d601a6f",
+  "wheel_sha256": "b2af32959214ba7fd475991aaf2476e1f775061708c154cd39782485365dc781",
+  "opencc_version": "1.4.2",
+  "config": "t2s.json",
+  "conversion_seconds": 0.004,
+  "asr_segments": 499,
+  "changed_segments": 322,
+  "temporal_overlap_cues": 467,
+  "scorable_cues": 461,
+  "raw_low_recall_cues": 30,
+  "normalized_low_recall_cues": 5,
+  "normalized_low_recall_ids": [
+    132,
+    223,
+    329,
+    415,
+    464
+  ],
+  "improved_cues": 306,
+  "worsened_cues": 0,
+  "unchanged_cues": 161,
+  "thirds": [
+    {
+      "third": 1,
+      "cues": 153,
+      "with_asr_overlap": 153,
+      "low_recall": 1
+    },
+    {
+      "third": 2,
+      "cues": 165,
+      "with_asr_overlap": 165,
+      "low_recall": 1
+    },
+    {
+      "third": 3,
+      "cues": 149,
+      "with_asr_overlap": 149,
+      "low_recall": 3
+    }
+  ],
+  "review": {
+    "kind": "ai_diagnostic",
+    "human_listeners": 0,
+    "caption_error_count": null,
+    "caption_error_count_reason": "no_human_listening_or_adjudication",
+    "source_admission": "inspected_candidate_zero_eligible"
+  }
+}
