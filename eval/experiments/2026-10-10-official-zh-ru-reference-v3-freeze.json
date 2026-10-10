@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "experiment": "REG-085-TEMPORAL-CONTROLS-v1",
+  "split": "authored_regression_development_not_holdout",
+  "expected": {
+    "pdf": "dc029d7ebc4b43d599348943dca8229108df81d3c932df2ccbb72df43da82ea8",
+    "source": "d89cc593114654ed5ebd6af4be5989b5df834142465e28c135277d217fed94e7",
+    "baseline": "b9c0951807157c832c42ec1d8d5ab3ec0ebd8498fa2cb01ccf3ce1f2b65e8210",
+    "model": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+    "runtime": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+    "manifest": "c287c53efbb4ce78471b64648ea3dd2f521363df0e168b7a61df1fdd6ae0479a"
+  },
+  "limits": {
+    "cases": 6,
+    "chats": 6,
+    "preflights": 12,
+    "max_total_tokens": 12000,
+    "max_wall_ms": 600000,
+    "readiness_ms": 180000,
+    "per_request_ms": 120000,
+    "per_preflight_ms": 30000,
+    "context_tokens": 2048,
+    "response_tokens": 1024,
+    "safety_tokens": 64,
+    "server_starts": 1,
+    "retries": 0
+  },
+  "model_alias": "auralis-hy-mt2-7b-q4",
+  "prompt_prefix_sha256": "1b4a2ae96e2526a2d096d41cd94215428d87e30db7ab614a222e65b6baac8ebb",
+  "planned": [
+    {
+      "id": "past_heading_same_action",
+      "page": null,
+      "target_id": 7001,
+      "source_sha256": "ee405a74f5d9033900ff710530eb8d00953ab9d7df93f4b7b0ebf7492e6ba9b2",
+      "request_sha256": "ffde63d6526b3d1d3377647738752a9d35cf8ffaeac867926a233456559c5a74"
+    },
+    {
+      "id": "past_without_heading",
+      "page": null,
+      "target_id": 7002,
+      "source_sha256": "945d17ebbf4c66f664dd63336ece46c2183a8e8b14f200b0958f59119fed8cd1",
+      "request_sha256": "d9376e4eb9e36fd54719339e9f6e2f785b031063effcfdeef21d6a34cf3f4e3b"
+    },
+    {
+      "id": "past_multicue_action",
+      "page": null,
+      "target_id": 7003,
+      "source_sha256": "8b1f26e6b1716bae762b0c784a35bb29c22540bf92281e6d6d074173f4a0a274",
+      "request_sha256": "2c67f20141bec984327bb0cf2776664e877798d6fb14c1941ee6d2d016305e97"
+    },
+    {
+      "id": "future_heading_same_action",
+      "page": null,
+      "target_id": 7004,
+      "source_sha256": "45afbd056e4585ca4ce2a3a105b5ff4529b7e3a78e2d031befb88a0f11f205eb",
+      "request_sha256": "653088a01a509fbe7f1df3eb56643329983320fd7913e7c256dd38654909de68"
+    },
+    {
+      "id": "explicit_future_action",
+      "page": null,
+      "target_id": 7005,
+      "source_sha256": "3b7da81895f6fa795a3680d6fd56acabdb5a8c18a45c8dff2f2bb2fa4297abfa",
+      "request_sha256": "d59bf5e731c3e4ba8513983d76f9d967d4e011802d1c0f10de5c5b4682e859d1"
+    },
+    {
+      "id": "irrelevant_heading",
+      "page": null,
+      "target_id": 7006,
+      "source_sha256": "22871fce5a7e3eae1032cd239ad0024fa4b74e1d21e05e6ee41d83d034720ee8",
+      "request_sha256": "64d09ffd32ab1fb081efb1894da0f7cea91f390c13f340fe962f181adcddb56d"
+    }
+  ]
+}
