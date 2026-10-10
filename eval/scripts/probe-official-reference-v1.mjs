@@ -15,11 +15,14 @@ const mode = process.argv[2];
 assert(['--freeze', '--preflight', '--probe'].includes(mode) &&
   process.argv.length === 3);
 assert.equal(process.platform, 'win32');
+const version = process.env.AURALIS_OFFICIAL_REFERENCE_VERSION ?? 'v1';
+assert(['v1', 'v2'].includes(version));
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const modelRoot = process.env.AURALIS_MODEL_ASSET_ROOT;
 assert(modelRoot && path.isAbsolute(modelRoot));
 const privateRoot = path.join(root, '.cache/eval/official-zh-ru-reference-2026');
-const sourcePath = path.join(privateRoot, 'source-cases.json');
+const sourcePath = path.join(privateRoot,
+  version === 'v2' ? 'source-cases-v2.json' : 'source-cases.json');
 const pdfPath = path.join(privateRoot, 'source-reference.pdf');
 const baselinePath = path.join(root,
   '.cache/eval/vivo-technical-senses-v2/attempt-WN2KN8/requests.jsonl');
@@ -28,10 +31,12 @@ const runtimePath = path.join(modelRoot, '.cache/runtime/llama/llama-server.exe'
 const manifestPath = path.join(root,
   'models/manifests/hy_mt2_7b_q4_k_m.context_v8_target_first_batch4.experimental.json');
 const freezePath = path.join(root,
-  'eval/experiments/2026-10-10-official-zh-ru-reference-v1-freeze.json');
+  `eval/experiments/2026-10-10-official-zh-ru-reference-${version}-freeze.json`);
 const expected = {
   pdf: 'dc029d7ebc4b43d599348943dca8229108df81d3c932df2ccbb72df43da82ea8',
-  source: '99db71f3c76546e9e8e7aeb8dc6a049adb49a9698dc71fb366786695ce843d52',
+  source: version === 'v2' ?
+    '026b7189bea819b0b4ccdcde8480cb1da4483305207ac5c5f6e4554ead2e00fa' :
+    '99db71f3c76546e9e8e7aeb8dc6a049adb49a9698dc71fb366786695ce843d52',
   baseline: 'b9c0951807157c832c42ec1d8d5ab3ec0ebd8498fa2cb01ccf3ce1f2b65e8210',
   model: '9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b',
   runtime: '6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4',
@@ -42,6 +47,8 @@ const limits = { cases: 10, chats: 10, preflights: 20,
   per_request_ms: 120000, per_preflight_ms: 30000,
   context_tokens: 2048, response_tokens: 1024, safety_tokens: 64,
   server_starts: 1, retries: 0 };
+if (version === 'v2') Object.assign(limits, { cases: 6, chats: 6,
+  preflights: 12, max_total_tokens: 16000 });
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 async function hashFile(file) {
   const hash = createHash('sha256');
@@ -56,7 +63,7 @@ for (const [key, file] of Object.entries({ pdf: pdfPath, source: sourcePath,
   assert.equal(await hashFile(file), expected[key], `Pinned ${key} changed`);
 }
 const source = JSON.parse(await fs.readFile(sourcePath, 'utf8'));
-assert.equal(source.schema_version, 1);
+assert.equal(source.schema_version, version === 'v2' ? 2 : 1);
 assert.equal(source.source_pdf_sha256, expected.pdf);
 assert.equal(source.cases.length, limits.cases);
 assert(!/[А-Яа-яЁё]/u.test(JSON.stringify(source)),
@@ -82,12 +89,17 @@ const planned = source.cases.map((row, index) => {
   assert.equal(typeof row.source, 'string');
   assert(/[\u4e00-\u9fff]/u.test(row.source));
   assert(!/[А-Яа-яЁё]/u.test(row.source));
-  const id = 5001 + index;
+  const id = (version === 'v2' ? 6001 : 5001) + index;
+  const sourceContext = row.context ? [{
+    end_ms: index * 10000 + 2000, line_index: 0,
+    segment_id: id - 1, source_original: row.context,
+    start_ms: index * 10000 }] : [];
+  const targetStart = index * 10000 + (version === 'v2' ? 3000 : 0);
   const envelope = { schema_version: 7, target_slots: [{
     approved_terms: [], end_ms: index * 10000 + 8000,
     line_index: 0, protected_facts: [], segment_id: id,
     source_for_translation: row.source, source_original: row.source,
-    start_ms: index * 10000 }], source_context: [] };
+    start_ms: targetStart }], source_context: sourceContext };
   const request = structuredClone(template);
   request.messages[0].content = `${prefix}${marker}${JSON.stringify(envelope)}`;
   request.response_format.schema.properties.translations.minItems = 1;
@@ -99,7 +111,7 @@ const planned = source.cases.map((row, index) => {
     request_sha256: sha(Buffer.from(JSON.stringify(request))), request };
 });
 const freeze = { schema_version: 1,
-  experiment: 'OFFICIAL-ZH-RU-REFERENCE-2026-v1',
+  experiment: `OFFICIAL-ZH-RU-REFERENCE-2026-${version}`,
   split: 'published_parallel_exposed_development_not_holdout',
   expected, limits, model_alias: manifest.model_alias,
   prompt_prefix_sha256: sha(Buffer.from(prefix)),
@@ -119,7 +131,8 @@ if (mode === '--preflight') {
   process.exit(0);
 }
 
-const workspace = await fs.mkdtemp(path.join(privateRoot, 'attempt-'));
+const workspace = await fs.mkdtemp(path.join(privateRoot,
+  version === 'v2' ? 'attempt-v2-' : 'attempt-'));
 const journal = await fs.open(path.join(workspace, 'requests.jsonl'), 'wx');
 const reportPath = path.join(workspace, 'report.json');
 const began = performance.now();

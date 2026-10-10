@@ -28,6 +28,36 @@ tasks:
     cmds:
       - task: eval:official-reference:preflight
       - node eval/scripts/probe-official-reference-v1.mjs --probe
+  eval:official-reference:v2:freeze:
+    desc: Freeze six complete Chinese-clause requests and completed-action controls
+    requires:
+      vars: [MODEL_ROOT]
+    env:
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+      AURALIS_OFFICIAL_REFERENCE_VERSION: v2
+    cmds:
+      - node --check eval/scripts/probe-official-reference-v1.mjs
+      - node eval/scripts/probe-official-reference-v1.mjs --freeze
+  eval:official-reference:v2:preflight:
+    desc: Verify v2 source and context identities without reading Russian references
+    requires:
+      vars: [MODEL_ROOT]
+    env:
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+      AURALIS_OFFICIAL_REFERENCE_VERSION: v2
+    cmds:
+      - node --check eval/scripts/probe-official-reference-v1.mjs
+      - node eval/scripts/probe-official-reference-v1.mjs --preflight
+  eval:official-reference:v2:probe:
+    desc: Run one bounded full-clause v8 translation screen with source-only controls
+    requires:
+      vars: [MODEL_ROOT]
+    env:
+      AURALIS_MODEL_ASSET_ROOT: '{{.MODEL_ROOT}}'
+      AURALIS_OFFICIAL_REFERENCE_VERSION: v2
+    cmds:
+      - task: eval:official-reference:v2:preflight
+      - node eval/scripts/probe-official-reference-v1.mjs --probe
   eval:model:qwen3:acquire:preflight:
     desc: Verify the pinned official Qwen3 8B Q4 acquisition contract without network use
     cmds:
