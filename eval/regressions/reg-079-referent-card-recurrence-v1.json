@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "REG-079",
+  "status": "observed_ai_source_aware_development_not_human_adjudicated",
+  "severity": "major_technical_referent",
+  "split": "authored_exposed_development_not_holdout",
+  "source_family": "reg077_authored_chip_core_contrast",
+  "profile_scope": "unchanged v8 baseline and rejected evaluation-only source-relation-card v4",
+  "machine_report_sha256": "1cd09c57dcad44e7eadcc1357faaa6cb1d901a620a129fdc845ed6bb6e17e8ae",
+  "ai_review_sha256": "299ef270b466f79f66e3a720c006026e28c4ff8679e08a7ed978d087cb09206d",
+  "expected_invariant": "Keep separate chips distinct from a single multi-core chip, with negation attached to the exact denied one-chip alternative; a source relation card cannot be admitted solely for recording the chip count.",
+  "minimal_reproducer": {
+    "case_id": "three_independent_not_one_multicore",
+    "source_lines": ["三颗芯片彼此独立，不是一颗多核芯片。"],
+    "source_text_sha256": "f2b5030ecaf3b1e2f40749b1e0fbe6079a6d7be78f0751778aede8474a3fad4e",
+    "source_inventory_sha256": "b65840c3ad0c38530ddd58b91f02ba96bced19f1ed9f0a14e3e3ea7b720b5ee8",
+    "candidate_seed101_request_sha256": "f029182382df0e88c2f058be3f96e5f75caf8a9fa7433f6bd400e30ce5b89b7f",
+    "candidate_seed101_raw_http_sha256": "5665b861475bea745150cb18fdeb54d8ea64556b7165309cf38c064c0d4f30a5",
+    "candidate_seed101_accepted_text_sha256": "cc50bc0e3dc1ddceb5a72b397433e3a8ba3b8786639777feb442e6bff1b3a92a",
+    "ai_finding": "All three card-exposed candidates still deny one multi-processor chip instead of one multi-core chip; the prior two-chip failure also persists in all three seeds.",
+    "candidate_major_errors": 3,
+    "candidate_repeats": 3
+  },
+  "related_controls": [
+    {"id":"four_independent_not_one_multicore","source_lines":["四颗芯片彼此独立，不是同一颗多核芯片。"],"expected_fact":"Four separate chips rather than one multi-core chip.","outcome":"pending_model_screen"},
+    {"id":"two_chips_not_one_many_cores","source_lines":["这里是两颗独立芯片，不是一个有多个核心的芯片。"],"expected_fact":"Two independent chips and explicit denial of one chip with multiple cores.","outcome":"pending_model_screen"},
+    {"id":"one_multicore_denied_after_count","source_lines":["我们看到三颗不同芯片，不能把它说成一颗多核芯片。"],"expected_fact":"Three different chips cannot be described as one multi-core chip.","outcome":"pending_model_screen"}
+  ],
+  "negative_controls": [
+    {"id":"one_multicore_not_two_chips","source_lines":["这是一颗多核芯片，不是两颗独立芯片。"],"expected_fact":"One multi-core chip is affirmed and two separate chips denied.","outcome":"pending_model_screen"},
+    {"id":"two_processors_not_one_chip","source_lines":["这里确实有两个处理器，不是一颗多核芯片。"],"expected_fact":"Two processors are affirmed and one multi-core chip denied; do not replace processors with chips.","outcome":"pending_model_screen"},
+    {"id":"both_separate_chips_multicore","source_lines":["这两颗独立芯片各自都是多核的。"],"expected_fact":"Both independent chips are individually multi-core; no one-chip denial exists.","outcome":"pending_model_screen"}
+  ],
+  "control_model_runs": 0,
+  "human_review": "missing",
+  "product_status": "v8_unchanged_v4_rejected"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "id": "REG-080",
+  "status": "observed_ai_language_review_not_human_adjudicated",
+  "severity": "minor_russian_grammar",
+  "split": "authored_exposed_development_not_holdout",
+  "source_family": "reg078_authored_one_core_controls",
+  "profile_scope": "unchanged v8 baseline and rejected evaluation-only source-relation-card v4",
+  "machine_report_sha256": "1cd09c57dcad44e7eadcc1357faaa6cb1d901a620a129fdc845ed6bb6e17e8ae",
+  "ai_review_sha256": "299ef270b466f79f66e3a720c006026e28c4ff8679e08a7ed978d087cb09206d",
+  "expected_invariant": "Use grammatical Russian agreement for one core without changing chip, processor or core counts; preserve the already grammatical distributive form and do not force it on two-core or unknown-count sources.",
+  "minimal_reproducers": [
+    {
+      "case_id": "each_processor_one_core",
+      "source_lines": ["每个处理器只有一个核心。"],
+      "source_text_sha256": "2aa3a300462fcc5ede7e114d56411bae808abb681c9aca449a9fc8af1b1cfdf5",
+      "source_inventory_sha256": "e45f0922157c65e986ba5a86d007019eb87a98832dcf4b705a16a3c1c5da796f",
+      "seed101_request_sha256_both": "c7b48bf1bacabf14ccd72db91a5d8d41219c24db58e365290fad8b1169a8ade9",
+      "seed101_accepted_text_sha256_both": "2000b661134c1179d26296eb2272ebceabaa3b92481f59c732f3e92335e0824b",
+      "ai_finding": "All six replies preserve one core per processor but use the ungrammatical 'один ядро'.",
+      "grammar_error_cells": 6
+    },
+    {
+      "case_id": "one_chip_one_core",
+      "source_lines": ["这颗芯片只有一个核心。"],
+      "source_text_sha256": "c541c20ae218a80f50b7f52c791d75eb2cd9391beae8455c912cf3e43c77b87c",
+      "source_inventory_sha256": "153d4b1c33fed44e09794f79fee134db0e09f1e4d0b13701064962cd3ec4df0c",
+      "seed101_request_sha256_both": "6ac6958ede26233b0dd9dd389e056de753d0899f23bae20d0d648d91b0caea69",
+      "seed101_accepted_text_sha256_both": "c4d3ad3a06fcde8a91e5cec21c75d99e2777e3b0520ea0cd21d943bbc5575eb8",
+      "ai_finding": "All six replies preserve one core in one chip but use the ungrammatical 'один ядро'.",
+      "grammar_error_cells": 6
+    }
+  ],
+  "related_controls": [
+    {"id":"each_chip_single_core","source_lines":["每颗芯片仅有一个核心。"],"expected_fact":"One core per chip with grammatical Russian agreement.","outcome":"pending_model_screen"},
+    {"id":"each_cpu_one_core","source_lines":["每个CPU都只配置了一个内核。"],"expected_fact":"One core in each CPU with grammatical Russian agreement.","outcome":"pending_model_screen"},
+    {"id":"two_processors_one_core_each","source_lines":["这两个处理器各有一个核心。"],"expected_fact":"Two processors, one core each, with grammatical Russian agreement.","outcome":"pending_model_screen"}
+  ],
+  "negative_controls": [
+    {"id":"each_processor_two_cores_new","source_lines":["每个处理器有两个核心。"],"expected_fact":"Two cores per processor, without forced one-core wording.","outcome":"pending_model_screen"},
+    {"id":"one_processor_three_cores","source_lines":["我们只有一个处理器和三个核心。"],"expected_fact":"One processor and three cores; preserve both counts.","outcome":"pending_model_screen"},
+    {"id":"single_core_performance","source_lines":["单核性能更好。"],"expected_fact":"Better single-core performance; do not invent a one-core processor or chip.","outcome":"pending_model_screen"}
+  ],
+  "control_model_runs": 0,
+  "human_review": "missing",
+  "product_status": "v8_unchanged_v4_rejected"
+}

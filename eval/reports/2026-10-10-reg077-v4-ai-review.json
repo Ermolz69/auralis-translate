@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "experiment": "REG-077-CHIP-CORE-REFERENT-2026-10-10-v4",
+  "machine_report_sha256": "1cd09c57dcad44e7eadcc1357faaa6cb1d901a620a129fdc845ed6bb6e17e8ae",
+  "prior_ai_review_sha256": "313760eb3c19d82bf6d4f23c8b95c115e1b3805b0623d1667d837537a642434e",
+  "provenance": "Source-aware AI inspection of every changed or new Russian reply against its exposed Chinese development input; 117 unchanged request/output cells inherit the pinned v3 AI-only review; no independent bilingual reviewer",
+  "seed_order": [101, 202, 303],
+  "changed_prior_case": {
+    "case_id": "not_multicore_but_separate_chips",
+    "candidate": ["major_fact_error", "major_fact_error", "major_fact_error"],
+    "finding": "All three revised candidates still deny a single multi-processor chip, not the source's single multi-core chip. The two separate chips and negation remain visible, but the negated referent is wrong."
+  },
+  "new_cases": {
+    "three_independent_not_one_multicore": {"baseline": ["major_fact_error", "major_fact_error", "major_fact_error"], "candidate": ["major_fact_error", "major_fact_error", "major_fact_error"], "finding": "All six outputs deny one multi-processor chip instead of one multi-core chip; the added source relation card does not repair the referent."},
+    "two_chips_vs_dual_core": {"baseline": ["fact_pass", "fact_pass", "fact_pass"], "candidate": ["fact_pass", "fact_pass", "fact_pass"], "finding": "Two separate chips and one dual-core chip remain distinct."},
+    "one_chip_four_cores_not_four_processors": {"baseline": ["fact_pass", "fact_pass", "fact_pass"], "candidate": ["fact_pass", "fact_pass", "fact_pass"], "finding": "One chip with four cores is kept distinct from four processors."},
+    "real_dual_processor_single_core": {"baseline": ["fact_pass", "fact_pass", "fact_pass"], "candidate": ["fact_pass", "fact_pass", "fact_pass"], "finding": "The actual dual-processor system and one core in each processor are preserved with grammatical Russian."},
+    "one_eight_core_chip": {"baseline": ["fact_pass", "fact_pass", "fact_pass"], "candidate": ["fact_pass", "fact_pass", "fact_pass"], "finding": "One eight-core chip is retained; a second chip is denied."},
+    "two_chips_unknown_core_counts": {"baseline": ["fact_pass", "fact_pass", "fact_pass"], "candidate": ["fact_pass", "fact_pass", "fact_pass"], "finding": "Two chips remain known while each core count remains unknown."},
+    "each_processor_one_core": {"baseline": ["fact_pass_grammar_error", "fact_pass_grammar_error", "fact_pass_grammar_error"], "candidate": ["fact_pass_grammar_error", "fact_pass_grammar_error", "fact_pass_grammar_error"], "finding": "All six preserve one core per processor but say the ungrammatical Russian 'один ядро'."},
+    "one_chip_one_core": {"baseline": ["fact_pass_grammar_error", "fact_pass_grammar_error", "fact_pass_grammar_error"], "candidate": ["fact_pass_grammar_error", "fact_pass_grammar_error", "fact_pass_grammar_error"], "finding": "All six preserve one core in the chip but say the ungrammatical Russian 'один ядро'."},
+    "two_chips_one_core_each": {"baseline": ["fact_pass", "fact_pass", "fact_pass"], "candidate": ["fact_pass", "fact_pass", "fact_pass"], "finding": "Both arms use the grammatical 'по одному ядру' for one core in each chip."},
+    "each_processor_two_cores": {"baseline": ["fact_pass", "fact_pass", "fact_pass"], "candidate": ["fact_pass", "fact_pass", "fact_pass"], "finding": "Both arms keep two cores per processor and do not force one-core wording."},
+    "one_processor_four_cores": {"baseline": ["fact_pass", "fact_pass", "fact_pass"], "candidate": ["fact_pass", "fact_pass", "fact_pass"], "finding": "One processor with four cores remains distinct from four processors."},
+    "multi_processor_unknown_cores": {"baseline": ["fact_pass", "fact_pass", "fact_pass"], "candidate": ["fact_pass", "fact_pass", "fact_pass"], "finding": "Several processors are stated without inventing a core count."}
+  },
+  "summary": {
+    "paired_cases_reviewed_ai_only": 96,
+    "prior_identical_request_and_output_cells": 117,
+    "changed_prior_candidate_cells_reviewed": 3,
+    "new_control_cells_reviewed": 72,
+    "baseline_major_fact_errors_selected_set": 16,
+    "candidate_major_fact_errors_selected_set": 7,
+    "targeted_relation_card_fact_passes": 0,
+    "targeted_relation_card_cells": 6,
+    "candidate_new_control_fact_passes": 33,
+    "candidate_new_control_cells": 36,
+    "shared_grammar_error_cells": 18,
+    "candidate_shortlisted": false,
+    "candidate_rejection_reason": "targeted_negated_single_multicore_referent_wrong_in_all_six_card_exposed_cells",
+    "human_bilingual_reviews": 0,
+    "language_quality_score": null,
+    "full_file_quality_accepted": false,
+    "product_profile_changed": false
+  }
+}

@@ -1532,6 +1532,7 @@ tasks:
       - node eval/scripts/build-regression-catalog-v53.mjs
       - node eval/scripts/build-regression-catalog-v54.mjs
       - node eval/scripts/build-regression-catalog-v55.mjs
+      - node eval/scripts/build-regression-catalog-v56.mjs
   eval:regression:catalog:portable:check:
     desc: Verify recent public catalog evidence in a clean checkout without private source files
     cmds:
@@ -1548,6 +1549,18 @@ tasks:
       - node eval/scripts/build-regression-catalog-v53.mjs
       - node eval/scripts/build-regression-catalog-v54.mjs
       - node eval/scripts/build-regression-catalog-v55.mjs
+      - node eval/scripts/build-regression-catalog-v56.mjs
+  eval:regression:catalog:v56:write:
+    desc: Append observed REG-079/080 failures and related controls without rewriting v55
+    cmds:
+      - task: eval:reg077:v4:regressions:check
+      - node --check eval/scripts/build-regression-catalog-v56.mjs
+      - node eval/scripts/build-regression-catalog-v56.mjs --write
+  eval:regression:catalog:v56:check:
+    desc: Verify the pinned 192-reply semantic and grammar regression catalog
+    cmds:
+      - node --check eval/scripts/build-regression-catalog-v56.mjs
+      - node eval/scripts/build-regression-catalog-v56.mjs
   eval:regression:catalog:v55:write:
     desc: Append observed REG-077/078 failures and related controls without rewriting v54
     cmds:
@@ -2004,6 +2017,28 @@ tasks:
     cmds:
       - task: eval:reg077:v4:preflight
       - node eval/scripts/probe-reg077-referent-v4.mjs --probe
+  eval:reg077:v4:report:
+    desc: Capture source-free hashes and resource evidence from the retained REG-077 replies
+    cmds:
+      - node --check eval/scripts/check-reg077-v4.mjs
+      - node eval/scripts/check-reg077-v4.mjs --capture
+  eval:reg077:v4:check:
+    desc: Recompute 192 public REG-077 observations from private raw replies
+    cmds:
+      - node --check eval/scripts/check-reg077-v4.mjs
+      - node eval/scripts/check-reg077-v4.mjs --check
+  eval:reg077:v4:review:check:
+    desc: Check all paired AI-only REG-077 judgments and inherited v3 bytes
+    cmds:
+      - task: eval:reg077:v4:check
+      - node --check eval/scripts/check-reg077-v4-review.mjs
+      - node eval/scripts/check-reg077-v4-review.mjs
+  eval:reg077:v4:regressions:check:
+    desc: Pin REG-079/080 recurrences and twelve unrun related controls
+    cmds:
+      - task: eval:reg077:v4:review:check
+      - node --check eval/scripts/check-reg077-v4-regressions.mjs
+      - node eval/scripts/check-reg077-v4-regressions.mjs
   eval:vivo:post-edit:freeze:
     desc: Freeze ten source-and-draft revision request identities before inference
     cmds:
