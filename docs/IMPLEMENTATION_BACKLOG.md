@@ -1188,3 +1188,20 @@ beginning/middle/end cues at rates 0/5/10, with a private blind player
 and empty review form. There were no new TTS calls and no human listeners.
 The [v29 RELEASE-05 self-audit](../eval/experiments/2026-10-10-release-05-audit-attempt-v29.md)
 keeps A1–A6 and G3–G9 open; the short packet is not a full-scene A4 check.
+
+The [frozen REG-076 v3 screen](../eval/experiments/2026-10-10-reg-076-negated-multicore-v3-result.md)
+adds one bounded 120-reply, 240-preflight real-model comparison to
+`CTX-03`/`EVAL-04`. All 60 source/seed pairs were retained and source-aware
+AI inspected, with zero human bilingual ratings. Two exposed natural
+technical senses improved, but the new two-chip versus single multi-core
+chip contrast failed in all three candidate repeats; a second control
+lost multi-core within each chip in one identical-request sample. Only
+14/18 new REG-076 control cells preserved the primary fact, below the
+frozen all-pass rule. The candidate is rejected; the v8 product profile,
+both complete SRTs and private audio remain unchanged. [REG-077/078 and
+catalog v55](../eval/regressions/catalog-v55.json) retain minimal failures
+and twelve new unrun related/negative cases. The [v30 RELEASE-05
+self-audit](../eval/experiments/2026-10-10-release-05-audit-attempt-v30.md)
+keeps G3–G9, A1–A6 and release acceptance open. Next: diagnose the
+chip/core/processor referent with those controls in a separately frozen,
+budgeted comparison before any long-file or voice-script advancement.
