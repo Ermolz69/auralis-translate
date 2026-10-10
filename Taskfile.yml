@@ -599,6 +599,42 @@ tasks:
     cmds:
       - task: eval:data:youtube:vivo:asr:full:test
       - node eval/scripts/vivo-full-audio-asr.mjs --check
+  eval:data:youtube:vivo:opencc:acquire:
+    desc: Fetch one hash-pinned official OpenCC Windows wheel for offline script comparison
+    env:
+      PIP_CACHE_DIR: '{{.ROOT_DIR}}/.cache/eval/vivo-opencc-pip-cache'
+    cmds:
+      - 'python -m pip download --require-hashes --no-deps --only-binary=:all: --retries 0 --timeout 30 --dest .cache/eval/vivo-opencc-wheel -r eval/manifests/vivo-opencc-requirements.txt'
+  eval:data:youtube:vivo:opencc:install:
+    desc: Install only the pinned OpenCC wheel into ignored diagnostic storage
+    cmds:
+      - python -m pip install --no-index --no-deps --require-hashes --find-links .cache/eval/vivo-opencc-wheel --target .cache/eval/vivo-opencc-package -r eval/manifests/vivo-opencc-requirements.txt
+  eval:data:youtube:vivo:opencc:test:
+    desc: Verify script normalization and negative meaning controls locally
+    cmds:
+      - python eval/scripts/convert-vivo-asr-opencc.py --test
+  eval:data:youtube:vivo:opencc:convert:
+    desc: Convert the one pinned private ASR response without changing originals
+    cmds:
+      - task: eval:data:youtube:vivo:opencc:test
+      - python eval/scripts/convert-vivo-asr-opencc.py --convert
+  eval:data:youtube:vivo:opencc:report:
+    desc: Capture source-free paired raw versus OpenCC cue-recall summary
+    requires:
+      vars: [ASSET_ROOT]
+    env:
+      AURALIS_VIVO_ASSET_ROOT: '{{.ASSET_ROOT}}'
+    cmds:
+      - node eval/scripts/check-vivo-opencc-recall.mjs --capture
+  eval:data:youtube:vivo:opencc:check:
+    desc: Recheck pinned OpenCC conversion and paired source-cue summary
+    requires:
+      vars: [ASSET_ROOT]
+    env:
+      AURALIS_VIVO_ASSET_ROOT: '{{.ASSET_ROOT}}'
+    cmds:
+      - task: eval:data:youtube:vivo:opencc:test
+      - node eval/scripts/check-vivo-opencc-recall.mjs --check
   eval:data:youtube:kirin:license:inventory:
     desc: Retain one bounded YouTube metadata response without downloading captions or media
     env:
