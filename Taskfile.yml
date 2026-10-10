@@ -1049,8 +1049,14 @@ tasks:
     desc: Compare both live GitHub Pages HTML files byte-for-byte with committed reports
     cmds:
       - task: site:check
+      - task: site:committed-bytes:test
       - node --check eval/scripts/check-live-pages.mjs
       - node eval/scripts/check-live-pages.mjs
+  site:committed-bytes:test:
+    desc: Verify committed HTML identity across LF and CRLF checkouts
+    cmds:
+      - node --check eval/scripts/committed-site-bytes.mjs
+      - node --test --test-isolation=none eval/scripts/tests/committed-site-bytes.test.mjs
   eval:data:commons:train:media:inventory:
     desc: Inventory one bounded Commons train-video derivative metadata response
     cmds:
