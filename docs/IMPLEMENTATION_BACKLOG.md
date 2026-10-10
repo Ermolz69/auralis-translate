@@ -119,6 +119,14 @@ reran both pinned private caption and three-window ASR checks successfully.
 The creator's separate Bilibili post adds a no-repost notice to the open
 cross-platform rights review; the YouTube CC metadata and Chinese-caption
 authorship remain distinct facts. No source or release gate was promoted.
+The later [source availability recheck](../eval/experiments/2026-10-10-vivo-source-availability-recheck.md)
+found the retained Commons SRT, matched media and three audio windows at
+their pinned hashes, with 467 parsed cues and 1,115,570 ms of media. The
+ignored original-platform SRT and three-window ASR raw JSON are absent from
+the current primary/publication checkouts, so their old private checks did
+not rerun; the earlier public reports remain historical evidence. Reacquire
+under a separately frozen identity before claiming repeatability of those
+two checks. Exact Chinese speech alignment and separate rights remain open.
 
 The [original-platform Vivo v8 long-file screen](../eval/experiments/2026-10-09-vivo-original-v8-long-result.md)
 adds partial `CTX-02`/`LONG-01`/`LONG-02`/`LONG-04`/`EVAL-04`/`DECIDE-01`
