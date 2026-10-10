@@ -23,6 +23,8 @@ reviewer sheet, model weights or SQLite database is published.
 and reports. `task site:check` validates both, exact `site/` contents, data
 identities, current figures, historical measurements, scripts and privacy.
 `task site:live:check` compares both deployed HTML files byte for byte with
-the committed files after the Pages workflow succeeds. A failed or missing
+the Git `HEAD` blobs after the Pages workflow succeeds, while rejecting staged
+or unstaged page content changes. This avoids false mismatches when Windows
+checks out LF Git blobs as CRLF files. A failed or missing
 history page is a failed publication, even if the landing page loads. The
 Tailwind browser CDN remains the only external page runtime dependency.

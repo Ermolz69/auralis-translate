@@ -1,19 +1,21 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
+import { assertSiteMatchesHead, committedSiteBytes } from './committed-site-bytes.mjs';
 
 const root = resolve('.');
 const revision = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root,
   encoding: 'utf8', timeout: 10_000 }).trim();
 assert.match(revision, /^[0-9a-f]{40}$/u);
+assertSiteMatchesHead(root);
 const directory = join(root, '.cache/eval/live-pages-check', `attempt-${randomUUID()}`);
 await mkdir(directory, { recursive: true });
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const maxBytes = 2 * 1024 * 1024;
 const timeoutMs = 30_000;
-const report = { schema_version: 2, id: 'live-pages-two-html-byte-check-v2',
+const report = { schema_version: 3, id: 'live-pages-two-html-byte-check-v3',
   revision, max_requests: 2, max_bytes_per_page: maxBytes,
   timeout_ms_per_page: timeoutMs, started_at: new Date().toISOString(),
   pages: [], status: 'running' };
@@ -25,10 +27,10 @@ for (const name of ['index.html', 'history.html']) {
   const page = { name, url: url.toString(), status: 'running' };
   report.pages.push(page);
   try {
-    const local = await readFile(join(root, 'site', name));
-    page.local_bytes = local.length;
-    page.local_sha256 = hash(local);
-    assert(local.length > 0 && local.length <= maxBytes);
+    const committed = committedSiteBytes(root, name);
+    page.committed_bytes = committed.length;
+    page.committed_sha256 = hash(committed);
+    assert(committed.length > 0 && committed.length <= maxBytes);
     const response = await fetch(url, { signal: AbortSignal.timeout(timeoutMs),
       redirect: 'error' });
     page.http_status = response.status;
@@ -45,7 +47,7 @@ for (const name of ['index.html', 'history.html']) {
     await writeFile(join(directory, `live-${name}`), live, { flag: 'wx' });
     page.live_bytes = live.length;
     page.live_sha256 = hash(live);
-    assert(live.equals(local), `${name} differs from the checked local report`);
+    assert(live.equals(committed), `${name} differs from committed HEAD`);
     const text = live.toString('utf8');
     assert(text.includes('https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'));
     assert(text.includes(name === 'index.html' ? 'id="current-data"' : 'id="report-data"'));
