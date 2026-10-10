@@ -138,6 +138,15 @@ v60](../eval/regressions/catalog-v60.json) retain the post-persistence
 Windows exit-9 failure and its offline correction. The old ASR raw JSON,
 source-language listening, caption/audio rights and source admission remain
 open; `DATA-03` stays `in_progress` with zero eligible cues.
+The [restored-SRT/full-ASR linkage](../eval/experiments/2026-10-10-vivo-restored-source-asr-link-v1-result.md)
+reuses the separate retained 499-segment full-audio raw response with no new
+inference. The exact YouTube SRT has timed ASR overlap at all 467 cues and
+at all 5/5, 6/6 and 7/7 cues in the frozen start/middle/end windows. After
+script normalization, cue 464 alone is low-scoring in those windows; AI
+text review cannot decide whether the short thanks mismatch is ASR or
+caption error. The old three-window raw remains absent, but this distinct
+full-audio raw is hash-verified. Human listening, speaker mapping and rights
+remain open, so `DATA-03` adds no eligible cues and G3–G5/A1–A6 stay open.
 
 The [original-platform Vivo v8 long-file screen](../eval/experiments/2026-10-09-vivo-original-v8-long-result.md)
 adds partial `CTX-02`/`LONG-01`/`LONG-02`/`LONG-04`/`EVAL-04`/`DECIDE-01`

@@ -233,6 +233,28 @@ export async function loadCurrentReport(root) {
   assert.equal(vivoRestoration.comparison.timing_differences.length, 8);
   assert.equal(vivoRestoration.human_speech_reviews, 0);
   assert.equal(vivoRestoration.source_admitted, false);
+  const vivoRestoredAsrRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-vivo-restored-source-asr-link-v1.json'), 'utf8');
+  assert.equal(createHash('sha256').update(vivoRestoredAsrRaw).digest('hex'),
+    'f9c29515bf28937e6d601fe99a8d7a0e3417f72cf389a1457a3f089e4ba8981d');
+  const vivoRestoredAsr = JSON.parse(vivoRestoredAsrRaw);
+  const vivoRestoredAsrReviewRaw = await fs.readFile(path.join(root,
+    'eval/reports/2026-10-10-vivo-restored-source-asr-link-v1-ai-review.json'), 'utf8');
+  assert.equal(createHash('sha256').update(vivoRestoredAsrReviewRaw).digest('hex'),
+    '715fd784b3cf62a2f220395d666b9f6b94a6020c963a88019693f20dddc96a05');
+  const vivoRestoredAsrReview = JSON.parse(vivoRestoredAsrReviewRaw);
+  assert.equal(vivoRestoredAsr.source_sha256, vivoRestoration.caption_response_sha256);
+  assert.deepEqual(vivoRestoredAsr.windows.map(row => row.cues_with_normalized_asr_overlap),
+    [5, 6, 7]);
+  assert.deepEqual(vivoRestoredAsr.windows.map(row => row.normalized_low_recall_ids),
+    [[], [], [464]]);
+  assert.equal(vivoRestoredAsr.whole_file_temporal_overlap_cues, 467);
+  assert.equal(vivoRestoredAsr.new_model_requests, 0);
+  assert.equal(vivoRestoredAsr.human_chinese_listeners, 0);
+  assert.equal(vivoRestoredAsr.source_admitted, false);
+  assert.equal(vivoRestoredAsrReview.machine_report_sha256,
+    createHash('sha256').update(vivoRestoredAsrRaw).digest('hex'));
+  assert.equal(vivoRestoredAsrReview.human_chinese_listeners, 0);
   const vivoAsrRaw = await fs.readFile(path.join(root,
     'eval/reports/youtube-geekerwan-vivo-audio-asr-v1.json'), 'utf8');
   assert.equal(createHash('sha256').update(vivoAsrRaw).digest('hex'),
@@ -748,6 +770,17 @@ export async function loadCurrentReport(root) {
       human_speech_reviews: vivoRestoration.human_speech_reviews,
       source_admitted: vivoRestoration.source_admitted,
       report_sha256: createHash('sha256').update(vivoRestorationRaw).digest('hex') },
+    youtube_restored_asr: {
+      window_cue_counts: vivoRestoredAsr.windows.map(row => row.cue_ids.length),
+      window_overlap_counts: vivoRestoredAsr.windows.map(row =>
+        row.cues_with_normalized_asr_overlap),
+      normalized_low_window_ids: vivoRestoredAsr.windows.flatMap(row =>
+        row.normalized_low_recall_ids),
+      full_overlap_cues: vivoRestoredAsr.whole_file_temporal_overlap_cues,
+      new_model_requests: vivoRestoredAsr.new_model_requests,
+      human_listeners: vivoRestoredAsr.human_chinese_listeners,
+      source_admitted: vivoRestoredAsr.source_admitted,
+      report_sha256: createHash('sha256').update(vivoRestoredAsrRaw).digest('hex') },
     youtube_asr: { windows: vivoAsr.windows.length,
       audio_seconds: vivoAsr.total_asr_audio_seconds,
       elapsed_seconds: vivoAsr.total_elapsed_seconds,
