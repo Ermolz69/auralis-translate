@@ -1822,6 +1822,44 @@ tasks:
     cmds:
       - task: eval:source-relations:cross-source:unit
       - node eval/scripts/check-cross-source-relation-screen.mjs --check
+  eval:source-relations:v3:unit:
+    desc: Verify source-only ASUS fact recognition and contradiction abstention controls
+    cmds:
+      - task: eval:source-relations:v2:unit
+      - node --check eval/scripts/source-relation-review-v3.mjs
+      - node --test --test-isolation=none eval/scripts/tests/source-relation-review-v3.test.mjs
+  eval:source-relations:v3:preflight:
+    desc: Rehash the ASUS source and draft and verify three source-only trigger cues
+    requires:
+      vars: [SOURCE_ROOT, DRAFT_ROOT]
+    env:
+      AURALIS_EVAL_SOURCE_ROOT: '{{.SOURCE_ROOT}}'
+      AURALIS_EVAL_DRAFT_ROOT: '{{.DRAFT_ROOT}}'
+    cmds:
+      - task: eval:source-relations:v3:unit
+      - node --check eval/scripts/check-asus-source-relations-v3.mjs
+      - node eval/scripts/check-asus-source-relations-v3.mjs --preflight
+  eval:source-relations:v3:report:
+    desc: Capture one bounded ASUS full-draft fact warning replay
+    requires:
+      vars: [SOURCE_ROOT, DRAFT_ROOT]
+    env:
+      AURALIS_EVAL_SOURCE_ROOT: '{{.SOURCE_ROOT}}'
+      AURALIS_EVAL_DRAFT_ROOT: '{{.DRAFT_ROOT}}'
+    cmds:
+      - task: eval:source-relations:v3:preflight
+      - node eval/scripts/check-asus-source-relations-v3.mjs --capture
+  eval:source-relations:v3:check:
+    desc: Rehash and recompute all ASUS source fact warnings without inference
+    requires:
+      vars: [SOURCE_ROOT, DRAFT_ROOT]
+    env:
+      AURALIS_EVAL_SOURCE_ROOT: '{{.SOURCE_ROOT}}'
+      AURALIS_EVAL_DRAFT_ROOT: '{{.DRAFT_ROOT}}'
+    cmds:
+      - task: eval:source-relations:v3:unit
+      - node --check eval/scripts/check-asus-source-relations-v3.mjs
+      - node eval/scripts/check-asus-source-relations-v3.mjs --check
   eval:reg040:count-category:unit:
     desc: Verify authored number/category swap and conservative abstention controls
     cmds:
