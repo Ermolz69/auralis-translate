@@ -1,12 +1,13 @@
 use crate::document_run_plan::DocumentRunPlan;
-use crate::durable_workflow::load_profile;
+use crate::durable_workflow::{DATABASE_FILE, load_profile};
 use crate::read_source::{read_source, read_vtt_source};
-use crate::reporting::CommandOutput;
+use crate::reporting::{CliFailure, CommandOutput, ErrorCode};
 use crate::start_input::StartInput;
 use crate::{durable_resume, durable_start};
-use auralis_translation::SourceHash;
+use auralis_translation::{RunId, RunState, SourceHash};
 use auralis_translation_formats::vtt::VttDocument;
 use auralis_translation_llamacpp::{LlamaCppProvider, ModelProfile, hash_file, verify_server};
+use auralis_translation_sqlite::{SqliteConfig, TranslateDb};
 use std::error::Error;
 use std::ffi::{OsStr, OsString};
 use std::net::TcpListener;
@@ -56,7 +57,10 @@ pub(crate) fn translate(
         format,
     } = input;
     if Path::new(output).exists() {
-        return Err("output already exists".into());
+        return Err(CliFailure::boxed(
+            ErrorCode::Conflict,
+            "output already exists",
+        ));
     }
     let source_bytes = match format {
         DocumentRunPlan::SRT_FORMAT => {
@@ -103,6 +107,20 @@ pub(crate) fn resume(
         gpu_layers,
         output,
     } = input;
+    let parsed_run_id = RunId::parse(run_id.to_str().ok_or("run ID must be Unicode")?)?;
+    let state_path = Path::new(state_dir);
+    let db = TranslateDb::open(&state_path.join(DATABASE_FILE), SqliteConfig::default())?;
+    if db.run_state(parsed_run_id)? == RunState::Validated {
+        return durable_resume::run(
+            state_dir,
+            run_id,
+            profile_path,
+            OsStr::new("http://127.0.0.1:9/"),
+            output,
+            reporter,
+        );
+    }
+    drop(db);
     let server = LocalModelServer::start(profile_path, executable, model_file, gpu_layers)?;
     durable_resume::run(
         state_dir,
@@ -127,29 +145,47 @@ impl LocalModelServer {
         gpu_layers: &OsStr,
     ) -> Result<Self, Box<dyn Error>> {
         let (profile, _) = load_profile(Path::new(profile_path))?;
-        let expected_bytes = profile
-            .model_file_bytes
-            .ok_or("local execution requires a checked model profile")?;
-        let context = profile
-            .min_context_tokens
-            .ok_or("checked model profile has no minimum context")?;
+        let expected_bytes = profile.model_file_bytes.ok_or_else(|| {
+            CliFailure::boxed(
+                ErrorCode::InvalidInput,
+                "local execution requires a checked model profile",
+            )
+        })?;
+        let context = profile.min_context_tokens.ok_or_else(|| {
+            CliFailure::boxed(
+                ErrorCode::InvalidInput,
+                "checked model profile has no minimum context",
+            )
+        })?;
         let layers = gpu_layers
             .to_str()
-            .ok_or("GPU layers must be Unicode")?
-            .parse::<u32>()?;
+            .ok_or_else(|| {
+                CliFailure::boxed(ErrorCode::InvalidInput, "GPU layers must be Unicode")
+            })?
+            .parse::<u32>()
+            .map_err(|_| {
+                CliFailure::boxed(ErrorCode::InvalidInput, "GPU layers must be an integer")
+            })?;
         if layers > MAX_GPU_LAYERS {
-            return Err("GPU layer count exceeds the configured limit".into());
+            return Err(CliFailure::boxed(
+                ErrorCode::InvalidInput,
+                "GPU layer count exceeds the configured limit",
+            ));
         }
         let executable = std::fs::canonicalize(executable)?;
         let model_file = std::fs::canonicalize(model_file)?;
         if !executable.is_file() || !model_file.is_file() {
             return Err("local server executable and model must be files".into());
         }
-        let expected_hash = SourceHash::parse_hex(&profile.model_file_sha256)
-            .ok_or("checked model SHA-256 is invalid")?;
+        let expected_hash = SourceHash::parse_hex(&profile.model_file_sha256).ok_or_else(|| {
+            CliFailure::boxed(ErrorCode::InvalidInput, "checked model SHA-256 is invalid")
+        })?;
         let (observed_hash, observed_bytes) = hash_file(&model_file)?;
         if observed_bytes != expected_bytes || observed_hash != expected_hash {
-            return Err("local model bytes differ from the checked profile".into());
+            return Err(CliFailure::boxed(
+                ErrorCode::ModelMismatch,
+                "local model bytes differ from the checked profile",
+            ));
         }
         let listener = TcpListener::bind((LOOPBACK_HOST, 0))?;
         let port = listener.local_addr()?.port();
@@ -193,20 +229,34 @@ impl LocalModelServer {
         let deadline = Instant::now() + STARTUP_TIMEOUT;
         loop {
             if self.child.exited()? {
-                return Err("local model server exited before readiness".into());
+                return Err(CliFailure::boxed(
+                    ErrorCode::RuntimeFailure,
+                    "local model server exited before readiness",
+                ));
             }
             if let Ok(report) = provider.probe_server() {
                 if std::fs::canonicalize(&report.model_path)? != expected_model_path {
-                    return Err("local server loaded a different model path".into());
+                    return Err(CliFailure::boxed(
+                        ErrorCode::ModelMismatch,
+                        "local server loaded a different model path",
+                    ));
                 }
-                verify_server(&provider, profile)?;
+                verify_server(&provider, profile).map_err(|error| {
+                    CliFailure::boxed(ErrorCode::ModelMismatch, error.to_string())
+                })?;
                 if self.child.exited()? {
-                    return Err("local model server exited during preflight".into());
+                    return Err(CliFailure::boxed(
+                        ErrorCode::RuntimeFailure,
+                        "local model server exited during preflight",
+                    ));
                 }
                 return Ok(());
             }
             if Instant::now() >= deadline {
-                return Err("local model server did not become ready in time".into());
+                return Err(CliFailure::boxed(
+                    ErrorCode::RuntimeFailure,
+                    "local model server did not become ready in time",
+                ));
             }
             thread::sleep(READINESS_INTERVAL);
         }

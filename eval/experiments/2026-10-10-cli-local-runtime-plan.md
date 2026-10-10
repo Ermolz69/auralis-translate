@@ -15,7 +15,10 @@ directly. It does not assess Chinese translation quality or release readiness.
   command lifetime, then terminate it. Preserve immutable source, separate
   complete output, checkpoints and machine event semantics.
 - Run `task build`, `task fmt`, `task test:cli:local`, `task docs:check` and
-  `task plan:check`. Inspect process cleanup and exact output structure.
+  `task plan:check`. Use `task build:release` and `task cli:release` for the
+  second format after the same candidate's debug SRT run, because hashing the
+  GGUF three times in debug mode consumes several minutes. Inspect process
+  cleanup and exact output structure.
 
 ## Bounded real-model probe
 
@@ -39,5 +42,7 @@ directly. It does not assess Chinese translation quality or release readiness.
 - Require one CLI invocation per format to launch and stop the server, produce
   a separate complete output, preserve timing/cue identity/source bytes, and
   leave no child process. Verify a second invocation against an occupied output
-  refuses overwrite before server startup. No clean-install or language gate
+  refuses overwrite before server startup. Retry one validated result through
+  `resume-local` with absent server/model paths; it must export identical bytes
+  without new inference or a child process. No clean-install or language gate
   passes from this development-host probe.

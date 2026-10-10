@@ -4147,6 +4147,10 @@ tasks:
   cli:
     cmds:
       - cargo run --offline -p auralis-translation-cli -- {{.CLI_ARGS}}
+  cli:release:
+    desc: Invoke the already built optimized standalone CLI
+    cmds:
+      - target/release/auralis-translation-cli.exe {{.CLI_ARGS}}
   eval:flores:verify:
     cmds:
       - cargo run --offline -p auralis-translation-eval -- verify-flores eval/corpora/flores200-archive-b8b0b767.json .cache/eval/flores200_dataset.tar.gz .cache/eval/flores200_dataset

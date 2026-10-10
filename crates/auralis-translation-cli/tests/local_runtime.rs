@@ -12,6 +12,15 @@ fn run(args: &[&Path], command: &str) -> Result<Output, Box<dyn Error>> {
     Ok(child.output()?)
 }
 
+fn run_jsonl(args: &[&Path], command: &str) -> Result<Output, Box<dyn Error>> {
+    let mut child = Command::new(env!("CARGO_BIN_EXE_auralis-translation-cli"));
+    child.arg("--jsonl").arg(command);
+    for arg in args {
+        child.arg(arg);
+    }
+    Ok(child.output()?)
+}
+
 #[test]
 fn occupied_output_is_refused_before_model_start() -> Result<(), Box<dyn Error>> {
     let directory = tempfile::tempdir()?;
@@ -66,12 +75,16 @@ fn mismatched_checked_model_is_refused_before_model_start() -> Result<(), Box<dy
         .join("../../models/manifests/hy_mt2_1_8b_q4_k_m.checked.experimental.json");
     let executable = Path::new(env!("CARGO_BIN_EXE_auralis-translation-cli"));
     let zero = Path::new("0");
-    let result = run(
+    let result = run_jsonl(
         &[&source, &state, &profile, executable, &model, zero, &output],
         "translate-local",
     )?;
     assert!(!result.status.success());
+    assert_eq!(result.status.code(), Some(7));
     assert!(String::from_utf8_lossy(&result.stderr).contains("local model bytes differ"));
+    let failure: serde_json::Value = serde_json::from_slice(&result.stdout)?;
+    assert_eq!(failure["event"], "failed");
+    assert_eq!(failure["code"], "model_mismatch");
     assert!(!state.exists());
     assert!(!output.exists());
     Ok(())

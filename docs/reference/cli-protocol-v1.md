@@ -35,7 +35,9 @@ records are used as by `translate` and `resume`. The model and runtime must
 already be present locally; the command never downloads either. The CLI verifies
 the model digest and server build against the checked profile before inference.
 On Windows the child runs in an owned Job Object and is terminated when the CLI
-exits. These positional commands are not yet `--request` variants.
+exits. For a previously validated run, `resume-local` exports without launching
+the server and does not require the runtime paths to exist. These positional
+commands are not yet `--request` variants.
 
 The separately versioned [name registry experiment](../architecture/016-source-name-registry.md)
 adds positional `translate-v8-names SOURCE STATE_DIR PROFILE SCENE_MAP PROPOSALS
