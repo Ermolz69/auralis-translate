@@ -23,7 +23,7 @@ const modelRoot = path.join(assetRoot, '.cache/eval/vivo-asr-model');
 const packagesRoot = path.join(assetRoot, '.cache/eval/vivo-asr-packages');
 const attemptRoot = path.join(root, '.cache/eval/vivo-full-audio-asr-v1');
 const reportPath = path.join(root,
-  'eval/reports/2026-10-10-vivo-full-audio-asr-v1.json');
+  'eval/reports/2026-10-10-vivo-full-audio-asr-v2.json');
 const expected = {
   source: 'b100803367b95fa55fc638b1ff39a0abfa0d5b8183ebe58d58b1a87242d9d8c4',
   media: '7ad0484b31a6788c31632616649c51e6aaf6cdcdd7d90083d88e1d5ee66e1507',
@@ -126,7 +126,7 @@ async function summary(inputs) {
   const alignment = summarizeCues(cues, raw.segments, inputs.media_duration_ms);
   const first = raw.segments[0];
   const last = raw.segments.at(-1);
-  return { schema_version: 1, experiment: raw.experiment,
+  return { schema_version: 2, experiment: raw.experiment,
     source_sha256: inputs.source_sha256, media_sha256: inputs.media_sha256,
     model_repo: raw.model_repo, model_revision: raw.model_revision,
     model_files_sha256: inputs.model_files_sha256,
@@ -140,6 +140,12 @@ async function summary(inputs) {
     segment_count: raw.segments.length,
     first_asr_second: first.start, last_asr_second: last.end,
     alignment,
+    alignment_interpretation: {
+      method: 'raw_unicode_ordered_character_recall_v1',
+      script_conversion_applied: false,
+      low_recall_is_caption_error: false,
+      limitation: 'Traditional ASR and simplified captions yield false low-recall flags; raw scores are review priorities only',
+    },
     review: { kind: 'ai_diagnostic', human_listeners: 0,
       source_speech_alignment_verified: false,
       caption_rights_verified: false,

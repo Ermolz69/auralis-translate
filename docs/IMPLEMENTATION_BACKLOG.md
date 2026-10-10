@@ -1272,3 +1272,15 @@ results are unchanged, and `CTX-03`/`EVAL-04`/G3–G5/RELEASE-05 remain open.
 The next bounded screen should test a separately frozen Hall-term preservation
 signal on new related/negative controls and a distinct natural source before
 any product warning admission.
+
+The [single full-audio Vivo ASR screen](../eval/experiments/2026-10-10-vivo-full-audio-asr-result.md)
+extends the earlier 36-second, three-window diagnostic to the matched
+18:35.570 media: 499 offline ASR segments, 94.82 seconds, with temporal
+overlap at all 467 cue windows. The initial raw ordered-character screen
+flagged 30/461 scorable cues, but AI inspection found traditional/simplified
+script mismatches, segment boundaries and ASR word errors; none is an
+adjudicated caption defect. Both the first and corrected source-free reports,
+the single private raw attempt and three deterministic scoring controls are
+retained. `DATA-03` stays `in_progress`: caption/audio rights, human source
+listening, speaker alignment and eligible development cues are unresolved.
+No product ASR feature, translation result or release/audio gate changed.

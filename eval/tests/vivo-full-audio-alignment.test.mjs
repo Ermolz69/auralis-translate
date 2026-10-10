@@ -22,3 +22,10 @@ test('cue mapping tolerates a 500 ms edge and rejects distant speech', () => {
   assert.equal(result.source_character_recall, 1);
   assert.equal(scoreCue(cue, segments, 0).overlapping_segments, 0);
 });
+
+test('traditional-script overlap can look falsely low without conversion', () => {
+  assert(orderedCharacterRecall('我们在东莞见面', '我們在東莞見面') < 1);
+  assert(orderedCharacterRecall('从专业测试里面', '從專業測試裡面') < 0.5);
+  assert.equal(orderedCharacterRecall('东莞总部', '东莞总部'), 1);
+  assert(orderedCharacterRecall('东莞总部', '上海总部') < 1);
+});
