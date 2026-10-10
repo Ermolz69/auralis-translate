@@ -3794,6 +3794,10 @@ tasks:
       - cargo test --offline -p auralis-translation-llamacpp --test request_cancellation
       - cargo test --offline -p auralis-translation --test retry_policy
       - cargo test --offline -p auralis-translation-cli --test cli_resume pause_preserves_committed_blocks_and_resume_finishes
+  test:sqlite:writer-fault:
+    desc: Verify atomic Translate SQLite checkpoints and exact resume after one owned writer lock
+    cmds:
+      - cargo test --offline -p auralis-translation-sqlite --test sqlite_writer_fault
   test:retry-policy:
     desc: Verify transient-only retries through the provider, core and durable CLI
     cmds:
