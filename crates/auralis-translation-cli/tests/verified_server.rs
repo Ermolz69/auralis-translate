@@ -71,9 +71,8 @@ fn checked_profile_probes_server_and_hashes_reported_local_model() -> Result<(),
     assert_eq!(good_detail["context_tokens"], 2048);
     drop(good_db);
 
-    profile["model_file_sha256"] =
-        serde_json::json!(SourceHash::digest(b"different model").to_string());
-    std::fs::write(&profile_path, serde_json::to_vec(&profile)?)?;
+    std::fs::write(&model_path, b"synthetic model evil")?;
+    assert_eq!(std::fs::metadata(&model_path)?.len(), MODEL.len() as u64);
     let listener = TcpListener::bind("127.0.0.1:0")?;
     let endpoint = format!("http://{}/", listener.local_addr()?);
     let model_path_for_server = path(&model_path)?.to_owned();

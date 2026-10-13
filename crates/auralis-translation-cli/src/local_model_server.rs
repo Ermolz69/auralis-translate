@@ -6,7 +6,9 @@ use crate::start_input::StartInput;
 use crate::{durable_resume, durable_start};
 use auralis_translation::{RunId, RunState, SourceHash};
 use auralis_translation_formats::vtt::VttDocument;
-use auralis_translation_llamacpp::{LlamaCppProvider, ModelProfile, hash_file, verify_server};
+use auralis_translation_llamacpp::{
+    LlamaCppProvider, ModelProfile, hash_file, verify_server_report_metadata,
+};
 use auralis_translation_sqlite::{SqliteConfig, TranslateDb};
 use std::error::Error;
 use std::ffi::{OsStr, OsString};
@@ -235,15 +237,16 @@ impl LocalModelServer {
                 ));
             }
             if let Ok(report) = provider.probe_server() {
-                if std::fs::canonicalize(&report.model_path)? != expected_model_path {
+                let reported_path =
+                    verify_server_report_metadata(&report, profile).map_err(|error| {
+                        CliFailure::boxed(ErrorCode::ModelMismatch, error.to_string())
+                    })?;
+                if reported_path != expected_model_path {
                     return Err(CliFailure::boxed(
                         ErrorCode::ModelMismatch,
                         "local server loaded a different model path",
                     ));
                 }
-                verify_server(&provider, profile).map_err(|error| {
-                    CliFailure::boxed(ErrorCode::ModelMismatch, error.to_string())
-                })?;
                 if self.child.exited()? {
                     return Err(CliFailure::boxed(
                         ErrorCode::RuntimeFailure,

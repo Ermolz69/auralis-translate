@@ -4114,6 +4114,7 @@ tasks:
   test:verified-server:
     cmds:
       - cargo test --offline -p auralis-translation-cli --test verified_server
+      - cargo test --offline -p auralis-translation-llamacpp --test server_report_metadata
   test:request-cancellation:
     desc: Verify response-header/body interruption, provider reuse, and durable CLI pause
     cmds:

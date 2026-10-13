@@ -17,6 +17,7 @@ mod release_manifest;
 mod request_control_policy;
 mod response;
 mod server_report;
+mod server_report_metadata;
 mod source_prefix_repair;
 mod target_schema_v6;
 mod target_text_json_tail;
@@ -35,6 +36,7 @@ pub use provider::LlamaCppProvider;
 pub use release_manifest::{ReleaseAsset, ReleaseManifest, ReleaseManifestError, RuntimeVariant};
 pub use request_control_policy::RequestControlPolicy;
 pub use server_report::ServerReport;
+pub use server_report_metadata::verify_server_report_metadata;
 mod model_hash;
 mod model_preflight;
 pub use asset_download::{
