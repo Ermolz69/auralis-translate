@@ -8,11 +8,13 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const write = process.argv.length === 3 && process.argv[2] === '--write';
 assert(process.argv.length === 2 || write);
 const read = relative => fs.readFile(path.join(root, relative));
+const readFrozenText = async relative =>
+  Buffer.from((await read(relative)).toString('utf8').replace(/\r\n/g, '\n'));
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const [baseBytes, planBytes, reportBytes, reviewBytes, packBytes] =
   await Promise.all([
     read('eval/regressions/catalog-v57.json'),
-    read('eval/experiments/2026-10-10-asus-source-relations-v3-plan.md'),
+    readFrozenText('eval/experiments/2026-10-10-asus-source-relations-v3-plan.md'),
     read('eval/reports/2026-10-10-asus-source-relations-v3.json'),
     read('eval/reports/2026-10-10-asus-source-relations-v3-ai-review.json'),
     read('eval/regressions/reg-083-asus-hall-stick-substitution-v1.json'),

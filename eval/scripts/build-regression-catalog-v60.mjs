@@ -8,11 +8,13 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const write = process.argv.length === 3 && process.argv[2] === '--write';
 assert(process.argv.length === 2 || write);
 const read = relative => fs.readFile(path.join(root, relative));
+const readFrozenText = async relative =>
+  Buffer.from((await read(relative)).toString('utf8').replace(/\r\n/g, '\n'));
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const [baseBytes, packBytes, planBytes, reportBytes] = await Promise.all([
   read('eval/regressions/catalog-v59.json'),
   read('eval/regressions/reg-084-youtube-caption-fetch-exit-v1.json'),
-  read('eval/experiments/2026-10-10-youtube-vivo-caption-restoration-v2-plan.md'),
+  readFrozenText('eval/experiments/2026-10-10-youtube-vivo-caption-restoration-v2-plan.md'),
   read('eval/reports/2026-10-10-youtube-vivo-caption-restoration-v2.json'),
 ]);
 assert.equal(sha(baseBytes),
