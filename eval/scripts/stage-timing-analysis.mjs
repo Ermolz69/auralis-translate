@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const marker = 'Input JSON:\n';
 const timingPrefix = 'auralis_eval_timing ';
-const inventory = [
+export const inventory = [
   ['natural_1_8b', 'v8-asus-natural-long-v1/attempt-UhjJZn/1_8b/state/auralis-translate.sqlite', 'e0d87164c730c362168e8109b3adbea9bb23965845f69f0bb31f02eac5a5f851'],
   ['natural_7b', 'v8-asus-natural-long-v1/attempt-UhjJZn/7b/state/auralis-translate.sqlite', '142290cb9cad56b83013fb00db57de7611a80ee6e8a7072a85d3410a1ca575c0'],
   ['resume_1_8b', 'v8-asus-copy-resume-v1/attempt-1LHWcZ/1_8b/state/auralis-translate.sqlite', '520d7628753ca8db2a8d94e8e3c9130fddb9b588aa658924b2f8c0a665d78b44'],

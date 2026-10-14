@@ -1574,6 +1574,13 @@ tasks:
     desc: Reconcile the latest private PERF-02 timing report with the durable request journals
     cmds:
       - node eval/scripts/stage-timing-analysis.mjs --check
+      - node --check eval/scripts/publish-stage-timing.mjs
+      - node eval/scripts/publish-stage-timing.mjs --check
+  eval:timing:publish:
+    desc: Publish source-free PERF-02 aggregates from pinned private attempts
+    cmds:
+      - node --check eval/scripts/publish-stage-timing.mjs
+      - node eval/scripts/publish-stage-timing.mjs --write
   test:scene-map:
     desc: Verify scene-bound context, frozen map admission and resume identity
     cmds:
