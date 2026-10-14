@@ -45,7 +45,10 @@ async function waitForReviewedExit(process, timeoutMs) {
   try {
     await waitForExit(process, timeoutMs);
   } catch (error) {
-    if (process.child.exitCode !== 3 || !events(process).some(event => event.event === 'result')) {
+    const hasResult = process.stdout.split(/\r?\n/u).some(line => line.startsWith('result_id='))
+      || (process.stdout.trimStart().startsWith('{')
+        && events(process).some(event => event.event === 'result'));
+    if (process.child.exitCode !== 3 || !hasResult) {
       throw error;
     }
   }
@@ -136,7 +139,7 @@ async function runArm(spec, kind) {
       { maxCaptureCharacters: 4 * 1024 * 1024 });
       await waitForHealthyServer(url, server, Math.min(180_000, remaining()));
       arm.external_spawn_to_ready_ms = performance.now() - startedServer;
-      args = ['--jsonl', 'translate-v5-scene', input, state, spec.profilePath, scene, url, output];
+      args = ['translate-v5-scene', input, state, spec.profilePath, scene, url, output];
     }
     sampler = runtimeSampler(path.join(armDirectory, 'resources.jsonl'), root,
       () => [server, cli].filter(item => item && item.child.exitCode === null &&
