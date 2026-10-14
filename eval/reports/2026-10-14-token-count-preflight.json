@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "experiment": "PERF-01-token-count-preflight-v1",
+  "split": "known_development_not_holdout",
+  "base_commit": "cba0280a4ec7f38298f50f3bc52d001585a42908",
+  "candidate_dirty_during_probe": true,
+  "runtime_build": "b10977-0ecb159c9",
+  "runtime_executable_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+  "parity": [
+    {
+      "model": "Hy-MT2-1.8B-Q4_K_M",
+      "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+      "private_report_sha256": "818c9a6829fb1f7f4f2a37498bc10c47b9338f230de6f950c50d565bd47105c5",
+      "pairs": 60,
+      "mismatches": 0,
+      "old_http_requests": 120,
+      "new_http_requests": 60,
+      "old_http_sum_ms": 613.4314,
+      "new_http_sum_ms": 536.9708,
+      "old_pair_p50_ms": 7.83405,
+      "old_pair_p95_ms": 16.7016,
+      "new_pair_p50_ms": 6.61125,
+      "new_pair_p95_ms": 15.1658,
+      "v8_boundary_input_tokens": 2048
+    },
+    {
+      "model": "Hy-MT2-7B-Q4_K_M",
+      "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+      "private_report_sha256": "db74658d2b00f8f9ebc1f2e81e3637fbe3a6246ee066b37ceb7c0cb9365649c3",
+      "pairs": 60,
+      "mismatches": 0,
+      "old_http_requests": 120,
+      "new_http_requests": 60,
+      "old_http_sum_ms": 579.9918,
+      "new_http_sum_ms": 502.5337,
+      "old_pair_p50_ms": 8.26065,
+      "old_pair_p95_ms": 16.2183,
+      "new_pair_p50_ms": 7.33195,
+      "new_pair_p95_ms": 12.9546,
+      "v8_boundary_input_tokens": 2224
+    }
+  ],
+  "local_e2e": {
+    "private_report_sha256": "a936a7d0a53d66e64f4825063f0b12881c12667a5b57d081fac05ddee051cb47",
+    "profile_sha256": "82b0d4d5a37ee742dd40697e01e60bb251b5230dbdec29313b05f702e1380193",
+    "run_formats": ["srt", "vtt", "srt"],
+    "chat_requests": 6,
+    "count_input_tokens_requests": 6,
+    "legacy_preflight_requests": 0,
+    "count_input_tokens_http_sum_ms": 61,
+    "chat_http_sum_ms": 16006,
+    "source_unchanged": true,
+    "separate_results": true,
+    "offline_exports_byte_identical": true
+  },
+  "whole_file_speedup_measured": false,
+  "language_quality_accepted": false,
+  "release_gate_closed": false
+}

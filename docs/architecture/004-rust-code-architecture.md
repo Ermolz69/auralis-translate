@@ -31,6 +31,14 @@ The llama.cpp adapter exports model-file hashing and checked-server preflight fo
 
 The CLI-owned local-server path hashes the selected model before launching its child, validates the ready server's reported alias, build, context, path and file size without rereading the model, then performs the full SHA-256 checked preflight immediately before inference. This removes the redundant readiness hash and second readiness probe while retaining early model refusal and the durable attempt boundary. An independently supplied server continues through the unchanged full checked preflight. The readiness-only report check does not authorize inference or attest in-memory weights.
 
+The pinned `b10977-0ecb159c9` provider counts a rendered chat request through
+`/v1/chat/completions/input_tokens` before context admission, recording one
+durable request. Its result was compared with the earlier template-plus-tokenize
+pair on both installed model sizes before use. Profiles with another or no
+runtime build identity retain the two-request counter. Context trimming and
+batch splitting still use the exact server count; an invalid count prevents
+inference.
+
 The same adapter now has separate `release_manifest/` and `offline_install/` modules. The manifest module validates versioned upstream asset identity against a checked profile; the installer module verifies local files, extracts a constrained archive, and stages an experimental package. The CLI only parses installation arguments and calls the installer. Auralis owns application-data placement and backend selection through its experimental package workflow. Keep package operations out of the core/domain crates; see [the installation boundary](007-model-installation.md).
 
 ## Suggested layout

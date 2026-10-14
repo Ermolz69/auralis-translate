@@ -9,7 +9,7 @@ const phases = [
   { title: 'База и план', prefixes: ['BASE', 'PLAN'] },
   { title: 'Данные и сравнения', prefixes: ['DATA', 'EVAL'] },
   { title: 'Контекст и термины', prefixes: ['CTX', 'NAME', 'TERM'] },
-  { title: 'Куски и длинные файлы', prefixes: ['LONG'] },
+  { title: 'Куски и длинные файлы', prefixes: ['LONG', 'PERF'] },
   { title: 'Выбор и дообучение', prefixes: ['DECIDE', 'TUNE', 'PRECISION'] },
   { title: 'Доставка и релиз перевода', prefixes: ['CLI', 'HOST', 'RELEASE'] },
   { title: 'Настоящая озвучка', prefixes: ['VOICE'] },

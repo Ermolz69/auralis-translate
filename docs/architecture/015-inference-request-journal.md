@@ -48,3 +48,13 @@ Schema 8 is forward-only: a schema-7 binary rejects an upgraded database.
 Before any production rollout, preserve a restorable copy of the schema-7
 database. A rollback restores that copy alongside the old executable; do not
 silently drop preflight rows to make an upgraded database readable by old code.
+
+Schema 11 adds `count_input_tokens` as a distinct request kind for checked
+llama.cpp build `b10977-0ecb159c9`. One journal row retains the exact
+`/v1/chat/completions/input_tokens` body, bounded raw reply, elapsed time and
+outcome before the chat request. The old `apply_template` and `tokenize` rows
+remain readable and unchanged; profiles without the pinned build retain that
+two-request path. A checked server missing the count endpoint fails before
+chat. The migration copies prior rows without relabeling them and is
+forward-only. Rollback requires a pre-upgrade database copy with the older
+binary; schema-10 binaries cannot read schema 11.

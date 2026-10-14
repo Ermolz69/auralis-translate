@@ -27,6 +27,8 @@ const PROPS_PATH: &str = "/props";
 const MODELS_PATH: &str = "/v1/models";
 const APPLY_TEMPLATE_PATH: &str = "/apply-template";
 const TOKENIZE_PATH: &str = "/tokenize";
+const COUNT_INPUT_TOKENS_PATH: &str = "/v1/chat/completions/input_tokens";
+const EXACT_COUNT_RUNTIME_BUILD: &str = "b10977-0ecb159c9";
 const RESPONSE_SCHEMA_VERSION: u32 = 1;
 
 #[derive(Clone, Copy)]
@@ -354,6 +356,7 @@ impl LlamaCppProvider {
         let path = match kind {
             InferenceRequestKind::ApplyTemplate => APPLY_TEMPLATE_PATH,
             InferenceRequestKind::Tokenize => TOKENIZE_PATH,
+            InferenceRequestKind::CountInputTokens => COUNT_INPUT_TOKENS_PATH,
             InferenceRequestKind::ChatCompletion => {
                 return Err(ProviderError::Permanent("invalid preflight kind".into()));
             }
@@ -475,13 +478,29 @@ impl LlamaCppProvider {
         target: PreflightTarget,
         control: Option<(&dyn RunControl, RunId)>,
     ) -> Result<usize, ProviderError> {
+        let chat_body = json!({
+            "model": self.profile.model_alias,
+            "messages": [{"role": "user", "content": prompt_text}],
+            "response_format": response_format,
+        });
+        if self.profile.runtime_build_info.as_deref() == Some(EXACT_COUNT_RUNTIME_BUILD) {
+            let counted = self.preflight_post(
+                InferenceRequestKind::CountInputTokens,
+                chat_body,
+                target,
+                control,
+            )?;
+            return counted["input_tokens"]
+                .as_u64()
+                .filter(|count| *count > 0)
+                .and_then(|count| usize::try_from(count).ok())
+                .ok_or_else(|| {
+                    ProviderError::Permanent("llama.cpp returned invalid input token count".into())
+                });
+        }
         let template = self.preflight_post(
             InferenceRequestKind::ApplyTemplate,
-            json!({
-                "model": self.profile.model_alias,
-                "messages": [{"role": "user", "content": prompt_text}],
-                "response_format": response_format,
-            }),
+            chat_body,
             target,
             control,
         )?;
@@ -747,6 +766,10 @@ fn parse_preflight_json(
             if value["tokens"].as_array().is_some_and(|tokens| {
                 !tokens.is_empty() && tokens.iter().all(|token| token.as_u64().is_some())
             }) => {}
+        InferenceRequestKind::CountInputTokens
+            if value["input_tokens"]
+                .as_u64()
+                .is_some_and(|count| count > 0) => {}
         InferenceRequestKind::ApplyTemplate => {
             return Err(ProviderError::Permanent(
                 "llama.cpp returned no rendered chat prompt".into(),
@@ -755,6 +778,11 @@ fn parse_preflight_json(
         InferenceRequestKind::Tokenize => {
             return Err(ProviderError::Permanent(
                 "llama.cpp returned invalid prompt tokens".into(),
+            ));
+        }
+        InferenceRequestKind::CountInputTokens => {
+            return Err(ProviderError::Permanent(
+                "llama.cpp returned invalid input token count".into(),
             ));
         }
         InferenceRequestKind::ChatCompletion => {

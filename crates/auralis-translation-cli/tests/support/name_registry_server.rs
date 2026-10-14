@@ -35,7 +35,7 @@ fn serve_with_reply(
     listener.set_nonblocking(true).map_err(|e| e.to_string())?;
     let deadline = Instant::now() + Duration::from_secs(30);
     let mut targets = Vec::new();
-    let requests = if fail_second { 9 } else { 6 };
+    let requests = if fail_second { 7 } else { 5 };
     for _ in 0..requests {
         let (mut stream, _) = loop {
             match listener.accept() {
@@ -91,6 +91,7 @@ fn serve_with_reply(
             "/v1/models"=>json!({"data":[{"id":"auralis-hy-mt2-7b-q4"}]}),
             "/apply-template"=>json!({"prompt":"mock-rendered-prompt"}),
             "/tokenize"=>json!({"tokens":[1,2,3,4,5,6,7,8,9,10]}),
+            "/v1/chat/completions/input_tokens"=>json!({"input_tokens":10}),
             "/v1/chat/completions"=>{
                 let request:Value=serde_json::from_slice(&raw[header_end..header_end+length]).map_err(|e|e.to_string())?;
                 let prompt=request["messages"][0]["content"].as_str().ok_or("prompt")?;

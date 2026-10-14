@@ -56,7 +56,7 @@ fn sends_only_bounded_target_terms_and_provenance() -> Result<(), Box<dyn Error>
     let result = translate_batch(&provider, &batch()?)?;
     assert_eq!(result[0].lines, ["Сяо Ван пришёл."]);
     let (request, preflight) = server.join().map_err(|_| "server panicked")??;
-    assert_eq!(preflight, 2);
+    assert_eq!(preflight, 1);
     let content = request["messages"][0]["content"].as_str().ok_or("prompt")?;
     let envelope: Value =
         serde_json::from_str(content.split_once("Input JSON:\n").ok_or("envelope")?.1)?;
@@ -104,6 +104,13 @@ fn serve(listener: &TcpListener) -> Result<(Value, usize), String> {
             "/apply-template" => {
                 preflight += 1;
                 serde_json::json!({"prompt":request["messages"][0]["content"]}).to_string()
+            }
+            "/v1/chat/completions/input_tokens" => {
+                preflight += 1;
+                if !request["messages"][0]["content"].as_str().ok_or("prompt")?.contains("Сяо Ван") {
+                    return Err("approved term missing from counted input".into());
+                }
+                serde_json::json!({"input_tokens":40}).to_string()
             }
             "/tokenize" => {
                 preflight += 1;

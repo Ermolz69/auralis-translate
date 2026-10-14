@@ -5,6 +5,7 @@ use auralis_translation::{
     InferenceRequestStart, SegmentId, SourceHash,
 };
 use auralis_translation_sqlite::{DbError, RunStop, SegmentSpec, SqliteConfig, TranslateDb};
+use rusqlite::Connection;
 use std::error::Error;
 use support::{run_spec, test_directory, translation_spec};
 
@@ -218,6 +219,75 @@ fn parsed_preflight_rows_survive_reopen_without_becoming_accepted_lines()
     assert_eq!(saved.len(), 1);
     assert_eq!(saved[0].start, template);
     assert_eq!(saved[0].finish, Some(parsed));
+    assert!(db.checkpoints(run.run_id)?.is_empty());
+    drop(db);
+    std::fs::remove_dir_all(directory)?;
+    Ok(())
+}
+
+#[test]
+fn schema_ten_preflight_survives_upgrade_and_new_count_kind_round_trips()
+-> Result<(), Box<dyn Error>> {
+    let directory = test_directory()?;
+    let path = directory.join("count-upgrade.sqlite");
+    let translation = translation_spec()?;
+    let run = run_spec()?;
+    let mut db = TranslateDb::open(&path, SqliteConfig::default())?;
+    db.ensure_translation(&translation)?;
+    db.ensure_segments(translation.translation_id, 20, &[source_segment()?])?;
+    let attempt = db.begin_attempt(&run, None)?;
+    let mut old = start("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa")?;
+    old.kind = InferenceRequestKind::ApplyTemplate;
+    db.begin_inference_request(attempt, &old)?;
+    let old_finish = InferenceRequestFinish {
+        request_id: old.request_id,
+        outcome: InferenceRequestOutcome::ParsedPreflightJson,
+        raw_response: Some(br#"{"prompt":"source"}"#.to_vec()),
+        restored_candidate: None,
+        prompt_tokens: None,
+        completion_tokens: None,
+        elapsed_ms: 7,
+        error_detail: None,
+    };
+    db.finish_inference_request(&old_finish)?;
+    drop(db);
+
+    let connection = Connection::open(&path)?;
+    connection.execute_batch(include_str!("../migrations/0009_inference_batches.sql"))?;
+    connection.pragma_update(None, "user_version", 10)?;
+    drop(connection);
+
+    let mut db = TranslateDb::open(&path, SqliteConfig::default())?;
+    assert_eq!(db.schema_version()?, 11);
+    assert_eq!(db.inference_requests(run.run_id)?[0].start, old);
+    assert_eq!(
+        db.inference_requests(run.run_id)?[0].finish,
+        Some(old_finish.clone())
+    );
+    let mut counted = start("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb")?;
+    counted.kind = InferenceRequestKind::CountInputTokens;
+    counted.rendered_request =
+        br#"{"model":"checked","messages":[{"role":"user","content":"source"}]}"#.to_vec();
+    db.begin_inference_request(attempt, &counted)?;
+    let count_finish = InferenceRequestFinish {
+        request_id: counted.request_id,
+        outcome: InferenceRequestOutcome::ParsedPreflightJson,
+        raw_response: Some(br#"{"input_tokens":11}"#.to_vec()),
+        restored_candidate: None,
+        prompt_tokens: None,
+        completion_tokens: None,
+        elapsed_ms: 4,
+        error_detail: None,
+    };
+    db.finish_inference_request(&count_finish)?;
+    drop(db);
+    let db = TranslateDb::open(&path, SqliteConfig::default())?;
+    let rows = db.inference_requests(run.run_id)?;
+    assert_eq!(rows.len(), 2);
+    assert_eq!(rows[0].start, old);
+    assert_eq!(rows[0].finish, Some(old_finish));
+    assert_eq!(rows[1].start, counted);
+    assert_eq!(rows[1].finish, Some(count_finish));
     assert!(db.checkpoints(run.run_id)?.is_empty());
     drop(db);
     std::fs::remove_dir_all(directory)?;

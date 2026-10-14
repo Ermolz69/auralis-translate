@@ -134,6 +134,23 @@ fn mock_server(reply: Reply, token_cost: TokenCost) -> Result<MockServer, Box<dy
                 .map_err(|error| error.to_string())?;
             let body = match path.as_str() {
                 "/apply-template" => json!({"prompt": request["messages"][0]["content"]}),
+                "/v1/chat/completions/input_tokens" => {
+                    let prompt = request["messages"][0]["content"]
+                        .as_str()
+                        .ok_or("missing chat prompt")?;
+                    let envelope = input_envelope(prompt)?;
+                    let context_count = envelope["source_context"]
+                        .as_array()
+                        .ok_or("missing source context")?
+                        .len();
+                    let count = match token_cost {
+                        TokenCost::Small => 100,
+                        TokenCost::ContextMustTrim if context_count > 0 => 1800,
+                        TokenCost::ContextMustTrim => 100,
+                        TokenCost::TooLarge => 3000,
+                    };
+                    json!({"input_tokens": count})
+                }
                 "/tokenize" => {
                     let prompt = request["content"]
                         .as_str()
@@ -327,7 +344,7 @@ fn v8_provider_reorders_only_the_target_and_context_json_fields() -> Result<(), 
         let translated = translate_batch(&provider, &context_money_batch()?)?;
         assert_eq!(translated[0].lines, ["Строка 1-0."]);
         let requests = finish_server(stop, server)?;
-        assert_eq!(requests.len(), 3);
+        assert_eq!(requests.len(), 2);
         let chat = requests
             .iter()
             .find(|(path, _)| path == "/v1/chat/completions")
@@ -398,19 +415,18 @@ fn v7_maps_multiline_money_and_context_without_exposing_context_as_target()
     );
     let starts = journal.starts.lock().map_err(|_| "journal lock")?;
     let finishes = journal.finishes.lock().map_err(|_| "journal lock")?;
-    assert_eq!(starts.len(), 3);
+    assert_eq!(starts.len(), 2);
     assert_eq!(
         starts.iter().map(|row| row.kind).collect::<Vec<_>>(),
         [
-            InferenceRequestKind::ApplyTemplate,
-            InferenceRequestKind::Tokenize,
+            InferenceRequestKind::CountInputTokens,
             InferenceRequestKind::ChatCompletion
         ]
     );
-    assert_eq!(finishes[2].outcome, InferenceRequestOutcome::ValidatedBatch);
+    assert_eq!(finishes[1].outcome, InferenceRequestOutcome::ValidatedBatch);
     assert_eq!(
         serde_json::from_str::<Vec<String>>(
-            finishes[2]
+            finishes[1]
                 .restored_candidate
                 .as_deref()
                 .ok_or("no candidate")?
@@ -474,7 +490,7 @@ fn v7_v8_strip_only_terminal_line_breaks_after_json_decoding() -> Result<(), Box
                     .all(|line| !line.chars().any(char::is_control))
             );
             let requests = finish_server(stop, server)?;
-            assert_eq!(requests.len(), 3);
+            assert_eq!(requests.len(), 2);
             let finishes = journal.finishes.lock().map_err(|_| "journal lock")?;
             let last = finishes.last().ok_or("missing finish")?;
             assert_eq!(last.outcome, InferenceRequestOutcome::ValidatedBatch);
@@ -510,7 +526,7 @@ fn v7_v8_keep_internal_and_leading_controls_invalid() -> Result<(), Box<dyn Erro
             .with_inference_journal(journal.clone());
         assert!(translate_batch(&provider, &batch(4, 0, false)?).is_err());
         let requests = finish_server(stop, server)?;
-        assert_eq!(requests.len(), 3);
+        assert_eq!(requests.len(), 2);
         let finishes = journal.finishes.lock().map_err(|_| "journal lock")?;
         let last = finishes.last().ok_or("missing finish")?;
         assert_eq!(last.outcome, InferenceRequestOutcome::InvalidCandidate);
@@ -708,7 +724,7 @@ fn v7_trims_context_then_rejects_unsized_single_target_without_chat() -> Result<
     assert_eq!(
         requests
             .iter()
-            .filter(|(path, _)| path == "/tokenize")
+            .filter(|(path, _)| path == "/v1/chat/completions/input_tokens")
             .count(),
         3
     );

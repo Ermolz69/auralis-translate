@@ -1532,6 +1532,28 @@ tasks:
     cmds:
       - cargo test --offline -p auralis-translation-sqlite --test inference_requests --test migrations
       - cargo test --offline -p auralis-translation-llamacpp --test context_v5
+  eval:token-count:parity:
+    desc: Compare pinned model chat input-token count with the durable two-request baseline; opt-in
+    requires:
+      vars: [MODEL_FILE, PROFILE_FILE]
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.MODEL_FILE}}'
+      AURALIS_TEST_PROFILE: '{{.PROFILE_FILE}}'
+    cmds:
+      - node --check eval/scripts/probe-token-count-parity.mjs
+      - node eval/scripts/probe-token-count-parity.mjs
+  eval:token-count:local:e2e:
+    desc: Run three bounded checked-v8 local SRT/WebVTT translations and verify one preflight per cue
+    requires:
+      vars: [MODEL_FILE]
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF: '{{.MODEL_FILE}}'
+    cmds:
+      - task: build:release
+      - node --check eval/scripts/cli-token-count-e2e.mjs
+      - node eval/scripts/cli-token-count-e2e.mjs
   test:scene-map:
     desc: Verify scene-bound context, frozen map admission and resume identity
     cmds:

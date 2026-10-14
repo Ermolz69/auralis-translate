@@ -3,6 +3,7 @@ pub enum InferenceRequestKind {
     ChatCompletion,
     ApplyTemplate,
     Tokenize,
+    CountInputTokens,
 }
 
 impl InferenceRequestKind {
@@ -11,6 +12,7 @@ impl InferenceRequestKind {
             Self::ChatCompletion => "chat_completion",
             Self::ApplyTemplate => "apply_template",
             Self::Tokenize => "tokenize",
+            Self::CountInputTokens => "count_input_tokens",
         }
     }
 
@@ -19,6 +21,7 @@ impl InferenceRequestKind {
             "chat_completion" => Some(Self::ChatCompletion),
             "apply_template" => Some(Self::ApplyTemplate),
             "tokenize" => Some(Self::Tokenize),
+            "count_input_tokens" => Some(Self::CountInputTokens),
             _ => None,
         }
     }

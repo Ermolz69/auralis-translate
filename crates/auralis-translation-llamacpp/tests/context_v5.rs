@@ -1,7 +1,7 @@
 use auralis_translation::{
     InferenceRequestFinish, InferenceRequestJournal, InferenceRequestKind, InferenceRequestOutcome,
-    InferenceRequestStart, LanguageCode, LanguagePair, RunId, SegmentId, SourceHash, SourceSegment,
-    TranslationBatch, TranslationId, TranslationProvider, translate_batch,
+    InferenceRequestStart, LanguageCode, LanguagePair, RunControl, RunId, SegmentId, SourceHash,
+    SourceSegment, TranslationBatch, TranslationId, TranslationProvider, translate_batch,
 };
 use auralis_translation_llamacpp::{LlamaCppProvider, ModelProfile};
 use serde_json::Value;
@@ -19,6 +19,14 @@ struct RecordedRequests {
     starts: Mutex<Vec<InferenceRequestStart>>,
     finishes: Mutex<Vec<InferenceRequestFinish>>,
     fail_begin: bool,
+}
+
+struct Paused;
+
+impl RunControl for Paused {
+    fn pause_requested(&self, _: RunId) -> Result<bool, Box<dyn Error>> {
+        Ok(true)
+    }
 }
 
 impl InferenceRequestJournal for RecordedRequests {
@@ -100,20 +108,18 @@ fn v5_journals_token_preflight_before_chat_with_exact_bodies() -> Result<(), Box
         .finishes
         .lock()
         .map_err(|_| "journal lock poisoned")?;
-    assert_eq!(starts.len(), 3);
-    assert_eq!(finishes.len(), 3);
+    assert_eq!(starts.len(), 2);
+    assert_eq!(finishes.len(), 2);
     assert_eq!(
         starts.iter().map(|item| item.kind).collect::<Vec<_>>(),
         [
-            InferenceRequestKind::ApplyTemplate,
-            InferenceRequestKind::Tokenize,
+            InferenceRequestKind::CountInputTokens,
             InferenceRequestKind::ChatCompletion,
         ]
     );
     assert_eq!(
         finishes.iter().map(|item| item.outcome).collect::<Vec<_>>(),
         [
-            InferenceRequestOutcome::ParsedPreflightJson,
             InferenceRequestOutcome::ParsedPreflightJson,
             InferenceRequestOutcome::ValidatedLine,
         ]
@@ -127,12 +133,12 @@ fn v5_journals_token_preflight_before_chat_with_exact_bodies() -> Result<(), Box
         assert!(serde_json::from_slice::<Value>(&start.rendered_request).is_ok());
         assert!(finish.raw_response.is_some());
     }
-    let template: Value = serde_json::from_slice(&starts[0].rendered_request)?;
-    let tokenize: Value = serde_json::from_slice(&starts[1].rendered_request)?;
-    assert_eq!(template["messages"][0]["role"], "user");
-    assert_eq!(tokenize["content"], template["messages"][0]["content"]);
+    let preflight: Value = serde_json::from_slice(&starts[0].rendered_request)?;
+    let chat: Value = serde_json::from_slice(&starts[1].rendered_request)?;
+    assert_eq!(preflight["messages"][0]["role"], "user");
+    assert_eq!(preflight["messages"], chat["messages"]);
+    assert_eq!(preflight["response_format"], chat["response_format"]);
     assert!(finishes[0].restored_candidate.is_none());
-    assert!(finishes[1].restored_candidate.is_none());
     Ok(())
 }
 
@@ -185,6 +191,7 @@ fn v5_retains_failed_tokenizer_preflight_without_sending_chat() -> Result<(), Bo
         profile["context_before_segments"] = 1.into();
         profile["max_context_bytes"] = 4096.into();
         profile["token_safety_margin_tokens"] = 64.into();
+        profile["runtime_build_info"] = "older-build".into();
         let provider = LlamaCppProvider::new(
             &format!("http://{address}/"),
             ModelProfile::from_json(&serde_json::to_vec(&profile)?)?,
@@ -218,6 +225,91 @@ fn v5_retains_failed_tokenizer_preflight_without_sending_chat() -> Result<(), Bo
         assert!(finishes[1].error_detail.is_some());
         assert!(finishes[1].restored_candidate.is_none());
     }
+    Ok(())
+}
+
+#[test]
+fn checked_v5_rejects_failed_or_invalid_input_count_before_chat() -> Result<(), Box<dyn Error>> {
+    for (status, body, expected) in [
+        (
+            "404 Not Found",
+            r#"{"error":"missing route"}"#,
+            InferenceRequestOutcome::OtherPermanent,
+        ),
+        (
+            "503 Service Unavailable",
+            r#"{"error":"busy"}"#,
+            InferenceRequestOutcome::TransportFailure,
+        ),
+        (
+            "200 OK",
+            r#"{"input_tokens":0}"#,
+            InferenceRequestOutcome::MalformedCandidate,
+        ),
+        (
+            "200 OK",
+            r#"{"input_tokens":"40"}"#,
+            InferenceRequestOutcome::MalformedCandidate,
+        ),
+    ] {
+        let listener = TcpListener::bind("127.0.0.1:0")?;
+        let address = listener.local_addr()?;
+        let server =
+            std::thread::spawn(move || serve_with_input_count_response(&listener, body, status));
+        let journal = Arc::new(RecordedRequests::default());
+        let mut profile: Value = serde_json::from_slice(PROFILE)?;
+        profile["context_before_segments"] = 1.into();
+        profile["max_context_bytes"] = 4096.into();
+        profile["token_safety_margin_tokens"] = 64.into();
+        let provider = LlamaCppProvider::new(
+            &format!("http://{address}/"),
+            ModelProfile::from_json(&serde_json::to_vec(&profile)?)?,
+        )?
+        .with_inference_journal(journal.clone());
+        assert!(provider.translate(&batch(true)?).is_err());
+        server.join().map_err(|_| "server panicked")??;
+        let starts = journal.starts.lock().map_err(|_| "journal lock poisoned")?;
+        let finishes = journal
+            .finishes
+            .lock()
+            .map_err(|_| "journal lock poisoned")?;
+        assert_eq!(starts.len(), 1);
+        assert_eq!(starts[0].kind, InferenceRequestKind::CountInputTokens);
+        assert_eq!(finishes.len(), 1);
+        assert_eq!(finishes[0].outcome, expected);
+        assert_eq!(finishes[0].raw_response.as_deref(), Some(body.as_bytes()));
+    }
+    Ok(())
+}
+
+#[test]
+fn checked_v5_pause_during_count_preflight_stops_before_chat() -> Result<(), Box<dyn Error>> {
+    let listener = TcpListener::bind("127.0.0.1:0")?;
+    listener.set_nonblocking(true)?;
+    let journal = Arc::new(RecordedRequests::default());
+    let mut profile: Value = serde_json::from_slice(PROFILE)?;
+    profile["context_before_segments"] = 1.into();
+    profile["max_context_bytes"] = 4096.into();
+    profile["token_safety_margin_tokens"] = 64.into();
+    let provider = LlamaCppProvider::new(
+        &format!("http://{}/", listener.local_addr()?),
+        ModelProfile::from_json(&serde_json::to_vec(&profile)?)?,
+    )?
+    .with_inference_journal(journal.clone());
+    assert!(
+        provider
+            .translate_with_control(&batch(true)?, &Paused)
+            .is_err()
+    );
+    let starts = journal.starts.lock().map_err(|_| "journal lock poisoned")?;
+    let finishes = journal
+        .finishes
+        .lock()
+        .map_err(|_| "journal lock poisoned")?;
+    assert_eq!(starts.len(), 1);
+    assert_eq!(starts[0].kind, InferenceRequestKind::CountInputTokens);
+    assert_eq!(finishes.len(), 1);
+    assert_eq!(finishes[0].outcome, InferenceRequestOutcome::Paused);
     Ok(())
 }
 
@@ -568,9 +660,9 @@ fn v5_neighbor_id_failure_retains_raw_candidate_without_accepting_target_text()
             .finishes
             .lock()
             .map_err(|_| "journal lock poisoned")?;
-        assert_eq!(finishes.len(), 3);
+        assert_eq!(finishes.len(), 2);
         let raw: Value = serde_json::from_slice(
-            finishes[2]
+            finishes[1]
                 .raw_response
                 .as_ref()
                 .ok_or("missing raw response")?,
@@ -579,14 +671,14 @@ fn v5_neighbor_id_failure_retains_raw_candidate_without_accepting_target_text()
         if accepted {
             let translated = result?;
             assert_eq!(translated[0].lines, ["Это не последний поезд."]);
-            assert_eq!(finishes[2].outcome, InferenceRequestOutcome::ValidatedLine);
+            assert_eq!(finishes[1].outcome, InferenceRequestOutcome::ValidatedLine);
         } else {
             assert!(result.is_err());
             assert_eq!(
-                finishes[2].outcome,
+                finishes[1].outcome,
                 InferenceRequestOutcome::InvalidCandidate
             );
-            assert!(finishes[2].restored_candidate.is_none());
+            assert!(finishes[1].restored_candidate.is_none());
         }
     }
     Ok(())
@@ -849,7 +941,14 @@ fn serve_with_mode(
     candidate: &str,
     oversized_when_far: bool,
 ) -> Result<Value, String> {
-    serve_custom(listener, candidate, oversized_when_far, "200 OK", None)
+    serve_custom(
+        listener,
+        candidate,
+        oversized_when_far,
+        "200 OK",
+        None,
+        None,
+    )
 }
 
 fn serve_with_chat_status(
@@ -857,7 +956,7 @@ fn serve_with_chat_status(
     body: &str,
     status: &str,
 ) -> Result<Value, String> {
-    serve_custom(listener, body, false, status, None)
+    serve_custom(listener, body, false, status, None, None)
 }
 
 fn serve_with_tokenize_response(
@@ -865,7 +964,15 @@ fn serve_with_tokenize_response(
     body: &str,
     status: &str,
 ) -> Result<Value, String> {
-    serve_custom(listener, "", false, "200 OK", Some((body, status)))
+    serve_custom(listener, "", false, "200 OK", Some((body, status)), None)
+}
+
+fn serve_with_input_count_response(
+    listener: &TcpListener,
+    body: &str,
+    status: &str,
+) -> Result<Value, String> {
+    serve_custom(listener, "", false, "200 OK", None, Some((body, status)))
 }
 
 fn serve_custom(
@@ -874,6 +981,7 @@ fn serve_custom(
     oversized_when_far: bool,
     chat_status: &str,
     tokenize_response: Option<(&str, &str)>,
+    count_response: Option<(&str, &str)>,
 ) -> Result<Value, String> {
     loop {
         let (mut stream, _) = listener.accept().map_err(|error| error.to_string())?;
@@ -916,6 +1024,12 @@ fn serve_custom(
                 .map_err(|error| error.to_string())?;
         let body = match path.as_str() {
             "/apply-template" => serde_json::json!({"prompt": request["messages"][0]["content"]}).to_string(),
+            "/v1/chat/completions/input_tokens" if count_response.is_some() => count_response.ok_or("no count response")?.0.to_owned(),
+            "/v1/chat/completions/input_tokens" => {
+                let prompt = request["messages"][0]["content"].as_str().ok_or("missing prompt")?;
+                let count = if oversized_when_far && prompt.contains("远处的旧消息") { 1800 } else { 40 };
+                serde_json::json!({"input_tokens": count}).to_string()
+            },
             "/tokenize" if tokenize_response.is_some() => tokenize_response.ok_or("no tokenizer response")?.0.to_owned(),
             "/tokenize" => {
                 let content = request["content"].as_str().ok_or("missing rendered prompt")?;
@@ -934,6 +1048,8 @@ fn serve_custom(
             chat_status
         } else if path == "/tokenize" {
             tokenize_response.map_or("200 OK", |(_, status)| status)
+        } else if path == "/v1/chat/completions/input_tokens" {
+            count_response.map_or("200 OK", |(_, status)| status)
         } else {
             "200 OK"
         };
@@ -944,7 +1060,10 @@ fn serve_custom(
         stream
             .write_all(response.as_bytes())
             .map_err(|error| error.to_string())?;
-        if path == "/v1/chat/completions" || (path == "/tokenize" && tokenize_response.is_some()) {
+        if path == "/v1/chat/completions"
+            || (path == "/tokenize" && tokenize_response.is_some())
+            || (path == "/v1/chat/completions/input_tokens" && count_response.is_some())
+        {
             return Ok(request);
         }
     }
