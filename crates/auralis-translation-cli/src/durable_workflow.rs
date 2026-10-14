@@ -1,11 +1,12 @@
 use crate::document_run_error::DocumentRunError;
 use crate::document_run_plan::DocumentRunPlan;
+use crate::eval_timing::{self, TimedCheckpointStore, TimedInferenceJournal};
 use crate::report_result::report_result;
 use crate::reporting::{CliEvent, CliFailure, CommandOutput, ErrorCode};
 use crate::write_new::write_new;
 use auralis_translation::{
-    BlockPolicy, ProviderError, ResultId, RetryPolicy, ReviewState, RunState, SourceHash,
-    VerifiedRenderer,
+    BlockPolicy, InferenceRequestJournal, ProviderError, ResultId, RetryPolicy, ReviewState,
+    RunState, SourceHash, VerifiedRenderer,
 };
 use auralis_translation_llamacpp::{
     LlamaCppProvider, ModelProfile, RequestControlPolicy, verify_server_with_control,
@@ -107,6 +108,7 @@ pub(crate) fn execute(
             outcome,
             &serde_json::json!({"elapsed_ms": preflight_started.elapsed().as_millis(), "reason": error.to_string()}),
         )?;
+        eval_timing::record("durable_model_preflight", preflight_started, false);
         return Err(Box::new(error));
     }
     if let Err(error) = &verification {
@@ -140,6 +142,11 @@ pub(crate) fn execute(
             }),
         )?;
     }
+    eval_timing::record(
+        "durable_model_preflight",
+        preflight_started,
+        verification.is_ok(),
+    );
     if let Some(report) = verification? {
         if reporter.is_machine() {
             reporter.emit(CliEvent::ModelReady {
@@ -174,8 +181,30 @@ pub(crate) fn execute(
             return Err(Box::new(error));
         }
     };
-    let provider = provider.with_inference_journal(Arc::new(journal));
-    let output = match plan.execute_with_policy(&provider, db, reporter, &control_db, retry) {
+    let journal: Arc<dyn InferenceRequestJournal> = if eval_timing::enabled() {
+        Arc::new(TimedInferenceJournal::new(journal))
+    } else {
+        Arc::new(journal)
+    };
+    let provider = provider.with_inference_journal(journal);
+    let translation_started = Instant::now();
+    let translated = if eval_timing::enabled() {
+        plan.execute_with_policy(
+            &provider,
+            &mut TimedCheckpointStore::new(db),
+            reporter,
+            &control_db,
+            retry,
+        )
+    } else {
+        plan.execute_with_policy(&provider, db, reporter, &control_db, retry)
+    };
+    eval_timing::record(
+        "translation_execute",
+        translation_started,
+        translated.is_ok(),
+    );
+    let output = match translated {
         Ok(output) => output,
         Err(DocumentRunError::Paused(error)) => {
             db.stop_attempt(run.run_id, attempt, RunStop::Paused, "pause requested")?;
@@ -195,7 +224,10 @@ pub(crate) fn execute(
         block_fingerprints: plan.block_fingerprints(),
         review_state: ReviewState::NeedsReview,
     };
-    let committed = match db.commit_result(&result, plan) {
+    let commit_started = Instant::now();
+    let committed_result = db.commit_result(&result, plan);
+    eval_timing::record("result_commit", commit_started, committed_result.is_ok());
+    let committed = match committed_result {
         Ok(committed) => committed,
         Err(error @ auralis_translation_sqlite::DbError::PauseRequested) => {
             db.stop_attempt(run.run_id, attempt, RunStop::Paused, "pause requested")?;
@@ -214,7 +246,10 @@ pub(crate) fn execute(
     if committed.output_hash != SourceHash::digest(&output) {
         return Err("verified result differs from the completed output".into());
     }
-    write_new(config.output_path, &output)?;
+    let output_started = Instant::now();
+    let written = write_new(config.output_path, &output);
+    eval_timing::record("output_write", output_started, written.is_ok());
+    written?;
     report_result(reporter, run, &committed, &output, config.output_path)
 }
 
@@ -242,6 +277,9 @@ pub(crate) fn export_validated(
             "regenerated output hash differs from validated result",
         ));
     }
-    write_new(output_path, &output)?;
+    let output_started = Instant::now();
+    let written = write_new(output_path, &output);
+    eval_timing::record("offline_output_write", output_started, written.is_ok());
+    written?;
     report_result(reporter, run, &result, &output, output_path)
 }

@@ -108,19 +108,22 @@ fn machine_translate_and_offline_export_preserve_both_formats_and_review_exit()
         let listener = TcpListener::bind("127.0.0.1:0")?;
         let endpoint = format!("http://{}/", listener.local_addr()?);
         let server = std::thread::spawn(move || machine_server::serve(listener, 1, None));
-        let output = invoke(&[
-            "--jsonl",
-            if format == "srt" {
-                "translate"
-            } else {
-                "translate-vtt"
-            },
-            text(&source)?,
-            text(&state)?,
-            text(&profile)?,
-            &endpoint,
-            text(&output_path)?,
-        ])?;
+        let output = Command::new(env!("CARGO_BIN_EXE_auralis-translation-cli"))
+            .env("AURALIS_EVAL_TIMINGS", "1")
+            .args([
+                "--jsonl",
+                if format == "srt" {
+                    "translate"
+                } else {
+                    "translate-vtt"
+                },
+                text(&source)?,
+                text(&state)?,
+                text(&profile)?,
+                &endpoint,
+                text(&output_path)?,
+            ])
+            .output()?;
         server.join().map_err(|_| "server panicked")??;
         assert_eq!(
             output.status.code(),
@@ -128,6 +131,30 @@ fn machine_translate_and_offline_export_preserve_both_formats_and_review_exit()
             "{}",
             String::from_utf8_lossy(&output.stderr)
         );
+        let timings = String::from_utf8(output.stderr.clone())?
+            .lines()
+            .filter_map(|line| line.strip_prefix("auralis_eval_timing "))
+            .map(serde_json::from_str::<Value>)
+            .collect::<Result<Vec<_>, _>>()?;
+        for phase in [
+            "durable_model_preflight",
+            "translation_execute",
+            "checkpoint_load",
+            "checkpoint_commit",
+            "result_commit",
+            "output_write",
+        ] {
+            assert!(
+                timings.iter().any(|row| row["phase"] == phase),
+                "missing {phase}: {timings:?}"
+            );
+        }
+        assert!(
+            timings
+                .iter()
+                .all(|row| row["elapsed_us"].as_u64().is_some())
+        );
+        assert!(!String::from_utf8_lossy(&output.stderr).contains("你好。"));
         let events = lines(&output)?;
         assert_eq!(events[0]["event"], "run_started");
         assert!(events.iter().any(|event| event["event"] == "progress"
