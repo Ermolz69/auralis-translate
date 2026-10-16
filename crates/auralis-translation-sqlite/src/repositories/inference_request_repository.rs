@@ -1,3 +1,4 @@
+use crate::eval_journal_timing::PhaseTimer;
 use crate::{AttemptId, DbError, InferenceRequestRecord};
 use auralis_translation::{
     InferenceRequestFinish, InferenceRequestId, InferenceRequestKind, InferenceRequestOutcome,
@@ -254,7 +255,10 @@ pub(crate) fn finish(
     }
     let elapsed_ms = i64::try_from(finish.elapsed_ms)
         .map_err(|_| DbError::InvalidSpec("inference duration exceeds SQLite range"))?;
+    let begin_timer = PhaseTimer::new("transaction_begin");
     let transaction = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
+    drop(begin_timer);
+    let read_timer = PhaseTimer::new("read_validate");
     let saved = load_one(&transaction, finish.request_id)?
         .ok_or(DbError::Conflict("inference request does not exist"))?;
     if (saved.start.kind == InferenceRequestKind::ChatCompletion
@@ -267,6 +271,8 @@ pub(crate) fn finish(
     {
         return Err(DbError::InvalidSpec("inference kind and outcome differ"));
     }
+    drop(read_timer);
+    let update_timer = PhaseTimer::new("update");
     let changed = transaction.execute(
         "UPDATE inference_requests SET outcome = ?2, raw_response = ?3,
             restored_candidate = ?4, prompt_tokens = ?5, completion_tokens = ?6,
@@ -285,7 +291,9 @@ pub(crate) fn finish(
             finish.error_detail,
         ],
     )?;
+    drop(update_timer);
     if changed != 1 {
+        let read_timer = PhaseTimer::new("idempotent_read_validate");
         let saved = load_one(&transaction, finish.request_id)?
             .ok_or(DbError::Conflict("inference request does not exist"))?;
         if saved.finish.as_ref() != Some(finish) {
@@ -293,8 +301,11 @@ pub(crate) fn finish(
                 "inference request result differs from saved result",
             ));
         }
+        drop(read_timer);
     }
+    let commit_timer = PhaseTimer::new("commit");
     transaction.commit()?;
+    drop(commit_timer);
     Ok(())
 }
 
