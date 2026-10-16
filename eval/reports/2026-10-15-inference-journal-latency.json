@@ -1,0 +1,438 @@
+{
+  "schema_version": 1,
+  "experiment": "PERF-03",
+  "baseline_commit": "587789e",
+  "plan": "eval/experiments/2026-10-14-inference-journal-latency-plan.md",
+  "fixture": [
+    {
+      "label": "baseline",
+      "repetitions": [
+        {
+          "repetition": 1,
+          "count": 54,
+          "sum_us": 124013,
+          "p50_us": 2244,
+          "p95_us": 2597,
+          "max_us": 2671
+        },
+        {
+          "repetition": 2,
+          "count": 54,
+          "sum_us": 123595,
+          "p50_us": 2250,
+          "p95_us": 2774,
+          "max_us": 3071
+        },
+        {
+          "repetition": 3,
+          "count": 54,
+          "sum_us": 129694,
+          "p50_us": 2279,
+          "p95_us": 2689,
+          "max_us": 7354
+        }
+      ],
+      "phases_us": {
+        "mutex_wait": {
+          "count": 162,
+          "sum": 18,
+          "p50": 0,
+          "p95": 1,
+          "max": 1
+        },
+        "transaction_begin": {
+          "count": 162,
+          "sum": 4990,
+          "p50": 29,
+          "p95": 41,
+          "max": 53
+        },
+        "read_validate": {
+          "count": 162,
+          "sum": 37189,
+          "p50": 213,
+          "p95": 294,
+          "max": 606
+        },
+        "update": {
+          "count": 162,
+          "sum": 19114,
+          "p50": 106,
+          "p95": 184,
+          "max": 275
+        },
+        "commit": {
+          "count": 162,
+          "sum": 268932,
+          "p50": 1600,
+          "p95": 1898,
+          "max": 6459
+        }
+      }
+    }
+  ],
+  "real": [
+    {
+      "label": "baseline-diagnostic-1",
+      "status": "probe_failed",
+      "code_commit": "587789e0d7685c0a04a64f1f37756eb87b5d222a",
+      "cli_sha256": "de275dd508fd685ddd14c2bb69e2d9ebf2f0af38aa54f9829984417f6740cf1c",
+      "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+      "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+      "profile_sha256": "a7850c4eb44b52597e1c3ba53d3342009d86373d8c320dd136e58dff563bfbf9",
+      "source_sha256": "fd6cd05e2a2fcf223a25216122161be75e940ec0f43068b217ea51c04587cd73",
+      "source_after_sha256": null,
+      "started_at": "2026-10-14T21:02:23.862Z",
+      "finished_at": "2026-10-14T21:02:23.913Z",
+      "cli_exit_code": null,
+      "cli_wall_ms": null,
+      "translation_execute_us": null,
+      "journal_finish_us": null,
+      "journal_phases_us": null,
+      "journal_share_translation_execute_percent": null,
+      "sqlite_settings": null,
+      "wal_salt_changes": null,
+      "wal_max_observed_bytes": null,
+      "chat_requests": null,
+      "preflight_requests": null,
+      "checkpoints": null,
+      "results": null,
+      "output_sha256": null,
+      "offline_reexport_equal": null
+    },
+    {
+      "label": "baseline-diagnostic-1",
+      "status": "completed",
+      "code_commit": "587789e0d7685c0a04a64f1f37756eb87b5d222a",
+      "cli_sha256": "c041e611331f15b9933f0c868aad91dcdbffa9e782292194cc269d76c27e592e",
+      "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+      "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+      "profile_sha256": "a7850c4eb44b52597e1c3ba53d3342009d86373d8c320dd136e58dff563bfbf9",
+      "source_sha256": "fd6cd05e2a2fcf223a25216122161be75e940ec0f43068b217ea51c04587cd73",
+      "source_after_sha256": "fd6cd05e2a2fcf223a25216122161be75e940ec0f43068b217ea51c04587cd73",
+      "started_at": "2026-10-14T21:03:37.677Z",
+      "finished_at": "2026-10-14T21:05:13.241Z",
+      "cli_exit_code": 3,
+      "cli_wall_ms": 95398.1494,
+      "translation_execute_us": {
+        "count": 1,
+        "sum": 36020059,
+        "p50": 36020059,
+        "p95": 36020059,
+        "max": 36020059,
+        "failed": 0
+      },
+      "journal_finish_us": {
+        "count": 16,
+        "sum": 1666226,
+        "p50": 43900,
+        "p95": 926185,
+        "max": 926185,
+        "failed": 0
+      },
+      "journal_phases_us": {
+        "mutex_wait": {
+          "count": 16,
+          "sum": 0,
+          "p50": 0,
+          "p95": 0,
+          "max": 0
+        },
+        "transaction_begin": {
+          "count": 16,
+          "sum": 514,
+          "p50": 31,
+          "p95": 39,
+          "max": 39
+        },
+        "read_validate": {
+          "count": 16,
+          "sum": 1563,
+          "p50": 87,
+          "p95": 150,
+          "max": 150
+        },
+        "update": {
+          "count": 16,
+          "sum": 1753,
+          "p50": 95,
+          "p95": 178,
+          "max": 178
+        },
+        "commit": {
+          "count": 16,
+          "sum": 1351229,
+          "p50": 24037,
+          "p95": 904840,
+          "max": 904840
+        }
+      },
+      "journal_share_translation_execute_percent": 4.6258280698540775,
+      "sqlite_settings": [
+        {
+          "schema_version": 1,
+          "journal_mode": "wal",
+          "synchronous": 2,
+          "wal_autocheckpoint": 1000,
+          "page_size": 4096,
+          "busy_timeout_ms": 5000
+        }
+      ],
+      "wal_salt_changes": 0,
+      "wal_max_observed_bytes": 782832,
+      "chat_requests": 8,
+      "preflight_requests": {
+        "count_input_tokens": 8
+      },
+      "checkpoints": 8,
+      "results": 1,
+      "output_sha256": "abbe1c761509167ece6b16b10de49a1e3a073dad7e78e741bd6bcf022546b395",
+      "offline_reexport_equal": true,
+      "commit_by_request_kind_us": {
+        "count_input_tokens": {
+          "count": 8,
+          "sum": 190395,
+          "p50": 23922,
+          "p95": 31573,
+          "max": 31573
+        },
+        "chat_completion": {
+          "count": 8,
+          "sum": 1160834,
+          "p50": 25217,
+          "p95": 904840,
+          "max": 904840
+        }
+      }
+    },
+    {
+      "label": "baseline-diagnostic-2",
+      "status": "completed",
+      "code_commit": "587789e0d7685c0a04a64f1f37756eb87b5d222a",
+      "cli_sha256": "c041e611331f15b9933f0c868aad91dcdbffa9e782292194cc269d76c27e592e",
+      "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+      "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+      "profile_sha256": "a7850c4eb44b52597e1c3ba53d3342009d86373d8c320dd136e58dff563bfbf9",
+      "source_sha256": "fd6cd05e2a2fcf223a25216122161be75e940ec0f43068b217ea51c04587cd73",
+      "source_after_sha256": "fd6cd05e2a2fcf223a25216122161be75e940ec0f43068b217ea51c04587cd73",
+      "started_at": "2026-10-14T21:05:46.067Z",
+      "finished_at": "2026-10-14T21:07:23.890Z",
+      "cli_exit_code": 3,
+      "cli_wall_ms": 97686.84550000001,
+      "translation_execute_us": {
+        "count": 1,
+        "sum": 40318200,
+        "p50": 40318200,
+        "p95": 40318200,
+        "max": 40318200,
+        "failed": 0
+      },
+      "journal_finish_us": {
+        "count": 16,
+        "sum": 3878271,
+        "p50": 34399,
+        "p95": 720158,
+        "max": 720158,
+        "failed": 0
+      },
+      "journal_phases_us": {
+        "mutex_wait": {
+          "count": 16,
+          "sum": 0,
+          "p50": 0,
+          "p95": 0,
+          "max": 0
+        },
+        "transaction_begin": {
+          "count": 16,
+          "sum": 534,
+          "p50": 32,
+          "p95": 42,
+          "max": 42
+        },
+        "read_validate": {
+          "count": 16,
+          "sum": 1348,
+          "p50": 78,
+          "p95": 119,
+          "max": 119
+        },
+        "update": {
+          "count": 16,
+          "sum": 1722,
+          "p50": 103,
+          "p95": 185,
+          "max": 185
+        },
+        "commit": {
+          "count": 16,
+          "sum": 3869378,
+          "p50": 33866,
+          "p95": 719638,
+          "max": 719638
+        }
+      },
+      "journal_share_translation_execute_percent": 9.619157105227911,
+      "sqlite_settings": [
+        {
+          "schema_version": 1,
+          "journal_mode": "wal",
+          "synchronous": 2,
+          "wal_autocheckpoint": 1000,
+          "page_size": 4096,
+          "busy_timeout_ms": 5000
+        }
+      ],
+      "wal_salt_changes": 0,
+      "wal_max_observed_bytes": 0,
+      "chat_requests": 8,
+      "preflight_requests": {
+        "count_input_tokens": 8
+      },
+      "checkpoints": 8,
+      "results": 1,
+      "output_sha256": "ba51d2612247a53bf5303cdd4a09619ac4699a437df54c2e160af090fcaae39b",
+      "offline_reexport_equal": true,
+      "commit_by_request_kind_us": {
+        "count_input_tokens": {
+          "count": 8,
+          "sum": 213057,
+          "p50": 25611,
+          "p95": 33866,
+          "max": 33866
+        },
+        "chat_completion": {
+          "count": 8,
+          "sum": 3656321,
+          "p50": 389385,
+          "p95": 719638,
+          "max": 719638
+        }
+      }
+    },
+    {
+      "label": "baseline-diagnostic-3",
+      "status": "completed",
+      "code_commit": "587789e0d7685c0a04a64f1f37756eb87b5d222a",
+      "cli_sha256": "c041e611331f15b9933f0c868aad91dcdbffa9e782292194cc269d76c27e592e",
+      "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+      "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+      "profile_sha256": "a7850c4eb44b52597e1c3ba53d3342009d86373d8c320dd136e58dff563bfbf9",
+      "source_sha256": "fd6cd05e2a2fcf223a25216122161be75e940ec0f43068b217ea51c04587cd73",
+      "source_after_sha256": "fd6cd05e2a2fcf223a25216122161be75e940ec0f43068b217ea51c04587cd73",
+      "started_at": "2026-10-14T21:08:16.075Z",
+      "finished_at": "2026-10-14T21:09:57.091Z",
+      "cli_exit_code": 3,
+      "cli_wall_ms": 100873.20479999999,
+      "translation_execute_us": {
+        "count": 1,
+        "sum": 41792981,
+        "p50": 41792981,
+        "p95": 41792981,
+        "max": 41792981,
+        "failed": 0
+      },
+      "journal_finish_us": {
+        "count": 16,
+        "sum": 5816793,
+        "p50": 32799,
+        "p95": 1215181,
+        "max": 1215181,
+        "failed": 0
+      },
+      "journal_phases_us": {
+        "mutex_wait": {
+          "count": 16,
+          "sum": 0,
+          "p50": 0,
+          "p95": 0,
+          "max": 0
+        },
+        "transaction_begin": {
+          "count": 16,
+          "sum": 588,
+          "p50": 33,
+          "p95": 46,
+          "max": 46
+        },
+        "read_validate": {
+          "count": 16,
+          "sum": 1460,
+          "p50": 83,
+          "p95": 125,
+          "max": 125
+        },
+        "update": {
+          "count": 16,
+          "sum": 1676,
+          "p50": 86,
+          "p95": 198,
+          "max": 198
+        },
+        "commit": {
+          "count": 16,
+          "sum": 5807761,
+          "p50": 32274,
+          "p95": 1214616,
+          "max": 1214616
+        }
+      },
+      "journal_share_translation_execute_percent": 13.918109837630391,
+      "sqlite_settings": [
+        {
+          "schema_version": 1,
+          "journal_mode": "wal",
+          "synchronous": 2,
+          "wal_autocheckpoint": 1000,
+          "page_size": 4096,
+          "busy_timeout_ms": 5000
+        }
+      ],
+      "wal_salt_changes": 0,
+      "wal_max_observed_bytes": 0,
+      "chat_requests": 8,
+      "preflight_requests": {
+        "count_input_tokens": 8
+      },
+      "checkpoints": 8,
+      "results": 1,
+      "output_sha256": "6ab2cda93bcc6b8a5bdfa44514d8ac88d805bc4faa4ef9ae95377b3baef122b9",
+      "offline_reexport_equal": true,
+      "commit_by_request_kind_us": {
+        "count_input_tokens": {
+          "count": 8,
+          "sum": 208198,
+          "p50": 25392,
+          "p95": 32274,
+          "max": 32274
+        },
+        "chat_completion": {
+          "count": 8,
+          "sum": 5599563,
+          "p50": 557324,
+          "p95": 1214616,
+          "max": 1214616
+        }
+      }
+    }
+  ],
+  "harness_failures": [
+    {
+      "stage": "fixture_compile",
+      "reason": "E0277 error conversion in first two compile attempts; corrected before any storage workload ran"
+    },
+    {
+      "stage": "real_harness",
+      "reason": "Node git child spawn EPERM before inference; revised harness to read HEAD without spawning"
+    },
+    {
+      "stage": "real_harness",
+      "reason": "Node CLI child spawn EPERM before inference; retained failed report and reran with approved process execution"
+    }
+  ],
+  "limitations": [
+    "Synthetic storage bytes are generated and do not establish real-model latency.",
+    "WAL header salt changes suggest reset but do not independently prove checkpoint duration.",
+    "Real runs are cold processes; operating-system cache state is uncontrolled."
+  ]
+}

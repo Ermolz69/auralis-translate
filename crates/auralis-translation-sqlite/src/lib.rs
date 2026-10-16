@@ -4,6 +4,7 @@ mod config;
 mod connection;
 mod diagnostic_codec;
 mod error;
+mod eval_journal_timing;
 mod inference_request_sink;
 mod migrations;
 mod model_preflight_outcome;

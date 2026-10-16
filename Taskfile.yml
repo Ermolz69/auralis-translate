@@ -1581,6 +1581,30 @@ tasks:
     cmds:
       - node --check eval/scripts/publish-stage-timing.mjs
       - node eval/scripts/publish-stage-timing.mjs --write
+  eval:journal:fixture:
+    desc: Run the bounded deterministic PERF-03 SQLite journal workload
+    env:
+      AURALIS_EVAL_JOURNAL_PHASES: '1'
+    cmds:
+      - cargo test --offline -p auralis-translation-sqlite --test journal_latency_probe -- --ignored --nocapture
+  eval:journal:real:
+    desc: Run the bounded real local 7B PERF-03 journal probe with a selected CLI binary
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_LARGE: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - node --check eval/scripts/probe-journal-latency.mjs
+      - node eval/scripts/probe-journal-latency.mjs
+  eval:journal:check:
+    desc: Check PERF-03 probe summaries and privacy-safe report contract
+    cmds:
+      - node --check eval/scripts/check-journal-latency.mjs
+      - node eval/scripts/check-journal-latency.mjs
+  eval:journal:publish:
+    desc: Publish the source-free PERF-03 latency report from retained private probes
+    cmds:
+      - node --check eval/scripts/check-journal-latency.mjs
+      - node eval/scripts/check-journal-latency.mjs --write
   test:scene-map:
     desc: Verify scene-bound context, frozen map admission and resume identity
     cmds:

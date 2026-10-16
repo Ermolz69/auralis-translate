@@ -5,8 +5,9 @@ use auralis_translation::{
     InferenceRequestStart, SegmentId, SourceHash,
 };
 use auralis_translation_sqlite::{DbError, RunStop, SegmentSpec, SqliteConfig, TranslateDb};
-use rusqlite::Connection;
+use rusqlite::{Connection, ErrorCode};
 use std::error::Error;
+use std::time::Duration;
 use support::{run_spec, test_directory, translation_spec};
 
 fn source_segment() -> Result<SegmentSpec, Box<dyn Error>> {
@@ -288,6 +289,51 @@ fn schema_ten_preflight_survives_upgrade_and_new_count_kind_round_trips()
     assert_eq!(rows[0].finish, Some(old_finish));
     assert_eq!(rows[1].start, counted);
     assert_eq!(rows[1].finish, Some(count_finish));
+    assert!(db.checkpoints(run.run_id)?.is_empty());
+    drop(db);
+    std::fs::remove_dir_all(directory)?;
+    Ok(())
+}
+
+#[test]
+fn locked_finish_keeps_pending_request_and_no_checkpoint() -> Result<(), Box<dyn Error>> {
+    let directory = test_directory()?;
+    let path = directory.join("locked-finish.sqlite");
+    let translation = translation_spec()?;
+    let run = run_spec()?;
+    let config = SqliteConfig::new(Duration::from_millis(50)).ok_or("invalid timeout")?;
+    let mut db = TranslateDb::open(&path, config)?;
+    db.ensure_translation(&translation)?;
+    db.ensure_segments(translation.translation_id, 20, &[source_segment()?])?;
+    let attempt = db.begin_attempt(&run, None)?;
+    let request = start("eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee")?;
+    db.begin_inference_request(attempt, &request)?;
+    let finish = InferenceRequestFinish {
+        request_id: request.request_id,
+        outcome: InferenceRequestOutcome::ValidatedLine,
+        raw_response: Some(br#"{"content":"accepted"}"#.to_vec()),
+        restored_candidate: Some("accepted".into()),
+        prompt_tokens: Some(11),
+        completion_tokens: Some(2),
+        elapsed_ms: 9,
+        error_detail: None,
+    };
+    let lock = Connection::open(&path)?;
+    lock.execute_batch("BEGIN IMMEDIATE")?;
+    let failed = db.finish_inference_request(&finish);
+    assert!(
+        matches!(&failed, Err(DbError::Sql(rusqlite::Error::SqliteFailure(code, _)))
+        if matches!(code.code, ErrorCode::DatabaseBusy | ErrorCode::DatabaseLocked))
+    );
+    assert!(db.checkpoints(run.run_id)?.is_empty());
+    drop(db);
+    lock.execute_batch("ROLLBACK")?;
+    drop(lock);
+    let mut db = TranslateDb::open(&path, config)?;
+    assert!(db.inference_requests(run.run_id)?[0].finish.is_none());
+    db.finish_inference_request(&finish)?;
+    db.finish_inference_request(&finish)?;
+    assert_eq!(db.inference_requests(run.run_id)?[0].finish, Some(finish));
     assert!(db.checkpoints(run.run_id)?.is_empty());
     drop(db);
     std::fs::remove_dir_all(directory)?;
