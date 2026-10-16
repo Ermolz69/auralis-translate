@@ -10,6 +10,7 @@ mod durable_start;
 mod durable_workflow;
 mod edit_command;
 mod edit_payload;
+mod eval_timing;
 mod experimental_command;
 mod glossary_input;
 mod inspect_command;

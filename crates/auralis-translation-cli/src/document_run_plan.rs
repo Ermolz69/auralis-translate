@@ -1,9 +1,9 @@
 use crate::document_run_error::DocumentRunError;
-use auralis_translation::ProgressSink;
 use auralis_translation::{
     ApprovedTerms, BlockPolicy, Glossary, LanguagePair, RetryPolicy, RunId, SegmentId, SourceHash,
     TargetSegment, TranslationId, VerifiedRenderer,
 };
+use auralis_translation::{CheckpointStore, ProgressSink};
 use auralis_translation_formats::srt::{SrtRunError, SrtRunPlan};
 use auralis_translation_formats::vtt::{VttRunError, VttRunPlan};
 use auralis_translation_llamacpp::LlamaCppProvider;
@@ -161,14 +161,17 @@ impl DocumentRunPlan {
         }
     }
 
-    pub fn execute_with_policy(
+    pub fn execute_with_policy<S: CheckpointStore>(
         &self,
         provider: &LlamaCppProvider,
-        store: &mut TranslateDb,
+        store: &mut S,
         progress: &mut impl ProgressSink,
         control: &TranslateDb,
         retry: RetryPolicy,
-    ) -> Result<Vec<u8>, DocumentRunError> {
+    ) -> Result<Vec<u8>, DocumentRunError>
+    where
+        S::Error: 'static,
+    {
         match self {
             Self::Srt(plan) => plan
                 .execute_with_policy(provider, store, progress, control, retry)

@@ -1,5 +1,6 @@
 use crate::document_run_plan::DocumentRunPlan;
 use crate::durable_workflow::{DATABASE_FILE, load_profile};
+use crate::eval_timing;
 use crate::read_source::{read_source, read_vtt_source};
 use crate::reporting::{CliFailure, CommandOutput, ErrorCode};
 use crate::start_input::StartInput;
@@ -64,19 +65,24 @@ pub(crate) fn translate(
             "output already exists",
         ));
     }
-    let source_bytes = match format {
-        DocumentRunPlan::SRT_FORMAT => {
-            let bytes = read_source(Path::new(source))?;
-            auralis_translation_formats::inspect(&bytes)?;
-            bytes
+    let source_started = Instant::now();
+    let inspected = (|| -> Result<Vec<u8>, Box<dyn Error>> {
+        match format {
+            DocumentRunPlan::SRT_FORMAT => {
+                let bytes = read_source(Path::new(source))?;
+                auralis_translation_formats::inspect(&bytes)?;
+                Ok(bytes)
+            }
+            DocumentRunPlan::VTT_FORMAT => {
+                let bytes = read_vtt_source(Path::new(source))?;
+                VttDocument::parse(&bytes)?;
+                Ok(bytes)
+            }
+            _ => Err("unsupported standalone source format".into()),
         }
-        DocumentRunPlan::VTT_FORMAT => {
-            let bytes = read_vtt_source(Path::new(source))?;
-            VttDocument::parse(&bytes)?;
-            bytes
-        }
-        _ => return Err("unsupported standalone source format".into()),
-    };
+    })();
+    eval_timing::record("source_inspect", source_started, inspected.is_ok());
+    let source_bytes = inspected?;
     drop(source_bytes);
     let server = LocalModelServer::start(profile_path, executable, model_file, gpu_layers)?;
     durable_start::run(
@@ -182,7 +188,10 @@ impl LocalModelServer {
         let expected_hash = SourceHash::parse_hex(&profile.model_file_sha256).ok_or_else(|| {
             CliFailure::boxed(ErrorCode::InvalidInput, "checked model SHA-256 is invalid")
         })?;
-        let (observed_hash, observed_bytes) = hash_file(&model_file)?;
+        let hash_started = Instant::now();
+        let hash_result = hash_file(&model_file);
+        eval_timing::record("prelaunch_model_hash", hash_started, hash_result.is_ok());
+        let (observed_hash, observed_bytes) = hash_result?;
         if observed_bytes != expected_bytes || observed_hash != expected_hash {
             return Err(CliFailure::boxed(
                 ErrorCode::ModelMismatch,
@@ -214,10 +223,17 @@ impl LocalModelServer {
             .stdin(Stdio::null())
             .stdout(Stdio::null())
             .stderr(Stdio::null());
-        let child = ServerChild::spawn(command)?;
+        let startup_started = Instant::now();
+        let spawned = ServerChild::spawn(command);
+        if spawned.is_err() {
+            eval_timing::record("server_spawn_to_ready", startup_started, false);
+        }
+        let child = spawned?;
         let endpoint = OsString::from(format!("http://{LOOPBACK_HOST}:{port}/"));
         let mut server = Self { endpoint, child };
-        server.wait_ready(&profile, &model_file)?;
+        let ready = server.wait_ready(&profile, &model_file);
+        eval_timing::record("server_spawn_to_ready", startup_started, ready.is_ok());
+        ready?;
         Ok(server)
     }
 

@@ -1554,6 +1554,33 @@ tasks:
       - task: build:release
       - node --check eval/scripts/cli-token-count-e2e.mjs
       - node eval/scripts/cli-token-count-e2e.mjs
+  eval:timing:inventory:
+    desc: Summarize retained private v8 request-token and duration distributions without inference
+    cmds:
+      - node --check eval/scripts/stage-timing-analysis.mjs
+      - node --test-isolation=none --test eval/scripts/tests/stage-timing-analysis.test.mjs
+      - node eval/scripts/stage-timing-analysis.mjs --inventory
+  eval:timing:probe:
+    desc: Run bounded ASUS v8 timing probes on both pinned models and local prefix checks
+    env:
+      AURALIS_TEST_LLAMA_SERVER: '{{.ROOT_DIR}}/.cache/runtime/llama/llama-server.exe'
+      AURALIS_TEST_GGUF_SMALL: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-1.8B-Q4_K_M.gguf'
+      AURALIS_TEST_GGUF_LARGE: '{{.ROOT_DIR}}/.cache/models/Hy-MT2-7B-Q4_K_M.gguf'
+    cmds:
+      - task: build:release
+      - node --check eval/scripts/probe-stage-timing.mjs
+      - node eval/scripts/probe-stage-timing.mjs
+  eval:timing:check:
+    desc: Reconcile the latest private PERF-02 timing report with the durable request journals
+    cmds:
+      - node eval/scripts/stage-timing-analysis.mjs --check
+      - node --check eval/scripts/publish-stage-timing.mjs
+      - node eval/scripts/publish-stage-timing.mjs --check
+  eval:timing:publish:
+    desc: Publish source-free PERF-02 aggregates from pinned private attempts
+    cmds:
+      - node --check eval/scripts/publish-stage-timing.mjs
+      - node eval/scripts/publish-stage-timing.mjs --write
   test:scene-map:
     desc: Verify scene-bound context, frozen map admission and resume identity
     cmds:

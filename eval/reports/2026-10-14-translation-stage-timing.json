@@ -1,0 +1,1902 @@
+{
+  "schema_version": 1,
+  "report_id": "PERF-02-translation-stage-timing-v1",
+  "units": {
+    "request_and_cli_duration": "ms",
+    "phase_duration": "us",
+    "tokens": "tokens"
+  },
+  "quantiles": "nearest-rank, sorted index ceil(p*n)-1",
+  "note": "Nested spans overlap; do not sum request or storage phases with translation_execute. Natural translation attempts stopped on invalid candidates and are partial.",
+  "historical": [
+    {
+      "id": "natural_1_8b",
+      "database_sha256": "e0d87164c730c362168e8109b3adbea9bb23965845f69f0bb31f02eac5a5f851",
+      "database": {
+        "schema_version": 9,
+        "chats": 55,
+        "unique_batches": 55,
+        "chats_per_batch": {
+          "count": 55,
+          "sum": 55,
+          "p50": 1,
+          "p95": 1,
+          "max": 1
+        },
+        "outcomes": {
+          "validated_batch": 54,
+          "invalid_candidate": 1
+        },
+        "by_outcome": {
+          "validated_batch": {
+            "chats": 54,
+            "prompt_tokens": {
+              "count": 54,
+              "sum": 25785,
+              "p50": 477,
+              "p95": 502,
+              "max": 517
+            },
+            "completion_tokens": {
+              "count": 54,
+              "sum": 9237,
+              "p50": 161,
+              "p95": 237,
+              "max": 244
+            },
+            "chat_elapsed_ms": {
+              "count": 54,
+              "sum": 75756,
+              "p50": 1364,
+              "p95": 1803,
+              "max": 1826
+            },
+            "finish_reasons": {
+              "stop": 54
+            }
+          },
+          "invalid_candidate": {
+            "chats": 1,
+            "prompt_tokens": {
+              "count": 1,
+              "sum": 467,
+              "p50": 467,
+              "p95": 467,
+              "max": 467
+            },
+            "completion_tokens": {
+              "count": 1,
+              "sum": 153,
+              "p50": 153,
+              "p95": 153,
+              "max": 153
+            },
+            "chat_elapsed_ms": {
+              "count": 1,
+              "sum": 1501,
+              "p50": 1501,
+              "p95": 1501,
+              "max": 1501
+            },
+            "finish_reasons": {
+              "stop": 1
+            }
+          }
+        },
+        "finish_reasons": {
+          "stop": 55
+        },
+        "prompt_tokens": {
+          "count": 55,
+          "sum": 26252,
+          "p50": 477,
+          "p95": 502,
+          "max": 517
+        },
+        "completion_tokens": {
+          "count": 55,
+          "sum": 9390,
+          "p50": 161,
+          "p95": 237,
+          "max": 244
+        },
+        "max_tokens": {
+          "count": 55,
+          "sum": 56320,
+          "p50": 1024,
+          "p95": 1024,
+          "max": 1024
+        },
+        "completion_reserve_ratio": {
+          "count": 55,
+          "sum": 9.169921875,
+          "p50": 0.1572265625,
+          "p95": 0.2314453125,
+          "max": 0.23828125
+        },
+        "target_slots": {
+          "count": 55,
+          "sum": 220,
+          "p50": 4,
+          "p95": 4,
+          "max": 4
+        },
+        "chat_elapsed_ms": {
+          "count": 55,
+          "sum": 77257,
+          "p50": 1366,
+          "p95": 1803,
+          "max": 1826
+        },
+        "preflight_kinds": {
+          "apply_template": 55,
+          "tokenize": 55
+        },
+        "preflight_elapsed_ms": {
+          "count": 110,
+          "sum": 329,
+          "p50": 3,
+          "p95": 4,
+          "max": 7
+        },
+        "checkpoints": 54,
+        "results": 0
+      }
+    },
+    {
+      "id": "natural_7b",
+      "database_sha256": "142290cb9cad56b83013fb00db57de7611a80ee6e8a7072a85d3410a1ca575c0",
+      "database": {
+        "schema_version": 9,
+        "chats": 36,
+        "unique_batches": 36,
+        "chats_per_batch": {
+          "count": 36,
+          "sum": 36,
+          "p50": 1,
+          "p95": 1,
+          "max": 1
+        },
+        "outcomes": {
+          "validated_batch": 36
+        },
+        "by_outcome": {
+          "validated_batch": {
+            "chats": 36,
+            "prompt_tokens": {
+              "count": 36,
+              "sum": 18182,
+              "p50": 502,
+              "p95": 538,
+              "max": 567
+            },
+            "completion_tokens": {
+              "count": 36,
+              "sum": 6677,
+              "p50": 182,
+              "p95": 229,
+              "max": 235
+            },
+            "chat_elapsed_ms": {
+              "count": 36,
+              "sum": 124756,
+              "p50": 3391,
+              "p95": 4496,
+              "max": 4697
+            },
+            "finish_reasons": {
+              "stop": 36
+            }
+          }
+        },
+        "finish_reasons": {
+          "stop": 36
+        },
+        "prompt_tokens": {
+          "count": 36,
+          "sum": 18182,
+          "p50": 502,
+          "p95": 538,
+          "max": 567
+        },
+        "completion_tokens": {
+          "count": 36,
+          "sum": 6677,
+          "p50": 182,
+          "p95": 229,
+          "max": 235
+        },
+        "max_tokens": {
+          "count": 36,
+          "sum": 36864,
+          "p50": 1024,
+          "p95": 1024,
+          "max": 1024
+        },
+        "completion_reserve_ratio": {
+          "count": 36,
+          "sum": 6.5205078125,
+          "p50": 0.177734375,
+          "p95": 0.2236328125,
+          "max": 0.2294921875
+        },
+        "target_slots": {
+          "count": 36,
+          "sum": 144,
+          "p50": 4,
+          "p95": 4,
+          "max": 4
+        },
+        "chat_elapsed_ms": {
+          "count": 36,
+          "sum": 124756,
+          "p50": 3391,
+          "p95": 4496,
+          "max": 4697
+        },
+        "preflight_kinds": {
+          "apply_template": 36,
+          "tokenize": 36
+        },
+        "preflight_elapsed_ms": {
+          "count": 72,
+          "sum": 293,
+          "p50": 4,
+          "p95": 12,
+          "max": 13
+        },
+        "checkpoints": 35,
+        "results": 0
+      }
+    },
+    {
+      "id": "resume_1_8b",
+      "database_sha256": "520d7628753ca8db2a8d94e8e3c9130fddb9b588aa658924b2f8c0a665d78b44",
+      "database": {
+        "schema_version": 9,
+        "chats": 63,
+        "unique_batches": 62,
+        "chats_per_batch": {
+          "count": 62,
+          "sum": 63,
+          "p50": 1,
+          "p95": 1,
+          "max": 2
+        },
+        "outcomes": {
+          "validated_batch": 61,
+          "invalid_candidate": 2
+        },
+        "by_outcome": {
+          "validated_batch": {
+            "chats": 61,
+            "prompt_tokens": {
+              "count": 61,
+              "sum": 29123,
+              "p50": 478,
+              "p95": 498,
+              "max": 517
+            },
+            "completion_tokens": {
+              "count": 61,
+              "sum": 10357,
+              "p50": 160,
+              "p95": 235,
+              "max": 244
+            },
+            "chat_elapsed_ms": {
+              "count": 61,
+              "sum": 84118,
+              "p50": 1358,
+              "p95": 1803,
+              "max": 1826
+            },
+            "finish_reasons": {
+              "stop": 61
+            }
+          },
+          "invalid_candidate": {
+            "chats": 2,
+            "prompt_tokens": {
+              "count": 2,
+              "sum": 936,
+              "p50": 467,
+              "p95": 469,
+              "max": 469
+            },
+            "completion_tokens": {
+              "count": 2,
+              "sum": 304,
+              "p50": 151,
+              "p95": 153,
+              "max": 153
+            },
+            "chat_elapsed_ms": {
+              "count": 2,
+              "sum": 2830,
+              "p50": 1329,
+              "p95": 1501,
+              "max": 1501
+            },
+            "finish_reasons": {
+              "stop": 2
+            }
+          }
+        },
+        "finish_reasons": {
+          "stop": 63
+        },
+        "prompt_tokens": {
+          "count": 63,
+          "sum": 30059,
+          "p50": 477,
+          "p95": 498,
+          "max": 517
+        },
+        "completion_tokens": {
+          "count": 63,
+          "sum": 10661,
+          "p50": 160,
+          "p95": 235,
+          "max": 244
+        },
+        "max_tokens": {
+          "count": 63,
+          "sum": 64512,
+          "p50": 1024,
+          "p95": 1024,
+          "max": 1024
+        },
+        "completion_reserve_ratio": {
+          "count": 63,
+          "sum": 10.4111328125,
+          "p50": 0.15625,
+          "p95": 0.2294921875,
+          "max": 0.23828125
+        },
+        "target_slots": {
+          "count": 63,
+          "sum": 252,
+          "p50": 4,
+          "p95": 4,
+          "max": 4
+        },
+        "chat_elapsed_ms": {
+          "count": 63,
+          "sum": 86948,
+          "p50": 1358,
+          "p95": 1803,
+          "max": 1826
+        },
+        "preflight_kinds": {
+          "apply_template": 63,
+          "tokenize": 63
+        },
+        "preflight_elapsed_ms": {
+          "count": 126,
+          "sum": 421,
+          "p50": 3,
+          "p95": 6,
+          "max": 11
+        },
+        "checkpoints": 61,
+        "results": 0
+      }
+    },
+    {
+      "id": "resume_7b",
+      "database_sha256": "f488d248e4ca99cc6c7f9b0efa1a7307f6d7b3e99876213b2df190b7399310f4",
+      "database": {
+        "schema_version": 9,
+        "chats": 37,
+        "unique_batches": 36,
+        "chats_per_batch": {
+          "count": 36,
+          "sum": 37,
+          "p50": 1,
+          "p95": 1,
+          "max": 2
+        },
+        "outcomes": {
+          "validated_batch": 36,
+          "invalid_candidate": 1
+        },
+        "by_outcome": {
+          "validated_batch": {
+            "chats": 36,
+            "prompt_tokens": {
+              "count": 36,
+              "sum": 18182,
+              "p50": 502,
+              "p95": 538,
+              "max": 567
+            },
+            "completion_tokens": {
+              "count": 36,
+              "sum": 6677,
+              "p50": 182,
+              "p95": 229,
+              "max": 235
+            },
+            "chat_elapsed_ms": {
+              "count": 36,
+              "sum": 124756,
+              "p50": 3391,
+              "p95": 4496,
+              "max": 4697
+            },
+            "finish_reasons": {
+              "stop": 36
+            }
+          },
+          "invalid_candidate": {
+            "chats": 1,
+            "prompt_tokens": {
+              "count": 1,
+              "sum": 502,
+              "p50": 502,
+              "p95": 502,
+              "max": 502
+            },
+            "completion_tokens": {
+              "count": 1,
+              "sum": 1024,
+              "p50": 1024,
+              "p95": 1024,
+              "max": 1024
+            },
+            "chat_elapsed_ms": {
+              "count": 1,
+              "sum": 17255,
+              "p50": 17255,
+              "p95": 17255,
+              "max": 17255
+            },
+            "finish_reasons": {
+              "length": 1
+            }
+          }
+        },
+        "finish_reasons": {
+          "stop": 36,
+          "length": 1
+        },
+        "prompt_tokens": {
+          "count": 37,
+          "sum": 18684,
+          "p50": 502,
+          "p95": 538,
+          "max": 567
+        },
+        "completion_tokens": {
+          "count": 37,
+          "sum": 7701,
+          "p50": 184,
+          "p95": 235,
+          "max": 1024
+        },
+        "max_tokens": {
+          "count": 37,
+          "sum": 37888,
+          "p50": 1024,
+          "p95": 1024,
+          "max": 1024
+        },
+        "completion_reserve_ratio": {
+          "count": 37,
+          "sum": 7.5205078125,
+          "p50": 0.1796875,
+          "p95": 0.2294921875,
+          "max": 1
+        },
+        "target_slots": {
+          "count": 37,
+          "sum": 148,
+          "p50": 4,
+          "p95": 4,
+          "max": 4
+        },
+        "chat_elapsed_ms": {
+          "count": 37,
+          "sum": 142011,
+          "p50": 3408,
+          "p95": 4697,
+          "max": 17255
+        },
+        "preflight_kinds": {
+          "apply_template": 37,
+          "tokenize": 37
+        },
+        "preflight_elapsed_ms": {
+          "count": 74,
+          "sum": 302,
+          "p50": 4,
+          "p95": 12,
+          "max": 13
+        },
+        "checkpoints": 35,
+        "results": 0
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "id": "attempt-YLA2o8",
+      "private_report_sha256": "2c943cc24fb65223680c96de9a86c278f61dcbffd6040f0c33e2e3d7a59f84f9",
+      "status": "incomplete",
+      "code_commit": "91f2a54c04d85c9c7f4e9f7639f3235b110032ed",
+      "harness_sha256": "c9e4ec44c3a3aeae0fbdb1c58171b19eb8b0d66d331e35b422e65ab7ba154914",
+      "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+      "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+      "started_at_utc": "2026-10-14T20:29:57.099Z",
+      "finished_at_utc": "2026-10-14T20:31:52.051Z",
+      "wall_ms": 145634.5696,
+      "arms": [
+        {
+          "model": "1_8b",
+          "kind": "natural_scene",
+          "status": "cli_failed",
+          "failure": "unsupported_machine_command",
+          "cli_exit_code": 2,
+          "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+          "profile_sha256": "1803aeb68428e1b138a17ed72b01abe1cc5fbc5845b5bca66a402b8936b1081f",
+          "input_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+          "source_preserved": true,
+          "output_sha256": null,
+          "database_sha256": null,
+          "offline_reexport_equal": null,
+          "cli_wall_ms": 484.7132000000056,
+          "external_spawn_to_ready_ms": 6489.8425000000025,
+          "database": null,
+          "timing": {
+            "record_count": 0,
+            "phases": {}
+          },
+          "resources": {
+            "sample_count": 1,
+            "interval_ms": 5000,
+            "tracked_working_set_peak_bytes": 1513639936,
+            "device_gpu_used_peak_mib": 2843,
+            "device_gpu_total_mib": 8192,
+            "sampler_error_count": 0,
+            "limitation": "Sampled process memory is a lower-bound peak; device GPU use includes other processes."
+          }
+        },
+        {
+          "model": "1_8b",
+          "kind": "local_prefix",
+          "status": "completed",
+          "failure": null,
+          "cli_exit_code": 3,
+          "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+          "profile_sha256": "32b6269105bc73de973cee0b0c8163b1289cd217b844eb0e719c48465425c432",
+          "input_sha256": "fd6cd05e2a2fcf223a25216122161be75e940ec0f43068b217ea51c04587cd73",
+          "source_preserved": true,
+          "output_sha256": "1aabbfdd43aeb430d70cd02b6f448010e4f625d2b82d637832f09d5bb1b60389",
+          "database_sha256": "9902312d0134e4331b545d2e148c742b219d26afa021adc2fc5916625acd5358",
+          "offline_reexport_equal": true,
+          "cli_wall_ms": 24878.4314,
+          "external_spawn_to_ready_ms": null,
+          "database": {
+            "schema_version": 11,
+            "chats": 8,
+            "unique_batches": 8,
+            "chats_per_batch": {
+              "count": 8,
+              "sum": 8,
+              "p50": 1,
+              "p95": 1,
+              "max": 1
+            },
+            "outcomes": {
+              "validated_batch": 8
+            },
+            "by_outcome": {
+              "validated_batch": {
+                "chats": 8,
+                "prompt_tokens": {
+                  "count": 8,
+                  "sum": 3211,
+                  "p50": 397,
+                  "p95": 422,
+                  "max": 422
+                },
+                "completion_tokens": {
+                  "count": 8,
+                  "sum": 1175,
+                  "p50": 146,
+                  "p95": 183,
+                  "max": 183
+                },
+                "chat_elapsed_ms": {
+                  "count": 8,
+                  "sum": 9287,
+                  "p50": 1107,
+                  "p95": 1360,
+                  "max": 1360
+                },
+                "finish_reasons": {
+                  "stop": 8
+                }
+              }
+            },
+            "finish_reasons": {
+              "stop": 8
+            },
+            "prompt_tokens": {
+              "count": 8,
+              "sum": 3211,
+              "p50": 397,
+              "p95": 422,
+              "max": 422
+            },
+            "completion_tokens": {
+              "count": 8,
+              "sum": 1175,
+              "p50": 146,
+              "p95": 183,
+              "max": 183
+            },
+            "max_tokens": {
+              "count": 8,
+              "sum": 8192,
+              "p50": 1024,
+              "p95": 1024,
+              "max": 1024
+            },
+            "completion_reserve_ratio": {
+              "count": 8,
+              "sum": 1.1474609375,
+              "p50": 0.142578125,
+              "p95": 0.1787109375,
+              "max": 0.1787109375
+            },
+            "target_slots": {
+              "count": 8,
+              "sum": 32,
+              "p50": 4,
+              "p95": 4,
+              "max": 4
+            },
+            "chat_elapsed_ms": {
+              "count": 8,
+              "sum": 9287,
+              "p50": 1107,
+              "p95": 1360,
+              "max": 1360
+            },
+            "preflight_kinds": {
+              "count_input_tokens": 8
+            },
+            "preflight_elapsed_ms": {
+              "count": 8,
+              "sum": 63,
+              "p50": 5,
+              "p95": 28,
+              "max": 28
+            },
+            "checkpoints": 8,
+            "results": 1
+          },
+          "timing": {
+            "record_count": 48,
+            "phases": {
+              "source_inspect": {
+                "count": 1,
+                "sum": 7463,
+                "p50": 7463,
+                "p95": 7463,
+                "max": 7463,
+                "failed": 0
+              },
+              "prelaunch_model_hash": {
+                "count": 1,
+                "sum": 5213215,
+                "p50": 5213215,
+                "p95": 5213215,
+                "max": 5213215,
+                "failed": 0
+              },
+              "server_spawn_to_ready": {
+                "count": 1,
+                "sum": 1912861,
+                "p50": 1912861,
+                "p95": 1912861,
+                "max": 1912861,
+                "failed": 0
+              },
+              "durable_model_preflight": {
+                "count": 1,
+                "sum": 5995347,
+                "p50": 5995347,
+                "p95": 5995347,
+                "max": 5995347,
+                "failed": 0
+              },
+              "checkpoint_load": {
+                "count": 1,
+                "sum": 33,
+                "p50": 33,
+                "p95": 33,
+                "max": 33,
+                "failed": 0
+              },
+              "journal_begin": {
+                "count": 16,
+                "sum": 440196,
+                "p50": 25031,
+                "p95": 33743,
+                "max": 33743,
+                "failed": 0
+              },
+              "journal_finish": {
+                "count": 16,
+                "sum": 434319,
+                "p50": 24588,
+                "p95": 45656,
+                "max": 45656,
+                "failed": 0
+              },
+              "checkpoint_commit": {
+                "count": 8,
+                "sum": 215631,
+                "p50": 25066,
+                "p95": 33383,
+                "max": 33383,
+                "failed": 0
+              },
+              "translation_execute": {
+                "count": 1,
+                "sum": 10456201,
+                "p50": 10456201,
+                "p95": 10456201,
+                "max": 10456201,
+                "failed": 0
+              },
+              "result_commit": {
+                "count": 1,
+                "sum": 24871,
+                "p50": 24871,
+                "p95": 24871,
+                "max": 24871,
+                "failed": 0
+              },
+              "output_write": {
+                "count": 1,
+                "sum": 32381,
+                "p50": 32381,
+                "p95": 32381,
+                "max": 32381,
+                "failed": 0
+              }
+            }
+          },
+          "resources": {
+            "sample_count": 4,
+            "interval_ms": 5000,
+            "tracked_working_set_peak_bytes": 14823424,
+            "device_gpu_used_peak_mib": 2852,
+            "device_gpu_total_mib": 8192,
+            "sampler_error_count": 0,
+            "limitation": "The CLI process was sampled but its local server child was not tracked; device GPU use includes other processes."
+          }
+        },
+        {
+          "model": "7b",
+          "kind": "natural_scene",
+          "status": "cli_failed",
+          "failure": "unsupported_machine_command",
+          "cli_exit_code": 2,
+          "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+          "profile_sha256": "c287c53efbb4ce78471b64648ea3dd2f521363df0e168b7a61df1fdd6ae0479a",
+          "input_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+          "source_preserved": true,
+          "output_sha256": null,
+          "database_sha256": null,
+          "offline_reexport_equal": null,
+          "cli_wall_ms": 37.26240000000689,
+          "external_spawn_to_ready_ms": 4130.366200000004,
+          "database": null,
+          "timing": {
+            "record_count": 0,
+            "phases": {}
+          },
+          "resources": {
+            "sample_count": 1,
+            "interval_ms": 5000,
+            "tracked_working_set_peak_bytes": 5034438656,
+            "device_gpu_used_peak_mib": 6348,
+            "device_gpu_total_mib": 8192,
+            "sampler_error_count": 0,
+            "limitation": "Sampled process memory is a lower-bound peak; device GPU use includes other processes."
+          }
+        },
+        {
+          "model": "7b",
+          "kind": "local_prefix",
+          "status": "completed",
+          "failure": null,
+          "cli_exit_code": 3,
+          "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+          "profile_sha256": "a7850c4eb44b52597e1c3ba53d3342009d86373d8c320dd136e58dff563bfbf9",
+          "input_sha256": "fd6cd05e2a2fcf223a25216122161be75e940ec0f43068b217ea51c04587cd73",
+          "source_preserved": true,
+          "output_sha256": "f864b2617efc1c3dee1a8b301749915c8e356b537b0678d16d302a4d024e8e3c",
+          "database_sha256": "7dd295c939f02af639bb79b8b3af5aa36d6d8b8ab11ae984970e7c281d75d6f6",
+          "offline_reexport_equal": true,
+          "cli_wall_ms": 77638.0661,
+          "external_spawn_to_ready_ms": null,
+          "database": {
+            "schema_version": 11,
+            "chats": 8,
+            "unique_batches": 8,
+            "chats_per_batch": {
+              "count": 8,
+              "sum": 8,
+              "p50": 1,
+              "p95": 1,
+              "max": 1
+            },
+            "outcomes": {
+              "validated_batch": 8
+            },
+            "by_outcome": {
+              "validated_batch": {
+                "chats": 8,
+                "prompt_tokens": {
+                  "count": 8,
+                  "sum": 3224,
+                  "p50": 400,
+                  "p95": 429,
+                  "max": 429
+                },
+                "completion_tokens": {
+                  "count": 8,
+                  "sum": 1402,
+                  "p50": 178,
+                  "p95": 204,
+                  "max": 204
+                },
+                "chat_elapsed_ms": {
+                  "count": 8,
+                  "sum": 25760,
+                  "p50": 3323,
+                  "p95": 3710,
+                  "max": 3710
+                },
+                "finish_reasons": {
+                  "stop": 8
+                }
+              }
+            },
+            "finish_reasons": {
+              "stop": 8
+            },
+            "prompt_tokens": {
+              "count": 8,
+              "sum": 3224,
+              "p50": 400,
+              "p95": 429,
+              "max": 429
+            },
+            "completion_tokens": {
+              "count": 8,
+              "sum": 1402,
+              "p50": 178,
+              "p95": 204,
+              "max": 204
+            },
+            "max_tokens": {
+              "count": 8,
+              "sum": 8192,
+              "p50": 1024,
+              "p95": 1024,
+              "max": 1024
+            },
+            "completion_reserve_ratio": {
+              "count": 8,
+              "sum": 1.369140625,
+              "p50": 0.173828125,
+              "p95": 0.19921875,
+              "max": 0.19921875
+            },
+            "target_slots": {
+              "count": 8,
+              "sum": 32,
+              "p50": 4,
+              "p95": 4,
+              "max": 4
+            },
+            "chat_elapsed_ms": {
+              "count": 8,
+              "sum": 25760,
+              "p50": 3323,
+              "p95": 3710,
+              "max": 3710
+            },
+            "preflight_kinds": {
+              "count_input_tokens": 8
+            },
+            "preflight_elapsed_ms": {
+              "count": 8,
+              "sum": 42,
+              "p50": 5,
+              "p95": 6,
+              "max": 6
+            },
+            "checkpoints": 8,
+            "results": 1
+          },
+          "timing": {
+            "record_count": 48,
+            "phases": {
+              "source_inspect": {
+                "count": 1,
+                "sum": 1148,
+                "p50": 1148,
+                "p95": 1148,
+                "max": 1148,
+                "failed": 0
+              },
+              "prelaunch_model_hash": {
+                "count": 1,
+                "sum": 21243442,
+                "p50": 21243442,
+                "p95": 21243442,
+                "max": 21243442,
+                "failed": 0
+              },
+              "server_spawn_to_ready": {
+                "count": 1,
+                "sum": 4069543,
+                "p50": 4069543,
+                "p95": 4069543,
+                "max": 4069543,
+                "failed": 0
+              },
+              "durable_model_preflight": {
+                "count": 1,
+                "sum": 21439247,
+                "p50": 21439247,
+                "p95": 21439247,
+                "max": 21439247,
+                "failed": 0
+              },
+              "checkpoint_load": {
+                "count": 1,
+                "sum": 43,
+                "p50": 43,
+                "p95": 43,
+                "max": 43,
+                "failed": 0
+              },
+              "journal_begin": {
+                "count": 16,
+                "sum": 451661,
+                "p50": 25195,
+                "p95": 33366,
+                "max": 33366,
+                "failed": 0
+              },
+              "journal_finish": {
+                "count": 16,
+                "sum": 3032920,
+                "p50": 27065,
+                "p95": 1103406,
+                "max": 1103406,
+                "failed": 0
+              },
+              "checkpoint_commit": {
+                "count": 8,
+                "sum": 193290,
+                "p50": 24675,
+                "p95": 32827,
+                "max": 32827,
+                "failed": 0
+              },
+              "translation_execute": {
+                "count": 1,
+                "sum": 29497262,
+                "p50": 29497262,
+                "p95": 29497262,
+                "max": 29497262,
+                "failed": 0
+              },
+              "result_commit": {
+                "count": 1,
+                "sum": 40436,
+                "p50": 40436,
+                "p95": 40436,
+                "max": 40436,
+                "failed": 0
+              },
+              "output_write": {
+                "count": 1,
+                "sum": 32728,
+                "p50": 32728,
+                "p95": 32728,
+                "max": 32728,
+                "failed": 0
+              }
+            }
+          },
+          "resources": {
+            "sample_count": 15,
+            "interval_ms": 5000,
+            "tracked_working_set_peak_bytes": 9740288,
+            "device_gpu_used_peak_mib": 6354,
+            "device_gpu_total_mib": 8192,
+            "sampler_error_count": 0,
+            "limitation": "The CLI process was sampled but its local server child was not tracked; device GPU use includes other processes."
+          }
+        }
+      ]
+    },
+    {
+      "id": "attempt-VhgCi9",
+      "private_report_sha256": "18515fb43de0dffd2e031262f5a8ae713d6a6a2a88a0dc76f6c11699464cf065",
+      "status": "incomplete",
+      "code_commit": "895bf258c85ed760da246491cf186fd34b449067",
+      "harness_sha256": "453bdf2165d1b94f1196d9f12b596f33749bee9069ac96d1effe41748437f0fc",
+      "runtime_sha256": "6f15be27bd80b6b4d52afefa49094e18fcfab55d5da354d717971f2d2537b2f4",
+      "source_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+      "started_at_utc": "2026-10-14T20:32:29.753Z",
+      "finished_at_utc": "2026-10-14T20:36:54.685Z",
+      "wall_ms": 279566.6713,
+      "arms": [
+        {
+          "model": "1_8b",
+          "kind": "natural_scene",
+          "status": "cli_failed",
+          "failure": "invalid_candidate",
+          "cli_exit_code": 1,
+          "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+          "profile_sha256": "1803aeb68428e1b138a17ed72b01abe1cc5fbc5845b5bca66a402b8936b1081f",
+          "input_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+          "source_preserved": true,
+          "output_sha256": null,
+          "database_sha256": "8a260b194f78fae82789fcab7cee347dc41f88a14f13856d9251c10f5e8f748e",
+          "offline_reexport_equal": null,
+          "cli_wall_ms": 18585.4984,
+          "external_spawn_to_ready_ms": 1924.298499999999,
+          "database": {
+            "schema_version": 11,
+            "chats": 8,
+            "unique_batches": 8,
+            "chats_per_batch": {
+              "count": 8,
+              "sum": 8,
+              "p50": 1,
+              "p95": 1,
+              "max": 1
+            },
+            "outcomes": {
+              "validated_batch": 7,
+              "invalid_candidate": 1
+            },
+            "by_outcome": {
+              "validated_batch": {
+                "chats": 7,
+                "prompt_tokens": {
+                  "count": 7,
+                  "sum": 3308,
+                  "p50": 478,
+                  "p95": 498,
+                  "max": 498
+                },
+                "completion_tokens": {
+                  "count": 7,
+                  "sum": 1096,
+                  "p50": 146,
+                  "p95": 198,
+                  "max": 198
+                },
+                "chat_elapsed_ms": {
+                  "count": 7,
+                  "sum": 8455,
+                  "p50": 1199,
+                  "p95": 1371,
+                  "max": 1371
+                },
+                "finish_reasons": {
+                  "stop": 7
+                }
+              },
+              "invalid_candidate": {
+                "chats": 1,
+                "prompt_tokens": {
+                  "count": 1,
+                  "sum": 471,
+                  "p50": 471,
+                  "p95": 471,
+                  "max": 471
+                },
+                "completion_tokens": {
+                  "count": 1,
+                  "sum": 163,
+                  "p50": 163,
+                  "p95": 163,
+                  "max": 163
+                },
+                "chat_elapsed_ms": {
+                  "count": 1,
+                  "sum": 1602,
+                  "p50": 1602,
+                  "p95": 1602,
+                  "max": 1602
+                },
+                "finish_reasons": {
+                  "stop": 1
+                }
+              }
+            },
+            "finish_reasons": {
+              "stop": 8
+            },
+            "prompt_tokens": {
+              "count": 8,
+              "sum": 3779,
+              "p50": 471,
+              "p95": 498,
+              "max": 498
+            },
+            "completion_tokens": {
+              "count": 8,
+              "sum": 1259,
+              "p50": 146,
+              "p95": 198,
+              "max": 198
+            },
+            "max_tokens": {
+              "count": 8,
+              "sum": 8192,
+              "p50": 1024,
+              "p95": 1024,
+              "max": 1024
+            },
+            "completion_reserve_ratio": {
+              "count": 8,
+              "sum": 1.2294921875,
+              "p50": 0.142578125,
+              "p95": 0.193359375,
+              "max": 0.193359375
+            },
+            "target_slots": {
+              "count": 8,
+              "sum": 32,
+              "p50": 4,
+              "p95": 4,
+              "max": 4
+            },
+            "chat_elapsed_ms": {
+              "count": 8,
+              "sum": 10057,
+              "p50": 1199,
+              "p95": 1602,
+              "max": 1602
+            },
+            "preflight_kinds": {
+              "count_input_tokens": 8
+            },
+            "preflight_elapsed_ms": {
+              "count": 8,
+              "sum": 43,
+              "p50": 5,
+              "p95": 6,
+              "max": 6
+            },
+            "checkpoints": 7,
+            "results": 0
+          },
+          "timing": {
+            "record_count": 42,
+            "phases": {
+              "durable_model_preflight": {
+                "count": 1,
+                "sum": 6263721,
+                "p50": 6263721,
+                "p95": 6263721,
+                "max": 6263721,
+                "failed": 0
+              },
+              "checkpoint_load": {
+                "count": 1,
+                "sum": 43,
+                "p50": 43,
+                "p95": 43,
+                "max": 43,
+                "failed": 0
+              },
+              "journal_begin": {
+                "count": 16,
+                "sum": 467525,
+                "p50": 26186,
+                "p95": 40524,
+                "max": 40524,
+                "failed": 0
+              },
+              "journal_finish": {
+                "count": 16,
+                "sum": 606498,
+                "p50": 27328,
+                "p95": 212385,
+                "max": 212385,
+                "failed": 0
+              },
+              "checkpoint_commit": {
+                "count": 7,
+                "sum": 198172,
+                "p50": 25070,
+                "p95": 48548,
+                "max": 48548,
+                "failed": 0
+              },
+              "translation_execute": {
+                "count": 1,
+                "sum": 11387301,
+                "p50": 11387301,
+                "p95": 11387301,
+                "max": 11387301,
+                "failed": 1
+              }
+            }
+          },
+          "resources": {
+            "sample_count": 4,
+            "interval_ms": 5000,
+            "tracked_working_set_peak_bytes": 1552269312,
+            "device_gpu_used_peak_mib": 2831,
+            "device_gpu_total_mib": 8192,
+            "sampler_error_count": 0,
+            "limitation": "Sampled process memory is a lower-bound peak; device GPU use includes other processes."
+          }
+        },
+        {
+          "model": "1_8b",
+          "kind": "local_prefix",
+          "status": "completed",
+          "failure": null,
+          "cli_exit_code": 3,
+          "model_sha256": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699",
+          "profile_sha256": "32b6269105bc73de973cee0b0c8163b1289cd217b844eb0e719c48465425c432",
+          "input_sha256": "fd6cd05e2a2fcf223a25216122161be75e940ec0f43068b217ea51c04587cd73",
+          "source_preserved": true,
+          "output_sha256": "de41ecfeb654d6b890ac026cab6f65991877cfada391cb87475aba48e386880a",
+          "database_sha256": "54355ed744b50ee3a86252c64d27d0d2740050b6684539f2cc8f10335e36e2a2",
+          "offline_reexport_equal": true,
+          "cli_wall_ms": 24343.1841,
+          "external_spawn_to_ready_ms": null,
+          "database": {
+            "schema_version": 11,
+            "chats": 8,
+            "unique_batches": 8,
+            "chats_per_batch": {
+              "count": 8,
+              "sum": 8,
+              "p50": 1,
+              "p95": 1,
+              "max": 1
+            },
+            "outcomes": {
+              "validated_batch": 8
+            },
+            "by_outcome": {
+              "validated_batch": {
+                "chats": 8,
+                "prompt_tokens": {
+                  "count": 8,
+                  "sum": 3211,
+                  "p50": 397,
+                  "p95": 422,
+                  "max": 422
+                },
+                "completion_tokens": {
+                  "count": 8,
+                  "sum": 1160,
+                  "p50": 143,
+                  "p95": 185,
+                  "max": 185
+                },
+                "chat_elapsed_ms": {
+                  "count": 8,
+                  "sum": 8954,
+                  "p50": 1097,
+                  "p95": 1364,
+                  "max": 1364
+                },
+                "finish_reasons": {
+                  "stop": 8
+                }
+              }
+            },
+            "finish_reasons": {
+              "stop": 8
+            },
+            "prompt_tokens": {
+              "count": 8,
+              "sum": 3211,
+              "p50": 397,
+              "p95": 422,
+              "max": 422
+            },
+            "completion_tokens": {
+              "count": 8,
+              "sum": 1160,
+              "p50": 143,
+              "p95": 185,
+              "max": 185
+            },
+            "max_tokens": {
+              "count": 8,
+              "sum": 8192,
+              "p50": 1024,
+              "p95": 1024,
+              "max": 1024
+            },
+            "completion_reserve_ratio": {
+              "count": 8,
+              "sum": 1.1328125,
+              "p50": 0.1396484375,
+              "p95": 0.1806640625,
+              "max": 0.1806640625
+            },
+            "target_slots": {
+              "count": 8,
+              "sum": 32,
+              "p50": 4,
+              "p95": 4,
+              "max": 4
+            },
+            "chat_elapsed_ms": {
+              "count": 8,
+              "sum": 8954,
+              "p50": 1097,
+              "p95": 1364,
+              "max": 1364
+            },
+            "preflight_kinds": {
+              "count_input_tokens": 8
+            },
+            "preflight_elapsed_ms": {
+              "count": 8,
+              "sum": 42,
+              "p50": 5,
+              "p95": 6,
+              "max": 6
+            },
+            "checkpoints": 8,
+            "results": 1
+          },
+          "timing": {
+            "record_count": 48,
+            "phases": {
+              "source_inspect": {
+                "count": 1,
+                "sum": 1126,
+                "p50": 1126,
+                "p95": 1126,
+                "max": 1126,
+                "failed": 0
+              },
+              "prelaunch_model_hash": {
+                "count": 1,
+                "sum": 5208784,
+                "p50": 5208784,
+                "p95": 5208784,
+                "max": 5208784,
+                "failed": 0
+              },
+              "server_spawn_to_ready": {
+                "count": 1,
+                "sum": 1799661,
+                "p50": 1799661,
+                "p95": 1799661,
+                "max": 1799661,
+                "failed": 0
+              },
+              "durable_model_preflight": {
+                "count": 1,
+                "sum": 6361907,
+                "p50": 6361907,
+                "p95": 6361907,
+                "max": 6361907,
+                "failed": 0
+              },
+              "checkpoint_load": {
+                "count": 1,
+                "sum": 43,
+                "p50": 43,
+                "p95": 43,
+                "max": 43,
+                "failed": 0
+              },
+              "journal_begin": {
+                "count": 16,
+                "sum": 460586,
+                "p50": 25123,
+                "p95": 33340,
+                "max": 33340,
+                "failed": 0
+              },
+              "journal_finish": {
+                "count": 16,
+                "sum": 378357,
+                "p50": 25173,
+                "p95": 29281,
+                "max": 29281,
+                "failed": 0
+              },
+              "checkpoint_commit": {
+                "count": 8,
+                "sum": 247178,
+                "p50": 32761,
+                "p95": 39569,
+                "max": 39569,
+                "failed": 0
+              },
+              "translation_execute": {
+                "count": 1,
+                "sum": 10096588,
+                "p50": 10096588,
+                "p95": 10096588,
+                "max": 10096588,
+                "failed": 0
+              },
+              "result_commit": {
+                "count": 1,
+                "sum": 24341,
+                "p50": 24341,
+                "p95": 24341,
+                "max": 24341,
+                "failed": 0
+              },
+              "output_write": {
+                "count": 1,
+                "sum": 49256,
+                "p50": 49256,
+                "p95": 49256,
+                "max": 49256,
+                "failed": 0
+              }
+            }
+          },
+          "resources": {
+            "sample_count": 4,
+            "interval_ms": 5000,
+            "tracked_working_set_peak_bytes": 9736192,
+            "device_gpu_used_peak_mib": 2830,
+            "device_gpu_total_mib": 8192,
+            "sampler_error_count": 0,
+            "limitation": "The CLI process was sampled but its local server child was not tracked; device GPU use includes other processes."
+          }
+        },
+        {
+          "model": "7b",
+          "kind": "natural_scene",
+          "status": "cli_failed",
+          "failure": "invalid_candidate",
+          "cli_exit_code": 1,
+          "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+          "profile_sha256": "c287c53efbb4ce78471b64648ea3dd2f521363df0e168b7a61df1fdd6ae0479a",
+          "input_sha256": "923aed3991c2308d92b89c45181cea8ec7ece74e9b4d3a3ce0234d95e329913b",
+          "source_preserved": true,
+          "output_sha256": null,
+          "database_sha256": "465ca947d7bb76c4466f96c2570c0b3322a717741744576490876b50e054602f",
+          "offline_reexport_equal": null,
+          "cli_wall_ms": 131002.28530000002,
+          "external_spawn_to_ready_ms": 4546.234700000001,
+          "database": {
+            "schema_version": 11,
+            "chats": 27,
+            "unique_batches": 27,
+            "chats_per_batch": {
+              "count": 27,
+              "sum": 27,
+              "p50": 1,
+              "p95": 1,
+              "max": 1
+            },
+            "outcomes": {
+              "validated_batch": 26,
+              "invalid_candidate": 1
+            },
+            "by_outcome": {
+              "validated_batch": {
+                "chats": 26,
+                "prompt_tokens": {
+                  "count": 26,
+                  "sum": 13071,
+                  "p50": 502,
+                  "p95": 538,
+                  "max": 567
+                },
+                "completion_tokens": {
+                  "count": 26,
+                  "sum": 4711,
+                  "p50": 179,
+                  "p95": 218,
+                  "max": 226
+                },
+                "chat_elapsed_ms": {
+                  "count": 26,
+                  "sum": 84950,
+                  "p50": 3160,
+                  "p95": 4073,
+                  "max": 4366
+                },
+                "finish_reasons": {
+                  "stop": 26
+                }
+              },
+              "invalid_candidate": {
+                "chats": 1,
+                "prompt_tokens": {
+                  "count": 1,
+                  "sum": 497,
+                  "p50": 497,
+                  "p95": 497,
+                  "max": 497
+                },
+                "completion_tokens": {
+                  "count": 1,
+                  "sum": 418,
+                  "p50": 418,
+                  "p95": 418,
+                  "max": 418
+                },
+                "chat_elapsed_ms": {
+                  "count": 1,
+                  "sum": 7374,
+                  "p50": 7374,
+                  "p95": 7374,
+                  "max": 7374
+                },
+                "finish_reasons": {
+                  "stop": 1
+                }
+              }
+            },
+            "finish_reasons": {
+              "stop": 27
+            },
+            "prompt_tokens": {
+              "count": 27,
+              "sum": 13568,
+              "p50": 502,
+              "p95": 538,
+              "max": 567
+            },
+            "completion_tokens": {
+              "count": 27,
+              "sum": 5129,
+              "p50": 182,
+              "p95": 226,
+              "max": 418
+            },
+            "max_tokens": {
+              "count": 27,
+              "sum": 27648,
+              "p50": 1024,
+              "p95": 1024,
+              "max": 1024
+            },
+            "completion_reserve_ratio": {
+              "count": 27,
+              "sum": 5.0087890625,
+              "p50": 0.177734375,
+              "p95": 0.220703125,
+              "max": 0.408203125
+            },
+            "target_slots": {
+              "count": 27,
+              "sum": 108,
+              "p50": 4,
+              "p95": 4,
+              "max": 4
+            },
+            "chat_elapsed_ms": {
+              "count": 27,
+              "sum": 92324,
+              "p50": 3274,
+              "p95": 4366,
+              "max": 7374
+            },
+            "preflight_kinds": {
+              "count_input_tokens": 27
+            },
+            "preflight_elapsed_ms": {
+              "count": 27,
+              "sum": 264,
+              "p50": 7,
+              "p95": 16,
+              "max": 17
+            },
+            "checkpoints": 26,
+            "results": 0
+          },
+          "timing": {
+            "record_count": 137,
+            "phases": {
+              "durable_model_preflight": {
+                "count": 1,
+                "sum": 23297794,
+                "p50": 23297794,
+                "p95": 23297794,
+                "max": 23297794,
+                "failed": 0
+              },
+              "checkpoint_load": {
+                "count": 1,
+                "sum": 70,
+                "p50": 70,
+                "p95": 70,
+                "max": 70,
+                "failed": 0
+              },
+              "journal_begin": {
+                "count": 54,
+                "sum": 1527007,
+                "p50": 24994,
+                "p95": 33432,
+                "max": 50136,
+                "failed": 0
+              },
+              "journal_finish": {
+                "count": 54,
+                "sum": 11288323,
+                "p50": 26902,
+                "p95": 1054187,
+                "max": 1220330,
+                "failed": 0
+              },
+              "checkpoint_commit": {
+                "count": 26,
+                "sum": 635946,
+                "p50": 23842,
+                "p95": 33436,
+                "max": 34525,
+                "failed": 0
+              },
+              "translation_execute": {
+                "count": 1,
+                "sum": 106101107,
+                "p50": 106101107,
+                "p95": 106101107,
+                "max": 106101107,
+                "failed": 1
+              }
+            }
+          },
+          "resources": {
+            "sample_count": 27,
+            "interval_ms": 5000,
+            "tracked_working_set_peak_bytes": 5075013632,
+            "device_gpu_used_peak_mib": 6400,
+            "device_gpu_total_mib": 8192,
+            "sampler_error_count": 0,
+            "limitation": "Sampled process memory is a lower-bound peak; device GPU use includes other processes."
+          }
+        },
+        {
+          "model": "7b",
+          "kind": "local_prefix",
+          "status": "completed",
+          "failure": null,
+          "cli_exit_code": 3,
+          "model_sha256": "9f96256500f3fc1ab4d64336b58f52a949a95ad7516b0c229476eef782f9f77b",
+          "profile_sha256": "a7850c4eb44b52597e1c3ba53d3342009d86373d8c320dd136e58dff563bfbf9",
+          "input_sha256": "fd6cd05e2a2fcf223a25216122161be75e940ec0f43068b217ea51c04587cd73",
+          "source_preserved": true,
+          "output_sha256": "7276c225eade93f495cc24b71f26b45ac03b923aea8642cf79378d63a847d392",
+          "database_sha256": "7d0023f3a10c4f2388373052b1e7160c1c8126c6178adba4ae1b4b7310b62686",
+          "offline_reexport_equal": true,
+          "cli_wall_ms": 83608.43789999999,
+          "external_spawn_to_ready_ms": null,
+          "database": {
+            "schema_version": 11,
+            "chats": 8,
+            "unique_batches": 8,
+            "chats_per_batch": {
+              "count": 8,
+              "sum": 8,
+              "p50": 1,
+              "p95": 1,
+              "max": 1
+            },
+            "outcomes": {
+              "validated_batch": 8
+            },
+            "by_outcome": {
+              "validated_batch": {
+                "chats": 8,
+                "prompt_tokens": {
+                  "count": 8,
+                  "sum": 3224,
+                  "p50": 400,
+                  "p95": 429,
+                  "max": 429
+                },
+                "completion_tokens": {
+                  "count": 8,
+                  "sum": 1435,
+                  "p50": 180,
+                  "p95": 215,
+                  "max": 215
+                },
+                "chat_elapsed_ms": {
+                  "count": 8,
+                  "sum": 24591,
+                  "p50": 3038,
+                  "p95": 3644,
+                  "max": 3644
+                },
+                "finish_reasons": {
+                  "stop": 8
+                }
+              }
+            },
+            "finish_reasons": {
+              "stop": 8
+            },
+            "prompt_tokens": {
+              "count": 8,
+              "sum": 3224,
+              "p50": 400,
+              "p95": 429,
+              "max": 429
+            },
+            "completion_tokens": {
+              "count": 8,
+              "sum": 1435,
+              "p50": 180,
+              "p95": 215,
+              "max": 215
+            },
+            "max_tokens": {
+              "count": 8,
+              "sum": 8192,
+              "p50": 1024,
+              "p95": 1024,
+              "max": 1024
+            },
+            "completion_reserve_ratio": {
+              "count": 8,
+              "sum": 1.4013671875,
+              "p50": 0.17578125,
+              "p95": 0.2099609375,
+              "max": 0.2099609375
+            },
+            "target_slots": {
+              "count": 8,
+              "sum": 32,
+              "p50": 4,
+              "p95": 4,
+              "max": 4
+            },
+            "chat_elapsed_ms": {
+              "count": 8,
+              "sum": 24591,
+              "p50": 3038,
+              "p95": 3644,
+              "max": 3644
+            },
+            "preflight_kinds": {
+              "count_input_tokens": 8
+            },
+            "preflight_elapsed_ms": {
+              "count": 8,
+              "sum": 80,
+              "p50": 8,
+              "p95": 16,
+              "max": 16
+            },
+            "checkpoints": 8,
+            "results": 1
+          },
+          "timing": {
+            "record_count": 48,
+            "phases": {
+              "source_inspect": {
+                "count": 1,
+                "sum": 1413,
+                "p50": 1413,
+                "p95": 1413,
+                "max": 1413,
+                "failed": 0
+              },
+              "prelaunch_model_hash": {
+                "count": 1,
+                "sum": 23930358,
+                "p50": 23930358,
+                "p95": 23930358,
+                "max": 23930358,
+                "failed": 0
+              },
+              "server_spawn_to_ready": {
+                "count": 1,
+                "sum": 4645633,
+                "p50": 4645633,
+                "p95": 4645633,
+                "max": 4645633,
+                "failed": 0
+              },
+              "durable_model_preflight": {
+                "count": 1,
+                "sum": 24729803,
+                "p50": 24729803,
+                "p95": 24729803,
+                "max": 24729803,
+                "failed": 0
+              },
+              "checkpoint_load": {
+                "count": 1,
+                "sum": 124,
+                "p50": 124,
+                "p95": 124,
+                "max": 124,
+                "failed": 0
+              },
+              "journal_begin": {
+                "count": 16,
+                "sum": 453645,
+                "p50": 24983,
+                "p95": 41710,
+                "max": 41710,
+                "failed": 0
+              },
+              "journal_finish": {
+                "count": 16,
+                "sum": 3827775,
+                "p50": 27525,
+                "p95": 1283538,
+                "max": 1283538,
+                "failed": 0
+              },
+              "checkpoint_commit": {
+                "count": 8,
+                "sum": 206260,
+                "p50": 21772,
+                "p95": 41663,
+                "max": 41663,
+                "failed": 0
+              },
+              "translation_execute": {
+                "count": 1,
+                "sum": 29188358,
+                "p50": 29188358,
+                "p95": 29188358,
+                "max": 29188358,
+                "failed": 0
+              },
+              "result_commit": {
+                "count": 1,
+                "sum": 24460,
+                "p50": 24460,
+                "p95": 24460,
+                "max": 24460,
+                "failed": 0
+              },
+              "output_write": {
+                "count": 1,
+                "sum": 42125,
+                "p50": 42125,
+                "p95": 42125,
+                "max": 42125,
+                "failed": 0
+              }
+            }
+          },
+          "resources": {
+            "sample_count": 16,
+            "interval_ms": 5000,
+            "tracked_working_set_peak_bytes": 9781248,
+            "device_gpu_used_peak_mib": 7121,
+            "device_gpu_total_mib": 8192,
+            "sampler_error_count": 0,
+            "limitation": "The CLI process was sampled but its local server child was not tracked; device GPU use includes other processes."
+          }
+        }
+      ]
+    }
+  ]
+}
