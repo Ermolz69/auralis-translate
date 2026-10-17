@@ -1,6 +1,5 @@
 use crate::profile::ModelProfile;
 use crate::prompt;
-use crate::server_report::ServerReport;
 use crate::{
     PreparationControl, RequestControlPolicy,
     decode_chat_response::{decode_chat_response, decode_chat_response_with_tail_retry},
@@ -22,9 +21,6 @@ use std::time::{Duration, Instant};
 use uuid::Uuid;
 
 const CHAT_PATH: &str = "/v1/chat/completions";
-const HEALTH_PATH: &str = "/health";
-const PROPS_PATH: &str = "/props";
-const MODELS_PATH: &str = "/v1/models";
 const APPLY_TEMPLATE_PATH: &str = "/apply-template";
 const TOKENIZE_PATH: &str = "/tokenize";
 const COUNT_INPUT_TOKENS_PATH: &str = "/v1/chat/completions/input_tokens";
@@ -46,6 +42,8 @@ pub struct LlamaCppProvider {
     pub(crate) profile: ModelProfile,
     pub(crate) inference_journal: Option<Arc<dyn InferenceRequestJournal>>,
 }
+
+mod probe;
 
 impl LlamaCppProvider {
     fn response_format(&self, segment_id: u32, line_index: usize) -> serde_json::Value {
@@ -97,35 +95,6 @@ impl LlamaCppProvider {
     pub fn with_inference_journal(mut self, journal: Arc<dyn InferenceRequestJournal>) -> Self {
         self.inference_journal = Some(journal);
         self
-    }
-
-    pub fn probe_server(&self) -> Result<ServerReport, ProviderError> {
-        self.probe_server_with_control(&|| Ok(()))
-    }
-
-    pub fn probe_server_with_control(
-        &self,
-        control: &dyn PreparationControl,
-    ) -> Result<ServerReport, ProviderError> {
-        control.check()?;
-        ServerReport::parse(
-            &self.get_bytes(HEALTH_PATH, control)?,
-            &self.get_bytes(PROPS_PATH, control)?,
-            &self.get_bytes(MODELS_PATH, control)?,
-        )
-    }
-
-    fn get_bytes(
-        &self,
-        path: &str,
-        control: &dyn PreparationControl,
-    ) -> Result<Vec<u8>, ProviderError> {
-        let endpoint = self
-            .base
-            .join(path)
-            .map_err(|_| ProviderError::Permanent("invalid llama.cpp probe endpoint".into()))?;
-        self.http
-            .request(self.http.client().get(endpoint), Some(control))
     }
 
     fn translate_line(
