@@ -30,7 +30,7 @@ For an already available checked model and llama.cpp runtime, the standalone
 CLI has [local one-command entrypoints](reference/cli-protocol-v1.md):
 `translate-local`, `translate-vtt-local` and `resume-local`. These own the
 loopback server process for one run; Auralis continues to link the same Rust
-translation crates directly. Their [bounded native acceptance](../eval/experiments/2026-10-10-cli-local-runtime-plan.md)
+translation crates directly. Their [bounded native acceptance](../eval/experiments/2026-10-10-cli-local-runtime-result.md)
 is tracked separately from translation quality and clean installation.
 
 ## Dated evidence and plan index
@@ -184,7 +184,7 @@ Voice markup, TTS, ASR, subtitle timing creation from text, live translation, an
 
 ## Changes from the root plan
 
-The [delivery audit](../eval/experiments/2026-09-26-translation-delivery-audit.md) records the explicit separation of application releases, upstream model downloads, and ignored local test data. Public GitHub publication is deferred by the repository owner; the local submodule workflow continues.
+The [26 September delivery audit](../eval/experiments/2026-09-26-translation-delivery-audit.md) records the explicit separation of application releases, upstream model downloads, and ignored local test data. Its local-only GitHub decision was superseded by later [public-source publication](https://github.com/Ermolz69/auralis-translate); the submodule pin and release gates remain separate.
 
 | Root plan sections | MVP clarification                                                                                                                                              |
 | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |

@@ -1,6 +1,6 @@
 # Tracked implementation backlog
 
-Updated: 2026-10-14. Canonical task state for the
+Updated: 2026-10-17. Canonical task state for the
 [delivery plan](DELIVERY_PLAN.md). This replaces the temporary S0–S9 work queue;
 their product/format acceptance criteria remain applicable. Historical evidence
 is in [implementation status](IMPLEMENTATION_STATUS.md).
@@ -27,6 +27,11 @@ does not activate implementation by being stored here.
 
 ## Task table
 
+MNT-01 is the dispatched documentation maintenance slice. Its acceptance is
+limited to current onboarding, evidence-backed status wording and generated
+progress. It changes no product gate. The other proposed maintenance IDs in
+the [planning packet](maintenance/README.md) are not active backlog tasks yet.
+
 NAME-01 is explicitly split from the unfinished CTX-03 language-review task for
 the owner's bounded source-name registry request. Its acceptance covers durable
 source-only extraction, target isolation, revision refusal and a frozen paired
@@ -34,6 +39,7 @@ development decision; independent approval and natural-file quality stay open.
 
 | ID | Work | Status | Depends on | Acceptance / evidence |
 | --- | --- | --- | --- | --- |
+| MNT-01 | Reconcile current documentation and onboarding | in_progress | - | [Assignment](maintenance/agents/01-documentation.md); scoped documentation/site checks and final integration review remain. No release gate changes. |
 | BASE-01 | Strict source/result and checkpoint foundation | done | - | Narrow implemented slices only; open S7–S9 retained in [status](IMPLEMENTATION_STATUS.md) |
 | BASE-02 | Real synthetic long-file recovery baseline | done | BASE-01 | Existing bounded scope and [recovery evidence](../eval/experiments/2026-09-26-long-file-recovery.md) |
 | BASE-03 | Matched 1.8B/7B development comparison | done | BASE-01 | 240 real requests, AI editorial review and [experiment](../eval/experiments/2026-09-27-model-size-comparison.md) |

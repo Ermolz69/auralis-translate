@@ -41,7 +41,30 @@ inference.
 
 The same adapter now has separate `release_manifest/` and `offline_install/` modules. The manifest module validates versioned upstream asset identity against a checked profile; the installer module verifies local files, extracts a constrained archive, and stages an experimental package. The CLI only parses installation arguments and calls the installer. Auralis owns application-data placement and backend selection through its experimental package workflow. Keep package operations out of the core/domain crates; see [the installation boundary](007-model-installation.md).
 
-## Suggested layout
+## Current source read path
+
+The table points to the actual modules at the MNT-01 base. It is navigation,
+not a statement that every release gate is complete. The dependency diagram and
+ownership rules below still govern changes.
+
+| Responsibility | Start reading |
+| --- | --- |
+| Format-independent IDs, segments, ports and translation orchestration | [Core exports](../../crates/auralis-translation/src/lib.rs), [planned-run application](../../crates/auralis-translation/src/application/translate_planned_run.rs), [provider port](../../crates/auralis-translation/src/ports/provider.rs) |
+| Strict source inspection, SRT/WebVTT parsing, text slots and separate rendering | [Inspector](../../crates/auralis-translation-formats/src/inspect.rs), [document translation](../../crates/auralis-translation-formats/src/translate_document.rs), [SRT parser](../../crates/auralis-translation-formats/src/srt/parser.rs), [WebVTT parser](../../crates/auralis-translation-formats/src/vtt/parser.rs) |
+| Durable Translate state, checkpoints, results and migrations | [SQLite exports](../../crates/auralis-translation-sqlite/src/lib.rs), [checkpoint repository](../../crates/auralis-translation-sqlite/src/repositories/checkpoint_repository.rs), [result repository](../../crates/auralis-translation-sqlite/src/repositories/result_repository.rs) |
+| llama.cpp request/provider behavior, checked model admission and packages | [Provider](../../crates/auralis-translation-llamacpp/src/provider.rs), [preflight](../../crates/auralis-translation-llamacpp/src/model_preflight.rs), [manifest](../../crates/auralis-translation-llamacpp/src/release_manifest/mod.rs), [offline installer](../../crates/auralis-translation-llamacpp/src/offline_install/mod.rs) |
+| CLI dispatch, durable workflow, owned local child and machine output | [Dispatch](../../crates/auralis-translation-cli/src/command_dispatch.rs), [durable workflow](../../crates/auralis-translation-cli/src/durable_workflow.rs), [local server](../../crates/auralis-translation-cli/src/local_model_server.rs), [reporting](../../crates/auralis-translation-cli/src/reporting/mod.rs) |
+| Auxiliary evaluation provenance and comparison | [Verification](../../crates/auralis-translation-eval/src/verify.rs), [comparison](../../crates/auralis-translation-eval/src/comparison.rs) |
+
+Behavior tests sit under each crate's `tests/`. Auralis embeds these crates via
+Cargo paths and owns its own project/artifact/job adapter; see the
+[integration document](003-auralis-integration.md). Maintenance assignments
+[MNT-03](../maintenance/agents/03-provider.md),
+[MNT-04](../maintenance/agents/04-cli-workflow.md) and
+[MNT-05](../maintenance/agents/05-report-tooling.md) may change this map after
+their branches are accepted; refresh it against the integrated tree then.
+
+## Historical illustrative layout
 
 The standalone CLI's machine interface is isolated in `reporting/`: one module
 each for output format, event, envelope, summary, error code, failure and output
@@ -162,7 +185,14 @@ eval/
 docs/
 ```
 
-This is a starting map, not an instruction to create empty files. Add a file when its responsibility exists. A module directory is appropriate when a concept acquires multiple operations or subtypes; its `mod.rs` contains declarations and re-exports, not business logic. `lib.rs` exposes a small stable API. Prefer one primary public type or one operation per file. A small private helper may live beside its owner; unrelated structs, enums, parsers, repositories, and command handlers do not share a file. Avoid catch-all `types.rs`, `utils.rs`, and `helpers.rs` files.
+The tree above is a 25 September design example, not a map of today's checkout
+or an instruction to create empty files. Add a file when its responsibility
+exists. A module directory is appropriate when a concept acquires multiple
+operations or subtypes; its `mod.rs` contains declarations and re-exports, not
+business logic. `lib.rs` exposes a small stable API. Prefer one primary public
+type or one operation per file. A small private helper may live beside its owner;
+unrelated structs, enums, parsers, repositories, and command handlers do not
+share a file. Avoid catch-all `types.rs`, `utils.rs`, and `helpers.rs` files.
 
 ## Dependency and ownership rules
 

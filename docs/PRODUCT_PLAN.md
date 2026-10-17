@@ -1,6 +1,6 @@
 # Auralis Translate: independent translation module plan
 
-Version 3.0 · 24 September 2026 · planning document, not an implementation report. The [original Russian version 2.0](../AURALIS_SUBTITLE_TRANSLATION_PLAN.md) remains at the repository root as a historical source. This English plan incorporates the agreed file-first MVP, separate Translate SQLite, and Auralis project links. The [architecture documentation](README.md) gives the binding MVP details; the [temporary implementation stages](IMPLEMENTATION_STAGES.md) are the agent-facing delivery sequence.
+Version 3.0 · 24 September 2026 · product contract, not an implementation report. The [original Russian version 2.0](../AURALIS_SUBTITLE_TRANSLATION_PLAN.md) remains at the repository root as a historical source. This English plan incorporates the agreed file-first MVP, separate Translate SQLite, and Auralis project links. The [documentation index](README.md) links the binding MVP details; the [canonical backlog](IMPLEMENTATION_BACKLOG.md) owns current task state and order. The [S0–S9 stages](IMPLEMENTATION_STAGES.md) remain acceptance references. Later [translator-only scope v3](../eval/experiments/2026-10-10-translation-only-scope-v3.md) and [desktop goal scope v3](../eval/experiments/2026-10-10-translate-desktop-goal-scope-v3.md) govern their selected execution endpoints without changing the file invariants or G1–G9 gates here.
 
 ## 1. Goal and release scope
 
@@ -35,7 +35,7 @@ flowchart LR
     APP --> ART["Managed source/output artifacts"]
 ```
 
-Use a separate Rust repository `auralis-translate`, initially developed beside Auralis. After publication on GitHub, add it at `auralis/modules/auralis-translate` as a Git submodule pinned to a commit. Auralis depends on the Rust crates through Cargo paths. Commit and push Translate first, then advance the submodule pointer in Auralis. Clone and CI workflows initialise submodules recursively. A direct Cargo Git dependency is an alternative only if physical nesting is no longer required. Dynamic Tauri plugins, a mandatory user Python environment, and a separate HTTP translation service are unnecessary for the initial desktop profile.
+Use a separate Rust repository `auralis-translate`, developed beside Auralis and now publicly available on [GitHub](https://github.com/Ermolz69/auralis-translate). Auralis pins it at `auralis/modules/auralis-translate` as a Git submodule and depends on the Rust crates through Cargo paths. When an accepted library change requires a pin update, commit and push Translate first, then advance the submodule pointer in a separate Auralis integration commit. Clone and CI workflows initialise submodules recursively. A direct Cargo Git dependency is an alternative only if physical nesting is no longer required. Dynamic Tauri plugins, a mandatory user Python environment, and a separate HTTP translation service are unnecessary for the initial desktop profile.
 
 The Rust workspace has a format-independent core, formats crate, SQLite adapter, llama.cpp provider, and CLI composition crate. [Rust code architecture](architecture/004-rust-code-architecture.md) defines module splitting, tests and configuration. The Auralis adapter stays in the Auralis repository. Model weights, runtime binaries, downloaded media and third-party full subtitles do not belong in Git.
 

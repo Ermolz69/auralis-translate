@@ -1,6 +1,9 @@
 # Delivery plan: contextual translation and dubbing
 
-Updated: 28 September 2026. This is the authoritative delivery sequence. The
+Baseline authored 28 September 2026. This is the delivery method and historical
+sequence; later [translator-only scope v3](../eval/experiments/2026-10-10-translation-only-scope-v3.md)
+and [Translate desktop goal scope v3](../eval/experiments/2026-10-10-translate-desktop-goal-scope-v3.md)
+govern their selected work. The
 [tracked backlog](IMPLEMENTATION_BACKLOG.md) owns task status;
 [agent workflow](AGENT_WORKFLOW.md) owns execution, evidence and commit rules.
 The [release acceptance map](RELEASE_ACCEPTANCE.md) binds finite goal scope and
@@ -26,14 +29,16 @@ source mapping, runs and immutable results. Auralis owns media, host jobs,
 speakers, ASR/TTS, mixing and artifact publication. A translation LLM does not
 itself supply an audio engine. End-to-end audio needs separate evidence.
 
-The immediate implementation sequence is CLI first. Desktop model selection and
-review UI are deferred as requested; planning their final acceptance is allowed.
+The original 28 September implementation sequence was CLI first and deferred
+desktop model selection/review UI. The later owner-authorized desktop scope v3
+permits its defined integration work; the translator-only scope remains separate.
+Neither scheduling decision passes a desktop or language release gate.
 Chinese is the first language gate. Japanese and broader subtitle syntax stay
 separate. Existing source files remain immutable for the project lifetime.
 
 ## 2. Baseline and honest progress
 
-| Capability | Evidence on 28 September | Open boundary |
+| Capability | Evidence at the 28 September baseline | Open boundary at that baseline; use the backlog for current state |
 | --- | --- | --- |
 | Strict plain-SRT/WebVTT, checkpoints, edits, host publication | [Implementation status](IMPLEMENTATION_STATUS.md) and linked real/native probes | S7/S8/S9 still contain open gates; unsupported syntax is rejected |
 | Money fidelity | [v4 currency experiment](../eval/experiments/2026-09-27-chinese-currency-protection.md) | Bounded admission; not a universal money parser or general quality guarantee |
