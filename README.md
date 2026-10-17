@@ -2,11 +2,13 @@
 
 An independent Rust engine for translating existing subtitle files into separate Russian copies. Auralis provides project storage, desktop controls, model lifecycle, and result selection; Translate owns parsing, translation contracts, checkpoints, edits, and immutable results in its own SQLite database.
 
-The current implementation is **experimental**. Strict plain-SRT and a documented plain-WebVTT subset have real-model and recovery evidence. Language quality, clean-machine packaging, long-file performance, and the Chinese/Japanese release gates remain open. See [implementation status](docs/IMPLEMENTATION_STATUS.md).
+The current implementation is **experimental**. Strict plain-SRT and a documented plain-WebVTT subset have [real-model and recovery evidence](docs/IMPLEMENTATION_STATUS.md). Source-matched language quality, clean Windows installation, representative long-file performance, and the Chinese/Japanese release gates remain open in the [canonical backlog](docs/IMPLEMENTATION_BACKLOG.md) and [release map](docs/RELEASE_ACCEPTANCE.md).
 
 ## Start here
 
+- [Developer guide: setup, CLI, recovery and contribution](docs/DEVELOPER_GUIDE.md)
 - [Documentation index](docs/README.md)
+- [Document inventory and authority map](docs/DOCUMENT_MAP.md)
 - [Current English product plan](docs/PRODUCT_PLAN.md)
 - [Delivery plan: context, long files and dubbing](docs/DELIVERY_PLAN.md)
 - [Canonical task backlog and progress](docs/IMPLEMENTATION_BACKLOG.md)
@@ -24,19 +26,30 @@ The Russian [historical plan](AURALIS_SUBTITLE_TRANSLATION_PLAN.md) stays at the
 
 ## Local checks and commands
 
-Use the pinned Rust toolchain in `rust-toolchain.toml` and Task. After dependencies are available:
+Install the pinned Rust toolchain from `rust-toolchain.toml`, Task, and Node.js.
+From the repository root, after dependencies are available, the first check needs
+no model, network request, or Auralis desktop session:
 
 ```text
-task build
-task check
 task docs:check
-task cli -- inspect PATH_TO_SOURCE.srt
-task cli -- inspect-vtt PATH_TO_SOURCE.vtt
+task plan:check
+task cli -- inspect crates/auralis-translation-formats/tests/fixtures/plain.srt
 ```
 
-`task check` covers Rust formatting, Clippy, and workspace tests. The documentation link check and optional evaluation scripts use Node.js. Default Rust tests use small synthetic fixtures and mock providers; they do not establish translation quality.
+`task check` covers Rust formatting, Clippy, and workspace tests. Default tests
+use synthetic fixtures and mock providers; they do not establish translation
+quality. `task cli -- inspect-vtt PATH_TO_SOURCE.vtt` checks the declared strict
+WebVTT subset without inference. [The developer guide](docs/DEVELOPER_GUIDE.md)
+separates model-free checks, supplied-asset checks and real inference.
 
-The CLI accepts an explicitly installed checked local server for `translate`, `translate-vtt`, and `resume`. See [implementation status](docs/IMPLEMENTATION_STATUS.md) for exact command contracts and [the ten-row comparison record](eval/experiments/2026-09-26-flores-file-comparison.md) for a reproducible real local file transport run and source/reference/candidate reports.
+For inference, `translate`, `translate-vtt` and `resume` connect to a separately
+started loopback llama.cpp server. `translate-local`, `translate-vtt-local` and
+`resume-local` own a checked server child for one CLI run when the pinned runtime
+and model are already present. See the [CLI protocol](docs/reference/cli-protocol-v1.md)
+for positional arguments and ownership limits; the [native acceptance](eval/experiments/2026-10-10-cli-local-runtime-result.md)
+covers bounded real-model paths, not language release. The earlier
+[ten-row comparison](eval/experiments/2026-09-26-flores-file-comparison.md) is
+a development transport and quality-triage record.
 
 Model acquisition and installation are separate commands. `fetch-release`,
 `fetch-asset`, `install-offline` and `install-online` accept machine JSON requests
@@ -59,4 +72,10 @@ Local GGUF/runtime caches, external corpora, generated comparison fixtures, repo
 
 Auralis pins this repository at `modules/auralis-translate` as a Git submodule and uses Cargo path dependencies. Translate SQLite owns translation details; Auralis SQLite stores project links and ready artifact selection. Original subtitles stay immutable, and partial results are not published. See [integration](docs/architecture/003-auralis-integration.md) and [storage lifecycle](docs/architecture/002-storage-and-lifecycle.md).
 
-Public GitHub publication is deferred by the owner. The current integration is local; no public remote was created or pushed.
+The [public Translate repository](https://github.com/Ermolz69/auralis-translate)
+exists; this was checked on 17 October 2026. The earlier local-only publication
+decision in the [26 September delivery audit](eval/experiments/2026-09-26-translation-delivery-audit.md)
+is historical. A [28 September record](eval/experiments/2026-09-28-goal-plan-audit.md)
+reports a successful Pages deployment; a configured workflow or local site build
+alone does not confirm that a new commit is live. Source publication and the
+Auralis submodule pin are separate from product release acceptance.
