@@ -442,6 +442,12 @@ source admission, a quality-safe context policy and release gates remain open.
 
 ## Current handoff
 
+This long section preserves dated investigation handoffs and links already used
+by other records. For a short current route, read the task table above, then
+follow the relevant row's dated acceptance link. The [document inventory](DOCUMENT_MAP.md)
+and [developer guide](DEVELOPER_GUIDE.md) explain which contracts govern a new
+change. The prose below is not a second status table.
+
 `CTX-02` and `EVAL-04` now have an opt-in [provider review diagnostic
 contract](reference/provider-review-diagnostic-v1.md) and core/SQLite checks.
 The new `source_prefix_inserted` flag is validated before checkpoint commit and

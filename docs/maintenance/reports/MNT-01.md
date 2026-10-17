@@ -70,6 +70,7 @@ Auralis checkout were not edited.
 | `7e2140620887fd94c9066901209629217e2138f0` | Preserve supplied review and assignments as the frozen implementation base. | 450/0 | 450/0 |
 | `bf31c7ed63631aad20ca2c94ac0b553c4c33c5fd` | Onboarding guide, document inventory and current reader paths. | 211/13 | 211/13 |
 | `32338aff0b1d76eaafdf595cc1cc03f56dd444bc` | Contract/status reconciliation, MNT progress phase and coherently regenerated site pages. | 133/38 | 133/38 |
+| `7af849c3c9d5fc2c719bfe1dae06f73b9c692e23` | Add this acceptance record and link it from canonical progress. | 119/2 | 119/2 |
 
 The generated HTML has two changed long lines per page in the ordinary diff;
 that is generated identity/progress churn rather than handwritten refactoring.
@@ -111,7 +112,10 @@ branches. The receiving reviewer must compare the full diff and rerun the
 scoped checks on the committed tree. MNT-01 cannot be marked `done` before
 that review and its final integration pass.
 
-No branch push or PR has been performed at the time this report was written.
+The branch was pushed to the verified `origin` as
+`docs/translate-current-documentation` after committed-tree checks. No PR was
+opened. The final remote tip and this report's own publication commit are
+identified in the handoff rather than guessed inside this file.
 The next integration action is independent review of the committed MNT-01
 branch, followed by documentation reconciliation after accepted Translate
 maintenance branches.

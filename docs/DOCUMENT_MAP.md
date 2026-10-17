@@ -48,7 +48,7 @@ progress must be rebuilt from those sources, never edited by hand.
 | Document | Class and reading rule |
 | --- | --- |
 | [Maintenance packet](maintenance/README.md), [review](maintenance/REVIEW.md), [agent contract](maintenance/AGENT_CONTRACT.md) | 17 October review and later execution instructions. Proposed IDs become active only when dispatched in the canonical backlog. |
-| [MNT-01](maintenance/agents/01-documentation.md), [MNT-02](maintenance/agents/02-task-discovery.md), [MNT-03](maintenance/agents/03-provider.md), [MNT-04](maintenance/agents/04-cli-workflow.md), [MNT-05](maintenance/agents/05-report-tooling.md) | Scoped assignments, not a second product status table. Their acceptance reports live under `maintenance/reports/` when completed. |
+| [MNT-01](maintenance/agents/01-documentation.md), [MNT-02](maintenance/agents/02-task-discovery.md), [MNT-03](maintenance/agents/03-provider.md), [MNT-04](maintenance/agents/04-cli-workflow.md), [MNT-05](maintenance/agents/05-report-tooling.md) | Scoped assignments, not a second product status table. The dispatched [MNT-01 report](maintenance/reports/MNT-01.md) records its limited acceptance; later reports live beside it. |
 | [Current report](../site/index.html), [history](../site/history.html) | Generated HTML. `task site:build` rebuilds both; `task site:check` checks identities and retained historical evidence. Local output does not prove live Pages deployment. |
 
 ## Current claims and evidence routes
