@@ -89,6 +89,7 @@ export async function verifyCurrentReport(root, current, html) {
   assert(current.length < html.length / 10, 'Current page must stay focused');
   const currentMatch = current.match(/<script id="current-data" type="application\/json">([\s\S]*?)<\/script>/);
   assert(currentMatch);
+  assert(!currentMatch[1].includes('<'), 'Current report JSON must escape source and model markup');
   const currentData = JSON.parse(currentMatch[1]);
   assert.deepEqual(currentData, await loadCurrentReport(root));
   assert.equal(currentData.name_registry.human_review_count,0);

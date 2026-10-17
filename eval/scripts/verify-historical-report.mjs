@@ -56,6 +56,7 @@ export async function verifyHistoricalReport(root, html) {
   assert.equal((html.match(/<article id="zh\d\d"/g) ?? []).length, 20);
   const match = html.match(/<script id="report-data" type="application\/json">([\s\S]*?)<\/script>/);
   assert(match);
+  assert(!match[1].includes('<'), 'Historical report JSON must escape source and model markup');
   const data = JSON.parse(match[1]);
   assert.equal(data.benchmark.result, 'passed');
   assert.equal(data.dataset.examples.length, 20);
