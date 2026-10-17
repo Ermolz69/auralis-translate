@@ -1,0 +1,22 @@
+version: "3"
+
+tasks:
+  catalog:check:
+    desc: Compare the preserved public catalog and representative command expansions with the MNT-02 base
+    cmds:
+      - node eval/scripts/check-maintenance-task-catalog.mjs
+  test:provider:
+    desc: Run model-free provider protocol, profile, token, journal and cancellation contracts
+    cmds:
+      - cargo test --offline -p auralis-translation-llamacpp --test protocol --test profile_contract --test context_v5 --test context_v6 --test context_v7 --test json_tail_retry --test request_cancellation --test server_report_metadata
+      - cargo test --offline -p auralis-translation-sqlite --test inference_requests --test migrations
+  test:cli:
+    desc: Run model-free CLI process, resume, export and checked-server contracts
+    cmds:
+      - cargo test --offline -p auralis-translation-cli --test cli_smoke --test cli_resume --test machine_protocol --test local_runtime --test verified_server --test preparation_pause
+      - task: :test:result-edits
+  test:report:
+    desc: Run local report record and two-page verification contracts without capturing evidence
+    cmds:
+      - task: :eval:report:check
+      - task: :site:check

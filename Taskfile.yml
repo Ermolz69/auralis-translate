@@ -4,6 +4,7 @@ includes:
   developer:
     taskfile: ./taskfiles/developer.yml
     flatten: true
+  maintenance: ./taskfiles/maintenance.yml
 
 tasks:
   eval:official-reference:freeze:
