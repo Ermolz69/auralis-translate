@@ -69,6 +69,7 @@ Timing and random request IDs naturally vary between runs.
 | `441485aea1f115e69c50f9dae340d6fe5c4bb15f` | Isolate line requests. | 238/226 | 238/226 |
 | `9b23de7d83767733c39db258bcd6cd9f0017b6f8` | Isolate token preflight and v5 budgeting. | 295/285 | 295/285 |
 | `b4a7c09219a1e6dc90fa9ac90583a45341ed5304` | Isolate dispatch and add journal finish failure test. | 223/165 | 223/165 |
+| `156d4b596c964458ce62f51ff13d95a9dfb9054c` | Record this source candidate and its verification. | 121/0 | 121/0 |
 
 Each source commit compiled and passed `task maintenance:test:provider` before
 the next extraction. Ordinary and `-M` counts match because Git did not detect
@@ -119,3 +120,7 @@ clean-install gate was renewed. The receiving reviewer should inspect the full
 base-to-candidate diff, rerun focused checks on the committed tree, compare
 negative/error paths and record an `accepted`, `changes_requested` or
 `blocked_by_environment` verdict before canonical backlog completion.
+
+The source and report through `156d4b5` were pushed to the verified `origin`
+branch `refactor/translate-provider-modules` on 17 October 2026. No PR was
+opened. The final report-only status commit is identified in the handoff.
