@@ -1,6 +1,6 @@
 # Integrating Translate with Auralis
 
-Status: experimental integration with verified native paths, 26 September 2026. `auralis-translate` remains an independent repository and builds without the Auralis UI. Auralis has durable project links, frozen intents, shared host jobs, managed checked-model admission, desktop start/resume/pause, comparison/editing and separate ready-result publication. Native checked-model SRT/WebVTT, named crash boundaries and SRT pause/resume have passed; see [implementation status](../IMPLEMENTATION_STATUS.md) for exact evidence and limits. Historical selection, event-driven progress, further command interleavings, clean installation and language release gates remain open.
+Status: experimental integration. `auralis-translate` remains independently buildable. Auralis has durable project links, frozen intents, shared host jobs, managed checked-model admission, desktop start/resume/pause, comparison/editing and separate ready-result publication. The [implementation status](../IMPLEMENTATION_STATUS.md) and [canonical backlog](../IMPLEMENTATION_BACKLOG.md) distinguish bounded native SRT/WebVTT, history and committed-event evidence from open command interleavings, clean installation and language release gates. The 26 September survey below is historical.
 
 ## Module boundaries
 
@@ -21,7 +21,20 @@ flowchart LR
 
 Auralis owns projects, source/output artifacts, host jobs, process cancellation, resource limits, and the UI. Translate owns file inspection/parsing, source maps, segments, block planning, model-provider calls, validation, checkpoints, edits, and result versions. The UI calls Auralis application APIs rather than reading Translate SQLite. Future voice-markup and TTS modules consume an approved Russian result through Auralis; their state does not belong in Translate.
 
-The same Rust core serves both the standalone CLI and the Auralis adapter. The current CLI supplies its own files and SQLite path and connects to a caller-supplied server; its own runtime lifecycle remains work. Auralis supplies managed artifacts, shared host jobs and process ownership. Embedded Translate does not run a second scheduler on top of Auralis. The [CLI machine protocol](../reference/cli-protocol-v1.md) is a controller interface, not the desktop integration boundary.
+The same Rust core serves both the standalone CLI and the Auralis adapter. The
+CLI supplies its own files and SQLite path. Its `translate`, `translate-vtt` and
+`resume` commands connect to a caller-supplied local server. Its
+`translate-local`, `translate-vtt-local` and `resume-local` commands start and
+stop an owned checked server child for one run when the runtime and model already
+exist; an already validated result can be re-exported without starting it.
+[Command dispatch](../../crates/auralis-translation-cli/src/command_dispatch.rs),
+[local server ownership](../../crates/auralis-translation-cli/src/local_model_server.rs)
+and [bounded native acceptance](../../eval/experiments/2026-10-10-cli-local-runtime-result.md)
+record this implementation. Package upgrade/removal, orphan cleanup and clean
+installation remain separate work. Auralis supplies managed artifacts, shared
+host jobs and process ownership to its embedded adapter. Embedded Translate does
+not run a second scheduler on top of Auralis. The [CLI machine protocol](../reference/cli-protocol-v1.md)
+is a controller interface, not the desktop integration boundary.
 
 ## Proposed integration API
 
@@ -61,11 +74,31 @@ The desktop comparison command pairs saved source segments with a requested immu
 
 Local subtitle import is now exposed by Auralis. Its application use case strictly inspects a project-selected `.srt` or `.vtt` path, copies it into managed staging, verifies the staged copy against the inspected digest and size, then commits a pending `OriginalSubtitle` artifact and finalization outbox action. The external file is never moved or edited. The desktop lists managed originals and can freeze a Chinese → Russian run against a ready artifact; this prepares durable state in the two databases but does not start the model. The source format is recovered from the preserved managed filename extension after restart. A real two-database test covers ready finalization, inspection, run registration, rejected malformed input and unchanged external bytes.
 
-The implemented local nested path is `auralis/modules/auralis-translate`. Its separate local Git repository contains the Rust workspace, documentation, fixtures and CI. Auralis already pins it as a **Git submodule** from the sibling checkout. Public GitHub publication is deferred by the owner. The Auralis gitlink pins one Translate commit; upgrading requires a separate pointer commit in Auralis. Auralis uses Cargo `path` dependencies from `modules/auralis-translate/crates/...`; Translate remains independently buildable. Model weights, runtime binaries and user files do not enter Git.
+The implemented nested path is `auralis/modules/auralis-translate`. Auralis pins
+the independent [public Translate repository](https://github.com/Ermolz69/auralis-translate)
+as a **Git submodule**. The Auralis gitlink pins one Translate commit; an accepted
+library upgrade requires a separate pointer commit in Auralis. Auralis uses Cargo
+`path` dependencies from `modules/auralis-translate/crates/...`; Translate remains
+independently buildable. Model weights, runtime binaries and user files do not
+enter Git. The earlier local-only publication decision is retained in the
+[26 September delivery audit](../../eval/experiments/2026-09-26-translation-delivery-audit.md).
 
-A local Auralis checkout now has the pinned submodule path. `.gitmodules` uses the relative URL `../auralis-translate`, which resolves to the sibling repository in the same GitHub owner after that repository is published. Until the remote exists, a fresh network clone cannot initialise the gitlink; local development uses the sibling repository. The direct Rust dependency also requires one compatible `libsqlite3-sys` version for Auralis SQLx and Translate rusqlite. Translate pins rusqlite 0.39, whose SQLite FFI dependency is within SQLx 0.9's accepted range; both workspaces must pass their checks after changing that pin. [rusqlite 0.39 dependencies](https://docs.rs/crate/rusqlite/0.39.0), [SQLx SQLite dependency guidance](https://docs.rs/sqlx/0.9.0/sqlx/sqlite/).
+Auralis's `.gitmodules` uses the relative URL `../auralis-translate` for the
+sibling repository under the same GitHub owner. A public remote now exists;
+actual clean-clone and installation gates still require their own checks. The
+direct Rust dependency also requires one compatible `libsqlite3-sys` version
+for Auralis SQLx and Translate rusqlite. Translate pins rusqlite 0.39, whose
+SQLite FFI dependency is within SQLx 0.9's accepted range; both workspaces must
+pass their checks after changing that pin. [rusqlite 0.39 dependencies](https://docs.rs/crate/rusqlite/0.39.0),
+[SQLx SQLite dependency guidance](https://docs.rs/sqlx/0.9.0/sqlx/sqlite/).
 
-Update order: commit/push Translate → pass Translate CI → advance the submodule in an Auralis integration branch → pass Auralis checks → commit/push Auralis. Auralis CI and local clones initialise the submodule with `git clone --recurse-submodules` or `git submodule update --init --recursive`. Builds never follow a floating `main` branch. The remote repository and access configuration still need to be created. [Git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules), [Cargo path dependencies](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html).
+For accepted library changes, update order is commit/push Translate → pass
+Translate CI → advance the submodule in an Auralis integration branch → pass
+Auralis checks → commit/push Auralis. Documentation-only changes need no pin
+update. Auralis CI and local clones initialise the submodule with
+`git clone --recurse-submodules` or `git submodule update --init --recursive`.
+Builds never follow a floating `main` branch. [Git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules),
+[Cargo path dependencies](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html).
 
 ## Delivery order
 

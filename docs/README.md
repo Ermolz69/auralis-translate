@@ -1,19 +1,43 @@
 # Auralis Translate documentation
 
-Status: architecture and staged implementation, 26 September 2026. Strict plain-SRT and plain-WebVTT pipelines, manual renderers, and experimental real-model paths are implemented. Translate SQLite has durable checkpoints, pause requests, and immutable results. The CLI has managed-source translation and resume paths verified with a mock server and a [checked-model WebVTT interruption](../eval/experiments/2026-09-25-cli-vtt-interruption.md). An [experimental pinned CPU package](../eval/experiments/2026-09-25-offline-cpu-install.md) installs from locally supplied, hash-verified assets; a [resumable downloader](../eval/experiments/2026-09-25-resumable-download.md) now acquires those assets into a verified cache. Auralis now has an experimental application-data installer and selection UI, with local adapter evidence and a native UI install/select, restart, and one-cue CPU translation test; clean offline verification remains open. Auralis has strict inspection, project links, managed runtime admission, desktop controls, ready artifact publication, a [checked-model worker-kill/resume test](../eval/experiments/2026-09-25-managed-worker-crash.md), a [native checked-model translation test](../eval/experiments/2026-09-25-native-tauri-translation.md), and native desktop crash/restart tests for [SRT](../eval/experiments/2026-09-25-native-tauri-crash.md) and [strict WebVTT](../eval/experiments/2026-09-25-native-vtt-crash-resume.md) through both databases. Committed progress events have supporting and native evidence; production quality, broader WebVTT coverage, and language release gates remain open. See [implementation status](IMPLEMENTATION_STATUS.md) for verified evidence.
+Current scope: an experimental Chinese-to-Russian translation path for existing
+strict plain-SRT and declared plain-WebVTT files. The original stays immutable;
+validated output is a separate file. Translate owns durable runs, checkpoints,
+edits and results; Auralis owns projects, host jobs and managed artifacts. Both a
+caller-supplied local server and a CLI-owned checked child have bounded
+[acceptance evidence](IMPLEMENTATION_BACKLOG.md). Native Auralis paths have
+separate [recorded checks](IMPLEMENTATION_STATUS.md). Source-matched language
+quality, representative long-file performance, clean Windows installation and
+release gates remain open. The [backlog](IMPLEMENTATION_BACKLOG.md) is the live
+task state; the [release map](RELEASE_ACCEPTANCE.md) defines completion.
+
+## Reader paths
+
+| Need | Start with |
+| --- | --- |
+| Set up and run a model-free check | [Developer guide](DEVELOPER_GUIDE.md) |
+| Find authoritative versus dated documents | [Document inventory](DOCUMENT_MAP.md) |
+| Understand product and format limits | [Product plan](PRODUCT_PLAN.md), [strict WebVTT subset](reference/webvtt-subset-v1.md) |
+| Find current task and gate state | [Canonical backlog](IMPLEMENTATION_BACKLOG.md), [release acceptance](RELEASE_ACCEPTANCE.md) |
+| Trace a specific implementation claim | [Implementation status](IMPLEMENTATION_STATUS.md) and its dated acceptance links |
+| Change code or run a probe | [Agent workflow](AGENT_WORKFLOW.md), [Rust map](architecture/004-rust-code-architecture.md) |
 
 The detailed [version 2.0 plan](../AURALIS_SUBTITLE_TRANSLATION_PLAN.md) remains at the repository root in Russian as a historical source. The [English product plan](PRODUCT_PLAN.md) and the architecture documents record the later decisions for the first file-based translation product. Where the historical plan conflicts with an agreed MVP decision below, this directory takes precedence; its research, format cautions, and release gates still apply.
 
 Agents should also read the repository-level [AGENTS.md](../AGENTS.md) before implementation work.
 
 For an already available checked model and llama.cpp runtime, the standalone
-CLI now has [local one-command entrypoints](reference/cli-protocol-v1.md):
+CLI has [local one-command entrypoints](reference/cli-protocol-v1.md):
 `translate-local`, `translate-vtt-local` and `resume-local`. These own the
 loopback server process for one run; Auralis continues to link the same Rust
-translation crates directly. Their [bounded native acceptance](../eval/experiments/2026-10-10-cli-local-runtime-plan.md)
+translation crates directly. Their [bounded native acceptance](../eval/experiments/2026-10-10-cli-local-runtime-result.md)
 is tracked separately from translation quality and clean installation.
 
-## Start here
+## Dated evidence and plan index
+
+The following records preserve the sequence of earlier decisions and bounded
+checks. Their dates and original limits remain part of the evidence; use the
+backlog and release map above for current status.
 
 The [delivery plan](DELIVERY_PLAN.md), [canonical backlog](IMPLEMENTATION_BACKLOG.md)
 and [agent workflow](AGENT_WORKFLOW.md) now govern execution and progress. They
@@ -160,7 +184,7 @@ Voice markup, TTS, ASR, subtitle timing creation from text, live translation, an
 
 ## Changes from the root plan
 
-The [delivery audit](../eval/experiments/2026-09-26-translation-delivery-audit.md) records the explicit separation of application releases, upstream model downloads, and ignored local test data. Public GitHub publication is deferred by the repository owner; the local submodule workflow continues.
+The [26 September delivery audit](../eval/experiments/2026-09-26-translation-delivery-audit.md) records the explicit separation of application releases, upstream model downloads, and ignored local test data. Its local-only GitHub decision was superseded by later [public-source publication](https://github.com/Ermolz69/auralis-translate); the submodule pin and release gates remain separate.
 
 | Root plan sections | MVP clarification                                                                                                                                              |
 | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |

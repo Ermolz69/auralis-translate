@@ -1,13 +1,20 @@
 # Implementation status and evidence
 
-Latest plan audit, 28 September 2026: [release acceptance](RELEASE_ACCEPTANCE.md),
+This is a dated evidence chronology, not the current task table. Read the
+[canonical backlog](IMPLEMENTATION_BACKLOG.md) for live IDs, dependencies and
+acceptance links and the [release map](RELEASE_ACCEPTANCE.md) for open gates.
+`task plan:check` calculates the current count from that table; the 49-task
+figure below belongs to its 28 September snapshot. The
+[developer guide](DEVELOPER_GUIDE.md) gives the short current entry path.
+
+Plan audit on 28 September 2026: [release acceptance](RELEASE_ACCEPTANCE.md),
 [regression policy 008](evaluation/008-regression-and-adversarial-checks.md) and
 [goal objective](GOAL_PROMPT.md) add finite completion, gate bindings, maintained
 regressions, bounded failure/retry, upgrade/rollback and a final candidate audit.
-The canonical backlog now contains 49 tasks. [Planning audit evidence](../eval/experiments/2026-09-28-goal-plan-audit.md)
+The canonical backlog contained 49 tasks at that audit. [Planning audit evidence](../eval/experiments/2026-09-28-goal-plan-audit.md)
 covers docs/report checks only; no Goal or new implementation/probe is activated.
 
-Latest planning slice, 28 September 2026: the [delivery plan](DELIVERY_PLAN.md),
+Planning slice on 28 September 2026: the [delivery plan](DELIVERY_PLAN.md),
 [tracked backlog](IMPLEMENTATION_BACKLOG.md) and [agent workflow](AGENT_WORKFLOW.md)
 replace the temporary work queue. They define context contrasts, bounded chunking,
 natural long-file quality and recovery, conditional adaptation, separate audio
@@ -246,7 +253,7 @@ Auralis SQLite schema v9 now stores each Translate result revision in its public
 
 Startup recovery now checks the latest Translate result ID on every link with an active run or selected result. An earlier pending or ready publication cannot hide a newer committed manual edit. A two-database integration test covers edit recovery before and after first selection, publication finalization, and an unchanged original. Native desktop process interruption remains open.
 
-## Current slices
+## Dated implementation slices
 
 The [original MSI content slice](../eval/experiments/2026-09-26-windows-msi-content.md) built and audited a real unsigned Windows package with production features. Its pre-bundle capture and complete packaged-byte checks corrected earlier marker/hash assumptions. A [fresh cancellation build and separate QA handoff](../eval/experiments/2026-09-26-windows-msi-cancellation.md) now pass for the later transport/host-worker changes: nine extracted files, captured source/package application identity, pinned media/licenses and no weight/evaluation payloads. A separate ignored directory contains that audited MSI, four authored SRT/WebVTT cues, unreviewed Russian drafts, a detached checklist and an unexecuted report. Real format inspectors accept both generated sources. The [clean Windows protocol](evaluation/006-clean-windows-installation.md) still requires the unseeded setup/offline run; signing, NSIS and G9 remain open.
 
@@ -340,9 +347,17 @@ These commands use `create_new` semantics: choose paths that do not exist. The d
 4. **S6: standalone CLI.** Add richer typed provider failure reasons, CLI-owned runtime lifecycle and source/glossary orphan cleanup. JSON/JSONL now covers translation/control/export and all four separate-model acquisition/install commands; package failures have typed codes. Upgrades/removal and clean-machine behavior remain open.
 5. **S7: desktop workflow.** Extend the verified event/history flow with manual-save crash boundaries, fuller review/diagnostic interactions and user validation. Selected and historical ready results have paged comparison; actual native older-base branches, explicit selection and reopening pass.
 6. **S1 / S8: formats and resources.** Expand strict SRT/WebVTT fixtures, fuzz parsers and verify exports in target players. Extend the completed synthetic long-file recovery record to varied real scenes and resource budgets with other Auralis workloads.
-7. **Repository delivery: owner deferred.** Publish the reviewed Translate repository and update GitHub submodule/CI cloning only after the owner resumes publication. Continue local commits and the pinned local submodule meanwhile.
+7. **Repository delivery at this handoff.** Publication was deferred on
+   26 September; the later [planning audit](../eval/experiments/2026-09-28-goal-plan-audit.md)
+   records a public source/report deployment. A clean clone and release
+   acceptance remain separate gates.
 
-The repository is a separate local Git repository. The Auralis checkout now has a local gitlink at `modules/auralis-translate`, pinned to a Translate commit, with a relative sibling URL planned for GitHub. The Translate SQLite adapter uses rusqlite 0.39 to share a compatible SQLite FFI version with Auralis SQLx 0.9; `task check` and `task build` passed after that dependency change. The Translate GitHub remote is still absent, so cloning the submodule from GitHub remains open.
+The repository is an independent Git repository. The Auralis checkout has a
+gitlink at `modules/auralis-translate`, pinned to a Translate commit, with a
+relative sibling GitHub URL. Translate SQLite uses rusqlite 0.39 for compatible
+SQLite FFI with Auralis SQLx 0.9; the historical `task check` and `task build`
+passed after that dependency change. The remote now exists, while an actual
+clean-clone check remains a separate acceptance item.
 
 ## Explicit manual publication foundation
 

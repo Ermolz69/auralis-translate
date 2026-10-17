@@ -7,6 +7,7 @@ const statuses = ['done', 'ready', 'in_progress', 'planned', 'deferred', 'blocke
 const labels = { done: 'Готово', ready: 'Можно начинать', in_progress: 'В работе', planned: 'Запланировано', deferred: 'Отложено / по условию', blocked: 'Блокировано' };
 const phases = [
   { title: 'База и план', prefixes: ['BASE', 'PLAN'] },
+  { title: 'Сопровождение', prefixes: ['MNT'] },
   { title: 'Данные и сравнения', prefixes: ['DATA', 'EVAL'] },
   { title: 'Контекст и термины', prefixes: ['CTX', 'NAME', 'TERM'] },
   { title: 'Куски и длинные файлы', prefixes: ['LONG', 'PERF'] },
