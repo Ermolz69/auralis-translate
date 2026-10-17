@@ -1,5 +1,10 @@
 version: "3"
 
+includes:
+  developer:
+    taskfile: ./taskfiles/developer.yml
+    flatten: true
+
 tasks:
   eval:official-reference:freeze:
     desc: Freeze ten source-only requests from the pinned official Chinese–Russian PDF
@@ -3490,10 +3495,6 @@ tasks:
       - task: eval:data:commons:cc-commerce:acquire
       - cargo build --offline -p auralis-translation-cli
       - node eval/scripts/check-cc-commerce-candidate.mjs
-  plan:check:
-    desc: Validate canonical delivery backlog states, dependencies and completion evidence
-    cmds:
-      - node eval/scripts/check-delivery-plan.mjs
   model:7b:smoke:
     desc: Verify the real 7B launcher reaches readiness and cleans up its runtime
     cmds:
@@ -4181,9 +4182,6 @@ tasks:
       - node --check eval/scripts/release-cli-receipt-contract.mjs
       - node --check eval/scripts/test-release-cli-build-receipt.mjs
       - node eval/scripts/test-release-cli-build-receipt.mjs
-  test:
-    cmds:
-      - cargo test --workspace --offline
   test:verified-server:
     cmds:
       - cargo test --offline -p auralis-translation-cli --test verified_server
@@ -4214,30 +4212,6 @@ tasks:
       - cargo test --offline -p auralis-translation-llamacpp --test request_cancellation
       - cargo test --offline -p auralis-translation --test retry_policy
       - cargo test --offline -p auralis-translation-cli --test cli_resume cli_profile_retry_limit_is_recorded_in_checkpoint
-  fmt:
-    cmds:
-      - cargo fmt --all -- --check
-  fmt:fix:
-    cmds:
-      - cargo fmt --all
-  lint:
-    cmds:
-      - cargo clippy --workspace --all-targets --offline -- -D warnings
-  check:
-    cmds:
-      - task: fmt
-      - task: lint
-      - task: test
-  docs:check:
-    desc: Check local file links in active English documentation and experiment records
-    cmds:
-      - node eval/scripts/check-doc-links.mjs
-  inspect:
-    cmds:
-      - cargo run --offline -p auralis-translation-cli -- inspect {{.CLI_ARGS}}
-  cli:
-    cmds:
-      - cargo run --offline -p auralis-translation-cli -- {{.CLI_ARGS}}
   cli:release:
     desc: Invoke the already built optimized standalone CLI
     cmds:
