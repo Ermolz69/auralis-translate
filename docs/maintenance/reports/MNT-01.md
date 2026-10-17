@@ -1,9 +1,8 @@
 # MNT-01 documentation acceptance report
 
-Status: implementation ready for independent review; canonical row remains
-`in_progress` until the reviewer verifies this scoped acceptance. This is
-documentation maintenance, not a language, model, audio, native desktop or
-release acceptance.
+Status: accepted after owner-authorized self-review and integration into `main`.
+This is documentation maintenance, not a language, model, audio, native desktop
+or release acceptance.
 
 ## Identity and scope
 
@@ -14,9 +13,11 @@ release acceptance.
   `79b53113bf3d39954ccb58f6204c441b1a10f427`.
 - Tested documentation/progress candidate HEAD:
   `32338aff0b1d76eaafdf595cc1cc03f56dd444bc`; source tree:
-  `6923dc560f6931c0f597d98360556e27c09f5996`. This report and its
-  backlog link follow as a report-only publication commit; the final commit
-  identity is recorded in the handoff after creation.
+  `6923dc560f6931c0f597d98360556e27c09f5996`. The final reviewed PR head is
+  `22c7ade4ab4340c3163448b79e8add8bf9fff20f`, tree
+  `27cf6194f5b67086baa27720f31572a2971c8420`. The local merge into `main`
+  is `f97fc2e3e21bd88a48f15834588791049a2323b6`, with the same tree.
+  The subsequent status/report closure commit is identified by the Git history.
 - No Rust/runtime/model/profile/manifest/schema/API/protocol/config change.
   Public CLI commands, error behavior, source preservation and release
   thresholds are unchanged.
@@ -52,7 +53,7 @@ Generated paths: `site/index.html`, `site/history.html`.
 | --- | --- |
 | README said no public remote existed. | [Public GitHub repository](https://github.com/Ermolz69/auralis-translate) observed 17 October 2026; [26 September audit](../../../eval/experiments/2026-09-26-translation-delivery-audit.md) remains a dated local-only decision. [28 September Pages record](../../../eval/experiments/2026-09-28-goal-plan-audit.md) reports that deployment; no new live deployment is inferred. |
 | Integration text said CLI runtime ownership remained work. | [Dispatch](../../../crates/auralis-translation-cli/src/command_dispatch.rs), [owned process](../../../crates/auralis-translation-cli/src/local_model_server.rs) and [bounded acceptance](../../../eval/experiments/2026-10-10-cli-local-runtime-result.md) show both caller-supplied and CLI-owned paths. Upgrade/removal/clean installation remain open. |
-| Status led with 49 tasks as though current. | 49 is labelled the 28 September audit; `task plan:check` computes the present table count. MNT-01 adds one `in_progress` row and a progress phase without changing release gates. |
+| Status led with 49 tasks as though current. | 49 is labelled the 28 September audit; `task plan:check` computes the present table count. MNT-01 adds one row and a progress phase without changing release gates; its row is `done` after this scoped review. |
 | Delivery plan deferred desktop work without later context. | The original schedule is dated and linked to [translator-only v3](../../../eval/experiments/2026-10-10-translation-only-scope-v3.md) and [desktop v3](../../../eval/experiments/2026-10-10-translate-desktop-goal-scope-v3.md). Both retain G1–G9. |
 | Architecture example looked like a current file tree. | [Current read path](../../architecture/004-rust-code-architecture.md) links actual core, format, SQLite, provider, CLI and evaluation modules; the example is labelled historical. |
 | Root onboarding required chronology and used placeholders for the first check. | [Guide](../../DEVELOPER_GUIDE.md) names prerequisites, a repository fixture, model-free commands, inference ownership, resume/diagnostics and contribution rules. The CLI fixture check is run below. |
@@ -71,6 +72,7 @@ Auralis checkout were not edited.
 | `bf31c7ed63631aad20ca2c94ac0b553c4c33c5fd` | Onboarding guide, document inventory and current reader paths. | 211/13 | 211/13 |
 | `32338aff0b1d76eaafdf595cc1cc03f56dd444bc` | Contract/status reconciliation, MNT progress phase and coherently regenerated site pages. | 133/38 | 133/38 |
 | `7af849c3c9d5fc2c719bfe1dae06f73b9c692e23` | Add this acceptance record and link it from canonical progress. | 119/2 | 119/2 |
+| `22c7ade4ab4340c3163448b79e8add8bf9fff20f` | Complete the document map and record the branch handoff. | 13/3 | 13/3 |
 
 The generated HTML has two changed long lines per page in the ordinary diff;
 that is generated identity/progress churn rather than handwritten refactoring.
@@ -106,16 +108,38 @@ was not independently reachable through the available web reader during this
 slice, so only the dated deployment record is claimed. No real model, download,
 native app, clean install or language review was run.
 
-MNT-02 has not supplied new maintenance Taskfile wrappers. The final command
-documentation and source map must be reconciled after accepted MNT-02–MNT-05
-branches. The receiving reviewer must compare the full diff and rerun the
-scoped checks on the committed tree. MNT-01 cannot be marked `done` before
-that review and its final integration pass.
+## Integration review and decision
 
-The branch was pushed to the verified `origin` as
-`docs/translate-current-documentation` after committed-tree checks. No PR was
-opened. The final remote tip and this report's own publication commit are
-identified in the handoff rather than guessed inside this file.
-The next integration action is independent review of the committed MNT-01
-branch, followed by documentation reconciliation after accepted Translate
-maintenance branches.
+On 17 October 2026 the owner explicitly authorized self-review in place of the
+contract's independent receiving reviewer. The complete 23-file PR diff was
+read against the base, including the eight supplied planning files, generated
+HTML and the single progress-prefix change. No Rust crate, model manifest,
+Taskfile, protocol or release threshold changed. The current source map links
+paths present in the merged tree. The original untracked planning packet in
+the main checkout matched all eight PR files by SHA-256 and was preserved in a
+recoverable Git stash before merge.
+
+The final PR head passed `task docs:check` (560 Markdown files),
+`task plan:check` (59 tasks and six document identities), `task site:build`
+(1,198,285-byte history and 120,342-byte index), and `task site:check` (all
+local HTML/evidence checks). The rebuilt pages had no Git content diff.
+After changing the canonical row to `done` on integrated `main`, the same four
+checks exited 0: `task site:build` produced a 1,198,325-byte history and a
+120,342-byte index; `task docs:check` still covered 560 Markdown files and
+`task plan:check` still counted 59 tasks. The generated diff changes MNT-01
+progress and document identities, retaining historical failures.
+`task cli -- inspect crates/auralis-translation-formats/tests/fixtures/plain.srt`
+returned two cues and protected byte ranges. The negative check
+`task cli -- inspect docs/README.md` exited 1 with `InvalidCueLabel at line 1`;
+it did not start inference. Initial CLI/build retries were blocked by sandbox
+write permissions on the managed worktree and passed when rerun with access;
+those environment failures were not counted as product failures.
+
+Decision: **accepted** for documentation and generated progress only. PR
+[#4](https://github.com/Ermolz69/auralis-translate/pull/4) was opened from
+`docs/translate-current-documentation` and integrated locally into `main` as
+`f97fc2e3e21bd88a48f15834588791049a2323b6`. Translate PRs #1–#3 were
+already merged into `main`; no MNT-02–MNT-05 branch was selected or accepted
+at this reconciliation. Their future source changes need a fresh documentation
+pass in their own acceptance scope. Auralis's gitlink is unchanged because this
+slice changes documentation and generated progress only.
