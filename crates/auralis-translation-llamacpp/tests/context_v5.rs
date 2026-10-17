@@ -19,6 +19,7 @@ struct RecordedRequests {
     starts: Mutex<Vec<InferenceRequestStart>>,
     finishes: Mutex<Vec<InferenceRequestFinish>>,
     fail_begin: bool,
+    fail_finish: bool,
 }
 
 struct Paused;
@@ -42,12 +43,62 @@ impl InferenceRequestJournal for RecordedRequests {
     }
 
     fn finish(&self, finish: &InferenceRequestFinish) -> Result<(), Box<dyn Error + Send + Sync>> {
+        if self.fail_finish {
+            return Err("injected journal finish failure".into());
+        }
         self.finishes
             .lock()
             .map_err(|_| "journal lock poisoned")?
             .push(finish.clone());
         Ok(())
     }
+}
+
+#[test]
+fn v5_finish_failure_rejects_valid_model_response() -> Result<(), Box<dyn Error>> {
+    let listener = TcpListener::bind("127.0.0.1:0")?;
+    let address = listener.local_addr()?;
+    let server = std::thread::spawn(move || {
+        serve(
+            &listener,
+            r#"{"translations":[{"segment_id":2,"line_index":0,"text":"Вода стоит __AURALIS_MONEY_0__."}]}"#,
+        )
+    });
+    let journal = Arc::new(RecordedRequests {
+        fail_finish: true,
+        ..Default::default()
+    });
+    let provider = LlamaCppProvider::new(
+        &format!("http://{address}/"),
+        ModelProfile::from_json(PROFILE)?,
+    )?
+    .with_inference_journal(journal.clone());
+    let error = match translate_batch(&provider, &batch(false)?) {
+        Ok(_) => return Err("journal finish must fail".into()),
+        Err(error) => error,
+    };
+    assert!(
+        error
+            .to_string()
+            .contains("injected journal finish failure")
+    );
+    server.join().map_err(|_| "server panicked")??;
+    assert_eq!(
+        journal
+            .starts
+            .lock()
+            .map_err(|_| "journal lock poisoned")?
+            .len(),
+        1
+    );
+    assert!(
+        journal
+            .finishes
+            .lock()
+            .map_err(|_| "journal lock poisoned")?
+            .is_empty()
+    );
+    Ok(())
 }
 
 #[test]
