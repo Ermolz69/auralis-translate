@@ -130,3 +130,7 @@ catalog and focused wrappers on the committed candidate, then record
 MNT-05 should start from a base containing these task entrypoints. This report
 does not mark MNT-02 done in the canonical backlog; the coordinator owns that
 integration and generated public progress.
+
+Push status: `chore/translate-task-discovery` was pushed to the verified
+`origin` after these checks. No pull request was opened. The branch-tip commit
+hash and remote equality are recorded in the final handoff.
