@@ -39,7 +39,7 @@ development decision; independent approval and natural-file quality stay open.
 
 | ID | Work | Status | Depends on | Acceptance / evidence |
 | --- | --- | --- | --- | --- |
-| MNT-01 | Reconcile current documentation and onboarding | in_progress | - | [Assignment](maintenance/agents/01-documentation.md); scoped documentation/site checks and final integration review remain. No release gate changes. |
+| MNT-01 | Reconcile current documentation and onboarding | in_progress | - | [Assignment](maintenance/agents/01-documentation.md) and [scoped acceptance report](maintenance/reports/MNT-01.md); independent review and final reconciliation after accepted Translate branches remain. No release gate changes. |
 | BASE-01 | Strict source/result and checkpoint foundation | done | - | Narrow implemented slices only; open S7–S9 retained in [status](IMPLEMENTATION_STATUS.md) |
 | BASE-02 | Real synthetic long-file recovery baseline | done | BASE-01 | Existing bounded scope and [recovery evidence](../eval/experiments/2026-09-26-long-file-recovery.md) |
 | BASE-03 | Matched 1.8B/7B development comparison | done | BASE-01 | 240 real requests, AI editorial review and [experiment](../eval/experiments/2026-09-27-model-size-comparison.md) |
