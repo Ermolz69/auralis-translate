@@ -10,7 +10,8 @@ pub(super) fn validate_entry(
     names: &mut HashSet<String>,
     total_bytes: &mut u64,
 ) -> Result<String, OfflineInstallError> {
-    let name = entry.name();
+    let name = entry.name()?;
+    let raw_mode = entry.external_attributes() >> 16;
     if entry.is_dir()
         || name.is_empty()
         || name == "."
@@ -18,10 +19,12 @@ pub(super) fn validate_entry(
         || !name
             .bytes()
             .all(|byte| byte.is_ascii_alphanumeric() || matches!(byte, b'.' | b'-' | b'_'))
-        || !names.insert(name.to_owned())
+        || !names.insert(name.to_string())
+        || raw_mode & 0o7000 != 0
+        || !matches!(raw_mode & 0o170000, 0 | 0o100000)
         || entry
             .unix_mode()
-            .is_some_and(|mode| mode & 0o170000 == 0o120000)
+            .is_some_and(|mode| !matches!(mode & 0o170000, 0 | 0o100000))
     {
         return Err(OfflineInstallError::Invalid(
             "runtime archive contains an unsafe or duplicate entry",
@@ -37,5 +40,5 @@ pub(super) fn validate_entry(
             "runtime archive exceeds extraction limits",
         ));
     }
-    Ok(name.to_owned())
+    Ok(name.into_owned())
 }

@@ -1,19 +1,12 @@
 use auralis_translation_llamacpp::{
     ReleaseManifest, install_offline, verify_runtime_files, verify_runtime_files_with_control,
 };
-use serde_json::{Value, json};
-use sha2::{Digest, Sha256};
 use std::error::Error;
-use std::fs::File;
-use std::io::Write;
-use std::path::{Path, PathBuf};
-use zip::ZipWriter;
-use zip::write::SimpleFileOptions;
+use std::path::Path;
 
-const PROFILE: &[u8] =
-    include_bytes!("../../../models/manifests/hy_mt2_1_8b_q4_k_m.checked.experimental.json");
-const MANIFEST: &[u8] =
-    include_bytes!("../../../models/releases/hy_mt2_1_8b_q4_k_m.windows_x64_cpu.experimental.json");
+#[path = "support/offline_install_fixture.rs"]
+mod offline_install_fixture;
+use offline_install_fixture::{Fixture, fixture_with_archive, make_zip};
 
 #[test]
 fn reporting_failure_keeps_verified_asset_and_stops_before_next_asset() -> Result<(), Box<dyn Error>>
@@ -92,63 +85,16 @@ fn interrupted_runtime_verification_keeps_the_installed_package() -> Result<(), 
     Ok(())
 }
 
-struct Fixture {
-    manifest: Vec<u8>,
-    profile: Vec<u8>,
-    sources: PathBuf,
-}
-
-fn digest(bytes: &[u8]) -> String {
-    format!("{:x}", Sha256::digest(bytes))
-}
-
-fn make_zip(path: &Path, unsafe_name: bool) -> Result<(), Box<dyn Error>> {
-    let mut writer = ZipWriter::new(File::create(path)?);
-    writer.start_file(
-        if unsafe_name {
-            "../escaped.txt"
-        } else {
-            "llama-server.exe"
-        },
-        SimpleFileOptions::default(),
-    )?;
-    writer.write_all(b"stub server")?;
-    writer.finish()?;
-    Ok(())
-}
-
 fn fixture(root: &Path, unsafe_zip: bool) -> Result<Fixture, Box<dyn Error>> {
-    let sources = root.join("sources");
-    std::fs::create_dir(&sources)?;
-    let model = b"tiny fixture model";
-    let model_license = b"fixture model license";
-    let runtime_license = b"fixture runtime license";
-    let archive = sources.join("llama-b10977-bin-win-cpu-x64.zip");
-    make_zip(&archive, unsafe_zip)?;
-    let archive_bytes = std::fs::read(archive)?;
-    std::fs::write(sources.join("Hy-MT2-1.8B-Q4_K_M.gguf"), model)?;
-    std::fs::write(sources.join("MODEL-LICENSE.txt"), model_license)?;
-    std::fs::write(sources.join("LLAMA-LICENSE.txt"), runtime_license)?;
-
-    let mut profile: Value = serde_json::from_slice(PROFILE)?;
-    profile["model_file_sha256"] = json!(digest(model));
-    profile["model_file_bytes"] = json!(model.len());
-    let profile_bytes = serde_json::to_vec(&profile)?;
-
-    let mut manifest: Value = serde_json::from_slice(MANIFEST)?;
-    manifest["profile_sha256"] = json!(digest(&profile_bytes));
-    manifest["model"]["file"]["sha256"] = json!(digest(model));
-    manifest["model"]["file"]["bytes"] = json!(model.len());
-    manifest["model"]["license"]["notice"]["sha256"] = json!(digest(model_license));
-    manifest["model"]["license"]["notice"]["bytes"] = json!(model_license.len());
-    manifest["runtime"]["license"]["notice"]["sha256"] = json!(digest(runtime_license));
-    manifest["runtime"]["license"]["notice"]["bytes"] = json!(runtime_license.len());
-    manifest["runtime"]["variants"][0]["archive"]["sha256"] = json!(digest(&archive_bytes));
-    manifest["runtime"]["variants"][0]["archive"]["bytes"] = json!(archive_bytes.len());
-    Ok(Fixture {
-        manifest: serde_json::to_vec(&manifest)?,
-        profile: profile_bytes,
-        sources,
+    fixture_with_archive(root, |archive| {
+        make_zip(
+            archive,
+            if unsafe_zip {
+                "../escaped.txt"
+            } else {
+                "llama-server.exe"
+            },
+        )
     })
 }
 
